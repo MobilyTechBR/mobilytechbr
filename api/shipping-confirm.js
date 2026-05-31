@@ -173,6 +173,100 @@ function extractOrderId(data) {
   return null;
 }
 
+function collectValues(value, found = []) {
+  if (value === undefined || value === null) return found;
+  if (typeof value === "string" || typeof value === "number") {
+    found.push(String(value));
+    return found;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectValues(item, found));
+    return found;
+  }
+  if (typeof value === "object") {
+    Object.values(value).forEach((item) => collectValues(item, found));
+  }
+  return found;
+}
+
+function findTrackingCode(...payloads) {
+  const joined = collectValues(payloads).join(" ");
+  const correiosMatch = joined.match(/\b[A-Z]{2}\d{9}[A-Z]{2}\b/i);
+  if (correiosMatch) return correiosMatch[0].toUpperCase();
+
+  const preferredKeys = [
+    "tracking",
+    "tracking_code",
+    "trackingCode",
+    "codigo_rastreio",
+    "codigoRastreio",
+    "rastreio",
+    "trackingNumber",
+    "tracking_number"
+  ];
+
+  const stack = [...payloads];
+  while (stack.length) {
+    const current = stack.pop();
+    if (!current || typeof current !== "object") continue;
+    for (const [key, value] of Object.entries(current)) {
+      if (preferredKeys.includes(key) && value) return String(value).trim();
+      if (value && typeof value === "object") stack.push(value);
+    }
+  }
+
+  return "";
+}
+
+function trackingUrlFor(code) {
+  if (!code) return "";
+  return `https://www2.correios.com.br/sistemas/rastreamento/default.cfm?objetos=${encodeURIComponent(code)}`;
+}
+
+async function notifyTrackingUpdate(payload, orderId, trackingCode, trackingUrl) {
+  const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT;
+  if (!endpoint || !trackingCode) return { sent: false, reason: "missing_endpoint_or_tracking_code" };
+
+  const customer = payload.shipping?.customer || {};
+  const form = new URLSearchParams({
+    _subject: "Pedido despachado - MobilyTechBR",
+    order_status: "DESPACHADO",
+    platform: payload.paymentProvider === "abacate" ? "Abacate Pay" : "Mercado Pago",
+    payment_id: String(payload.paymentId || ""),
+    pagamento: String(payload.paymentId || ""),
+    produto: payload.productTitle || "",
+    product_title: payload.productTitle || "",
+    customer_name: customer.name || "",
+    customer_email: customer.email || "",
+    customer_phone: customer.phone || "",
+    delivery_mode: "shipping",
+    shipping_requested: "true",
+    shipping_provider: payload.shipping?.provider || "melhor-envio",
+    shipping_service_id: payload.shipping?.serviceId || "",
+    shipping_service_name: payload.shipping?.serviceName || "",
+    shipping_carrier: payload.shipping?.carrier || "",
+    shipping_price: payload.shipping?.price || "",
+    shipping_postal_code: payload.shipping?.postalCode || "",
+    shipping_customer: JSON.stringify(customer),
+    tracking_code: trackingCode,
+    tracking_url: trackingUrl || "",
+    codigo_rastreio: trackingCode,
+    link_rastreio: trackingUrl || "",
+    melhor_envio_order_id: String(orderId || "")
+  });
+
+  const notification = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: form.toString()
+  });
+
+  return { sent: notification.ok, status: notification.status };
+}
+
 module.exports = async function shippingConfirm(request, response) {
   try {
     const url = new URL(request.url || "/", `https://${request.headers.host || "mobilytechbr.vercel.app"}`);
@@ -201,8 +295,15 @@ module.exports = async function shippingConfirm(request, response) {
     const checkoutData = await melhorEnvioRequest("/me/shipment/checkout", { orders: [orderId] });
     const generateData = await melhorEnvioRequest("/me/shipment/generate", { orders: [orderId] });
     const printData = await melhorEnvioRequest("/me/shipment/print", { orders: [orderId] });
+    const trackingCode = findTrackingCode(checkoutData, generateData, printData);
+    const trackingUrl = trackingUrlFor(trackingCode);
+    const notification = await notifyTrackingUpdate(payload, orderId, trackingCode, trackingUrl);
 
-    html(response, 200, "Etiqueta comprada", `<p>A compra da etiqueta foi enviada ao Melhor Envio.</p><code>${JSON.stringify({ orderId, checkoutData, generateData, printData }, null, 2)}</code>`);
+    const trackingMessage = trackingCode
+      ? `<p>Codigo de rastreio encontrado: <strong>${trackingCode}</strong>. A planilha foi avisada para enviar o e-mail de rastreamento ao cliente.</p>`
+      : "<p>A etiqueta foi comprada, mas o Melhor Envio ainda nao retornou um codigo de rastreio nesta resposta. Quando o codigo aparecer, preencha a coluna CodigoRastreio e marque o pedido como DESPACHADO na planilha.</p>";
+
+    html(response, 200, "Etiqueta comprada", `<p>A compra da etiqueta foi enviada ao Melhor Envio.</p>${trackingMessage}<code>${JSON.stringify({ orderId, trackingCode, notification, checkoutData, generateData, printData }, null, 2)}</code>`);
   } catch (error) {
     html(response, error.statusCode || 500, "Erro ao comprar etiqueta", `<p>Confira os dados e variaveis da Vercel.</p><code>${String(error.message || error)}</code>`);
   }

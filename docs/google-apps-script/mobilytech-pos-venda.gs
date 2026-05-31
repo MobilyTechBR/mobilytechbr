@@ -129,7 +129,7 @@ function sendCustomerConfirmation_(order) {
   const html = emailShell_({
     preheader: "Recebemos seu pedido e vamos preparar tudo com cuidado.",
     title: "Compra confirmada!",
-    intro: `Ola, ${escapeHtml_(order.ClienteNome || "tudo bem")}! A MobilyTech BR agradece sua compra. Vamos preparar seu pedido com cuidado para ele chegar pronto para uso.`,
+    intro: `Ola, ${escapeHtml_(order.ClienteNome || "tudo bem")}! A MobilyTech BR agradece sua compra. Vamos preparar o seu pedido para ele chegar prontinho para uso!`,
     blocks: [
       detailBlock_("Resumo do pedido", [
         ["Produto", order.Produto],
@@ -137,7 +137,7 @@ function sendCustomerConfirmation_(order) {
         ["Valor pago", formatMoneyText_(order.ValorPago)],
         ["Entrega", deliverySummary_(order)]
       ]),
-      textBlock_("Proximos passos", "Agora o PC entra em preparacao final: revisao, limpeza, testes e embalagem. Se voce escolheu frete, voce recebera outro e-mail com o codigo de rastreamento assim que o envio for despachado.")
+      textBlock_("Proximos passos", "O seu PC sera despachado o mais breve possivel. Assim que for despachado, sera enviado um codigo de rastreio para que voce possa acompanha-lo durante o envio. Seguimos a disposicao para qualquer duvida que voce tiver.")
     ],
     ctaLabel: "Falar com a MobilyTech BR",
     ctaUrl: MOBILYTECH.WHATSAPP_URL
@@ -340,11 +340,16 @@ function upsertOrder_(payload) {
   const sheet = ordersSheet_();
   const order = normalizeOrder_(payload);
   const existing = readRows_(sheet).find(({ values }) => String(values.PedidoID) === order.PedidoID);
-  const rowValues = ORDER_HEADERS.map((header) => order[header] || "");
   if (existing) {
+    const rowValues = ORDER_HEADERS.map((header) => {
+      const nextValue = order[header];
+      if (nextValue !== undefined && nextValue !== null && String(nextValue) !== "") return nextValue;
+      return existing.values[header] || "";
+    });
     sheet.getRange(existing.row, 1, 1, ORDER_HEADERS.length).setValues([rowValues]);
     return existing.row;
   }
+  const rowValues = ORDER_HEADERS.map((header) => order[header] || "");
   sheet.appendRow(rowValues);
   return sheet.getLastRow();
 }
@@ -364,7 +369,7 @@ function normalizeOrder_(payload) {
     ClienteEmail: customer.email,
     ClienteTelefone: customer.phone,
     Produto: payload.product_title || payload.produto || "",
-    Opcionais: payload.selected_addons || "Nenhum",
+    Opcionais: payload.selected_addons || payload.opcionais || "",
     ValorPago: payload.amount_paid || "",
     ModoEntrega: payload.delivery_mode || (payload.shipping_requested === "true" ? "shipping" : "pickup"),
     Transportadora: payload.shipping_carrier || "",
@@ -374,8 +379,8 @@ function normalizeOrder_(payload) {
     Endereco: [shippingCustomer.street, shippingCustomer.number, shippingCustomer.complement, shippingCustomer.district, shippingCustomer.city, shippingCustomer.state].filter(Boolean).join(", "),
     LinkConfirmarEtiqueta: payload.label_confirmation_url || payload.confirmar_etiqueta || "",
     DecisaoEtiqueta: "",
-    CodigoRastreio: "",
-    LinkRastreio: "",
+    CodigoRastreio: payload.tracking_code || payload.codigo_rastreio || payload.CodigoRastreio || "",
+    LinkRastreio: payload.tracking_url || payload.link_rastreio || payload.LinkRastreio || "",
     EmailClienteConfirmacaoEnviado: "",
     EmailVendedorVendaEnviado: "",
     EmailClienteDespachoEnviado: "",
@@ -403,52 +408,60 @@ function emailShell_({ preheader, title, intro, blocks = [], ctaLabel, ctaUrl })
   const cta = ctaLabel && ctaUrl
     ? `<p style="text-align:center;margin:26px 0 6px"><a href="${ctaUrl}" style="${buttonStyle_()}">${escapeHtml_(ctaLabel)}</a></p>`
     : "";
-  return `
-  <div style="display:none;max-height:0;overflow:hidden">${escapeHtml_(preheader || "")}</div>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#02070d;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#f5fbff">
-    <tr><td align="center" style="padding:28px 14px">
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;border:1px solid rgba(34,240,196,.22);border-radius:18px;background:linear-gradient(180deg,#071b2d,#03101b);overflow:hidden">
-        <tr><td align="center" style="padding:30px 26px 18px;background:radial-gradient(circle at 50% 0,rgba(4,183,255,.20),transparent 260px)">
+  return `<!doctype html>
+  <html>
+  <head>
+    <meta name="color-scheme" content="light only">
+    <meta name="supported-color-schemes" content="light">
+  </head>
+  <body style="margin:0;padding:0;background-color:#02070d!important;color:#f5fbff!important">
+  <div style="display:none;max-height:0;overflow:hidden;color:#02070d">${escapeHtml_(preheader || "")}</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#02070d" style="background-color:#02070d!important;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#f5fbff!important">
+    <tr><td align="center" bgcolor="#02070d" style="padding:28px 14px;background-color:#02070d!important;color:#f5fbff!important">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#061b2a" style="max-width:680px;border:1px solid #136064;border-radius:18px;background-color:#061b2a!important;color:#f5fbff!important;overflow:hidden">
+        <tr><td align="center" bgcolor="#082235" style="padding:30px 26px 18px;background-color:#082235!important;color:#f5fbff!important">
           <img src="${MOBILYTECH.LOGO_URL}" width="96" alt="MobilyTech BR" style="display:block;border-radius:999px;margin:0 auto 16px">
-          <div style="color:#22f0c4;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">MobilyTech BR</div>
-          <h1 style="margin:10px 0 0;color:#ffffff;font-size:32px;line-height:1.08">${escapeHtml_(title)}</h1>
-          <p style="margin:14px auto 0;max-width:540px;color:#c6d8e4;font-size:16px;line-height:1.55;font-weight:700">${escapeHtml_(intro)}</p>
+          <div style="color:#22f0c4!important;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">MobilyTech BR</div>
+          <h1 style="margin:10px 0 0;color:#ffffff!important;font-size:32px;line-height:1.08">${escapeHtml_(title)}</h1>
+          <p style="margin:14px auto 0;max-width:540px;color:#d7eaf5!important;font-size:16px;line-height:1.55;font-weight:700">${escapeHtml_(intro)}</p>
         </td></tr>
-        <tr><td style="padding:10px 26px 28px">${blocksHtml}${cta}</td></tr>
-        <tr><td style="padding:18px 26px;border-top:1px solid rgba(88,214,255,.18);color:#8fa6b8;font-size:12px;line-height:1.5;text-align:center">
+        <tr><td bgcolor="#061b2a" style="padding:10px 26px 28px;background-color:#061b2a!important;color:#f5fbff!important">${blocksHtml}${cta}</td></tr>
+        <tr><td bgcolor="#04111d" style="padding:18px 26px;border-top:1px solid #16435a;background-color:#04111d!important;color:#a9bfcc!important;font-size:12px;line-height:1.5;text-align:center">
           MobilyTech BR - PCs e Hardware<br>
           Envio para todo o Brasil | Site oficial | OLX | Facebook Marketplace | Mercado Livre
         </td></tr>
       </table>
     </td></tr>
-  </table>`;
+  </table>
+  </body>
+  </html>`;
 }
 
 function detailBlock_(title, rows) {
   const rowsHtml = rows
     .filter(([, value]) => value !== undefined && value !== null && String(value) !== "")
-    .map(([label, value]) => `<tr><td style="padding:7px 0;color:#8fb2c4;font-size:12px;font-weight:800;text-transform:uppercase">${escapeHtml_(label)}</td><td style="padding:7px 0;color:#f5fbff;font-size:14px;font-weight:800;text-align:right">${escapeHtml_(value)}</td></tr>`)
+    .map(([label, value]) => `<tr><td style="padding:7px 0;color:#9fc1d1!important;font-size:12px;font-weight:800;text-transform:uppercase">${escapeHtml_(label)}</td><td style="padding:7px 0;color:#f5fbff!important;font-size:14px;font-weight:800;text-align:right">${escapeHtml_(value)}</td></tr>`)
     .join("");
-  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0">${rowsHtml}</table></div>`;
+  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="color:#f5fbff!important">${rowsHtml}</table></div>`;
 }
 
 function textBlock_(title, text) {
-  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><p style="margin:0;color:#c6d8e4;font-size:14px;line-height:1.6;font-weight:700">${escapeHtml_(text)}</p></div>`;
+  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><p style="margin:0;color:#d7eaf5!important;font-size:14px;line-height:1.6;font-weight:700">${escapeHtml_(text)}</p></div>`;
 }
 
 function buttonStyle_(variant) {
   if (variant === "secondary") {
-    return "display:inline-block;margin:6px 6px;padding:13px 18px;border:1px solid rgba(88,214,255,.34);border-radius:10px;color:#dff7ff;background:#0b2134;text-decoration:none;font-weight:900";
+    return "display:inline-block;margin:6px 6px;padding:13px 18px;border:1px solid #2b7696;border-radius:10px;color:#dff7ff!important;background-color:#0b2134!important;text-decoration:none;font-weight:900";
   }
-  return "display:inline-block;margin:6px 6px;padding:13px 18px;border-radius:10px;color:#021018;background:linear-gradient(135deg,#7df8e0,#22f0c4 52%,#04b7ff);text-decoration:none;font-weight:900";
+  return "display:inline-block;margin:6px 6px;padding:13px 18px;border-radius:10px;color:#021018!important;background-color:#22f0c4!important;text-decoration:none;font-weight:900";
 }
 
 function cardStyle_() {
-  return "margin:14px 0 0;padding:18px;border:1px solid rgba(88,214,255,.22);border-radius:14px;background:rgba(255,255,255,.045)";
+  return "margin:14px 0 0;padding:18px;border:1px solid #16435a;border-radius:14px;background-color:#082235!important;color:#f5fbff!important";
 }
 
 function blockTitleStyle_() {
-  return "margin:0 0 12px;color:#22f0c4;font-size:13px;letter-spacing:.08em;text-transform:uppercase";
+  return "margin:0 0 12px;color:#22f0c4!important;font-size:13px;letter-spacing:.08em;text-transform:uppercase";
 }
 
 function deliverySummary_(order) {
