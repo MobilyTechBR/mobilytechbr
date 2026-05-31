@@ -29,6 +29,20 @@ function parsePositiveNumber(value) {
   return Number.isFinite(number) && number > 0 ? number : null;
 }
 
+function categoryMinimumWeight(product) {
+  const category = normalizeText(product?.category || product?.type || product?.title || "");
+  if (category.includes("ssd")) return 1;
+  if (category.includes("fonte")) return 3.5;
+  return null;
+}
+
+function packageWeight(product, shipping) {
+  const explicitWeight = parsePositiveNumber(shipping.weightKg);
+  const minimumWeight = categoryMinimumWeight(product);
+  if (minimumWeight) return Math.max(explicitWeight || minimumWeight, minimumWeight);
+  return explicitWeight || parsePositiveNumber(process.env.DEFAULT_PACKAGE_WEIGHT_KG);
+}
+
 function normalizeText(value = "") {
   return String(value)
     .normalize("NFD")
@@ -56,7 +70,7 @@ function isPreferredCarrier(company) {
 function productPackage(product) {
   const shipping = product.shipping || {};
   return {
-    weight: parsePositiveNumber(shipping.weightKg) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_WEIGHT_KG),
+    weight: packageWeight(product, shipping),
     height: parsePositiveNumber(shipping.heightCm) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_HEIGHT_CM),
     width: parsePositiveNumber(shipping.widthCm) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_WIDTH_CM),
     length: parsePositiveNumber(shipping.lengthCm) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_LENGTH_CM),

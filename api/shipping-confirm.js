@@ -32,6 +32,27 @@ function parseNumber(value) {
   return Number.isFinite(number) && number > 0 ? number : null;
 }
 
+function normalizeText(value = "") {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function categoryMinimumWeight(product) {
+  const category = normalizeText(product?.category || product?.type || product?.title || "");
+  if (category.includes("ssd")) return 1;
+  if (category.includes("fonte")) return 3.5;
+  return null;
+}
+
+function packageWeight(product, shipping) {
+  const explicitWeight = parseNumber(shipping.weightKg);
+  const minimumWeight = categoryMinimumWeight(product);
+  if (minimumWeight) return Math.max(explicitWeight || minimumWeight, minimumWeight);
+  return explicitWeight || parseNumber(process.env.DEFAULT_PACKAGE_WEIGHT_KG);
+}
+
 function onlyDigits(value) {
   return String(value || "").replace(/\D/g, "");
 }
@@ -76,7 +97,7 @@ async function assertPaymentConfirmed(payload) {
 function productPackage(product) {
   const shipping = product.shipping || {};
   return {
-    weight: parseNumber(shipping.weightKg) || parseNumber(process.env.DEFAULT_PACKAGE_WEIGHT_KG),
+    weight: packageWeight(product, shipping),
     height: parseNumber(shipping.heightCm) || parseNumber(process.env.DEFAULT_PACKAGE_HEIGHT_CM),
     width: parseNumber(shipping.widthCm) || parseNumber(process.env.DEFAULT_PACKAGE_WIDTH_CM),
     length: parseNumber(shipping.lengthCm) || parseNumber(process.env.DEFAULT_PACKAGE_LENGTH_CM),

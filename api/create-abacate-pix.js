@@ -46,6 +46,32 @@ function parsePriceBRL(value) {
   return Number(raw);
 }
 
+function normalizeText(value = "") {
+  return String(value)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function categoryMinimumWeight(product) {
+  const category = normalizeText(product?.category || product?.type || product?.title || "");
+  if (category.includes("ssd")) return 1;
+  if (category.includes("fonte")) return 3.5;
+  return null;
+}
+
+function packageWeight(product, shipping) {
+  const explicitWeight = parsePriceBRL(shipping.weightKg);
+  const minimumWeight = categoryMinimumWeight(product);
+  if (minimumWeight) {
+    return Math.max(Number.isFinite(explicitWeight) && explicitWeight > 0 ? explicitWeight : minimumWeight, minimumWeight);
+  }
+  const defaultWeight = parsePriceBRL(process.env.DEFAULT_PACKAGE_WEIGHT_KG);
+  return Number.isFinite(explicitWeight) && explicitWeight > 0
+    ? explicitWeight
+    : (Number.isFinite(defaultWeight) && defaultWeight > 0 ? defaultWeight : 0);
+}
+
 function onlyDigits(value) {
   return String(value || "").replace(/\D/g, "");
 }
@@ -183,7 +209,7 @@ function aggregateShippingProduct(products) {
   const packages = products.map((product) => {
     const shipping = product.shipping || {};
     return {
-      weight: parsePriceBRL(shipping.weightKg) || parsePriceBRL(process.env.DEFAULT_PACKAGE_WEIGHT_KG) || 0,
+      weight: packageWeight(product, shipping),
       height: parsePriceBRL(shipping.heightCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_HEIGHT_CM) || 0,
       width: parsePriceBRL(shipping.widthCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_WIDTH_CM) || 0,
       length: parsePriceBRL(shipping.lengthCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_LENGTH_CM) || 0,
