@@ -87,5 +87,170 @@
       "facebook": "https://www.facebook.com/marketplace/item/1891906721500389/?mibextid=6ojiHh"
     },
     "featured": true
+  },
+  {
+    "id": "ssd-240gb-pny-sata3",
+    "active": true,
+    "category": "ssd",
+    "title": "SSD 240GB PNY - SATA 3",
+    "price": 220,
+    "badge": "SSD",
+    "image": "./assets/ssd-240gb-pny-sata3.png",
+    "cutout": "./assets/generated/ssd-240gb-pny-sata3-cutout.png",
+    "photo": "square",
+    "tags": [
+      "240GB",
+      "PNY",
+      "SATA 3"
+    ],
+    "specs": {
+      "storage": "240GB",
+      "capacity": "240GB",
+      "brand": "PNY",
+      "type": "SSD",
+      "formFactor": "2.5 polegadas",
+      "interface": "SATA 3"
+    },
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 220
+    },
+    "links": {},
+    "featured": true
+  },
+  {
+    "id": "ssd-240gb-crucial",
+    "active": true,
+    "category": "ssd",
+    "title": "SSD 240GB Crucial",
+    "price": 215,
+    "badge": "SSD",
+    "image": "./assets/ssd-240gb-crucial.png",
+    "cutout": "./assets/generated/ssd-240gb-crucial-cutout.png",
+    "photo": "square",
+    "tags": [
+      "240GB",
+      "Crucial",
+      "SATA"
+    ],
+    "specs": {
+      "storage": "240GB",
+      "capacity": "240GB",
+      "brand": "Crucial",
+      "type": "SSD",
+      "formFactor": "2.5 polegadas",
+      "interface": "SATA"
+    },
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 215
+    },
+    "links": {},
+    "featured": true
+  },
+  {
+    "id": "ssd-256gb-lexar-25",
+    "active": true,
+    "category": "ssd",
+    "title": "SSD 256GB Lexar 2.5",
+    "price": 215,
+    "badge": "SSD",
+    "image": "./assets/ssd-256gb-lexar-25.png",
+    "cutout": "./assets/generated/ssd-256gb-lexar-25-cutout.png",
+    "photo": "square",
+    "tags": [
+      "256GB",
+      "Lexar",
+      "2.5"
+    ],
+    "specs": {
+      "storage": "256GB",
+      "capacity": "256GB",
+      "brand": "Lexar",
+      "type": "SSD",
+      "formFactor": "2.5 polegadas",
+      "interface": "SATA"
+    },
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 215
+    },
+    "links": {},
+    "featured": true
+  },
+  {
+    "id": "ssd-240gb-kingston-original",
+    "active": true,
+    "category": "ssd",
+    "title": "SSD 240GB Kingston Original",
+    "price": 225,
+    "badge": "SSD",
+    "image": "./assets/ssd-240gb-kingston-original.png",
+    "cutout": "./assets/generated/ssd-240gb-kingston-original-cutout.png",
+    "photo": "square",
+    "tags": [
+      "240GB",
+      "Kingston",
+      "Original"
+    ],
+    "specs": {
+      "storage": "240GB",
+      "capacity": "240GB",
+      "brand": "Kingston",
+      "type": "SSD",
+      "formFactor": "2.5 polegadas",
+      "interface": "SATA"
+    },
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 225
+    },
+    "links": {},
+    "featured": true
+  },
+  {
+    "id": "fonte-750w-nvinet-80plus-bronze",
+    "active": true,
+    "category": "fonte",
+    "title": "Fonte 750W 80 Plus Bronze NVINET - Lacrada",
+    "price": 355,
+    "badge": "Fonte",
+    "image": "./assets/fonte-750w-nvinet-80plus-bronze.png",
+    "cutout": "./assets/generated/fonte-750w-nvinet-80plus-bronze-cutout.png",
+    "photo": "square",
+    "tags": [
+      "750W",
+      "80 Plus Bronze",
+      "Lacrada"
+    ],
+    "specs": {
+      "wattage": "750W",
+      "brand": "NVINET",
+      "model": "NT750",
+      "certification": "80 Plus Bronze",
+      "type": "Fonte ATX",
+      "condition": "Lacrada"
+    },
+    "shipping": {
+      "weightKg": 3.5,
+      "heightCm": 15,
+      "widthCm": 25,
+      "lengthCm": 30,
+      "insuranceValue": 355
+    },
+    "links": {},
+    "featured": true
   }
 ]
