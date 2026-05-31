@@ -30,32 +30,60 @@ content:
         type: string
         default: mobilytechbr@gmail.com
       - name: marketplacePriceSyncEnabled
-        label: Ativar verificacao de precos OLX/Facebook
+        label: Ativar verificacao de anuncios Facebook/OLX
         type: boolean
-        default: false
-        description: "Comece desligado. Ligue quando a planilha/script estiver configurado."
+        default: true
+        description: "Verifica preco pelo Facebook, remocoes, novos anuncios e links da OLX."
       - name: marketplacePriceSyncMode
         label: Modo da verificacao de precos
         type: select
-        default: review
+        default: auto
         options:
           values:
             - review
             - auto
-        description: "Review cria sugestoes para conferir. Auto so deve ser usado depois de testes."
+        description: "Auto aplica somente quando a confianca passar do limite seguro."
       - name: marketplacePriceSyncIntervalMinutes
         label: Intervalo da verificacao de precos em minutos
         type: number
         default: 360
         description: "Recomendado: 360 minutos, ou seja, a cada 6 horas."
+      - name: marketplacePriceSyncHighConfidenceThreshold
+        label: Confianca minima para aplicar sozinho
+        type: number
+        default: 95
+        description: "Use 95 para exigir quase certeza antes de alterar preco/remover sozinho."
       - name: marketplacePriceSyncRequireManualApproval
-        label: Exigir aprovacao manual antes de atualizar preco
+        label: Exigir aprovacao manual para tudo
         type: boolean
-        default: true
+        default: false
       - name: marketplacePriceSyncApplyOnlyHighConfidence
         label: Aplicar somente quando a confianca for alta
         type: boolean
         default: true
+      - name: marketplaceRemovalSyncAutoApply
+        label: Remover anuncio sozinho com alta confianca
+        type: boolean
+        default: true
+        description: "Se desligado, remocoes sempre viram e-mail de aprovacao."
+      - name: marketplaceOlxLinkReviewEnabled
+        label: Revisar links da OLX por e-mail
+        type: boolean
+        default: true
+        description: "OLX e usada apenas para sugerir links de redirecionamento; nunca define preco."
+      - name: marketplaceDraftCreationEnabled
+        label: Criar rascunhos inativos de novos anuncios
+        type: boolean
+        default: true
+        description: "Quando detectar anuncio novo no Facebook, cria no painel como inativo para voce revisar fotos e ativar."
+      - name: marketplaceFacebookProfileUrl
+        label: Perfil do Facebook Marketplace
+        type: string
+        default: "https://www.facebook.com/marketplace/profile/100035688601043/?ref=permalink&mibextid=6ojiHh"
+      - name: marketplaceOlxProfileUrl
+        label: Perfil da OLX
+        type: string
+        default: "https://www.olx.com.br/perfil/julian-859fd666"
   - name: globalAddons
     label: Adicionais globais
     type: file

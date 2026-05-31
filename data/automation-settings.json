@@ -3,9 +3,15 @@
   "postSalePollMinutes": 5,
   "sellerNotificationsEnabled": true,
   "sellerEmail": "mobilytechbr@gmail.com",
-  "marketplacePriceSyncEnabled": false,
-  "marketplacePriceSyncMode": "review",
+  "marketplacePriceSyncEnabled": true,
+  "marketplacePriceSyncMode": "auto",
   "marketplacePriceSyncIntervalMinutes": 360,
-  "marketplacePriceSyncRequireManualApproval": true,
-  "marketplacePriceSyncApplyOnlyHighConfidence": true
+  "marketplacePriceSyncRequireManualApproval": false,
+  "marketplacePriceSyncApplyOnlyHighConfidence": true,
+  "marketplacePriceSyncHighConfidenceThreshold": 95,
+  "marketplaceRemovalSyncAutoApply": true,
+  "marketplaceOlxLinkReviewEnabled": true,
+  "marketplaceDraftCreationEnabled": true,
+  "marketplaceFacebookProfileUrl": "https://www.facebook.com/marketplace/profile/100035688601043/?ref=permalink&mibextid=6ojiHh",
+  "marketplaceOlxProfileUrl": "https://www.olx.com.br/perfil/julian-859fd666"
 }

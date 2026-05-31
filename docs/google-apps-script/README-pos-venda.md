@@ -54,8 +54,25 @@ O Correios aparece como opcao recomendada quando estiver disponivel. Para trocar
 - `SHIPPING_ALLOWED_CARRIERS`: lista separada por virgula, por exemplo `correios,jadlog,loggi`.
 - `SHIPPING_PREFERRED_CARRIER`: transportadora recomendada, por exemplo `correios`.
 
-## Sincronizacao de precos
+## Automacao de anuncios Facebook/OLX
 
-A automacao de precos fica desligada por padrao e em modo `review`.
+A automacao pode revisar anuncios a cada intervalo configurado no painel.
 
-Motivo: Facebook Marketplace e OLX podem exigir login, mudar pagina ou mostrar anuncios parecidos. Para nao alterar o PC errado, o primeiro passo e gerar uma aba de revisao. Depois de alguns testes com confianca alta, da para evoluir para aplicacao automatica via GitHub API.
+Fluxo atual:
+
+- Precos sao conferidos pelo Facebook Marketplace.
+- OLX nao muda preco: ela so sugere links de redirecionamento, sempre com aprovacao por e-mail.
+- Quando a confianca fica abaixo de 95%, o script envia um unico e-mail de revisao para `mobilytechbr@gmail.com`.
+- Quando a confianca fica em 95% ou mais, o script pode aplicar a alteracao sozinho e envia um e-mail com botao para desfazer.
+- Se o anuncio parecer removido/vendido, vale o mesmo fluxo: alta confianca pode remover, baixa confianca pede revisao.
+- Anuncios novos detectados no Facebook viram rascunhos inativos em `data/products.json`, para aparecerem no painel sem aparecerem para clientes ate voce revisar fotos e ativar.
+
+Para os botoes de aprovar/desfazer realmente alterarem o site, configure nas **Propriedades do script** do Apps Script:
+
+- `GITHUB_TOKEN`: token fino do GitHub com acesso de leitura/escrita ao repositorio.
+- `GITHUB_OWNER`: `MobilyTechBR`
+- `GITHUB_REPO`: `mobilytechbr`
+- `GITHUB_BRANCH`: `main`
+- `GITHUB_PRODUCTS_PATH`: `data/products.json`
+
+Sem `GITHUB_TOKEN`, o script ainda envia os e-mails e registra a revisao na planilha, mas nao altera o site sozinho.
