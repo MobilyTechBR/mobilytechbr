@@ -70,12 +70,12 @@ content:
         label: Revisar links da OLX por e-mail
         type: boolean
         default: true
-        description: "OLX e usada apenas para sugerir links de redirecionamento; nunca define preco."
+        description: "OLX sugere links de redirecionamento e pode criar rascunhos de SSDs; preco de OLX so e usado para SSD sem Facebook."
       - name: marketplaceDraftCreationEnabled
         label: Criar rascunhos inativos de novos anuncios
         type: boolean
         default: true
-        description: "Quando detectar anuncio novo no Facebook, cria no painel como inativo para voce revisar fotos e ativar."
+        description: "Quando detectar anuncio novo no Facebook ou SSD novo na OLX, cria no painel como inativo para voce revisar fotos e ativar."
       - name: marketplaceFacebookProfileUrl
         label: Perfil do Facebook Marketplace
         type: string
@@ -130,7 +130,7 @@ content:
         type: image
         description: "Opcional. Se ficar vazio e houver foto, o GitHub tenta criar a versao sem fundo automaticamente."
   - name: products
-    label: Anuncios de PCs
+    label: Anuncios e produtos
     type: file
     path: data/products.json
     format: json
@@ -148,6 +148,17 @@ content:
         label: Ativo no site
         type: boolean
         default: true
+      - name: category
+        label: Tipo de produto
+        type: select
+        default: pc
+        options:
+          values:
+            - pc
+            - ssd
+            - fonte
+            - hardware
+        description: "Use pc para computadores completos, ssd para armazenamento, fonte para fontes de alimentacao e hardware para outros itens."
       - name: title
         label: Titulo
         type: string
@@ -164,7 +175,7 @@ content:
       - name: shipping
         label: Caixa para frete
         type: object
-        description: "Opcional. Use para sobrescrever o peso e as medidas padrao da Vercel neste PC."
+        description: "Opcional. Use para sobrescrever o peso e as medidas padrao da Vercel neste produto."
         fields:
           - name: weightKg
             label: Peso da caixa em kg
@@ -185,7 +196,7 @@ content:
           - name: insuranceValue
             label: Valor segurado
             type: number
-            description: "Opcional. Se vazio, usa o preco do PC."
+            description: "Opcional. Se vazio, usa o preco do produto."
       - name: badge
         label: Selo do card
         type: string
@@ -194,14 +205,14 @@ content:
         type: image
         required: true
       - name: cutout
-        label: Foto recortada/PNG do PC
+        label: Foto recortada/PNG do produto
         type: image
         description: "Opcional. Se ficar vazio, o GitHub tenta gerar automaticamente uma versao sem fundo a partir da foto principal."
       - name: gallery
-        label: Fotos extras do PC
+        label: Fotos extras do produto
         type: object
         list: true
-        description: "Opcional. Essas fotos aparecem somente quando o cliente clica na foto do PC para abrir o zoom/galeria."
+        description: "Opcional. Essas fotos aparecem somente quando o cliente clica na foto do produto para abrir o zoom/galeria."
         fields:
           - name: image
             label: Foto
@@ -242,6 +253,33 @@ content:
           - name: storage
             label: Armazenamento
             type: string
+          - name: brand
+            label: Marca
+            type: string
+          - name: model
+            label: Modelo
+            type: string
+          - name: capacity
+            label: Capacidade
+            type: string
+          - name: type
+            label: Tipo
+            type: string
+          - name: formFactor
+            label: Formato
+            type: string
+          - name: interface
+            label: Interface
+            type: string
+          - name: wattage
+            label: Potencia
+            type: string
+          - name: certification
+            label: Certificacao
+            type: string
+          - name: connectors
+            label: Conectores / pinagem
+            type: string
       - name: links
         label: Links dos anuncios
         type: object
@@ -253,9 +291,9 @@ content:
             label: Link do Facebook Marketplace
             type: string
       - name: addons
-        label: Opcionais especificos deste PC
+        label: Opcionais especificos deste produto
         type: object
-        description: "Use somente quando o opcional for exclusivo deste PC. Os adicionais globais aparecem em todos os PCs automaticamente."
+        description: "Use somente quando o opcional for exclusivo deste produto. Os adicionais globais aparecem automaticamente somente em PCs."
         fields:
           - name: storage
             label: Armazenamento

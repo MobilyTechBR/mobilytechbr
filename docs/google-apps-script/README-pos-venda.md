@@ -60,12 +60,20 @@ A automacao pode revisar anuncios a cada intervalo configurado no painel.
 
 Fluxo atual:
 
-- Precos sao conferidos pelo Facebook Marketplace.
-- OLX nao muda preco: ela so sugere links de redirecionamento, sempre com aprovacao por e-mail.
+- Precos sao conferidos pelo Facebook Marketplace quando houver link do Facebook.
+- Para SSDs sem link do Facebook, a OLX pode ser usada como fonte de preco.
+- OLX tambem sugere links de redirecionamento, sempre com aprovacao por e-mail.
 - Quando a confianca fica abaixo de 95%, o script envia um unico e-mail de revisao para `mobilytechbr@gmail.com`.
 - Quando a confianca fica em 95% ou mais, o script pode aplicar a alteracao sozinho e envia um e-mail com botao para desfazer.
 - Se o anuncio parecer removido/vendido, vale o mesmo fluxo: alta confianca pode remover, baixa confianca pede revisao.
-- Anuncios novos detectados no Facebook viram rascunhos inativos em `data/products.json`, para aparecerem no painel sem aparecerem para clientes ate voce revisar fotos e ativar.
+- Anuncios novos detectados no Facebook viram rascunhos inativos em `data/products.json`, incluindo PCs e fontes.
+- SSDs novos detectados na OLX tambem viram rascunhos inativos; o script usa medidas padrao de embalagem de SSD.
+- Os rascunhos nao aparecem para clientes ate voce revisar fotos, conferir as informacoes e ativar no painel.
+
+Medidas automaticas dos rascunhos:
+
+- SSD: `15 x 12 x 6 cm`, `0.35 kg`.
+- Fonte: `30 x 25 x 15 cm`, `2.2 kg`.
 
 Para os botoes de aprovar/desfazer realmente alterarem o site, configure nas **Propriedades do script** do Apps Script:
 

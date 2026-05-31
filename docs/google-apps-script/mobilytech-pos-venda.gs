@@ -101,7 +101,18 @@ const NEW_LISTING_HEADERS = [
   "Status",
   "EmailEnviadoEm",
   "CriadoEm",
-  "AtualizadoEm"
+  "AtualizadoEm",
+  "Origem",
+  "LinkOLX",
+  "Categoria",
+  "Marca",
+  "Modelo",
+  "Tipo",
+  "Formato",
+  "Interface",
+  "Potencia",
+  "Certificacao",
+  "Conectores"
 ];
 
 function setupMobilyTechPostSale() {
@@ -408,15 +419,17 @@ function runMarketplacePriceReview_(settings) {
 }
 
 function findMarketplacePriceCandidate_(product, threshold) {
-  const sources = [
-    ["Facebook", product.links?.facebook || ""]
-  ].filter(([, url]) => url);
+  const category = productCategory_(product);
+  const sources = [];
+  if (product.links?.facebook) sources.push(["Facebook", product.links.facebook]);
+  if (category === "ssd" && product.links?.olx) sources.push(["OLX", product.links.olx]);
+  let facebookReviewFallback = null;
 
   for (const [source, url] of sources) {
     const page = fetchPublicPage_(url);
     if (page.unavailable) {
       const match = page.text ? marketplaceMatchConfidence_(product, page.text) : emptyMarketplaceMatch_();
-      return {
+      const candidate = {
         kind: "removal",
         price: "",
         priceNumber: null,
@@ -431,6 +444,11 @@ function findMarketplacePriceCandidate_(product, threshold) {
         matches: match.matches,
         details: match.details
       };
+      if (category === "ssd" && source === "Facebook" && product.links?.olx) {
+        facebookReviewFallback = candidate;
+        continue;
+      }
+      return candidate;
     }
     if (!page.ok) {
       continue;
@@ -453,7 +471,7 @@ function findMarketplacePriceCandidate_(product, threshold) {
       };
     }
     if (price.label) {
-      return {
+      const candidate = {
         kind: "price",
         price: price.label,
         priceNumber: price.number,
@@ -468,8 +486,15 @@ function findMarketplacePriceCandidate_(product, threshold) {
         matches: match.matches,
         details: match.details
       };
+      if (category === "ssd" && source === "Facebook" && product.links?.olx) {
+        facebookReviewFallback = candidate;
+        continue;
+      }
+      return candidate;
     }
   }
+
+  if (facebookReviewFallback) return facebookReviewFallback;
 
   return {
     kind: "none",
@@ -557,7 +582,7 @@ function collectOlxLinkCandidates_(settings, products, threshold) {
           matches: match.matches,
           details: match.details,
           title: extractPageTitle_(listing.text),
-          note: "Encontrei um link da OLX que parece ser este PC. Como links de redirecionamento podem confundir anuncios parecidos, ele precisa da sua aprovacao antes de entrar no site."
+          note: "Encontrei um link da OLX que parece ser este produto. Como links de redirecionamento podem confundir anuncios parecidos, ele precisa da sua aprovacao antes de entrar no site."
         };
       }
     });
@@ -567,73 +592,167 @@ function collectOlxLinkCandidates_(settings, products, threshold) {
 }
 
 function runMarketplaceDraftCreation_(settings, products) {
-  const facebookProfileUrl = String(settings.marketplaceFacebookProfileUrl || "https://www.facebook.com/marketplace/profile/100035688601043/?ref=permalink&mibextid=6ojiHh").trim();
-  if (!facebookProfileUrl) return;
   const sheet = ensureSheet_(spreadsheet_(), MOBILYTECH.NEW_LISTINGS_SHEET, NEW_LISTING_HEADERS);
   const existingRows = readRows_(sheet);
   const existingHashes = new Set(existingRows.map(({ values }) => String(values.MudancaHash || "")));
-  const existingFacebookFingerprints = new Set(products
-    .map((product) => product.links?.facebook || "")
+  const knownFingerprints = new Set(products
+    .flatMap((product) => [product.links?.facebook || "", product.links?.olx || ""])
     .filter(Boolean)
     .map(marketplaceListingFingerprint_));
-  const profile = fetchPublicPage_(facebookProfileUrl);
-  if (!profile.ok) return;
-  const urls = extractListingUrls_(profile.text, "facebook")
-    .filter((url) => !existingFacebookFingerprints.has(marketplaceListingFingerprint_(url)))
-    .slice(0, 12);
+  existingRows.forEach(({ values }) => {
+    [values.LinkFacebook, values.LinkOLX].filter(Boolean).forEach((url) => knownFingerprints.add(marketplaceListingFingerprint_(url)));
+  });
 
-  urls.forEach((url) => {
-    const page = fetchPublicPage_(url);
-    if (!page.ok || page.unavailable) return;
-    const title = extractPageTitle_(page.text) || "Novo PC detectado no Facebook";
-    const price = extractPrice_(page.text);
-    const specs = extractSpecsFromText_(page.text);
-    const hash = changeHash_(["novo-facebook", marketplaceListingFingerprint_(url), title, price.number, JSON.stringify(specs)]);
-    if (existingHashes.has(hash)) return;
-    const draft = buildDraftProduct_(url, title, price.number, specs);
-    const result = createDraftProductOnGithub_(draft);
-    const now = new Date();
-    const status = result.ok ? "Rascunho inativo criado no painel" : `Detectado, mas nao criado: ${result.message || "erro desconhecido"}`;
-    sheet.appendRow(NEW_LISTING_HEADERS.map((header) => ({
-      LinkFacebook: url,
-      TituloDetectado: title,
-      PrecoDetectado: price.number || "",
-      ProdutoIDGerado: draft.id,
-      Processador: specs.processor || "",
-      Memoria: specs.memory || "",
-      PlacaVideo: specs.gpu || "",
-      Fonte: specs.powerSupply || "",
-      Armazenamento: specs.storage || "",
-      Descricao: extractPageDescription_(page.text),
-      MudancaHash: hash,
-      Status: status,
-      EmailEnviadoEm: now,
-      CriadoEm: result.ok ? now : "",
-      AtualizadoEm: now
-    }[header] || "")));
-    existingHashes.add(hash);
-    sendNewListingEmail_(settings, draft, url, specs, price.number, status, result.ok);
+  const sources = [
+    {
+      key: "facebook",
+      type: "facebook",
+      label: "Facebook",
+      profileUrl: String(settings.marketplaceFacebookProfileUrl || "https://www.facebook.com/marketplace/profile/100035688601043/?ref=permalink&mibextid=6ojiHh").trim()
+    },
+    {
+      key: "olx",
+      type: "olx",
+      label: "OLX",
+      profileUrl: String(settings.marketplaceOlxProfileUrl || "https://www.olx.com.br/perfil/julian-859fd666").trim()
+    }
+  ].filter((source) => source.profileUrl);
+
+  sources.forEach((source) => {
+    const profile = fetchPublicPage_(source.profileUrl);
+    if (!profile.ok) return;
+    const urls = extractListingUrls_(profile.text, source.type)
+      .filter((url) => !knownFingerprints.has(marketplaceListingFingerprint_(url)))
+      .slice(0, source.key === "olx" ? 20 : 12);
+
+    urls.forEach((url) => {
+      const page = fetchPublicPage_(url);
+      if (!page.ok || page.unavailable) return;
+      const classification = classifyListing_(page.text);
+      if (source.key === "olx" && classification.category !== "ssd") return;
+      const title = extractPageTitle_(page.text) || defaultTitleForCategory_(classification.category, source.label);
+      const price = extractPrice_(page.text);
+      const priceNumber = source.key === "olx" && classification.category !== "ssd" ? null : price.number;
+      const hash = changeHash_(["novo-anuncio", source.key, marketplaceListingFingerprint_(url), classification.category, title, priceNumber, JSON.stringify(classification.specs)]);
+      if (existingHashes.has(hash)) return;
+      const draft = buildDraftProduct_(url, title, priceNumber, classification.specs, {
+        sourceKey: source.key,
+        sourceLabel: source.label,
+        category: classification.category
+      });
+      const result = createDraftProductOnGithub_(draft);
+      const now = new Date();
+      const status = result.ok ? "Rascunho inativo criado no painel" : `Detectado, mas nao criado: ${result.message || "erro desconhecido"}`;
+      const row = {
+        Origem: source.label,
+        LinkFacebook: source.key === "facebook" ? url : "",
+        LinkOLX: source.key === "olx" ? url : "",
+        TituloDetectado: title,
+        PrecoDetectado: priceNumber || "",
+        Categoria: classification.category,
+        ProdutoIDGerado: draft.id,
+        Processador: classification.specs.processor || "",
+        Memoria: classification.specs.memory || "",
+        PlacaVideo: classification.specs.gpu || "",
+        Fonte: classification.specs.powerSupply || "",
+        Armazenamento: classification.specs.storage || classification.specs.capacity || "",
+        Marca: classification.specs.brand || "",
+        Modelo: classification.specs.model || "",
+        Tipo: classification.specs.type || "",
+        Formato: classification.specs.formFactor || "",
+        Interface: classification.specs.interface || "",
+        Potencia: classification.specs.wattage || "",
+        Certificacao: classification.specs.certification || "",
+        Conectores: classification.specs.connectors || "",
+        Descricao: extractPageDescription_(page.text),
+        MudancaHash: hash,
+        Status: status,
+        EmailEnviadoEm: now,
+        CriadoEm: result.ok ? now : "",
+        AtualizadoEm: now
+      };
+      sheet.appendRow(NEW_LISTING_HEADERS.map((header) => row[header] || ""));
+      existingHashes.add(hash);
+      knownFingerprints.add(marketplaceListingFingerprint_(url));
+      sendNewListingEmail_(settings, draft, url, classification.specs, priceNumber, status, result.ok, source.label, classification.category);
+    });
   });
 }
 
-function buildDraftProduct_(facebookUrl, title, price, specs) {
-  const cleanTitle = cleanupText_(title).replace(/\s*-\s*Facebook.*$/i, "") || "Novo PC detectado";
-  const tags = [specs.processor, specs.memory, specs.gpu, specs.storage].filter(Boolean);
-  return {
+function buildDraftProduct_(listingUrl, title, price, specs, options) {
+  const category = options?.category || "pc";
+  const sourceKey = options?.sourceKey || "facebook";
+  const cleanTitle = cleanupText_(title).replace(/\s*-\s*(Facebook|OLX).*$/i, "") || defaultTitleForCategory_(category, options?.sourceLabel || "plataforma");
+  const tags = draftTagsForCategory_(category, specs);
+  const product = {
     id: uniqueDraftId_(cleanTitle),
     active: false,
+    category,
     title: cleanTitle,
     price: Number.isFinite(price) ? price : 0,
-    badge: "Rascunho",
+    badge: draftBadgeForCategory_(category),
     image: "./assets/mobilytech-logo.png",
     photo: "square",
     tags,
     specs,
-    links: {
-      facebook: facebookUrl
-    },
+    links: { [sourceKey]: listingUrl },
     featured: false
   };
+  const shipping = defaultShippingForCategory_(category, price);
+  if (shipping) product.shipping = shipping;
+  return product;
+}
+
+function defaultTitleForCategory_(category, sourceLabel) {
+  const names = {
+    pc: "Novo PC detectado",
+    ssd: "Novo SSD detectado",
+    fonte: "Nova fonte detectada",
+    hardware: "Novo produto detectado"
+  };
+  return `${names[category] || names.hardware} em ${sourceLabel || "marketplace"}`;
+}
+
+function draftBadgeForCategory_(category) {
+  return {
+    pc: "Rascunho",
+    ssd: "SSD",
+    fonte: "Fonte",
+    hardware: "Rascunho"
+  }[category] || "Rascunho";
+}
+
+function draftTagsForCategory_(category, specs) {
+  const order = {
+    pc: [specs.processor, specs.memory, specs.gpu, specs.storage],
+    ssd: [specs.storage || specs.capacity, specs.brand, specs.interface || specs.type],
+    fonte: [specs.wattage || specs.powerSupply, specs.certification, specs.brand],
+    hardware: [specs.brand, specs.model, specs.type]
+  }[category] || [specs.brand, specs.model, specs.type];
+  return order.filter(Boolean);
+}
+
+function defaultShippingForCategory_(category, price) {
+  const insuranceValue = Number.isFinite(price) && price > 0 ? price : undefined;
+  if (category === "ssd") {
+    return {
+      weightKg: 0.35,
+      heightCm: 6,
+      widthCm: 12,
+      lengthCm: 15,
+      insuranceValue
+    };
+  }
+  if (category === "fonte") {
+    return {
+      weightKg: 2.2,
+      heightCm: 15,
+      widthCm: 25,
+      lengthCm: 30,
+      insuranceValue
+    };
+  }
+  return null;
 }
 
 function createDraftProductOnGithub_(draft) {
@@ -695,8 +814,39 @@ function extractPageDescription_(html) {
   return cleanupText_(decodeHtml_(og?.[1] || text.replace(/<[^>]+>/g, " ").slice(0, 700))).slice(0, 650);
 }
 
+function productCategory_(product) {
+  return String(product?.category || product?.type || "pc").toLowerCase();
+}
+
+function classifyListing_(html) {
+  const text = listingPlainText_(html);
+  const pcSpecs = extractPcSpecsFromPlainText_(text);
+  const category = detectListingCategory_(text, pcSpecs);
+  if (category === "ssd") return { category, specs: extractSsdSpecsFromPlainText_(text) };
+  if (category === "fonte") return { category, specs: extractPowerSupplySpecsFromPlainText_(text) };
+  if (category === "pc") return { category, specs: pcSpecs };
+  return { category: "hardware", specs: extractHardwareSpecsFromPlainText_(text) };
+}
+
+function listingPlainText_(html) {
+  return normalizeText_(extractPageTitle_(html) + " " + extractPageDescription_(html) + " " + String(html || "").replace(/<[^>]+>/g, " ").slice(0, 5000));
+}
+
+function detectListingCategory_(text, pcSpecs) {
+  const hasPcCore = Boolean(pcSpecs.processor || pcSpecs.gpu || /\bpc\s*gamer\b|\bcomputador\b|\bdesktop\b/.test(text));
+  const hasSsd = /\bssd\b|\bnvme\b|\bm\.?2\b|\bsata\b/.test(text);
+  const hasPsu = /\bfonte\b|\bpower\s*supply\b|\b80\s*plus\b|\b\d{3,4}\s*w\b/.test(text);
+  if (hasPcCore) return "pc";
+  if (hasPsu) return "fonte";
+  if (hasSsd) return "ssd";
+  return "hardware";
+}
+
 function extractSpecsFromText_(html) {
-  const text = normalizeText_(extractPageTitle_(html) + " " + extractPageDescription_(html) + " " + String(html || "").replace(/<[^>]+>/g, " ").slice(0, 5000));
+  return classifyListing_(html).specs;
+}
+
+function extractPcSpecsFromPlainText_(text) {
   return {
     processor: firstSpecMatch_(text, [
       /\bryzen\s*[3579]\s*\d{4}\s*[a-z]*/i,
@@ -718,6 +868,106 @@ function extractSpecsFromText_(html) {
   };
 }
 
+function extractSsdSpecsFromPlainText_(text) {
+  const storage = firstSpecMatch_(text, [
+    /\b(?:ssd|nvme|m\.?2|sata)?\s*\d{2,4}\s*(?:gb|tb)\b/i
+  ]);
+  const brand = extractKnownBrand_(text, [
+    "kingston", "adata", "crucial", "sandisk", "wd", "western digital", "hikvision", "goldenfir",
+    "xraydisk", "lexar", "samsung", "seagate", "pny", "patriot", "netac", "multilaser", "kingspec"
+  ]);
+  const isNvme = /\bnvme\b|\bm\.?2\b|\b2280\b/.test(text);
+  const isSata = /\bsata\b|\b2\.?5\b/.test(text);
+  const interfaceName = isNvme ? "NVMe" : (isSata ? "SATA" : "");
+  const formFactor = isNvme ? "M.2 2280" : (isSata ? "2.5 polegadas" : "");
+  return {
+    storage,
+    capacity: storage,
+    brand,
+    model: extractModelNearBrand_(text, brand),
+    type: isNvme ? "SSD NVMe" : "SSD",
+    formFactor,
+    interface: interfaceName
+  };
+}
+
+function extractPowerSupplySpecsFromPlainText_(text) {
+  const brand = extractKnownBrand_(text, [
+    "corsair", "evga", "cooler master", "thermaltake", "redragon", "pichau", "mancer",
+    "gamemax", "aerocool", "kcas", "duex", "bluecase", "xpg", "gigabyte"
+  ]);
+  const wattage = firstSpecMatch_(text, [/\b\d{3,4}\s*w\b/i]);
+  const certification = firstSpecMatch_(text, [
+    /\b80\s*plus\s*(?:white|bronze|silver|gold|platinum|titanium)?\b/i
+  ]);
+  const connectors = extractPowerSupplyConnectors_(text);
+  const model = extractModelNearBrand_(text, brand) || firstSpecMatch_(text, [/\b(?:cx|vs|cv|kcas)\s*\d{3,4}\b/i]);
+  const summary = uniqueSpecs_([brand, model, wattage, certification]).join(" ");
+  return {
+    powerSupply: summary || wattage,
+    wattage,
+    brand,
+    model,
+    certification,
+    connectors
+  };
+}
+
+function extractPowerSupplyConnectors_(text) {
+  const matches = String(text || "").match(/\b(?:24\s*pinos?|8\s*pinos?|6\+2\s*pinos?|4\+4\s*pinos?|sata|pci[-\s]?e)\b/ig) || [];
+  return uniqueSpecs_(matches.map(prettySpec_)).slice(0, 5).join(", ");
+}
+
+function uniqueSpecs_(items) {
+  const seen = new Set();
+  return (items || [])
+    .map((item) => cleanupText_(item))
+    .filter(Boolean)
+    .filter((item) => {
+      const key = normalizeText_(item);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+function extractHardwareSpecsFromPlainText_(text) {
+  const brand = extractKnownBrand_(text, ["corsair", "kingston", "adata", "crucial", "pichau", "mancer", "redragon", "samsung", "wd"]);
+  return {
+    brand,
+    model: extractModelNearBrand_(text, brand),
+    type: firstSpecMatch_(text, [/\b(?:ssd|fonte|memoria|placa\s*de\s*video|gabinete|monitor|teclado|mouse)\b/i])
+  };
+}
+
+function extractKnownBrand_(text, brands) {
+  const normalized = normalizeText_(text);
+  const found = brands.find((brand) => new RegExp(`\\b${brand.replace(/\s+/g, "\\s+")}\\b`, "i").test(normalized));
+  return found ? prettyBrand_(found) : "";
+}
+
+function extractModelNearBrand_(text, brand) {
+  if (!brand) return "";
+  const normalizedBrand = normalizeText_(brand).replace(/\s+/g, "\\s+");
+  const match = String(text || "").match(new RegExp(`\\b${normalizedBrand}\\b\\s+([a-z0-9][a-z0-9\\- ]{1,22})`, "i"));
+  if (!match) return "";
+  const model = cleanupText_(match[1])
+    .replace(/\b\d{2,4}\s*(?:gb|tb|w)\b.*$/i, "")
+    .replace(/\b(?:ssd|sata|nvme|m\.?2|fonte|power|supply|80\s*plus|novo|usado|seminovo|para|pc|gamer|com)\b.*$/i, "")
+    .trim();
+  return prettySpec_(model).slice(0, 28);
+}
+
+function prettyBrand_(value) {
+  return cleanupText_(value)
+    .replace(/\bwd\b/i, "WD")
+    .replace(/\bxpg\b/i, "XPG")
+    .replace(/\bevga\b/i, "EVGA")
+    .replace(/\bpny\b/i, "PNY")
+    .replace(/\badata\b/i, "ADATA")
+    .replace(/\b([a-z])([a-z]*)\b/gi, (_match, first, rest) => first.toUpperCase() + rest.toLowerCase());
+}
+
 function firstSpecMatch_(text, patterns) {
   for (const pattern of patterns) {
     const match = String(text || "").match(pattern);
@@ -728,12 +978,26 @@ function firstSpecMatch_(text, patterns) {
 
 function prettySpec_(value) {
   return cleanupText_(value)
+    .replace(/(\d)\s*gb\b/ig, "$1GB")
+    .replace(/(\d)\s*tb\b/ig, "$1TB")
+    .replace(/(\d)\s*w\b/ig, "$1W")
     .replace(/\bgb\b/ig, "GB")
     .replace(/\btb\b/ig, "TB")
+    .replace(/\bram\b/ig, "RAM")
     .replace(/\bddr\s*(\d)\b/ig, "DDR$1")
     .replace(/\bssd\b/ig, "SSD")
     .replace(/\bhdd\b/ig, "HDD")
     .replace(/\bnvme\b/ig, "NVMe")
+    .replace(/\b80\s*plus\b/ig, "80 Plus")
+    .replace(/\bwhite\b/ig, "White")
+    .replace(/\bbronze\b/ig, "Bronze")
+    .replace(/\bsilver\b/ig, "Silver")
+    .replace(/\bgold\b/ig, "Gold")
+    .replace(/\bplatinum\b/ig, "Platinum")
+    .replace(/\btitanium\b/ig, "Titanium")
+    .replace(/\b(cx|vs|cv)\s*(\d{3,4})\b/ig, (_match, prefix, number) => `${prefix.toUpperCase()}${number}`)
+    .replace(/\bkcas\s*(\d{3,4})\b/ig, (_match, number) => `KCAS ${number}`)
+    .replace(/\bpci[-\s]?e\b/ig, "PCIe")
     .replace(/\bgtx\b/ig, "GTX")
     .replace(/\brtx\b/ig, "RTX")
     .replace(/\brx\b/ig, "RX")
@@ -767,13 +1031,8 @@ function slug_(value) {
 function marketplaceMatchConfidence_(product, html) {
   const text = normalizeText_(html);
   const specs = product.specs || {};
-  const checks = [
-    specCheck_("processor", "Processador", specs.processor, text, 28, true),
-    specCheck_("memory", "Memoria", specs.memory, text, 16, true),
-    specCheck_("gpu", "Placa de video", specs.gpu, text, 32, true),
-    specCheck_("storage", "Armazenamento", specs.storage, text, 14, Boolean(specs.storage)),
-    specCheck_("powerSupply", "Fonte", specs.powerSupply, text, 10, Boolean(specs.powerSupply))
-  ].filter((check) => check.weight > 0);
+  const category = productCategory_(product);
+  const checks = marketplaceChecksForCategory_(category, specs, text);
   const titleCheck = looseTokenMatch_(product.title, text);
   const tagHits = (product.tags || []).filter((tag) => looseTokenMatch_(tag, text).ok).length;
   const tagTotal = (product.tags || []).length || 1;
@@ -795,12 +1054,47 @@ function marketplaceMatchConfidence_(product, html) {
   };
 }
 
+function marketplaceChecksForCategory_(category, specs, text) {
+  if (category === "ssd") {
+    return [
+      specCheck_("storage", "Armazenamento", specs.storage || specs.capacity, text, 44, true),
+      specCheck_("brand", "Marca", specs.brand, text, 22, Boolean(specs.brand)),
+      specCheck_("model", "Modelo", specs.model, text, 16, Boolean(specs.model)),
+      specCheck_("interface", "Interface", specs.interface || specs.type, text, 12, Boolean(specs.interface || specs.type))
+    ].filter((check) => check.weight > 0);
+  }
+  if (category === "fonte") {
+    return [
+      specCheck_("wattage", "Potencia", specs.wattage || specs.powerSupply, text, 38, Boolean(specs.wattage || specs.powerSupply)),
+      specCheck_("brand", "Marca", specs.brand, text, 20, Boolean(specs.brand)),
+      specCheck_("model", "Modelo", specs.model, text, 18, Boolean(specs.model)),
+      specCheck_("certification", "Certificacao", specs.certification, text, 14, Boolean(specs.certification)),
+      specCheck_("connectors", "Conectores", specs.connectors, text, 8, false)
+    ].filter((check) => check.weight > 0);
+  }
+  if (category === "hardware") {
+    return [
+      specCheck_("brand", "Marca", specs.brand, text, 30, Boolean(specs.brand)),
+      specCheck_("model", "Modelo", specs.model, text, 28, Boolean(specs.model)),
+      specCheck_("type", "Tipo", specs.type, text, 18, Boolean(specs.type)),
+      specCheck_("storage", "Armazenamento", specs.storage || specs.capacity, text, 18, Boolean(specs.storage || specs.capacity))
+    ].filter((check) => check.weight > 0);
+  }
+  return [
+    specCheck_("processor", "Processador", specs.processor, text, 28, true),
+    specCheck_("memory", "Memoria", specs.memory, text, 16, true),
+    specCheck_("gpu", "Placa de video", specs.gpu, text, 32, true),
+    specCheck_("storage", "Armazenamento", specs.storage, text, 14, Boolean(specs.storage)),
+    specCheck_("powerSupply", "Fonte", specs.powerSupply, text, 10, Boolean(specs.powerSupply))
+  ].filter((check) => check.weight > 0);
+}
+
 function extractPrice_(html) {
   const matches = String(html).match(/R\$\s?[\d.]+,\d{2}|R\$\s?[\d.]+/g) || [];
   const prices = matches
     .map((value) => value.replace(/\s+/g, " "))
     .map((label) => ({ label, number: Number(label.replace(/[^\d,.-]/g, "").replace(/\./g, "").replace(",", ".")) }))
-    .filter((item) => Number.isFinite(item.number) && item.number >= 100 && item.number <= 30000);
+    .filter((item) => Number.isFinite(item.number) && item.number >= 20 && item.number <= 30000);
   if (!prices.length) return { label: "", number: null };
   return prices[0];
 }
@@ -954,9 +1248,9 @@ function sendOlxLinkReviewEmail_(settings, product, candidate, record) {
   const approveUrl = buildMarketplaceActionUrl_("approve-olx-link", product.id, record.LinkOLXHash);
   const rejectUrl = buildMarketplaceActionUrl_("reject-olx-link", product.id, record.LinkOLXHash);
   const html = emailShell_({
-    preheader: "Encontrei um possivel link da OLX para um PC do site.",
+    preheader: "Encontrei um possivel link da OLX para um produto do site.",
     title: "Confirmar link da OLX",
-    intro: "Encontrei um link da OLX que parece combinar com um PC do site. Nao vou trocar automaticamente: confirme primeiro para evitar colocar o link de outro anuncio parecido.",
+    intro: "Encontrei um link da OLX que parece combinar com um produto do site. Nao vou trocar automaticamente: confirme primeiro para evitar colocar o link de outro anuncio parecido.",
     blocks: [
       marketplaceEmailCard_(product, candidate, {
         ...record,
@@ -973,31 +1267,48 @@ function sendOlxLinkReviewEmail_(settings, product, candidate, record) {
   GmailApp.sendEmail(sellerEmail, "Confirmar link OLX - MobilyTechBR", "Possivel link OLX encontrado.", { htmlBody: html, name: "MobilyTech BR" });
 }
 
-function sendNewListingEmail_(settings, draft, facebookUrl, specs, price, status, created) {
+function sendNewListingEmail_(settings, draft, listingUrl, specs, price, status, created, sourceLabel, category) {
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
   const panelUrl = `${MOBILYTECH.SITE_URL}/admin/`;
+  const categoryLabel = productCategoryLabel_(category || draft.category);
   const html = emailShell_({
-    preheader: "Um novo anuncio do Facebook foi detectado.",
+    preheader: `Um novo anuncio em ${sourceLabel || "marketplace"} foi detectado.`,
     title: created ? "Rascunho criado no painel" : "Novo anuncio detectado",
     intro: created
-      ? "Detectei um novo anuncio no Facebook e criei um rascunho inativo no painel. Ele ainda nao aparece para clientes. Entre no painel, coloque fotos boas, confira as informacoes e ative quando estiver pronto."
-      : "Detectei um novo anuncio no Facebook, mas nao consegui criar automaticamente no painel. Confira o motivo abaixo.",
+      ? `Detectei um novo anuncio em ${sourceLabel || "marketplace"} e criei um rascunho inativo no painel. Ele ainda nao aparece para clientes. Entre no painel, coloque fotos boas, confira as informacoes e ative quando estiver pronto.`
+      : `Detectei um novo anuncio em ${sourceLabel || "marketplace"}, mas nao consegui criar automaticamente no painel. Confira o motivo abaixo.`,
     blocks: [
       detailBlock_("Anuncio detectado", [
+        ["Origem", sourceLabel || "Marketplace"],
+        ["Categoria", categoryLabel],
         ["Titulo", draft.title],
-        ["Preco Facebook", Number.isFinite(price) ? formatMoneyText_(price) : "Nao detectado"],
-        ["Processador", specs.processor || "Nao detectado"],
-        ["Memoria", specs.memory || "Nao detectada"],
-        ["Placa de video", specs.gpu || "Nao detectada"],
-        ["Fonte", specs.powerSupply || "Nao detectada"],
-        ["Armazenamento", specs.storage || "Nao detectado"],
+        ["Preco detectado", Number.isFinite(price) ? formatMoneyText_(price) : "Nao detectado"],
+        ["Processador", specs.processor || ""],
+        ["Memoria", specs.memory || ""],
+        ["Placa de video", specs.gpu || ""],
+        ["Fonte", specs.powerSupply || ""],
+        ["Armazenamento", specs.storage || specs.capacity || ""],
+        ["Marca", specs.brand || ""],
+        ["Modelo", specs.model || ""],
+        ["Tipo", specs.type || ""],
+        ["Potencia", specs.wattage || ""],
+        ["Certificacao", specs.certification || ""],
         ["Status", status],
-        ["Link Facebook", facebookUrl]
-      ]),
+        ["Link do anuncio", listingUrl]
+      ].filter((item) => item[1] !== "")),
       `<p style="text-align:center;margin:22px 0 4px"><a href="${panelUrl}" style="${buttonStyle_()}">Abrir painel do site</a></p>`
     ]
   });
-  GmailApp.sendEmail(sellerEmail, "Novo anuncio detectado - MobilyTechBR", "Um novo anuncio foi detectado no Facebook.", { htmlBody: html, name: "MobilyTech BR" });
+  GmailApp.sendEmail(sellerEmail, "Novo anuncio detectado - MobilyTechBR", `Um novo anuncio foi detectado em ${sourceLabel || "marketplace"}.`, { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function productCategoryLabel_(category) {
+  return {
+    pc: "PC completo",
+    ssd: "SSD / armazenamento",
+    fonte: "Fonte",
+    hardware: "Hardware"
+  }[String(category || "").toLowerCase()] || "Produto";
 }
 
 function marketplaceEmailCard_(product, candidate, record) {
@@ -1347,10 +1658,10 @@ function seedSettings_(sheet) {
     ["marketplacePriceSyncHighConfidenceThreshold", "95", "Minimo para aplicar sozinho."],
     ["marketplacePriceSyncRequireManualApproval", "false", "true bloqueia aplicacao automatica."],
     ["marketplaceRemovalSyncAutoApply", "true", "Permite remover anuncio sozinho apenas com alta confianca."],
-    ["marketplaceOlxLinkReviewEnabled", "true", "Sugere links da OLX por e-mail, sempre com aprovacao."],
-    ["marketplaceDraftCreationEnabled", "true", "Cria rascunhos inativos para novos anuncios do Facebook."],
+    ["marketplaceOlxLinkReviewEnabled", "true", "Sugere links da OLX por e-mail e permite criar SSDs vindos da OLX."],
+    ["marketplaceDraftCreationEnabled", "true", "Cria rascunhos inativos para novos anuncios do Facebook e SSDs novos da OLX."],
     ["marketplaceFacebookProfileUrl", "https://www.facebook.com/marketplace/profile/100035688601043/?ref=permalink&mibextid=6ojiHh", "Perfil do Facebook Marketplace usado para detectar anuncios novos."],
-    ["marketplaceOlxProfileUrl", "https://www.olx.com.br/perfil/julian-859fd666", "Perfil OLX usado para sugerir links de redirecionamento."]
+    ["marketplaceOlxProfileUrl", "https://www.olx.com.br/perfil/julian-859fd666", "Perfil OLX usado para sugerir links e detectar SSDs novos."]
   ];
   if (sheet.getLastRow() <= 1) sheet.getRange(2, 1, rows.length, 3).setValues(rows);
 }
