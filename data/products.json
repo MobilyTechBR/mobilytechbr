@@ -95,8 +95,8 @@
     "title": "SSD 240GB PNY - SATA 3",
     "price": 220,
     "badge": "SSD",
-    "image": "./assets/ssd-240gb-pny-sata3.png",
-    "cutout": "./assets/generated/ssd-240gb-pny-sata3-cutout.png",
+    "image": "./assets/ssd-240gb-pny-sata3-clean.png",
+    "cutout": "./assets/generated/ssd-240gb-pny-sata3-clean-cutout.png",
     "photo": "square",
     "tags": [
       "240GB",
@@ -128,8 +128,8 @@
     "title": "SSD 240GB Crucial",
     "price": 215,
     "badge": "SSD",
-    "image": "./assets/ssd-240gb-crucial.png",
-    "cutout": "./assets/generated/ssd-240gb-crucial-cutout.png",
+    "image": "./assets/ssd-240gb-crucial-clean.png",
+    "cutout": "./assets/generated/ssd-240gb-crucial-clean-cutout.png",
     "photo": "square",
     "tags": [
       "240GB",
@@ -161,8 +161,8 @@
     "title": "SSD 256GB Lexar 2.5",
     "price": 215,
     "badge": "SSD",
-    "image": "./assets/ssd-256gb-lexar-25.png",
-    "cutout": "./assets/generated/ssd-256gb-lexar-25-cutout.png",
+    "image": "./assets/ssd-256gb-lexar-25-clean.png",
+    "cutout": "./assets/generated/ssd-256gb-lexar-25-clean-cutout.png",
     "photo": "square",
     "tags": [
       "256GB",
@@ -194,8 +194,8 @@
     "title": "SSD 240GB Kingston Original",
     "price": 225,
     "badge": "SSD",
-    "image": "./assets/ssd-240gb-kingston-original.png",
-    "cutout": "./assets/generated/ssd-240gb-kingston-original-cutout.png",
+    "image": "./assets/ssd-240gb-kingston-original-clean.png",
+    "cutout": "./assets/generated/ssd-240gb-kingston-original-clean-cutout.png",
     "photo": "square",
     "tags": [
       "240GB",
