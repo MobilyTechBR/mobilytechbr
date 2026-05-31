@@ -1,59 +1,5 @@
 [
   {
-    "id": "pc-gamer-ryzen-5-3600x",
-    "active": true,
-    "title": "PC Gamer Ryzen 5 3600X",
-    "price": 4000,
-    "badge": "Melhor performance",
-    "image": "./assets/ryzen-rx6650xt-manual.png",
-    "cutout": "./assets/ryzen-rx6650xt-cutout.png",
-    "photo": "square",
-    "tags": [
-      "Ryzen 5 3600X",
-      "16GB DDR4",
-      "RX 6650 XT 8GB",
-      "SSD 480GB"
-    ],
-    "specs": {
-      "processor": "Ryzen 5 3600X",
-      "memory": "16GB DDR4",
-      "gpu": "RX 6650 XT 8GB",
-      "storage": "SSD 480GB"
-    },
-    "links": {
-      "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-amd-ryzen-5-3600x-16gb-ddr4-rx-6650-xt-8gb-ssd-480gb-1497594744?lis=ad_card_user_profile",
-      "facebook": "https://www.facebook.com/marketplace/item/832968043185090/?ref=marketplace_profile&referral_code=undefined&__tn__=!%3AD"
-    },
-    "featured": true
-  },
-  {
-    "id": "pc-gamer-xeon-gtx-750",
-    "active": true,
-    "title": "PC Gamer Xeon GTX 750 Ti",
-    "price": 950,
-    "badge": "Com SDD",
-    "image": "./assets/chatgpt-image-20-de-mai-de-2026-161636-1.png",
-    "cutout": "./assets/generated/pc-gamer-xeon-gtx-650-cutout.png",
-    "photo": "square",
-    "tags": [
-      "Xeon E3-1220V1",
-      "8GB RAM",
-      "GTX 750 Ti",
-      "SSD 128GB"
-    ],
-    "specs": {
-      "processor": "Xeon E3-1220V1",
-      "memory": "8GB RAM",
-      "gpu": "GTX 750 Ti",
-      "powerSupply": "500W",
-      "storage": "SSD 128GB"
-    },
-    "links": {
-      "facebook": "https://www.facebook.com/marketplace/item/26760481873564144/?ref=marketplace_profile&referral_code=undefined&__tn__=!%3AD"
-    },
-    "featured": false
-  },
-  {
     "id": "pc-gamer-amd-fx",
     "active": true,
     "title": "PC GAMER AMD FX",
@@ -120,8 +66,7 @@
     "cutout": "./assets/generated/pc-amdlx-cutout.png",
     "gallery": [
       {
-        "image": "./assets/img2810.jpeg",
-        "cutout": "./assets/generated/pc-amdlx-gallery-1-cutout.png"
+        "image": "./assets/img2810.jpeg"
       },
       {
         "image": "./assets/img2808.jpeg",
