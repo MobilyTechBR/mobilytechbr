@@ -3,6 +3,16 @@ const path = require("path");
 
 const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const MELHOR_ENVIO_API = process.env.MELHOR_ENVIO_API_BASE || "https://www.melhorenvio.com.br/api/v2";
+const DEFAULT_MELHOR_ENVIO_SERVICE_IDS = [
+  1, 2, 17, // Correios: PAC, SEDEX, Mini Envios
+  3, 4, 27, // Jadlog
+  12, // LATAM Cargo
+  35, // Total Express
+  15, 16, // Azul Cargo
+  22, // Buslog
+  31, 32, 34, // Loggi
+  33 // JeT
+].join(",");
 
 function sendJson(response, status, payload) {
   response.statusCode = status;
@@ -83,6 +93,14 @@ function carrierPriority(company) {
   if (normalized.includes("jadlog")) return 1;
   if (normalized.includes("loggi")) return 2;
   return 3;
+}
+
+function melhorEnvioServiceIds() {
+  return String(process.env.MELHOR_ENVIO_SERVICE_IDS || DEFAULT_MELHOR_ENVIO_SERVICE_IDS)
+    .split(",")
+    .map((item) => onlyDigits(item))
+    .filter(Boolean)
+    .join(",");
 }
 
 function productPackage(product) {
@@ -176,6 +194,7 @@ async function quoteMelhorEnvio(product, destinationPostalCode) {
   const body = {
     from: { postal_code: fromPostalCode },
     to: { postal_code: toPostalCode },
+    services: melhorEnvioServiceIds(),
     products: [{
       id: product.id,
       width: pkg.width,

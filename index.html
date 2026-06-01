@@ -4481,7 +4481,7 @@
             throw new Error(data.error || "Nao foi possivel calcular o frete.");
           }
           renderShippingQuotes(data.quotes);
-          setShippingMessage("Escolha o frete e finalize o pagamento. Correios fica marcado como melhor opcao quando estiver disponivel.");
+          setShippingMessage("Escolha o frete e finalize o pagamento.");
         } catch (error) {
           setShippingMessage(error.message || "Nao foi possivel calcular o frete agora.", true);
         } finally {
