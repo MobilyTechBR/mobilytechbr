@@ -255,7 +255,7 @@
     "active": true,
     "category": "pc",
     "title": "PC GAMER RYZEN 5 3600X",
-    "price": 4000,
+    "price": 4500,
     "badge": "O MELHOR!",
     "image": "./assets/img2912.jpeg",
     "photo": "square",
@@ -266,6 +266,7 @@
       "powerSupply": "700W EVGA 80 Plus White",
       "storage": "SSD 480GB"
     },
-    "featured": true
+    "featured": true,
+    "cutout": "./assets/generated/pcryzen-5-3600-cutout.png"
   }
 ]

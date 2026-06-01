@@ -2373,7 +2373,7 @@
       }
       .payment-option {
         display: grid;
-        grid-template-rows: auto minmax(86px, 1fr) auto auto;
+        grid-template-rows: auto minmax(90px, 1fr) auto 48px;
         gap: 12px;
         align-content: start;
         min-width: 0;
@@ -2432,6 +2432,8 @@
         width: 100%;
         justify-content: center;
         gap: 6px;
+        align-self: end;
+        height: 48px;
         min-height: 48px;
         padding-inline: 10px;
         font-size: 12.5px;
@@ -3450,13 +3452,13 @@
             </article>
             <article class="payment-option featured">
               <h3><img src="./assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Abacate Pay</h3>
-              <p>Checkout do Abacate Pay com Pix, cart&atilde;o e as formas dispon&iacute;veis na plataforma, mantendo o valor original do pedido.</p>
+              <p>Checkout do Abacate Pay com Pix, cart&atilde;o e as formas dispon&iacute;veis na plataforma. Inclui ajuste para cobrir a taxa da plataforma.</p>
               <div class="payment-price"><span>Total pelo Abacate Pay</span><strong id="payment-abacate-total">R$ 0,00</strong></div>
               <button class="button abacate-pay-button" type="button" id="payment-abacate-checkout-button"><img class="abacate-pay-button-logo" src="./assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Pagar pelo Abacate Pay</button>
             </article>
             <article class="payment-option">
               <h3><img src="./assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Pix direto</h3>
-              <p>Gere o QR Code Pix e o c&oacute;digo copia-e-cola para pagar pelo app do banco, tamb&eacute;m pelo Abacate Pay.</p>
+              <p>Gere o QR Code Pix e o c&oacute;digo copia-e-cola para pagar pelo app do banco. Inclui a taxa Pix do Abacate Pay.</p>
               <div class="payment-price"><span>Total no Pix</span><strong id="payment-pix-total">R$ 0,00</strong></div>
               <button class="button abacate-pay-button" type="button" id="payment-abacate-pix-button"><img class="abacate-pay-button-logo" src="./assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Gerar QR Code Pix</button>
             </article>
@@ -3593,6 +3595,10 @@
       const cartStorageKey = "mobilytech-cart-v1";
       const mercadoPagoFeePercent = 4.99;
       const mercadoPagoFixedFee = 0;
+      const abacateCheckoutFeePercent = 4.5;
+      const abacateCheckoutFixedFee = 0.6;
+      const abacatePixFeePercent = 0;
+      const abacatePixFixedFee = 0.8;
 
       const escapeHtml = (value = "") => String(value)
         .replace(/&/g, "&amp;")
@@ -4179,23 +4185,29 @@
         return itemsTotal + (Number.isFinite(shippingTotal) ? shippingTotal : 0);
       };
 
-      const mercadoPagoGrossTotal = (value) => {
+      const grossTotal = (value, percent, fixedFee) => {
         const net = parseCurrency(value);
-        const rate = Math.max(0, mercadoPagoFeePercent) / 100;
-        const fixed = Math.max(0, mercadoPagoFixedFee);
+        const rate = Math.max(0, percent) / 100;
+        const fixed = Math.max(0, fixedFee);
         if (!Number.isFinite(net) || net <= 0 || rate >= 1) return net;
         return Math.ceil(((net + fixed) / (1 - rate)) * 100) / 100;
       };
+
+      const mercadoPagoGrossTotal = (value) => grossTotal(value, mercadoPagoFeePercent, mercadoPagoFixedFee);
+      const abacateCheckoutGrossTotal = (value) => grossTotal(value, abacateCheckoutFeePercent, abacateCheckoutFixedFee);
+      const abacatePixGrossTotal = (value) => grossTotal(value, abacatePixFeePercent, abacatePixFixedFee);
 
       const openPaymentModal = (context, button, shipping = null) => {
         if (!paymentModal || !button) return;
         pendingPayment = { context, button, shipping };
         const baseTotal = cartBaseTotal(shipping);
         const mercadoTotal = mercadoPagoGrossTotal(baseTotal);
+        const abacateTotal = abacateCheckoutGrossTotal(baseTotal);
+        const pixTotal = abacatePixGrossTotal(baseTotal);
         if (paymentBaseTotal) paymentBaseTotal.textContent = formatCurrency(baseTotal);
         if (paymentMercadoTotal) paymentMercadoTotal.textContent = formatCurrency(mercadoTotal);
-        if (paymentAbacateTotal) paymentAbacateTotal.textContent = formatCurrency(baseTotal);
-        if (paymentPixTotal) paymentPixTotal.textContent = formatCurrency(baseTotal);
+        if (paymentAbacateTotal) paymentAbacateTotal.textContent = formatCurrency(abacateTotal);
+        if (paymentPixTotal) paymentPixTotal.textContent = formatCurrency(pixTotal);
         paymentModal.hidden = false;
         document.body.style.overflow = "hidden";
         paymentMercadoButton?.focus();

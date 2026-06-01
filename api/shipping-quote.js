@@ -51,8 +51,18 @@ function normalizeText(value = "") {
 }
 
 function allowedCarrierNames() {
-  const raw = process.env.SHIPPING_ALLOWED_CARRIERS || "correios,jadlog,loggi";
-  return raw.split(",").map(normalizeText).map((item) => item.trim()).filter(Boolean);
+  const raw = String(process.env.SHIPPING_ALLOWED_CARRIERS || "").trim();
+  const configured = raw
+    .split(",")
+    .map(normalizeText)
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  if (!configured.length || configured.some((item) => ["*", "all", "todos", "todas"].includes(item))) {
+    return [];
+  }
+
+  return [...new Set(["correios", "jadlog", "loggi", ...configured])];
 }
 
 function isAllowedCarrier(company) {
@@ -65,6 +75,14 @@ function isAllowedCarrier(company) {
 function isPreferredCarrier(company) {
   const preferred = normalizeText(process.env.SHIPPING_PREFERRED_CARRIER || "correios");
   return preferred ? normalizeText(company).includes(preferred) : false;
+}
+
+function carrierPriority(company) {
+  const normalized = normalizeText(company);
+  if (normalized.includes("correios")) return 0;
+  if (normalized.includes("jadlog")) return 1;
+  if (normalized.includes("loggi")) return 2;
+  return 3;
 }
 
 function productPackage(product) {
@@ -198,6 +216,8 @@ async function quoteMelhorEnvio(product, destinationPostalCode) {
     .filter(Boolean)
     .sort((a, b) => {
       if (a.recommended !== b.recommended) return a.recommended ? -1 : 1;
+      const priority = carrierPriority(a.company) - carrierPriority(b.company);
+      if (priority !== 0) return priority;
       return a.price - b.price;
     });
 

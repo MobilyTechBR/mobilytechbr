@@ -26,7 +26,8 @@ module.exports = async function shippingConfig(_request, response) {
     enabled,
     provider: "melhor-envio",
     preferredCarrier: process.env.SHIPPING_PREFERRED_CARRIER || "Correios",
-    allowedCarriers: process.env.SHIPPING_ALLOWED_CARRIERS || "correios,jadlog,loggi",
+    allowedCarriers: process.env.SHIPPING_ALLOWED_CARRIERS || "todas",
+    prioritizedCarriers: ["Correios", "Jadlog", "Loggi"],
     requires: missing
   });
 };

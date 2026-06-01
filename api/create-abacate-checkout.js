@@ -6,6 +6,7 @@ const ADDONS_FILE = path.join(process.cwd(), "data", "addons.json");
 const ABACATE_PRODUCTS_CREATE_API = "https://api.abacatepay.com/v2/products/create";
 const ABACATE_CHECKOUT_API = "https://api.abacatepay.com/v2/checkouts/create";
 const { quoteMelhorEnvio } = require("./shipping-quote");
+const { abacateCheckoutGrossUp } = require("./payment-fees");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -268,6 +269,14 @@ async function normalizeShipping(product, shipping) {
   };
 }
 
+function totalFromCheckoutItems(checkoutItems, normalizedShipping) {
+  const productsTotal = checkoutItems.reduce((sum, item) => {
+    const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
+    return sum + item.unitPrice + addonsTotal;
+  }, 0);
+  return productsTotal + (normalizedShipping ? normalizedShipping.price : 0);
+}
+
 async function abacateRequest(apiKey, url, options = {}) {
   const apiResponse = await fetch(url, {
     ...options,
@@ -316,7 +325,7 @@ async function ensureAbacateProduct(apiKey, line) {
   return product.id;
 }
 
-function checkoutLines(checkoutItems, normalizedShipping, origin) {
+function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment = 0) {
   const runId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   const lines = checkoutItems.flatMap((item) => {
     const productImage = absoluteUrl(origin, item.product.image || item.product.cutout);
@@ -343,6 +352,15 @@ function checkoutLines(checkoutItems, normalizedShipping, origin) {
       name: `Frete ${normalizedShipping.carrier} ${normalizedShipping.serviceName}`,
       description: `Entrega para CEP ${normalizedShipping.postalCode}`,
       price: normalizedShipping.price
+    });
+  }
+
+  if (abacateFeeAdjustment > 0) {
+    lines.push({
+      externalId: `mobilytech-${runId}-abacate-processing-adjustment-${toCents(abacateFeeAdjustment)}`,
+      name: "Ajuste de processamento Abacate Pay",
+      description: "Ajuste para cobrir a taxa da plataforma",
+      price: abacateFeeAdjustment
     });
   }
 
@@ -380,7 +398,9 @@ module.exports = async function createAbacateCheckout(request, response) {
       : aggregateShippingProduct(checkoutItems.map((item) => item.product));
     const normalizedShipping = await normalizeShipping(shippingProduct, shipping);
     const origin = requestOrigin(request);
-    const lines = checkoutLines(checkoutItems, normalizedShipping, origin);
+    const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping);
+    const abacateFeeAdjustment = abacateCheckoutGrossUp(baseCheckoutTotal).fee;
+    const lines = checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment);
 
     const productIds = [];
     for (const line of lines) {
@@ -409,6 +429,7 @@ module.exports = async function createAbacateCheckout(request, response) {
         shippingServiceName: normalizedShipping?.serviceName || "",
         shippingCarrier: normalizedShipping?.carrier || "",
         shippingPrice: normalizedShipping ? String(normalizedShipping.price) : "",
+        abacateFeeAdjustment: String(abacateFeeAdjustment),
         shippingPostalCode: normalizedShipping?.postalCode || "",
         shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : ""
       }

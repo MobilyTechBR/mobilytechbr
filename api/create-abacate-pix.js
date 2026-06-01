@@ -5,6 +5,7 @@ const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const ADDONS_FILE = path.join(process.cwd(), "data", "addons.json");
 const ABACATE_PIX_API = "https://api.abacatepay.com/v2/transparents/create";
 const { quoteMelhorEnvio } = require("./shipping-quote");
+const { abacatePixGrossUp } = require("./payment-fees");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -313,7 +314,9 @@ module.exports = async function createAbacatePix(request, response) {
       : aggregateShippingProduct(checkoutItems.map((item) => item.product));
     const normalizedShipping = await normalizeShipping(shippingProduct, shipping);
     const total = totalFromCheckoutItems(checkoutItems, normalizedShipping);
-    const amount = toCents(total);
+    const abacateFee = abacatePixGrossUp(total).fee;
+    const finalTotal = total + abacateFee;
+    const amount = toCents(finalTotal);
 
     if (!Number.isInteger(amount) || amount <= 0) {
       sendJson(response, 400, { error: "Valor do pedido invalido." });
@@ -342,6 +345,9 @@ module.exports = async function createAbacatePix(request, response) {
           shippingServiceName: normalizedShipping?.serviceName || "",
           shippingCarrier: normalizedShipping?.carrier || "",
           shippingPrice: normalizedShipping ? String(normalizedShipping.price) : "",
+          abacateFeeAdjustment: String(abacateFee),
+          baseTotal: String(total),
+          finalTotal: String(finalTotal),
           shippingPostalCode: normalizedShipping?.postalCode || "",
           shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : ""
         }
@@ -382,7 +388,9 @@ module.exports = async function createAbacatePix(request, response) {
     sendJson(response, 200, {
       id: pixData.id,
       amount: pixData.amount,
-      amount_brl: total,
+      amount_brl: finalTotal,
+      base_amount_brl: total,
+      fee_adjustment_brl: abacateFee,
       copy_code: copyCode,
       qr_code_base64: qrCodeBase64,
       expires_at: pixData.expiresAt,

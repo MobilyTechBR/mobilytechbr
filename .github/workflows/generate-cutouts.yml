@@ -66,7 +66,18 @@ jobs:
               git add assets/generated/
             fi
             git commit -m "Generate product cutouts"
-            git push
+            for attempt in 1 2 3; do
+              git fetch origin main
+              git rebase origin/main
+              if git push; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                echo "Could not push generated cutouts after rebasing." >&2
+                exit 1
+              fi
+              sleep 3
+            done
           else
             echo "No cutout changes to commit."
           fi
