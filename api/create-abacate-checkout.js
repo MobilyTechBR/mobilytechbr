@@ -69,6 +69,10 @@ function toCents(value) {
   return Math.round(Number(value || 0) * 100);
 }
 
+function toMoney(value) {
+  return Math.round(Number(value || 0) * 100) / 100;
+}
+
 function onlyDigits(value) {
   return String(value || "").replace(/\D/g, "");
 }
@@ -355,13 +359,13 @@ function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdju
     });
   }
 
-  if (abacateFeeAdjustment > 0) {
-    lines.push({
-      externalId: `mobilytech-${runId}-abacate-processing-adjustment-${toCents(abacateFeeAdjustment)}`,
-      name: "Ajuste de processamento Abacate Pay",
-      description: "Ajuste para cobrir a taxa da plataforma",
-      price: abacateFeeAdjustment
-    });
+  if (abacateFeeAdjustment > 0 && lines.length) {
+    lines[0] = {
+      ...lines[0],
+      externalId: `${lines[0].externalId}-abacate-fee-${toCents(abacateFeeAdjustment)}`,
+      description: [lines[0].description, "Inclui ajuste de processamento Abacate Pay"].filter(Boolean).join(" | "),
+      price: toMoney(lines[0].price + abacateFeeAdjustment)
+    };
   }
 
   return lines;
@@ -399,7 +403,9 @@ module.exports = async function createAbacateCheckout(request, response) {
     const normalizedShipping = await normalizeShipping(shippingProduct, shipping);
     const origin = requestOrigin(request);
     const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping);
-    const abacateFeeAdjustment = abacateCheckoutGrossUp(baseCheckoutTotal).fee;
+    const abacateFeeInfo = abacateCheckoutGrossUp(baseCheckoutTotal);
+    const abacateFeeAdjustment = abacateFeeInfo.fee;
+    const finalCheckoutTotal = abacateFeeInfo.gross;
     const lines = checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment);
 
     const productIds = [];
@@ -430,6 +436,8 @@ module.exports = async function createAbacateCheckout(request, response) {
         shippingCarrier: normalizedShipping?.carrier || "",
         shippingPrice: normalizedShipping ? String(normalizedShipping.price) : "",
         abacateFeeAdjustment: String(abacateFeeAdjustment),
+        baseTotal: String(baseCheckoutTotal),
+        finalTotal: String(finalCheckoutTotal),
         shippingPostalCode: normalizedShipping?.postalCode || "",
         shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : ""
       }
@@ -449,7 +457,10 @@ module.exports = async function createAbacateCheckout(request, response) {
     sendJson(response, 200, {
       id: checkout.id,
       checkout_url: checkoutUrl,
-      external_id: externalId
+      external_id: externalId,
+      amount_brl: finalCheckoutTotal,
+      base_amount_brl: baseCheckoutTotal,
+      fee_adjustment_brl: abacateFeeAdjustment
     });
   } catch (error) {
     sendJson(response, error.statusCode || 500, {
