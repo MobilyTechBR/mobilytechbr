@@ -2,6 +2,7 @@
   {
     "id": "pc-gamer-amd-fx",
     "active": true,
+    "category": "pc",
     "title": "PC GAMER AMD FX",
     "price": 1100,
     "badge": "Novo",
@@ -27,6 +28,7 @@
   {
     "id": "pc-gamer-gtx550tigbnv",
     "active": true,
+    "category": "pc",
     "title": "PC GAMER E3-1220V1 / 8GB RAM / GTX 550 Ti / SSD 128GB",
     "price": 900,
     "badge": "NOVO!",
@@ -59,6 +61,7 @@
   {
     "id": "pc-amdlx",
     "active": true,
+    "category": "pc",
     "title": "PC GAMER FX 6300 / 8GB RAM / GTX 550 Ti + SSD 128GB",
     "price": 900,
     "badge": "NOVO!",
@@ -94,6 +97,13 @@
     "category": "ssd",
     "title": "SSD 240GB PNY - SATA 3",
     "price": 220,
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 220
+    },
     "badge": "SSD",
     "image": "./assets/ssd-240gb-pny-sata3-clean.png",
     "cutout": "./assets/generated/ssd-240gb-pny-sata3-clean-cutout.png",
@@ -105,20 +115,12 @@
     ],
     "specs": {
       "storage": "240GB",
-      "capacity": "240GB",
       "brand": "PNY",
+      "capacity": "240GB",
       "type": "SSD",
       "formFactor": "2.5 polegadas",
       "interface": "SATA 3"
     },
-    "shipping": {
-      "weightKg": 1,
-      "heightCm": 7,
-      "widthCm": 13,
-      "lengthCm": 15,
-      "insuranceValue": 220
-    },
-    "links": {},
     "featured": true
   },
   {
@@ -127,6 +129,13 @@
     "category": "ssd",
     "title": "SSD 240GB Crucial",
     "price": 215,
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 215
+    },
     "badge": "SSD",
     "image": "./assets/ssd-240gb-crucial-clean.png",
     "cutout": "./assets/generated/ssd-240gb-crucial-clean-cutout.png",
@@ -138,20 +147,12 @@
     ],
     "specs": {
       "storage": "240GB",
-      "capacity": "240GB",
       "brand": "Crucial",
+      "capacity": "240GB",
       "type": "SSD",
       "formFactor": "2.5 polegadas",
       "interface": "SATA"
     },
-    "shipping": {
-      "weightKg": 1,
-      "heightCm": 7,
-      "widthCm": 13,
-      "lengthCm": 15,
-      "insuranceValue": 215
-    },
-    "links": {},
     "featured": true
   },
   {
@@ -160,6 +161,13 @@
     "category": "ssd",
     "title": "SSD 256GB Lexar 2.5",
     "price": 215,
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 215
+    },
     "badge": "SSD",
     "image": "./assets/ssd-256gb-lexar-25-clean.png",
     "cutout": "./assets/generated/ssd-256gb-lexar-25-clean-cutout.png",
@@ -171,20 +179,12 @@
     ],
     "specs": {
       "storage": "256GB",
-      "capacity": "256GB",
       "brand": "Lexar",
+      "capacity": "256GB",
       "type": "SSD",
       "formFactor": "2.5 polegadas",
       "interface": "SATA"
     },
-    "shipping": {
-      "weightKg": 1,
-      "heightCm": 7,
-      "widthCm": 13,
-      "lengthCm": 15,
-      "insuranceValue": 215
-    },
-    "links": {},
     "featured": true
   },
   {
@@ -193,6 +193,13 @@
     "category": "ssd",
     "title": "SSD 240GB Kingston Original",
     "price": 225,
+    "shipping": {
+      "weightKg": 1,
+      "heightCm": 7,
+      "widthCm": 13,
+      "lengthCm": 15,
+      "insuranceValue": 225
+    },
     "badge": "SSD",
     "image": "./assets/ssd-240gb-kingston-original-clean.png",
     "cutout": "./assets/generated/ssd-240gb-kingston-original-clean-cutout.png",
@@ -204,20 +211,12 @@
     ],
     "specs": {
       "storage": "240GB",
-      "capacity": "240GB",
       "brand": "Kingston",
+      "capacity": "240GB",
       "type": "SSD",
       "formFactor": "2.5 polegadas",
       "interface": "SATA"
     },
-    "shipping": {
-      "weightKg": 1,
-      "heightCm": 7,
-      "widthCm": 13,
-      "lengthCm": 15,
-      "insuranceValue": 225
-    },
-    "links": {},
     "featured": true
   },
   {
@@ -226,6 +225,13 @@
     "category": "fonte",
     "title": "Fonte 750W 80 Plus Bronze NVINET - Lacrada",
     "price": 355,
+    "shipping": {
+      "weightKg": 3.5,
+      "heightCm": 15,
+      "widthCm": 25,
+      "lengthCm": 30,
+      "insuranceValue": 355
+    },
     "badge": "Fonte",
     "image": "./assets/fonte-750w-nvinet-80plus-bronze.png",
     "cutout": "./assets/generated/fonte-750w-nvinet-80plus-bronze-cutout.png",
@@ -236,21 +242,30 @@
       "Lacrada"
     ],
     "specs": {
-      "wattage": "750W",
       "brand": "NVINET",
       "model": "NT750",
-      "certification": "80 Plus Bronze",
       "type": "Fonte ATX",
-      "condition": "Lacrada"
+      "wattage": "750W",
+      "certification": "80 Plus Bronze"
     },
-    "shipping": {
-      "weightKg": 3.5,
-      "heightCm": 15,
-      "widthCm": 25,
-      "lengthCm": 30,
-      "insuranceValue": 355
+    "featured": true
+  },
+  {
+    "id": "pcryzen-5-3600",
+    "active": true,
+    "category": "pc",
+    "title": "PC GAMER RYZEN 5 3600X",
+    "price": 4000,
+    "badge": "O MELHOR!",
+    "image": "./assets/img2912.jpeg",
+    "photo": "square",
+    "specs": {
+      "processor": "RYZEN 5 3600X",
+      "memory": "16GB DDR4",
+      "gpu": "RX 6650XT",
+      "powerSupply": "700W EVGA 80 Plus White",
+      "storage": "SSD 480GB"
     },
-    "links": {},
     "featured": true
   }
 ]
