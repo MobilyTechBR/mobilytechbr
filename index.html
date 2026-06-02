@@ -3304,6 +3304,617 @@
           height: 44px;
         }
       }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .service-showcase {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        scroll-margin-top: 92px;
+        border-top: 1px solid rgba(34, 240, 196, .28);
+        border-bottom: 1px solid rgba(4, 183, 255, .2);
+        background:
+          radial-gradient(circle at 28% 38%, rgba(34, 240, 196, .18), transparent 32rem),
+          radial-gradient(circle at 66% 32%, rgba(4, 183, 255, .2), transparent 34rem),
+          radial-gradient(circle at 86% 55%, rgba(130, 78, 255, .1), transparent 30rem),
+          linear-gradient(90deg, rgba(95, 225, 255, .045) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(95, 225, 255, .038) 1px, transparent 1px),
+          linear-gradient(180deg, #06111f 0%, #030711 100%);
+        background-size: auto, auto, auto, 56px 56px, 56px 56px, auto;
+      }
+      .service-showcase::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background:
+          linear-gradient(120deg, rgba(34, 240, 196, .12), transparent 34%),
+          linear-gradient(240deg, rgba(4, 183, 255, .16), transparent 36%),
+          radial-gradient(ellipse at 50% 92%, rgba(34, 240, 196, .18), transparent 34rem);
+        opacity: .86;
+      }
+      .service-showcase::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        z-index: -1;
+        height: 1px;
+        pointer-events: none;
+        background: linear-gradient(90deg, transparent, rgba(34, 240, 196, .58), rgba(4, 183, 255, .52), transparent);
+        box-shadow: 0 -24px 86px rgba(34, 240, 196, .13);
+      }
+      .service-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin: 0;
+        color: #22f26f;
+        font-size: clamp(15px, 1.35vw, 20px);
+        font-weight: 1000;
+        letter-spacing: .18em;
+        line-height: 1.1;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .service-eyebrow-icon {
+        display: inline-grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(34, 242, 111, .58);
+        border-radius: 9px;
+        color: #20f074;
+        background: rgba(34, 242, 111, .09);
+        box-shadow: 0 0 24px rgba(34, 242, 111, .16), inset 0 1px 0 rgba(255, 255, 255, .08);
+      }
+      .service-eyebrow-icon svg,
+      .service-safe-note svg,
+      .whatsapp-mark svg {
+        width: 21px;
+        height: 21px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.9;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .service-safe-note {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 4px 0 0;
+        color: #e8f9f4;
+        font-size: clamp(16px, 1.25vw, 20px);
+        font-weight: 800;
+        text-align: center;
+      }
+      .service-safe-note svg {
+        color: #22f26f;
+      }
+      .assembly-showcase {
+        display: block;
+        padding: clamp(28px, 3vw, 44px) clamp(18px, 4.6vw, 64px);
+      }
+      .assembly-heading {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        justify-items: center;
+        gap: 9px;
+        width: min(1180px, 100%);
+        margin: 0 auto clamp(12px, 1.45vw, 20px);
+        text-align: center;
+      }
+      .assembly-heading h2 {
+        margin: 0;
+        color: #fff;
+        font-size: clamp(34px, 4.15vw, 54px);
+        line-height: .98;
+        text-shadow: 0 16px 44px rgba(0, 0, 0, .48);
+      }
+      .assembly-heading h2 span,
+      .assembly-content h3 span,
+      .cleaning-content h2 span {
+        color: #21e779;
+        text-shadow: 0 0 26px rgba(34, 240, 196, .22);
+      }
+      .assembly-heading p:not(.service-eyebrow) {
+        max-width: 860px;
+        margin: 0;
+        color: #e0eaf0;
+        font-size: clamp(16px, 1.35vw, 19px);
+        font-weight: 700;
+        line-height: 1.42;
+      }
+      .assembly-wrap {
+        grid-template-columns: minmax(320px, .92fr) minmax(360px, 1.08fr);
+        align-items: stretch;
+        gap: clamp(20px, 3vw, 34px);
+        width: min(1440px, 100%);
+      }
+      .assembly-media,
+      .assembly-content,
+      .cleaning-media,
+      .cleaning-content {
+        border-radius: 22px;
+        border: 1px solid rgba(34, 240, 196, .54);
+        background:
+          linear-gradient(145deg, rgba(11, 30, 51, .72), rgba(2, 8, 18, .88)),
+          rgba(3, 12, 22, .72);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, .12),
+          inset 0 -1px 0 rgba(34, 240, 196, .08),
+          0 32px 92px rgba(0, 0, 0, .42),
+          0 0 44px rgba(34, 240, 196, .13);
+        backdrop-filter: blur(18px) saturate(1.24);
+        -webkit-backdrop-filter: blur(18px) saturate(1.24);
+      }
+      .assembly-media,
+      .cleaning-media {
+        overflow: hidden;
+        min-height: clamp(470px, 36vw, 585px);
+        background:
+          radial-gradient(circle at 46% 56%, rgba(4, 183, 255, .2), transparent 18rem),
+          radial-gradient(circle at 22% 58%, rgba(34, 240, 196, .18), transparent 20rem),
+          linear-gradient(90deg, rgba(34, 240, 196, .08) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(4, 183, 255, .07) 1px, transparent 1px),
+          linear-gradient(160deg, rgba(8, 35, 54, .78), rgba(2, 8, 18, .9));
+        background-size: auto, auto, 42px 42px, 42px 42px, auto;
+      }
+      .assembly-media::before,
+      .cleaning-media::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        inset: 12% 8% 16%;
+        border: 2px solid rgba(4, 183, 255, .56);
+        border-left-color: rgba(34, 240, 196, .74);
+        border-top-color: rgba(34, 240, 196, .42);
+        border-radius: 999px;
+        box-shadow:
+          0 0 28px rgba(34, 240, 196, .26),
+          0 0 50px rgba(4, 183, 255, .2),
+          inset 0 0 80px rgba(4, 183, 255, .04);
+        transform: rotate(-9deg);
+      }
+      .assembly-media::after,
+      .cleaning-media::after {
+        content: "";
+        position: absolute;
+        left: 4%;
+        right: 4%;
+        bottom: -3%;
+        z-index: 0;
+        height: 34%;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, rgba(34, 240, 196, .16) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(4, 183, 255, .16) 1px, transparent 1px),
+          radial-gradient(ellipse at 50% 40%, rgba(34, 240, 196, .32), transparent 56%),
+          radial-gradient(ellipse at 42% 74%, rgba(4, 183, 255, .28), transparent 58%);
+        background-size: 44px 28px, 44px 28px, auto, auto;
+        opacity: .82;
+        transform: perspective(360px) rotateX(58deg);
+        filter: blur(.2px);
+      }
+      .assembly-media img,
+      .cleaning-media img {
+        position: relative;
+        z-index: 2;
+        max-width: none;
+        object-fit: contain;
+        filter:
+          saturate(1.12)
+          contrast(1.08)
+          drop-shadow(0 34px 48px rgba(0, 0, 0, .6))
+          drop-shadow(0 0 30px rgba(4, 183, 255, .18));
+      }
+      .assembly-media img {
+        width: auto;
+        max-width: min(108%, 720px);
+        height: clamp(450px, 35vw, 575px);
+        transform: translate(-10px, -4px) scale(1.03);
+      }
+      .cleaning-media img {
+        width: min(103%, 730px);
+        max-width: none;
+        height: auto;
+        transform: translate(-18px, -6px);
+      }
+      .assembly-media-badge,
+      .cleaning-media-badge {
+        left: clamp(34px, 11%, 84px);
+        right: clamp(34px, 11%, 84px);
+        bottom: clamp(22px, 3.2vw, 36px);
+        z-index: 3;
+        min-height: clamp(52px, 4.2vw, 64px);
+        border-radius: 14px;
+        border-color: rgba(91, 223, 255, .42);
+        color: #fff;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .03)),
+          rgba(5, 18, 30, .66);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, .12),
+          0 18px 48px rgba(0, 0, 0, .3);
+        backdrop-filter: blur(16px) saturate(1.28);
+        -webkit-backdrop-filter: blur(16px) saturate(1.28);
+        font-size: clamp(14px, 1.32vw, 20px);
+        letter-spacing: .18em;
+      }
+      .assembly-media-badge svg,
+      .cleaning-media-badge svg {
+        width: 34px;
+        height: 34px;
+        color: #21f26d;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .assembly-content {
+        --card-accent: #7b4dff;
+        align-content: center;
+        justify-items: center;
+        gap: clamp(13px, 1.35vw, 18px);
+        max-width: none;
+        padding: clamp(24px, 2.9vw, 42px);
+        border-color: rgba(96, 95, 255, .58);
+        background:
+          radial-gradient(circle at 15% 20%, rgba(34, 240, 196, .13), transparent 18rem),
+          radial-gradient(circle at 85% 25%, rgba(4, 183, 255, .18), transparent 18rem),
+          radial-gradient(circle at 88% 84%, rgba(130, 78, 255, .16), transparent 20rem),
+          linear-gradient(145deg, rgba(8, 28, 52, .82), rgba(3, 9, 19, .91));
+        text-align: center;
+      }
+      .assembly-content::before,
+      .cleaning-content::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, .08), transparent 36%),
+          radial-gradient(circle at 50% 0%, rgba(255, 255, 255, .06), transparent 20rem);
+        opacity: .72;
+      }
+      .assembly-content h3 {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0;
+        color: #fff;
+        font-size: clamp(30px, 3.15vw, 44px);
+        line-height: 1.08;
+        text-shadow: 0 16px 44px rgba(0, 0, 0, .48);
+      }
+      .assembly-content p:not(.eyebrow):not(.service-safe-note) {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+        margin: 0;
+        color: #eef8fb;
+        font-size: clamp(15px, 1.15vw, 18px);
+        font-weight: 600;
+        line-height: 1.38;
+      }
+      .assembly-benefits {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .assembly-benefit {
+        min-height: clamp(118px, 9vw, 142px);
+        padding: 14px 12px;
+        border-radius: 14px;
+        border-color: rgba(34, 240, 196, .44);
+        background:
+          radial-gradient(circle at 50% 20%, rgba(34, 240, 196, .12), transparent 6rem),
+          linear-gradient(145deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02)),
+          rgba(3, 15, 26, .62);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 16px 38px rgba(0, 0, 0, .18);
+        gap: 8px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 900;
+      }
+      .assembly-benefit:nth-child(2) {
+        border-color: rgba(4, 183, 255, .42);
+      }
+      .assembly-benefit:nth-child(3) {
+        border-color: rgba(153, 81, 255, .52);
+      }
+      .assembly-benefit svg {
+        width: 46px;
+        height: 46px;
+        padding: 10px;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        background: rgba(34, 240, 196, .08);
+      }
+      .assembly-benefit strong,
+      .assembly-benefit span {
+        display: block;
+      }
+      .assembly-benefit span {
+        color: #e4f0f6;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 1.38;
+      }
+      .assembly-cta {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        min-height: clamp(56px, 4vw, 64px);
+        margin: 2px 0 0;
+        border: 0;
+        border-radius: 14px;
+        color: #041018;
+        background: linear-gradient(135deg, #12f58b 0%, #19e8bf 44%, #18a8ff 100%);
+        box-shadow:
+          0 18px 54px rgba(4, 183, 255, .22),
+          0 0 38px rgba(34, 240, 196, .16),
+          inset 0 1px 0 rgba(255, 255, 255, .26);
+        font-size: clamp(15px, 1.35vw, 21px);
+        letter-spacing: .04em;
+        text-transform: uppercase;
+      }
+      .whatsapp-mark {
+        display: inline-grid;
+        place-items: center;
+        width: 35px;
+        height: 35px;
+        color: #041018;
+      }
+      .whatsapp-mark svg {
+        width: 34px;
+        height: 34px;
+        stroke-width: 1.8;
+      }
+      .cta-arrow {
+        margin-left: 6px;
+        font-size: 36px;
+        line-height: 1;
+      }
+      .cleaning-showcase {
+        grid-template-columns: minmax(330px, .95fr) minmax(380px, 1.05fr);
+        gap: clamp(22px, 3vw, 36px);
+        align-items: stretch;
+        padding: clamp(42px, 4.2vw, 66px) clamp(18px, 4.6vw, 64px);
+      }
+      .cleaning-content {
+        align-content: center;
+        justify-items: center;
+        gap: clamp(13px, 1.25vw, 18px);
+        max-width: none;
+        padding: clamp(28px, 3.4vw, 50px);
+        text-align: center;
+      }
+      .cleaning-content h2 {
+        max-width: 780px;
+        margin: 0;
+        color: #fff;
+        font-size: clamp(36px, 4vw, 58px);
+        line-height: 1.08;
+        text-shadow: 0 16px 44px rgba(0, 0, 0, .5);
+      }
+      .cleaning-content p:not(.eyebrow):not(.cleaning-message):not(.service-safe-note) {
+        max-width: 760px;
+        margin: 0;
+        color: #f2f8fb;
+        font-size: clamp(16px, 1.32vw, 20px);
+        font-weight: 600;
+        line-height: 1.58;
+      }
+      .cleaning-benefits {
+        width: 100%;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .cleaning-benefit {
+        min-height: 68px;
+        grid-template-columns: 42px minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px 17px;
+        border-radius: 12px;
+        border-color: rgba(34, 240, 196, .34);
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .018)),
+          rgba(3, 15, 26, .6);
+        font-size: clamp(13px, 1vw, 16px);
+      }
+      .cleaning-benefit svg {
+        width: 34px;
+        height: 34px;
+        color: #20f074;
+      }
+      .cleaning-form {
+        width: 100%;
+        gap: 18px;
+        margin-top: 2px;
+        padding: clamp(18px, 2vw, 26px);
+        border-radius: 16px;
+        border-color: rgba(91, 223, 255, .28);
+        background:
+          radial-gradient(circle at 100% 0%, rgba(4, 183, 255, .13), transparent 15rem),
+          linear-gradient(145deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .02)),
+          rgba(3, 13, 23, .64);
+      }
+      .cleaning-form label {
+        display: block;
+        color: inherit;
+        font-size: 0;
+        letter-spacing: 0;
+      }
+      .cleaning-form input {
+        min-height: 56px;
+        padding: 0 18px;
+        border-radius: 10px;
+        border-color: rgba(91, 223, 255, .33);
+        color: #fff;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .015)),
+          rgba(2, 8, 13, .68);
+        font-size: clamp(16px, 1.25vw, 20px);
+        font-weight: 800;
+      }
+      .cleaning-form input::placeholder {
+        color: rgba(238, 248, 251, .9);
+        opacity: 1;
+      }
+      .cleaning-submit {
+        position: relative;
+        min-height: 66px;
+        border-radius: 10px;
+        color: #15100a;
+        font-size: clamp(18px, 1.75vw, 26px);
+        letter-spacing: .03em;
+        text-transform: uppercase;
+      }
+      .cleaning-submit::before {
+        content: "";
+        width: 28px;
+        height: 28px;
+        margin-right: 9px;
+        background: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+      }
+      .cleaning-message {
+        justify-self: center;
+      }
+      @media (max-width: 1120px) {
+        .assembly-wrap,
+        .cleaning-showcase {
+          grid-template-columns: 1fr;
+        }
+        .assembly-media,
+        .cleaning-media,
+        .assembly-content,
+        .cleaning-content {
+          width: min(100%, 760px);
+          justify-self: center;
+        }
+      }
+      @media (max-width: 760px) {
+        .assembly-showcase,
+        .cleaning-showcase {
+          padding: 38px 14px;
+        }
+        .assembly-heading h2 {
+          font-size: clamp(36px, 12vw, 54px);
+        }
+        .assembly-heading p:not(.service-eyebrow) {
+          font-size: 17px;
+        }
+        .assembly-media,
+        .cleaning-media {
+          min-height: 500px;
+        }
+        .assembly-media img {
+          width: min(116%, 560px);
+        }
+        .cleaning-media img {
+          width: min(105%, 520px);
+          transform: translate(-4px, 0);
+        }
+        .assembly-media-badge,
+        .cleaning-media-badge {
+          left: 22px;
+          right: 22px;
+          font-size: 15px;
+          letter-spacing: .1em;
+        }
+        .assembly-content,
+        .cleaning-content {
+          padding: 24px 18px;
+        }
+        .assembly-content h3,
+        .cleaning-content h2 {
+          font-size: clamp(32px, 10vw, 44px);
+        }
+        .assembly-content p:not(.eyebrow):not(.service-safe-note),
+        .cleaning-content p:not(.eyebrow):not(.cleaning-message):not(.service-safe-note) {
+          font-size: 16px;
+        }
+        .assembly-benefits,
+        .cleaning-benefits {
+          grid-template-columns: 1fr;
+        }
+        .assembly-benefit {
+          min-height: 126px;
+        }
+        .cleaning-benefit {
+          min-height: 66px;
+        }
+        .assembly-cta,
+        .cleaning-submit {
+          min-height: 62px;
+          white-space: normal;
+          text-align: center;
+        }
+      }
+      @media (max-width: 520px) {
+        .service-eyebrow {
+          font-size: 13px;
+          letter-spacing: .13em;
+        }
+        .service-eyebrow-icon {
+          width: 30px;
+          height: 30px;
+        }
+        .assembly-media,
+        .cleaning-media {
+          min-height: 430px;
+          border-radius: 18px;
+        }
+        .assembly-media img {
+          width: min(128%, 480px);
+          transform: translate(-8px, 4px) scale(1);
+        }
+        .cleaning-media img {
+          width: min(106%, 420px);
+          transform: translate(-4px, 10px) scale(1);
+        }
+        .assembly-media::before,
+        .cleaning-media::before {
+          inset: 13% -4% 24%;
+        }
+        .assembly-media-badge,
+        .cleaning-media-badge {
+          min-height: 54px;
+          font-size: 12px;
+        }
+        .assembly-media-badge svg,
+        .cleaning-media-badge svg {
+          width: 27px;
+          height: 27px;
+        }
+        .cleaning-form input {
+          min-height: 54px;
+        }
+        .cleaning-submit {
+          min-height: 58px;
+          font-size: 17px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -3555,61 +4166,80 @@
         </details>
       </section>
 
-      <section id="montagem-pc" class="assembly-service reveal" aria-labelledby="assembly-title">
+      <section id="montagem-pc" class="assembly-service reveal service-showcase assembly-showcase" aria-labelledby="assembly-title">
+        <div class="assembly-heading">
+          <p class="service-eyebrow">
+            <span class="service-eyebrow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11" rx="2"></rect><path d="M8 20h8"></path><path d="M12 15v5"></path><path d="m17 7 2 2"></path><path d="m16 8-4 4"></path></svg>
+            </span>
+            Montagem de PCs
+          </p>
+          <h2 id="assembly-title">Monte seu <span>PC Gamer</span> personalizado</h2>
+          <p>Voc&ecirc; aprova o or&ccedil;amento, a MobilyTech BR compra as pe&ccedil;as, monta o computador, instala o sistema e entrega tudo pronto para uso.</p>
+        </div>
         <div class="assembly-wrap">
           <div class="assembly-media" aria-label="PC gamer personalizado montado pela MobilyTech BR">
             <img src="./assets/assembly-pc-build-cutout.png" alt="PC gamer personalizado em montagem">
             <div class="assembly-media-badge" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-3 3-3-3 3-3Z"></path></svg>
-              Montagem sob or&ccedil;amento
+              PC montado sob medida
             </div>
           </div>
           <div class="assembly-content">
-            <p class="eyebrow">
-              <span class="assembly-eyebrow-icon" aria-hidden="true">
+            <p class="eyebrow service-eyebrow">
+              <span class="assembly-eyebrow-icon service-eyebrow-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11" rx="2"></rect><path d="M8 20h8"></path><path d="M12 15v5"></path><path d="m17 7 2 2"></path><path d="m16 8-4 4"></path></svg>
               </span>
-              Montagem de PCs
+              Montagem sob or&ccedil;amento
             </p>
-            <h2 id="assembly-title">Deseja montar seu novo PC personalizado?</h2>
-            <p>Voc&ecirc; aprova o or&ccedil;amento, a MobilyTech BR compra as pe&ccedil;as, monta o PC, instala o sistema e entrega tudo pronto para uso.</p>
+            <h3>Seu PC do seu jeito, montado por <span>especialistas.</span></h3>
+            <p>Voc&ecirc; escolhe o objetivo: jogos, trabalho, estudo ou upgrade. A MobilyTech BR monta a configura&ccedil;&atilde;o ideal, compra as pe&ccedil;as, faz a montagem completa, instala&ccedil;&atilde;o do sistema e testes finais.</p>
             <div class="assembly-benefits" aria-label="Etapas do servico de montagem">
               <div class="assembly-benefit">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7h8"></path><path d="M8 12h8"></path><path d="M8 17h5"></path><rect x="5" y="3" width="14" height="18" rx="2"></rect></svg>
-                Or&ccedil;amento personalizado
+                <strong>Or&ccedil;amento sob medida</strong>
+                <span>Escolhemos a melhor configura&ccedil;&atilde;o para seu uso e or&ccedil;amento.</span>
               </div>
               <div class="assembly-benefit">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h15l-1.5 8h-12L6 6Z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg>
-                Compra das pe&ccedil;as
+                <strong>Compra das pe&ccedil;as</strong>
+                <span>Voc&ecirc; aprova tudo antes da compra, com total transpar&ecirc;ncia.</span>
               </div>
               <div class="assembly-benefit">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 4.6-3.2 7.7-8 9-4.8-1.3-8-4.4-8-9V6l8-3Z"></path><path d="m9 12 2 2 4-5"></path></svg>
-                Montado e pronto para uso
+                <strong>Montado e pronto para uso</strong>
+                <span>Montagem completa, instala&ccedil;&atilde;o, testes e entrega final.</span>
               </div>
             </div>
-            <a class="button primary assembly-cta" href="https://wa.me/5511954801967?text=Ol%C3%A1%2C%20eu%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20montar%20meu%20pr%C3%B3ximo%20PC%20com%20a%20MobilyTech%20BR." target="_blank" rel="noreferrer">Entre em contato para fazer seu or&ccedil;amento!</a>
+            <a class="button primary assembly-cta" href="https://wa.me/5511954801967?text=Ol%C3%A1%2C%20eu%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20montar%20meu%20pr%C3%B3ximo%20PC%20com%20a%20MobilyTech%20BR." target="_blank" rel="noreferrer">
+              <span class="whatsapp-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.5 11.8A8.5 8.5 0 0 1 8 19.2L4 20.5l1.3-3.9A8.5 8.5 0 1 1 20.5 11.8Z"></path><path d="M8.8 7.9c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.3 0 .5-.1.7l-.5.6c.8 1.5 1.9 2.5 3.4 3.2l.6-.6c.2-.2.4-.2.7-.1l1.7.8c.3.1.4.3.4.6v.5c0 .3-.1.5-.4.7-.5.3-1.2.6-2 .5-3.2-.4-6.1-3-6.8-6.1-.2-.9.1-1.7.6-2.3Z"></path></svg></span>
+              Solicitar or&ccedil;amento pelo WhatsApp
+              <span class="cta-arrow" aria-hidden="true">&rsaquo;</span>
+            </a>
+            <p class="service-safe-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 4.6-3.2 7.7-8 9-4.8-1.3-8-4.4-8-9V6l8-3Z"></path><path d="m9 12 2 2 4-5"></path></svg>Atendimento r&aacute;pido e seguro</p>
           </div>
         </div>
       </section>
 
-      <section id="limpeza-pcs" class="cleaning-service" aria-labelledby="cleaning-title">
+      <section id="limpeza-pcs" class="cleaning-service service-showcase cleaning-showcase" aria-labelledby="cleaning-title">
         <div class="cleaning-media">
           <img id="cleaning-photo" src="./assets/pc-cleaning-service-cutout.png" alt="PC gamer limpo com acessorios para limpeza e troca de pasta termica">
+          <div class="cleaning-media-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 11h8"></path><path d="M9 11V5a3 3 0 0 1 6 0v6"></path><path d="M7 11h10l-1 9H8l-1-9Z"></path><path d="M10 15h4"></path></svg>
+            Limpeza de PCs
+          </div>
         </div>
         <div class="cleaning-content">
-          <p class="eyebrow">
-            <span class="cleaning-eyebrow-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="12" rx="2"></rect>
-                <path d="M8 20h8"></path>
-                <path d="M12 16v4"></path>
-                <path d="m10 9 2 2 3-4"></path>
+          <p class="eyebrow service-eyebrow">
+            <span class="cleaning-eyebrow-icon service-eyebrow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M8 11h8"></path><path d="M9 11V5a3 3 0 0 1 6 0v6"></path><path d="M7 11h10l-1 9H8l-1-9Z"></path><path d="M10 15h4"></path>
               </svg>
             </span>
             Limpeza de PCs
           </p>
-          <h2 id="cleaning-title">Seu PC est&aacute; sujo ou esquentando demais?</h2>
-          <p>N&atilde;o machuque mais seu PC. Fa&ccedil;a uma limpeza completa com troca de pasta t&eacute;rmica no processador e na placa de v&iacute;deo para manter tudo mais frio e confi&aacute;vel.</p>
+          <h2 id="cleaning-title">Seu PC est&aacute; sujo ou <span>esquentando</span> demais?</h2>
+          <p>N&atilde;o machuque mais seu PC. Fa&ccedil;a uma limpeza completa com troca da pasta t&eacute;rmica no processador e na placa de v&iacute;deo para manter tudo mais frio e o desempenho no m&aacute;ximo.</p>
           <div class="cleaning-benefits" aria-label="Servicos inclusos">
             <div class="cleaning-benefit">
               <svg viewBox="-2 -2 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -3641,12 +4271,13 @@
             <input type="hidden" name="_subject" value="Pedido de limpeza - MobilyTechBR">
             <input type="hidden" name="mensagem" value="Novo pedido de limpeza!">
             <input type="hidden" name="servico" value="Limpeza completa + troca de pasta termica do processador e da placa de video.">
-            <label>Nome<input name="nome" type="text" autocomplete="name" required></label>
-            <label>Email<input name="email" type="email" autocomplete="email" required></label>
-            <label>Telefone<input name="telefone" type="tel" autocomplete="tel" required></label>
+            <label><span class="sr-only">Nome</span><input name="nome" type="text" autocomplete="name" placeholder="NOME" required></label>
+            <label><span class="sr-only">E-mail</span><input name="email" type="email" autocomplete="email" placeholder="E-MAIL" required></label>
+            <label><span class="sr-only">Telefone</span><input name="telefone" type="tel" autocomplete="tel" placeholder="TELEFONE" required></label>
             <button class="button gold cleaning-submit" id="cleaning-submit" type="submit" disabled>AGENDE J&Aacute;!</button>
             <p class="cleaning-message" id="cleaning-message" aria-live="polite"></p>
           </form>
+          <p class="service-safe-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 4.6-3.2 7.7-8 9-4.8-1.3-8-4.4-8-9V6l8-3Z"></path><path d="m9 12 2 2 4-5"></path></svg>Atendimento r&aacute;pido e seguro</p>
         </div>
       </section>
       <section id="contato" class="contact-section" aria-labelledby="contact-title">
