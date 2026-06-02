@@ -3688,68 +3688,74 @@
         height: 34px;
         stroke-width: 1.8;
       }
+      .whatsapp-mark img {
+        display: block;
+        width: 29px;
+        height: 29px;
+        object-fit: contain;
+      }
       .cta-arrow {
         margin-left: 6px;
         font-size: 36px;
         line-height: 1;
       }
       .cleaning-showcase {
-        grid-template-columns: minmax(330px, .95fr) minmax(380px, 1.05fr);
-        gap: clamp(22px, 3vw, 36px);
+        grid-template-columns: minmax(320px, .92fr) minmax(360px, 1.08fr);
+        gap: clamp(20px, 3vw, 34px);
         align-items: stretch;
-        padding: clamp(42px, 4.2vw, 66px) clamp(18px, 4.6vw, 64px);
+        padding: clamp(28px, 3vw, 44px) clamp(18px, 4.6vw, 64px);
       }
       .cleaning-content {
         align-content: center;
         justify-items: center;
-        gap: clamp(13px, 1.25vw, 18px);
+        gap: clamp(12px, 1.15vw, 16px);
         max-width: none;
-        padding: clamp(28px, 3.4vw, 50px);
+        padding: clamp(24px, 2.9vw, 42px);
         text-align: center;
       }
       .cleaning-content h2 {
-        max-width: 780px;
+        max-width: 720px;
         margin: 0;
         color: #fff;
-        font-size: clamp(36px, 4vw, 58px);
+        font-size: clamp(30px, 3.15vw, 44px);
         line-height: 1.08;
         text-shadow: 0 16px 44px rgba(0, 0, 0, .5);
       }
       .cleaning-content p:not(.eyebrow):not(.cleaning-message):not(.service-safe-note) {
-        max-width: 760px;
+        max-width: 700px;
         margin: 0;
         color: #f2f8fb;
-        font-size: clamp(16px, 1.32vw, 20px);
+        font-size: clamp(15px, 1.15vw, 18px);
         font-weight: 600;
-        line-height: 1.58;
+        line-height: 1.42;
       }
       .cleaning-benefits {
         width: 100%;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
+        gap: 14px;
       }
       .cleaning-benefit {
-        min-height: 68px;
-        grid-template-columns: 42px minmax(0, 1fr);
-        gap: 12px;
-        padding: 14px 17px;
+        min-height: clamp(58px, 5vw, 64px);
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px 14px;
         border-radius: 12px;
         border-color: rgba(34, 240, 196, .34);
         background:
           linear-gradient(145deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .018)),
           rgba(3, 15, 26, .6);
-        font-size: clamp(13px, 1vw, 16px);
+        font-size: clamp(12px, .95vw, 15px);
       }
       .cleaning-benefit svg {
-        width: 34px;
-        height: 34px;
+        width: 30px;
+        height: 30px;
         color: #20f074;
       }
       .cleaning-form {
         width: 100%;
-        gap: 18px;
+        gap: 14px;
         margin-top: 2px;
-        padding: clamp(18px, 2vw, 26px);
+        padding: clamp(16px, 1.7vw, 22px);
         border-radius: 16px;
         border-color: rgba(91, 223, 255, .28);
         background:
@@ -3764,7 +3770,7 @@
         letter-spacing: 0;
       }
       .cleaning-form input {
-        min-height: 56px;
+        min-height: 50px;
         padding: 0 18px;
         border-radius: 10px;
         border-color: rgba(91, 223, 255, .33);
@@ -3772,7 +3778,7 @@
         background:
           linear-gradient(145deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .015)),
           rgba(2, 8, 13, .68);
-        font-size: clamp(16px, 1.25vw, 20px);
+        font-size: clamp(14px, 1.1vw, 18px);
         font-weight: 800;
       }
       .cleaning-form input::placeholder {
@@ -3781,17 +3787,17 @@
       }
       .cleaning-submit {
         position: relative;
-        min-height: 66px;
+        min-height: 58px;
         border-radius: 10px;
         color: #15100a;
-        font-size: clamp(18px, 1.75vw, 26px);
+        font-size: clamp(16px, 1.45vw, 22px);
         letter-spacing: .03em;
         text-transform: uppercase;
       }
       .cleaning-submit::before {
         content: "";
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
         margin-right: 9px;
         background: currentColor;
         -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
@@ -3816,7 +3822,7 @@
       @media (max-width: 760px) {
         .assembly-showcase,
         .cleaning-showcase {
-          padding: 38px 14px;
+          padding: 34px 14px;
         }
         .assembly-heading h2 {
           font-size: clamp(36px, 12vw, 54px);
@@ -3826,7 +3832,7 @@
         }
         .assembly-media,
         .cleaning-media {
-          min-height: 500px;
+          min-height: 480px;
         }
         .assembly-media img {
           width: min(116%, 560px);
@@ -4180,10 +4186,6 @@
         <div class="assembly-wrap">
           <div class="assembly-media" aria-label="PC gamer personalizado montado pela MobilyTech BR">
             <img src="./assets/assembly-pc-build-cutout.png" alt="PC gamer personalizado em montagem">
-            <div class="assembly-media-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-3 3-3-3 3-3Z"></path></svg>
-              PC montado sob medida
-            </div>
           </div>
           <div class="assembly-content">
             <p class="eyebrow service-eyebrow">
@@ -4212,7 +4214,7 @@
               </div>
             </div>
             <a class="button primary assembly-cta" href="https://wa.me/5511954801967?text=Ol%C3%A1%2C%20eu%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20montar%20meu%20pr%C3%B3ximo%20PC%20com%20a%20MobilyTech%20BR." target="_blank" rel="noreferrer">
-              <span class="whatsapp-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.5 11.8A8.5 8.5 0 0 1 8 19.2L4 20.5l1.3-3.9A8.5 8.5 0 1 1 20.5 11.8Z"></path><path d="M8.8 7.9c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.3 0 .5-.1.7l-.5.6c.8 1.5 1.9 2.5 3.4 3.2l.6-.6c.2-.2.4-.2.7-.1l1.7.8c.3.1.4.3.4.6v.5c0 .3-.1.5-.4.7-.5.3-1.2.6-2 .5-3.2-.4-6.1-3-6.8-6.1-.2-.9.1-1.7.6-2.3Z"></path></svg></span>
+              <span class="whatsapp-mark" aria-hidden="true"><img src="./assets/whatsapp-icon-clean.png" alt=""></span>
               Solicitar or&ccedil;amento pelo WhatsApp
               <span class="cta-arrow" aria-hidden="true">&rsaquo;</span>
             </a>
@@ -4224,10 +4226,6 @@
       <section id="limpeza-pcs" class="cleaning-service service-showcase cleaning-showcase" aria-labelledby="cleaning-title">
         <div class="cleaning-media">
           <img id="cleaning-photo" src="./assets/pc-cleaning-service-cutout.png" alt="PC gamer limpo com acessorios para limpeza e troca de pasta termica">
-          <div class="cleaning-media-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M8 11h8"></path><path d="M9 11V5a3 3 0 0 1 6 0v6"></path><path d="M7 11h10l-1 9H8l-1-9Z"></path><path d="M10 15h4"></path></svg>
-            Limpeza de PCs
-          </div>
         </div>
         <div class="cleaning-content">
           <p class="eyebrow service-eyebrow">
