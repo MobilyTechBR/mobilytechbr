@@ -5,6 +5,7 @@ const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const ADDONS_FILE = path.join(process.cwd(), "data", "addons.json");
 const MERCADO_PAGO_API = "https://api.mercadopago.com/checkout/preferences";
 const { quoteMelhorEnvio } = require("./shipping-quote");
+const { loadGlobalSwaps, normalizeSelectedSwaps } = require("./product-swaps");
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
   peripherals: "Kit perifericos"
@@ -216,11 +217,11 @@ function normalizeSelectedAddons(product, selectedAddons, globalAddons = []) {
   });
 }
 
-function normalizeCheckoutItems(products, globalAddons, payload) {
+function normalizeCheckoutItems(products, globalAddons, globalSwaps, payload) {
   const rawCartItems = Array.isArray(payload.cartItems) ? payload.cartItems : [];
   const requestedItems = rawCartItems.length
     ? rawCartItems
-    : [{ productId: payload.productId, selectedAddons: payload.selectedAddons }];
+    : [{ productId: payload.productId, selectedAddons: payload.selectedAddons, selectedSwaps: payload.selectedSwaps }];
 
   if (!requestedItems.length || !requestedItems[0]?.productId) {
     const error = new Error("Produto nao informado.");
@@ -247,7 +248,8 @@ function normalizeCheckoutItems(products, globalAddons, payload) {
     return {
       product,
       unitPrice,
-      addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons)
+      addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons),
+      swaps: normalizeSelectedSwaps(product, item.selectedSwaps, globalSwaps)
     };
   });
 }
@@ -317,11 +319,12 @@ module.exports = async function createPreference(request, response) {
   try {
     const payload = await readJsonBody(request);
     const { shipping } = payload;
-    const [products, globalAddons] = await Promise.all([
+    const [products, globalAddons, globalSwaps] = await Promise.all([
       loadProducts(),
-      loadGlobalAddons()
+      loadGlobalAddons(),
+      loadGlobalSwaps()
     ]);
-    const checkoutItems = normalizeCheckoutItems(products, globalAddons, payload);
+    const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
     const shippingProduct = checkoutItems.length === 1
       ? checkoutItems[0].product
       : aggregateShippingProduct(checkoutItems.map((item) => item.product));
@@ -335,6 +338,11 @@ module.exports = async function createPreference(request, response) {
       productId: item.product.id,
       productTitle: item.product.title
     })));
+    const allSwaps = checkoutItems.flatMap((item) => item.swaps.map((swap) => ({
+      ...swap,
+      productId: item.product.id,
+      productTitle: item.product.title
+    })));
     const shippingDescription = normalizedShipping
       ? `Frete ${normalizedShipping.carrier} ${normalizedShipping.serviceName} para CEP ${normalizedShipping.postalCode}`
       : "";
@@ -342,22 +350,26 @@ module.exports = async function createPreference(request, response) {
     const customerName = splitName(customer.name);
     const baseCheckoutTotal = checkoutItems.reduce((sum, item) => {
       const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
-      return sum + item.unitPrice + addonsTotal;
+      const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
+      return sum + item.unitPrice + addonsTotal + swapsTotal;
     }, 0) + (normalizedShipping ? normalizedShipping.price : 0);
     const mercadoFeeAdjustment = mercadoPagoGrossUp(baseCheckoutTotal).fee;
     const preference = {
       items: [
         ...checkoutItems.flatMap((item) => {
           const addonDescription = item.addons.map((addon) => `${addon.categoryLabel}: ${addon.label}`).join(" | ");
+          const swapDescription = item.swaps.map((swap) => `${swap.targetLabel}: ${swap.label}`).join(" | ");
+          const swapsTotal = item.swaps.reduce((sum, swap) => sum + swap.price, 0);
+          const adjustedUnitPrice = item.unitPrice + swapsTotal;
           return [
             {
               id: item.product.id,
               title: item.product.title,
-              description: [item.product.tags?.filter(Boolean).join(" | "), addonDescription].filter(Boolean).join(" | ") || item.product.title,
+              description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription, addonDescription].filter(Boolean).join(" | ") || item.product.title,
               picture_url: absoluteUrl(origin, item.product.image || item.product.cutout),
               quantity: 1,
               currency_id: "BRL",
-              unit_price: item.unitPrice
+              unit_price: adjustedUnitPrice
             },
             ...item.addons.map((addon) => ({
               id: `${item.product.id}-${addon.category}-${addon.index}`,
@@ -407,6 +419,7 @@ module.exports = async function createPreference(request, response) {
         product_ids: checkoutItems.map((item) => item.product.id).join("; "),
         product_title: checkoutItems.map((item) => item.product.title).join("; "),
         selected_addons: allAddons.map((addon) => `${addon.productId}:${addon.category}:${addon.label}`).join("; "),
+        selected_swaps: allSwaps.map((swap) => `${swap.productId}:${swap.target}:${swap.label}`).join("; "),
         shipping_requested: normalizedShipping ? "true" : "false",
         shipping_provider: normalizedShipping ? "melhor-envio" : "",
         shipping_service_id: normalizedShipping?.serviceId || "",

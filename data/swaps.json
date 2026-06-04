@@ -1,0 +1,63 @@
+[
+  {
+    "id": "storage-ssd-240gb-upgrade",
+    "active": true,
+    "target": "storage",
+    "label": "Trocar por SSD 240GB",
+    "price": 100,
+    "whenContains": [
+      "120GB",
+      "128GB"
+    ]
+  },
+  {
+    "id": "storage-ssd-128gb-downgrade",
+    "active": true,
+    "target": "storage",
+    "label": "Trocar por SSD 128GB",
+    "price": -55,
+    "whenContains": [
+      "240GB"
+    ],
+    "excludeContains": [
+      "480GB"
+    ]
+  },
+  {
+    "id": "memory-16gb-ddr3-from-8gb",
+    "active": true,
+    "target": "memory",
+    "label": "Trocar para 16GB DDR3 (2x8GB)",
+    "price": 170,
+    "whenContains": [
+      "8GB"
+    ],
+    "excludeContains": [
+      "12GB",
+      "16GB"
+    ]
+  },
+  {
+    "id": "memory-16gb-ddr3-from-12gb",
+    "active": true,
+    "target": "memory",
+    "label": "Trocar para 16GB DDR3 (2x8GB)",
+    "price": 120,
+    "whenContains": [
+      "12GB"
+    ],
+    "excludeContains": [
+      "16GB"
+    ]
+  },
+  {
+    "id": "power-nvinet-750w-bronze",
+    "active": true,
+    "target": "powerSupply",
+    "label": "Trocar por Fonte NVINET 750W 80 Plus Bronze",
+    "price": 250,
+    "excludeContains": [
+      "NVINET 750W"
+    ]
+  }
+]

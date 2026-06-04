@@ -7,6 +7,7 @@ const ABACATE_PRODUCTS_CREATE_API = "https://api.abacatepay.com/v2/products/crea
 const ABACATE_CHECKOUT_API = "https://api.abacatepay.com/v2/checkouts/create";
 const { quoteMelhorEnvio } = require("./shipping-quote");
 const { abacateCheckoutGrossUp } = require("./payment-fees");
+const { loadGlobalSwaps, normalizeSelectedSwaps } = require("./product-swaps");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -190,11 +191,11 @@ function normalizeSelectedAddons(product, selectedAddons, globalAddons = []) {
   });
 }
 
-function normalizeCheckoutItems(products, globalAddons, payload) {
+function normalizeCheckoutItems(products, globalAddons, globalSwaps, payload) {
   const rawCartItems = Array.isArray(payload.cartItems) ? payload.cartItems : [];
   const requestedItems = rawCartItems.length
     ? rawCartItems
-    : [{ productId: payload.productId, selectedAddons: payload.selectedAddons }];
+    : [{ productId: payload.productId, selectedAddons: payload.selectedAddons, selectedSwaps: payload.selectedSwaps }];
 
   if (!requestedItems.length || !requestedItems[0]?.productId) {
     const error = new Error("Produto nao informado.");
@@ -221,7 +222,8 @@ function normalizeCheckoutItems(products, globalAddons, payload) {
     return {
       product,
       unitPrice,
-      addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons)
+      addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons),
+      swaps: normalizeSelectedSwaps(product, item.selectedSwaps, globalSwaps)
     };
   });
 }
@@ -276,7 +278,8 @@ async function normalizeShipping(product, shipping) {
 function totalFromCheckoutItems(checkoutItems, normalizedShipping) {
   const productsTotal = checkoutItems.reduce((sum, item) => {
     const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
-    return sum + item.unitPrice + addonsTotal;
+    const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
+    return sum + item.unitPrice + addonsTotal + swapsTotal;
   }, 0);
   return productsTotal + (normalizedShipping ? normalizedShipping.price : 0);
 }
@@ -333,12 +336,14 @@ function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdju
   const runId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   const lines = checkoutItems.flatMap((item) => {
     const productImage = absoluteUrl(origin, item.product.image || item.product.cutout);
+    const swapsTotal = item.swaps.reduce((sum, swap) => sum + swap.price, 0);
+    const swapDescription = item.swaps.map((swap) => `${swap.targetLabel}: ${swap.label}`).join(" | ");
     return [
       {
-        externalId: `mobilytech-${runId}-product-${slug(item.product.id)}-${toCents(item.unitPrice)}`,
+        externalId: `mobilytech-${runId}-product-${slug(item.product.id)}-${toCents(item.unitPrice + swapsTotal)}`,
         name: item.product.title || "PC MobilyTech BR",
-        description: item.product.tags?.filter(Boolean).join(" | ") || item.product.title || "PC MobilyTech BR",
-        price: item.unitPrice,
+        description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription].filter(Boolean).join(" | ") || item.product.title || "PC MobilyTech BR",
+        price: item.unitPrice + swapsTotal,
         imageUrl: productImage
       },
       ...item.addons.map((addon) => ({
@@ -395,8 +400,8 @@ module.exports = async function createAbacateCheckout(request, response) {
   try {
     const payload = await readJsonBody(request);
     const { shipping } = payload;
-    const [products, globalAddons] = await Promise.all([loadProducts(), loadGlobalAddons()]);
-    const checkoutItems = normalizeCheckoutItems(products, globalAddons, payload);
+    const [products, globalAddons, globalSwaps] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps()]);
+    const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
     const shippingProduct = checkoutItems.length === 1
       ? checkoutItems[0].product
       : aggregateShippingProduct(checkoutItems.map((item) => item.product));
@@ -429,6 +434,7 @@ module.exports = async function createAbacateCheckout(request, response) {
         productIds: checkoutItems.map((item) => item.product.id).join("; "),
         productTitles: checkoutItems.map((item) => item.product.title).join("; "),
         selectedAddons: checkoutItems.flatMap((item) => item.addons.map((addon) => `${item.product.id}:${addon.category}:${addon.label}`)).join("; "),
+        selectedSwaps: checkoutItems.flatMap((item) => item.swaps.map((swap) => `${item.product.id}:${swap.target}:${swap.label}`)).join("; "),
         shippingRequested: normalizedShipping ? "true" : "false",
         shippingProvider: normalizedShipping ? "melhor-envio" : "",
         shippingServiceId: normalizedShipping?.serviceId || "",

@@ -43,7 +43,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 18px;
+        gap: 14px;
         min-height: 68px;
         padding: 12px clamp(16px, 4vw, 54px);
         border-bottom: 1px solid rgba(4, 183, 255, .18);
@@ -85,7 +85,10 @@
       nav {
         display: flex;
         align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
         gap: 8px;
+        min-width: 0;
         color: var(--muted);
         font-size: 13px;
         font-weight: 800;
@@ -96,7 +99,7 @@
         justify-content: center;
         gap: 7px;
         min-height: 34px;
-        padding: 0 12px;
+        padding: 0 10px;
         border: 1px solid rgba(4, 183, 255, .16);
         border-radius: 8px;
         background: rgba(255, 255, 255, .035);
@@ -1453,7 +1456,7 @@
         background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--card-accent) 12%, #050b14));
       }
       .catalog {
-        padding: 82px clamp(18px, 5vw, 76px) 96px;
+        padding: 72px clamp(16px, 4vw, 58px) 86px;
         background:
           linear-gradient(180deg, rgba(4, 183, 255, .08), transparent 28rem),
           linear-gradient(90deg, rgba(255, 201, 40, .04) 1px, transparent 1px),
@@ -1480,12 +1483,27 @@
         font-weight: 700;
         line-height: 1.55;
       }
+      .catalog-block + .catalog-block {
+        margin-top: 58px;
+      }
+      .hardware-heading {
+        margin-bottom: 24px;
+      }
+      .hardware-heading h2 {
+        font-size: clamp(28px, 3.8vw, 46px);
+      }
 
       .grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 42px 28px;
-        align-items: stretch;
+        gap: 26px 16px;
+        align-items: start;
+      }
+      .pc-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+      .hardware-grid {
+        grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+        gap: 18px 12px;
       }
       .empty-state {
         grid-column: 1 / -1;
@@ -1498,8 +1516,8 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 100%;
-        min-height: 100%;
+        height: auto;
+        min-height: 0;
         overflow: visible;
         isolation: isolate;
         border: 1px solid rgba(104, 224, 255, .46);
@@ -1546,9 +1564,9 @@
         appearance: none;
         position: relative;
         display: block;
-        width: calc(100% - 32px);
-        aspect-ratio: 1 / .95;
-        margin: 48px 16px 0;
+        width: calc(100% - 18px);
+        aspect-ratio: 1 / .9;
+        margin: 16px 9px 0;
         padding: 0;
         overflow: visible;
         border: 1px solid rgba(4, 183, 255, .42);
@@ -1602,7 +1620,7 @@
         bottom: 2%;
         z-index: 2;
         width: 114%;
-        height: calc(100% + 56px);
+        height: calc(100% + 46px);
         object-fit: contain;
         object-position: center bottom;
         transform: translateX(-50%);
@@ -1611,7 +1629,7 @@
       }
       .photo.portrait .product-cutout {
         width: 108%;
-        height: calc(100% + 60px);
+        height: calc(100% + 50px);
         bottom: 0;
       }
       .photo.square .product-cutout {
@@ -1625,8 +1643,8 @@
         display: flex;
         flex: 1;
         flex-direction: column;
-        gap: 14px;
-        padding: 18px;
+        gap: 8px;
+        padding: 10px;
       }
       .topline {
         display: flex;
@@ -1664,10 +1682,198 @@
         font-size: 23px;
         line-height: 1.08;
       }
+      .product-card {
+        min-width: 0;
+      }
+      .product-card .photo {
+        aspect-ratio: 1 / .84;
+      }
+      .photo-title {
+        position: absolute;
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        z-index: 4;
+        display: block;
+        padding: 8px 9px;
+        border: 1px solid rgba(34, 240, 196, .24);
+        border-radius: 8px;
+        color: #f7fbff;
+        background: rgba(4, 14, 24, .68);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1);
+        backdrop-filter: blur(12px) saturate(1.2);
+        -webkit-backdrop-filter: blur(12px) saturate(1.2);
+        font-size: clamp(10px, .7vw, 12px);
+        font-weight: 950;
+        line-height: 1.18;
+        text-align: center;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, .55);
+      }
+      .product-summary {
+        display: grid;
+        gap: 8px;
+        align-content: start;
+      }
+      .summary-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 9px;
+        min-height: 29px;
+      }
+      .config-toggle {
+        appearance: none;
+        width: 100%;
+        min-height: 34px;
+        border: 1px solid rgba(34, 240, 196, .36);
+        border-radius: 8px;
+        color: #07141c;
+        background: linear-gradient(135deg, var(--green), #27c7ff);
+        box-shadow: 0 12px 28px rgba(4, 183, 255, .16);
+        font: inherit;
+        font-size: 12px;
+        font-weight: 950;
+        letter-spacing: .03em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .config-toggle:hover {
+        transform: translateY(-1px);
+      }
+      .config-panel {
+        display: grid;
+        gap: 11px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition: max-height .48s ease, opacity .28s ease, transform .28s ease, margin-top .28s ease;
+      }
+      .product-card.is-expanded .config-panel {
+        max-height: 1900px;
+        margin-top: 4px;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .product-card.is-expanded .config-toggle {
+        color: var(--green);
+        background: rgba(34, 240, 196, .09);
+      }
+      .hardware-card {
+        border-color: rgba(104, 224, 255, .34);
+      }
+      .hardware-card .photo {
+        width: calc(100% - 12px);
+        aspect-ratio: 1 / .62;
+        margin: 9px 6px 0;
+      }
+      .hardware-card .product-cutout,
+      .hardware-card .photo.square .product-cutout {
+        width: 98%;
+        height: calc(100% + 6px);
+      }
+      .hardware-card.category-fonte .product-cutout,
+      .hardware-card.category-fonte .photo.square .product-cutout {
+        width: 150%;
+        height: calc(100% + 26px);
+      }
+      .hardware-card .body {
+        gap: 6px;
+        padding: 8px;
+      }
+      .hardware-card .photo-title {
+        font-size: 10px;
+      }
+      .hardware-card .summary-line {
+        min-height: 25px;
+      }
+      .hardware-card .badge {
+        min-height: 23px;
+        padding-inline: 8px;
+        font-size: 10px;
+      }
+      .hardware-card .price {
+        font-size: 13px;
+      }
+      .hardware-card .config-toggle {
+        min-height: 29px;
+        font-size: 10px;
+      }
+      .hardware-card .details {
+        gap: 5px;
+      }
+      .hardware-card .details li {
+        grid-template-columns: 22px minmax(0, 1fr);
+        min-height: 30px;
+        padding: 4px 5px;
+      }
+      .hardware-card .spec-icon {
+        width: 22px;
+        height: 22px;
+      }
+      .hardware-card .spec-icon svg {
+        width: 13px;
+        height: 13px;
+      }
+      .hardware-card .detail-text strong,
+      .hardware-card .addon-group legend,
+      .hardware-card .addon-title {
+        font-size: 8.8px;
+      }
+      .hardware-card .detail-text em,
+      .hardware-card .addon-choice-row {
+        font-size: 9.7px;
+        line-height: 1.16;
+      }
+      .hardware-card .addon-groups {
+        gap: 6px;
+        padding: 7px;
+      }
+      .hardware-card .addon-choice-row,
+      .hardware-card .swap-choice-row {
+        min-height: 25px;
+        padding: 4px 5px;
+      }
+      .hardware-card .addon-choice-row.has-image {
+        grid-template-columns: 15px 32px minmax(0, 1fr);
+        min-height: 39px;
+      }
+      .hardware-card .swap-control {
+        gap: 5px;
+        margin-top: 4px;
+      }
+      .hardware-card .swap-toggle {
+        min-height: 23px;
+        padding-inline: 8px;
+        font-size: 8.5px;
+      }
+      .hardware-card .swap-options {
+        gap: 4px;
+      }
+      .hardware-card .addon-thumb-button {
+        width: 32px;
+        height: 27px;
+      }
+      .hardware-card .checkout-total {
+        padding-top: 6px;
+        gap: 4px;
+        font-size: 9px;
+      }
+      .hardware-card .checkout-total strong {
+        font-size: 15px;
+      }
+      .hardware-card .card-actions {
+        gap: 7px;
+      }
+      .hardware-card .button {
+        min-height: 36px;
+        padding-inline: 9px;
+        font-size: 10px;
+      }
       .details {
         display: grid;
         gap: 8px;
-        min-height: 242px;
+        min-height: 0;
         align-content: start;
         margin: 0;
         padding: 0;
@@ -1722,6 +1928,62 @@
         font-style: normal;
         font-weight: 800;
         line-height: 1.25;
+      }
+      .swap-control {
+        display: grid;
+        gap: 7px;
+        margin-top: 7px;
+      }
+      .swap-toggle {
+        appearance: none;
+        justify-self: start;
+        min-height: 28px;
+        padding: 0 10px;
+        border: 1px solid rgba(34, 240, 196, .38);
+        border-radius: 999px;
+        color: var(--green);
+        background: rgba(34, 240, 196, .09);
+        font: inherit;
+        font-size: 10px;
+        font-weight: 950;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .swap-options {
+        display: grid;
+        gap: 6px;
+      }
+      .swap-options[hidden] {
+        display: none;
+      }
+      .swap-choice-row {
+        display: grid;
+        grid-template-columns: 16px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 7px;
+        min-height: 36px;
+        padding: 7px 8px;
+        border: 1px solid rgba(255, 255, 255, .12);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .035);
+        color: #e9f4fa;
+        font-size: 11px;
+        font-weight: 850;
+      }
+      .swap-choice-row:has(input:checked) {
+        border-color: rgba(34, 240, 196, .46);
+        background: rgba(34, 240, 196, .08);
+      }
+      .swap-choice-row input {
+        accent-color: var(--green);
+      }
+      .swap-choice-row strong {
+        color: var(--green);
+        white-space: nowrap;
+      }
+      .swap-choice-row strong.is-negative {
+        color: #ffe08a;
       }
       .addon-groups {
         display: grid;
@@ -3084,9 +3346,13 @@
         .fulfillment-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .pc-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .hardware-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       }
       @media (max-width: 1120px) {
-        .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid,
+        .pc-grid,
+        .hardware-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .story-wrap,
         .assembly-wrap,
         .post-sale-wrap {
@@ -3152,7 +3418,9 @@
         .visual-tile.facebook-logo-tile img { width: 98px; height: 98px; }
         .section-heading { grid-template-columns: 1fr; }
         .catalog { padding-inline: 14px; }
-        .grid {
+        .grid,
+        .pc-grid,
+        .hardware-grid {
           grid-template-columns: minmax(0, 1fr);
           gap: 34px;
           width: 100%;
@@ -4040,10 +4308,19 @@
       </section>
       <section id="catalogo" class="catalog">
         <div class="section-heading">
-          <div><p class="eyebrow">Estoque atual</p><h2>Produtos em destaque</h2></div>
-          <p>Escolha o item, confira a ficha t&eacute;cnica e abra o an&uacute;ncio na plataforma que preferir.</p>
+          <div><p class="eyebrow">Estoque atual</p><h2>PCs em destaque</h2></div>
+          <p>Escolha o item, abra as configura&ccedil;&otilde;es quando quiser e adicione ao carrinho sem deixar a p&aacute;gina pesada.</p>
         </div>
-        <div class="grid" id="products"></div>
+        <div class="catalog-block catalog-block-pcs">
+          <div class="grid pc-grid" id="pc-products"></div>
+        </div>
+        <div class="catalog-block catalog-block-hardware">
+          <div class="section-heading hardware-heading">
+            <div><p class="eyebrow">Pe&ccedil;as e upgrades</p><h2>Hardware em estoque</h2></div>
+            <p>SSDs, fontes e outros itens ficam separados dos PCs para facilitar a escolha.</p>
+          </div>
+          <div class="grid hardware-grid" id="hardware-products"></div>
+        </div>
       </section>
       <section id="carrinho" class="cart-section reveal" aria-labelledby="cart-title">
         <div class="cart-wrap">
@@ -4450,7 +4727,10 @@
         "Conectores": "Conectores"
       };
 
-      const productGrid = document.getElementById("products");
+      const pcProductGrid = document.getElementById("pc-products");
+      const hardwareProductGrid = document.getElementById("hardware-products");
+      const productGrids = [pcProductGrid, hardwareProductGrid].filter(Boolean);
+      const catalogSection = document.getElementById("catalogo");
       const cartItemsContainer = document.getElementById("cart-items");
       const cartTotalOutput = document.getElementById("cart-total");
       const cartCheckoutButton = document.getElementById("cart-checkout");
@@ -4490,6 +4770,7 @@
       const postalCodeInput = shippingForm?.querySelector("input[name='postalCode']");
       const productDataUrl = "./data/products.json";
       const addonDataUrl = "./data/addons.json";
+      const swapDataUrl = "./data/swaps.json";
       const currencyFormatter = new Intl.NumberFormat("pt-BR", {
         style: "currency",
         currency: "BRL"
@@ -4498,11 +4779,21 @@
         { key: "storage", label: "Armazenamento" },
         { key: "peripherals", label: "Kit perif\u00e9ricos" }
       ];
+      const swapCategories = [
+        { key: "processor", detail: "Processador", label: "Processador" },
+        { key: "memory", detail: "Memoria", label: "Mem\u00f3ria" },
+        { key: "gpu", detail: "Placa de video", label: "Placa de v\u00eddeo" },
+        { key: "powerSupply", detail: "Fonte", label: "Fonte" },
+        { key: "storage", detail: "Armazenamento", label: "Armazenamento" }
+      ];
+      const swapCategoryByKey = Object.fromEntries(swapCategories.map((category) => [category.key, category]));
+      const swapCategoryByDetail = Object.fromEntries(swapCategories.map((category) => [category.detail, category]));
       let shippingEnabled = false;
       let activeShippingButton = null;
       let checkoutContext = null;
       let productStore = [];
       let addonStore = [];
+      let swapStore = [];
       let cart = [];
       let activeShippingQuotes = [];
       let shippingValidationStarted = false;
@@ -4635,13 +4926,67 @@
         }).filter((category) => category.options.length);
       };
 
+      const normalizedSearchText = (value = "") => String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+
+      const listIncludesAny = (value, list = []) => {
+        const text = normalizedSearchText(value);
+        const terms = Array.isArray(list) ? list.filter(Boolean) : [];
+        if (!terms.length) return false;
+        return terms.some((term) => text.includes(normalizedSearchText(term)));
+      };
+
+      const normalizeSwapOption = (option, fallbackTarget = "") => {
+        const label = option?.label || option?.name || "";
+        const price = parseCurrency(option?.price);
+        const target = option?.target || fallbackTarget;
+        if (!option || option.active === false || !label || !swapCategoryByKey[target] || !Number.isFinite(price)) {
+          return null;
+        }
+        return { ...option, label, price, target };
+      };
+
+      const swapMatchesProduct = (product, option) => {
+        if (productCategory(product) !== "pc" && product.allowGlobalSwaps !== true) return false;
+        const target = swapCategoryByKey[option.target];
+        const detailValue = productDetails(product)[target.detail] || "";
+        if (!detailValue) return false;
+        const when = Array.isArray(option.whenContains) ? option.whenContains.filter(Boolean) : [];
+        const exclude = Array.isArray(option.excludeContains) ? option.excludeContains.filter(Boolean) : [];
+        if (when.length && !listIncludesAny(detailValue, when)) return false;
+        if (exclude.length && listIncludesAny(detailValue, exclude)) return false;
+        return true;
+      };
+
+      const productSwaps = (product, globalSwaps = []) => {
+        const source = product.swaps || {};
+        const globalOptions = Array.isArray(globalSwaps) ? globalSwaps : [];
+        const productOptions = Object.entries(source).flatMap(([target, options]) => (
+          Array.isArray(options) ? options.map((option) => ({ ...option, target })) : []
+        ));
+        const options = [...globalOptions, ...productOptions]
+          .map((option) => normalizeSwapOption(option))
+          .filter((option) => option && swapMatchesProduct(product, option));
+
+        return swapCategories.map((category) => ({
+          ...category,
+          options: options.filter((option) => option.target === category.key)
+        })).filter((category) => category.options.length);
+      };
+
+      const swapsByDetailLabel = (groups = []) => Object.fromEntries(
+        groups.map((group) => [group.detail, group])
+      );
+
       const renderAddonGroups = (product, groups, basePrice) => {
         if (!groups.length) return "";
         const safeProductId = escapeHtml(product.id || "");
         const safeBasePrice = Number.isFinite(basePrice) ? basePrice : 0;
 
         return `<div class="addon-groups" data-base-price="${safeBasePrice}">
-              <p class="addon-title">${productCategory(product) === "pc" ? "Personalize o seu PC!" : "Opcionais do produto"}</p>
+              <p class="addon-title">${productCategory(product) === "pc" ? "Adicionais para o PC" : "Opcionais do produto"}</p>
               ${groups.map((group) => {
                 return `<fieldset class="addon-group">
                 <legend>${group.label}</legend>
@@ -4662,12 +5007,55 @@
             </div>`;
       };
 
+      const renderSwapOptions = (product, group) => {
+        if (!group?.options?.length) return "";
+        const safeProductId = safeDomId(product.id || "pc");
+        const safeTarget = safeDomId(group.key);
+        return `<div class="swap-control">
+          <button class="swap-toggle" type="button" data-swap-toggle aria-expanded="false">Ver outras op&ccedil;&otilde;es</button>
+          <div class="swap-options" hidden>
+            ${group.options.map((option, index) => {
+              const inputId = `swap-${safeProductId}-${safeTarget}-${index}`;
+              const sign = option.price > 0 ? "+" : "";
+              return `<label class="swap-choice-row" for="${escapeHtml(inputId)}">
+                <input class="swap-choice" id="${escapeHtml(inputId)}" type="checkbox" data-swap-target="${escapeHtml(group.key)}" data-swap-index="${index}" data-swap-price="${option.price}">
+                <span>${escapeHtml(option.label)}</span>
+                <strong class="${option.price < 0 ? "is-negative" : ""}">${sign}${escapeHtml(formatCurrency(option.price))}</strong>
+              </label>`;
+            }).join("")}
+          </div>
+        </div>`;
+      };
+
+      const renderDetailRows = (product, details, order, swapGroups = []) => {
+        const swaps = swapsByDetailLabel(swapGroups);
+        return order.map((key) => {
+          const value = details[key];
+          if (!value) return "";
+          return `<li>
+            <span class="spec-icon" aria-hidden="true">${icons[key] || icons.Modelo}</span>
+            <span class="detail-text">
+              <strong>${detailLabels[key] || key}</strong>
+              <em>${escapeHtml(value)}</em>
+              ${renderSwapOptions(product, swaps[key])}
+            </span>
+          </li>`;
+        }).join("");
+      };
+
       const selectedAddonsForCard = (card) => Array.from(card?.querySelectorAll(".addon-choice:checked") || [])
         .map((input) => ({
           category: input.dataset.addonCategory,
           index: Number(input.dataset.addonIndex)
         }))
         .filter((selection) => selection.category && Number.isInteger(selection.index));
+
+      const selectedSwapsForCard = (card) => Array.from(card?.querySelectorAll(".swap-choice:checked") || [])
+        .map((input) => ({
+          target: input.dataset.swapTarget,
+          index: Number(input.dataset.swapIndex)
+        }))
+        .filter((selection) => selection.target && Number.isInteger(selection.index));
 
       const updateCheckoutTotal = (card) => {
         const container = card?.querySelector(".addon-groups");
@@ -4676,7 +5064,9 @@
         const basePrice = parseCurrency(container.dataset.basePrice);
         const addonsTotal = Array.from(container.querySelectorAll(".addon-choice:checked"))
           .reduce((sum, input) => sum + (parseCurrency(input.dataset.addonPrice) || 0), 0);
-        output.textContent = formatCurrency((Number.isFinite(basePrice) ? basePrice : 0) + addonsTotal);
+        const swapsTotal = Array.from(card.querySelectorAll(".swap-choice:checked"))
+          .reduce((sum, input) => sum + (parseCurrency(input.dataset.swapPrice) || 0), 0);
+        output.textContent = formatCurrency((Number.isFinite(basePrice) ? basePrice : 0) + addonsTotal + swapsTotal);
       };
 
       const cartToast = (() => {
@@ -4705,13 +5095,24 @@
         }).filter(Boolean);
       };
 
+      const resolveSelectedSwaps = (product, selectedSwaps = []) => {
+        const groups = productSwaps(product, swapStore);
+        return (Array.isArray(selectedSwaps) ? selectedSwaps : []).map((selection) => {
+          const group = groups.find((item) => item.key === selection.target);
+          const option = group?.options?.[Number(selection.index)];
+          return group && option ? { ...option, target: group.key, targetLabel: group.label, index: Number(selection.index) } : null;
+        }).filter(Boolean);
+      };
+
       const cartItemTotal = (item) => {
         const product = productStore.find((entry) => entry.id === item.productId && entry.active !== false);
         if (!product) return 0;
         const basePrice = parseCurrency(product.price);
         const addonsTotal = resolveSelectedAddons(product, item.selectedAddons)
           .reduce((sum, addon) => sum + (parseCurrency(addon.price) || 0), 0);
-        return (Number.isFinite(basePrice) ? basePrice : 0) + addonsTotal;
+        const swapsTotal = resolveSelectedSwaps(product, item.selectedSwaps)
+          .reduce((sum, swap) => sum + (parseCurrency(swap.price) || 0), 0);
+        return (Number.isFinite(basePrice) ? basePrice : 0) + addonsTotal + swapsTotal;
       };
 
       const saveCart = () => {
@@ -4751,10 +5152,13 @@
         cartItemsContainer.innerHTML = cart.map((item) => {
           const product = productStore.find((entry) => entry.id === item.productId);
           const addons = resolveSelectedAddons(product, item.selectedAddons);
+          const swaps = resolveSelectedSwaps(product, item.selectedSwaps);
           const image = mediaGallery(product)[0] || "";
-          const addonText = addons.length
-            ? addons.map((addon) => `${addon.categoryLabel}: ${addon.label}`).join(" | ")
-            : "Sem opcionais adicionais";
+          const optionText = [
+            ...swaps.map((swap) => `Troca de ${swap.targetLabel}: ${swap.label}`),
+            ...addons.map((addon) => `${addon.categoryLabel}: ${addon.label}`)
+          ];
+          const addonText = optionText.length ? optionText.join(" | ") : "Sem trocas ou adicionais";
           return `<article class="cart-item">
             <img src="${escapeHtml(image)}" alt="" loading="lazy">
             <div>
@@ -4775,8 +5179,9 @@
         if (!product) return;
         const card = button.closest(".card");
         const selectedAddons = selectedAddonsForCard(card);
+        const selectedSwaps = selectedSwapsForCard(card);
         const existingIndex = cart.findIndex((item) => cartKeyForProduct(item.productId) === cartKeyForProduct(productId));
-        const nextItem = { productId, selectedAddons };
+        const nextItem = { productId, selectedAddons, selectedSwaps };
         if (existingIndex >= 0) {
           cart[existingIndex] = nextItem;
           cartToast("Carrinho atualizado com os opcionais selecionados.");
@@ -4957,41 +5362,62 @@
         checkoutContext = null;
       };
 
-      const renderProducts = (items, globalAddons = []) => {
-        if (!productGrid) return;
-        const products = Array.isArray(items) ? items.filter((product) => product.active !== false) : [];
-        if (!products.length) {
-          productGrid.innerHTML = '<p class="empty-state">Nenhum produto ativo no momento.</p>';
-          return;
-        }
+      const renderProductCard = (product, globalAddons = [], globalSwaps = [], cardType = "pc") => {
+        const details = productDetails(product);
+        const olx = product.olx || product.links?.olx || "";
+        const fb = product.fb || product.links?.facebook || "";
+        const productImages = mediaGallery(product);
+        const image = productImages[0] || "";
+        const photoClass = product.photo || "square";
+        const basePrice = parseCurrency(product.price);
+        const addons = productAddons(product, globalAddons);
+        const swaps = productSwaps(product, globalSwaps);
+        const detailOrderForProduct = productDetailOrder(product);
+        const category = productCategory(product);
+        const isHardware = cardType === "hardware";
 
-        productGrid.innerHTML = products.map((product) => {
-          const details = productDetails(product);
-          const olx = product.olx || product.links?.olx || "";
-          const fb = product.fb || product.links?.facebook || "";
-          const productImages = mediaGallery(product);
-          const image = productImages[0] || "";
-          const photoClass = product.photo || "square";
-          const basePrice = parseCurrency(product.price);
-          const addons = productAddons(product, globalAddons);
-          const detailOrderForProduct = productDetailOrder(product);
-
-          return `
-        <article class="card">
-          <button class="photo ${escapeHtml(photoClass)}" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}" aria-label="Ampliar fotos de ${escapeHtml(product.title)}"><img class="product-cutout" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" loading="lazy"></button>
+        return `
+        <article class="card product-card ${isHardware ? "hardware-card" : "pc-card"} category-${escapeHtml(category)}">
+          <button class="photo ${escapeHtml(photoClass)}" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}" aria-label="Ampliar fotos de ${escapeHtml(product.title)}">
+            <span class="photo-title">${escapeHtml(product.title)}</span>
+            <img class="product-cutout" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" loading="lazy">
+          </button>
           <div class="body">
-            <div class="topline"><span class="badge">${escapeHtml(product.badge || "")}</span><span class="price">${product.old ? `<s>${escapeHtml(formatCurrency(product.old))}</s> ` : ""}${escapeHtml(formatCurrency(product.price))}</span></div>
-            <h3>${escapeHtml(product.title)}</h3>
-            <ul class="details">${detailOrderForProduct.filter((label) => details[label]).map((label) => `<li><span class="spec-icon" aria-hidden="true">${icons[label] || icons["Tipo"]}</span><span class="detail-text"><strong>${detailLabels[label] || label}</strong><em>${escapeHtml(details[label])}</em></span></li>`).join("")}</ul>
-            ${renderAddonGroups(product, addons, basePrice)}
-            <div class="card-actions">
-              <button class="button compact cart-button" type="button" data-cart-product-id="${escapeHtml(product.id || "")}"><span class="button-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 8h-12L6 6Z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg></span>Adicionar ao carrinho</button>
-              <button class="button compact secondary details-button" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}">Ver detalhes</button>
-              ${(olx || fb) ? `<div class="marketplace-actions">${olx ? `<a class="button compact primary olx-button" href="${escapeHtml(olx)}" target="_blank" rel="noreferrer"><img class="button-logo olx-button-logo" src="./assets/olx-logo.svg" alt="" aria-hidden="true">Comprar na OLX</a>` : ""}${fb ? `<a class="button compact secondary" href="${escapeHtml(fb)}" target="_blank" rel="noreferrer"><img class="button-icon" src="./assets/facebook-icon.svg" alt="" aria-hidden="true">Facebook</a>` : ""}</div>` : ""}
+            <div class="product-summary">
+              <div class="summary-line">
+                <span class="badge">${escapeHtml(product.badge || (isHardware ? "Hardware" : "Disponivel"))}</span>
+                <span class="price">${product.old ? `<s>${escapeHtml(formatCurrency(product.old))}</s> ` : ""}${escapeHtml(formatCurrency(product.price))}</span>
+              </div>
+              <button class="config-toggle" type="button" data-toggle-config aria-expanded="false">Ver configura&ccedil;&otilde;es</button>
+            </div>
+            <div class="config-panel" aria-hidden="true">
+              <ul class="details">${renderDetailRows(product, details, detailOrderForProduct, swaps)}</ul>
+              ${renderAddonGroups(product, addons, basePrice)}
+              <div class="card-actions">
+                <button class="button compact cart-button" type="button" data-cart-product-id="${escapeHtml(product.id || "")}"><span class="button-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 8h-12L6 6Z"></path><path d="M6 6 5 3H2"></path><circle cx="9" cy="20" r="1"></circle><circle cx="18" cy="20" r="1"></circle></svg></span>Adicionar ao carrinho</button>
+                <button class="button compact secondary details-button" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}">Ver detalhes</button>
+                ${(olx || fb) ? `<div class="marketplace-actions">${olx ? `<a class="button compact primary olx-button" href="${escapeHtml(olx)}" target="_blank" rel="noreferrer"><img class="button-logo olx-button-logo" src="./assets/olx-logo.svg" alt="" aria-hidden="true">Comprar na OLX</a>` : ""}${fb ? `<a class="button compact secondary" href="${escapeHtml(fb)}" target="_blank" rel="noreferrer"><img class="button-icon" src="./assets/facebook-icon.svg" alt="" aria-hidden="true">Facebook</a>` : ""}</div>` : ""}
+              </div>
             </div>
           </div>
         </article>`;
-        }).join("");
+      };
+
+      const renderProductGroup = (grid, products, emptyText, cardType, globalAddons, globalSwaps) => {
+        if (!grid) return;
+        if (!products.length) {
+          grid.innerHTML = `<p class="empty-state">${escapeHtml(emptyText)}</p>`;
+          return;
+        }
+        grid.innerHTML = products.map((product) => renderProductCard(product, globalAddons, globalSwaps, cardType)).join("");
+      };
+
+      const renderProducts = (items, globalAddons = [], globalSwaps = []) => {
+        const products = Array.isArray(items) ? items.filter((product) => product.active !== false) : [];
+        const pcs = products.filter((product) => productCategory(product) === "pc");
+        const hardware = products.filter((product) => productCategory(product) !== "pc");
+        renderProductGroup(pcProductGrid, pcs, "Nenhum PC ativo no momento.", "pc", globalAddons, globalSwaps);
+        renderProductGroup(hardwareProductGrid, hardware, "Nenhum hardware ativo no momento.", "hardware", globalAddons, globalSwaps);
       };
 
       let lightboxImages = [];
@@ -5048,6 +5474,7 @@
         if (!productId) return;
         const card = button.closest(".card");
         const selectedAddons = selectedAddonsForCard(card);
+        const selectedSwaps = selectedSwapsForCard(card);
 
         const originalText = button.textContent;
         button.disabled = true;
@@ -5057,7 +5484,7 @@
           const response = await fetch("/api/create-preference", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ productId, selectedAddons, shipping })
+            body: JSON.stringify({ productId, selectedAddons, selectedSwaps, shipping })
           });
           const data = await response.json().catch(() => ({}));
           if (!response.ok || !data.checkout_url) {
@@ -5184,6 +5611,7 @@
         if (!productId) return;
         const card = button.closest(".card");
         const selectedAddons = selectedAddonsForCard(card);
+        const selectedSwaps = selectedSwapsForCard(card);
         const originalText = button.textContent;
         button.disabled = true;
         button.textContent = "Gerando Pix...";
@@ -5192,7 +5620,7 @@
           const response = await fetch("/api/create-abacate-pix", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ productId, selectedAddons, shipping })
+            body: JSON.stringify({ productId, selectedAddons, selectedSwaps, shipping })
           });
           const data = await response.json().catch(() => ({}));
           if (!response.ok || !data.copy_code) {
@@ -5265,7 +5693,7 @@
         startMercadoPagoCheckout(button, shipping);
       };
 
-      productGrid?.addEventListener("click", (event) => {
+      catalogSection?.addEventListener("click", (event) => {
         const mediaButton = event.target.closest("[data-lightbox-gallery]");
         if (mediaButton) {
           event.preventDefault();
@@ -5275,6 +5703,28 @@
             mediaButton.dataset.lightboxAlt || "",
             mediaButton
           );
+          return;
+        }
+
+        const toggleButton = event.target.closest("[data-toggle-config]");
+        if (toggleButton) {
+          const card = toggleButton.closest(".product-card");
+          const panel = card?.querySelector(".config-panel");
+          const expanded = !card?.classList.contains("is-expanded");
+          card?.classList.toggle("is-expanded", expanded);
+          toggleButton.setAttribute("aria-expanded", String(expanded));
+          toggleButton.textContent = expanded ? "Ocultar configura\u00e7\u00f5es" : "Ver configura\u00e7\u00f5es";
+          panel?.setAttribute("aria-hidden", String(!expanded));
+          return;
+        }
+
+        const swapToggle = event.target.closest("[data-swap-toggle]");
+        if (swapToggle) {
+          const options = swapToggle.closest(".swap-control")?.querySelector(".swap-options");
+          if (!options) return;
+          const shouldOpen = options.hidden;
+          options.hidden = !shouldOpen;
+          swapToggle.setAttribute("aria-expanded", String(shouldOpen));
           return;
         }
 
@@ -5434,7 +5884,17 @@
         if (event.key === "ArrowRight") moveLightbox(1);
       });
 
-      productGrid?.addEventListener("change", (event) => {
+      catalogSection?.addEventListener("change", (event) => {
+        if (event.target.matches(".swap-choice")) {
+          const card = event.target.closest(".card");
+          if (event.target.checked) {
+            card?.querySelectorAll(`.swap-choice[data-swap-target="${event.target.dataset.swapTarget}"]`).forEach((input) => {
+              if (input !== event.target) input.checked = false;
+            });
+          }
+          updateCheckoutTotal(card);
+          return;
+        }
         if (!event.target.matches(".addon-choice")) return;
         updateCheckoutTotal(event.target.closest(".card"));
       });
@@ -5513,19 +5973,24 @@
       setupDisclosureAnimations();
 
       const loadProducts = async () => {
-        if (!productGrid) return;
+        if (!productGrids.length) return;
         try {
           const response = await fetch(productDataUrl, { cache: "no-store" });
           if (!response.ok) throw new Error("Nao foi possivel carregar os produtos.");
           const addonsResponse = await fetch(addonDataUrl, { cache: "no-store" }).catch(() => null);
+          const swapsResponse = await fetch(swapDataUrl, { cache: "no-store" }).catch(() => null);
           const globalAddons = addonsResponse?.ok ? await addonsResponse.json() : [];
+          const globalSwaps = swapsResponse?.ok ? await swapsResponse.json() : [];
           productStore = await response.json();
           addonStore = Array.isArray(globalAddons) ? globalAddons : [];
-          renderProducts(productStore, addonStore);
+          swapStore = Array.isArray(globalSwaps) ? globalSwaps : [];
+          renderProducts(productStore, addonStore, swapStore);
           loadCart();
           renderCart();
         } catch (error) {
-          productGrid.innerHTML = '<p class="empty-state">Nao foi possivel carregar os anuncios agora.</p>';
+          productGrids.forEach((grid) => {
+            grid.innerHTML = '<p class="empty-state">Nao foi possivel carregar os anuncios agora.</p>';
+          });
           renderCart();
         }
       };

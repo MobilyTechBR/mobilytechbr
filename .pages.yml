@@ -129,6 +129,56 @@ content:
         label: Foto recortada/PNG do adicional
         type: image
         description: "Opcional. Se ficar vazio e houver foto, o GitHub tenta criar a versao sem fundo automaticamente."
+  - name: globalSwaps
+    label: Trocas globais de pecas
+    type: file
+    path: data/swaps.json
+    format: json
+    list: true
+    fields:
+      - name: id
+        label: ID interno
+        type: string
+        required: true
+        pattern:
+          regex: "^[a-z0-9-]+$"
+          message: "Use apenas letras minusculas, numeros e tracos."
+        description: "Identificador unico. Exemplo: storage-ssd-240gb-upgrade"
+      - name: active
+        label: Ativo no site
+        type: boolean
+        default: true
+      - name: target
+        label: Peca que sera trocada
+        type: select
+        required: true
+        options:
+          values:
+            - storage
+            - memory
+            - gpu
+            - powerSupply
+        description: "Processador fica nas trocas especificas de cada produto."
+      - name: label
+        label: Nome da troca
+        type: string
+        required: true
+        description: "Exemplo: Trocar por SSD 240GB"
+      - name: price
+        label: Diferenca no preco
+        type: number
+        required: true
+        description: "Digite positivo para acrescentar e negativo para abater. Exemplo: 100 ou -55."
+      - name: whenContains
+        label: Mostrar quando a configuracao contiver
+        type: string
+        list: true
+        description: "Opcional. Exemplo: 128GB. Se vazio, aparece para todos os PCs que tenham essa peca."
+      - name: excludeContains
+        label: Nao mostrar quando a configuracao contiver
+        type: string
+        list: true
+        description: "Opcional. Exemplo: NVINET 750W."
   - name: products
     label: Anuncios e produtos
     type: file
@@ -349,6 +399,40 @@ content:
                 label: Foto recortada/PNG do opcional
                 type: image
                 description: "Opcional. Se ficar vazio e houver foto, o GitHub tenta criar a versao sem fundo automaticamente."
+      - name: swaps
+        label: Trocas especificas deste produto
+        type: object
+        description: "Use principalmente para processador, porque isso depende de cada PC. Trocas globais de memoria, fonte e armazenamento ficam em outra aba."
+        fields:
+          - name: processor
+            label: Trocas de processador
+            type: object
+            list: true
+            fields:
+              - name: active
+                label: Ativo
+                type: boolean
+                default: true
+              - name: label
+                label: Nome da troca
+                type: string
+                required: true
+                description: "Exemplo: Trocar por Xeon E3-1230"
+              - name: price
+                label: Diferenca no preco
+                type: number
+                required: true
+                description: "Digite positivo para acrescentar e negativo para abater."
+              - name: whenContains
+                label: Mostrar quando o processador contiver
+                type: string
+                list: true
+                description: "Opcional. Exemplo: E3-1220."
+              - name: excludeContains
+                label: Nao mostrar quando o processador contiver
+                type: string
+                list: true
+                description: "Opcional."
       - name: featured
         label: Destaque interno
         type: boolean
