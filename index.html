@@ -1678,9 +1678,10 @@
       }
       .card h3 {
         margin: 0;
-        min-height: 50px;
-        font-size: 23px;
+        min-height: 42px;
+        font-size: 18px;
         line-height: 1.08;
+        text-align: center;
       }
       .product-card {
         min-width: 0;
@@ -1717,7 +1718,7 @@
       .summary-line {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         gap: 9px;
         min-height: 29px;
       }
@@ -1739,6 +1740,32 @@
       }
       .config-toggle:hover {
         transform: translateY(-1px);
+      }
+      .summary-price {
+        display: grid;
+        justify-items: center;
+        gap: 3px;
+        margin: 0;
+        padding-top: 2px;
+        color: var(--muted);
+        text-align: center;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .summary-price strong {
+        color: #f7fbff;
+        font-size: 20px;
+        line-height: 1;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      .summary-price s {
+        margin-right: 6px;
+        color: var(--subtle);
+        font-size: .72em;
+        font-weight: 800;
       }
       .config-panel {
         display: grid;
@@ -1781,9 +1808,6 @@
         gap: 6px;
         padding: 8px;
       }
-      .hardware-card .photo-title {
-        font-size: 10px;
-      }
       .hardware-card .summary-line {
         min-height: 25px;
       }
@@ -1795,9 +1819,16 @@
       .hardware-card .price {
         font-size: 13px;
       }
+      .hardware-card h3 {
+        min-height: 34px;
+        font-size: 13px;
+      }
       .hardware-card .config-toggle {
         min-height: 29px;
         font-size: 10px;
+      }
+      .hardware-card .summary-price strong {
+        font-size: 16px;
       }
       .hardware-card .details {
         gap: 5px;
@@ -5060,13 +5091,16 @@
       const updateCheckoutTotal = (card) => {
         const container = card?.querySelector(".addon-groups");
         const output = container?.querySelector(".checkout-total strong");
-        if (!container || !output) return;
-        const basePrice = parseCurrency(container.dataset.basePrice);
-        const addonsTotal = Array.from(container.querySelectorAll(".addon-choice:checked"))
+        const summaryOutput = card?.querySelector(".summary-price strong");
+        if (!card && !container) return;
+        const basePrice = parseCurrency(container?.dataset.basePrice || card?.dataset.basePrice);
+        const addonsTotal = Array.from(card?.querySelectorAll(".addon-choice:checked") || [])
           .reduce((sum, input) => sum + (parseCurrency(input.dataset.addonPrice) || 0), 0);
-        const swapsTotal = Array.from(card.querySelectorAll(".swap-choice:checked"))
+        const swapsTotal = Array.from(card?.querySelectorAll(".swap-choice:checked") || [])
           .reduce((sum, input) => sum + (parseCurrency(input.dataset.swapPrice) || 0), 0);
-        output.textContent = formatCurrency((Number.isFinite(basePrice) ? basePrice : 0) + addonsTotal + swapsTotal);
+        const total = formatCurrency((Number.isFinite(basePrice) ? basePrice : 0) + addonsTotal + swapsTotal);
+        if (output) output.textContent = total;
+        if (summaryOutput) summaryOutput.textContent = total;
       };
 
       const cartToast = (() => {
@@ -5377,18 +5411,18 @@
         const isHardware = cardType === "hardware";
 
         return `
-        <article class="card product-card ${isHardware ? "hardware-card" : "pc-card"} category-${escapeHtml(category)}">
+        <article class="card product-card ${isHardware ? "hardware-card" : "pc-card"} category-${escapeHtml(category)}" data-base-price="${basePrice}">
           <button class="photo ${escapeHtml(photoClass)}" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}" aria-label="Ampliar fotos de ${escapeHtml(product.title)}">
-            <span class="photo-title">${escapeHtml(product.title)}</span>
             <img class="product-cutout" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" loading="lazy">
           </button>
           <div class="body">
             <div class="product-summary">
               <div class="summary-line">
                 <span class="badge">${escapeHtml(product.badge || (isHardware ? "Hardware" : "Disponivel"))}</span>
-                <span class="price">${product.old ? `<s>${escapeHtml(formatCurrency(product.old))}</s> ` : ""}${escapeHtml(formatCurrency(product.price))}</span>
               </div>
+              <h3>${escapeHtml(product.title)}</h3>
               <button class="config-toggle" type="button" data-toggle-config aria-expanded="false">Ver configura&ccedil;&otilde;es</button>
+              <p class="summary-price"><span>Valor</span><strong>${product.old ? `<s>${escapeHtml(formatCurrency(product.old))}</s> ` : ""}${escapeHtml(formatCurrency(product.price))}</strong></p>
             </div>
             <div class="config-panel" aria-hidden="true">
               <ul class="details">${renderDetailRows(product, details, detailOrderForProduct, swaps)}</ul>
