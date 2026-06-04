@@ -92,6 +92,43 @@
     "featured": true
   },
   {
+    "id": "pc-gamer-i5-gt610",
+    "active": true,
+    "category": "pc",
+    "title": "PC GAMER INTEL I5 / 8GB RAM / GT 610 / SSD 120GB",
+    "price": 800,
+    "badge": "NOVO!",
+    "image": "./assets/new-pc-main.jpeg",
+    "cutout": "./assets/generated/pc-gamer-i5-gt610-cutout.png",
+    "gallery": [
+      {
+        "image": "./assets/new-pc-gallery-1.jpeg",
+        "cutout": "./assets/generated/pc-gamer-i5-gt610-gallery-1-cutout.png"
+      },
+      {
+        "image": "./assets/new-pc-gallery-2.jpeg",
+        "cutout": "./assets/generated/pc-gamer-i5-gt610-gallery-2-cutout.png"
+      },
+      {
+        "image": "./assets/new-pc-gallery-3.jpeg",
+        "cutout": "./assets/generated/pc-gamer-i5-gt610-gallery-3-cutout.png"
+      }
+    ],
+    "photo": "square",
+    "specs": {
+      "processor": "Intel Core i5-3330",
+      "memory": "8GB DDR3",
+      "gpu": "GT 610",
+      "powerSupply": "NVINET 750W 80 Plus Bronze",
+      "storage": "SSD 120GB"
+    },
+    "links": {
+      "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-intel-i5-3-8gb-ram-gt-610-fonte-750w-80plus-ssd-120gb-pc-novo-1507876354",
+      "facebook": "https://www.facebook.com/share/17zY7NvcBB/"
+    },
+    "featured": true
+  },
+  {
     "id": "ssd-240gb-pny-sata3",
     "active": true,
     "category": "ssd",
