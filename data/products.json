@@ -295,6 +295,7 @@
     "price": 4500,
     "badge": "O MELHOR!",
     "image": "./assets/img2912.jpeg",
+    "cutout": "./assets/generated/pcryzen-5-3600-cutout.png",
     "photo": "square",
     "specs": {
       "processor": "RYZEN 5 3600X",
@@ -303,7 +304,45 @@
       "powerSupply": "700W EVGA 80 Plus White",
       "storage": "SSD 480GB"
     },
-    "featured": true,
-    "cutout": "./assets/generated/pcryzen-5-3600-cutout.png"
+    "featured": true
+  },
+  {
+    "id": "pcgameri53330gtx550ti",
+    "active": true,
+    "category": "pc",
+    "title": "PC GAMER i5 3º / 8GB RAM / GTX 550 Ti + SSD 128GB",
+    "price": 1000,
+    "old": 1100,
+    "shipping": {
+      "weightKg": 7
+    },
+    "image": "./assets/img2983.jpeg",
+    "gallery": [
+      {
+        "image": "./assets/img2988.jpeg"
+      }
+    ],
+    "photo": "square",
+    "specs": {
+      "processor": "Intel core i5-3330",
+      "memory": "8GB RAM Dual Channel",
+      "gpu": "GTX 550 Ti 1GB VRAM",
+      "powerSupply": "750W 80 Plus Bronze Nvinet",
+      "storage": "SSD 128GB"
+    },
+    "links": {
+      "olx": "https://olx.com.br/vi/1508120680?utm_source=social_media_ad_share&utm_medium=instagram_stories",
+      "facebook": "https://www.facebook.com/marketplace/item/869492206237338/?mibextid=6ojiHh"
+    },
+    "swaps": {
+      "processor": [
+        {
+          "active": true,
+          "label": "Xeon E3-1230 V2 (i7 3º Geração)",
+          "price": 150
+        }
+      ]
+    },
+    "featured": true
   }
 ]
