@@ -1639,6 +1639,14 @@
         transform: translateX(-50%) translateY(-8px) scale(1.018);
         filter: drop-shadow(0 32px 32px rgba(0, 0, 0, .46));
       }
+      .product-card[data-product-id="pcgameri53330gtx550ti"] .product-cutout {
+        transform: translateX(-50%) translateY(14px) scale(1.11);
+        filter: brightness(1.08) contrast(1.06) drop-shadow(0 26px 28px rgba(0, 0, 0, .42));
+      }
+      .product-card[data-product-id="pcgameri53330gtx550ti"]:hover .product-cutout {
+        transform: translateX(-50%) translateY(6px) scale(1.13);
+        filter: brightness(1.08) contrast(1.06) drop-shadow(0 32px 32px rgba(0, 0, 0, .46));
+      }
       .body {
         display: flex;
         flex: 1;
@@ -5409,7 +5417,7 @@
         const isHardware = cardType === "hardware";
 
         return `
-        <article class="card product-card ${isHardware ? "hardware-card" : "pc-card"} category-${escapeHtml(category)}" data-base-price="${basePrice}">
+        <article class="card product-card ${isHardware ? "hardware-card" : "pc-card"} category-${escapeHtml(category)}" data-product-id="${escapeHtml(product.id || "")}" data-base-price="${basePrice}">
           <button class="photo ${escapeHtml(photoClass)}" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}" aria-label="Ampliar fotos de ${escapeHtml(product.title)}">
             <img class="product-cutout" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" loading="lazy">
           </button>
