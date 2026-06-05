@@ -319,7 +319,8 @@
     "image": "./assets/img2983.jpeg",
     "gallery": [
       {
-        "image": "./assets/img2988.jpeg"
+        "image": "./assets/img2988.jpeg",
+        "cutout": "./assets/generated/pcgameri53330gtx550ti-gallery-1-cutout.png"
       }
     ],
     "photo": "square",
@@ -343,6 +344,7 @@
         }
       ]
     },
-    "featured": true
+    "featured": true,
+    "cutout": "./assets/generated/pcgameri53330gtx550ti-cutout.png"
   }
 ]
