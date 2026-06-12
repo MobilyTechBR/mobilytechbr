@@ -6059,7 +6059,7 @@
           return;
         }
 
-        const button = event.target.closest("[data-product-id]");
+        const button = event.target.closest("button[data-product-id], a[data-product-id]");
         if (!button) return;
         if (shippingEnabled) {
           openShippingModal(button, { type: "product", provider: "mercado" });
