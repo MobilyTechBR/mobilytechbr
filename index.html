@@ -3612,6 +3612,291 @@
         }
       }
 
+      @media (max-width: 760px) {
+        .site-header {
+          gap: 7px;
+          min-height: 0;
+          padding: 8px 8px 9px;
+        }
+        .brand {
+          justify-content: center;
+          gap: 8px;
+        }
+        .brand img {
+          width: 40px;
+          height: 40px;
+        }
+        .brand strong { font-size: 13px; }
+        .brand small {
+          font-size: 9px;
+          letter-spacing: .08em;
+        }
+        nav {
+          display: grid;
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          gap: 6px;
+          justify-content: center;
+          width: 100%;
+          font-size: 9.8px;
+        }
+        nav a {
+          min-width: 0;
+          min-height: 28px;
+          gap: 4px;
+          padding: 0 4px;
+          border-radius: 7px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .nav-symbol,
+        .nav-icon {
+          width: 13px;
+          height: 13px;
+        }
+        .nav-symbol svg {
+          width: 13px;
+          height: 13px;
+          stroke-width: 2.1;
+        }
+        .brand-nav-icon { max-width: 18px; }
+
+        .hero {
+          min-height: 78vh;
+          padding: 42px 18px 44px;
+        }
+        .hero-logo {
+          width: 132px;
+          height: 132px;
+          margin-bottom: 16px;
+        }
+        .hero h1 {
+          font-size: clamp(38px, 11.2vw, 48px);
+        }
+        .hero-subtitle {
+          margin-top: 8px;
+          font-size: clamp(15px, 4.2vw, 18px);
+          letter-spacing: .08em;
+        }
+        .hero-handle {
+          margin-top: 11px;
+          font-size: 14px;
+        }
+        .hero p.copy {
+          margin-top: 14px;
+          font-size: 14px;
+          line-height: 1.45;
+        }
+        .actions {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          width: min(100%, 380px);
+          margin-top: 20px;
+        }
+        .actions .button {
+          width: auto;
+          min-width: 0;
+          min-height: 38px;
+          padding: 0 9px;
+          white-space: normal;
+          font-size: 11px;
+          line-height: 1.12;
+          text-align: center;
+        }
+        .button-symbol {
+          width: 14px;
+          height: 14px;
+        }
+        .button-symbol svg {
+          width: 14px;
+          height: 14px;
+        }
+
+        .catalog {
+          padding: 42px 8px 56px;
+        }
+        .section-heading {
+          gap: 12px;
+          margin-bottom: 18px;
+        }
+        .section-heading h2,
+        .platforms h2 {
+          font-size: clamp(24px, 7.4vw, 34px);
+        }
+        .section-heading p:last-child {
+          font-size: 12.5px;
+          line-height: 1.42;
+        }
+        .catalog-block + .catalog-block {
+          margin-top: 34px;
+        }
+        .hardware-heading {
+          margin-bottom: 16px;
+        }
+        .grid,
+        .pc-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 14px 9px;
+        }
+        .hardware-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 12px 8px;
+        }
+        .product-card.is-expanded {
+          grid-column: 1 / -1;
+        }
+        .card {
+          border-radius: 7px;
+        }
+        .photo,
+        .product-card .photo {
+          width: calc(100% - 12px);
+          aspect-ratio: 1 / .86;
+          margin: 10px 6px 0;
+        }
+        .product-cutout,
+        .photo.portrait .product-cutout,
+        .photo.square .product-cutout {
+          width: 118%;
+          height: calc(100% + 24px);
+          bottom: -2px;
+        }
+        .product-card[data-product-id="pcgameri53330gtx550ti"] .product-cutout {
+          transform: translateX(-50%) translateY(8px) scale(1.08);
+        }
+        .body {
+          gap: 6px;
+          padding: 7px;
+        }
+        .product-summary {
+          gap: 5px;
+        }
+        .summary-line {
+          min-height: 22px;
+        }
+        .badge {
+          min-height: 20px;
+          padding-inline: 6px;
+          font-size: 9px;
+        }
+        .card h3 {
+          min-height: 32px;
+          font-size: 11.4px;
+          line-height: 1.12;
+        }
+        .config-toggle {
+          min-height: 27px;
+          font-size: 8.8px;
+          letter-spacing: .01em;
+        }
+        .summary-price {
+          gap: 2px;
+          font-size: 8px;
+        }
+        .summary-price strong {
+          font-size: 14px;
+        }
+        .details {
+          gap: 6px;
+        }
+        .details li {
+          grid-template-columns: 24px minmax(0, 1fr);
+          gap: 6px;
+          min-height: 34px;
+          padding: 5px 6px;
+        }
+        .spec-icon {
+          width: 24px;
+          height: 24px;
+        }
+        .spec-icon svg {
+          width: 14px;
+          height: 14px;
+        }
+        .detail-text strong,
+        .addon-group legend,
+        .addon-title {
+          font-size: 8.5px;
+        }
+        .detail-text em,
+        .addon-choice-row,
+        .swap-choice-row {
+          font-size: 10px;
+          line-height: 1.18;
+        }
+        .addon-groups {
+          gap: 7px;
+          padding: 7px;
+        }
+        .addon-choice-row,
+        .swap-choice-row {
+          min-height: 31px;
+          padding: 5px 6px;
+        }
+        .checkout-total {
+          padding-top: 7px;
+          font-size: 8.7px;
+        }
+        .checkout-total strong {
+          font-size: 15px;
+        }
+        .card-actions {
+          gap: 6px;
+        }
+        .card-actions .button,
+        .card-actions .payment-button,
+        .cart-button,
+        .details-button {
+          min-height: 34px;
+          padding-inline: 6px;
+          font-size: 9.4px;
+          line-height: 1.12;
+          white-space: normal;
+        }
+        .marketplace-actions {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+        .hardware-card .photo {
+          width: calc(100% - 8px);
+          aspect-ratio: 1 / .64;
+          margin: 7px 4px 0;
+        }
+        .hardware-card .body {
+          gap: 4px;
+          padding: 6px;
+        }
+        .hardware-card h3 {
+          min-height: 30px;
+          font-size: 10px;
+        }
+        .hardware-card .badge {
+          min-height: 18px;
+          font-size: 8px;
+        }
+        .hardware-card .config-toggle {
+          min-height: 24px;
+          font-size: 8px;
+        }
+        .hardware-card .summary-price strong {
+          font-size: 13px;
+        }
+        .hardware-card .button {
+          min-height: 30px;
+          font-size: 8.4px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        nav {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .pc-grid,
+        .hardware-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
       .sr-only {
         position: absolute;
         width: 1px;
