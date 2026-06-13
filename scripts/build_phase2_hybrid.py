@@ -1,0 +1,1598 @@
+from __future__ import annotations
+
+import csv
+import html
+import json
+import math
+import re
+from datetime import datetime
+from pathlib import Path
+from urllib.parse import quote
+
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+from openpyxl.utils import get_column_letter
+
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "data"
+DOCS_DIR = ROOT / "docs"
+CREATIVE_DIR = ROOT / "assets" / "phase2-creatives"
+OUTPUT_DIR = Path.home() / "Documents" / "New project" / "outputs" / "mobilytech_fase2_hibrida_2026-06-13"
+
+GENERATED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+BACKUP_PATH = Path.home() / "Documents" / "Site Vercel backups" / "Site Vercel backup antes fase2 hibrida 2026-06-13_08-48-34.zip"
+WIX_PREMIUM_SITE_ID = "85e985c5-2904-452f-85e2-a98f6d3b1cac"
+WIX_DOMAIN = "https://www.mobilytech.com.br/"
+VERCEL_PRODUCTION = "https://mobilytechbr.vercel.app"
+
+
+def slugify(value: str) -> str:
+    value = value.lower()
+    value = re.sub(r"[^a-z0-9]+", "-", value)
+    return value.strip("-")
+
+
+def trends_link(query: str) -> str:
+    return f"https://trends.google.com/trends/explore?geo=BR&q={quote(query)}"
+
+
+def meta_link(query: str) -> str:
+    return (
+        "https://www.facebook.com/ads/library/"
+        f"?active_status=active&ad_type=all&country=BR&q={quote(query)}"
+        "&search_type=keyword_unordered&media_type=all"
+    )
+
+
+def ml_trends_link(query: str) -> str:
+    return f"https://tendencias.mercadolivre.com.br/{quote(query.replace(' ', '-'))}"
+
+
+def ml_search_link(query: str) -> str:
+    return f"https://lista.mercadolivre.com.br/{quote(query.replace(' ', '-'))}"
+
+
+FINALISTS = [
+    {
+        "id": "case-ssd-nvme",
+        "title": "Case SSD M.2 NVMe USB-C 10Gbps",
+        "niche": "Armazenamento e upgrades",
+        "platform": "Mercado Livre / Shopee",
+        "sourceUrl": "https://www.mercadolivre.com.br/case-para-ssd-m2-nvme-externo-usb-c-31-adaptador-nvme-2230-2242-2260-2280-aluminio-m-key-ate-4tb-10gbps-inv-tech/p/MLB29349887",
+        "currentPrice": "R$59,98 no Mercado Livre; Shopee em torno de R$74,57",
+        "shipping": "Frete gratis/por cupom em ofertas vistas; prazo depende do vendedor e CEP",
+        "delivery": "ML local tende a ser mais rapido; Shopee pode variar por vendedor",
+        "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
+        "reviews": "Boa prova social para velocidade, praticidade e uso plug-and-play",
+        "returnPolicy": "Mercado Livre indica Compra Garantida e devolucao gratis quando aplicavel; confirmar oferta final antes de anunciar",
+        "operationModel": "Testar afiliado primeiro e depois dropshipping automatizado",
+        "whySell": "Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.",
+        "costTarget": "R$58 a R$75",
+        "sellTarget": "R$119 a R$139",
+        "margin": "Margem bruta alvo de R$40 a R$65 antes de trafego e taxas",
+        "confidence": "Alta",
+        "wixCategory": "Achados Tech / Armazenamento",
+        "creativeAngles": [
+            "Transforme SSD parado em armazenamento externo rapido",
+            "Backup de jogos, fotos e projetos sem abrir o PC"
+        ],
+        "risk": "Precisa separar NVMe de SATA para evitar compra errada.",
+    },
+    {
+        "id": "case-ssd-sata",
+        "title": "Case SSD/HD SATA 2.5 USB 3.0",
+        "niche": "Armazenamento e manutencao",
+        "platform": "Mercado Livre",
+        "sourceUrl": "https://www.mercadolivre.com.br/case-slim-hd-ssd-adaptador-usb-30-sata-3-externo-6gbps-ps4/p/MLB27786386",
+        "currentPrice": "R$22 com opcoes a partir de R$17,50",
+        "shipping": "Algumas opcoes com frete gratis; envio nacional",
+        "delivery": "Depende do vendedor; produto local facilita entrega rapida",
+        "sellerReputation": "+10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista",
+        "reviews": "Alta prova social: facil instalacao e bom custo-beneficio",
+        "returnPolicy": "Devolucao gratis em 30 dias na oferta vista e Compra Garantida",
+        "operationModel": "Afiliado primeiro, dropshipping automatizado se houver fornecedor estavel",
+        "whySell": "Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.",
+        "costTarget": "R$17,50 a R$30",
+        "sellTarget": "R$49 a R$69",
+        "margin": "Margem bruta alvo de R$20 a R$35 antes de trafego e taxas",
+        "confidence": "Alta",
+        "wixCategory": "Achados Tech / Armazenamento",
+        "creativeAngles": [
+            "Nao jogue fora o HD antigo: transforme em backup externo",
+            "Upgrade simples para quem comprou PC revisado"
+        ],
+        "risk": "Produto comoditizado; diferencial precisa ser conteudo e kit com SSD/limpeza.",
+    },
+    {
+        "id": "fone-kz-castor",
+        "title": "Fone KZ Castor monitor in-ear",
+        "niche": "Audio gamer e setup",
+        "platform": "Mercado Livre / Shopee / AliExpress",
+        "sourceUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
+        "currentPrice": "R$114 no Mercado Livre; Shopee oficial foi visto em torno de R$109 com cupom",
+        "shipping": "ML com frete gratis em oferta vista; Shopee pode depender de cupom/importacao",
+        "delivery": "ML mais rapido; Shopee/AliExpress podem ter prazo maior",
+        "sellerReputation": "Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas",
+        "reviews": "Comentarios destacam graves, clareza, custo-beneficio e uso para jogos/musica",
+        "returnPolicy": "ML com devolucao gratis/Compra Garantida quando aplicavel; confirmar oferta final",
+        "operationModel": "Afiliado primeiro; dropshipping so com fornecedor oficial/confiavel",
+        "whySell": "Produto quente em TikTok/audio e encaixa bem com setup gamer sem parecer aleatorio no site.",
+        "costTarget": "R$95 a R$115",
+        "sellTarget": "R$149 a R$179",
+        "margin": "Margem apertada no afiliado; melhor para conteudo e ticket complementar",
+        "confidence": "Media-alta",
+        "wixCategory": "Achados Tech / Audio",
+        "creativeAngles": [
+            "Som de monitor gastando menos que headset gamer comum",
+            "Setup limpo para jogar, estudar e ouvir musica"
+        ],
+        "risk": "Audio e muito subjetivo; evitar promessa exagerada de qualidade profissional.",
+    },
+    {
+        "id": "kit-limpeza-esd",
+        "title": "Kit limpeza ESD antiestatico para PC",
+        "niche": "Limpeza e manutencao",
+        "platform": "Mercado Livre / Shopee",
+        "sourceUrl": "https://www.mercadolivre.com.br/kit-limpeza-esd-antiestatico-para-pc-com-5-pecas/p/MLB37963040",
+        "currentPrice": "Ofertas entre cerca de R$21 e R$58 conforme composicao",
+        "shipping": "Algumas ofertas com frete gratis; verificar cupom/CEP",
+        "delivery": "Varia por vendedor; kits nacionais tendem a chegar antes",
+        "sellerReputation": "Oferta vista de loja Tapcamp com +100 mil vendas",
+        "reviews": "Sinal positivo por ser acessorio de baixo risco e uso recorrente",
+        "returnPolicy": "Devolucao gratis em 30 dias quando indicada no ML",
+        "operationModel": "Dropshipping automatizado com estoque reserva local para combos",
+        "whySell": "Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.",
+        "costTarget": "R$21 a R$35",
+        "sellTarget": "R$59 a R$89",
+        "margin": "Boa margem em kit/combo; trafego frio precisa criativo forte",
+        "confidence": "Alta",
+        "wixCategory": "Achados Tech / Limpeza",
+        "creativeAngles": [
+            "Poeira e estatica: o erro silencioso que mata desempenho",
+            "Kit simples para manter teclado, placa e gabinete apresentaveis"
+        ],
+        "risk": "Nao prometer recuperacao de componente; vender como prevencao e cuidado.",
+    },
+    {
+        "id": "mini-aspirador-teclado",
+        "title": "Mini aspirador USB para teclado e cantos do setup",
+        "niche": "Limpeza e setup",
+        "platform": "Mercado Livre / Shopee",
+        "sourceUrl": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
+        "currentPrice": "R$21,62 na oferta House Tools",
+        "shipping": "Envio para todo o pais; frete/prazo por CEP",
+        "delivery": "Produto local com vendedor grande tende a ser operacionalmente simples",
+        "sellerReputation": "Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas",
+        "reviews": "Poucas avaliacoes; review indica que e fraco, mas aceitavel pelo preco",
+        "returnPolicy": "Devolucao gratis indicada na oferta vista",
+        "operationModel": "Afiliado primeiro; dropshipping apenas se qualidade for validada",
+        "whySell": "Criativo de antes/depois funciona bem, mas precisa expectativa honesta.",
+        "costTarget": "R$21 a R$30",
+        "sellTarget": "R$49 a R$69",
+        "margin": "Margem boa, mas risco de suporte maior se expectativa for mal comunicada",
+        "confidence": "Media",
+        "wixCategory": "Achados Tech / Limpeza",
+        "creativeAngles": [
+            "Teclado cheio de migalha e poeira em 30 segundos",
+            "Limpeza rapida para mesa, notebook e setup gamer"
+        ],
+        "risk": "Potencia limitada; criativo precisa ser honesto para reduzir reclamacao.",
+    },
+    {
+        "id": "hub-usb-c",
+        "title": "Hub USB-C 4 portas para notebook e celular",
+        "niche": "Conectividade",
+        "platform": "Mercado Livre / Amazon",
+        "sourceUrl": "https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539",
+        "currentPrice": "R$19,27 em oferta Chrome Technology vista em busca",
+        "shipping": "Confirmar CEP; produto leve e facil de enviar",
+        "delivery": "Boa opcao para afiliado por marketplaces locais",
+        "sellerReputation": "Loja oficial Chrome Technology em oferta vista",
+        "reviews": "Produto de necessidade recorrente; validar avaliacoes no link final",
+        "returnPolicy": "Compra Garantida/marketplace; confirmar na oferta final",
+        "operationModel": "Afiliado primeiro",
+        "whySell": "Resolve problema comum de notebook com poucas portas e complementa PCs/notebooks.",
+        "costTarget": "R$19 a R$35",
+        "sellTarget": "R$49 a R$79",
+        "margin": "Margem razoavel, melhor como produto de volume/remarketing",
+        "confidence": "Media-alta",
+        "wixCategory": "Achados Tech / Conectividade",
+        "creativeAngles": [
+            "Falta porta USB no notebook? Resolva sem gambiarra",
+            "Mouse, teclado, pendrive e headset no mesmo hub"
+        ],
+        "risk": "Concorrencia alta; diferenciar por curadoria e garantia do marketplace.",
+    },
+    {
+        "id": "suporte-gpu-antisag",
+        "title": "Suporte anti-sag para placa de video",
+        "niche": "PC gamer e estetica",
+        "platform": "Mercado Livre / AliExpress",
+        "sourceUrl": "https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362",
+        "currentPrice": "Ofertas vistas de R$19,90 a R$134,99 conforme marca/RGB",
+        "shipping": "Frete geralmente simples; confirmar vendedor final",
+        "delivery": "Melhor testar fornecedor nacional ou afiliado antes",
+        "sellerReputation": "Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa",
+        "reviews": "Sinal bom para setups com GPUs pesadas, mas volume menor que cases/hubs",
+        "returnPolicy": "Confirmar devolucao e Compra Garantida na oferta escolhida",
+        "operationModel": "Testar afiliado primeiro e so depois dropshipping",
+        "whySell": "Visual forte para criativos e conversa com PCs gamer montados.",
+        "costTarget": "R$19 a R$45 para versao simples; RGB pode passar de R$100",
+        "sellTarget": "R$59 a R$99 simples; R$129+ RGB",
+        "margin": "Boa margem se fornecedor barato e qualidade aceitavel",
+        "confidence": "Media",
+        "wixCategory": "Achados Tech / Setup Gamer",
+        "creativeAngles": [
+            "Sua placa de video esta torta? Evite peso no slot PCIe",
+            "Setup gamer mais limpo com suporte ajustavel"
+        ],
+        "risk": "Medidas de gabinete variam; incluir guia de compatibilidade.",
+    },
+    {
+        "id": "keycaps-pbt",
+        "title": "Kit keycaps PBT para teclado mecanico",
+        "niche": "Personalizacao de setup",
+        "platform": "Mercado Livre / AliExpress",
+        "sourceUrl": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
+        "currentPrice": "Ofertas de R$28 a R$130+ conforme quantidade/perfil",
+        "shipping": "Frete gratis em algumas ofertas; internacional exige atencao a prazo",
+        "delivery": "Afiliado e mais simples ate validar demanda",
+        "sellerReputation": "Algumas ofertas com +50 vendas; buscar kits com mais prova social antes de anuncio",
+        "reviews": "Boa atratividade visual, mas nicho mais estetico",
+        "returnPolicy": "Confirmar compatibilidade e devolucao na oferta escolhida",
+        "operationModel": "Afiliado primeiro",
+        "whySell": "Produto visual para criativos e publico gamer que gosta de customizacao.",
+        "costTarget": "R$28 a R$70",
+        "sellTarget": "R$79 a R$149",
+        "margin": "Boa margem em dropshipping, mas exige conteudo claro de compatibilidade",
+        "confidence": "Media",
+        "wixCategory": "Achados Tech / Setup Gamer",
+        "creativeAngles": [
+            "Teclado antigo, cara nova em minutos",
+            "Personalize o setup sem comprar teclado novo"
+        ],
+        "risk": "Compatibilidade ABNT/ANSI/perfil gera devolucao se nao explicar bem.",
+    },
+    {
+        "id": "teclado-mecanico-abnt2",
+        "title": "Teclado gamer mecanico RGB ABNT2",
+        "niche": "Perifericos gamer",
+        "platform": "Mercado Livre / Amazon / Shopee",
+        "sourceUrl": "https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221",
+        "currentPrice": "Preco varia bastante; validar SKU final antes de campanha",
+        "shipping": "Produto maior; frete influencia conversao",
+        "delivery": "Afiliado e mais seguro no inicio",
+        "sellerReputation": "Busca indica bom custo-beneficio, mas tambem relatos de durabilidade a checar",
+        "reviews": "Demanda alta por ABNT2/RGB; precisa filtrar qualidade",
+        "returnPolicy": "Usar marketplace com politica clara de devolucao e garantia",
+        "operationModel": "Afiliado primeiro",
+        "whySell": "Periferico principal do setup; bom para combos com PCs e anuncios de retargeting.",
+        "costTarget": "R$80 a R$180 conforme modelo",
+        "sellTarget": "Afiliado: comissao; loja propria so apos fornecedor validado",
+        "margin": "Melhor como afiliado por reduzir suporte/garantia",
+        "confidence": "Media",
+        "wixCategory": "Achados Tech / Perifericos",
+        "creativeAngles": [
+            "Switch red, RGB e ABNT2 para jogar sem adaptacao",
+            "O upgrade mais visivel do setup"
+        ],
+        "risk": "Garantia e suporte podem consumir margem se vendido como estoque proprio.",
+    },
+    {
+        "id": "bias-light-led",
+        "title": "Fita LED bias lighting USB para monitor",
+        "niche": "Setup e conforto visual",
+        "platform": "Mercado Livre / Shopee / AliExpress",
+        "sourceUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
+        "currentPrice": "Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar",
+        "shipping": "Produto leve; bom para importacao se prazo for comunicado",
+        "delivery": "Melhor como afiliado/teste ate achar fornecedor ativo",
+        "sellerReputation": "Validacao fraca nesta rodada por oferta indisponivel",
+        "reviews": "Boa ideia visual para criativo, mas precisa fornecedor com estoque",
+        "returnPolicy": "Confirmar devolucao e funcionamento antes de publicar",
+        "operationModel": "Testar afiliado primeiro",
+        "whySell": "Produto barato e muito visual, bom para conteudo de setup.",
+        "costTarget": "R$15 a R$35",
+        "sellTarget": "R$49 a R$79",
+        "margin": "Boa no papel, mas depende de fornecedor ativo e qualidade",
+        "confidence": "Baixa-media",
+        "wixCategory": "Achados Tech / Setup Gamer",
+        "creativeAngles": [
+            "Deixe o monitor mais confortavel a noite",
+            "Setup com cara gamer gastando pouco"
+        ],
+        "risk": "Fornecedor atual precisa ser trocado; nao subir anuncio antes de validar estoque.",
+    },
+]
+
+
+for item in FINALISTS:
+    query = item["title"]
+    item["researchLinks"] = {
+        "googleTrends": trends_link(query),
+        "metaAdsLibrary": meta_link(query),
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": ml_trends_link(query),
+        "mercadoLivreSearch": ml_search_link(query),
+    }
+
+
+def split_lines(text: str, limit: int = 34) -> list[str]:
+    words = text.split()
+    lines: list[str] = []
+    current: list[str] = []
+    for word in words:
+        if len(" ".join(current + [word])) > limit and current:
+            lines.append(" ".join(current))
+            current = [word]
+        else:
+            current.append(word)
+    if current:
+        lines.append(" ".join(current))
+    return lines
+
+
+def creative_svg(item: dict, variant: int) -> str:
+    title_lines = split_lines(item["title"], 24)
+    if variant == 1:
+        headline = item["creativeAngles"][0]
+        hook = "PROBLEMA"
+        cta = "Validar oferta"
+        color = "#16d9ff"
+        glow = "#00ffc8"
+    else:
+        headline = item["creativeAngles"][1]
+        hook = "BENEFICIO"
+        cta = "Ver no site"
+        color = "#7cf7ff"
+        glow = "#3b82f6"
+    headline_lines = split_lines(headline, 29)
+    proof_lines = split_lines(item["sellerReputation"], 36)[:3]
+    price_lines = split_lines(f"Preco visto: {item['currentPrice']}", 35)[:2]
+    risk_lines = split_lines(item["risk"], 38)[:2]
+
+    def tspans(lines: list[str], x: int, y: int, size: int, weight: int = 800, fill: str = "#f7fbff", gap: int = 36) -> str:
+        parts = []
+        for i, line in enumerate(lines):
+            parts.append(f'<text x="{x}" y="{y + i * gap}" font-size="{size}" font-weight="{weight}" fill="{fill}">{html.escape(line)}</text>')
+        return "\n".join(parts)
+
+    icon = item["id"].split("-")[0].upper()
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#03070d"/>
+      <stop offset="46%" stop-color="#071827"/>
+      <stop offset="100%" stop-color="#020409"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="{color}" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="{glow}" stop-opacity="0.08"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1080" height="1080" rx="54" fill="url(#bg)"/>
+  <path d="M82 188 C250 78 422 125 535 196 C694 296 803 176 998 120" stroke="{color}" stroke-width="3" opacity="0.42" fill="none"/>
+  <path d="M69 901 C244 792 397 905 536 846 C720 768 824 842 1014 748" stroke="{glow}" stroke-width="3" opacity="0.32" fill="none"/>
+  <rect x="70" y="70" width="940" height="940" rx="42" fill="rgba(255,255,255,0.045)" stroke="{color}" stroke-opacity="0.52"/>
+  <text x="98" y="130" font-size="30" font-weight="900" fill="{color}">MobilyTech BR</text>
+  <text x="98" y="174" font-size="20" font-weight="800" fill="#b9f7ff">{html.escape(item["niche"])}</text>
+  <rect x="774" y="96" width="190" height="48" rx="24" fill="{color}" fill-opacity="0.14" stroke="{color}" stroke-opacity="0.75"/>
+  <text x="806" y="127" font-size="18" font-weight="900" fill="#f8ffff">{hook}</text>
+  <circle cx="820" cy="395" r="178" fill="url(#panel)" stroke="{color}" stroke-width="4" filter="url(#glow)"/>
+  <circle cx="820" cy="395" r="120" fill="#07111b" stroke="{glow}" stroke-opacity="0.55"/>
+  <text x="820" y="410" font-size="58" font-weight="950" fill="{color}" text-anchor="middle">{icon}</text>
+  <rect x="120" y="250" width="470" height="240" rx="32" fill="#07111b" fill-opacity="0.82" stroke="{color}" stroke-opacity="0.4"/>
+  {tspans(headline_lines, 150, 313, 41, 950, "#ffffff", 48)}
+  <rect x="120" y="530" width="835" height="180" rx="30" fill="#07111b" fill-opacity="0.74" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text x="150" y="585" font-size="23" font-weight="900" fill="{color}">PROVA / BENEFICIO</text>
+  {tspans(proof_lines, 150, 628, 23, 800, "#e7f9ff", 32)}
+  <rect x="120" y="748" width="520" height="138" rx="30" fill="{color}" fill-opacity="0.16" stroke="{color}" stroke-opacity="0.54"/>
+  {tspans(price_lines, 150, 807, 24, 900, "#ffffff", 34)}
+  <rect x="680" y="748" width="275" height="138" rx="30" fill="{glow}" fill-opacity="0.22" stroke="{glow}" stroke-opacity="0.72"/>
+  <text x="818" y="829" font-size="28" font-weight="950" fill="#ffffff" text-anchor="middle">{cta}</text>
+  <text x="120" y="932" font-size="18" font-weight="800" fill="#9fb7c7">{html.escape(" | ".join(risk_lines))}</text>
+  <text x="120" y="970" font-size="16" font-weight="700" fill="#5edcff">Criativo rascunho: precisa aprovacao antes de trafego pago.</text>
+</svg>"""
+
+
+def write_creatives() -> None:
+    CREATIVE_DIR.mkdir(parents=True, exist_ok=True)
+    for item in FINALISTS:
+        item["creatives"] = []
+        for variant in (1, 2):
+            filename = f"{item['id']}-{variant:02d}.svg"
+            rel = f"./assets/phase2-creatives/{filename}"
+            path = CREATIVE_DIR / filename
+            path.write_text(creative_svg(item, variant), encoding="utf-8")
+            item["creatives"].append(
+                {
+                    "variant": variant,
+                    "file": rel,
+                    "angle": item["creativeAngles"][variant - 1],
+                    "status": "rascunho para aprovacao",
+                }
+            )
+
+
+def write_phase2_json() -> Path:
+    payload = {
+        "generatedAt": GENERATED_AT,
+        "status": "draft-for-approval-no-paid-ads",
+        "strategy": "Vercel alternative preview first, then Wix/Premium bridge after approval.",
+        "backupPath": str(BACKUP_PATH),
+        "wixPremiumSiteId": WIX_PREMIUM_SITE_ID,
+        "wixDomain": WIX_DOMAIN,
+        "vercelProduction": VERCEL_PRODUCTION,
+        "sources": [
+            "https://tendencias.mercadolivre.com.br/",
+            "https://www.facebook.com/ads/library",
+            "https://ads.tiktok.com/business/creativecenter",
+            "https://ads.tiktok.com/help/article/top-products?lang=en",
+            "https://www.gov.br/mj/pt-br/assuntos/noticias/consumidor-tem-direito-ao-arrependimento-em-compras-on-line",
+            "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm",
+        ],
+        "finalists": FINALISTS,
+    }
+    path = DATA_DIR / "phase2-finalists.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    return path
+
+
+def write_page() -> Path:
+    html_doc = r"""<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MobilyTech BR | Fase 2 Hibrida</title>
+  <meta name="description" content="Rascunho alternativo MobilyTech BR inspirado em iBUYPOWER e KaBuM, com base Vercel e plano de hibridizacao Wix." />
+  <link rel="icon" href="./assets/favicon.png" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #02050a;
+      --bg-2: #07111c;
+      --panel: rgba(8, 23, 34, 0.78);
+      --panel-2: rgba(10, 35, 51, 0.86);
+      --line: rgba(118, 242, 255, 0.22);
+      --cyan: #17d9ff;
+      --cyan-2: #79f7ff;
+      --blue: #2e7dff;
+      --green: #00ffc6;
+      --text: #f6fbff;
+      --muted: #a9bed0;
+      --radius: 22px;
+      font-family: Nunito, Inter, Segoe UI, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(23, 217, 255, 0.13), transparent 28rem),
+        radial-gradient(circle at 82% 18%, rgba(0, 255, 198, 0.09), transparent 26rem),
+        linear-gradient(180deg, #03070d 0%, #06101b 44%, #02050a 100%);
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    .shell { width: min(1510px, calc(100% - 36px)); margin: 0 auto; }
+    .promo-strip {
+      background: rgba(4, 10, 16, 0.86);
+      border-bottom: 1px solid var(--line);
+      color: #d8fbff;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .promo-strip .shell {
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      text-align: center;
+    }
+    .promo-strip strong { color: var(--green); }
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(2, 7, 13, 0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-row {
+      height: 78px;
+      display: grid;
+      grid-template-columns: 190px 1fr 315px 114px;
+      align-items: center;
+      gap: 20px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.42)); }
+    .brand span { font-size: 20px; font-weight: 950; white-space: nowrap; }
+    .menu {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 18px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .menu::-webkit-scrollbar { display: none; }
+    .menu a {
+      font-size: 14px;
+      font-weight: 900;
+      color: #e4f8ff;
+      white-space: nowrap;
+      opacity: .95;
+      padding: 10px 2px;
+    }
+    .menu a:hover { color: var(--cyan); }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 14px;
+      height: 42px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .search input {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      font-weight: 800;
+      min-width: 0;
+    }
+    .cart-btn, .primary, .ghost {
+      border: 0;
+      cursor: pointer;
+      min-height: 42px;
+      border-radius: 999px;
+      font-weight: 950;
+      color: #041018;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      box-shadow: 0 0 26px rgba(23,217,255,.22);
+      padding: 0 18px;
+    }
+    .ghost {
+      background: transparent;
+      color: var(--cyan-2);
+      border: 1px solid rgba(121,247,255,.42);
+      box-shadow: none;
+    }
+    .hero {
+      padding: 30px 0 18px;
+    }
+    .hero-panel {
+      min-height: 430px;
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(105deg, rgba(3,7,13,.96) 0%, rgba(4,26,39,.92) 43%, rgba(3,7,13,.68) 100%),
+        url("./assets/cleaning-neon-bg.png") center/cover;
+      border: 1px solid rgba(121,247,255,.18);
+      box-shadow: 0 22px 65px rgba(0,0,0,.28);
+    }
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(121,247,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(121,247,255,.07) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: linear-gradient(90deg, #000 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 600px;
+      gap: 24px;
+      min-height: 430px;
+      align-items: center;
+      padding: 54px 64px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(23,217,255,.12);
+      border: 1px solid rgba(23,217,255,.3);
+      color: var(--cyan-2);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(44px, 5vw, 78px);
+      line-height: .94;
+      letter-spacing: 0;
+      max-width: 760px;
+    }
+    .lead {
+      max-width: 650px;
+      color: #d8e8f4;
+      font-size: 18px;
+      line-height: 1.5;
+      font-weight: 750;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .hero-stage {
+      min-height: 340px;
+      position: relative;
+      display: grid;
+      place-items: center;
+    }
+    .hero-stage img {
+      position: absolute;
+      max-width: 92%;
+      max-height: 330px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 16px 0 rgba(255,255,255,.9))
+        drop-shadow(0 24px 28px rgba(0,255,198,.12))
+        drop-shadow(0 0 32px rgba(23,217,255,.28));
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .hero-card-mini {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      width: 260px;
+      border-radius: 18px;
+      background: rgba(3, 12, 19, .76);
+      border: 1px solid rgba(121,247,255,.22);
+      padding: 16px;
+      box-shadow: 0 12px 34px rgba(0,0,0,.3);
+    }
+    .hero-card-mini strong { color: var(--green); font-size: 22px; display: block; }
+    .section { padding: 34px 0; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+    .section h2 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 46px);
+      line-height: 1;
+    }
+    .section p.sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-weight: 800;
+      max-width: 740px;
+    }
+    .deal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .deal-card, .feature-card, .review-card, .finalist-card, .creative-card, .policy-card {
+      border-radius: var(--radius);
+      background: var(--panel);
+      border: 1px solid rgba(121,247,255,.18);
+      box-shadow: 0 18px 48px rgba(0,0,0,.24);
+      overflow: hidden;
+      min-width: 0;
+    }
+    .deal-card {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      min-height: 330px;
+    }
+    .deal-img {
+      height: 166px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: radial-gradient(circle at 52% 40%, rgba(23,217,255,.22), rgba(0,0,0,.08) 54%, rgba(0,0,0,.28));
+      overflow: hidden;
+    }
+    .deal-img img { max-width: 96%; max-height: 154px; object-fit: contain; filter: drop-shadow(0 16px 20px rgba(0,0,0,.32)); }
+    .deal-card h3 { margin: 14px 0 8px; font-size: 17px; line-height: 1.18; min-height: 40px; }
+    .price { color: var(--cyan); font-size: 25px; font-weight: 950; margin-top: auto; }
+    .specs { color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.45; margin: 0 0 12px; }
+    .deal-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .deal-actions button, .deal-actions a { flex: 1; display: grid; place-items: center; min-height: 38px; border-radius: 999px; font-size: 12px; font-weight: 950; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .feature-card {
+      min-height: 300px;
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      align-items: center;
+      padding: 34px;
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(8,33,46,.92), rgba(3,7,13,.8)),
+        url("./assets/brazil-purchase-card-bg.png") center/cover;
+    }
+    .feature-card:nth-child(2) { background-image: linear-gradient(135deg, rgba(4, 64, 55, .9), rgba(3,7,13,.72)), url("./assets/cleaning-neon-bg.png"); }
+    .feature-card h3 { font-size: 34px; line-height: 1.02; margin: 0 0 12px; }
+    .feature-card p { color: #def6ff; font-weight: 800; line-height: 1.42; margin: 0 0 18px; }
+    .feature-card img { max-width: 310px; max-height: 260px; object-fit: contain; justify-self: end; filter: drop-shadow(0 22px 22px rgba(0,0,0,.34)); }
+    .finalist-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 15px;
+    }
+    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 254px; }
+    .badge {
+      align-self: flex-start;
+      border-radius: 999px;
+      background: rgba(23,217,255,.12);
+      border: 1px solid rgba(23,217,255,.32);
+      color: var(--cyan-2);
+      font-size: 11px;
+      font-weight: 950;
+      padding: 5px 9px;
+    }
+    .finalist-card h3 { font-size: 15px; line-height: 1.18; margin: 0; }
+    .finalist-card p { margin: 0; color: var(--muted); font-size: 12px; font-weight: 800; line-height: 1.35; }
+    .finalist-card .model { color: var(--green); }
+    .creative-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .creative-card { padding: 12px; background: rgba(6,17,27,.86); }
+    .creative-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 16px; display: block; background: #03101a; }
+    .creative-card span { display: block; margin-top: 9px; font-size: 12px; font-weight: 900; color: #dffbff; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .review-card { padding: 22px; min-height: 178px; background: rgba(255,255,255,.94); color: #09101a; }
+    .review-card .stars { color: #ffb300; font-size: 20px; letter-spacing: 0; }
+    .review-card h3 { margin: 8px 0; font-size: 18px; }
+    .review-card p { margin: 0; color: #243244; font-weight: 750; line-height: 1.4; }
+    .brand-wall {
+      border-radius: 24px;
+      padding: 28px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(121,247,255,.18);
+    }
+    .brand-wall h2 { text-align: center; margin-bottom: 24px; }
+    .brand-row {
+      display: grid;
+      grid-template-columns: repeat(11, minmax(0, 1fr));
+      gap: 12px;
+      align-items: center;
+    }
+    .brand-pill {
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(121,247,255,.16);
+      color: #f7fbff;
+      font-weight: 950;
+      font-size: 14px;
+      text-align: center;
+    }
+    .policy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .policy-card { padding: 20px; }
+    .policy-card h3 { margin: 0 0 10px; color: var(--cyan); }
+    .policy-card p { margin: 0; color: #d9e8f3; line-height: 1.45; font-weight: 760; }
+    footer {
+      margin-top: 40px;
+      padding: 44px 0;
+      background: #03070d;
+      border-top: 1px solid rgba(121,247,255,.16);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr repeat(4, 1fr);
+      gap: 26px;
+    }
+    footer h3 { margin: 0 0 12px; color: #fff; font-size: 16px; }
+    footer a, footer p { display: block; color: #c3d4df; font-weight: 800; font-size: 14px; margin: 8px 0; }
+    .drawer {
+      position: fixed;
+      inset: 0 0 0 auto;
+      z-index: 30;
+      width: min(430px, 100%);
+      background: rgba(4,11,18,.96);
+      border-left: 1px solid rgba(121,247,255,.22);
+      transform: translateX(110%);
+      transition: transform .25s ease;
+      padding: 22px;
+      overflow-y: auto;
+      box-shadow: -22px 0 60px rgba(0,0,0,.38);
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer h2 { margin-top: 0; }
+    .option {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 11px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.055);
+      margin: 8px 0;
+      font-weight: 850;
+      color: #dff7ff;
+    }
+    .cart-line {
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      padding: 10px 0;
+      color: #dff7ff;
+      font-weight: 800;
+    }
+    .sr-note {
+      margin-top: 12px;
+      color: #8fafbf;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+    @media (max-width: 1120px) {
+      .nav-row { grid-template-columns: 170px 1fr 230px 104px; gap: 12px; }
+      .hero-content { grid-template-columns: 1fr 430px; padding: 42px; }
+      .deal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .finalist-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 22px, 720px); }
+      .promo-strip .shell { min-height: 34px; font-size: 11px; }
+      .nav-row {
+        height: auto;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "brand cart"
+          "search search"
+          "menu menu";
+        padding: 10px 0;
+      }
+      .brand { grid-area: brand; }
+      .brand span { font-size: 16px; }
+      .menu { grid-area: menu; justify-content: start; gap: 14px; padding: 2px 0; }
+      .menu a { font-size: 12px; padding: 7px 0; }
+      .search { grid-area: search; height: 38px; }
+      .cart-btn { grid-area: cart; min-height: 38px; padding: 0 13px; font-size: 12px; }
+      .hero { padding-top: 14px; }
+      .hero-panel { min-height: 520px; border-radius: 22px; }
+      .hero-content { grid-template-columns: 1fr; padding: 28px 20px 22px; gap: 6px; min-height: 520px; }
+      h1 { font-size: 34px; }
+      .lead { font-size: 14px; line-height: 1.42; }
+      .hero-stage { min-height: 210px; }
+      .hero-stage img { max-height: 210px; }
+      .hero-card-mini { position: relative; right: auto; bottom: auto; width: 100%; margin-top: 8px; }
+      .hero-actions .primary, .hero-actions .ghost { min-height: 38px; font-size: 12px; padding: 0 14px; }
+      .section { padding: 24px 0; }
+      .section-head { align-items: start; flex-direction: column; }
+      .deal-grid, .finalist-grid, .creative-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .deal-card { min-height: 260px; padding: 10px; border-radius: 16px; }
+      .deal-img { height: 112px; border-radius: 14px; }
+      .deal-img img { max-height: 104px; }
+      .deal-card h3 { font-size: 12px; min-height: 34px; }
+      .price { font-size: 18px; }
+      .specs, .finalist-card p { font-size: 10.5px; }
+      .deal-actions { flex-direction: column; gap: 6px; }
+      .deal-actions button, .deal-actions a { min-height: 32px; font-size: 10.5px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .feature-card { grid-template-columns: 1fr 124px; min-height: 200px; padding: 18px; border-radius: 18px; }
+      .feature-card h3 { font-size: 22px; }
+      .feature-card p { font-size: 12px; }
+      .feature-card img { max-width: 130px; max-height: 140px; }
+      .finalist-card { min-height: 238px; padding: 11px; border-radius: 16px; }
+      .finalist-card h3 { font-size: 12px; }
+      .badge { font-size: 9px; padding: 4px 7px; }
+      .reviews-grid, .policy-grid { grid-template-columns: 1fr; }
+      .brand-wall { padding: 20px 12px; }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .brand-pill { min-height: 42px; font-size: 11px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+      footer .brand-block { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="promo-strip">
+    <div class="shell">
+      <span>Fase 2 em rascunho: <strong>PCs revisados + Achados Tech</strong></span>
+      <span>Sem anuncio pago sem aprovacao</span>
+    </div>
+  </div>
+  <nav class="top-nav">
+    <div class="shell nav-row">
+      <a class="brand" href="#inicio" aria-label="MobilyTech BR">
+        <img src="./assets/mobilytech-logo.png" alt="" />
+        <span>MobilyTech BR</span>
+      </a>
+      <div class="menu" aria-label="Navegacao principal">
+        <a href="#ofertas">Ofertas</a>
+        <a href="#pcs">PC Gamer</a>
+        <a href="#monte">Monte seu PC</a>
+        <a href="#limpeza">Limpeza</a>
+        <a href="#achados">Achados Tech</a>
+        <a href="#avaliacoes">Avaliacoes</a>
+        <a href="#contato">Suporte</a>
+      </div>
+      <label class="search" aria-label="Pesquisar">
+        <span>⌕</span>
+        <input id="searchInput" placeholder="Buscar PC, SSD, limpeza..." />
+      </label>
+      <button class="cart-btn" id="cartButton">Carrinho <span id="cartCount">0</span></button>
+    </div>
+  </nav>
+
+  <main id="inicio">
+    <section class="hero shell">
+      <div class="hero-panel">
+        <div class="hero-content">
+          <div>
+            <span class="eyebrow">Preview Vercel + ponte Wix</span>
+            <h1>MobilyTech BR em modo loja gamer</h1>
+            <p class="lead">Uma versao alternativa inspirada na estrutura da iBUYPOWER e energia visual da KaBuM, preservando PCs reais, swaps, limpeza, garantia e o plano hibrido com Wix Stores.</p>
+            <div class="hero-actions">
+              <a class="primary" href="#ofertas">Ver PCs e ofertas</a>
+              <a class="ghost" href="#achados">Ver Achados Tech</a>
+            </div>
+          </div>
+          <div class="hero-stage">
+            <img id="heroProduct" src="./assets/generated/pcryzen-5-3600-cutout.png" alt="PC Gamer MobilyTech" />
+            <div class="hero-card-mini">
+              <span>Julho Tech</span>
+              <strong>PCs + upgrades</strong>
+              <p class="specs">Cupom e campanhas ficam bloqueados ate sua aprovacao.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ofertas" class="section shell">
+      <div class="section-head">
+        <div>
+          <h2>Current Promotions MobilyTech</h2>
+          <p class="sub">PCs e hardware reais do catalogo atual, com botoes de configuracao e carrinho de rascunho para manter a logica viva.</p>
+        </div>
+        <a class="ghost" href="./index.html">Abrir site original</a>
+      </div>
+      <div id="productGrid" class="deal-grid"></div>
+    </section>
+
+    <section id="monte" class="section shell">
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div>
+            <span class="eyebrow">Custom gaming PCs</span>
+            <h3>Monte seu PC sob orcamento</h3>
+            <p>Escolha uso, jogos, limite de preco e upgrades. A montagem continua personalizada, com garantia informada antes da compra.</p>
+            <a class="primary" href="https://wa.me/5511954801967?text=Quero%20montar%20um%20PC%20com%20a%20MobilyTech%20BR">Consultar orcamento</a>
+          </div>
+          <img src="./assets/assembly-pc-build-cutout.png" alt="Montagem de PC" />
+        </article>
+        <article id="limpeza" class="feature-card">
+          <div>
+            <span class="eyebrow">PC cleaning service</span>
+            <h3>Limpeza e relatorio</h3>
+            <p>Servico de limpeza com foco em cuidado, organizacao e relatorio visual do antes/depois, mantendo a pegada de pos-venda.</p>
+            <a class="primary" href="https://wa.me/5511954801967?text=Quero%20agendar%20uma%20limpeza%20de%20PC">Agendar limpeza</a>
+          </div>
+          <img src="./assets/pc-cleaning-service-cutout.png" alt="Limpeza de PC" />
+        </article>
+      </div>
+    </section>
+
+    <section id="achados" class="section shell">
+      <div class="section-head">
+        <div>
+          <h2>Achados Tech em validacao</h2>
+          <p class="sub">Finalistas da Fase 2 com modelo operacional sugerido. Nada daqui vira anuncio pago sem aprovacao.</p>
+        </div>
+        <a class="ghost" href="./docs/MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx">Abrir planilha</a>
+      </div>
+      <div id="finalistGrid" class="finalist-grid"></div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-head">
+        <div>
+          <h2>Criativos para aprovacao</h2>
+          <p class="sub">Dois rascunhos por produto: problema, demonstracao, prova/beneficio e oferta. O orçamento de trafego fica para aprovacao manual.</p>
+        </div>
+      </div>
+      <div id="creativeGrid" class="creative-grid"></div>
+    </section>
+
+    <section id="avaliacoes" class="section shell">
+      <div class="section-head">
+        <div>
+          <h2>MobilyTech BR Customer Reviews</h2>
+          <p class="sub">Blocos no estilo iBUYPOWER, usando os canais reais de confianca da MobilyTech.</p>
+        </div>
+      </div>
+      <div class="reviews-grid">
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <h3>OLX</h3>
+          <p>Avaliacoes publicas do vendedor e historico de atendimento para PCs e hardware revisados.</p>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <h3>Facebook Marketplace</h3>
+          <p>Contato direto, retirada local em Vila Suzana e negociacao com fotos reais do produto.</p>
+        </article>
+        <article class="review-card">
+          <div class="stars">★★★★★</div>
+          <h3>Pos-venda</h3>
+          <p>Garantia informada, suporte por WhatsApp e orientacao sobre upgrades antes da compra.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="brand-wall">
+        <h2>Marcas confiaveis no ecossistema MobilyTech</h2>
+        <div class="brand-row">
+          <span class="brand-pill">Intel</span>
+          <span class="brand-pill">AMD</span>
+          <span class="brand-pill">NVIDIA</span>
+          <span class="brand-pill">Microsoft</span>
+          <span class="brand-pill">Corsair</span>
+          <span class="brand-pill">ASUS</span>
+          <span class="brand-pill">Gigabyte</span>
+          <span class="brand-pill">EVGA</span>
+          <span class="brand-pill">Kingston</span>
+          <span class="brand-pill">Crucial</span>
+          <span class="brand-pill">PNY</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="section-head">
+        <div>
+          <h2>Regras claras antes da compra</h2>
+          <p class="sub">Texto preventivo para manter a loja mais alinhada ao e-commerce brasileiro. Deve ser revisado juridicamente antes da versao final.</p>
+        </div>
+      </div>
+      <div class="policy-grid">
+        <article class="policy-card">
+          <h3>Arrependimento online</h3>
+          <p>Em compras online, o direito de arrependimento de 7 dias deve ser respeitado quando aplicavel. Nao recomendo remover essa regra no e-commerce.</p>
+        </article>
+        <article class="policy-card">
+          <h3>Garantia MobilyTech</h3>
+          <p>PCs revisados podem ter garantia comercial de 14 dias para defeitos preexistentes comprovados, sem cobrir danos por mau uso, alteracao indevida ou manipulacao apos a entrega.</p>
+        </article>
+        <article class="policy-card">
+          <h3>Achados Tech</h3>
+          <p>Produtos afiliados/dropshipping precisam informar prazo, origem, devolucao e suporte de forma clara antes de virar campanha paga.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contato">
+    <div class="shell footer-grid">
+      <div class="brand-block">
+        <div class="brand"><img src="./assets/mobilytech-logo.png" alt="" /><span>MobilyTech BR</span></div>
+        <p>Vila Suzana, Sao Paulo, SP</p>
+        <p>mobilytechbr@gmail.com</p>
+        <p>WhatsApp: +55 (11) 95480-1967</p>
+      </div>
+      <div>
+        <h3>Loja</h3>
+        <a href="#ofertas">PC Gamer</a>
+        <a href="#achados">Achados Tech</a>
+        <a href="#monte">Montagem</a>
+        <a href="#limpeza">Limpeza</a>
+      </div>
+      <div>
+        <h3>Suporte</h3>
+        <a href="https://wa.me/5511954801967">WhatsApp</a>
+        <a href="mailto:mobilytechbr@gmail.com">E-mail</a>
+        <a href="https://avaliacoes.olx.com.br/vendedor/859fd666-c047-4d6d-adac-374dd530d56c">Avaliacoes OLX</a>
+      </div>
+      <div>
+        <h3>Empresa</h3>
+        <a href="#avaliacoes">Avaliacoes</a>
+        <a href="./index.html">Site original</a>
+        <a href="./admin/index.html">Painel legado</a>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <a href="#contato">Politica de trocas</a>
+        <a href="#contato">Entrega</a>
+        <a href="#contato">Privacidade</a>
+      </div>
+    </div>
+  </footer>
+
+  <aside id="drawer" class="drawer" aria-live="polite"></aside>
+
+  <script>
+    const state = { products: [], swaps: [], addons: [], finalists: [], cart: [], heroIndex: 0 };
+    const money = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
+    const qs = selector => document.querySelector(selector);
+
+    async function loadData() {
+      const [products, swaps, addons, phase2] = await Promise.all([
+        fetch('./data/products.json').then(r => r.json()),
+        fetch('./data/swaps.json').then(r => r.json()),
+        fetch('./data/addons.json').then(r => r.json()),
+        fetch('./data/phase2-finalists.json').then(r => r.json())
+      ]);
+      state.products = products.filter(p => p.active !== false);
+      state.swaps = swaps.filter(s => s.active !== false);
+      state.addons = addons.filter(a => a.active !== false);
+      state.finalists = phase2.finalists || [];
+      renderProducts();
+      renderFinalists();
+      renderCreatives();
+      startHero();
+    }
+
+    function productSpecs(product) {
+      const specs = product.specs || {};
+      return [specs.processor, specs.memory, specs.gpu, specs.storage, specs.powerSupply, specs.brand, specs.capacity]
+        .filter(Boolean)
+        .slice(0, 4)
+        .join(' • ');
+    }
+
+    function renderProducts() {
+      const term = qs('#searchInput').value.trim().toLowerCase();
+      const grid = qs('#productGrid');
+      grid.innerHTML = '';
+      state.products
+        .filter(product => !term || `${product.title} ${product.category} ${productSpecs(product)}`.toLowerCase().includes(term))
+        .forEach(product => {
+          const card = document.createElement('article');
+          card.className = 'deal-card';
+          card.innerHTML = `
+            <div class="deal-img"><img src="${product.cutout || product.image}" alt="${product.title}"></div>
+            <h3>${product.title}</h3>
+            <p class="specs">${productSpecs(product) || product.badge || 'Catalogo MobilyTech'}</p>
+            <div class="price">${money(product.price)}</div>
+            <div class="deal-actions">
+              <button class="ghost" type="button" data-config="${product.id}">Configurar</button>
+              <button class="primary" type="button" data-add="${product.id}">Adicionar</button>
+            </div>`;
+          grid.appendChild(card);
+        });
+    }
+
+    function renderFinalists() {
+      const term = qs('#searchInput').value.trim().toLowerCase();
+      const grid = qs('#finalistGrid');
+      grid.innerHTML = '';
+      state.finalists
+        .filter(item => !term || `${item.title} ${item.niche} ${item.operationModel}`.toLowerCase().includes(term))
+        .forEach(item => {
+          const card = document.createElement('article');
+          card.className = 'finalist-card';
+          card.innerHTML = `
+            <span class="badge">${item.confidence} confianca</span>
+            <h3>${item.title}</h3>
+            <p>${item.whySell}</p>
+            <p><strong>Preco:</strong> ${item.currentPrice}</p>
+            <p class="model">${item.operationModel}</p>
+            <a class="ghost" href="${item.sourceUrl}" target="_blank" rel="noreferrer">Ver fonte</a>`;
+          grid.appendChild(card);
+        });
+    }
+
+    function renderCreatives() {
+      const grid = qs('#creativeGrid');
+      grid.innerHTML = '';
+      state.finalists.forEach(item => {
+        (item.creatives || []).forEach(creative => {
+          const card = document.createElement('a');
+          card.className = 'creative-card';
+          card.href = creative.file;
+          card.target = '_blank';
+          card.rel = 'noreferrer';
+          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} • ${creative.angle}</span>`;
+          grid.appendChild(card);
+        });
+      });
+    }
+
+    function startHero() {
+      const pcs = state.products.filter(p => p.category === 'pc' && (p.cutout || p.image));
+      if (!pcs.length) return;
+      const img = qs('#heroProduct');
+      setInterval(() => {
+        state.heroIndex = (state.heroIndex + 1) % pcs.length;
+        img.style.opacity = '0';
+        img.style.transform = 'translateY(10px) scale(.98)';
+        setTimeout(() => {
+          img.src = pcs[state.heroIndex].cutout || pcs[state.heroIndex].image;
+          img.alt = pcs[state.heroIndex].title;
+          img.style.opacity = '1';
+          img.style.transform = 'translateY(0) scale(1)';
+        }, 260);
+      }, 4600);
+    }
+
+    function compatibleSwaps(product) {
+      const specsText = Object.values(product.specs || {}).join(' ').toLowerCase();
+      const specific = (product.swaps && product.swaps.processor ? product.swaps.processor : []).map((swap, index) => ({
+        id: `${product.id}-processor-${index}`,
+        label: swap.label,
+        price: swap.price || 0
+      }));
+      const global = state.swaps.filter(swap => {
+        const when = (swap.whenContains || []).every(token => specsText.includes(String(token).toLowerCase()));
+        const exclude = (swap.excludeContains || []).some(token => specsText.includes(String(token).toLowerCase()));
+        return (when || !swap.whenContains) && !exclude;
+      });
+      return [...specific, ...global];
+    }
+
+    function openConfig(productId) {
+      const product = state.products.find(p => p.id === productId);
+      if (!product) return;
+      const drawer = qs('#drawer');
+      const swaps = compatibleSwaps(product);
+      let selected = [];
+      let total = product.price || 0;
+      const render = () => {
+        total = (product.price || 0) + selected.reduce((sum, option) => sum + option.price, 0);
+        drawer.innerHTML = `
+          <button class="ghost" type="button" id="closeDrawer">Fechar</button>
+          <h2>${product.title}</h2>
+          <p class="specs">${productSpecs(product)}</p>
+          <div class="price">${money(total)}</div>
+          <h3>Trocas e adicionais</h3>
+          ${[...swaps, ...state.addons].map(option => `
+            <label class="option">
+              <input type="checkbox" data-option="${option.id}" ${selected.some(s => s.id === option.id) ? 'checked' : ''}>
+              <span>${option.label} <strong>${option.price >= 0 ? '+' : ''}${money(option.price)}</strong></span>
+            </label>`).join('') || '<p class="specs">Nenhum adicional disponivel para este item.</p>'}
+          <button class="primary" type="button" id="addConfigured">Adicionar configurado</button>
+          <p class="sr-note">Rascunho funcional: o checkout real continua no fluxo original/Wix apos aprovacao da arquitetura hibrida.</p>`;
+        drawer.querySelector('#closeDrawer').onclick = closeDrawer;
+        drawer.querySelectorAll('[data-option]').forEach(input => {
+          input.onchange = event => {
+            const id = event.target.dataset.option;
+            const option = [...swaps, ...state.addons].find(item => item.id === id);
+            if (!option) return;
+            selected = event.target.checked ? [...selected, option] : selected.filter(item => item.id !== id);
+            render();
+          };
+        });
+        drawer.querySelector('#addConfigured').onclick = () => {
+          state.cart.push({ title: product.title, total, options: selected.map(s => s.label) });
+          updateCart();
+          closeDrawer();
+        };
+      };
+      drawer.classList.add('open');
+      render();
+    }
+
+    function addProduct(productId) {
+      const product = state.products.find(p => p.id === productId);
+      if (!product) return;
+      state.cart.push({ title: product.title, total: product.price || 0, options: [] });
+      updateCart();
+    }
+
+    function updateCart() {
+      qs('#cartCount').textContent = state.cart.length;
+    }
+
+    function openCart() {
+      const drawer = qs('#drawer');
+      const total = state.cart.reduce((sum, item) => sum + item.total, 0);
+      drawer.innerHTML = `
+        <button class="ghost" type="button" id="closeDrawer">Fechar</button>
+        <h2>Carrinho de rascunho</h2>
+        ${state.cart.map(item => `<div class="cart-line"><strong>${item.title}</strong><br>${item.options.join(', ') || 'Sem adicionais'}<br>${money(item.total)}</div>`).join('') || '<p class="specs">Carrinho vazio.</p>'}
+        <div class="price">${money(total)}</div>
+        <a class="primary" href="./index.html#cart">Ir para checkout original</a>
+        <a class="ghost" href="https://wa.me/5511954801967?text=Quero%20finalizar%20um%20pedido%20MobilyTech">Falar no WhatsApp</a>
+        <p class="sr-note">Na versao aprovada, este ponto deve ligar ao Wix Stores/Mercado Pago/Melhor Envio sem perder o visual.</p>`;
+      drawer.classList.add('open');
+      drawer.querySelector('#closeDrawer').onclick = closeDrawer;
+    }
+
+    function closeDrawer() { qs('#drawer').classList.remove('open'); }
+
+    document.addEventListener('click', event => {
+      const configId = event.target.closest('[data-config]')?.dataset.config;
+      const addId = event.target.closest('[data-add]')?.dataset.add;
+      if (configId) openConfig(configId);
+      if (addId) addProduct(addId);
+    });
+    qs('#cartButton').addEventListener('click', openCart);
+    qs('#searchInput').addEventListener('input', () => { renderProducts(); renderFinalists(); });
+    loadData().catch(error => {
+      document.body.insertAdjacentHTML('afterbegin', `<pre style="color:#fff;background:#900;padding:12px">${error.message}</pre>`);
+    });
+  </script>
+</body>
+</html>
+"""
+    path = ROOT / "fase2-hibrida.html"
+    path.write_text(html_doc, encoding="utf-8")
+    return path
+
+
+def write_csvs() -> tuple[Path, Path]:
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    finalists_csv = DOCS_DIR / "phase2-finalists-2026-06-13.csv"
+    creative_csv = DOCS_DIR / "phase2-creatives-2026-06-13.csv"
+    fields = [
+        "id",
+        "title",
+        "niche",
+        "platform",
+        "currentPrice",
+        "shipping",
+        "delivery",
+        "sellerReputation",
+        "reviews",
+        "returnPolicy",
+        "operationModel",
+        "whySell",
+        "costTarget",
+        "sellTarget",
+        "margin",
+        "confidence",
+        "risk",
+        "sourceUrl",
+        "googleTrends",
+        "metaAdsLibrary",
+        "tikTokCreativeCenter",
+        "mercadoLivreTendencias",
+    ]
+    with finalists_csv.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, delimiter=";")
+        writer.writeheader()
+        for item in FINALISTS:
+            row = {key: item.get(key, "") for key in fields}
+            for key in ("googleTrends", "metaAdsLibrary", "tikTokCreativeCenter", "mercadoLivreTendencias"):
+                row[key] = item["researchLinks"].get(key, "")
+            writer.writerow(row)
+    with creative_csv.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=["productId", "product", "variant", "angle", "file", "status"], delimiter=";")
+        writer.writeheader()
+        for item in FINALISTS:
+            for creative in item["creatives"]:
+                writer.writerow(
+                    {
+                        "productId": item["id"],
+                        "product": item["title"],
+                        "variant": creative["variant"],
+                        "angle": creative["angle"],
+                        "file": creative["file"],
+                        "status": creative["status"],
+                    }
+                )
+    return finalists_csv, creative_csv
+
+
+def write_workbook() -> Path:
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Finalistas Fase 2"
+    headers = [
+        "Produto",
+        "Nicho",
+        "Modelo operacional",
+        "Preco atual",
+        "Frete",
+        "Prazo/logistica",
+        "Reputacao",
+        "Avaliacoes",
+        "Devolucao",
+        "Margem possivel",
+        "Confianca",
+        "Risco",
+        "Link principal",
+        "Google Trends",
+        "Meta Ads Library",
+        "TikTok Creative Center",
+        "ML Tendencias",
+    ]
+    ws.append(headers)
+    for item in FINALISTS:
+        ws.append(
+            [
+                item["title"],
+                item["niche"],
+                item["operationModel"],
+                item["currentPrice"],
+                item["shipping"],
+                item["delivery"],
+                item["sellerReputation"],
+                item["reviews"],
+                item["returnPolicy"],
+                item["margin"],
+                item["confidence"],
+                item["risk"],
+                item["sourceUrl"],
+                item["researchLinks"]["googleTrends"],
+                item["researchLinks"]["metaAdsLibrary"],
+                item["researchLinks"]["tikTokCreativeCenter"],
+                item["researchLinks"]["mercadoLivreTendencias"],
+            ]
+        )
+
+    ws2 = wb.create_sheet("Criativos")
+    ws2.append(["Produto", "Variante", "Angulo", "Arquivo", "Status"])
+    for item in FINALISTS:
+        for creative in item["creatives"]:
+            ws2.append([item["title"], creative["variant"], creative["angle"], creative["file"], creative["status"]])
+
+    ws3 = wb.create_sheet("Execucao")
+    exec_rows = [
+        ["Gerado em", GENERATED_AT],
+        ["Backup usado", str(BACKUP_PATH)],
+        ["Preview local", "http://127.0.0.1:4173/fase2-hibrida.html"],
+        ["Arquivo HTML", str(ROOT / "fase2-hibrida.html")],
+        ["JSON", str(DATA_DIR / "phase2-finalists.json")],
+        ["Wix Premium site ID", WIX_PREMIUM_SITE_ID],
+        ["Dominio Wix", WIX_DOMAIN],
+        ["Status anuncios pagos", "Bloqueados ate aprovacao manual"],
+        ["Pendencia legal", "Direito de arrependimento de 7 dias deve permanecer para compra online quando aplicavel"],
+    ]
+    for row in exec_rows:
+        ws3.append(row)
+
+    for sheet in wb.worksheets:
+        sheet.freeze_panes = "A2"
+        header_fill = PatternFill("solid", fgColor="062131")
+        header_font = Font(color="FFFFFF", bold=True)
+        thin = Side(style="thin", color="1F5A6A")
+        for cell in sheet[1]:
+            cell.fill = header_fill
+            cell.font = header_font
+            cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+            cell.border = Border(top=thin, left=thin, right=thin, bottom=thin)
+        for row in sheet.iter_rows(min_row=2):
+            for cell in row:
+                cell.alignment = Alignment(vertical="top", wrap_text=True)
+                cell.border = Border(top=thin, left=thin, right=thin, bottom=thin)
+        for column in sheet.columns:
+            letter = get_column_letter(column[0].column)
+            max_length = min(max((len(str(cell.value or "")) for cell in column), default=10), 58)
+            sheet.column_dimensions[letter].width = max(12, max_length + 2)
+
+    docs_xlsx = DOCS_DIR / "MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx"
+    out_xlsx = OUTPUT_DIR / docs_xlsx.name
+    wb.save(docs_xlsx)
+    wb.save(out_xlsx)
+    return docs_xlsx
+
+
+def write_report() -> Path:
+    lines = [
+        "# MobilyTech BR - Fase 2 Hibrida",
+        "",
+        f"Gerado em: {GENERATED_AT}",
+        "",
+        "## Objetivo",
+        "",
+        "Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a base visual e funcional da MobilyTech BR, mas com estrutura inspirada principalmente na iBUYPOWER e parcialmente na KaBuM. A pagina tambem prepara a ponte para Wix Stores, marketing e produtos de afiliado/dropshipping depois de aprovacao.",
+        "",
+        "## Arquivos principais",
+        "",
+        f"- Backup: `{BACKUP_PATH}`",
+        "- Preview local: `http://127.0.0.1:4173/fase2-hibrida.html`",
+        "- HTML: `fase2-hibrida.html`",
+        "- Dados: `data/phase2-finalists.json`",
+        "- Criativos: `assets/phase2-creatives/*.svg`",
+        "- Planilha: `docs/MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx`",
+        "",
+        "## O que foi aplicado da referencia iBUYPOWER/KaBuM",
+        "",
+        "- Barra superior promocional, navegacao por categorias e busca.",
+        "- Hero grande com PC real da MobilyTech, chamada de campanha e visual de loja gamer.",
+        "- Cards grandes para PCs prontos, montagem personalizada e limpeza de PCs.",
+        "- Bloco de avaliacoes no estilo cards brancos, adaptado para OLX/Facebook/pos-venda.",
+        "- Rodape com Loja, Suporte, Empresa e Legal.",
+        "- Fileira de marcas confiaveis com proporcao controlada para nao cortar logos/textos.",
+        "- Grid mobile reduzido para caber mais itens por linha e evitar botoes gigantes.",
+        "",
+        "## Finalistas escolhidos",
+        "",
+    ]
+    for index, item in enumerate(FINALISTS, start=1):
+        lines.extend(
+            [
+                f"### {index}. {item['title']}",
+                "",
+                f"- Nicho: {item['niche']}",
+                f"- Modelo: {item['operationModel']}",
+                f"- Preco/frete: {item['currentPrice']} | {item['shipping']}",
+                f"- Reputacao: {item['sellerReputation']}",
+                f"- Por que vender: {item['whySell']}",
+                f"- Margem: {item['margin']}",
+                f"- Risco: {item['risk']}",
+                f"- Link: {item['sourceUrl']}",
+                f"- Pesquisa: [Google Trends]({item['researchLinks']['googleTrends']}) | [Meta Ads Library]({item['researchLinks']['metaAdsLibrary']}) | [TikTok Creative Center]({item['researchLinks']['tikTokCreativeCenter']}) | [ML Tendencias]({item['researchLinks']['mercadoLivreTendencias']})",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "## Observacoes de conformidade",
+            "",
+            "- Para compras online, o direito de arrependimento de 7 dias nao deve ser removido quando aplicavel. Fontes consultadas: gov.br/MJ e CDC/Planalto.",
+            "- A garantia comercial de 14 dias para PCs revisados pode ser exibida como garantia adicional/contratual, mas nao deve excluir direitos legais por vicio/defeito.",
+            "- Produtos de afiliado/dropshipping precisam deixar prazo, origem, devolucao, suporte e responsavel pela entrega claros antes de ir ao ar.",
+            "",
+            "## Pendencias antes de campanha paga",
+            "",
+            "- Confirmar no link final de cada produto: preco atual, prazo para CEP de destino, vendedor, reputacao e devolucao.",
+            "- Validar manualmente Google Trends, Meta Ads Library, TikTok Creative Center e Mercado Livre Tendencias nos links preparados.",
+            "- Aprovar 2 criativos por produto e definir orcamento pequeno de teste.",
+            "- So depois subir teste e medir CPC, CTR, conversao, margem e suporte.",
+        ]
+    )
+    path = DOCS_DIR / "phase2-hibrida-execution-2026-06-13.md"
+    path.write_text("\n".join(lines), encoding="utf-8")
+    return path
+
+
+def main() -> None:
+    DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    write_creatives()
+    json_path = write_phase2_json()
+    page_path = write_page()
+    finalists_csv, creative_csv = write_csvs()
+    xlsx_path = write_workbook()
+    report_path = write_report()
+    print(json.dumps(
+        {
+            "json": str(json_path),
+            "page": str(page_path),
+            "finalistsCsv": str(finalists_csv),
+            "creativeCsv": str(creative_csv),
+            "xlsx": str(xlsx_path),
+            "report": str(report_path),
+            "creatives": len(list(CREATIVE_DIR.glob("*.svg"))),
+        },
+        ensure_ascii=False,
+        indent=2,
+    ))
+
+
+if __name__ == "__main__":
+    main()

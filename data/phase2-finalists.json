@@ -1,0 +1,479 @@
+{
+  "generatedAt": "2026-06-13 09:08:36",
+  "status": "draft-for-approval-no-paid-ads",
+  "strategy": "Vercel alternative preview first, then Wix/Premium bridge after approval.",
+  "backupPath": "C:\\Users\\MF\\Documents\\Site Vercel backups\\Site Vercel backup antes fase2 hibrida 2026-06-13_08-48-34.zip",
+  "wixPremiumSiteId": "85e985c5-2904-452f-85e2-a98f6d3b1cac",
+  "wixDomain": "https://www.mobilytech.com.br/",
+  "vercelProduction": "https://mobilytechbr.vercel.app",
+  "sources": [
+    "https://tendencias.mercadolivre.com.br/",
+    "https://www.facebook.com/ads/library",
+    "https://ads.tiktok.com/business/creativecenter",
+    "https://ads.tiktok.com/help/article/top-products?lang=en",
+    "https://www.gov.br/mj/pt-br/assuntos/noticias/consumidor-tem-direito-ao-arrependimento-em-compras-on-line",
+    "https://www.planalto.gov.br/ccivil_03/leis/l8078compilado.htm"
+  ],
+  "finalists": [
+    {
+      "id": "case-ssd-nvme",
+      "title": "Case SSD M.2 NVMe USB-C 10Gbps",
+      "niche": "Armazenamento e upgrades",
+      "platform": "Mercado Livre / Shopee",
+      "sourceUrl": "https://www.mercadolivre.com.br/case-para-ssd-m2-nvme-externo-usb-c-31-adaptador-nvme-2230-2242-2260-2280-aluminio-m-key-ate-4tb-10gbps-inv-tech/p/MLB29349887",
+      "currentPrice": "R$59,98 no Mercado Livre; Shopee em torno de R$74,57",
+      "shipping": "Frete gratis/por cupom em ofertas vistas; prazo depende do vendedor e CEP",
+      "delivery": "ML local tende a ser mais rapido; Shopee pode variar por vendedor",
+      "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
+      "reviews": "Boa prova social para velocidade, praticidade e uso plug-and-play",
+      "returnPolicy": "Mercado Livre indica Compra Garantida e devolucao gratis quando aplicavel; confirmar oferta final antes de anunciar",
+      "operationModel": "Testar afiliado primeiro e depois dropshipping automatizado",
+      "whySell": "Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.",
+      "costTarget": "R$58 a R$75",
+      "sellTarget": "R$119 a R$139",
+      "margin": "Margem bruta alvo de R$40 a R$65 antes de trafego e taxas",
+      "confidence": "Alta",
+      "wixCategory": "Achados Tech / Armazenamento",
+      "creativeAngles": [
+        "Transforme SSD parado em armazenamento externo rapido",
+        "Backup de jogos, fotos e projetos sem abrir o PC"
+      ],
+      "risk": "Precisa separar NVMe de SATA para evitar compra errada.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Case%20SSD%20M.2%20NVMe%20USB-C%2010Gbps",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Case%20SSD%20M.2%20NVMe%20USB-C%2010Gbps&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Case-SSD-M.2-NVMe-USB-C-10Gbps",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Case-SSD-M.2-NVMe-USB-C-10Gbps"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/case-ssd-nvme-01.svg",
+          "angle": "Transforme SSD parado em armazenamento externo rapido",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/case-ssd-nvme-02.svg",
+          "angle": "Backup de jogos, fotos e projetos sem abrir o PC",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "case-ssd-sata",
+      "title": "Case SSD/HD SATA 2.5 USB 3.0",
+      "niche": "Armazenamento e manutencao",
+      "platform": "Mercado Livre",
+      "sourceUrl": "https://www.mercadolivre.com.br/case-slim-hd-ssd-adaptador-usb-30-sata-3-externo-6gbps-ps4/p/MLB27786386",
+      "currentPrice": "R$22 com opcoes a partir de R$17,50",
+      "shipping": "Algumas opcoes com frete gratis; envio nacional",
+      "delivery": "Depende do vendedor; produto local facilita entrega rapida",
+      "sellerReputation": "+10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista",
+      "reviews": "Alta prova social: facil instalacao e bom custo-beneficio",
+      "returnPolicy": "Devolucao gratis em 30 dias na oferta vista e Compra Garantida",
+      "operationModel": "Afiliado primeiro, dropshipping automatizado se houver fornecedor estavel",
+      "whySell": "Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.",
+      "costTarget": "R$17,50 a R$30",
+      "sellTarget": "R$49 a R$69",
+      "margin": "Margem bruta alvo de R$20 a R$35 antes de trafego e taxas",
+      "confidence": "Alta",
+      "wixCategory": "Achados Tech / Armazenamento",
+      "creativeAngles": [
+        "Nao jogue fora o HD antigo: transforme em backup externo",
+        "Upgrade simples para quem comprou PC revisado"
+      ],
+      "risk": "Produto comoditizado; diferencial precisa ser conteudo e kit com SSD/limpeza.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Case%20SSD/HD%20SATA%202.5%20USB%203.0",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Case%20SSD/HD%20SATA%202.5%20USB%203.0&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Case-SSD/HD-SATA-2.5-USB-3.0",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Case-SSD/HD-SATA-2.5-USB-3.0"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/case-ssd-sata-01.svg",
+          "angle": "Nao jogue fora o HD antigo: transforme em backup externo",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/case-ssd-sata-02.svg",
+          "angle": "Upgrade simples para quem comprou PC revisado",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "fone-kz-castor",
+      "title": "Fone KZ Castor monitor in-ear",
+      "niche": "Audio gamer e setup",
+      "platform": "Mercado Livre / Shopee / AliExpress",
+      "sourceUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
+      "currentPrice": "R$114 no Mercado Livre; Shopee oficial foi visto em torno de R$109 com cupom",
+      "shipping": "ML com frete gratis em oferta vista; Shopee pode depender de cupom/importacao",
+      "delivery": "ML mais rapido; Shopee/AliExpress podem ter prazo maior",
+      "sellerReputation": "Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas",
+      "reviews": "Comentarios destacam graves, clareza, custo-beneficio e uso para jogos/musica",
+      "returnPolicy": "ML com devolucao gratis/Compra Garantida quando aplicavel; confirmar oferta final",
+      "operationModel": "Afiliado primeiro; dropshipping so com fornecedor oficial/confiavel",
+      "whySell": "Produto quente em TikTok/audio e encaixa bem com setup gamer sem parecer aleatorio no site.",
+      "costTarget": "R$95 a R$115",
+      "sellTarget": "R$149 a R$179",
+      "margin": "Margem apertada no afiliado; melhor para conteudo e ticket complementar",
+      "confidence": "Media-alta",
+      "wixCategory": "Achados Tech / Audio",
+      "creativeAngles": [
+        "Som de monitor gastando menos que headset gamer comum",
+        "Setup limpo para jogar, estudar e ouvir musica"
+      ],
+      "risk": "Audio e muito subjetivo; evitar promessa exagerada de qualidade profissional.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Fone%20KZ%20Castor%20monitor%20in-ear",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Fone%20KZ%20Castor%20monitor%20in-ear&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Fone-KZ-Castor-monitor-in-ear",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Fone-KZ-Castor-monitor-in-ear"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/fone-kz-castor-01.svg",
+          "angle": "Som de monitor gastando menos que headset gamer comum",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/fone-kz-castor-02.svg",
+          "angle": "Setup limpo para jogar, estudar e ouvir musica",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "kit-limpeza-esd",
+      "title": "Kit limpeza ESD antiestatico para PC",
+      "niche": "Limpeza e manutencao",
+      "platform": "Mercado Livre / Shopee",
+      "sourceUrl": "https://www.mercadolivre.com.br/kit-limpeza-esd-antiestatico-para-pc-com-5-pecas/p/MLB37963040",
+      "currentPrice": "Ofertas entre cerca de R$21 e R$58 conforme composicao",
+      "shipping": "Algumas ofertas com frete gratis; verificar cupom/CEP",
+      "delivery": "Varia por vendedor; kits nacionais tendem a chegar antes",
+      "sellerReputation": "Oferta vista de loja Tapcamp com +100 mil vendas",
+      "reviews": "Sinal positivo por ser acessorio de baixo risco e uso recorrente",
+      "returnPolicy": "Devolucao gratis em 30 dias quando indicada no ML",
+      "operationModel": "Dropshipping automatizado com estoque reserva local para combos",
+      "whySell": "Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.",
+      "costTarget": "R$21 a R$35",
+      "sellTarget": "R$59 a R$89",
+      "margin": "Boa margem em kit/combo; trafego frio precisa criativo forte",
+      "confidence": "Alta",
+      "wixCategory": "Achados Tech / Limpeza",
+      "creativeAngles": [
+        "Poeira e estatica: o erro silencioso que mata desempenho",
+        "Kit simples para manter teclado, placa e gabinete apresentaveis"
+      ],
+      "risk": "Nao prometer recuperacao de componente; vender como prevencao e cuidado.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Kit%20limpeza%20ESD%20antiestatico%20para%20PC",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Kit%20limpeza%20ESD%20antiestatico%20para%20PC&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Kit-limpeza-ESD-antiestatico-para-PC",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Kit-limpeza-ESD-antiestatico-para-PC"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/kit-limpeza-esd-01.svg",
+          "angle": "Poeira e estatica: o erro silencioso que mata desempenho",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/kit-limpeza-esd-02.svg",
+          "angle": "Kit simples para manter teclado, placa e gabinete apresentaveis",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "mini-aspirador-teclado",
+      "title": "Mini aspirador USB para teclado e cantos do setup",
+      "niche": "Limpeza e setup",
+      "platform": "Mercado Livre / Shopee",
+      "sourceUrl": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
+      "currentPrice": "R$21,62 na oferta House Tools",
+      "shipping": "Envio para todo o pais; frete/prazo por CEP",
+      "delivery": "Produto local com vendedor grande tende a ser operacionalmente simples",
+      "sellerReputation": "Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas",
+      "reviews": "Poucas avaliacoes; review indica que e fraco, mas aceitavel pelo preco",
+      "returnPolicy": "Devolucao gratis indicada na oferta vista",
+      "operationModel": "Afiliado primeiro; dropshipping apenas se qualidade for validada",
+      "whySell": "Criativo de antes/depois funciona bem, mas precisa expectativa honesta.",
+      "costTarget": "R$21 a R$30",
+      "sellTarget": "R$49 a R$69",
+      "margin": "Margem boa, mas risco de suporte maior se expectativa for mal comunicada",
+      "confidence": "Media",
+      "wixCategory": "Achados Tech / Limpeza",
+      "creativeAngles": [
+        "Teclado cheio de migalha e poeira em 30 segundos",
+        "Limpeza rapida para mesa, notebook e setup gamer"
+      ],
+      "risk": "Potencia limitada; criativo precisa ser honesto para reduzir reclamacao.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Mini%20aspirador%20USB%20para%20teclado%20e%20cantos%20do%20setup",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Mini%20aspirador%20USB%20para%20teclado%20e%20cantos%20do%20setup&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Mini-aspirador-USB-para-teclado-e-cantos-do-setup",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Mini-aspirador-USB-para-teclado-e-cantos-do-setup"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/mini-aspirador-teclado-01.svg",
+          "angle": "Teclado cheio de migalha e poeira em 30 segundos",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/mini-aspirador-teclado-02.svg",
+          "angle": "Limpeza rapida para mesa, notebook e setup gamer",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "hub-usb-c",
+      "title": "Hub USB-C 4 portas para notebook e celular",
+      "niche": "Conectividade",
+      "platform": "Mercado Livre / Amazon",
+      "sourceUrl": "https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539",
+      "currentPrice": "R$19,27 em oferta Chrome Technology vista em busca",
+      "shipping": "Confirmar CEP; produto leve e facil de enviar",
+      "delivery": "Boa opcao para afiliado por marketplaces locais",
+      "sellerReputation": "Loja oficial Chrome Technology em oferta vista",
+      "reviews": "Produto de necessidade recorrente; validar avaliacoes no link final",
+      "returnPolicy": "Compra Garantida/marketplace; confirmar na oferta final",
+      "operationModel": "Afiliado primeiro",
+      "whySell": "Resolve problema comum de notebook com poucas portas e complementa PCs/notebooks.",
+      "costTarget": "R$19 a R$35",
+      "sellTarget": "R$49 a R$79",
+      "margin": "Margem razoavel, melhor como produto de volume/remarketing",
+      "confidence": "Media-alta",
+      "wixCategory": "Achados Tech / Conectividade",
+      "creativeAngles": [
+        "Falta porta USB no notebook? Resolva sem gambiarra",
+        "Mouse, teclado, pendrive e headset no mesmo hub"
+      ],
+      "risk": "Concorrencia alta; diferenciar por curadoria e garantia do marketplace.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Hub%20USB-C%204%20portas%20para%20notebook%20e%20celular",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Hub%20USB-C%204%20portas%20para%20notebook%20e%20celular&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Hub-USB-C-4-portas-para-notebook-e-celular",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Hub-USB-C-4-portas-para-notebook-e-celular"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/hub-usb-c-01.svg",
+          "angle": "Falta porta USB no notebook? Resolva sem gambiarra",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/hub-usb-c-02.svg",
+          "angle": "Mouse, teclado, pendrive e headset no mesmo hub",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "suporte-gpu-antisag",
+      "title": "Suporte anti-sag para placa de video",
+      "niche": "PC gamer e estetica",
+      "platform": "Mercado Livre / AliExpress",
+      "sourceUrl": "https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362",
+      "currentPrice": "Ofertas vistas de R$19,90 a R$134,99 conforme marca/RGB",
+      "shipping": "Frete geralmente simples; confirmar vendedor final",
+      "delivery": "Melhor testar fornecedor nacional ou afiliado antes",
+      "sellerReputation": "Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa",
+      "reviews": "Sinal bom para setups com GPUs pesadas, mas volume menor que cases/hubs",
+      "returnPolicy": "Confirmar devolucao e Compra Garantida na oferta escolhida",
+      "operationModel": "Testar afiliado primeiro e so depois dropshipping",
+      "whySell": "Visual forte para criativos e conversa com PCs gamer montados.",
+      "costTarget": "R$19 a R$45 para versao simples; RGB pode passar de R$100",
+      "sellTarget": "R$59 a R$99 simples; R$129+ RGB",
+      "margin": "Boa margem se fornecedor barato e qualidade aceitavel",
+      "confidence": "Media",
+      "wixCategory": "Achados Tech / Setup Gamer",
+      "creativeAngles": [
+        "Sua placa de video esta torta? Evite peso no slot PCIe",
+        "Setup gamer mais limpo com suporte ajustavel"
+      ],
+      "risk": "Medidas de gabinete variam; incluir guia de compatibilidade.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Suporte%20anti-sag%20para%20placa%20de%20video",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Suporte%20anti-sag%20para%20placa%20de%20video&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Suporte-anti-sag-para-placa-de-video",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Suporte-anti-sag-para-placa-de-video"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/suporte-gpu-antisag-01.svg",
+          "angle": "Sua placa de video esta torta? Evite peso no slot PCIe",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/suporte-gpu-antisag-02.svg",
+          "angle": "Setup gamer mais limpo com suporte ajustavel",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "keycaps-pbt",
+      "title": "Kit keycaps PBT para teclado mecanico",
+      "niche": "Personalizacao de setup",
+      "platform": "Mercado Livre / AliExpress",
+      "sourceUrl": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
+      "currentPrice": "Ofertas de R$28 a R$130+ conforme quantidade/perfil",
+      "shipping": "Frete gratis em algumas ofertas; internacional exige atencao a prazo",
+      "delivery": "Afiliado e mais simples ate validar demanda",
+      "sellerReputation": "Algumas ofertas com +50 vendas; buscar kits com mais prova social antes de anuncio",
+      "reviews": "Boa atratividade visual, mas nicho mais estetico",
+      "returnPolicy": "Confirmar compatibilidade e devolucao na oferta escolhida",
+      "operationModel": "Afiliado primeiro",
+      "whySell": "Produto visual para criativos e publico gamer que gosta de customizacao.",
+      "costTarget": "R$28 a R$70",
+      "sellTarget": "R$79 a R$149",
+      "margin": "Boa margem em dropshipping, mas exige conteudo claro de compatibilidade",
+      "confidence": "Media",
+      "wixCategory": "Achados Tech / Setup Gamer",
+      "creativeAngles": [
+        "Teclado antigo, cara nova em minutos",
+        "Personalize o setup sem comprar teclado novo"
+      ],
+      "risk": "Compatibilidade ABNT/ANSI/perfil gera devolucao se nao explicar bem.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Kit%20keycaps%20PBT%20para%20teclado%20mecanico",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Kit%20keycaps%20PBT%20para%20teclado%20mecanico&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Kit-keycaps-PBT-para-teclado-mecanico",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Kit-keycaps-PBT-para-teclado-mecanico"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/keycaps-pbt-01.svg",
+          "angle": "Teclado antigo, cara nova em minutos",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/keycaps-pbt-02.svg",
+          "angle": "Personalize o setup sem comprar teclado novo",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "teclado-mecanico-abnt2",
+      "title": "Teclado gamer mecanico RGB ABNT2",
+      "niche": "Perifericos gamer",
+      "platform": "Mercado Livre / Amazon / Shopee",
+      "sourceUrl": "https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221",
+      "currentPrice": "Preco varia bastante; validar SKU final antes de campanha",
+      "shipping": "Produto maior; frete influencia conversao",
+      "delivery": "Afiliado e mais seguro no inicio",
+      "sellerReputation": "Busca indica bom custo-beneficio, mas tambem relatos de durabilidade a checar",
+      "reviews": "Demanda alta por ABNT2/RGB; precisa filtrar qualidade",
+      "returnPolicy": "Usar marketplace com politica clara de devolucao e garantia",
+      "operationModel": "Afiliado primeiro",
+      "whySell": "Periferico principal do setup; bom para combos com PCs e anuncios de retargeting.",
+      "costTarget": "R$80 a R$180 conforme modelo",
+      "sellTarget": "Afiliado: comissao; loja propria so apos fornecedor validado",
+      "margin": "Melhor como afiliado por reduzir suporte/garantia",
+      "confidence": "Media",
+      "wixCategory": "Achados Tech / Perifericos",
+      "creativeAngles": [
+        "Switch red, RGB e ABNT2 para jogar sem adaptacao",
+        "O upgrade mais visivel do setup"
+      ],
+      "risk": "Garantia e suporte podem consumir margem se vendido como estoque proprio.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Teclado%20gamer%20mecanico%20RGB%20ABNT2",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Teclado%20gamer%20mecanico%20RGB%20ABNT2&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Teclado-gamer-mecanico-RGB-ABNT2",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Teclado-gamer-mecanico-RGB-ABNT2"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-01.svg",
+          "angle": "Switch red, RGB e ABNT2 para jogar sem adaptacao",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-02.svg",
+          "angle": "O upgrade mais visivel do setup",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    },
+    {
+      "id": "bias-light-led",
+      "title": "Fita LED bias lighting USB para monitor",
+      "niche": "Setup e conforto visual",
+      "platform": "Mercado Livre / Shopee / AliExpress",
+      "sourceUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
+      "currentPrice": "Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar",
+      "shipping": "Produto leve; bom para importacao se prazo for comunicado",
+      "delivery": "Melhor como afiliado/teste ate achar fornecedor ativo",
+      "sellerReputation": "Validacao fraca nesta rodada por oferta indisponivel",
+      "reviews": "Boa ideia visual para criativo, mas precisa fornecedor com estoque",
+      "returnPolicy": "Confirmar devolucao e funcionamento antes de publicar",
+      "operationModel": "Testar afiliado primeiro",
+      "whySell": "Produto barato e muito visual, bom para conteudo de setup.",
+      "costTarget": "R$15 a R$35",
+      "sellTarget": "R$49 a R$79",
+      "margin": "Boa no papel, mas depende de fornecedor ativo e qualidade",
+      "confidence": "Baixa-media",
+      "wixCategory": "Achados Tech / Setup Gamer",
+      "creativeAngles": [
+        "Deixe o monitor mais confortavel a noite",
+        "Setup com cara gamer gastando pouco"
+      ],
+      "risk": "Fornecedor atual precisa ser trocado; nao subir anuncio antes de validar estoque.",
+      "researchLinks": {
+        "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Fita%20LED%20bias%20lighting%20USB%20para%20monitor",
+        "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Fita%20LED%20bias%20lighting%20USB%20para%20monitor&search_type=keyword_unordered&media_type=all",
+        "tikTokCreativeCenter": "https://ads.tiktok.com/business/creativecenter",
+        "mercadoLivreTendencias": "https://tendencias.mercadolivre.com.br/Fita-LED-bias-lighting-USB-para-monitor",
+        "mercadoLivreSearch": "https://lista.mercadolivre.com.br/Fita-LED-bias-lighting-USB-para-monitor"
+      },
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/bias-light-led-01.svg",
+          "angle": "Deixe o monitor mais confortavel a noite",
+          "status": "rascunho para aprovacao"
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/bias-light-led-02.svg",
+          "angle": "Setup com cara gamer gastando pouco",
+          "status": "rascunho para aprovacao"
+        }
+      ]
+    }
+  ]
+}

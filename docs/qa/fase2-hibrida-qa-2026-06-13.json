@@ -1,0 +1,86 @@
+[
+  {
+    "target": {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\fase2-hibrida-desktop-2026-06-13.png",
+    "metrics": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "title": "MobilyTech BR | Fase 2 Hibrida",
+      "horizontalOverflow": false,
+      "scrollWidth": 1440,
+      "clientWidth": 1440,
+      "brokenImages": [],
+      "overflowCount": 1,
+      "overflow": [
+        {
+          "tag": "ASIDE",
+          "cls": "drawer",
+          "text": "",
+          "left": 1483,
+          "right": 1913,
+          "width": 430
+        }
+      ],
+      "productCards": 8,
+      "finalists": 10,
+      "creatives": 20,
+      "cartButtonText": "Carrinho 0"
+    }
+  },
+  {
+    "target": {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\fase2-hibrida-mobile-2026-06-13.png",
+    "metrics": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "title": "MobilyTech BR | Fase 2 Hibrida",
+      "horizontalOverflow": false,
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "brokenImages": [],
+      "overflowCount": 3,
+      "overflow": [
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Avaliacoes",
+          "left": 393.328125,
+          "right": 456.3125,
+          "width": 62.984375
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "text": "Suporte",
+          "left": 470.3125,
+          "right": 516.953125,
+          "width": 46.640625
+        },
+        {
+          "tag": "ASIDE",
+          "cls": "drawer",
+          "text": "",
+          "left": 429,
+          "right": 819,
+          "width": 390
+        }
+      ],
+      "productCards": 8,
+      "finalists": 10,
+      "creatives": 20,
+      "cartButtonText": "Carrinho 0"
+    }
+  }
+]
