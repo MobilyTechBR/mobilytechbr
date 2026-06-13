@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Achados Tech e criativos | MobilyTech BR</title>
+  <link rel="icon" href="../assets/favicon.png" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #02050a;
+      --panel: rgba(7, 22, 34, .84);
+      --line: rgba(121,247,255,.2);
+      --cyan: #17d9ff;
+      --green: #00ffc6;
+      --text: #f6fbff;
+      --muted: #a9bed0;
+      font-family: Nunito, Inter, Segoe UI, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(23,217,255,.14), transparent 26rem),
+        radial-gradient(circle at 82% 12%, rgba(0,255,198,.09), transparent 25rem),
+        linear-gradient(180deg, #02050a 0%, #06101b 48%, #02050a 100%);
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1440px, calc(100% - 36px)); margin: 0 auto; }
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(2,7,13,.9);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-row {
+      min-height: 78px;
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 950; font-size: 20px; }
+    .brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.42)); }
+    .menu { display: flex; justify-content: flex-end; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    .menu::-webkit-scrollbar { display: none; }
+    .menu a { white-space: nowrap; font-size: 14px; font-weight: 950; color: #dff8ff; padding: 8px 0; }
+    .menu a.active, .menu a:hover { color: var(--cyan); }
+    .page-hero {
+      margin: 28px auto 22px;
+      min-height: 310px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 24px;
+      align-items: center;
+      border-radius: 28px;
+      padding: 42px 54px;
+      border: 1px solid rgba(121,247,255,.2);
+      background:
+        linear-gradient(105deg, rgba(3,7,13,.96), rgba(4,32,45,.86), rgba(3,7,13,.72)),
+        url("../assets/cleaning-neon-bg.png") center/cover;
+      overflow: hidden;
+      box-shadow: 0 22px 65px rgba(0,0,0,.28);
+    }
+    .eyebrow {
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,217,255,.32);
+      background: rgba(23,217,255,.12);
+      color: #79f7ff;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    h1 { margin: 16px 0 12px; font-size: clamp(36px, 5vw, 70px); line-height: .95; }
+    h2 { margin: 0 0 16px; font-size: clamp(28px, 3vw, 44px); line-height: 1; }
+    h3 { margin: 0; }
+    p { color: #d6e8f3; font-weight: 760; line-height: 1.45; }
+    .page-hero p { max-width: 760px; font-size: 17px; }
+    .page-hero img { max-width: 100%; max-height: 280px; object-fit: contain; justify-self: end; filter: drop-shadow(0 18px 24px rgba(0,0,0,.34)); }
+    .section { padding: 30px 0; }
+    .grid { display: grid; gap: 18px; }
+    .grid.products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.finalists { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card {
+      border-radius: 22px;
+      background: var(--panel);
+      border: 1px solid rgba(121,247,255,.18);
+      box-shadow: 0 18px 48px rgba(0,0,0,.24);
+      overflow: hidden;
+      min-width: 0;
+    }
+    .product-card { padding: 16px; display: flex; flex-direction: column; min-height: 342px; }
+    .product-card .imgbox { height: 166px; display: grid; place-items: center; border-radius: 18px; background: radial-gradient(circle, rgba(23,217,255,.2), rgba(0,0,0,.16) 58%); overflow: hidden; }
+    .product-card img { max-width: 96%; max-height: 154px; object-fit: contain; }
+    .product-card h3 { margin: 14px 0 8px; font-size: 17px; line-height: 1.18; }
+    .specs { color: var(--muted); font-size: 12px; font-weight: 850; line-height: 1.4; }
+    .price { color: var(--cyan); font-size: 25px; font-weight: 950; margin-top: auto; }
+    .actions { display: flex; gap: 8px; margin-top: 12px; }
+    .btn {
+      display: inline-grid;
+      place-items: center;
+      min-height: 40px;
+      border-radius: 999px;
+      padding: 0 18px;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      color: #041018;
+      font-weight: 950;
+      text-align: center;
+    }
+    .btn.ghost { color: #79f7ff; background: transparent; border: 1px solid rgba(121,247,255,.42); }
+    .actions .btn { flex: 1; font-size: 12px; }
+    .text-card { padding: 24px; }
+    .text-card h3 { color: var(--cyan); margin-bottom: 10px; font-size: 22px; }
+    .text-card p { margin: 0 0 12px; }
+    .badge {
+      display: inline-flex;
+      align-self: flex-start;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: rgba(23,217,255,.12);
+      border: 1px solid rgba(23,217,255,.32);
+      color: #79f7ff;
+      font-size: 11px;
+      font-weight: 950;
+    }
+    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 270px; }
+    .finalist-card h3 { font-size: 15px; line-height: 1.18; }
+    .finalist-card p { margin: 0; font-size: 12px; color: var(--muted); }
+    .creative-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .creative-card { padding: 12px; }
+    .creative-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; display: block; }
+    .creative-card span { display: block; margin-top: 9px; font-size: 12px; font-weight: 900; color: #dffbff; }
+    .brand-wall {
+      border-radius: 24px;
+      padding: 28px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(121,247,255,.18);
+    }
+    .brand-row { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 12px; align-items: center; }
+    .brand-pill {
+      width: 100%;
+      min-width: 0;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(121,247,255,.16);
+      overflow: hidden;
+    }
+    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    footer { margin-top: 40px; padding: 38px 0; border-top: 1px solid rgba(121,247,255,.16); background: #03070d; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 22px; }
+    footer h3 { margin: 0 0 12px; font-size: 16px; }
+    footer a, footer p { display: block; color: #c3d4df; font-weight: 800; font-size: 14px; margin: 8px 0; }
+    @media (max-width: 1120px) {
+      .page-hero { grid-template-columns: 1fr 330px; padding: 36px; }
+      .grid.products { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid.finalists { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 22px, 720px); }
+      .nav-row { grid-template-columns: 1fr; gap: 10px; padding: 12px 0; }
+      .brand { font-size: 16px; }
+      .brand img { width: 34px; height: 34px; }
+      .menu { justify-content: start; gap: 11px; padding-right: 20px; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 24px), transparent 100%); }
+      .menu a { font-size: 11px; }
+      .page-hero { grid-template-columns: 1fr; min-height: auto; padding: 24px 18px; border-radius: 20px; gap: 14px; }
+      .page-hero img { max-height: 150px; justify-self: center; }
+      h1 { font-size: 30px; line-height: 1.02; }
+      .page-hero p { font-size: 13px; }
+      .grid.products, .grid.finalists, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .product-card { min-height: 270px; padding: 10px; border-radius: 16px; }
+      .product-card .imgbox { height: 112px; border-radius: 14px; }
+      .product-card img { max-height: 104px; }
+      .product-card h3 { font-size: 12px; }
+      .specs, .finalist-card p { font-size: 10.5px; }
+      .price { font-size: 18px; }
+      .actions { flex-direction: column; }
+      .actions .btn { min-height: 32px; font-size: 10.5px; }
+      .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
+      .finalist-card h3 { font-size: 12px; }
+      .creative-card span { font-size: 10.5px; line-height: 1.25; }
+      .brand-wall { padding: 20px 12px; }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .brand-pill { height: 50px; padding: 6px; }
+      .brand-pill img { max-height: 100%; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      footer .brand-block { grid-column: 1 / -1; }
+    }
+
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <div class="shell nav-row">
+      <a class="brand" href="../fase2-hibrida.html"><img src="../assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></a>
+      <div class="menu" aria-label="Navegacao principal">
+<a class="" href="../fase2-hibrida.html">Inicio</a>
+<a class="" href="ofertas.html">Ofertas</a>
+<a class="" href="montagem.html">Monte seu PC</a>
+<a class="" href="limpeza.html">Limpeza</a>
+<a class="active" href="achados.html">Achados Tech</a>
+<a class="" href="avaliacoes.html">Avaliacoes</a>
+<a class="" href="contato.html">Contato</a>
+      </div>
+    </div>
+  </nav>
+  <header class="shell page-hero">
+    <div>
+      <span class="eyebrow">Fase 2 hibrida</span>
+      <h1>Achados Tech e criativos</h1>
+      <p>Finalistas da Fase 2 para afiliado/dropshipping, com criativos separados para aprovacao antes de trafego pago.</p>
+    </div>
+    <img src="../assets/generated/global-kit-mouse-teclado-pichau-cutout.png" alt="">
+  </header>
+  <section class="section shell">
+    <h2>Finalistas escolhidos</h2>
+    <div class="grid finalists">
+      <article class="card finalist-card">
+        <span class="badge">Alta confianca</span>
+        <h3>Case SSD M.2 NVMe USB-C 10Gbps</h3>
+        <p>Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.</p>
+        <p><strong>Preco:</strong> R$59,98 no Mercado Livre; Shopee em torno de R$74,57</p>
+        <p><strong>Modelo:</strong> Testar afiliado primeiro e depois dropshipping automatizado</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/case-para-ssd-m2-nvme-externo-usb-c-31-adaptador-nvme-2230-2242-2260-2280-aluminio-m-key-ate-4tb-10gbps-inv-tech/p/MLB29349887" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Alta confianca</span>
+        <h3>Case SSD/HD SATA 2.5 USB 3.0</h3>
+        <p>Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.</p>
+        <p><strong>Preco:</strong> R$22 com opcoes a partir de R$17,50</p>
+        <p><strong>Modelo:</strong> Afiliado primeiro, dropshipping automatizado se houver fornecedor estavel</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/case-slim-hd-ssd-adaptador-usb-30-sata-3-externo-6gbps-ps4/p/MLB27786386" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Media-alta confianca</span>
+        <h3>Fone KZ Castor monitor in-ear</h3>
+        <p>Produto quente em TikTok/audio e encaixa bem com setup gamer sem parecer aleatorio no site.</p>
+        <p><strong>Preco:</strong> R$114 no Mercado Livre; Shopee oficial foi visto em torno de R$109 com cupom</p>
+        <p><strong>Modelo:</strong> Afiliado primeiro; dropshipping so com fornecedor oficial/confiavel</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Alta confianca</span>
+        <h3>Kit limpeza ESD antiestatico para PC</h3>
+        <p>Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.</p>
+        <p><strong>Preco:</strong> Ofertas entre cerca de R$21 e R$58 conforme composicao</p>
+        <p><strong>Modelo:</strong> Dropshipping automatizado com estoque reserva local para combos</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/kit-limpeza-esd-antiestatico-para-pc-com-5-pecas/p/MLB37963040" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Media confianca</span>
+        <h3>Mini aspirador USB para teclado e cantos do setup</h3>
+        <p>Criativo de antes/depois funciona bem, mas precisa expectativa honesta.</p>
+        <p><strong>Preco:</strong> R$21,62 na oferta House Tools</p>
+        <p><strong>Modelo:</strong> Afiliado primeiro; dropshipping apenas se qualidade for validada</p>
+        <a class="btn ghost" href="https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Media-alta confianca</span>
+        <h3>Hub USB-C 4 portas para notebook e celular</h3>
+        <p>Resolve problema comum de notebook com poucas portas e complementa PCs/notebooks.</p>
+        <p><strong>Preco:</strong> R$19,27 em oferta Chrome Technology vista em busca</p>
+        <p><strong>Modelo:</strong> Afiliado primeiro</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Media confianca</span>
+        <h3>Suporte anti-sag para placa de video</h3>
+        <p>Visual forte para criativos e conversa com PCs gamer montados.</p>
+        <p><strong>Preco:</strong> Ofertas vistas de R$19,90 a R$134,99 conforme marca/RGB</p>
+        <p><strong>Modelo:</strong> Testar afiliado primeiro e so depois dropshipping</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Media confianca</span>
+        <h3>Kit keycaps PBT para teclado mecanico</h3>
+        <p>Produto visual para criativos e publico gamer que gosta de customizacao.</p>
+        <p><strong>Preco:</strong> Ofertas de R$28 a R$130+ conforme quantidade/perfil</p>
+        <p><strong>Modelo:</strong> Afiliado primeiro</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Media confianca</span>
+        <h3>Teclado gamer mecanico RGB ABNT2</h3>
+        <p>Periferico principal do setup; bom para combos com PCs e anuncios de retargeting.</p>
+        <p><strong>Preco:</strong> Preco varia bastante; validar SKU final antes de campanha</p>
+        <p><strong>Modelo:</strong> Afiliado primeiro</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+      <article class="card finalist-card">
+        <span class="badge">Baixa-media confianca</span>
+        <h3>Fita LED bias lighting USB para monitor</h3>
+        <p>Produto barato e muito visual, bom para conteudo de setup.</p>
+        <p><strong>Preco:</strong> Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar</p>
+        <p><strong>Modelo:</strong> Testar afiliado primeiro</p>
+        <a class="btn ghost" href="https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>
+    </div>
+  </section>
+  <section class="section shell">
+    <h2>Criativos para aprovacao</h2>
+    <div class="creative-grid">
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-nvme-01.svg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
+        <span>Case SSD M.2 NVMe USB-C 10Gbps • Transforme SSD parado em armazenamento externo rapido</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-nvme-02.svg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
+        <span>Case SSD M.2 NVMe USB-C 10Gbps • Backup de jogos, fotos e projetos sem abrir o PC</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-sata-01.svg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
+        <span>Case SSD/HD SATA 2.5 USB 3.0 • Nao jogue fora o HD antigo: transforme em backup externo</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-sata-02.svg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
+        <span>Case SSD/HD SATA 2.5 USB 3.0 • Upgrade simples para quem comprou PC revisado</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/fone-kz-castor-01.svg" alt="Criativo Fone KZ Castor monitor in-ear">
+        <span>Fone KZ Castor monitor in-ear • Som de monitor gastando menos que headset gamer comum</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/fone-kz-castor-02.svg" alt="Criativo Fone KZ Castor monitor in-ear">
+        <span>Fone KZ Castor monitor in-ear • Setup limpo para jogar, estudar e ouvir musica</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/kit-limpeza-esd-01.svg" alt="Criativo Kit limpeza ESD antiestatico para PC">
+        <span>Kit limpeza ESD antiestatico para PC • Poeira e estatica: o erro silencioso que mata desempenho</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/kit-limpeza-esd-02.svg" alt="Criativo Kit limpeza ESD antiestatico para PC">
+        <span>Kit limpeza ESD antiestatico para PC • Kit simples para manter teclado, placa e gabinete apresentaveis</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/mini-aspirador-teclado-01.svg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
+        <span>Mini aspirador USB para teclado e cantos do setup • Teclado cheio de migalha e poeira em 30 segundos</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/mini-aspirador-teclado-02.svg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
+        <span>Mini aspirador USB para teclado e cantos do setup • Limpeza rapida para mesa, notebook e setup gamer</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/hub-usb-c-01.svg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
+        <span>Hub USB-C 4 portas para notebook e celular • Falta porta USB no notebook? Resolva sem gambiarra</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/hub-usb-c-02.svg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
+        <span>Hub USB-C 4 portas para notebook e celular • Mouse, teclado, pendrive e headset no mesmo hub</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/suporte-gpu-antisag-01.svg" alt="Criativo Suporte anti-sag para placa de video">
+        <span>Suporte anti-sag para placa de video • Sua placa de video esta torta? Evite peso no slot PCIe</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/suporte-gpu-antisag-02.svg" alt="Criativo Suporte anti-sag para placa de video">
+        <span>Suporte anti-sag para placa de video • Setup gamer mais limpo com suporte ajustavel</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/keycaps-pbt-01.svg" alt="Criativo Kit keycaps PBT para teclado mecanico">
+        <span>Kit keycaps PBT para teclado mecanico • Teclado antigo, cara nova em minutos</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/keycaps-pbt-02.svg" alt="Criativo Kit keycaps PBT para teclado mecanico">
+        <span>Kit keycaps PBT para teclado mecanico • Personalize o setup sem comprar teclado novo</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-01.svg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
+        <span>Teclado gamer mecanico RGB ABNT2 • Switch red, RGB e ABNT2 para jogar sem adaptacao</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-02.svg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
+        <span>Teclado gamer mecanico RGB ABNT2 • O upgrade mais visivel do setup</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-01.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/bias-light-led-01.svg" alt="Criativo Fita LED bias lighting USB para monitor">
+        <span>Fita LED bias lighting USB para monitor • Deixe o monitor mais confortavel a noite</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-02.svg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/bias-light-led-02.svg" alt="Criativo Fita LED bias lighting USB para monitor">
+        <span>Fita LED bias lighting USB para monitor • Setup com cara gamer gastando pouco</span>
+      </a>
+    </div>
+  </section>
+  <footer id="contato">
+    <div class="shell footer-grid">
+      <div class="brand-block">
+        <div class="brand"><img src="../assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></div>
+        <p>Vila Suzana, Sao Paulo, SP</p>
+        <p>mobilytechbr@gmail.com</p>
+        <p>WhatsApp: +55 (11) 95480-1967</p>
+      </div>
+      <div>
+        <h3>Loja</h3>
+        <a href="ofertas.html">PC Gamer</a>
+        <a href="achados.html">Achados Tech</a>
+        <a href="montagem.html">Montagem</a>
+        <a href="limpeza.html">Limpeza</a>
+      </div>
+      <div>
+        <h3>Suporte</h3>
+        <a href="contato.html">Contato</a>
+        <a href="https://wa.me/5511954801967">WhatsApp</a>
+        <a href="mailto:mobilytechbr@gmail.com">E-mail</a>
+      </div>
+      <div>
+        <h3>Empresa</h3>
+        <a href="avaliacoes.html">Avaliacoes</a>
+        <a href="../fase2-hibrida.html">Preview principal</a>
+        <a href="../admin/index.html">Painel legado</a>
+      </div>
+      <div>
+        <h3>Politicas</h3>
+        <a href="contato.html#politicas">Politica de trocas</a>
+        <a href="contato.html#entrega">Entrega</a>
+        <a href="contato.html#privacidade">Privacidade</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

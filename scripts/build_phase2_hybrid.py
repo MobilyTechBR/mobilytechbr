@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 DOCS_DIR = ROOT / "docs"
 CREATIVE_DIR = ROOT / "assets" / "phase2-creatives"
+BRAND_LOGO_DIR = ROOT / "assets" / "brand-logos"
 OUTPUT_DIR = Path.home() / "Documents" / "New project" / "outputs" / "mobilytech_fase2_hibrida_2026-06-13"
 
 GENERATED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -25,6 +26,20 @@ BACKUP_PATH = Path.home() / "Documents" / "Site Vercel backups" / "Site Vercel b
 WIX_PREMIUM_SITE_ID = "85e985c5-2904-452f-85e2-a98f6d3b1cac"
 WIX_DOMAIN = "https://www.mobilytech.com.br/"
 VERCEL_PRODUCTION = "https://mobilytechbr.vercel.app"
+
+BRANDS = [
+    {"id": "intel", "name": "Intel", "accent": "#38bdf8"},
+    {"id": "amd", "name": "AMD", "accent": "#22c55e"},
+    {"id": "nvidia", "name": "NVIDIA", "accent": "#76b900"},
+    {"id": "microsoft", "name": "Microsoft", "accent": "#60a5fa"},
+    {"id": "corsair", "name": "Corsair", "accent": "#f8fafc"},
+    {"id": "asus", "name": "ASUS", "accent": "#9ca3af"},
+    {"id": "gigabyte", "name": "Gigabyte", "accent": "#22d3ee"},
+    {"id": "evga", "name": "EVGA", "accent": "#d1d5db"},
+    {"id": "kingston", "name": "Kingston", "accent": "#ef4444"},
+    {"id": "crucial", "name": "Crucial", "accent": "#60a5fa"},
+    {"id": "pny", "name": "PNY", "accent": "#94a3b8"},
+]
 
 
 def slugify(value: str) -> str:
@@ -419,6 +434,54 @@ def write_creatives() -> None:
             )
 
 
+def brand_logo_svg(brand: dict) -> str:
+    name = html.escape(brand["name"])
+    accent = brand["accent"]
+    size = 38 if len(brand["name"]) <= 5 else 30 if len(brand["name"]) <= 8 else 25
+    mark = ""
+    if brand["id"] == "microsoft":
+        mark = """
+  <rect x="34" y="29" width="14" height="14" fill="#f25022"/>
+  <rect x="51" y="29" width="14" height="14" fill="#7fba00"/>
+  <rect x="34" y="46" width="14" height="14" fill="#00a4ef"/>
+  <rect x="51" y="46" width="14" height="14" fill="#ffb900"/>"""
+    elif brand["id"] == "amd":
+        mark = """
+  <path d="M35 28h31v11H46v20H35z" fill="#22c55e"/>
+  <path d="M67 28h18v18H74v-7h-7z" fill="#22c55e"/>"""
+    elif brand["id"] == "nvidia":
+        mark = """
+  <path d="M34 45c13-17 34-17 47 0-13 17-34 17-47 0z" fill="none" stroke="#76b900" stroke-width="5"/>
+  <circle cx="58" cy="45" r="8" fill="#76b900"/>"""
+    elif brand["id"] == "kingston":
+        mark = """
+  <path d="M55 23c14 9 18 24 11 41H39c-7-17-3-32 16-41z" fill="#ef4444" opacity=".9"/>
+  <path d="M45 55c8 5 17 5 26 0" stroke="#fff" stroke-width="4" stroke-linecap="round"/>"""
+    else:
+        mark = f"""
+  <circle cx="55" cy="45" r="24" fill="none" stroke="{accent}" stroke-width="4" opacity=".9"/>
+  <path d="M42 45h26" stroke="{accent}" stroke-width="4" stroke-linecap="round"/>"""
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="240" height="88" viewBox="0 0 240 88" role="img" aria-label="{name}">
+  <rect width="240" height="88" rx="14" fill="#121820"/>
+  <rect x="1" y="1" width="238" height="86" rx="13" fill="none" stroke="{accent}" stroke-opacity=".5"/>
+  {mark}
+  <text x="134" y="54" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="{size}" font-weight="900" fill="#f8fbff" letter-spacing="0">{name}</text>
+</svg>"""
+
+
+def write_brand_logos() -> None:
+    BRAND_LOGO_DIR.mkdir(parents=True, exist_ok=True)
+    for brand in BRANDS:
+        (BRAND_LOGO_DIR / f"{brand['id']}.svg").write_text(brand_logo_svg(brand), encoding="utf-8")
+
+
+def brand_logo_cards(prefix: str = "./") -> str:
+    return "\n".join(
+        f'          <span class="brand-pill"><img src="{prefix}assets/brand-logos/{brand["id"]}.svg" alt="{html.escape(brand["name"])}"></span>'
+        for brand in BRANDS
+    )
+
+
 def write_phase2_json() -> Path:
     payload = {
         "generatedAt": GENERATED_AT,
@@ -786,17 +849,18 @@ def write_page() -> Path:
       align-items: center;
     }
     .brand-pill {
-      min-height: 52px;
+      width: 100%;
+      min-width: 0;
+      height: 64px;
       display: grid;
       place-items: center;
+      padding: 8px;
       border-radius: 10px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(121,247,255,.16);
-      color: #f7fbff;
-      font-weight: 950;
-      font-size: 14px;
-      text-align: center;
+      overflow: hidden;
     }
+    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
     .policy-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -965,7 +1029,8 @@ def write_page() -> Path:
       .reviews-grid, .policy-grid { grid-template-columns: 1fr; }
       .brand-wall { padding: 20px 12px; }
       .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .brand-pill { min-height: 42px; font-size: 11px; }
+      .brand-pill { height: 50px; padding: 6px; }
+      .brand-pill img { max-height: 100%; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -985,13 +1050,13 @@ def write_page() -> Path:
         <span>MobilyTech BR</span>
       </a>
       <div class="menu" aria-label="Navegacao principal">
-        <a href="#ofertas">Ofertas</a>
-        <a href="#pcs">PC Gamer</a>
-        <a href="#monte">Monte seu PC</a>
-        <a href="#limpeza">Limpeza</a>
-        <a href="#achados">Achados Tech</a>
-        <a href="#avaliacoes">Avaliacoes</a>
-        <a href="#contato">Suporte</a>
+        <a href="./fase2/ofertas.html">Ofertas</a>
+        <a href="./fase2/ofertas.html#pcs">PC Gamer</a>
+        <a href="./fase2/montagem.html">Monte seu PC</a>
+        <a href="./fase2/limpeza.html">Limpeza</a>
+        <a href="./fase2/achados.html">Achados Tech</a>
+        <a href="./fase2/avaliacoes.html">Avaliacoes</a>
+        <a href="./fase2/contato.html">Suporte</a>
       </div>
       <label class="search" aria-label="Pesquisar">
         <span>⌕</span>
@@ -1010,8 +1075,8 @@ def write_page() -> Path:
             <h1>MobilyTech BR em modo loja gamer</h1>
             <p class="lead">Uma versao alternativa inspirada na estrutura da iBUYPOWER e energia visual da KaBuM, preservando PCs reais, swaps, limpeza, garantia e o plano hibrido com Wix Stores.</p>
             <div class="hero-actions">
-              <a class="primary" href="#ofertas">Ver PCs e ofertas</a>
-              <a class="ghost" href="#achados">Ver Achados Tech</a>
+              <a class="primary" href="./fase2/ofertas.html">Ver PCs e ofertas</a>
+              <a class="ghost" href="./fase2/achados.html">Ver Achados Tech</a>
             </div>
           </div>
           <div class="hero-stage">
@@ -1029,10 +1094,10 @@ def write_page() -> Path:
     <section id="ofertas" class="section shell">
       <div class="section-head">
         <div>
-          <h2>Current Promotions MobilyTech</h2>
+          <h2>Promocoes atuais MobilyTech</h2>
           <p class="sub">PCs e hardware reais do catalogo atual, com botoes de configuracao e carrinho de rascunho para manter a logica viva.</p>
         </div>
-        <a class="ghost" href="./index.html">Abrir site original</a>
+        <a class="ghost" href="./fase2/ofertas.html">Abrir catalogo completo</a>
       </div>
       <div id="productGrid" class="deal-grid"></div>
     </section>
@@ -1044,7 +1109,7 @@ def write_page() -> Path:
             <span class="eyebrow">Custom gaming PCs</span>
             <h3>Monte seu PC sob orcamento</h3>
             <p>Escolha uso, jogos, limite de preco e upgrades. A montagem continua personalizada, com garantia informada antes da compra.</p>
-            <a class="primary" href="https://wa.me/5511954801967?text=Quero%20montar%20um%20PC%20com%20a%20MobilyTech%20BR">Consultar orcamento</a>
+            <a class="primary" href="./fase2/montagem.html">Consultar orcamento</a>
           </div>
           <img src="./assets/assembly-pc-build-cutout.png" alt="Montagem de PC" />
         </article>
@@ -1053,7 +1118,7 @@ def write_page() -> Path:
             <span class="eyebrow">PC cleaning service</span>
             <h3>Limpeza e relatorio</h3>
             <p>Servico de limpeza com foco em cuidado, organizacao e relatorio visual do antes/depois, mantendo a pegada de pos-venda.</p>
-            <a class="primary" href="https://wa.me/5511954801967?text=Quero%20agendar%20uma%20limpeza%20de%20PC">Agendar limpeza</a>
+            <a class="primary" href="./fase2/limpeza.html">Agendar limpeza</a>
           </div>
           <img src="./assets/pc-cleaning-service-cutout.png" alt="Limpeza de PC" />
         </article>
@@ -1066,7 +1131,7 @@ def write_page() -> Path:
           <h2>Achados Tech em validacao</h2>
           <p class="sub">Finalistas da Fase 2 com modelo operacional sugerido. Nada daqui vira anuncio pago sem aprovacao.</p>
         </div>
-        <a class="ghost" href="./docs/MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx">Abrir planilha</a>
+        <a class="ghost" href="./fase2/achados.html">Abrir pagina de achados</a>
       </div>
       <div id="finalistGrid" class="finalist-grid"></div>
     </section>
@@ -1084,7 +1149,7 @@ def write_page() -> Path:
     <section id="avaliacoes" class="section shell">
       <div class="section-head">
         <div>
-          <h2>MobilyTech BR Customer Reviews</h2>
+          <h2>Avaliacoes da MobilyTech BR</h2>
           <p class="sub">Blocos no estilo iBUYPOWER, usando os canais reais de confianca da MobilyTech.</p>
         </div>
       </div>
@@ -1111,17 +1176,7 @@ def write_page() -> Path:
       <div class="brand-wall">
         <h2>Marcas confiaveis no ecossistema MobilyTech</h2>
         <div class="brand-row">
-          <span class="brand-pill">Intel</span>
-          <span class="brand-pill">AMD</span>
-          <span class="brand-pill">NVIDIA</span>
-          <span class="brand-pill">Microsoft</span>
-          <span class="brand-pill">Corsair</span>
-          <span class="brand-pill">ASUS</span>
-          <span class="brand-pill">Gigabyte</span>
-          <span class="brand-pill">EVGA</span>
-          <span class="brand-pill">Kingston</span>
-          <span class="brand-pill">Crucial</span>
-          <span class="brand-pill">PNY</span>
+__BRAND_LOGOS__
         </div>
       </div>
     </section>
@@ -1160,10 +1215,10 @@ def write_page() -> Path:
       </div>
       <div>
         <h3>Loja</h3>
-        <a href="#ofertas">PC Gamer</a>
-        <a href="#achados">Achados Tech</a>
-        <a href="#monte">Montagem</a>
-        <a href="#limpeza">Limpeza</a>
+        <a href="./fase2/ofertas.html">PC Gamer</a>
+        <a href="./fase2/achados.html">Achados Tech</a>
+        <a href="./fase2/montagem.html">Montagem</a>
+        <a href="./fase2/limpeza.html">Limpeza</a>
       </div>
       <div>
         <h3>Suporte</h3>
@@ -1173,15 +1228,15 @@ def write_page() -> Path:
       </div>
       <div>
         <h3>Empresa</h3>
-        <a href="#avaliacoes">Avaliacoes</a>
+        <a href="./fase2/avaliacoes.html">Avaliacoes</a>
         <a href="./index.html">Site original</a>
         <a href="./admin/index.html">Painel legado</a>
       </div>
       <div>
-        <h3>Legal</h3>
-        <a href="#contato">Politica de trocas</a>
-        <a href="#contato">Entrega</a>
-        <a href="#contato">Privacidade</a>
+        <h3>Politicas</h3>
+        <a href="./fase2/contato.html#politicas">Politica de trocas</a>
+        <a href="./fase2/contato.html#entrega">Entrega</a>
+        <a href="./fase2/contato.html#privacidade">Privacidade</a>
       </div>
     </div>
   </footer>
@@ -1393,9 +1448,486 @@ def write_page() -> Path:
 </body>
 </html>
 """
+    html_doc = html_doc.replace("__BRAND_LOGOS__", brand_logo_cards("./"))
     path = ROOT / "fase2-hibrida.html"
     path.write_text(html_doc, encoding="utf-8")
     return path
+
+
+def brl(value: float | int | None) -> str:
+    if value is None:
+        return "Sob consulta"
+    whole = f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"R$ {whole}"
+
+
+def page_nav(prefix: str = "../", active: str = "") -> str:
+    items = [
+        ("Inicio", f"{prefix}fase2-hibrida.html", "home"),
+        ("Ofertas", "ofertas.html", "ofertas"),
+        ("Monte seu PC", "montagem.html", "montagem"),
+        ("Limpeza", "limpeza.html", "limpeza"),
+        ("Achados Tech", "achados.html", "achados"),
+        ("Avaliacoes", "avaliacoes.html", "avaliacoes"),
+        ("Contato", "contato.html", "contato"),
+    ]
+    return "\n".join(
+        f'<a class="{"active" if key == active else ""}" href="{href}">{label}</a>'
+        for label, href, key in items
+    )
+
+
+def subpage_css() -> str:
+    return """    :root {
+      color-scheme: dark;
+      --bg: #02050a;
+      --panel: rgba(7, 22, 34, .84);
+      --line: rgba(121,247,255,.2);
+      --cyan: #17d9ff;
+      --green: #00ffc6;
+      --text: #f6fbff;
+      --muted: #a9bed0;
+      font-family: Nunito, Inter, Segoe UI, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(23,217,255,.14), transparent 26rem),
+        radial-gradient(circle at 82% 12%, rgba(0,255,198,.09), transparent 25rem),
+        linear-gradient(180deg, #02050a 0%, #06101b 48%, #02050a 100%);
+      color: var(--text);
+      letter-spacing: 0;
+    }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(1440px, calc(100% - 36px)); margin: 0 auto; }
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(2,7,13,.9);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-row {
+      min-height: 78px;
+      display: grid;
+      grid-template-columns: 230px 1fr;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 950; font-size: 20px; }
+    .brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.42)); }
+    .menu { display: flex; justify-content: flex-end; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    .menu::-webkit-scrollbar { display: none; }
+    .menu a { white-space: nowrap; font-size: 14px; font-weight: 950; color: #dff8ff; padding: 8px 0; }
+    .menu a.active, .menu a:hover { color: var(--cyan); }
+    .page-hero {
+      margin: 28px auto 22px;
+      min-height: 310px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 430px;
+      gap: 24px;
+      align-items: center;
+      border-radius: 28px;
+      padding: 42px 54px;
+      border: 1px solid rgba(121,247,255,.2);
+      background:
+        linear-gradient(105deg, rgba(3,7,13,.96), rgba(4,32,45,.86), rgba(3,7,13,.72)),
+        url("../assets/cleaning-neon-bg.png") center/cover;
+      overflow: hidden;
+      box-shadow: 0 22px 65px rgba(0,0,0,.28);
+    }
+    .eyebrow {
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(23,217,255,.32);
+      background: rgba(23,217,255,.12);
+      color: #79f7ff;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    h1 { margin: 16px 0 12px; font-size: clamp(36px, 5vw, 70px); line-height: .95; }
+    h2 { margin: 0 0 16px; font-size: clamp(28px, 3vw, 44px); line-height: 1; }
+    h3 { margin: 0; }
+    p { color: #d6e8f3; font-weight: 760; line-height: 1.45; }
+    .page-hero p { max-width: 760px; font-size: 17px; }
+    .page-hero img { max-width: 100%; max-height: 280px; object-fit: contain; justify-self: end; filter: drop-shadow(0 18px 24px rgba(0,0,0,.34)); }
+    .section { padding: 30px 0; }
+    .grid { display: grid; gap: 18px; }
+    .grid.products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.finalists { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card {
+      border-radius: 22px;
+      background: var(--panel);
+      border: 1px solid rgba(121,247,255,.18);
+      box-shadow: 0 18px 48px rgba(0,0,0,.24);
+      overflow: hidden;
+      min-width: 0;
+    }
+    .product-card { padding: 16px; display: flex; flex-direction: column; min-height: 342px; }
+    .product-card .imgbox { height: 166px; display: grid; place-items: center; border-radius: 18px; background: radial-gradient(circle, rgba(23,217,255,.2), rgba(0,0,0,.16) 58%); overflow: hidden; }
+    .product-card img { max-width: 96%; max-height: 154px; object-fit: contain; }
+    .product-card h3 { margin: 14px 0 8px; font-size: 17px; line-height: 1.18; }
+    .specs { color: var(--muted); font-size: 12px; font-weight: 850; line-height: 1.4; }
+    .price { color: var(--cyan); font-size: 25px; font-weight: 950; margin-top: auto; }
+    .actions { display: flex; gap: 8px; margin-top: 12px; }
+    .btn {
+      display: inline-grid;
+      place-items: center;
+      min-height: 40px;
+      border-radius: 999px;
+      padding: 0 18px;
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      color: #041018;
+      font-weight: 950;
+      text-align: center;
+    }
+    .btn.ghost { color: #79f7ff; background: transparent; border: 1px solid rgba(121,247,255,.42); }
+    .actions .btn { flex: 1; font-size: 12px; }
+    .text-card { padding: 24px; }
+    .text-card h3 { color: var(--cyan); margin-bottom: 10px; font-size: 22px; }
+    .text-card p { margin: 0 0 12px; }
+    .badge {
+      display: inline-flex;
+      align-self: flex-start;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: rgba(23,217,255,.12);
+      border: 1px solid rgba(23,217,255,.32);
+      color: #79f7ff;
+      font-size: 11px;
+      font-weight: 950;
+    }
+    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 270px; }
+    .finalist-card h3 { font-size: 15px; line-height: 1.18; }
+    .finalist-card p { margin: 0; font-size: 12px; color: var(--muted); }
+    .creative-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .creative-card { padding: 12px; }
+    .creative-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; display: block; }
+    .creative-card span { display: block; margin-top: 9px; font-size: 12px; font-weight: 900; color: #dffbff; }
+    .brand-wall {
+      border-radius: 24px;
+      padding: 28px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(121,247,255,.18);
+    }
+    .brand-row { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 12px; align-items: center; }
+    .brand-pill {
+      width: 100%;
+      min-width: 0;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(121,247,255,.16);
+      overflow: hidden;
+    }
+    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    footer { margin-top: 40px; padding: 38px 0; border-top: 1px solid rgba(121,247,255,.16); background: #03070d; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 22px; }
+    footer h3 { margin: 0 0 12px; font-size: 16px; }
+    footer a, footer p { display: block; color: #c3d4df; font-weight: 800; font-size: 14px; margin: 8px 0; }
+    @media (max-width: 1120px) {
+      .page-hero { grid-template-columns: 1fr 330px; padding: 36px; }
+      .grid.products { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid.finalists { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 22px, 720px); }
+      .nav-row { grid-template-columns: 1fr; gap: 10px; padding: 12px 0; }
+      .brand { font-size: 16px; }
+      .brand img { width: 34px; height: 34px; }
+      .menu { justify-content: start; gap: 11px; padding-right: 20px; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 24px), transparent 100%); }
+      .menu a { font-size: 11px; }
+      .page-hero { grid-template-columns: 1fr; min-height: auto; padding: 24px 18px; border-radius: 20px; gap: 14px; }
+      .page-hero img { max-height: 150px; justify-self: center; }
+      h1 { font-size: 30px; line-height: 1.02; }
+      .page-hero p { font-size: 13px; }
+      .grid.products, .grid.finalists, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .product-card { min-height: 270px; padding: 10px; border-radius: 16px; }
+      .product-card .imgbox { height: 112px; border-radius: 14px; }
+      .product-card img { max-height: 104px; }
+      .product-card h3 { font-size: 12px; }
+      .specs, .finalist-card p { font-size: 10.5px; }
+      .price { font-size: 18px; }
+      .actions { flex-direction: column; }
+      .actions .btn { min-height: 32px; font-size: 10.5px; }
+      .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
+      .finalist-card h3 { font-size: 12px; }
+      .creative-card span { font-size: 10.5px; line-height: 1.25; }
+      .brand-wall { padding: 20px 12px; }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .brand-pill { height: 50px; padding: 6px; }
+      .brand-pill img { max-height: 100%; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      footer .brand-block { grid-column: 1 / -1; }
+    }
+"""
+
+
+def product_specs(product: dict) -> str:
+    specs = product.get("specs") or {}
+    values = [
+        specs.get("processor"),
+        specs.get("memory"),
+        specs.get("gpu"),
+        specs.get("storage"),
+        specs.get("powerSupply"),
+        specs.get("brand"),
+        specs.get("capacity"),
+    ]
+    return " • ".join(str(value) for value in values if value)[:170]
+
+
+def product_card(product: dict, prefix: str = "../") -> str:
+    image = product.get("cutout") or product.get("image") or ""
+    if image.startswith("./"):
+        image = prefix + image[2:]
+    title = html.escape(product.get("title", "Produto MobilyTech"))
+    specs = html.escape(product_specs(product) or product.get("badge", "Catalogo MobilyTech"))
+    return f"""      <article class="card product-card">
+        <div class="imgbox"><img src="{image}" alt="{title}"></div>
+        <h3>{title}</h3>
+        <p class="specs">{specs}</p>
+        <div class="price">{brl(product.get("price"))}</div>
+        <div class="actions">
+          <a class="btn ghost" href="../fase2-hibrida.html#ofertas">Configurar</a>
+          <a class="btn" href="https://wa.me/5511954801967?text=Tenho%20interesse%20em%20{quote(product.get("title", "produto MobilyTech"))}">Consultar</a>
+        </div>
+      </article>"""
+
+
+def finalist_card(item: dict) -> str:
+    return f"""      <article class="card finalist-card">
+        <span class="badge">{html.escape(item["confidence"])} confianca</span>
+        <h3>{html.escape(item["title"])}</h3>
+        <p>{html.escape(item["whySell"])}</p>
+        <p><strong>Preco:</strong> {html.escape(item["currentPrice"])}</p>
+        <p><strong>Modelo:</strong> {html.escape(item["operationModel"])}</p>
+        <a class="btn ghost" href="{html.escape(item["sourceUrl"])}" target="_blank" rel="noreferrer">Ver fonte</a>
+      </article>"""
+
+
+def shared_footer(prefix: str = "../") -> str:
+    return f"""  <footer id="contato">
+    <div class="shell footer-grid">
+      <div class="brand-block">
+        <div class="brand"><img src="{prefix}assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></div>
+        <p>Vila Suzana, Sao Paulo, SP</p>
+        <p>mobilytechbr@gmail.com</p>
+        <p>WhatsApp: +55 (11) 95480-1967</p>
+      </div>
+      <div>
+        <h3>Loja</h3>
+        <a href="ofertas.html">PC Gamer</a>
+        <a href="achados.html">Achados Tech</a>
+        <a href="montagem.html">Montagem</a>
+        <a href="limpeza.html">Limpeza</a>
+      </div>
+      <div>
+        <h3>Suporte</h3>
+        <a href="contato.html">Contato</a>
+        <a href="https://wa.me/5511954801967">WhatsApp</a>
+        <a href="mailto:mobilytechbr@gmail.com">E-mail</a>
+      </div>
+      <div>
+        <h3>Empresa</h3>
+        <a href="avaliacoes.html">Avaliacoes</a>
+        <a href="../fase2-hibrida.html">Preview principal</a>
+        <a href="{prefix}admin/index.html">Painel legado</a>
+      </div>
+      <div>
+        <h3>Politicas</h3>
+        <a href="contato.html#politicas">Politica de trocas</a>
+        <a href="contato.html#entrega">Entrega</a>
+        <a href="contato.html#privacidade">Privacidade</a>
+      </div>
+    </div>
+  </footer>"""
+
+
+def subpage_html(active: str, title: str, subtitle: str, hero_image: str, content: str) -> str:
+    return f"""<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{html.escape(title)} | MobilyTech BR</title>
+  <link rel="icon" href="../assets/favicon.png" />
+  <style>
+{subpage_css()}
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <div class="shell nav-row">
+      <a class="brand" href="../fase2-hibrida.html"><img src="../assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></a>
+      <div class="menu" aria-label="Navegacao principal">
+{page_nav("../", active)}
+      </div>
+    </div>
+  </nav>
+  <header class="shell page-hero">
+    <div>
+      <span class="eyebrow">Fase 2 hibrida</span>
+      <h1>{html.escape(title)}</h1>
+      <p>{html.escape(subtitle)}</p>
+    </div>
+    <img src="{hero_image}" alt="">
+  </header>
+{content}
+{shared_footer("../")}
+</body>
+</html>
+"""
+
+
+def write_subpages() -> list[Path]:
+    out_dir = ROOT / "fase2"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    products = [p for p in json.loads((DATA_DIR / "products.json").read_text(encoding="utf-8")) if p.get("active") is not False]
+    pc_products = [p for p in products if p.get("category") == "pc"]
+    hardware_products = [p for p in products if p.get("category") != "pc"]
+    product_grid = "\n".join(product_card(product) for product in products)
+    pc_grid = "\n".join(product_card(product) for product in pc_products)
+    hardware_grid = "\n".join(product_card(product) for product in hardware_products)
+    finalist_grid = "\n".join(finalist_card(item) for item in FINALISTS)
+    creative_grid = "\n".join(
+        f"""      <a class="card creative-card" href="../{creative['file'][2:]}" target="_blank" rel="noreferrer">
+        <img src="../{creative['file'][2:]}" alt="Criativo {html.escape(item['title'])}">
+        <span>{html.escape(item['title'])} • {html.escape(creative['angle'])}</span>
+      </a>"""
+        for item in FINALISTS
+        for creative in item.get("creatives", [])
+    )
+    brand_wall = f"""  <section class="section shell">
+    <div class="brand-wall">
+      <h2>Marcas confiaveis no ecossistema MobilyTech</h2>
+      <div class="brand-row">
+{brand_logo_cards("../")}
+      </div>
+    </div>
+  </section>"""
+
+    pages = {
+        "index.html": subpage_html(
+            "home",
+            "Fase 2 MobilyTech",
+            "Indice das subpaginas do preview hibrido, mantendo a home principal como vitrine inspirada na iBUYPOWER.",
+            "../assets/generated/pcryzen-5-3600-cutout.png",
+            """  <section class="section shell">
+    <div class="grid two">
+      <a class="card text-card" href="ofertas.html"><h3>Ofertas e PCs</h3><p>Catalogo separado de PCs, SSDs, fonte e hardware real.</p></a>
+      <a class="card text-card" href="achados.html"><h3>Achados Tech</h3><p>Finalistas de afiliado/dropshipping e criativos para aprovacao.</p></a>
+      <a class="card text-card" href="montagem.html"><h3>Monte seu PC</h3><p>Pagina propria para montagem sob orcamento.</p></a>
+      <a class="card text-card" href="limpeza.html"><h3>Limpeza</h3><p>Pagina propria para limpeza e relatorio.</p></a>
+    </div>
+  </section>""" + brand_wall,
+        ),
+        "ofertas.html": subpage_html(
+            "ofertas",
+            "Ofertas e PCs revisados",
+            "Catalogo separado para os PCs e hardwares reais da MobilyTech, mantendo o visual da home principal.",
+            "../assets/generated/pc-gamer-i5-gt610-cutout.png",
+            f"""  <section id="pcs" class="section shell">
+    <h2>PC Gamer</h2>
+    <div class="grid products">
+{pc_grid}
+    </div>
+  </section>
+  <section class="section shell">
+    <h2>Hardware e pecas</h2>
+    <div class="grid products">
+{hardware_grid}
+    </div>
+  </section>""",
+        ),
+        "achados.html": subpage_html(
+            "achados",
+            "Achados Tech e criativos",
+            "Finalistas da Fase 2 para afiliado/dropshipping, com criativos separados para aprovacao antes de trafego pago.",
+            "../assets/generated/global-kit-mouse-teclado-pichau-cutout.png",
+            f"""  <section class="section shell">
+    <h2>Finalistas escolhidos</h2>
+    <div class="grid finalists">
+{finalist_grid}
+    </div>
+  </section>
+  <section class="section shell">
+    <h2>Criativos para aprovacao</h2>
+    <div class="creative-grid">
+{creative_grid}
+    </div>
+  </section>""",
+        ),
+        "montagem.html": subpage_html(
+            "montagem",
+            "Monte seu PC",
+            "Pagina dedicada para montagem sob orcamento, com configuracao orientada por uso, jogos, limite de preco e disponibilidade de pecas.",
+            "../assets/assembly-pc-build-cutout.png",
+            """  <section class="section shell">
+    <div class="grid two">
+      <article class="card text-card"><h3>Orcamento personalizado</h3><p>O cliente informa objetivo, jogos, programas, limite de preco e preferencia por novo/usado. A MobilyTech monta uma proposta coerente.</p><a class="btn" href="https://wa.me/5511954801967?text=Quero%20montar%20um%20PC%20com%20a%20MobilyTech%20BR">Chamar no WhatsApp</a></article>
+      <article class="card text-card"><h3>Garantia e transparencia</h3><p>Antes de fechar, a proposta precisa deixar claro pecas, estado, garantia, prazo e condicoes de suporte.</p><a class="btn ghost" href="contato.html#politicas">Ver regras</a></article>
+    </div>
+  </section>""" + brand_wall,
+        ),
+        "limpeza.html": subpage_html(
+            "limpeza",
+            "Limpeza de PCs",
+            "Pagina dedicada para limpeza, relatorio visual e orientacao de manutencao preventiva.",
+            "../assets/pc-cleaning-service-cutout.png",
+            """  <section class="section shell">
+    <div class="grid two">
+      <article class="card text-card"><h3>Limpeza com relatorio</h3><p>Antes/depois, cuidado com poeira, organizacao visual e registro para o cliente acompanhar o servico.</p><a class="btn" href="https://wa.me/5511954801967?text=Quero%20agendar%20uma%20limpeza%20de%20PC">Agendar limpeza</a></article>
+      <article class="card text-card"><h3>Produtos relacionados</h3><p>Kits de limpeza e acessorios da Fase 2 podem virar upsell sem alterar o servico principal.</p><a class="btn ghost" href="achados.html">Ver Achados Tech</a></article>
+    </div>
+  </section>""" + brand_wall,
+        ),
+        "avaliacoes.html": subpage_html(
+            "avaliacoes",
+            "Avaliacoes e confianca",
+            "Pagina dedicada para prova social, canais reais e marcas presentes no ecossistema MobilyTech.",
+            "../assets/mobilytech-character-cutout.png",
+            """  <section class="section shell">
+    <div class="grid three reviews-grid">
+      <article class="card text-card"><h3>OLX</h3><p>Avaliacoes publicas e historico de vendedor para PCs e hardware revisados.</p><a class="btn ghost" href="https://avaliacoes.olx.com.br/vendedor/859fd666-c047-4d6d-adac-374dd530d56c">Ver OLX</a></article>
+      <article class="card text-card"><h3>Facebook Marketplace</h3><p>Contato direto, retirada local e negociacao com fotos reais dos produtos.</p></article>
+      <article class="card text-card"><h3>Pos-venda</h3><p>Suporte por WhatsApp, garantia informada e orientacao de upgrades antes da compra.</p></article>
+    </div>
+  </section>""" + brand_wall,
+        ),
+        "contato.html": subpage_html(
+            "contato",
+            "Contato, entrega e politicas",
+            "Pagina dedicada para suporte, retirada local, politicas e pontos legais antes da compra.",
+            "../assets/mobilytech-logo.png",
+            """  <section class="section shell">
+    <div class="grid two">
+      <article class="card text-card"><h3>Contato</h3><p>E-mail: mobilytechbr@gmail.com<br>WhatsApp: +55 (11) 95480-1967<br>Retirada: Vila Suzana, Sao Paulo, SP</p><a class="btn" href="https://wa.me/5511954801967">Chamar no WhatsApp</a></article>
+      <article id="entrega" class="card text-card"><h3>Entrega e retirada</h3><p>Frete e retirada precisam ser confirmados no checkout ou no atendimento, usando CEP, seguro e disponibilidade real.</p></article>
+      <article id="politicas" class="card text-card"><h3>Trocas e garantia</h3><p>PCs revisados podem ter garantia comercial de 14 dias para defeitos preexistentes comprovados, sem cobrir dano por mau uso ou alteracao indevida apos entrega.</p></article>
+      <article id="privacidade" class="card text-card"><h3>Privacidade</h3><p>Dados de contato, endereco e pagamento devem ser tratados apenas para atendimento, entrega, pos-venda e obrigacoes legais.</p></article>
+    </div>
+  </section>""",
+        ),
+    }
+    written = []
+    for filename, page in pages.items():
+        path = out_dir / filename
+        path.write_text(page, encoding="utf-8")
+        written.append(path)
+    return written
 
 
 def write_csvs() -> tuple[Path, Path]:
@@ -1622,9 +2154,11 @@ def main() -> None:
     DOCS_DIR.mkdir(parents=True, exist_ok=True)
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    write_brand_logos()
     write_creatives()
     json_path = write_phase2_json()
     page_path = write_page()
+    subpages = write_subpages()
     finalists_csv, creative_csv = write_csvs()
     xlsx_path = write_workbook()
     report_path = write_report()
@@ -1632,11 +2166,13 @@ def main() -> None:
         {
             "json": str(json_path),
             "page": str(page_path),
+            "subpages": [str(path) for path in subpages],
             "finalistsCsv": str(finalists_csv),
             "creativeCsv": str(creative_csv),
             "xlsx": str(xlsx_path),
             "report": str(report_path),
             "creatives": len(list(CREATIVE_DIR.glob("*.svg"))),
+            "brandLogos": len(list(BRAND_LOGO_DIR.glob("*.svg"))),
         },
         ensure_ascii=False,
         indent=2,

@@ -340,17 +340,18 @@
       align-items: center;
     }
     .brand-pill {
-      min-height: 52px;
+      width: 100%;
+      min-width: 0;
+      height: 64px;
       display: grid;
       place-items: center;
+      padding: 8px;
       border-radius: 10px;
       background: rgba(255,255,255,.08);
       border: 1px solid rgba(121,247,255,.16);
-      color: #f7fbff;
-      font-weight: 950;
-      font-size: 14px;
-      text-align: center;
+      overflow: hidden;
     }
+    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
     .policy-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -519,7 +520,8 @@
       .reviews-grid, .policy-grid { grid-template-columns: 1fr; }
       .brand-wall { padding: 20px 12px; }
       .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .brand-pill { min-height: 42px; font-size: 11px; }
+      .brand-pill { height: 50px; padding: 6px; }
+      .brand-pill img { max-height: 100%; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -539,13 +541,13 @@
         <span>MobilyTech BR</span>
       </a>
       <div class="menu" aria-label="Navegacao principal">
-        <a href="#ofertas">Ofertas</a>
-        <a href="#pcs">PC Gamer</a>
-        <a href="#monte">Monte seu PC</a>
-        <a href="#limpeza">Limpeza</a>
-        <a href="#achados">Achados Tech</a>
-        <a href="#avaliacoes">Avaliacoes</a>
-        <a href="#contato">Suporte</a>
+        <a href="./fase2/ofertas.html">Ofertas</a>
+        <a href="./fase2/ofertas.html#pcs">PC Gamer</a>
+        <a href="./fase2/montagem.html">Monte seu PC</a>
+        <a href="./fase2/limpeza.html">Limpeza</a>
+        <a href="./fase2/achados.html">Achados Tech</a>
+        <a href="./fase2/avaliacoes.html">Avaliacoes</a>
+        <a href="./fase2/contato.html">Suporte</a>
       </div>
       <label class="search" aria-label="Pesquisar">
         <span>⌕</span>
@@ -564,8 +566,8 @@
             <h1>MobilyTech BR em modo loja gamer</h1>
             <p class="lead">Uma versao alternativa inspirada na estrutura da iBUYPOWER e energia visual da KaBuM, preservando PCs reais, swaps, limpeza, garantia e o plano hibrido com Wix Stores.</p>
             <div class="hero-actions">
-              <a class="primary" href="#ofertas">Ver PCs e ofertas</a>
-              <a class="ghost" href="#achados">Ver Achados Tech</a>
+              <a class="primary" href="./fase2/ofertas.html">Ver PCs e ofertas</a>
+              <a class="ghost" href="./fase2/achados.html">Ver Achados Tech</a>
             </div>
           </div>
           <div class="hero-stage">
@@ -583,10 +585,10 @@
     <section id="ofertas" class="section shell">
       <div class="section-head">
         <div>
-          <h2>Current Promotions MobilyTech</h2>
+          <h2>Promocoes atuais MobilyTech</h2>
           <p class="sub">PCs e hardware reais do catalogo atual, com botoes de configuracao e carrinho de rascunho para manter a logica viva.</p>
         </div>
-        <a class="ghost" href="./index.html">Abrir site original</a>
+        <a class="ghost" href="./fase2/ofertas.html">Abrir catalogo completo</a>
       </div>
       <div id="productGrid" class="deal-grid"></div>
     </section>
@@ -598,7 +600,7 @@
             <span class="eyebrow">Custom gaming PCs</span>
             <h3>Monte seu PC sob orcamento</h3>
             <p>Escolha uso, jogos, limite de preco e upgrades. A montagem continua personalizada, com garantia informada antes da compra.</p>
-            <a class="primary" href="https://wa.me/5511954801967?text=Quero%20montar%20um%20PC%20com%20a%20MobilyTech%20BR">Consultar orcamento</a>
+            <a class="primary" href="./fase2/montagem.html">Consultar orcamento</a>
           </div>
           <img src="./assets/assembly-pc-build-cutout.png" alt="Montagem de PC" />
         </article>
@@ -607,7 +609,7 @@
             <span class="eyebrow">PC cleaning service</span>
             <h3>Limpeza e relatorio</h3>
             <p>Servico de limpeza com foco em cuidado, organizacao e relatorio visual do antes/depois, mantendo a pegada de pos-venda.</p>
-            <a class="primary" href="https://wa.me/5511954801967?text=Quero%20agendar%20uma%20limpeza%20de%20PC">Agendar limpeza</a>
+            <a class="primary" href="./fase2/limpeza.html">Agendar limpeza</a>
           </div>
           <img src="./assets/pc-cleaning-service-cutout.png" alt="Limpeza de PC" />
         </article>
@@ -620,7 +622,7 @@
           <h2>Achados Tech em validacao</h2>
           <p class="sub">Finalistas da Fase 2 com modelo operacional sugerido. Nada daqui vira anuncio pago sem aprovacao.</p>
         </div>
-        <a class="ghost" href="./docs/MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx">Abrir planilha</a>
+        <a class="ghost" href="./fase2/achados.html">Abrir pagina de achados</a>
       </div>
       <div id="finalistGrid" class="finalist-grid"></div>
     </section>
@@ -638,7 +640,7 @@
     <section id="avaliacoes" class="section shell">
       <div class="section-head">
         <div>
-          <h2>MobilyTech BR Customer Reviews</h2>
+          <h2>Avaliacoes da MobilyTech BR</h2>
           <p class="sub">Blocos no estilo iBUYPOWER, usando os canais reais de confianca da MobilyTech.</p>
         </div>
       </div>
@@ -665,17 +667,17 @@
       <div class="brand-wall">
         <h2>Marcas confiaveis no ecossistema MobilyTech</h2>
         <div class="brand-row">
-          <span class="brand-pill">Intel</span>
-          <span class="brand-pill">AMD</span>
-          <span class="brand-pill">NVIDIA</span>
-          <span class="brand-pill">Microsoft</span>
-          <span class="brand-pill">Corsair</span>
-          <span class="brand-pill">ASUS</span>
-          <span class="brand-pill">Gigabyte</span>
-          <span class="brand-pill">EVGA</span>
-          <span class="brand-pill">Kingston</span>
-          <span class="brand-pill">Crucial</span>
-          <span class="brand-pill">PNY</span>
+          <span class="brand-pill"><img src="./assets/brand-logos/intel.svg" alt="Intel"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/amd.svg" alt="AMD"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/nvidia.svg" alt="NVIDIA"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/microsoft.svg" alt="Microsoft"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/corsair.svg" alt="Corsair"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/asus.svg" alt="ASUS"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/gigabyte.svg" alt="Gigabyte"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/evga.svg" alt="EVGA"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/kingston.svg" alt="Kingston"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/crucial.svg" alt="Crucial"></span>
+          <span class="brand-pill"><img src="./assets/brand-logos/pny.svg" alt="PNY"></span>
         </div>
       </div>
     </section>
@@ -714,10 +716,10 @@
       </div>
       <div>
         <h3>Loja</h3>
-        <a href="#ofertas">PC Gamer</a>
-        <a href="#achados">Achados Tech</a>
-        <a href="#monte">Montagem</a>
-        <a href="#limpeza">Limpeza</a>
+        <a href="./fase2/ofertas.html">PC Gamer</a>
+        <a href="./fase2/achados.html">Achados Tech</a>
+        <a href="./fase2/montagem.html">Montagem</a>
+        <a href="./fase2/limpeza.html">Limpeza</a>
       </div>
       <div>
         <h3>Suporte</h3>
@@ -727,15 +729,15 @@
       </div>
       <div>
         <h3>Empresa</h3>
-        <a href="#avaliacoes">Avaliacoes</a>
+        <a href="./fase2/avaliacoes.html">Avaliacoes</a>
         <a href="./index.html">Site original</a>
         <a href="./admin/index.html">Painel legado</a>
       </div>
       <div>
-        <h3>Legal</h3>
-        <a href="#contato">Politica de trocas</a>
-        <a href="#contato">Entrega</a>
-        <a href="#contato">Privacidade</a>
+        <h3>Politicas</h3>
+        <a href="./fase2/contato.html#politicas">Politica de trocas</a>
+        <a href="./fase2/contato.html#entrega">Entrega</a>
+        <a href="./fase2/contato.html#privacidade">Privacidade</a>
       </div>
     </div>
   </footer>
