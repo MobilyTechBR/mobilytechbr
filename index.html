@@ -4547,7 +4547,7 @@
 
       .site-header.storefront-header .brand {
         gap: 12px;
-        min-width: max-content;
+        min-width: 0;
       }
 
       .site-header.storefront-header .brand img {
@@ -4738,8 +4738,8 @@
       #limpeza-pcs { order: 5; }
       #avaliacoes { order: 6; }
       .mobily-brand-wall { order: 7; }
-      #contato { order: 8; }
-      #carrinho { order: 9; }
+      #carrinho { order: 8; }
+      #contato { order: 9; }
 
       .reveal {
         opacity: 1 !important;
@@ -5621,23 +5621,29 @@
 
       .mobily-brand-row {
         display: grid;
-        grid-template-columns: repeat(8, minmax(0, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 14px;
       }
 
       .brand-tile {
-        height: 66px;
+        min-height: 92px;
+        aspect-ratio: 2.4 / 1;
         display: grid;
         place-items: center;
-        padding: 12px;
+        min-width: 0;
+        padding: 6px;
+        overflow: hidden;
         border: 1px solid rgba(129, 216, 255, 0.12);
-        border-radius: 11px;
+        border-radius: 14px;
         background: rgba(255, 255, 255, 0.035);
       }
 
       .brand-tile img {
-        max-width: 100%;
-        max-height: 34px;
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+        min-width: 0;
         object-fit: contain;
         filter: drop-shadow(0 0 10px rgba(34, 240, 196, 0.12));
       }
@@ -5772,6 +5778,10 @@
         .contact-card {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+
+        .mobily-brand-row {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
       }
 
       @media (max-width: 760px) {
@@ -5798,10 +5808,14 @@
         }
 
         .site-header.storefront-header nav {
-          justify-content: flex-start;
-          overflow-x: auto;
-          padding-bottom: 2px;
-          scrollbar-width: none;
+          grid-column: 1 / -1;
+          order: 2;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 6px;
+          justify-content: stretch;
+          overflow: visible;
+          padding-bottom: 0;
         }
 
         .site-header.storefront-header nav::-webkit-scrollbar {
@@ -5809,19 +5823,26 @@
         }
 
         .site-header.storefront-header nav a {
-          flex: 0 0 auto;
-          min-width: max-content;
+          width: 100%;
+          min-width: 0;
           min-height: 34px;
-          padding: 7px 9px;
-          font-size: 12px;
+          justify-content: center;
+          padding: 7px 6px;
+          font-size: 10.5px;
+          line-height: 1.05;
+          text-align: center;
+          white-space: normal;
         }
 
         .site-search {
+          grid-column: 1 / -1;
+          order: 3;
           min-height: 40px;
           border-radius: 14px;
         }
 
         .header-cart {
+          justify-self: end;
           min-width: 106px;
           padding: 6px 9px !important;
         }
@@ -5865,6 +5886,10 @@
         .hero .button {
           width: 100%;
           min-height: 48px;
+          padding: 0 14px;
+          font-size: 12px;
+          line-height: 1.05;
+          text-align: center;
         }
 
         .hero-stage {
@@ -6035,6 +6060,16 @@
           grid-template-columns: 1fr;
         }
 
+        .cleaning-content h2 {
+          font-size: 26px !important;
+          line-height: 1.08 !important;
+        }
+
+        .cleaning-content p {
+          font-size: 12px !important;
+          line-height: 1.45 !important;
+        }
+
         .cleaning-media {
           min-height: 220px;
         }
@@ -6056,16 +6091,68 @@
           grid-column: auto;
         }
 
+        .cleaning-form input,
+        .cleaning-form textarea {
+          min-height: 46px !important;
+          padding: 12px 14px !important;
+          border-radius: 10px !important;
+          font-size: 13px !important;
+          line-height: 1.25 !important;
+        }
+
+        .reviews-wrap > div:first-child {
+          display: block;
+          margin-bottom: 12px;
+          text-align: left;
+        }
+
+        .reviews-wrap > div:first-child .section-kicker {
+          margin: 0 0 7px;
+          font-size: 10px;
+          letter-spacing: .14em;
+        }
+
+        .reviews-title {
+          max-width: 100%;
+          font-size: 24px !important;
+          line-height: 1.05 !important;
+        }
+
+        .reviews-lead {
+          max-width: none;
+          margin-top: 9px;
+          font-size: 13px !important;
+          line-height: 1.45 !important;
+          text-align: left;
+        }
+
         .review-grid {
           grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .rating-card,
+        .review-card {
+          min-height: 0;
+          padding: 15px;
+        }
+
+        .rating-card strong {
+          font-size: 42px;
+        }
+
+        .review-card blockquote {
+          font-size: 13px;
         }
 
         .mobily-brand-row {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
         }
 
         .brand-tile {
-          height: 58px;
+          min-height: 68px;
+          border-radius: 12px;
         }
 
         .contact-card {
@@ -6458,7 +6545,7 @@
             <input type="hidden" name="servico" value="Limpeza completa + troca de pasta termica do processador e da placa de video.">
             <label><span class="sr-only">Nome completo</span><input name="nome" type="text" autocomplete="name" placeholder="Nome completo" required></label>
             <label><span class="sr-only">E-mail</span><input name="email" type="email" autocomplete="email" placeholder="seu@email.com" required></label>
-            <label><span class="sr-only">WhatsApp</span><input name="telefone" type="tel" autocomplete="tel" placeholder="(11) 99999-9999" required></label>
+            <label><span class="sr-only">WhatsApp</span><input name="telefone" type="tel" autocomplete="tel" placeholder="Ex.: (11) 91234-5678" required></label>
             <label><span class="sr-only">Descricao opcional</span><textarea name="descricao" placeholder="Conte um pouco sobre o que seu PC precisa..."></textarea></label>
             <button class="button gold cleaning-submit" id="cleaning-submit" type="submit" disabled>AGENDAR LIMPEZA</button>
             <p class="cleaning-message" id="cleaning-message" aria-live="polite"></p>
@@ -6481,14 +6568,17 @@
             </div>
           </div>
           <div class="mobily-brand-row" aria-label="Logos de marcas">
-            <span class="brand-tile"><img src="./assets/brand-logos/intel.svg" alt="Intel"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/amd.svg" alt="AMD"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/nvidia.svg" alt="NVIDIA"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/kingston.svg" alt="Kingston"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/asus.svg" alt="ASUS"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/gigabyte.svg" alt="Gigabyte"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/corsair.svg" alt="Corsair"></span>
-            <span class="brand-tile"><img src="./assets/brand-logos/crucial.svg" alt="Crucial"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/intel.jpg" alt="Intel"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/amd.jpg" alt="AMD"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/nvidia.jpg" alt="NVIDIA"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/microsoft.jpg" alt="Microsoft"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/corsair.jpg" alt="Corsair"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/asus.jpg" alt="ASUS"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/gigabyte.jpg" alt="Gigabyte"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/evga.jpg" alt="EVGA"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/kingston.jpg" alt="Kingston"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/crucial.jpg" alt="Crucial"></span>
+            <span class="brand-tile"><img src="./assets/brand-tiles/pny.jpg" alt="PNY"></span>
           </div>
         </div>
       </section>
@@ -6530,13 +6620,13 @@
               <span>Pix</span>
               <span>Mercado Pago</span>
               <span>Abacate Pay</span>
-              <span>Wix</span>
+              <span>Cartao</span>
             </div>
             <span>Frete calculado no checkout e retirada local combinada.</span>
           </div>
           <div class="footer-bottom">
             <span>&copy; 2026 MobilyTech BR. Todos os direitos reservados.</span>
-            <span>CNPJ em regularizacao MEI | Sao Paulo - SP</span>
+            <span>Compra segura | Sao Paulo - SP</span>
           </div>
         </div>
       </section>
