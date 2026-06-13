@@ -4982,6 +4982,7 @@
         height: 42px;
         display: grid;
         place-items: center;
+        place-self: center;
         border-radius: 12px;
         background: rgba(34, 240, 196, 0.08);
         color: #22f0c4;
@@ -4990,6 +4991,7 @@
       .trust-icon svg {
         width: 23px;
         height: 23px;
+        display: block;
         fill: none;
         stroke: currentColor;
         stroke-width: 1.9;
@@ -5084,22 +5086,41 @@
       .product-card .photo {
         position: relative;
         z-index: 1;
-        height: 144px;
-        min-height: 144px;
+        height: 150px;
+        min-height: 150px;
         width: 100%;
-        margin: 0;
+        margin: 0 0 -10px;
         padding: 14px 14px 4px;
+        overflow: visible;
+        isolation: isolate;
         border: 0;
         border-radius: 0;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent);
+        background:
+          radial-gradient(circle at 50% 16%, rgba(34, 240, 196, 0.18), transparent 36%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent);
         display: grid;
         place-items: center;
       }
 
+      .product-card .photo::after {
+        left: 8%;
+        right: 8%;
+        bottom: -7px;
+        z-index: 3;
+        height: 38%;
+        background:
+          radial-gradient(ellipse at center, rgba(34, 240, 196, 0.34), transparent 66%),
+          linear-gradient(180deg, transparent, rgba(4, 183, 255, 0.12));
+        filter: blur(3px);
+        opacity: 0.72;
+      }
+
       .product-card .product-cutout {
         width: 100%;
-        height: 100%;
+        height: calc(100% + 28px);
+        bottom: -8px;
         object-fit: contain;
+        object-position: center bottom;
         filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.42));
       }
 
@@ -5107,7 +5128,7 @@
         position: relative;
         z-index: 1;
         flex: 1;
-        padding: 12px 14px 14px;
+        padding: 22px 14px 14px;
         display: flex;
         flex-direction: column;
       }
@@ -5603,9 +5624,16 @@
         background: transparent;
       }
 
+      .reviews-wrap > div:first-child {
+        display: block;
+        text-align: center;
+      }
+
       .reviews-lead {
         max-width: 640px;
+        margin: 8px auto 0;
         color: rgba(215, 237, 247, 0.7);
+        text-align: center;
       }
 
       .review-grid {
@@ -5665,34 +5693,36 @@
       }
 
       .mobily-brand-row {
-        display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: clamp(12px, 1.7vw, 22px);
+        padding: 10px 0 0;
+        overflow: visible;
       }
 
       .brand-tile {
-        min-height: 78px;
-        aspect-ratio: 2.4 / 1;
-        display: grid;
-        place-items: center;
+        min-height: 38px;
+        display: flex;
+        flex: 1 1 0;
+        align-items: center;
+        justify-content: center;
         min-width: 0;
-        padding: 12px 16px;
-        overflow: hidden;
-        border: 1px solid rgba(129, 216, 255, 0.16);
-        border-radius: 14px;
-        background:
-          radial-gradient(circle at 50% 50%, rgba(34, 240, 196, 0.12), transparent 58%),
-          rgba(255, 255, 255, 0.035);
+        padding: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
       }
 
       .brand-tile img {
-        width: auto;
-        height: auto;
-        max-width: 92%;
-        max-height: 36px;
+        width: 100%;
+        height: 34px;
+        max-width: 118px;
+        max-height: 34px;
         min-width: 0;
         object-fit: contain;
-        filter: drop-shadow(0 0 9px rgba(34, 240, 196, 0.2));
+        filter: drop-shadow(0 0 10px rgba(34, 240, 196, 0.18));
       }
 
       .contact-section {
@@ -5831,10 +5861,6 @@
 
         .contact-card {
           grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .mobily-brand-row {
-          grid-template-columns: repeat(4, minmax(0, 1fr));
         }
       }
 
@@ -6021,11 +6047,12 @@
         .product-card .photo {
           height: 118px;
           min-height: 118px;
+          margin-bottom: -8px;
           padding: 10px 8px 0;
         }
 
         .product-card .body {
-          padding: 10px;
+          padding: 18px 10px 10px;
         }
 
         .product-card h3 {
@@ -6181,7 +6208,7 @@
         .reviews-wrap > div:first-child {
           display: block;
           margin-bottom: 12px;
-          text-align: left;
+          text-align: center;
         }
 
         .reviews-wrap > div:first-child .section-kicker {
@@ -6198,10 +6225,10 @@
 
         .reviews-lead {
           max-width: none;
-          margin-top: 9px;
+          margin: 9px auto 0;
           font-size: 13px !important;
           line-height: 1.45 !important;
-          text-align: left;
+          text-align: center;
         }
 
         .review-grid {
@@ -6224,20 +6251,20 @@
         }
 
         .mobily-brand-row {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 10px;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 13px 16px;
+          padding-top: 8px;
         }
 
         .brand-tile {
-          min-height: 74px;
-          aspect-ratio: 1.78 / 1;
-          padding: 10px 12px;
-          border-radius: 12px;
+          min-height: 26px;
         }
 
         .brand-tile img {
-          max-width: 86%;
-          max-height: 34px;
+          height: 24px;
+          max-width: 76px;
+          max-height: 24px;
         }
 
         .contact-card {

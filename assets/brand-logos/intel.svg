@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="240" height="88" viewBox="0 0 240 88" role="img" aria-label="Intel">
-  <rect width="240" height="88" rx="14" fill="#121820"/>
-  <rect x="1" y="1" width="238" height="86" rx="13" fill="none" stroke="#38bdf8" stroke-opacity=".5"/>
-  
-  <circle cx="55" cy="45" r="24" fill="none" stroke="#38bdf8" stroke-width="4" opacity=".9"/>
-  <path d="M42 45h26" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
-  <text x="134" y="54" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="900" fill="#f8fbff" letter-spacing="0">Intel</text>
+  <g fill="none" stroke="#e9f6ff" stroke-width="6" stroke-linecap="round" opacity=".95">
+    <path d="M35 55c20 18 103 18 151-2 34-14 27-34-18-40"/>
+    <path d="M205 24c18 15 1 35-36 46-44 13-112 7-139-12"/>
+  </g>
+  <text x="116" y="54" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" fill="#f8fbff" letter-spacing="-2">intel</text>
 </svg>
