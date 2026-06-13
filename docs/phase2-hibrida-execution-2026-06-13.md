@@ -1,6 +1,6 @@
 # MobilyTech BR - Fase 2 Hibrida
 
-Gerado em: 2026-06-13 09:57:06
+Gerado em: 2026-06-13 12:07:32
 
 ## Objetivo
 
@@ -12,7 +12,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Preview local: `http://127.0.0.1:4173/fase2-hibrida.html`
 - HTML: `fase2-hibrida.html`
 - Dados: `data/phase2-finalists.json`
-- Criativos: `assets/phase2-creatives/*.svg`
+- Criativos: `assets/phase2-creatives/*.jpg`
 - Planilha: `docs/MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx`
 
 ## O que foi aplicado da referencia iBUYPOWER/KaBuM

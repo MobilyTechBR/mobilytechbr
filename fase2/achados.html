@@ -27,6 +27,7 @@
         linear-gradient(180deg, #02050a 0%, #06101b 48%, #02050a 100%);
       color: var(--text);
       letter-spacing: 0;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     .shell { width: min(1440px, calc(100% - 36px)); margin: 0 auto; }
@@ -87,7 +88,7 @@
     .section { padding: 30px 0; }
     .grid { display: grid; gap: 18px; }
     .grid.products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .grid.finalists { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid.finalists { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .card {
@@ -178,7 +179,55 @@
       font-size: 11px;
       font-weight: 950;
     }
-    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 270px; }
+    .finalist-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 388px; }
+    .affiliate-photo {
+      width: 100%;
+      aspect-ratio: 1 / .78;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(219,241,247,.9));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 16px 28px rgba(0,0,0,.18);
+    }
+    .affiliate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .market-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: #071018;
+      background: linear-gradient(135deg, #ffe600, #fff2a8);
+      font-size: 10.5px;
+      font-weight: 950;
+      box-shadow: 0 0 18px rgba(255,230,0,.15);
+    }
+    .market-badge img { width: 18px; height: 18px; object-fit: contain; }
+    .affiliate-status { font-size: 10px; color: #9fb3bd; font-weight: 850; line-height: 1.25; min-height: 26px; }
+    .market-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      margin-top: auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      color: #071018;
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: none;
+      text-align: center;
+      padding: 0 12px;
+      box-shadow: 0 0 26px rgba(255,230,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
+      backdrop-filter: blur(12px);
+    }
+    .market-button img { width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto; }
+    .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .finalist-card h3 { font-size: 15px; line-height: 1.18; }
     .finalist-card p { margin: 0; font-size: 12px; color: var(--muted); }
     .creative-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
@@ -186,25 +235,31 @@
     .creative-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; display: block; }
     .creative-card span { display: block; margin-top: 9px; font-size: 12px; font-weight: 900; color: #dffbff; }
     .brand-wall {
-      border-radius: 24px;
-      padding: 28px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(121,247,255,.18);
+      border-radius: 30px;
+      padding: clamp(22px, 4vw, 42px);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(23,217,255,.14), transparent 34%),
+        linear-gradient(145deg, rgba(10,18,28,.94), rgba(3,8,14,.96));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: 0 22px 58px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.035);
     }
-    .brand-row { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 12px; align-items: center; }
+    .brand-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: center; }
     .brand-pill {
       width: 100%;
       min-width: 0;
-      height: 64px;
+      aspect-ratio: 1.5 / 1;
       display: grid;
       place-items: center;
-      padding: 8px;
-      border-radius: 10px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(121,247,255,.16);
+      padding: 0;
+      border-radius: 24px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
+      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
       overflow: hidden;
     }
-    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
+    .brand-pill:last-child { grid-column: 2 / 3; }
+    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
     footer { margin-top: 40px; padding: 38px 0; border-top: 1px solid rgba(121,247,255,.16); background: #03070d; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 22px; }
     footer h3 { margin: 0 0 12px; font-size: 16px; }
@@ -213,7 +268,7 @@
       .page-hero { grid-template-columns: 1fr 330px; padding: 36px; }
       .grid.products { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.finalists { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 22px, 720px); }
@@ -238,13 +293,18 @@
       .actions { flex-direction: column; }
       .actions .btn { min-height: 32px; font-size: 10.5px; }
       .form-actions .btn { width: 100%; min-width: 0; }
-      .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
+      .finalist-card { min-height: 318px; padding: 10px; border-radius: 16px; }
+      .affiliate-photo { border-radius: 13px; }
+      .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
+      .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
+      .market-button img { width: 18px; height: 18px; }
+      .affiliate-status { font-size: 9px; min-height: 0; }
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .brand-pill { height: 50px; padding: 6px; }
-      .brand-pill img { max-height: 100%; }
+      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -270,7 +330,7 @@
     <div>
       <span class="eyebrow">Fase 2 hibrida</span>
       <h1>Achados Tech e criativos</h1>
-      <p>Finalistas da Fase 2 para afiliado/dropshipping, com criativos separados para aprovacao antes de trafego pago.</p>
+      <p>Produtos parceiros da Fase 2, com criativos separados para aprovacao antes de trafego pago.</p>
     </div>
     <img src="../assets/generated/global-kit-mouse-teclado-pichau-cutout.png" alt="">
   </header>
@@ -278,170 +338,297 @@
     <h2>Finalistas escolhidos</h2>
     <div class="grid finalists">
       <article class="card finalist-card">
-        <span class="badge">Alta confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/case-ssd-nvme.jpg" alt="Case SSD M.2 NVMe USB-C 10Gbps"></div>
+        <div class="market-row">
+          <span class="badge">Alta confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Case SSD M.2 NVMe USB-C 10Gbps</h3>
         <p>Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.</p>
         <p><strong>Preco:</strong> R$59,98 no Mercado Livre; Shopee em torno de R$74,57</p>
-        <p><strong>Modelo:</strong> Testar afiliado primeiro e depois dropshipping automatizado</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/case-para-ssd-m2-nvme-externo-usb-c-31-adaptador-nvme-2230-2242-2260-2280-aluminio-m-key-ate-4tb-10gbps-inv-tech/p/MLB29349887" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/1DNJP2s" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Alta confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/case-ssd-sata.jpg" alt="Case SSD/HD SATA 2.5 USB 3.0"></div>
+        <div class="market-row">
+          <span class="badge">Alta confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Case SSD/HD SATA 2.5 USB 3.0</h3>
         <p>Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.</p>
         <p><strong>Preco:</strong> R$22 com opcoes a partir de R$17,50</p>
-        <p><strong>Modelo:</strong> Afiliado primeiro, dropshipping automatizado se houver fornecedor estavel</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/case-slim-hd-ssd-adaptador-usb-30-sata-3-externo-6gbps-ps4/p/MLB27786386" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/27TQAft" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Media-alta confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/fone-kz-castor.jpg" alt="Fone KZ Castor monitor in-ear"></div>
+        <div class="market-row">
+          <span class="badge">Media-alta confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Fone KZ Castor monitor in-ear</h3>
         <p>Produto quente em TikTok/audio e encaixa bem com setup gamer sem parecer aleatorio no site.</p>
         <p><strong>Preco:</strong> R$114 no Mercado Livre; Shopee oficial foi visto em torno de R$109 com cupom</p>
-        <p><strong>Modelo:</strong> Afiliado primeiro; dropshipping so com fornecedor oficial/confiavel</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/1WRhUoF" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Alta confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/kit-limpeza-esd.jpg" alt="Kit limpeza ESD antiestatico para PC"></div>
+        <div class="market-row">
+          <span class="badge">Alta confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Kit limpeza ESD antiestatico para PC</h3>
         <p>Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.</p>
         <p><strong>Preco:</strong> Ofertas entre cerca de R$21 e R$58 conforme composicao</p>
-        <p><strong>Modelo:</strong> Dropshipping automatizado com estoque reserva local para combos</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/kit-limpeza-esd-antiestatico-para-pc-com-5-pecas/p/MLB37963040" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/2qJ8vr9" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Media confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/mini-aspirador-teclado.jpg" alt="Mini aspirador USB para teclado e cantos do setup"></div>
+        <div class="market-row">
+          <span class="badge">Media confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Mini aspirador USB para teclado e cantos do setup</h3>
         <p>Criativo de antes/depois funciona bem, mas precisa expectativa honesta.</p>
         <p><strong>Preco:</strong> R$21,62 na oferta House Tools</p>
-        <p><strong>Modelo:</strong> Afiliado primeiro; dropshipping apenas se qualidade for validada</p>
-        <a class="btn ghost" href="https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta em validacao antes de qualquer campanha paga.</span>
+        <a class="market-button market-ml" href="https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Validar oferta no Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Media-alta confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/hub-usb-c.jpg" alt="Hub USB-C 4 portas para notebook e celular"></div>
+        <div class="market-row">
+          <span class="badge">Media-alta confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Hub USB-C 4 portas para notebook e celular</h3>
         <p>Resolve problema comum de notebook com poucas portas e complementa PCs/notebooks.</p>
         <p><strong>Preco:</strong> R$19,27 em oferta Chrome Technology vista em busca</p>
-        <p><strong>Modelo:</strong> Afiliado primeiro</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/2GBaCfz" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Media confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/suporte-gpu-antisag.jpg" alt="Suporte anti-sag para placa de video"></div>
+        <div class="market-row">
+          <span class="badge">Media confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Suporte anti-sag para placa de video</h3>
         <p>Visual forte para criativos e conversa com PCs gamer montados.</p>
         <p><strong>Preco:</strong> Ofertas vistas de R$19,90 a R$134,99 conforme marca/RGB</p>
-        <p><strong>Modelo:</strong> Testar afiliado primeiro e so depois dropshipping</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/1ycmCJ9" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Media confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/keycaps-pbt.jpg" alt="Kit keycaps PBT para teclado mecanico"></div>
+        <div class="market-row">
+          <span class="badge">Media confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Kit keycaps PBT para teclado mecanico</h3>
         <p>Produto visual para criativos e publico gamer que gosta de customizacao.</p>
         <p><strong>Preco:</strong> Ofertas de R$28 a R$130+ conforme quantidade/perfil</p>
-        <p><strong>Modelo:</strong> Afiliado primeiro</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/2tNDMiC" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Media confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/teclado-mecanico-abnt2.jpg" alt="Teclado gamer mecanico RGB ABNT2"></div>
+        <div class="market-row">
+          <span class="badge">Media confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Teclado gamer mecanico RGB ABNT2</h3>
         <p>Periferico principal do setup; bom para combos com PCs e anuncios de retargeting.</p>
         <p><strong>Preco:</strong> Preco varia bastante; validar SKU final antes de campanha</p>
-        <p><strong>Modelo:</strong> Afiliado primeiro</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta parceira do Mercado Livre validada para teste.</span>
+        <a class="market-button market-ml" href="https://meli.la/2zS3ZBX" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Compre pelo Mercado Livre
+        </a>
       </article>
       <article class="card finalist-card">
-        <span class="badge">Baixa-media confianca</span>
+        <div class="affiliate-photo"><img src="../assets/phase2-affiliates/bias-light-led.jpg" alt="Fita LED bias lighting USB para monitor"></div>
+        <div class="market-row">
+          <span class="badge">Baixa-media confianca</span>
+          <span class="market-badge"><img src="../assets/mercado-livre-logo.svg" alt="">Mercado Livre</span>
+        </div>
         <h3>Fita LED bias lighting USB para monitor</h3>
         <p>Produto barato e muito visual, bom para conteudo de setup.</p>
         <p><strong>Preco:</strong> Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar</p>
-        <p><strong>Modelo:</strong> Testar afiliado primeiro</p>
-        <a class="btn ghost" href="https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>Produto parceiro selecionado para complementar setups, upgrades e manutencao.</p>
+        <span class="affiliate-status">Oferta em validacao antes de qualquer campanha paga.</span>
+        <a class="market-button market-ml" href="https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735" target="_blank" rel="noreferrer">
+          <img src="../assets/mercado-livre-logo.svg" alt="">Validar oferta no Mercado Livre
+        </a>
       </article>
     </div>
   </section>
   <section class="section shell">
     <h2>Criativos para aprovacao</h2>
     <div class="creative-grid">
-      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/case-ssd-nvme-01.svg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-nvme-01.jpg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
         <span>Case SSD M.2 NVMe USB-C 10Gbps | Transforme SSD parado em armazenamento externo rapido</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/case-ssd-nvme-02.svg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-nvme-02.jpg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
         <span>Case SSD M.2 NVMe USB-C 10Gbps | Backup de jogos, fotos e projetos sem abrir o PC</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/case-ssd-sata-01.svg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-nvme-03.jpg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
+        <span>Selecionado | Case SSD M.2 NVMe USB-C 10Gbps | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-sata-01.jpg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
         <span>Case SSD/HD SATA 2.5 USB 3.0 | Nao jogue fora o HD antigo: transforme em backup externo</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/case-ssd-sata-02.svg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-sata-02.jpg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
         <span>Case SSD/HD SATA 2.5 USB 3.0 | Upgrade simples para quem comprou PC revisado</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/fone-kz-castor-01.svg" alt="Criativo Fone KZ Castor monitor in-ear">
+      <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/case-ssd-sata-03.jpg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
+        <span>Selecionado | Case SSD/HD SATA 2.5 USB 3.0 | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/fone-kz-castor-01.jpg" alt="Criativo Fone KZ Castor monitor in-ear">
         <span>Fone KZ Castor monitor in-ear | Som de monitor gastando menos que headset gamer comum</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/fone-kz-castor-02.svg" alt="Criativo Fone KZ Castor monitor in-ear">
+      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/fone-kz-castor-02.jpg" alt="Criativo Fone KZ Castor monitor in-ear">
         <span>Fone KZ Castor monitor in-ear | Setup limpo para jogar, estudar e ouvir musica</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/kit-limpeza-esd-01.svg" alt="Criativo Kit limpeza ESD antiestatico para PC">
+      <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/fone-kz-castor-03.jpg" alt="Criativo Fone KZ Castor monitor in-ear">
+        <span>Selecionado | Fone KZ Castor monitor in-ear | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/kit-limpeza-esd-01.jpg" alt="Criativo Kit limpeza ESD antiestatico para PC">
         <span>Kit limpeza ESD antiestatico para PC | Poeira e estatica: o erro silencioso que mata desempenho</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/kit-limpeza-esd-02.svg" alt="Criativo Kit limpeza ESD antiestatico para PC">
+      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/kit-limpeza-esd-02.jpg" alt="Criativo Kit limpeza ESD antiestatico para PC">
         <span>Kit limpeza ESD antiestatico para PC | Kit simples para manter teclado, placa e gabinete apresentaveis</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/mini-aspirador-teclado-01.svg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
+      <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/kit-limpeza-esd-03.jpg" alt="Criativo Kit limpeza ESD antiestatico para PC">
+        <span>Selecionado | Kit limpeza ESD antiestatico para PC | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/mini-aspirador-teclado-01.jpg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
         <span>Mini aspirador USB para teclado e cantos do setup | Teclado cheio de migalha e poeira em 30 segundos</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/mini-aspirador-teclado-02.svg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
-        <span>Mini aspirador USB para teclado e cantos do setup | Limpeza rapida para mesa, notebook e setup gamer</span>
+      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/mini-aspirador-teclado-02.jpg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
+        <span>Selecionado | Mini aspirador USB para teclado e cantos do setup | Limpeza rapida para mesa, notebook e setup gamer</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/hub-usb-c-01.svg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
+      <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/mini-aspirador-teclado-03.jpg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
+        <span>Mini aspirador USB para teclado e cantos do setup | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/hub-usb-c-01.jpg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
         <span>Hub USB-C 4 portas para notebook e celular | Falta porta USB no notebook? Resolva sem gambiarra</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/hub-usb-c-02.svg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
+      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/hub-usb-c-02.jpg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
         <span>Hub USB-C 4 portas para notebook e celular | Mouse, teclado, pendrive e headset no mesmo hub</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/suporte-gpu-antisag-01.svg" alt="Criativo Suporte anti-sag para placa de video">
+      <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/hub-usb-c-03.jpg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
+        <span>Selecionado | Hub USB-C 4 portas para notebook e celular | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/suporte-gpu-antisag-01.jpg" alt="Criativo Suporte anti-sag para placa de video">
         <span>Suporte anti-sag para placa de video | Sua placa de video esta torta? Evite peso no slot PCIe</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/suporte-gpu-antisag-02.svg" alt="Criativo Suporte anti-sag para placa de video">
+      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/suporte-gpu-antisag-02.jpg" alt="Criativo Suporte anti-sag para placa de video">
         <span>Suporte anti-sag para placa de video | Setup gamer mais limpo com suporte ajustavel</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/keycaps-pbt-01.svg" alt="Criativo Kit keycaps PBT para teclado mecanico">
+      <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/suporte-gpu-antisag-03.jpg" alt="Criativo Suporte anti-sag para placa de video">
+        <span>Selecionado | Suporte anti-sag para placa de video | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/keycaps-pbt-01.jpg" alt="Criativo Kit keycaps PBT para teclado mecanico">
         <span>Kit keycaps PBT para teclado mecanico | Teclado antigo, cara nova em minutos</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/keycaps-pbt-02.svg" alt="Criativo Kit keycaps PBT para teclado mecanico">
+      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/keycaps-pbt-02.jpg" alt="Criativo Kit keycaps PBT para teclado mecanico">
         <span>Kit keycaps PBT para teclado mecanico | Personalize o setup sem comprar teclado novo</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-01.svg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
+      <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/keycaps-pbt-03.jpg" alt="Criativo Kit keycaps PBT para teclado mecanico">
+        <span>Selecionado | Kit keycaps PBT para teclado mecanico | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-01.jpg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
         <span>Teclado gamer mecanico RGB ABNT2 | Switch red, RGB e ABNT2 para jogar sem adaptacao</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-02.svg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
+      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-02.jpg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
         <span>Teclado gamer mecanico RGB ABNT2 | O upgrade mais visivel do setup</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-01.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/bias-light-led-01.svg" alt="Criativo Fita LED bias lighting USB para monitor">
+      <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-03.jpg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
+        <span>Selecionado | Teclado gamer mecanico RGB ABNT2 | Oferta e chamada para Mercado Livre</span>
+      </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-01.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/bias-light-led-01.jpg" alt="Criativo Fita LED bias lighting USB para monitor">
         <span>Fita LED bias lighting USB para monitor | Deixe o monitor mais confortavel a noite</span>
       </a>
-      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-02.svg" target="_blank" rel="noreferrer">
-        <img src="../assets/phase2-creatives/bias-light-led-02.svg" alt="Criativo Fita LED bias lighting USB para monitor">
-        <span>Fita LED bias lighting USB para monitor | Setup com cara gamer gastando pouco</span>
+      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-02.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/bias-light-led-02.jpg" alt="Criativo Fita LED bias lighting USB para monitor">
+        <span>Selecionado | Fita LED bias lighting USB para monitor | Setup com cara gamer gastando pouco</span>
       </a>
+      <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-03.jpg" target="_blank" rel="noreferrer">
+        <img src="../assets/phase2-creatives/bias-light-led-03.jpg" alt="Criativo Fita LED bias lighting USB para monitor">
+        <span>Fita LED bias lighting USB para monitor | Oferta e chamada para Mercado Livre</span>
+      </a>
+    </div>
+  </section>  <section class="section shell">
+    <div class="brand-wall">
+      <h2>Marcas confiaveis no ecossistema MobilyTech</h2>
+      <div class="brand-row">
+          <span class="brand-pill" style="--brand-accent:#38bdf8"><img src="../assets/brand-tiles/intel.jpg" alt="Intel"></span>
+          <span class="brand-pill" style="--brand-accent:#22c55e"><img src="../assets/brand-tiles/amd.jpg" alt="AMD"></span>
+          <span class="brand-pill" style="--brand-accent:#76b900"><img src="../assets/brand-tiles/nvidia.jpg" alt="NVIDIA"></span>
+          <span class="brand-pill" style="--brand-accent:#60a5fa"><img src="../assets/brand-tiles/microsoft.jpg" alt="Microsoft"></span>
+          <span class="brand-pill" style="--brand-accent:#f8fafc"><img src="../assets/brand-tiles/corsair.jpg" alt="Corsair"></span>
+          <span class="brand-pill" style="--brand-accent:#9ca3af"><img src="../assets/brand-tiles/asus.jpg" alt="ASUS"></span>
+          <span class="brand-pill" style="--brand-accent:#22d3ee"><img src="../assets/brand-tiles/gigabyte.jpg" alt="Gigabyte"></span>
+          <span class="brand-pill" style="--brand-accent:#d1d5db"><img src="../assets/brand-tiles/evga.jpg" alt="EVGA"></span>
+          <span class="brand-pill" style="--brand-accent:#ef4444"><img src="../assets/brand-tiles/kingston.jpg" alt="Kingston"></span>
+          <span class="brand-pill" style="--brand-accent:#60a5fa"><img src="../assets/brand-tiles/crucial.jpg" alt="Crucial"></span>
+          <span class="brand-pill" style="--brand-accent:#94a3b8"><img src="../assets/brand-tiles/pny.jpg" alt="PNY"></span>
+      </div>
     </div>
   </section>
   <footer id="contato">

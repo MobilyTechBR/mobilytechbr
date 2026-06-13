@@ -12,6 +12,7 @@ from urllib.parse import quote
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +20,7 @@ DATA_DIR = ROOT / "data"
 DOCS_DIR = ROOT / "docs"
 CREATIVE_DIR = ROOT / "assets" / "phase2-creatives"
 BRAND_LOGO_DIR = ROOT / "assets" / "brand-logos"
+AFFILIATE_IMAGE_DIR = ROOT / "assets" / "phase2-affiliates"
 OUTPUT_DIR = Path.home() / "Documents" / "New project" / "outputs" / "mobilytech_fase2_hibrida_2026-06-13"
 
 GENERATED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -322,8 +324,46 @@ FINALISTS = [
 ]
 
 
+AFFILIATE_LINKS = {
+    "case-ssd-nvme": "https://meli.la/1DNJP2s",
+    "case-ssd-sata": "https://meli.la/27TQAft",
+    "fone-kz-castor": "https://meli.la/1WRhUoF",
+    "kit-limpeza-esd": "https://meli.la/2qJ8vr9",
+    "hub-usb-c": "https://meli.la/2GBaCfz",
+    "suporte-gpu-antisag": "https://meli.la/1ycmCJ9",
+    "keycaps-pbt": "https://meli.la/2tNDMiC",
+    "teclado-mecanico-abnt2": "https://meli.la/2zS3ZBX",
+}
+
+
+MARKETPLACES = {
+    "mercado-livre": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml",
+    }
+}
+
+
 for item in FINALISTS:
     query = item["title"]
+    affiliate_url = AFFILIATE_LINKS.get(item["id"])
+    item["primaryMarketplace"] = "mercado-livre"
+    item["marketplace"] = MARKETPLACES["mercado-livre"]
+    item["affiliateUrl"] = affiliate_url or item["sourceUrl"]
+    item["affiliateReady"] = bool(affiliate_url)
+    item["affiliateButton"] = "Compre pelo Mercado Livre" if affiliate_url else "Validar oferta no Mercado Livre"
+    item["affiliateStatus"] = (
+        "Oferta parceira do Mercado Livre validada para teste."
+        if affiliate_url
+        else "Oferta em validacao antes de qualquer campanha paga."
+    )
+    item["publicPartnerNote"] = (
+        "Produto parceiro selecionado para complementar setups, upgrades e manutencao."
+    )
+    item["productImage"] = f"./assets/phase2-affiliates/{item['id']}.jpg"
+    item["selectedCreativeVariant"] = 3 if affiliate_url else 2
     item["researchLinks"] = {
         "googleTrends": trends_link(query),
         "metaAdsLibrary": meta_link(query),
@@ -415,23 +455,148 @@ def creative_svg(item: dict, variant: int) -> str:
 </svg>"""
 
 
+def pil_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont:
+    font_name = "segoeuib.ttf" if bold else "segoeui.ttf"
+    path = Path("C:/Windows/Fonts") / font_name
+    if path.exists():
+        return ImageFont.truetype(str(path), size=size)
+    return ImageFont.load_default()
+
+
+def wrap_for_draw(draw: ImageDraw.ImageDraw, text: str, font: ImageFont.ImageFont, max_width: int) -> list[str]:
+    words = text.split()
+    lines: list[str] = []
+    current: list[str] = []
+    for word in words:
+        candidate = " ".join(current + [word])
+        if draw.textbbox((0, 0), candidate, font=font)[2] <= max_width or not current:
+            current.append(word)
+        else:
+            lines.append(" ".join(current))
+            current = [word]
+    if current:
+        lines.append(" ".join(current))
+    return lines
+
+
+def draw_wrapped(
+    draw: ImageDraw.ImageDraw,
+    xy: tuple[int, int],
+    text: str,
+    font: ImageFont.ImageFont,
+    fill: str,
+    max_width: int,
+    line_gap: int,
+    max_lines: int | None = None,
+) -> int:
+    lines = wrap_for_draw(draw, text, font, max_width)
+    if max_lines:
+        lines = lines[:max_lines]
+    x, y = xy
+    for line in lines:
+        draw.text((x, y), line, font=font, fill=fill)
+        y += line_gap
+    return y
+
+
+def creative_image(item: dict, variant: int, path: Path) -> None:
+    W = H = 1080
+    accent = "#17d9ff"
+    green = "#00ffc6"
+    bg = Image.new("RGB", (W, H), "#02050a")
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    od.ellipse((-220, -180, 560, 520), fill=(23, 217, 255, 38))
+    od.ellipse((610, 100, 1300, 790), fill=(0, 255, 198, 24))
+    od.ellipse((220, 690, 1180, 1340), fill=(59, 130, 246, 20))
+    overlay = overlay.filter(ImageFilter.GaussianBlur(34))
+    bg = Image.alpha_composite(bg.convert("RGBA"), overlay)
+    draw = ImageDraw.Draw(bg)
+
+    title_font = pil_font(48, True)
+    mid_font = pil_font(32, True)
+    body_font = pil_font(25, True)
+    small_font = pil_font(21, True)
+    tag_font = pil_font(24, True)
+
+    if variant == 1:
+        tag = "PROBLEMA DO SETUP"
+        headline = item["creativeAngles"][0]
+        sub = item["risk"]
+        cta = "Veja a solucao"
+        palette = accent
+    elif variant == 2:
+        tag = "DEMONSTRACAO"
+        headline = item["creativeAngles"][1]
+        sub = item["sellerReputation"]
+        cta = "Curadoria MobilyTech"
+        palette = green
+    else:
+        tag = "OFERTA VALIDADA" if item["affiliateReady"] else "VALIDAR OFERTA"
+        headline = item["title"]
+        sub = f"{item['currentPrice']} | {item['affiliateStatus']}"
+        cta = item["affiliateButton"]
+        palette = "#fff159"
+
+    draw.rounded_rectangle((54, 54, 1026, 1026), radius=46, fill=(7, 18, 29, 228), outline=palette, width=3)
+    for x in range(80, 1020, 72):
+        draw.line((x, 70, x, 1010), fill=(121, 247, 255, 20), width=1)
+    for y in range(80, 1020, 72):
+        draw.line((70, y, 1010, y), fill=(121, 247, 255, 18), width=1)
+
+    draw.rounded_rectangle((86, 88, 395, 144), radius=28, fill=(23, 217, 255, 32), outline=accent, width=2)
+    draw.text((112, 103), "MobilyTech BR", font=tag_font, fill="#f8feff")
+    draw.rounded_rectangle((720, 88, 982, 144), radius=28, fill=(255, 241, 89, 38), outline=palette, width=2)
+    draw.text((750, 104), tag, font=small_font, fill="#f8feff")
+
+    y = draw_wrapped(draw, (88, 188), headline, title_font, "#ffffff", 500, 54, 3)
+    y = max(y + 18, 350)
+    draw_wrapped(draw, (92, y), sub, body_font, "#dcecf5", 495, 32, 4)
+
+    photo_path = ROOT / item["productImage"][2:]
+    if photo_path.exists():
+        product = Image.open(photo_path).convert("RGBA")
+        product = ImageOps.contain(product, (340, 294), Image.Resampling.LANCZOS)
+        card = Image.new("RGBA", (382, 336), (255, 255, 255, 0))
+        cd = ImageDraw.Draw(card)
+        cd.rounded_rectangle((0, 0, 382, 336), radius=34, fill=(247, 250, 252, 246), outline=(121, 247, 255, 120), width=2)
+        card.alpha_composite(product, ((382 - product.width) // 2, (336 - product.height) // 2))
+        bg.alpha_composite(card, (628, 226))
+
+    draw.rounded_rectangle((92, 720, 988, 880), radius=34, fill=(5, 14, 23, 238), outline=palette, width=2)
+    draw_wrapped(draw, (126, 756), item["currentPrice"], mid_font, "#ffffff", 805, 38, 2)
+    draw_wrapped(draw, (126, 838), item["operationModel"], small_font, "#b9f7ff", 805, 28, 1)
+    draw.rounded_rectangle((92, 914, 988, 984), radius=35, fill=palette, outline="#ffffff", width=1)
+    draw.text((130, 936), cta[:42], font=mid_font, fill="#041018")
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    bg.convert("RGB").save(path, quality=92, optimize=True)
+
+
 def write_creatives() -> None:
     CREATIVE_DIR.mkdir(parents=True, exist_ok=True)
     for item in FINALISTS:
         item["creatives"] = []
-        for variant in (1, 2):
-            filename = f"{item['id']}-{variant:02d}.svg"
+        for variant in (1, 2, 3):
+            filename = f"{item['id']}-{variant:02d}.jpg"
             rel = f"./assets/phase2-creatives/{filename}"
             path = CREATIVE_DIR / filename
-            path.write_text(creative_svg(item, variant), encoding="utf-8")
+            creative_image(item, variant, path)
+            selected = variant == item["selectedCreativeVariant"]
             item["creatives"].append(
                 {
                     "variant": variant,
                     "file": rel,
-                    "angle": item["creativeAngles"][variant - 1],
-                    "status": "rascunho para aprovacao",
+                    "angle": (
+                        item["creativeAngles"][variant - 1]
+                        if variant <= len(item["creativeAngles"])
+                        else f"Oferta e chamada para {item['marketplace']['name']}"
+                    ),
+                    "status": "selecionado para vitrine" if selected else "alternativa para aprovacao",
+                    "selected": selected,
                 }
             )
+        item["selectedCreative"] = next(creative["file"] for creative in item["creatives"] if creative["selected"])
 
 
 def brand_logo_svg(brand: dict) -> str:
@@ -477,7 +642,7 @@ def write_brand_logos() -> None:
 
 def brand_logo_cards(prefix: str = "./") -> str:
     return "\n".join(
-        f'          <span class="brand-pill"><img src="{prefix}assets/brand-logos/{brand["id"]}.svg" alt="{html.escape(brand["name"])}"></span>'
+        f'          <span class="brand-pill" style="--brand-accent:{brand["accent"]}"><img src="{prefix}assets/brand-tiles/{brand["id"]}.jpg" alt="{html.escape(brand["name"])}"></span>'
         for brand in BRANDS
     )
 
@@ -543,6 +708,7 @@ def write_page() -> Path:
         linear-gradient(180deg, #03070d 0%, #06101b 44%, #02050a 100%);
       color: var(--text);
       letter-spacing: 0;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
@@ -809,10 +975,59 @@ def write_page() -> Path:
     .feature-card img { max-width: 310px; max-height: 260px; object-fit: contain; justify-self: end; filter: drop-shadow(0 22px 22px rgba(0,0,0,.34)); }
     .finalist-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
     }
-    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 254px; }
+    .finalist-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 388px; }
+    .affiliate-photo {
+      width: 100%;
+      aspect-ratio: 1 / .78;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(219,241,247,.9));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 16px 28px rgba(0,0,0,.18);
+    }
+    .affiliate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .market-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: #071018;
+      background: linear-gradient(135deg, #ffe600, #fff2a8);
+      font-size: 10.5px;
+      font-weight: 950;
+      box-shadow: 0 0 18px rgba(255,230,0,.15);
+    }
+    .market-badge img { width: 18px; height: 18px; object-fit: contain; }
+    .affiliate-status { font-size: 10px; color: #9fb3bd; font-weight: 850; line-height: 1.25; min-height: 26px; }
+    .market-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      margin-top: auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      color: #071018;
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: none;
+      text-align: center;
+      padding: 0 12px;
+      box-shadow: 0 0 26px rgba(255,230,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
+      backdrop-filter: blur(12px);
+    }
+    .market-button img { width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto; }
+    .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .badge {
       align-self: flex-start;
       border-radius: 999px;
@@ -844,31 +1059,37 @@ def write_page() -> Path:
     .review-card h3 { margin: 8px 0; font-size: 18px; }
     .review-card p { margin: 0; color: #243244; font-weight: 750; line-height: 1.4; }
     .brand-wall {
-      border-radius: 24px;
-      padding: 28px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(121,247,255,.18);
+      border-radius: 30px;
+      padding: clamp(22px, 4vw, 42px);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(23,217,255,.14), transparent 34%),
+        linear-gradient(145deg, rgba(10,18,28,.94), rgba(3,8,14,.96));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: 0 22px 58px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.035);
     }
-    .brand-wall h2 { text-align: center; margin-bottom: 24px; }
+    .brand-wall h2 { text-align: center; margin-bottom: 26px; }
     .brand-row {
       display: grid;
-      grid-template-columns: repeat(11, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
       align-items: center;
     }
     .brand-pill {
       width: 100%;
       min-width: 0;
-      height: 64px;
+      aspect-ratio: 1.5 / 1;
       display: grid;
       place-items: center;
-      padding: 8px;
-      border-radius: 10px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(121,247,255,.16);
+      padding: 0;
+      border-radius: 24px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
+      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
       overflow: hidden;
     }
-    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
+    .brand-pill:last-child { grid-column: 2 / 3; }
+    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .policy-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1013,7 +1234,7 @@ def write_page() -> Path:
       .hero-content { grid-template-columns: 1fr 430px; padding: 42px; }
       .deal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .finalist-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 22px, 720px); }
@@ -1100,7 +1321,12 @@ def write_page() -> Path:
       .feature-card h3 { font-size: 22px; }
       .feature-card p { font-size: 12px; }
       .feature-card img { max-width: 130px; max-height: 140px; }
-      .finalist-card { min-height: 238px; padding: 11px; border-radius: 16px; }
+      .finalist-card { min-height: 318px; padding: 10px; border-radius: 16px; }
+      .affiliate-photo { border-radius: 13px; }
+      .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
+      .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
+      .market-button img { width: 18px; height: 18px; }
+      .affiliate-status { font-size: 9px; min-height: 0; }
       .finalist-card h3 { font-size: 12px; }
       .finalist-card p,
       .creative-card span {
@@ -1115,9 +1341,9 @@ def write_page() -> Path:
       .badge { font-size: 9px; padding: 4px 7px; }
       .reviews-grid, .policy-grid { grid-template-columns: 1fr; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .brand-pill { height: 50px; padding: 6px; }
-      .brand-pill img { max-height: 100%; }
+      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -1126,7 +1352,7 @@ def write_page() -> Path:
 <body>
   <div class="promo-strip">
     <div class="shell">
-      <span>Fase 2 em rascunho: <strong>PCs revisados + Achados Tech</strong></span>
+      <span>Preview MobilyTech: <strong>PCs revisados + Achados Tech</strong></span>
       <span>Sem anuncio pago sem aprovacao</span>
     </div>
   </div>
@@ -1215,8 +1441,8 @@ def write_page() -> Path:
     <section id="achados" class="section shell">
       <div class="section-head">
         <div>
-          <h2>Achados Tech em validacao</h2>
-          <p class="sub">Finalistas da Fase 2 com modelo operacional sugerido. Nada daqui vira anuncio pago sem aprovacao.</p>
+          <h2>Achados Tech selecionados</h2>
+          <p class="sub">Produtos de parceiros para testar como vitrine complementar. Nada daqui vira anuncio pago sem aprovacao.</p>
         </div>
         <a class="ghost" href="./fase2/achados.html">Abrir pagina de achados</a>
       </div>
@@ -1286,7 +1512,7 @@ __BRAND_LOGOS__
         </article>
         <article class="policy-card">
           <h3>Achados Tech</h3>
-          <p>Produtos afiliados/dropshipping precisam informar prazo, origem, devolucao e suporte de forma clara antes de virar campanha paga.</p>
+          <p>Produtos parceiros precisam informar loja de origem, prazo, devolucao e suporte de forma clara antes de virar campanha paga.</p>
         </article>
       </div>
     </section>
@@ -1388,17 +1614,26 @@ __BRAND_LOGOS__
       const grid = qs('#finalistGrid');
       grid.innerHTML = '';
       state.finalists
-        .filter(item => !term || `${item.title} ${item.niche} ${item.operationModel}`.toLowerCase().includes(term))
+        .filter(item => !term || `${item.title} ${item.niche} ${item.whySell}`.toLowerCase().includes(term))
         .forEach(item => {
+          const market = item.marketplace || { name: 'Marketplace', logo: 'assets/mercado-livre-logo.svg', button: 'Ver oferta', class: 'market-ml' };
+          const href = item.affiliateUrl || item.sourceUrl;
           const card = document.createElement('article');
           card.className = 'finalist-card';
           card.innerHTML = `
-            <span class="badge">${item.confidence} confianca</span>
+            <div class="affiliate-photo"><img src="${item.productImage}" alt="${item.title}"></div>
+            <div class="market-row">
+              <span class="badge">${item.confidence} confianca</span>
+              <span class="market-badge"><img src="${market.logo}" alt="">${market.name}</span>
+            </div>
             <h3>${item.title}</h3>
             <p>${item.whySell}</p>
             <p><strong>Preco:</strong> ${item.currentPrice}</p>
-            <p class="model">${item.operationModel}</p>
-            <a class="ghost" href="${item.sourceUrl}" target="_blank" rel="noreferrer">Ver fonte</a>`;
+            <p class="model">${item.publicPartnerNote}</p>
+            <span class="affiliate-status">${item.affiliateStatus}</span>
+            <a class="market-button ${market.class}" href="${href}" target="_blank" rel="noreferrer">
+              <img src="${market.logo}" alt="">${item.affiliateButton || market.button}
+            </a>`;
           grid.appendChild(card);
         });
     }
@@ -1413,7 +1648,7 @@ __BRAND_LOGOS__
           card.href = creative.file;
           card.target = '_blank';
           card.rel = 'noreferrer';
-          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} | ${creative.angle}</span>`;
+          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${creative.selected ? 'Selecionado | ' : ''}${item.title} | ${creative.angle}</span>`;
           grid.appendChild(card);
         });
       });
@@ -1647,6 +1882,7 @@ def subpage_css() -> str:
         linear-gradient(180deg, #02050a 0%, #06101b 48%, #02050a 100%);
       color: var(--text);
       letter-spacing: 0;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     .shell { width: min(1440px, calc(100% - 36px)); margin: 0 auto; }
@@ -1707,7 +1943,7 @@ def subpage_css() -> str:
     .section { padding: 30px 0; }
     .grid { display: grid; gap: 18px; }
     .grid.products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .grid.finalists { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid.finalists { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .card {
@@ -1798,7 +2034,55 @@ def subpage_css() -> str:
       font-size: 11px;
       font-weight: 950;
     }
-    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 270px; }
+    .finalist-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 388px; }
+    .affiliate-photo {
+      width: 100%;
+      aspect-ratio: 1 / .78;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(219,241,247,.9));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 16px 28px rgba(0,0,0,.18);
+    }
+    .affiliate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .market-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: #071018;
+      background: linear-gradient(135deg, #ffe600, #fff2a8);
+      font-size: 10.5px;
+      font-weight: 950;
+      box-shadow: 0 0 18px rgba(255,230,0,.15);
+    }
+    .market-badge img { width: 18px; height: 18px; object-fit: contain; }
+    .affiliate-status { font-size: 10px; color: #9fb3bd; font-weight: 850; line-height: 1.25; min-height: 26px; }
+    .market-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      margin-top: auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      color: #071018;
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: none;
+      text-align: center;
+      padding: 0 12px;
+      box-shadow: 0 0 26px rgba(255,230,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
+      backdrop-filter: blur(12px);
+    }
+    .market-button img { width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto; }
+    .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .finalist-card h3 { font-size: 15px; line-height: 1.18; }
     .finalist-card p { margin: 0; font-size: 12px; color: var(--muted); }
     .creative-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
@@ -1806,25 +2090,31 @@ def subpage_css() -> str:
     .creative-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; display: block; }
     .creative-card span { display: block; margin-top: 9px; font-size: 12px; font-weight: 900; color: #dffbff; }
     .brand-wall {
-      border-radius: 24px;
-      padding: 28px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(121,247,255,.18);
+      border-radius: 30px;
+      padding: clamp(22px, 4vw, 42px);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(23,217,255,.14), transparent 34%),
+        linear-gradient(145deg, rgba(10,18,28,.94), rgba(3,8,14,.96));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: 0 22px 58px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.035);
     }
-    .brand-row { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 12px; align-items: center; }
+    .brand-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: center; }
     .brand-pill {
       width: 100%;
       min-width: 0;
-      height: 64px;
+      aspect-ratio: 1.5 / 1;
       display: grid;
       place-items: center;
-      padding: 8px;
-      border-radius: 10px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(121,247,255,.16);
+      padding: 0;
+      border-radius: 24px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
+      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
       overflow: hidden;
     }
-    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
+    .brand-pill:last-child { grid-column: 2 / 3; }
+    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
     footer { margin-top: 40px; padding: 38px 0; border-top: 1px solid rgba(121,247,255,.16); background: #03070d; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 22px; }
     footer h3 { margin: 0 0 12px; font-size: 16px; }
@@ -1833,7 +2123,7 @@ def subpage_css() -> str:
       .page-hero { grid-template-columns: 1fr 330px; padding: 36px; }
       .grid.products { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .grid.finalists { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 22px, 720px); }
@@ -1858,13 +2148,18 @@ def subpage_css() -> str:
       .actions { flex-direction: column; }
       .actions .btn { min-height: 32px; font-size: 10.5px; }
       .form-actions .btn { width: 100%; min-width: 0; }
-      .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
+      .finalist-card { min-height: 318px; padding: 10px; border-radius: 16px; }
+      .affiliate-photo { border-radius: 13px; }
+      .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
+      .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
+      .market-button img { width: 18px; height: 18px; }
+      .affiliate-status { font-size: 9px; min-height: 0; }
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .brand-pill { height: 50px; padding: 6px; }
-      .brand-pill img { max-height: 100%; }
+      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -1904,13 +2199,23 @@ def product_card(product: dict, prefix: str = "../") -> str:
 
 
 def finalist_card(item: dict) -> str:
+    market = item["marketplace"]
+    product_image = item["productImage"][2:] if item["productImage"].startswith("./") else item["productImage"]
+    market_logo = market["logo"]
     return f"""      <article class="card finalist-card">
-        <span class="badge">{html.escape(item["confidence"])} confianca</span>
+        <div class="affiliate-photo"><img src="../{html.escape(product_image)}" alt="{html.escape(item["title"])}"></div>
+        <div class="market-row">
+          <span class="badge">{html.escape(item["confidence"])} confianca</span>
+          <span class="market-badge"><img src="../{html.escape(market_logo)}" alt="">{html.escape(market["name"])}</span>
+        </div>
         <h3>{html.escape(item["title"])}</h3>
         <p>{html.escape(item["whySell"])}</p>
         <p><strong>Preco:</strong> {html.escape(item["currentPrice"])}</p>
-        <p><strong>Modelo:</strong> {html.escape(item["operationModel"])}</p>
-        <a class="btn ghost" href="{html.escape(item["sourceUrl"])}" target="_blank" rel="noreferrer">Ver fonte</a>
+        <p>{html.escape(item["publicPartnerNote"])}</p>
+        <span class="affiliate-status">{html.escape(item["affiliateStatus"])}</span>
+        <a class="market-button {html.escape(market["class"])}" href="{html.escape(item["affiliateUrl"])}" target="_blank" rel="noreferrer">
+          <img src="../{html.escape(market_logo)}" alt="">{html.escape(item["affiliateButton"])}
+        </a>
       </article>"""
 
 
@@ -2024,7 +2329,7 @@ def write_subpages() -> list[Path]:
     creative_grid = "\n".join(
         f"""      <a class="card creative-card" href="../{creative['file'][2:]}" target="_blank" rel="noreferrer">
         <img src="../{creative['file'][2:]}" alt="Criativo {html.escape(item['title'])}">
-        <span>{html.escape(item['title'])} | {html.escape(creative['angle'])}</span>
+        <span>{'Selecionado | ' if creative.get('selected') else ''}{html.escape(item['title'])} | {html.escape(creative['angle'])}</span>
       </a>"""
         for item in FINALISTS
         for creative in item.get("creatives", [])
@@ -2047,7 +2352,7 @@ def write_subpages() -> list[Path]:
             """  <section class="section shell">
     <div class="grid two">
       <a class="card text-card" href="ofertas.html"><h3>Ofertas e PCs</h3><p>Catalogo separado de PCs, SSDs, fonte e hardware real.</p></a>
-      <a class="card text-card" href="achados.html"><h3>Achados Tech</h3><p>Finalistas de afiliado/dropshipping e criativos para aprovacao.</p></a>
+      <a class="card text-card" href="achados.html"><h3>Achados Tech</h3><p>Produtos parceiros e criativos para aprovacao.</p></a>
       <a class="card text-card" href="montagem.html"><h3>Monte seu PC</h3><p>Pagina propria para montagem sob orcamento.</p></a>
       <a class="card text-card" href="limpeza.html"><h3>Limpeza</h3><p>Pagina propria para limpeza e relatorio.</p></a>
     </div>
@@ -2074,7 +2379,7 @@ def write_subpages() -> list[Path]:
         "achados.html": subpage_html(
             "achados",
             "Achados Tech e criativos",
-            "Finalistas da Fase 2 para afiliado/dropshipping, com criativos separados para aprovacao antes de trafego pago.",
+            "Produtos parceiros da Fase 2, com criativos separados para aprovacao antes de trafego pago.",
             "../assets/generated/global-kit-mouse-teclado-pichau-cutout.png",
             f"""  <section class="section shell">
     <h2>Finalistas escolhidos</h2>
@@ -2087,7 +2392,7 @@ def write_subpages() -> list[Path]:
     <div class="creative-grid">
 {creative_grid}
     </div>
-  </section>""",
+  </section>""" + brand_wall,
         ),
         "montagem.html": subpage_html(
             "montagem",
@@ -2342,7 +2647,7 @@ def write_report() -> Path:
         "- Preview local: `http://127.0.0.1:4173/fase2-hibrida.html`",
         "- HTML: `fase2-hibrida.html`",
         "- Dados: `data/phase2-finalists.json`",
-        "- Criativos: `assets/phase2-creatives/*.svg`",
+        "- Criativos: `assets/phase2-creatives/*.jpg`",
         "- Planilha: `docs/MobilyTech_Fase2_Finalistas_Validacao_Criativos_2026-06-13.xlsx`",
         "",
         "## O que foi aplicado da referencia iBUYPOWER/KaBuM",
@@ -2417,8 +2722,8 @@ def main() -> None:
             "creativeCsv": str(creative_csv),
             "xlsx": str(xlsx_path),
             "report": str(report_path),
-            "creatives": len(list(CREATIVE_DIR.glob("*.svg"))),
-            "brandLogos": len(list(BRAND_LOGO_DIR.glob("*.svg"))),
+            "creatives": len(list(CREATIVE_DIR.glob("*.jpg"))),
+            "brandLogos": len(list((ROOT / "assets" / "brand-tiles").glob("*.jpg"))),
         },
         ensure_ascii=False,
         indent=2,

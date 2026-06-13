@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13 09:57:06",
+  "generatedAt": "2026-06-13 12:07:32",
   "status": "draft-for-approval-no-paid-ads",
   "strategy": "Vercel alternative preview first, then Wix/Premium bridge after approval.",
   "backupPath": "C:\\Users\\MF\\Documents\\Site Vercel backups\\Site Vercel backup antes fase2 hibrida 2026-06-13_08-48-34.zip",
@@ -39,6 +39,20 @@
         "Backup de jogos, fotos e projetos sem abrir o PC"
       ],
       "risk": "Precisa separar NVMe de SATA para evitar compra errada.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/1DNJP2s",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/case-ssd-nvme.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Case%20SSD%20M.2%20NVMe%20USB-C%2010Gbps",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Case%20SSD%20M.2%20NVMe%20USB-C%2010Gbps&search_type=keyword_unordered&media_type=all",
@@ -49,17 +63,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/case-ssd-nvme-01.svg",
+          "file": "./assets/phase2-creatives/case-ssd-nvme-01.jpg",
           "angle": "Transforme SSD parado em armazenamento externo rapido",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/case-ssd-nvme-02.svg",
+          "file": "./assets/phase2-creatives/case-ssd-nvme-02.jpg",
           "angle": "Backup de jogos, fotos e projetos sem abrir o PC",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/case-ssd-nvme-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/case-ssd-nvme-03.jpg"
     },
     {
       "id": "case-ssd-sata",
@@ -85,6 +109,20 @@
         "Upgrade simples para quem comprou PC revisado"
       ],
       "risk": "Produto comoditizado; diferencial precisa ser conteudo e kit com SSD/limpeza.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/27TQAft",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/case-ssd-sata.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Case%20SSD/HD%20SATA%202.5%20USB%203.0",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Case%20SSD/HD%20SATA%202.5%20USB%203.0&search_type=keyword_unordered&media_type=all",
@@ -95,17 +133,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/case-ssd-sata-01.svg",
+          "file": "./assets/phase2-creatives/case-ssd-sata-01.jpg",
           "angle": "Nao jogue fora o HD antigo: transforme em backup externo",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/case-ssd-sata-02.svg",
+          "file": "./assets/phase2-creatives/case-ssd-sata-02.jpg",
           "angle": "Upgrade simples para quem comprou PC revisado",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/case-ssd-sata-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/case-ssd-sata-03.jpg"
     },
     {
       "id": "fone-kz-castor",
@@ -131,6 +179,20 @@
         "Setup limpo para jogar, estudar e ouvir musica"
       ],
       "risk": "Audio e muito subjetivo; evitar promessa exagerada de qualidade profissional.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/1WRhUoF",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/fone-kz-castor.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Fone%20KZ%20Castor%20monitor%20in-ear",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Fone%20KZ%20Castor%20monitor%20in-ear&search_type=keyword_unordered&media_type=all",
@@ -141,17 +203,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/fone-kz-castor-01.svg",
+          "file": "./assets/phase2-creatives/fone-kz-castor-01.jpg",
           "angle": "Som de monitor gastando menos que headset gamer comum",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/fone-kz-castor-02.svg",
+          "file": "./assets/phase2-creatives/fone-kz-castor-02.jpg",
           "angle": "Setup limpo para jogar, estudar e ouvir musica",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/fone-kz-castor-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/fone-kz-castor-03.jpg"
     },
     {
       "id": "kit-limpeza-esd",
@@ -177,6 +249,20 @@
         "Kit simples para manter teclado, placa e gabinete apresentaveis"
       ],
       "risk": "Nao prometer recuperacao de componente; vender como prevencao e cuidado.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/2qJ8vr9",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/kit-limpeza-esd.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Kit%20limpeza%20ESD%20antiestatico%20para%20PC",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Kit%20limpeza%20ESD%20antiestatico%20para%20PC&search_type=keyword_unordered&media_type=all",
@@ -187,17 +273,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/kit-limpeza-esd-01.svg",
+          "file": "./assets/phase2-creatives/kit-limpeza-esd-01.jpg",
           "angle": "Poeira e estatica: o erro silencioso que mata desempenho",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/kit-limpeza-esd-02.svg",
+          "file": "./assets/phase2-creatives/kit-limpeza-esd-02.jpg",
           "angle": "Kit simples para manter teclado, placa e gabinete apresentaveis",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/kit-limpeza-esd-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/kit-limpeza-esd-03.jpg"
     },
     {
       "id": "mini-aspirador-teclado",
@@ -223,6 +319,20 @@
         "Limpeza rapida para mesa, notebook e setup gamer"
       ],
       "risk": "Potencia limitada; criativo precisa ser honesto para reduzir reclamacao.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
+      "affiliateReady": false,
+      "affiliateButton": "Validar oferta no Mercado Livre",
+      "affiliateStatus": "Oferta em validacao antes de qualquer campanha paga.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/mini-aspirador-teclado.jpg",
+      "selectedCreativeVariant": 2,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Mini%20aspirador%20USB%20para%20teclado%20e%20cantos%20do%20setup",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Mini%20aspirador%20USB%20para%20teclado%20e%20cantos%20do%20setup&search_type=keyword_unordered&media_type=all",
@@ -233,17 +343,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/mini-aspirador-teclado-01.svg",
+          "file": "./assets/phase2-creatives/mini-aspirador-teclado-01.jpg",
           "angle": "Teclado cheio de migalha e poeira em 30 segundos",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/mini-aspirador-teclado-02.svg",
+          "file": "./assets/phase2-creatives/mini-aspirador-teclado-02.jpg",
           "angle": "Limpeza rapida para mesa, notebook e setup gamer",
-          "status": "rascunho para aprovacao"
+          "status": "selecionado para vitrine",
+          "selected": true
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/mini-aspirador-teclado-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "alternativa para aprovacao",
+          "selected": false
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/mini-aspirador-teclado-02.jpg"
     },
     {
       "id": "hub-usb-c",
@@ -269,6 +389,20 @@
         "Mouse, teclado, pendrive e headset no mesmo hub"
       ],
       "risk": "Concorrencia alta; diferenciar por curadoria e garantia do marketplace.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/2GBaCfz",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/hub-usb-c.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Hub%20USB-C%204%20portas%20para%20notebook%20e%20celular",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Hub%20USB-C%204%20portas%20para%20notebook%20e%20celular&search_type=keyword_unordered&media_type=all",
@@ -279,17 +413,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/hub-usb-c-01.svg",
+          "file": "./assets/phase2-creatives/hub-usb-c-01.jpg",
           "angle": "Falta porta USB no notebook? Resolva sem gambiarra",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/hub-usb-c-02.svg",
+          "file": "./assets/phase2-creatives/hub-usb-c-02.jpg",
           "angle": "Mouse, teclado, pendrive e headset no mesmo hub",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/hub-usb-c-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/hub-usb-c-03.jpg"
     },
     {
       "id": "suporte-gpu-antisag",
@@ -315,6 +459,20 @@
         "Setup gamer mais limpo com suporte ajustavel"
       ],
       "risk": "Medidas de gabinete variam; incluir guia de compatibilidade.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/1ycmCJ9",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/suporte-gpu-antisag.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Suporte%20anti-sag%20para%20placa%20de%20video",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Suporte%20anti-sag%20para%20placa%20de%20video&search_type=keyword_unordered&media_type=all",
@@ -325,17 +483,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/suporte-gpu-antisag-01.svg",
+          "file": "./assets/phase2-creatives/suporte-gpu-antisag-01.jpg",
           "angle": "Sua placa de video esta torta? Evite peso no slot PCIe",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/suporte-gpu-antisag-02.svg",
+          "file": "./assets/phase2-creatives/suporte-gpu-antisag-02.jpg",
           "angle": "Setup gamer mais limpo com suporte ajustavel",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/suporte-gpu-antisag-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/suporte-gpu-antisag-03.jpg"
     },
     {
       "id": "keycaps-pbt",
@@ -361,6 +529,20 @@
         "Personalize o setup sem comprar teclado novo"
       ],
       "risk": "Compatibilidade ABNT/ANSI/perfil gera devolucao se nao explicar bem.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/2tNDMiC",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/keycaps-pbt.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Kit%20keycaps%20PBT%20para%20teclado%20mecanico",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Kit%20keycaps%20PBT%20para%20teclado%20mecanico&search_type=keyword_unordered&media_type=all",
@@ -371,17 +553,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/keycaps-pbt-01.svg",
+          "file": "./assets/phase2-creatives/keycaps-pbt-01.jpg",
           "angle": "Teclado antigo, cara nova em minutos",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/keycaps-pbt-02.svg",
+          "file": "./assets/phase2-creatives/keycaps-pbt-02.jpg",
           "angle": "Personalize o setup sem comprar teclado novo",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/keycaps-pbt-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/keycaps-pbt-03.jpg"
     },
     {
       "id": "teclado-mecanico-abnt2",
@@ -407,6 +599,20 @@
         "O upgrade mais visivel do setup"
       ],
       "risk": "Garantia e suporte podem consumir margem se vendido como estoque proprio.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://meli.la/2zS3ZBX",
+      "affiliateReady": true,
+      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateStatus": "Oferta parceira do Mercado Livre validada para teste.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/teclado-mecanico-abnt2.jpg",
+      "selectedCreativeVariant": 3,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Teclado%20gamer%20mecanico%20RGB%20ABNT2",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Teclado%20gamer%20mecanico%20RGB%20ABNT2&search_type=keyword_unordered&media_type=all",
@@ -417,17 +623,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-01.svg",
+          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-01.jpg",
           "angle": "Switch red, RGB e ABNT2 para jogar sem adaptacao",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-02.svg",
+          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-02.jpg",
           "angle": "O upgrade mais visivel do setup",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "selecionado para vitrine",
+          "selected": true
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/teclado-mecanico-abnt2-03.jpg"
     },
     {
       "id": "bias-light-led",
@@ -453,6 +669,20 @@
         "Setup com cara gamer gastando pouco"
       ],
       "risk": "Fornecedor atual precisa ser trocado; nao subir anuncio antes de validar estoque.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Compre pelo Mercado Livre",
+        "class": "market-ml"
+      },
+      "affiliateUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
+      "affiliateReady": false,
+      "affiliateButton": "Validar oferta no Mercado Livre",
+      "affiliateStatus": "Oferta em validacao antes de qualquer campanha paga.",
+      "publicPartnerNote": "Produto parceiro selecionado para complementar setups, upgrades e manutencao.",
+      "productImage": "./assets/phase2-affiliates/bias-light-led.jpg",
+      "selectedCreativeVariant": 2,
       "researchLinks": {
         "googleTrends": "https://trends.google.com/trends/explore?geo=BR&q=Fita%20LED%20bias%20lighting%20USB%20para%20monitor",
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Fita%20LED%20bias%20lighting%20USB%20para%20monitor&search_type=keyword_unordered&media_type=all",
@@ -463,17 +693,27 @@
       "creatives": [
         {
           "variant": 1,
-          "file": "./assets/phase2-creatives/bias-light-led-01.svg",
+          "file": "./assets/phase2-creatives/bias-light-led-01.jpg",
           "angle": "Deixe o monitor mais confortavel a noite",
-          "status": "rascunho para aprovacao"
+          "status": "alternativa para aprovacao",
+          "selected": false
         },
         {
           "variant": 2,
-          "file": "./assets/phase2-creatives/bias-light-led-02.svg",
+          "file": "./assets/phase2-creatives/bias-light-led-02.jpg",
           "angle": "Setup com cara gamer gastando pouco",
-          "status": "rascunho para aprovacao"
+          "status": "selecionado para vitrine",
+          "selected": true
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/bias-light-led-03.jpg",
+          "angle": "Oferta e chamada para Mercado Livre",
+          "status": "alternativa para aprovacao",
+          "selected": false
         }
-      ]
+      ],
+      "selectedCreative": "./assets/phase2-creatives/bias-light-led-02.jpg"
     }
   ]
 }

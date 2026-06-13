@@ -34,6 +34,7 @@
         linear-gradient(180deg, #03070d 0%, #06101b 44%, #02050a 100%);
       color: var(--text);
       letter-spacing: 0;
+      overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
@@ -300,10 +301,59 @@
     .feature-card img { max-width: 310px; max-height: 260px; object-fit: contain; justify-self: end; filter: drop-shadow(0 22px 22px rgba(0,0,0,.34)); }
     .finalist-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
     }
-    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 254px; }
+    .finalist-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 388px; }
+    .affiliate-photo {
+      width: 100%;
+      aspect-ratio: 1 / .78;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(219,241,247,.9));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 16px 28px rgba(0,0,0,.18);
+    }
+    .affiliate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .market-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: #071018;
+      background: linear-gradient(135deg, #ffe600, #fff2a8);
+      font-size: 10.5px;
+      font-weight: 950;
+      box-shadow: 0 0 18px rgba(255,230,0,.15);
+    }
+    .market-badge img { width: 18px; height: 18px; object-fit: contain; }
+    .affiliate-status { font-size: 10px; color: #9fb3bd; font-weight: 850; line-height: 1.25; min-height: 26px; }
+    .market-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 42px;
+      margin-top: auto;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.2);
+      color: #071018;
+      font-size: 12px;
+      font-weight: 950;
+      text-decoration: none;
+      text-align: center;
+      padding: 0 12px;
+      box-shadow: 0 0 26px rgba(255,230,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
+      backdrop-filter: blur(12px);
+    }
+    .market-button img { width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto; }
+    .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .badge {
       align-self: flex-start;
       border-radius: 999px;
@@ -335,31 +385,37 @@
     .review-card h3 { margin: 8px 0; font-size: 18px; }
     .review-card p { margin: 0; color: #243244; font-weight: 750; line-height: 1.4; }
     .brand-wall {
-      border-radius: 24px;
-      padding: 28px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(121,247,255,.18);
+      border-radius: 30px;
+      padding: clamp(22px, 4vw, 42px);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(23,217,255,.14), transparent 34%),
+        linear-gradient(145deg, rgba(10,18,28,.94), rgba(3,8,14,.96));
+      border: 1px solid rgba(121,247,255,.2);
+      box-shadow: 0 22px 58px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.035);
     }
-    .brand-wall h2 { text-align: center; margin-bottom: 24px; }
+    .brand-wall h2 { text-align: center; margin-bottom: 26px; }
     .brand-row {
       display: grid;
-      grid-template-columns: repeat(11, minmax(0, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
       align-items: center;
     }
     .brand-pill {
       width: 100%;
       min-width: 0;
-      height: 64px;
+      aspect-ratio: 1.5 / 1;
       display: grid;
       place-items: center;
-      padding: 8px;
-      border-radius: 10px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(121,247,255,.16);
+      padding: 0;
+      border-radius: 24px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
+      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
       overflow: hidden;
     }
-    .brand-pill img { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
+    .brand-pill:last-child { grid-column: 2 / 3; }
+    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .policy-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -504,7 +560,7 @@
       .hero-content { grid-template-columns: 1fr 430px; padding: 42px; }
       .deal-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .finalist-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .brand-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 22px, 720px); }
@@ -591,7 +647,12 @@
       .feature-card h3 { font-size: 22px; }
       .feature-card p { font-size: 12px; }
       .feature-card img { max-width: 130px; max-height: 140px; }
-      .finalist-card { min-height: 238px; padding: 11px; border-radius: 16px; }
+      .finalist-card { min-height: 318px; padding: 10px; border-radius: 16px; }
+      .affiliate-photo { border-radius: 13px; }
+      .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
+      .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
+      .market-button img { width: 18px; height: 18px; }
+      .affiliate-status { font-size: 9px; min-height: 0; }
       .finalist-card h3 { font-size: 12px; }
       .finalist-card p,
       .creative-card span {
@@ -606,9 +667,9 @@
       .badge { font-size: 9px; padding: 4px 7px; }
       .reviews-grid, .policy-grid { grid-template-columns: 1fr; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .brand-pill { height: 50px; padding: 6px; }
-      .brand-pill img { max-height: 100%; }
+      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -617,7 +678,7 @@
 <body>
   <div class="promo-strip">
     <div class="shell">
-      <span>Fase 2 em rascunho: <strong>PCs revisados + Achados Tech</strong></span>
+      <span>Preview MobilyTech: <strong>PCs revisados + Achados Tech</strong></span>
       <span>Sem anuncio pago sem aprovacao</span>
     </div>
   </div>
@@ -706,8 +767,8 @@
     <section id="achados" class="section shell">
       <div class="section-head">
         <div>
-          <h2>Achados Tech em validacao</h2>
-          <p class="sub">Finalistas da Fase 2 com modelo operacional sugerido. Nada daqui vira anuncio pago sem aprovacao.</p>
+          <h2>Achados Tech selecionados</h2>
+          <p class="sub">Produtos de parceiros para testar como vitrine complementar. Nada daqui vira anuncio pago sem aprovacao.</p>
         </div>
         <a class="ghost" href="./fase2/achados.html">Abrir pagina de achados</a>
       </div>
@@ -754,17 +815,17 @@
       <div class="brand-wall">
         <h2>Marcas confiaveis no ecossistema MobilyTech</h2>
         <div class="brand-row">
-          <span class="brand-pill"><img src="./assets/brand-logos/intel.svg" alt="Intel"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/amd.svg" alt="AMD"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/nvidia.svg" alt="NVIDIA"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/microsoft.svg" alt="Microsoft"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/corsair.svg" alt="Corsair"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/asus.svg" alt="ASUS"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/gigabyte.svg" alt="Gigabyte"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/evga.svg" alt="EVGA"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/kingston.svg" alt="Kingston"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/crucial.svg" alt="Crucial"></span>
-          <span class="brand-pill"><img src="./assets/brand-logos/pny.svg" alt="PNY"></span>
+          <span class="brand-pill" style="--brand-accent:#38bdf8"><img src="./assets/brand-tiles/intel.jpg" alt="Intel"></span>
+          <span class="brand-pill" style="--brand-accent:#22c55e"><img src="./assets/brand-tiles/amd.jpg" alt="AMD"></span>
+          <span class="brand-pill" style="--brand-accent:#76b900"><img src="./assets/brand-tiles/nvidia.jpg" alt="NVIDIA"></span>
+          <span class="brand-pill" style="--brand-accent:#60a5fa"><img src="./assets/brand-tiles/microsoft.jpg" alt="Microsoft"></span>
+          <span class="brand-pill" style="--brand-accent:#f8fafc"><img src="./assets/brand-tiles/corsair.jpg" alt="Corsair"></span>
+          <span class="brand-pill" style="--brand-accent:#9ca3af"><img src="./assets/brand-tiles/asus.jpg" alt="ASUS"></span>
+          <span class="brand-pill" style="--brand-accent:#22d3ee"><img src="./assets/brand-tiles/gigabyte.jpg" alt="Gigabyte"></span>
+          <span class="brand-pill" style="--brand-accent:#d1d5db"><img src="./assets/brand-tiles/evga.jpg" alt="EVGA"></span>
+          <span class="brand-pill" style="--brand-accent:#ef4444"><img src="./assets/brand-tiles/kingston.jpg" alt="Kingston"></span>
+          <span class="brand-pill" style="--brand-accent:#60a5fa"><img src="./assets/brand-tiles/crucial.jpg" alt="Crucial"></span>
+          <span class="brand-pill" style="--brand-accent:#94a3b8"><img src="./assets/brand-tiles/pny.jpg" alt="PNY"></span>
         </div>
       </div>
     </section>
@@ -787,7 +848,7 @@
         </article>
         <article class="policy-card">
           <h3>Achados Tech</h3>
-          <p>Produtos afiliados/dropshipping precisam informar prazo, origem, devolucao e suporte de forma clara antes de virar campanha paga.</p>
+          <p>Produtos parceiros precisam informar loja de origem, prazo, devolucao e suporte de forma clara antes de virar campanha paga.</p>
         </article>
       </div>
     </section>
@@ -889,17 +950,26 @@
       const grid = qs('#finalistGrid');
       grid.innerHTML = '';
       state.finalists
-        .filter(item => !term || `${item.title} ${item.niche} ${item.operationModel}`.toLowerCase().includes(term))
+        .filter(item => !term || `${item.title} ${item.niche} ${item.whySell}`.toLowerCase().includes(term))
         .forEach(item => {
+          const market = item.marketplace || { name: 'Marketplace', logo: 'assets/mercado-livre-logo.svg', button: 'Ver oferta', class: 'market-ml' };
+          const href = item.affiliateUrl || item.sourceUrl;
           const card = document.createElement('article');
           card.className = 'finalist-card';
           card.innerHTML = `
-            <span class="badge">${item.confidence} confianca</span>
+            <div class="affiliate-photo"><img src="${item.productImage}" alt="${item.title}"></div>
+            <div class="market-row">
+              <span class="badge">${item.confidence} confianca</span>
+              <span class="market-badge"><img src="${market.logo}" alt="">${market.name}</span>
+            </div>
             <h3>${item.title}</h3>
             <p>${item.whySell}</p>
             <p><strong>Preco:</strong> ${item.currentPrice}</p>
-            <p class="model">${item.operationModel}</p>
-            <a class="ghost" href="${item.sourceUrl}" target="_blank" rel="noreferrer">Ver fonte</a>`;
+            <p class="model">${item.publicPartnerNote}</p>
+            <span class="affiliate-status">${item.affiliateStatus}</span>
+            <a class="market-button ${market.class}" href="${href}" target="_blank" rel="noreferrer">
+              <img src="${market.logo}" alt="">${item.affiliateButton || market.button}
+            </a>`;
           grid.appendChild(card);
         });
     }
@@ -914,7 +984,7 @@
           card.href = creative.file;
           card.target = '_blank';
           card.rel = 'noreferrer';
-          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} | ${creative.angle}</span>`;
+          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${creative.selected ? 'Selecionado | ' : ''}${item.title} | ${creative.angle}</span>`;
           grid.appendChild(card);
         });
       });
