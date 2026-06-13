@@ -619,6 +619,8 @@ def write_page() -> Path:
       min-width: 0;
     }
     .cart-btn, .primary, .ghost {
+      display: inline-grid;
+      place-items: center;
       border: 0;
       cursor: pointer;
       min-height: 42px;
@@ -628,6 +630,11 @@ def write_page() -> Path:
       background: linear-gradient(135deg, var(--cyan), var(--green));
       box-shadow: 0 0 26px rgba(23,217,255,.22);
       padding: 0 18px;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+      vertical-align: middle;
     }
     .ghost {
       background: transparent;
@@ -698,6 +705,7 @@ def write_page() -> Path:
       font-weight: 750;
     }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .hero-actions .primary, .hero-actions .ghost { min-width: 178px; min-height: 54px; font-size: 16px; }
     .hero-stage {
       min-height: 340px;
       position: relative;
@@ -897,6 +905,24 @@ def write_page() -> Path:
     }
     .drawer.open { transform: translateX(0); }
     .drawer h2 { margin-top: 0; }
+    .drawer-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(121,247,255,.16);
+    }
+    .drawer-head h2 { margin: 0; font-size: 28px; line-height: 1; }
+    .drawer-kicker {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .drawer-close { min-height: 36px; padding: 0 14px; font-size: 12px; }
     .option {
       display: flex;
       gap: 10px;
@@ -908,11 +934,72 @@ def write_page() -> Path:
       font-weight: 850;
       color: #dff7ff;
     }
+    .cart-list { display: grid; gap: 12px; margin: 18px 0; }
     .cart-line {
-      border-bottom: 1px solid rgba(255,255,255,.1);
-      padding: 10px 0;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      border: 1px solid rgba(121,247,255,.15);
+      border-radius: 18px;
+      padding: 12px;
+      background: rgba(255,255,255,.055);
       color: #dff7ff;
       font-weight: 800;
+    }
+    .cart-line img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: radial-gradient(circle, rgba(23,217,255,.15), rgba(0,0,0,.28));
+    }
+    .cart-line strong { display: block; line-height: 1.18; }
+    .cart-options { margin: 6px 0 8px; color: var(--muted); font-size: 11px; line-height: 1.35; }
+    .cart-line-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .cart-remove {
+      border: 0;
+      background: transparent;
+      color: #79f7ff;
+      cursor: pointer;
+      font-weight: 950;
+      padding: 0;
+    }
+    .checkout-card {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(121,247,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+    .checkout-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #dff7ff; font-weight: 900; }
+    .checkout-row strong { color: var(--cyan); font-size: 22px; }
+    .payment-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .payment-chips span {
+      display: inline-grid;
+      place-items: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 0 10px;
+      border: 1px solid rgba(121,247,255,.2);
+      color: #dffbff;
+      background: rgba(23,217,255,.08);
+      font-size: 11px;
+      font-weight: 950;
+    }
+    .cart-actions { display: grid; gap: 10px; }
+    .cart-actions .primary, .cart-actions .ghost { width: 100%; min-height: 44px; }
+    .mini-field {
+      width: 100%;
+      min-height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(121,247,255,.22);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding: 0 14px;
+      outline: 0;
+      font-weight: 850;
     }
     .sr-note {
       margin-top: 12px;
@@ -991,7 +1078,7 @@ def write_page() -> Path:
       .hero-card-mini span { font-size: 13px; }
       .hero-card-mini strong { font-size: 18px; line-height: 1.05; }
       .hero-card-mini .specs { font-size: 10.5px; margin-bottom: 0; }
-      .hero-actions .primary, .hero-actions .ghost { min-height: 36px; font-size: 11px; padding: 0 12px; }
+      .hero-actions .primary, .hero-actions .ghost { min-width: 0; min-height: 36px; font-size: 11px; padding: 0 12px; }
       .section { padding: 24px 0; }
       .section h2 { font-size: 25px; line-height: 1.05; }
       .section p.sub { font-size: 12px; line-height: 1.35; }
@@ -1245,6 +1332,7 @@ __BRAND_LOGOS__
 
   <script>
     const state = { products: [], swaps: [], addons: [], finalists: [], cart: [], heroIndex: 0 };
+    const checkoutUrl = './index.html#cart';
     const money = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
     const qs = selector => document.querySelector(selector);
 
@@ -1270,7 +1358,7 @@ __BRAND_LOGOS__
       return [specs.processor, specs.memory, specs.gpu, specs.storage, specs.powerSupply, specs.brand, specs.capacity]
         .filter(Boolean)
         .slice(0, 4)
-        .join(' • ');
+        .join(' | ');
     }
 
     function renderProducts() {
@@ -1325,7 +1413,7 @@ __BRAND_LOGOS__
           card.href = creative.file;
           card.target = '_blank';
           card.rel = 'noreferrer';
-          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} • ${creative.angle}</span>`;
+          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} | ${creative.angle}</span>`;
           grid.appendChild(card);
         });
       });
@@ -1396,9 +1484,16 @@ __BRAND_LOGOS__
           };
         });
         drawer.querySelector('#addConfigured').onclick = () => {
-          state.cart.push({ title: product.title, total, options: selected.map(s => s.label) });
+          state.cart.push({
+            id: `${product.id}-${Date.now()}`,
+            productId: product.id,
+            title: product.title,
+            total,
+            image: product.cutout || product.image,
+            options: selected.map(s => s.label)
+          });
           updateCart();
-          closeDrawer();
+          openCart();
         };
       };
       drawer.classList.add('open');
@@ -1408,27 +1503,80 @@ __BRAND_LOGOS__
     function addProduct(productId) {
       const product = state.products.find(p => p.id === productId);
       if (!product) return;
-      state.cart.push({ title: product.title, total: product.price || 0, options: [] });
+      state.cart.push({
+        id: `${product.id}-${Date.now()}`,
+        productId: product.id,
+        title: product.title,
+        total: product.price || 0,
+        image: product.cutout || product.image,
+        options: []
+      });
       updateCart();
+      openCart();
     }
 
     function updateCart() {
       qs('#cartCount').textContent = state.cart.length;
     }
 
+    function cartItemTemplate(item) {
+      const options = item.options.length ? item.options.join(', ') : 'Sem adicionais';
+      return `<article class="cart-line">
+        <img src="${item.image || './assets/mobilytech-logo.png'}" alt="">
+        <div>
+          <strong>${item.title}</strong>
+          <div class="cart-options">${options}</div>
+          <div class="cart-line-bottom">
+            <span>${money(item.total)}</span>
+            <button class="cart-remove" type="button" data-remove-cart="${item.id}">Remover</button>
+          </div>
+        </div>
+      </article>`;
+    }
+
     function openCart() {
       const drawer = qs('#drawer');
       const total = state.cart.reduce((sum, item) => sum + item.total, 0);
+      const shippingMessage = state.cart.length
+        ? 'Frete Melhor Envio/retirada e formas de pagamento continuam no checkout original.'
+        : 'Adicione um PC ou hardware para preparar o checkout.';
       drawer.innerHTML = `
-        <button class="ghost" type="button" id="closeDrawer">Fechar</button>
-        <h2>Carrinho de rascunho</h2>
-        ${state.cart.map(item => `<div class="cart-line"><strong>${item.title}</strong><br>${item.options.join(', ') || 'Sem adicionais'}<br>${money(item.total)}</div>`).join('') || '<p class="specs">Carrinho vazio.</p>'}
-        <div class="price">${money(total)}</div>
-        <a class="primary" href="./index.html#cart">Ir para checkout original</a>
-        <a class="ghost" href="https://wa.me/5511954801967?text=Quero%20finalizar%20um%20pedido%20MobilyTech">Falar no WhatsApp</a>
-        <p class="sr-note">Na versao aprovada, este ponto deve ligar ao Wix Stores/Mercado Pago/Melhor Envio sem perder o visual.</p>`;
+        <div class="drawer-head">
+          <div>
+            <span class="drawer-kicker">Checkout MobilyTech</span>
+            <h2>Seu carrinho</h2>
+          </div>
+          <button class="ghost drawer-close" type="button" id="closeDrawer">Fechar</button>
+        </div>
+        <div class="cart-list">
+          ${state.cart.map(cartItemTemplate).join('') || '<p class="specs">Carrinho vazio.</p>'}
+        </div>
+        <div class="checkout-card">
+          <div class="checkout-row"><span>Subtotal</span><strong>${money(total)}</strong></div>
+          <input class="mini-field" id="cartCep" inputmode="numeric" placeholder="CEP para calcular frete no checkout">
+          <div class="payment-chips" aria-label="Metodos preservados">
+            <span>Wix Payments</span>
+            <span>Mercado Pago</span>
+            <span>Abacate Pay</span>
+            <span>Pix QR Code</span>
+            <span>Melhor Envio</span>
+          </div>
+          <div class="cart-actions">
+            <a class="primary" href="${checkoutUrl}">Continuar para checkout seguro</a>
+            <a class="ghost" href="https://wa.me/5511954801967?text=${encodeURIComponent('Quero finalizar um pedido MobilyTech pelo carrinho do site.')}">Falar no WhatsApp</a>
+          </div>
+          <p class="sr-note">${shippingMessage}</p>
+        </div>`;
       drawer.classList.add('open');
       drawer.querySelector('#closeDrawer').onclick = closeDrawer;
+      drawer.querySelectorAll('[data-remove-cart]').forEach(button => {
+        button.onclick = event => {
+          const id = event.currentTarget.dataset.removeCart;
+          state.cart = state.cart.filter(item => item.id !== id);
+          updateCart();
+          openCart();
+        };
+      });
     }
 
     function closeDrawer() { qs('#drawer').classList.remove('open'); }
@@ -1587,12 +1735,58 @@ def subpage_css() -> str:
       color: #041018;
       font-weight: 950;
       text-align: center;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+      vertical-align: middle;
     }
     .btn.ghost { color: #79f7ff; background: transparent; border: 1px solid rgba(121,247,255,.42); }
     .actions .btn { flex: 1; font-size: 12px; }
     .text-card { padding: 24px; }
     .text-card h3 { color: var(--cyan); margin-bottom: 10px; font-size: 22px; }
     .text-card p { margin: 0 0 12px; }
+    .service-form {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+    .service-form h3 { color: var(--cyan); font-size: 24px; }
+    .service-form p { margin: 0; }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field-grid label {
+      display: grid;
+      gap: 6px;
+      color: #dff7ff;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .field-grid label.full { grid-column: 1 / -1; }
+    .field-grid input, .field-grid textarea {
+      width: 100%;
+      border: 1px solid rgba(121,247,255,.22);
+      border-radius: 14px;
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      outline: 0;
+      padding: 12px 13px;
+      font: inherit;
+      font-weight: 850;
+      text-transform: none;
+    }
+    .field-grid textarea { min-height: 94px; resize: vertical; }
+    .form-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .form-actions .btn { min-width: 170px; min-height: 44px; }
+    .form-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
     .badge {
       display: inline-flex;
       align-self: flex-start;
@@ -1654,6 +1848,7 @@ def subpage_css() -> str:
       .page-hero p { font-size: 13px; }
       .grid.products, .grid.finalists, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
       .product-card { min-height: 270px; padding: 10px; border-radius: 16px; }
       .product-card .imgbox { height: 112px; border-radius: 14px; }
       .product-card img { max-height: 104px; }
@@ -1662,6 +1857,7 @@ def subpage_css() -> str:
       .price { font-size: 18px; }
       .actions { flex-direction: column; }
       .actions .btn { min-height: 32px; font-size: 10.5px; }
+      .form-actions .btn { width: 100%; min-width: 0; }
       .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
@@ -1686,7 +1882,7 @@ def product_specs(product: dict) -> str:
         specs.get("brand"),
         specs.get("capacity"),
     ]
-    return " • ".join(str(value) for value in values if value)[:170]
+    return " | ".join(str(value) for value in values if value)[:170]
 
 
 def product_card(product: dict, prefix: str = "../") -> str:
@@ -1787,6 +1983,29 @@ def subpage_html(active: str, title: str, subtitle: str, hero_image: str, conten
   </header>
 {content}
 {shared_footer("../")}
+  <script>
+    (() => {{
+      const form = document.querySelector('#cleaningScheduleForm');
+      if (!form) return;
+      form.addEventListener('submit', event => {{
+        event.preventDefault();
+        const data = new FormData(form);
+        const name = String(data.get('name') || '').trim();
+        const phone = String(data.get('phone') || '').trim();
+        const email = String(data.get('email') || '').trim();
+        const notes = String(data.get('notes') || '').trim();
+        const message = [
+          'Quero agendar uma limpeza de PC pela MobilyTech BR.',
+          '',
+          'Nome: ' + name,
+          'Numero: ' + phone,
+          'E-mail: ' + email,
+          notes ? 'Observacoes: ' + notes : ''
+        ].filter(Boolean).join('\\n');
+        window.location.href = 'https://wa.me/5511954801967?text=' + encodeURIComponent(message);
+      }});
+    }})();
+  </script>
 </body>
 </html>
 """
@@ -1805,7 +2024,7 @@ def write_subpages() -> list[Path]:
     creative_grid = "\n".join(
         f"""      <a class="card creative-card" href="../{creative['file'][2:]}" target="_blank" rel="noreferrer">
         <img src="../{creative['file'][2:]}" alt="Criativo {html.escape(item['title'])}">
-        <span>{html.escape(item['title'])} • {html.escape(creative['angle'])}</span>
+        <span>{html.escape(item['title'])} | {html.escape(creative['angle'])}</span>
       </a>"""
         for item in FINALISTS
         for creative in item.get("creatives", [])
@@ -1889,9 +2108,36 @@ def write_subpages() -> list[Path]:
             "../assets/pc-cleaning-service-cutout.png",
             """  <section class="section shell">
     <div class="grid two">
-      <article class="card text-card"><h3>Limpeza com relatorio</h3><p>Antes/depois, cuidado com poeira, organizacao visual e registro para o cliente acompanhar o servico.</p><a class="btn" href="https://wa.me/5511954801967?text=Quero%20agendar%20uma%20limpeza%20de%20PC">Agendar limpeza</a></article>
+      <article class="card text-card"><h3>Limpeza com relatorio</h3><p>Antes/depois, cuidado com poeira, organizacao visual e registro para o cliente acompanhar o servico.</p><a class="btn" href="#agendamento">Agendar limpeza</a></article>
       <article class="card text-card"><h3>Produtos relacionados</h3><p>Kits de limpeza e acessorios da Fase 2 podem virar upsell sem alterar o servico principal.</p><a class="btn ghost" href="achados.html">Ver Achados Tech</a></article>
     </div>
+  </section>
+  <section id="agendamento" class="section shell">
+    <form class="card service-form" id="cleaningScheduleForm">
+      <div>
+        <span class="eyebrow">Agendamento</span>
+        <h3>Solicitar limpeza de PC</h3>
+        <p>Preencha seus dados para abrir o atendimento pelo WhatsApp com a mensagem pronta.</p>
+      </div>
+      <div class="field-grid">
+        <label>Nome
+          <input name="name" autocomplete="name" placeholder="Seu nome" required>
+        </label>
+        <label>Numero
+          <input name="phone" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" required>
+        </label>
+        <label class="full">E-mail
+          <input name="email" type="email" autocomplete="email" placeholder="seuemail@email.com" required>
+        </label>
+        <label class="full">Observacoes
+          <textarea name="notes" placeholder="Descreva o PC, problema de temperatura, poeira, barulho ou urgencia."></textarea>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Agende ja</button>
+        <span class="form-note">O envio abre o WhatsApp da MobilyTech com seus dados preenchidos para confirmar horario, valor e retirada/entrega.</span>
+      </div>
+    </form>
   </section>""" + brand_wall,
         ),
         "avaliacoes.html": subpage_html(

@@ -110,6 +110,8 @@
       min-width: 0;
     }
     .cart-btn, .primary, .ghost {
+      display: inline-grid;
+      place-items: center;
       border: 0;
       cursor: pointer;
       min-height: 42px;
@@ -119,6 +121,11 @@
       background: linear-gradient(135deg, var(--cyan), var(--green));
       box-shadow: 0 0 26px rgba(23,217,255,.22);
       padding: 0 18px;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none;
+      white-space: nowrap;
+      vertical-align: middle;
     }
     .ghost {
       background: transparent;
@@ -189,6 +196,7 @@
       font-weight: 750;
     }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+    .hero-actions .primary, .hero-actions .ghost { min-width: 178px; min-height: 54px; font-size: 16px; }
     .hero-stage {
       min-height: 340px;
       position: relative;
@@ -388,6 +396,24 @@
     }
     .drawer.open { transform: translateX(0); }
     .drawer h2 { margin-top: 0; }
+    .drawer-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(121,247,255,.16);
+    }
+    .drawer-head h2 { margin: 0; font-size: 28px; line-height: 1; }
+    .drawer-kicker {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .drawer-close { min-height: 36px; padding: 0 14px; font-size: 12px; }
     .option {
       display: flex;
       gap: 10px;
@@ -399,11 +425,72 @@
       font-weight: 850;
       color: #dff7ff;
     }
+    .cart-list { display: grid; gap: 12px; margin: 18px 0; }
     .cart-line {
-      border-bottom: 1px solid rgba(255,255,255,.1);
-      padding: 10px 0;
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 12px;
+      border: 1px solid rgba(121,247,255,.15);
+      border-radius: 18px;
+      padding: 12px;
+      background: rgba(255,255,255,.055);
       color: #dff7ff;
       font-weight: 800;
+    }
+    .cart-line img {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: radial-gradient(circle, rgba(23,217,255,.15), rgba(0,0,0,.28));
+    }
+    .cart-line strong { display: block; line-height: 1.18; }
+    .cart-options { margin: 6px 0 8px; color: var(--muted); font-size: 11px; line-height: 1.35; }
+    .cart-line-bottom { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .cart-remove {
+      border: 0;
+      background: transparent;
+      color: #79f7ff;
+      cursor: pointer;
+      font-weight: 950;
+      padding: 0;
+    }
+    .checkout-card {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(121,247,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+    .checkout-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #dff7ff; font-weight: 900; }
+    .checkout-row strong { color: var(--cyan); font-size: 22px; }
+    .payment-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .payment-chips span {
+      display: inline-grid;
+      place-items: center;
+      min-height: 28px;
+      border-radius: 999px;
+      padding: 0 10px;
+      border: 1px solid rgba(121,247,255,.2);
+      color: #dffbff;
+      background: rgba(23,217,255,.08);
+      font-size: 11px;
+      font-weight: 950;
+    }
+    .cart-actions { display: grid; gap: 10px; }
+    .cart-actions .primary, .cart-actions .ghost { width: 100%; min-height: 44px; }
+    .mini-field {
+      width: 100%;
+      min-height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(121,247,255,.22);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      padding: 0 14px;
+      outline: 0;
+      font-weight: 850;
     }
     .sr-note {
       margin-top: 12px;
@@ -482,7 +569,7 @@
       .hero-card-mini span { font-size: 13px; }
       .hero-card-mini strong { font-size: 18px; line-height: 1.05; }
       .hero-card-mini .specs { font-size: 10.5px; margin-bottom: 0; }
-      .hero-actions .primary, .hero-actions .ghost { min-height: 36px; font-size: 11px; padding: 0 12px; }
+      .hero-actions .primary, .hero-actions .ghost { min-width: 0; min-height: 36px; font-size: 11px; padding: 0 12px; }
       .section { padding: 24px 0; }
       .section h2 { font-size: 25px; line-height: 1.05; }
       .section p.sub { font-size: 12px; line-height: 1.35; }
@@ -746,6 +833,7 @@
 
   <script>
     const state = { products: [], swaps: [], addons: [], finalists: [], cart: [], heroIndex: 0 };
+    const checkoutUrl = './index.html#cart';
     const money = value => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value || 0);
     const qs = selector => document.querySelector(selector);
 
@@ -771,7 +859,7 @@
       return [specs.processor, specs.memory, specs.gpu, specs.storage, specs.powerSupply, specs.brand, specs.capacity]
         .filter(Boolean)
         .slice(0, 4)
-        .join(' • ');
+        .join(' | ');
     }
 
     function renderProducts() {
@@ -826,7 +914,7 @@
           card.href = creative.file;
           card.target = '_blank';
           card.rel = 'noreferrer';
-          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} • ${creative.angle}</span>`;
+          card.innerHTML = `<img src="${creative.file}" alt="Criativo ${item.title}"><span>${item.title} | ${creative.angle}</span>`;
           grid.appendChild(card);
         });
       });
@@ -897,9 +985,16 @@
           };
         });
         drawer.querySelector('#addConfigured').onclick = () => {
-          state.cart.push({ title: product.title, total, options: selected.map(s => s.label) });
+          state.cart.push({
+            id: `${product.id}-${Date.now()}`,
+            productId: product.id,
+            title: product.title,
+            total,
+            image: product.cutout || product.image,
+            options: selected.map(s => s.label)
+          });
           updateCart();
-          closeDrawer();
+          openCart();
         };
       };
       drawer.classList.add('open');
@@ -909,27 +1004,80 @@
     function addProduct(productId) {
       const product = state.products.find(p => p.id === productId);
       if (!product) return;
-      state.cart.push({ title: product.title, total: product.price || 0, options: [] });
+      state.cart.push({
+        id: `${product.id}-${Date.now()}`,
+        productId: product.id,
+        title: product.title,
+        total: product.price || 0,
+        image: product.cutout || product.image,
+        options: []
+      });
       updateCart();
+      openCart();
     }
 
     function updateCart() {
       qs('#cartCount').textContent = state.cart.length;
     }
 
+    function cartItemTemplate(item) {
+      const options = item.options.length ? item.options.join(', ') : 'Sem adicionais';
+      return `<article class="cart-line">
+        <img src="${item.image || './assets/mobilytech-logo.png'}" alt="">
+        <div>
+          <strong>${item.title}</strong>
+          <div class="cart-options">${options}</div>
+          <div class="cart-line-bottom">
+            <span>${money(item.total)}</span>
+            <button class="cart-remove" type="button" data-remove-cart="${item.id}">Remover</button>
+          </div>
+        </div>
+      </article>`;
+    }
+
     function openCart() {
       const drawer = qs('#drawer');
       const total = state.cart.reduce((sum, item) => sum + item.total, 0);
+      const shippingMessage = state.cart.length
+        ? 'Frete Melhor Envio/retirada e formas de pagamento continuam no checkout original.'
+        : 'Adicione um PC ou hardware para preparar o checkout.';
       drawer.innerHTML = `
-        <button class="ghost" type="button" id="closeDrawer">Fechar</button>
-        <h2>Carrinho de rascunho</h2>
-        ${state.cart.map(item => `<div class="cart-line"><strong>${item.title}</strong><br>${item.options.join(', ') || 'Sem adicionais'}<br>${money(item.total)}</div>`).join('') || '<p class="specs">Carrinho vazio.</p>'}
-        <div class="price">${money(total)}</div>
-        <a class="primary" href="./index.html#cart">Ir para checkout original</a>
-        <a class="ghost" href="https://wa.me/5511954801967?text=Quero%20finalizar%20um%20pedido%20MobilyTech">Falar no WhatsApp</a>
-        <p class="sr-note">Na versao aprovada, este ponto deve ligar ao Wix Stores/Mercado Pago/Melhor Envio sem perder o visual.</p>`;
+        <div class="drawer-head">
+          <div>
+            <span class="drawer-kicker">Checkout MobilyTech</span>
+            <h2>Seu carrinho</h2>
+          </div>
+          <button class="ghost drawer-close" type="button" id="closeDrawer">Fechar</button>
+        </div>
+        <div class="cart-list">
+          ${state.cart.map(cartItemTemplate).join('') || '<p class="specs">Carrinho vazio.</p>'}
+        </div>
+        <div class="checkout-card">
+          <div class="checkout-row"><span>Subtotal</span><strong>${money(total)}</strong></div>
+          <input class="mini-field" id="cartCep" inputmode="numeric" placeholder="CEP para calcular frete no checkout">
+          <div class="payment-chips" aria-label="Metodos preservados">
+            <span>Wix Payments</span>
+            <span>Mercado Pago</span>
+            <span>Abacate Pay</span>
+            <span>Pix QR Code</span>
+            <span>Melhor Envio</span>
+          </div>
+          <div class="cart-actions">
+            <a class="primary" href="${checkoutUrl}">Continuar para checkout seguro</a>
+            <a class="ghost" href="https://wa.me/5511954801967?text=${encodeURIComponent('Quero finalizar um pedido MobilyTech pelo carrinho do site.')}">Falar no WhatsApp</a>
+          </div>
+          <p class="sr-note">${shippingMessage}</p>
+        </div>`;
       drawer.classList.add('open');
       drawer.querySelector('#closeDrawer').onclick = closeDrawer;
+      drawer.querySelectorAll('[data-remove-cart]').forEach(button => {
+        button.onclick = event => {
+          const id = event.currentTarget.dataset.removeCart;
+          state.cart = state.cart.filter(item => item.id !== id);
+          updateCart();
+          openCart();
+        };
+      });
     }
 
     function closeDrawer() { qs('#drawer').classList.remove('open'); }

@@ -115,12 +115,58 @@
       color: #041018;
       font-weight: 950;
       text-align: center;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+      vertical-align: middle;
     }
     .btn.ghost { color: #79f7ff; background: transparent; border: 1px solid rgba(121,247,255,.42); }
     .actions .btn { flex: 1; font-size: 12px; }
     .text-card { padding: 24px; }
     .text-card h3 { color: var(--cyan); margin-bottom: 10px; font-size: 22px; }
     .text-card p { margin: 0 0 12px; }
+    .service-form {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+    .service-form h3 { color: var(--cyan); font-size: 24px; }
+    .service-form p { margin: 0; }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field-grid label {
+      display: grid;
+      gap: 6px;
+      color: #dff7ff;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .field-grid label.full { grid-column: 1 / -1; }
+    .field-grid input, .field-grid textarea {
+      width: 100%;
+      border: 1px solid rgba(121,247,255,.22);
+      border-radius: 14px;
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      outline: 0;
+      padding: 12px 13px;
+      font: inherit;
+      font-weight: 850;
+      text-transform: none;
+    }
+    .field-grid textarea { min-height: 94px; resize: vertical; }
+    .form-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .form-actions .btn { min-width: 170px; min-height: 44px; }
+    .form-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
     .badge {
       display: inline-flex;
       align-self: flex-start;
@@ -182,6 +228,7 @@
       .page-hero p { font-size: 13px; }
       .grid.products, .grid.finalists, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
       .product-card { min-height: 270px; padding: 10px; border-radius: 16px; }
       .product-card .imgbox { height: 112px; border-radius: 14px; }
       .product-card img { max-height: 104px; }
@@ -190,6 +237,7 @@
       .price { font-size: 18px; }
       .actions { flex-direction: column; }
       .actions .btn { min-height: 32px; font-size: 10.5px; }
+      .form-actions .btn { width: 100%; min-width: 0; }
       .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
@@ -285,5 +333,28 @@
       </div>
     </div>
   </footer>
+  <script>
+    (() => {
+      const form = document.querySelector('#cleaningScheduleForm');
+      if (!form) return;
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const name = String(data.get('name') || '').trim();
+        const phone = String(data.get('phone') || '').trim();
+        const email = String(data.get('email') || '').trim();
+        const notes = String(data.get('notes') || '').trim();
+        const message = [
+          'Quero agendar uma limpeza de PC pela MobilyTech BR.',
+          '',
+          'Nome: ' + name,
+          'Numero: ' + phone,
+          'E-mail: ' + email,
+          notes ? 'Observacoes: ' + notes : ''
+        ].filter(Boolean).join('\n');
+        window.location.href = 'https://wa.me/5511954801967?text=' + encodeURIComponent(message);
+      });
+    })();
+  </script>
 </body>
 </html>

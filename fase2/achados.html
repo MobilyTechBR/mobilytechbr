@@ -115,12 +115,58 @@
       color: #041018;
       font-weight: 950;
       text-align: center;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+      vertical-align: middle;
     }
     .btn.ghost { color: #79f7ff; background: transparent; border: 1px solid rgba(121,247,255,.42); }
     .actions .btn { flex: 1; font-size: 12px; }
     .text-card { padding: 24px; }
     .text-card h3 { color: var(--cyan); margin-bottom: 10px; font-size: 22px; }
     .text-card p { margin: 0 0 12px; }
+    .service-form {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+    }
+    .service-form h3 { color: var(--cyan); font-size: 24px; }
+    .service-form p { margin: 0; }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field-grid label {
+      display: grid;
+      gap: 6px;
+      color: #dff7ff;
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+    }
+    .field-grid label.full { grid-column: 1 / -1; }
+    .field-grid input, .field-grid textarea {
+      width: 100%;
+      border: 1px solid rgba(121,247,255,.22);
+      border-radius: 14px;
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      outline: 0;
+      padding: 12px 13px;
+      font: inherit;
+      font-weight: 850;
+      text-transform: none;
+    }
+    .field-grid textarea { min-height: 94px; resize: vertical; }
+    .form-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .form-actions .btn { min-width: 170px; min-height: 44px; }
+    .form-note {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      line-height: 1.35;
+    }
     .badge {
       display: inline-flex;
       align-self: flex-start;
@@ -182,6 +228,7 @@
       .page-hero p { font-size: 13px; }
       .grid.products, .grid.finalists, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .grid.two, .grid.three { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr; }
       .product-card { min-height: 270px; padding: 10px; border-radius: 16px; }
       .product-card .imgbox { height: 112px; border-radius: 14px; }
       .product-card img { max-height: 104px; }
@@ -190,6 +237,7 @@
       .price { font-size: 18px; }
       .actions { flex-direction: column; }
       .actions .btn { min-height: 32px; font-size: 10.5px; }
+      .form-actions .btn { width: 100%; min-width: 0; }
       .finalist-card { min-height: 230px; padding: 11px; border-radius: 16px; }
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
@@ -316,83 +364,83 @@
     <div class="creative-grid">
       <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/case-ssd-nvme-01.svg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
-        <span>Case SSD M.2 NVMe USB-C 10Gbps • Transforme SSD parado em armazenamento externo rapido</span>
+        <span>Case SSD M.2 NVMe USB-C 10Gbps | Transforme SSD parado em armazenamento externo rapido</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-nvme-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/case-ssd-nvme-02.svg" alt="Criativo Case SSD M.2 NVMe USB-C 10Gbps">
-        <span>Case SSD M.2 NVMe USB-C 10Gbps • Backup de jogos, fotos e projetos sem abrir o PC</span>
+        <span>Case SSD M.2 NVMe USB-C 10Gbps | Backup de jogos, fotos e projetos sem abrir o PC</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/case-ssd-sata-01.svg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
-        <span>Case SSD/HD SATA 2.5 USB 3.0 • Nao jogue fora o HD antigo: transforme em backup externo</span>
+        <span>Case SSD/HD SATA 2.5 USB 3.0 | Nao jogue fora o HD antigo: transforme em backup externo</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/case-ssd-sata-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/case-ssd-sata-02.svg" alt="Criativo Case SSD/HD SATA 2.5 USB 3.0">
-        <span>Case SSD/HD SATA 2.5 USB 3.0 • Upgrade simples para quem comprou PC revisado</span>
+        <span>Case SSD/HD SATA 2.5 USB 3.0 | Upgrade simples para quem comprou PC revisado</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/fone-kz-castor-01.svg" alt="Criativo Fone KZ Castor monitor in-ear">
-        <span>Fone KZ Castor monitor in-ear • Som de monitor gastando menos que headset gamer comum</span>
+        <span>Fone KZ Castor monitor in-ear | Som de monitor gastando menos que headset gamer comum</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/fone-kz-castor-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/fone-kz-castor-02.svg" alt="Criativo Fone KZ Castor monitor in-ear">
-        <span>Fone KZ Castor monitor in-ear • Setup limpo para jogar, estudar e ouvir musica</span>
+        <span>Fone KZ Castor monitor in-ear | Setup limpo para jogar, estudar e ouvir musica</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/kit-limpeza-esd-01.svg" alt="Criativo Kit limpeza ESD antiestatico para PC">
-        <span>Kit limpeza ESD antiestatico para PC • Poeira e estatica: o erro silencioso que mata desempenho</span>
+        <span>Kit limpeza ESD antiestatico para PC | Poeira e estatica: o erro silencioso que mata desempenho</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/kit-limpeza-esd-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/kit-limpeza-esd-02.svg" alt="Criativo Kit limpeza ESD antiestatico para PC">
-        <span>Kit limpeza ESD antiestatico para PC • Kit simples para manter teclado, placa e gabinete apresentaveis</span>
+        <span>Kit limpeza ESD antiestatico para PC | Kit simples para manter teclado, placa e gabinete apresentaveis</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/mini-aspirador-teclado-01.svg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
-        <span>Mini aspirador USB para teclado e cantos do setup • Teclado cheio de migalha e poeira em 30 segundos</span>
+        <span>Mini aspirador USB para teclado e cantos do setup | Teclado cheio de migalha e poeira em 30 segundos</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/mini-aspirador-teclado-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/mini-aspirador-teclado-02.svg" alt="Criativo Mini aspirador USB para teclado e cantos do setup">
-        <span>Mini aspirador USB para teclado e cantos do setup • Limpeza rapida para mesa, notebook e setup gamer</span>
+        <span>Mini aspirador USB para teclado e cantos do setup | Limpeza rapida para mesa, notebook e setup gamer</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/hub-usb-c-01.svg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
-        <span>Hub USB-C 4 portas para notebook e celular • Falta porta USB no notebook? Resolva sem gambiarra</span>
+        <span>Hub USB-C 4 portas para notebook e celular | Falta porta USB no notebook? Resolva sem gambiarra</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/hub-usb-c-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/hub-usb-c-02.svg" alt="Criativo Hub USB-C 4 portas para notebook e celular">
-        <span>Hub USB-C 4 portas para notebook e celular • Mouse, teclado, pendrive e headset no mesmo hub</span>
+        <span>Hub USB-C 4 portas para notebook e celular | Mouse, teclado, pendrive e headset no mesmo hub</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/suporte-gpu-antisag-01.svg" alt="Criativo Suporte anti-sag para placa de video">
-        <span>Suporte anti-sag para placa de video • Sua placa de video esta torta? Evite peso no slot PCIe</span>
+        <span>Suporte anti-sag para placa de video | Sua placa de video esta torta? Evite peso no slot PCIe</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/suporte-gpu-antisag-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/suporte-gpu-antisag-02.svg" alt="Criativo Suporte anti-sag para placa de video">
-        <span>Suporte anti-sag para placa de video • Setup gamer mais limpo com suporte ajustavel</span>
+        <span>Suporte anti-sag para placa de video | Setup gamer mais limpo com suporte ajustavel</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/keycaps-pbt-01.svg" alt="Criativo Kit keycaps PBT para teclado mecanico">
-        <span>Kit keycaps PBT para teclado mecanico • Teclado antigo, cara nova em minutos</span>
+        <span>Kit keycaps PBT para teclado mecanico | Teclado antigo, cara nova em minutos</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/keycaps-pbt-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/keycaps-pbt-02.svg" alt="Criativo Kit keycaps PBT para teclado mecanico">
-        <span>Kit keycaps PBT para teclado mecanico • Personalize o setup sem comprar teclado novo</span>
+        <span>Kit keycaps PBT para teclado mecanico | Personalize o setup sem comprar teclado novo</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-01.svg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
-        <span>Teclado gamer mecanico RGB ABNT2 • Switch red, RGB e ABNT2 para jogar sem adaptacao</span>
+        <span>Teclado gamer mecanico RGB ABNT2 | Switch red, RGB e ABNT2 para jogar sem adaptacao</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/teclado-mecanico-abnt2-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/teclado-mecanico-abnt2-02.svg" alt="Criativo Teclado gamer mecanico RGB ABNT2">
-        <span>Teclado gamer mecanico RGB ABNT2 • O upgrade mais visivel do setup</span>
+        <span>Teclado gamer mecanico RGB ABNT2 | O upgrade mais visivel do setup</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-01.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/bias-light-led-01.svg" alt="Criativo Fita LED bias lighting USB para monitor">
-        <span>Fita LED bias lighting USB para monitor • Deixe o monitor mais confortavel a noite</span>
+        <span>Fita LED bias lighting USB para monitor | Deixe o monitor mais confortavel a noite</span>
       </a>
       <a class="card creative-card" href="../assets/phase2-creatives/bias-light-led-02.svg" target="_blank" rel="noreferrer">
         <img src="../assets/phase2-creatives/bias-light-led-02.svg" alt="Criativo Fita LED bias lighting USB para monitor">
-        <span>Fita LED bias lighting USB para monitor • Setup com cara gamer gastando pouco</span>
+        <span>Fita LED bias lighting USB para monitor | Setup com cara gamer gastando pouco</span>
       </a>
     </div>
   </section>
@@ -431,5 +479,28 @@
       </div>
     </div>
   </footer>
+  <script>
+    (() => {
+      const form = document.querySelector('#cleaningScheduleForm');
+      if (!form) return;
+      form.addEventListener('submit', event => {
+        event.preventDefault();
+        const data = new FormData(form);
+        const name = String(data.get('name') || '').trim();
+        const phone = String(data.get('phone') || '').trim();
+        const email = String(data.get('email') || '').trim();
+        const notes = String(data.get('notes') || '').trim();
+        const message = [
+          'Quero agendar uma limpeza de PC pela MobilyTech BR.',
+          '',
+          'Nome: ' + name,
+          'Numero: ' + phone,
+          'E-mail: ' + email,
+          notes ? 'Observacoes: ' + notes : ''
+        ].filter(Boolean).join('\n');
+        window.location.href = 'https://wa.me/5511954801967?text=' + encodeURIComponent(message);
+      });
+    })();
+  </script>
 </body>
 </html>
