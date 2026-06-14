@@ -1,9 +1,10 @@
 # MobilyTech BR - Fase 2 iBUYPOWER style
 
-Gerado em: 2026-06-14 00:35:13
+Gerado em: 2026-06-14 16:27:29
 
 - Preview principal: `fase2-hibrida.html`.
 - Subpaginas: `fase2/`.
 - Visual: estrutura clara inspirada em iBUYPOWER, com conteudo e assets MobilyTech.
 - Backend preservado: carrinho chama rotas Vercel de frete, Mercado Pago e Abacate Pay.
+- Conta/pedidos: pagina de ponte preparada para Wix Members, retirada e acompanhamento por atendimento.
 - Linguagem publica: sem termos de teste, rascunho, dropshipping ou aprovacao interna.

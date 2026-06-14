@@ -3,149 +3,517 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Painel MobilyTechBR</title>
+    <title>Painel MobilyTech BR</title>
     <link rel="icon" href="../assets/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" href="../assets/favicon.png">
     <link rel="apple-touch-icon" href="../assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900;1000&display=swap" rel="stylesheet">
     <style>
       :root {
-        --bg: #06101b;
-        --panel: rgba(8, 29, 48, .92);
-        --line: rgba(46, 196, 255, .28);
-        --text: #f5fbff;
-        --muted: #a7bdd0;
-        --cyan: #28c6ff;
-        --blue: #1267db;
-        --gold: #f2c85d;
+        --red: #ff2b2b;
+        --cyan: #15d8cc;
+        --blue: #1478ff;
+        --ink: #090b10;
+        --muted: #626a76;
+        --line: #e5e8ee;
+        --soft: #f5f6f8;
+        --card: #ffffff;
+        --shadow: 0 18px 50px rgba(18, 24, 38, .12);
+        font-family: "Nunito", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      html, body { max-width: 100%; overflow-x: hidden; }
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 28px;
-        color: var(--text);
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        overflow-x: hidden;
         background:
-          radial-gradient(circle at 18% 18%, rgba(40, 198, 255, .17), transparent 34%),
-          radial-gradient(circle at 80% 12%, rgba(242, 200, 93, .12), transparent 30%),
-          linear-gradient(135deg, #030912 0%, var(--bg) 46%, #02070d 100%);
+          radial-gradient(circle at 8% 0%, rgba(21, 216, 204, .14), transparent 26%),
+          radial-gradient(circle at 100% 10%, rgba(20, 120, 255, .12), transparent 26%),
+          linear-gradient(180deg, #ffffff 0%, #f6f7fa 48%, #ffffff 100%);
       }
-      main {
-        width: min(940px, 100%);
-        display: grid;
-        grid-template-columns: .9fr 1.1fr;
-        gap: 28px;
-        align-items: center;
-      }
-      .logo-wrap {
-        display: grid;
-        place-items: center;
-        padding: 34px;
-      }
-      .logo {
-        width: min(280px, 70vw);
-        border-radius: 999px;
-        filter: drop-shadow(0 18px 44px rgba(0, 0, 0, .4));
-      }
-      .panel {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        padding: clamp(26px, 4vw, 42px);
-        background: linear-gradient(180deg, var(--panel), rgba(5, 14, 24, .96));
-        box-shadow: 0 24px 70px rgba(0, 0, 0, .35);
-      }
-      p.eyebrow {
-        margin: 0 0 10px;
-        color: var(--cyan);
-        font-size: 12px;
+      a { color: inherit; text-decoration: none; }
+      button, input { font: inherit; }
+      .topbar {
+        background: #ececec;
+        border-bottom: 1px solid #d8d8d8;
+        color: #222;
+        font-size: 14px;
         font-weight: 900;
-        letter-spacing: .12em;
-        text-transform: uppercase;
       }
-      h1 {
-        margin: 0 0 12px;
-        font-size: clamp(32px, 5vw, 54px);
-        line-height: 1;
-      }
-      p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 1.6;
-      }
-      ol {
-        margin: 24px 0;
-        padding-left: 20px;
-        color: var(--muted);
-        font-weight: 700;
-        line-height: 1.6;
-      }
-      li + li { margin-top: 8px; }
-      .actions {
+      .topbar-inner {
+        max-width: 1420px;
+        margin: 0 auto;
+        min-height: 40px;
+        padding: 8px 22px;
         display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 26px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
       }
-      a.button {
+      .topbar span { color: var(--red); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+      .mobile-copy { display: none; }
+      .shell { max-width: 1420px; margin: 0 auto; padding: 24px 22px 48px; }
+      .header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 22px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 1000;
+        font-size: 21px;
+      }
+      .brand img { width: 48px; height: 48px; object-fit: contain; }
+      .status-pill {
+        justify-self: start;
+        border: 1px solid #cdf5f2;
+        background: #e9fbfa;
+        color: #047d74;
+        border-radius: 999px;
+        padding: 10px 16px;
+        font-size: 13px;
+        font-weight: 1000;
+      }
+      .header-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+      .btn {
+        min-height: 44px;
+        border-radius: 999px;
+        padding: 0 18px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-height: 46px;
-        padding: 0 18px;
-        border-radius: 8px;
-        color: #03111b;
-        font-weight: 950;
-        text-decoration: none;
-        background: linear-gradient(135deg, var(--cyan), var(--blue));
+        gap: 10px;
+        border: 0;
+        font-weight: 1000;
+        cursor: pointer;
+        transition: .2s transform, .2s box-shadow;
       }
-      a.button.secondary {
-        color: var(--text);
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, .05);
+      .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0, 0, 0, .16); }
+      .btn-red { background: var(--red); color: #fff; }
+      .btn-dark { background: #111; color: #fff; }
+      .btn-ghost { background: #fff; color: #111; border: 2px solid #111; }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 340px;
+        border-radius: 18px;
+        background: linear-gradient(90deg, #1788e8 0%, #2f9cf2 42%, #91d7ff 100%);
+        color: #fff;
+        padding: clamp(28px, 5vw, 60px);
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(310px, .9fr);
+        gap: 26px;
+        align-items: end;
+        box-shadow: var(--shadow);
       }
-      .note {
-        margin-top: 20px;
-        color: var(--gold);
+      .hero:before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 18% 84%, rgba(255, 255, 255, .26), transparent 26%),
+          radial-gradient(circle at 84% 12%, rgba(255, 255, 255, .24), transparent 22%);
+        pointer-events: none;
+      }
+      .hero > * { position: relative; z-index: 1; }
+      .hero > *, .card, .stat-card, .hero-card, .section-head, .brand, .status-pill { min-width: 0; }
+      .kicker {
+        margin: 0 0 12px;
+        color: #fff;
         font-size: 13px;
+        font-weight: 1000;
+        letter-spacing: .12em;
+        text-transform: uppercase;
       }
-      @media (max-width: 820px) {
-        main { grid-template-columns: 1fr; }
-        .logo-wrap { padding: 10px 20px 0; }
-        .logo { width: 190px; }
+      .hero h1 {
+        margin: 0;
+        max-width: 780px;
+        font-size: clamp(38px, 5.8vw, 68px);
+        line-height: .98;
+        letter-spacing: 0;
+        font-weight: 1000;
+      }
+      .hero p {
+        max-width: 720px;
+        margin: 18px 0 0;
+        font-size: 20px;
+        line-height: 1.45;
+        font-weight: 800;
+      }
+      .hero-card {
+        background: rgba(255, 255, 255, .92);
+        color: #111;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+      .hero-card small {
+        display: block;
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 1000;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+      }
+      .hero-card strong {
+        display: block;
+        margin: 10px 0;
+        font-size: 32px;
+        line-height: 1;
+      }
+      .hero-card p { margin: 0; color: var(--muted); font-size: 14px; font-weight: 900; }
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin: 36px 0 18px;
+      }
+      .section-head h2 { margin: 0; font-size: 34px; line-height: 1.05; }
+      .section-head p { margin: 8px 0 0; max-width: 780px; color: var(--muted); font-weight: 800; }
+      .section-kicker {
+        margin: 0 0 8px;
+        color: var(--red);
+        font-size: 13px;
+        font-weight: 1000;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+      .grid { display: grid; gap: 16px; }
+      .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 10px 28px rgba(13, 23, 38, .08);
+        padding: 22px;
+      }
+      .stat-card {
+        min-height: 132px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .stat-card small, .card small {
+        color: #687182;
+        font-size: 12px;
+        font-weight: 1000;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .stat-card strong {
+        display: block;
+        font-size: 40px;
+        line-height: 1;
+        margin-top: 12px;
+      }
+      .stat-card span { color: #0d8f70; font-weight: 1000; }
+      .card h3 { margin: 12px 0 10px; font-size: 22px; line-height: 1.1; }
+      .card p, .card li {
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+      }
+      .card p { margin: 0; }
+      .card ul, .card ol { margin: 14px 0 0; padding-left: 20px; }
+      .card li + li { margin-top: 8px; }
+      .card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+      .workflow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .flow-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .flow-list li {
+        margin: 0;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px 16px;
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 12px;
+        align-items: start;
+        background: #fff;
+      }
+      .flow-list b {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: #e9fbfa;
+        color: #047d74;
+      }
+      .notice {
+        border: 1px solid #ffe4a8;
+        background: #fff8e8;
+        border-radius: 16px;
+        padding: 18px 20px;
+        color: #6d5108;
+        font-weight: 900;
+      }
+      code {
+        border-radius: 7px;
+        padding: 2px 6px;
+        background: #f0f1f3;
+        color: #111;
+        font-size: .92em;
+      }
+      footer {
+        margin-top: 38px;
+        padding: 22px 0 0;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      @media (max-width: 980px) {
+        .header { grid-template-columns: 1fr; align-items: start; }
+        .status-pill { justify-self: start; }
+        .header-actions { justify-content: flex-start; }
+        .hero, .workflow { grid-template-columns: 1fr; }
+        .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .cards { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 620px) {
+        .desktop-copy { display: none; }
+        .mobile-copy { display: inline; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
+        .topbar, .shell, .hero, main, section, article, footer { max-width: 100vw; overflow-x: hidden; }
+        .topbar-inner, .shell { padding-left: 14px; padding-right: 14px; }
+        .topbar-inner, .shell { width: calc(100% - 92px); margin-left: 0; margin-right: auto; }
+        .topbar-inner { align-items: flex-start; flex-direction: column; overflow-wrap: anywhere; font-size: 11.5px; line-height: 1.35; }
+        .topbar-inner > * { width: 100%; flex: 0 0 auto; }
+        .topbar-inner > *, .hero h1, .hero p, .hero-card p, .section-head p, .card p, .card span, .status-pill {
+          max-width: 100%;
+          min-width: 0;
+          white-space: normal;
+          overflow-wrap: anywhere;
+          word-break: break-all;
+        }
+        .header, .status-pill, .header-actions { width: 100%; }
+        .status-pill { white-space: normal; line-height: 1.35; overflow-wrap: anywhere; font-size: 12px; }
+        .brand span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+        .hero { padding: 24px 16px; border-radius: 16px; margin-left: 0; margin-right: 0; width: 100%; }
+        .hero > div, .hero-card { width: 100%; max-width: 100%; }
+        .hero h1 { font-size: 24px; line-height: 1.1; }
+        .hero p { font-size: 11px; line-height: 1.45; }
+        .hero-card { padding: 20px; }
+        .hero-card strong { font-size: 25px; }
+        .hero-card p { font-size: 11.5px; overflow-wrap: anywhere; }
+        .stats { grid-template-columns: 1fr; gap: 10px; }
+        .stat-card { min-height: 116px; padding: 16px; }
+        .stat-card strong { font-size: 30px; }
+        .stat-card span { font-size: 14px; overflow-wrap: anywhere; }
+        .section-head { align-items: start; flex-direction: column; width: 100%; }
+        .section-head > div { width: 100%; max-width: 100%; }
+        .section-head h2 { font-size: 28px; }
+        .btn { width: 100%; min-height: 46px; }
+        footer { flex-direction: column; align-items: flex-start; }
       }
     </style>
   </head>
   <body>
-    <main>
-      <div class="logo-wrap">
-        <img class="logo" src="../assets/mobilytech-logo.png" alt="MobilyTechBR">
+    <div class="topbar">
+      <div class="topbar-inner">
+        <span>Painel interno</span>
+        <div>Edite catalogo, adicionais e swaps sem tocar no HTML publico.</div>
       </div>
-      <section class="panel" aria-labelledby="title">
-        <p class="eyebrow">Painel de anuncios</p>
-        <h1 id="title">Atualizar PCs do site</h1>
-        <p>Esta pagina e a entrada segura para editar os anuncios sem alterar manualmente o HTML do site publico.</p>
-        <ol>
-          <li>Abra o Pages CMS e entre com sua conta do GitHub.</li>
-          <li>Escolha o repositorio <strong>mobilytechbr</strong>.</li>
-          <li>Edite a colecao <strong>Anuncios de PCs</strong>, envie a foto principal, fotos extras, digite os precos apenas com numeros e salve.</li>
-          <li>Preencha <strong>Caixa para frete</strong> quando um PC tiver peso ou medidas diferentes do padrao configurado na Vercel.</li>
-          <li>Use <strong>Adicionais globais</strong> para SSDs, armazenamento ou kits de mouse e teclado que podem aparecer em todos os PCs.</li>
-          <li>Use <strong>Trocas globais de pecas</strong> para upgrades/substituicoes de memoria, fonte e armazenamento que podem aparecer em varios PCs.</li>
-          <li>Use <strong>Trocas especificas deste produto</strong> para processadores ou pecas que so servem naquele PC.</li>
-          <li>Em adicionais globais ou especificos, envie uma foto quando quiser mostrar uma miniatura clicavel ao cliente.</li>
-          <li>Use <strong>Opcionais especificos deste PC</strong> somente quando um opcional servir apenas para aquele anuncio.</li>
-          <li>Se o campo <strong>cutout</strong> ficar vazio, o GitHub tenta criar o PNG sem fundo automaticamente.</li>
-        </ol>
-        <div class="actions">
-          <a class="button" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Abrir Pages CMS</a>
-          <a class="button secondary" href="../">Voltar para o site</a>
-        </div>
-        <p class="note">Nunca cole senha ou token do GitHub em paginas desconhecidas. Use apenas o login oficial do GitHub dentro do Pages CMS.</p>
-      </section>
-    </main>
+    </div>
+
+    <div class="shell">
+      <header class="header" aria-label="Cabecalho do painel">
+        <a class="brand" href="../fase2-hibrida.html">
+          <img src="../assets/mobilytech-logo.png" alt="MobilyTech BR">
+          <span>MobilyTech BR</span>
+        </a>
+        <div class="status-pill" id="syncStatus">Carregando dados do catalogo...</div>
+        <nav class="header-actions" aria-label="Acoes rapidas">
+          <a class="btn btn-red" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Abrir Pages CMS</a>
+          <a class="btn btn-dark" href="https://manage.wix.com/dashboard/" target="_blank" rel="noreferrer">Abrir Wix</a>
+          <a class="btn btn-ghost" href="../fase2-hibrida.html">Ver Fase 2</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero" aria-labelledby="title">
+          <div>
+            <p class="kicker">Controle da loja</p>
+            <h1 id="title"><span class="desktop-copy">Painel para manter a MobilyTech BR atualizada.</span><span class="mobile-copy">Painel MobilyTech BR</span></h1>
+            <p>O repositorio segue como fonte de verdade. A Wix entra como camada comercial, de marketing, membros e pedidos.</p>
+          </div>
+          <aside class="hero-card" aria-label="Resumo da estrategia hibrida">
+            <small>Modelo hibrido</small>
+            <strong>Vercel + Wix</strong>
+            <p>Visual no Vercel; Wix Stores, membros e pedidos entram como ponte controlada.</p>
+          </aside>
+        </section>
+
+        <section aria-labelledby="stats-title">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Visao rapida</p>
+              <h2 id="stats-title">Status do catalogo</h2>
+              <p>Os numeros abaixo sao lidos diretamente dos arquivos JSON usados pelo site.</p>
+            </div>
+          </div>
+          <div class="grid stats">
+            <article class="card stat-card">
+              <small>Produtos ativos</small>
+              <strong id="activeProducts">--</strong>
+              <span>PCs, SSDs e hardware</span>
+            </article>
+            <article class="card stat-card">
+              <small>PCs ativos</small>
+              <strong id="activePcs">--</strong>
+              <span>Produtos principais</span>
+            </article>
+            <article class="card stat-card">
+              <small>Adicionais</small>
+              <strong id="activeAddons">--</strong>
+              <span>Globais do carrinho</span>
+            </article>
+            <article class="card stat-card">
+              <small>Trocas</small>
+              <strong id="activeSwaps">--</strong>
+              <span>Swaps e upgrades</span>
+            </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="actions-title">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Operacao</p>
+              <h2 id="actions-title">Mapa de edicao</h2>
+              <p>Use este mapa para editar sem confundir catalogo, afiliados, adicionais ou automacoes.</p>
+            </div>
+          </div>
+          <div class="grid cards">
+            <article class="card">
+              <small>Catalogo principal</small>
+              <h3>PCs e hardware</h3>
+              <p>Edite nome, preco, fotos, estoque, frete, links e pecas em <code>data/products.json</code>.</p>
+              <div class="card-actions">
+                <a class="btn btn-red" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Editar no CMS</a>
+              </div>
+            </article>
+            <article class="card">
+              <small>Carrinho</small>
+              <h3>Adicionais e swaps</h3>
+              <p>Use <code>data/addons.json</code> para extras globais e <code>data/swaps.json</code> para trocas de SSD, RAM, GPU e fonte.</p>
+              <div class="card-actions">
+                <a class="btn btn-ghost" href="../data/addons.json">Ver adicionais</a>
+                <a class="btn btn-ghost" href="../data/swaps.json">Ver swaps</a>
+              </div>
+            </article>
+            <article class="card">
+              <small>Wix e marketing</small>
+              <h3>Ponte comercial</h3>
+              <p>Depois da validacao, o Wix espelha catalogo, membros, pedidos e campanhas sem trocar de surpresa o fluxo funcional.</p>
+              <div class="card-actions">
+                <a class="btn btn-dark" href="https://manage.wix.com/dashboard/" target="_blank" rel="noreferrer">Painel Wix</a>
+              </div>
+            </article>
+            <article class="card">
+              <small>Clientes</small>
+              <h3>Conta e pedidos</h3>
+              <p><code>fase2/minha-conta.html</code> prepara login, retirada, rastreio e status para Wix Members/Wix Stores.</p>
+              <div class="card-actions">
+                <a class="btn btn-red" href="../fase2/minha-conta.html">Ver conta</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="workflow" aria-label="Fluxo recomendado">
+          <article class="card">
+            <small>Passo a passo seguro</small>
+            <h3>Antes de publicar</h3>
+            <ol>
+              <li>Edite produtos, adicionais ou swaps pelo Pages CMS.</li>
+              <li>Confirme que fotos e precos estao certos.</li>
+              <li>Abra a Fase 2 e teste busca, carrinho, frete e checkout.</li>
+              <li>So depois sincronize ou replique a mudanca no Wix Stores.</li>
+            </ol>
+          </article>
+          <article class="card">
+            <small>Dados que precisam bater</small>
+            <h3>Checklist Wix</h3>
+            <ul class="flow-list">
+              <li><b>1</b><span>Produto ativo no JSON tambem precisa ficar ativo no Wix quando for vender por la.</span></li>
+              <li><b>2</b><span>Preco, foto, SKU, peso e medidas precisam ser iguais para frete e checkout nao divergirem.</span></li>
+              <li><b>3</b><span>Pedidos Wix devem apontar para o mesmo atendimento, e-mail e WhatsApp da loja.</span></li>
+              <li><b>4</b><span>Login e enderecos entram por Wix Members; cartao fica apenas nos provedores.</span></li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="notice" role="note">
+          Nao cole tokens, access tokens, client secrets ou senhas neste painel. Credenciais ficam apenas no provedor correto: Vercel, Wix, Mercado Pago, Abacate Pay, Melhor Envio ou Google Apps Script.
+        </section>
+      </main>
+
+      <footer>
+        <span>MobilyTech BR - painel interno</span>
+        <span>Fonte atual: GitHub/Vercel. Ponte: Wix Stores, membros e marketing.</span>
+      </footer>
+    </div>
+
+    <script>
+      const $ = (selector) => document.querySelector(selector);
+      const countActive = (items = []) => items.filter((item) => item && item.active !== false).length;
+
+      async function readJson(path, fallback) {
+        try {
+          const response = await fetch(path, { cache: "no-store" });
+          if (!response.ok) throw new Error(response.statusText);
+          return await response.json();
+        } catch (error) {
+          console.warn("Nao foi possivel ler", path, error);
+          return fallback;
+        }
+      }
+
+      async function hydrateDashboard() {
+        const [products, addons, swaps] = await Promise.all([
+          readJson("../data/products.json", []),
+          readJson("../data/addons.json", []),
+          readJson("../data/swaps.json", [])
+        ]);
+        const productList = Array.isArray(products) ? products : [];
+        const ownProducts = productList.filter((item) => item && item.category !== "affiliate");
+        const pcs = productList.filter((item) => item && item.category === "pc");
+
+        $("#activeProducts").textContent = countActive(ownProducts);
+        $("#activePcs").textContent = countActive(pcs);
+        $("#activeAddons").textContent = countActive(Array.isArray(addons) ? addons : []);
+        $("#activeSwaps").textContent = countActive(Array.isArray(swaps) ? swaps : []);
+        $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
+      }
+
+      hydrateDashboard();
+    </script>
   </body>
 </html>
