@@ -48,9 +48,9 @@
     }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 950; font-size: 20px; }
     .brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.42)); }
-    .menu { display: flex; justify-content: flex-end; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    .menu { display: flex; justify-content: flex-end; gap: 8px; overflow-x: auto; scrollbar-width: none; }
     .menu::-webkit-scrollbar { display: none; }
-    .menu a { white-space: nowrap; font-size: 14px; font-weight: 950; color: #dff8ff; padding: 8px 0; }
+    .menu a { min-height: 36px; display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; font-size: 13px; font-weight: 950; color: #dff8ff; padding: 0 14px; border: 1px solid rgba(121,247,255,.16); border-radius: 999px; background: rgba(255,255,255,.04); }
     .menu a.active, .menu a:hover { color: var(--cyan); }
     .page-hero {
       margin: 28px auto 22px;
@@ -88,7 +88,7 @@
     .section { padding: 30px 0; }
     .grid { display: grid; gap: 18px; }
     .grid.products { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .grid.finalists { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.finalists { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .card {
@@ -179,7 +179,7 @@
       font-size: 11px;
       font-weight: 950;
     }
-    .finalist-card { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 388px; }
+    .finalist-card { padding: 16px; display: flex; flex-direction: column; gap: 11px; min-height: 430px; }
     .affiliate-photo {
       width: 100%;
       aspect-ratio: 1 / .78;
@@ -230,6 +230,7 @@
     .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .finalist-card h3 { font-size: 15px; line-height: 1.18; }
     .finalist-card p { margin: 0; font-size: 12px; color: var(--muted); }
+    .creative-showcase { display: none; }
     .creative-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
     .creative-card { padding: 12px; }
     .creative-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 16px; display: block; }
@@ -243,23 +244,11 @@
       border: 1px solid rgba(121,247,255,.2);
       box-shadow: 0 22px 58px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.035);
     }
-    .brand-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: center; }
-    .brand-pill {
-      width: 100%;
-      min-width: 0;
-      aspect-ratio: 1.5 / 1;
-      display: grid;
-      place-items: center;
-      padding: 0;
-      border-radius: 24px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
-      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
-      overflow: hidden;
-    }
-    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
-    .brand-pill:last-child { grid-column: 2 / 3; }
-    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .brand-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: clamp(14px, 2vw, 28px); overflow-x: auto; padding: 18px 2px 2px; scrollbar-width: none; }
+    .brand-row::-webkit-scrollbar { display: none; }
+    .brand-pill { flex: 0 0 auto; min-width: 74px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
+    .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+    .brand-pill img { display: block; width: auto; height: 34px; max-width: 112px; max-height: 34px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.2)); }
     footer { margin-top: 40px; padding: 38px 0; border-top: 1px solid rgba(121,247,255,.16); background: #03070d; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 22px; }
     footer h3 { margin: 0 0 12px; font-size: 16px; }
@@ -275,13 +264,24 @@
       .nav-row { grid-template-columns: 1fr; gap: 10px; padding: 12px 0; }
       .brand { font-size: 16px; }
       .brand img { width: 34px; height: 34px; }
-      .menu { justify-content: start; gap: 11px; padding-right: 20px; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 24px), transparent 100%); }
-      .menu a { font-size: 11px; }
-      .page-hero { grid-template-columns: 1fr; min-height: auto; padding: 24px 18px; border-radius: 20px; gap: 14px; }
-      .page-hero img { max-height: 150px; justify-self: center; }
-      h1 { font-size: 30px; line-height: 1.02; }
+      .menu {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 7px;
+        padding: 1px 2px 3px;
+        mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 10px), transparent 100%);
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+      }
+      .menu a { flex: 0 0 auto; min-height: 32px; min-width: 0; font-size: 10.5px; padding: 0 11px; white-space: nowrap; line-height: 1.05; }
+      .page-hero { grid-template-columns: 1fr; min-height: auto; padding: 20px 16px; border-radius: 20px; gap: 10px; }
+      .page-hero img { max-height: 128px; justify-self: center; }
+      h1 { font-size: 28px; line-height: 1.03; }
       .page-hero p { font-size: 13px; }
-      .grid.products, .grid.finalists, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .grid.products, .creative-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .grid.finalists { grid-template-columns: 1fr; gap: 12px; }
       .grid.two, .grid.three { grid-template-columns: 1fr; }
       .field-grid { grid-template-columns: 1fr; }
       .product-card { min-height: 270px; padding: 10px; border-radius: 16px; }
@@ -293,7 +293,7 @@
       .actions { flex-direction: column; }
       .actions .btn { min-height: 32px; font-size: 10.5px; }
       .form-actions .btn { width: 100%; min-width: 0; }
-      .finalist-card { min-height: 318px; padding: 10px; border-radius: 16px; }
+      .finalist-card { min-height: 0; padding: 12px; border-radius: 16px; }
       .affiliate-photo { border-radius: 13px; }
       .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
       .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
@@ -302,9 +302,10 @@
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-row { display: flex; flex-wrap: nowrap; gap: 18px; overflow-x: auto; }
       .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
-      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
+      .brand-pill { min-width: 82px; }
+      .brand-pill img { height: 28px; max-width: 92px; max-height: 28px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -314,13 +315,13 @@
 <body>
   <nav class="top-nav">
     <div class="shell nav-row">
-      <a class="brand" href="../fase2-hibrida.html"><img src="../assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></a>
+      <a class="brand" href="../index.html"><img src="../assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></a>
       <div class="menu" aria-label="Navegacao principal">
-<a class="" href="../fase2-hibrida.html">Inicio</a>
+<a class="" href="../index.html">Inicio</a>
 <a class="" href="ofertas.html">Ofertas</a>
 <a class="" href="montagem.html">Monte seu PC</a>
 <a class="" href="limpeza.html">Limpeza</a>
-<a class="" href="achados.html">Achados Tech</a>
+<a class="" href="achados.html">MOBILYTECH FINDS</a>
 <a class="" href="avaliacoes.html">Avaliacoes</a>
 <a class="active" href="contato.html">Contato</a>
       </div>
@@ -328,7 +329,7 @@
   </nav>
   <header class="shell page-hero">
     <div>
-      <span class="eyebrow">Fase 2 hibrida</span>
+      <span class="eyebrow">Curadoria MobilyTech</span>
       <h1>Contato, entrega e politicas</h1>
       <p>Pagina dedicada para suporte, retirada local, politicas e pontos legais antes da compra.</p>
     </div>
@@ -353,7 +354,7 @@
       <div>
         <h3>Loja</h3>
         <a href="ofertas.html">PC Gamer</a>
-        <a href="achados.html">Achados Tech</a>
+        <a href="achados.html">MOBILYTECH FINDS</a>
         <a href="montagem.html">Montagem</a>
         <a href="limpeza.html">Limpeza</a>
       </div>
@@ -366,8 +367,8 @@
       <div>
         <h3>Empresa</h3>
         <a href="avaliacoes.html">Avaliacoes</a>
-        <a href="../fase2-hibrida.html">Preview principal</a>
-        <a href="../admin/index.html">Painel legado</a>
+        <a href="../index.html">Inicio</a>
+        <a href="contato.html">Atendimento</a>
       </div>
       <div>
         <h3>Politicas</h3>

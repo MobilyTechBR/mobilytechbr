@@ -27,6 +27,12 @@
 
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
+      html,
+      body {
+        background: var(--bg);
+        overflow-x: hidden;
+      }
+
       body {
         margin: 0;
         background: var(--bg);
@@ -4523,6 +4529,8 @@
           radial-gradient(circle at top left, rgba(34, 240, 196, 0.13), transparent 34%),
           radial-gradient(circle at 82% 8%, rgba(4, 183, 255, 0.11), transparent 28%),
           linear-gradient(180deg, #03070d 0%, #071018 48%, #03070d 100%);
+        font-size: 15px;
+        line-height: 1.5;
       }
 
       body::before {
@@ -4530,14 +4538,14 @@
       }
 
       .site-header.storefront-header {
-        width: min(1540px, calc(100% - 44px));
+        width: min(1600px, calc(100% - 36px));
         min-height: 76px;
         margin: 14px auto 0;
         padding: 12px 16px;
         display: grid;
-        grid-template-columns: auto minmax(360px, 1fr) minmax(240px, 340px) auto;
+        grid-template-columns: auto minmax(0, 1fr) minmax(170px, 230px) auto;
         align-items: center;
-        gap: 18px;
+        gap: 12px;
         border: 1px solid rgba(91, 251, 223, 0.14);
         border-radius: 18px;
         background: rgba(5, 10, 17, 0.88);
@@ -4546,7 +4554,7 @@
       }
 
       .site-header.storefront-header .brand {
-        gap: 12px;
+        gap: 10px;
         min-width: 0;
       }
 
@@ -4570,20 +4578,33 @@
       }
 
       .site-header.storefront-header nav {
+        display: flex;
+        flex-wrap: nowrap;
         justify-content: center;
-        gap: 8px;
-        overflow: visible;
+        gap: 6px;
+        min-width: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+      }
+
+      .site-header.storefront-header nav::-webkit-scrollbar {
+        display: none;
       }
 
       .site-header.storefront-header nav a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
         flex: 0 0 auto;
-        min-height: 38px;
-        padding: 8px 12px;
+        min-height: 36px;
+        padding: 8px 10px;
         border: 1px solid rgba(129, 216, 255, 0.14);
-        border-radius: 12px;
+        border-radius: 999px;
         background: rgba(255, 255, 255, 0.035);
         color: rgba(246, 251, 255, 0.82);
-        font-size: 13px;
+        font-size: 11.5px;
         font-weight: 800;
         white-space: nowrap;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
@@ -4617,12 +4638,12 @@
       }
 
       .site-search {
-        min-height: 42px;
+        min-height: 40px;
         display: grid;
         grid-template-columns: 1fr auto;
         align-items: center;
         gap: 8px;
-        padding: 4px 6px 4px 16px;
+        padding: 4px 6px 4px 13px;
         border: 1px solid rgba(129, 216, 255, 0.13);
         border-radius: 14px;
         background: rgba(255, 255, 255, 0.045);
@@ -4665,7 +4686,7 @@
       }
 
       .header-cart {
-        min-height: 46px;
+        min-height: 44px;
         display: grid !important;
         grid-template-columns: auto 1fr;
         align-items: center;
@@ -4970,6 +4991,7 @@
         display: grid;
         grid-template-columns: 42px 1fr;
         align-items: center;
+        justify-items: start;
         gap: 12px;
         padding: 12px 14px;
         border: 1px solid rgba(129, 216, 255, 0.1);
@@ -4986,6 +5008,11 @@
         border-radius: 12px;
         background: rgba(34, 240, 196, 0.08);
         color: #22f0c4;
+      }
+
+      .trust-item > span:not(.trust-icon),
+      .trust > div > span:not(.trust-icon) {
+        align-self: center;
       }
 
       .trust-icon svg {
@@ -5055,7 +5082,12 @@
         margin-top: 22px;
       }
 
-      .pc-grid,
+      .pc-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
       .hardware-grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -5064,7 +5096,7 @@
 
       .product-card {
         position: relative;
-        min-height: 398px;
+        min-height: 432px;
         padding: 0;
         display: flex;
         flex-direction: column;
@@ -5086,11 +5118,11 @@
       .product-card .photo {
         position: relative;
         z-index: 1;
-        height: 150px;
-        min-height: 150px;
+        height: 174px;
+        min-height: 174px;
         width: 100%;
-        margin: 0 0 -10px;
-        padding: 14px 14px 4px;
+        margin: 0 0 -18px;
+        padding: 14px 14px 0;
         overflow: visible;
         isolation: isolate;
         border: 0;
@@ -5105,7 +5137,7 @@
       .product-card .photo::after {
         left: 8%;
         right: 8%;
-        bottom: -7px;
+        bottom: -11px;
         z-index: 3;
         height: 38%;
         background:
@@ -5116,12 +5148,33 @@
       }
 
       .product-card .product-cutout {
-        width: 100%;
-        height: calc(100% + 28px);
-        bottom: -8px;
+        width: 112%;
+        height: calc(100% + 40px);
+        bottom: -13px;
         object-fit: contain;
         object-position: center bottom;
-        filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.42));
+        transform: translateX(-50%) scale(1.02);
+        filter: drop-shadow(0 22px 18px rgba(0, 0, 0, 0.48));
+      }
+
+      .product-card.hardware-card .product-cutout,
+      .product-card.hardware-card .photo.square .product-cutout {
+        width: 84%;
+        height: calc(100% - 4px);
+        bottom: 7px;
+        transform: translateX(-50%);
+      }
+
+      .product-card.hardware-card.category-fonte .product-cutout,
+      .product-card.hardware-card.category-fonte .photo.square .product-cutout {
+        width: 92%;
+        height: calc(100% - 2px);
+        bottom: 6px;
+        transform: translateX(-50%);
+      }
+
+      .product-card[data-product-id="pcgameri53330gtx550ti"] .product-cutout {
+        transform: translateX(-50%) translateY(8px) scale(1.06);
       }
 
       .product-card .body {
@@ -5153,10 +5206,10 @@
       }
 
       .product-card h3 {
-        min-height: 42px;
+        min-height: 48px;
         margin: 11px 0 8px;
         color: #f8fbff;
-        font-size: 15px;
+        font-size: 15.5px;
         line-height: 1.32;
         letter-spacing: 0;
         overflow: hidden;
@@ -5166,12 +5219,12 @@
       }
 
       .summary-specs {
-        min-height: 58px;
+        min-height: 72px;
         margin: 0 0 10px;
         padding: 0;
         list-style: none;
         color: rgba(215, 237, 247, 0.72);
-        font-size: 12px;
+        font-size: 12.5px;
         line-height: 1.48;
       }
 
@@ -5213,7 +5266,7 @@
 
       .product-card .config-toggle {
         width: 100%;
-        min-height: 40px;
+        min-height: 44px;
         margin-top: 0;
         padding: 0 12px;
         border: 1px solid rgba(34, 240, 196, 0.22);
@@ -5466,7 +5519,7 @@
       }
 
       .assembly-showcase .assembly-cta {
-        width: min(100%, 420px) !important;
+        width: min(100%, 390px) !important;
         min-height: 46px !important;
         font-size: 10.5px !important;
         letter-spacing: 0 !important;
@@ -5557,7 +5610,7 @@
 
       .cleaning-submit {
         min-height: 46px;
-        width: min(100%, 420px);
+        width: min(100%, 390px);
         justify-self: center;
         padding: 0 14px;
         font-size: 10.5px;
@@ -5615,18 +5668,20 @@
       }
 
       .reviews-section {
-        padding: 0;
+        padding: 22px 0 0;
       }
 
       .reviews-wrap {
         padding: 0;
         border: 0;
         background: transparent;
+        text-align: center;
       }
 
       .reviews-wrap > div:first-child {
         display: block;
         text-align: center;
+        margin-bottom: 22px;
       }
 
       .reviews-lead {
@@ -5638,36 +5693,38 @@
 
       .review-grid {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: 1.12fr repeat(4, minmax(0, 1fr));
+        gap: 16px;
       }
 
       .review-card,
       .rating-card {
-        min-height: 138px;
-        padding: 18px;
+        min-height: 184px;
+        padding: 24px;
         border: 1px solid rgba(91, 251, 223, 0.12);
-        border-radius: 13px;
+        border-radius: 16px;
         background: rgba(12, 20, 29, 0.9);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+        box-shadow: 0 16px 34px rgba(0,0,0,.18), inset 0 1px 0 rgba(255, 255, 255, 0.035);
       }
 
       .rating-card strong {
         display: block;
-        font-size: 42px;
+        font-size: 56px;
         line-height: 0.95;
       }
 
       .review-stars {
         color: #ffc928;
+        font-size: 18px;
         letter-spacing: 0;
       }
 
       .review-card blockquote {
-        margin: 10px 0 0;
+        margin: 12px 0 0;
         color: rgba(237, 247, 252, 0.82);
-        font-size: 13px;
+        font-size: 14.5px;
         line-height: 1.45;
+        text-align: left;
       }
 
       .review-card small {
@@ -5686,10 +5743,11 @@
       }
 
       .brand-wall-panel {
-        padding: 22px;
+        padding: 26px 28px;
         border: 1px solid rgba(91, 251, 223, 0.13);
-        border-radius: 16px;
+        border-radius: 18px;
         background: rgba(12, 20, 29, 0.9);
+        overflow: visible;
       }
 
       .mobily-brand-row {
@@ -5702,7 +5760,7 @@
       }
 
       .brand-tile {
-        min-height: 38px;
+        min-height: 44px;
         display: flex;
         flex: 1 1 0;
         align-items: center;
@@ -5717,9 +5775,9 @@
 
       .brand-tile img {
         width: 100%;
-        height: 34px;
-        max-width: 118px;
-        max-height: 34px;
+        height: 38px;
+        max-width: 126px;
+        max-height: 38px;
         min-width: 0;
         object-fit: contain;
         filter: drop-shadow(0 0 10px rgba(34, 240, 196, 0.18));
@@ -5734,9 +5792,9 @@
         grid-template-columns: 1.1fr repeat(3, minmax(160px, 0.65fr)) minmax(190px, 0.75fr);
         gap: 22px;
         align-items: start;
-        padding: 24px;
+        padding: 32px;
         border: 1px solid rgba(91, 251, 223, 0.12);
-        border-radius: 16px;
+        border-radius: 20px;
         background: rgba(7, 12, 19, 0.94);
       }
 
@@ -5748,7 +5806,7 @@
 
       .footer-brand h2 {
         margin: 10px 0 5px;
-        font-size: 18px;
+        font-size: 20px;
       }
 
       .footer-brand p,
@@ -5866,36 +5924,43 @@
 
       @media (max-width: 760px) {
         html {
-          scroll-padding-top: 160px;
+          scroll-padding-top: 122px;
         }
 
         .site-header.storefront-header {
           width: calc(100% - 18px);
           margin-top: 8px;
           grid-template-columns: 1fr auto;
-          gap: 10px;
-          padding: 10px;
+          gap: 7px;
+          padding: 8px;
           border-radius: 16px;
         }
 
         .site-header.storefront-header .brand img {
-          width: 42px;
-          height: 42px;
+          width: 38px;
+          height: 38px;
         }
 
         .site-header.storefront-header .brand strong {
-          font-size: 16px;
+          font-size: 15px;
+        }
+
+        .site-header.storefront-header .brand small {
+          font-size: 10px;
         }
 
         .site-header.storefront-header nav {
           grid-column: 1 / -1;
-          order: 2;
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 6px;
-          justify-content: stretch;
-          overflow: visible;
-          padding-bottom: 0;
+          order: 3;
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: flex-start;
+          gap: 7px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          padding: 1px 2px 2px;
+          scrollbar-width: none;
+          mask-image: linear-gradient(90deg, transparent 0, #000 10px, #000 calc(100% - 10px), transparent 100%);
         }
 
         .site-header.storefront-header nav::-webkit-scrollbar {
@@ -5903,15 +5968,16 @@
         }
 
         .site-header.storefront-header nav a {
-          width: 100%;
-          min-width: 0;
-          min-height: 36px;
+          flex: 0 0 auto;
+          min-width: auto;
+          min-height: 32px;
           justify-content: center;
-          padding: 7px 6px;
-          font-size: 10px;
+          padding: 7px 10px;
+          font-size: 10.5px;
           line-height: 1.05;
           text-align: center;
-          white-space: normal;
+          white-space: nowrap;
+          border-radius: 999px;
         }
 
         .site-header.storefront-header .nav-symbol,
@@ -5922,15 +5988,16 @@
 
         .site-search {
           grid-column: 1 / -1;
-          order: 3;
-          min-height: 40px;
+          order: 2;
+          min-height: 42px;
           border-radius: 14px;
         }
 
         .header-cart {
           justify-self: end;
-          min-width: 106px;
-          padding: 6px 9px !important;
+          min-width: 100px;
+          min-height: 40px;
+          padding: 5px 8px !important;
         }
 
         .header-cart strong {
@@ -5946,14 +6013,14 @@
         .hero-panel {
           min-height: 0;
           grid-template-columns: 1fr;
-          padding: 22px 16px 18px;
+          padding: 24px 16px 18px;
           border-radius: 18px;
           gap: 12px;
         }
 
         .hero h1 {
           font-size: clamp(30px, 10.4vw, 42px);
-          line-height: 1;
+          line-height: 1.05;
         }
 
         .hero .copy {
@@ -5979,18 +6046,19 @@
         }
 
         .hero-stage {
-          height: 170px;
+          height: 210px;
           order: 3;
         }
 
         .hero-stage img {
-          max-height: 178px;
+          max-height: 222px;
+          transform: scale(1.08);
         }
 
         .hero-product-card {
           max-width: none;
           order: 4;
-          padding: 14px;
+          padding: 16px;
         }
 
         .hero-product-card h2 {
@@ -6017,14 +6085,18 @@
         .trust-item,
         .trust > div {
           min-height: 68px;
-          grid-template-columns: 34px 1fr;
-          gap: 9px;
+          grid-template-columns: 1fr;
+          gap: 7px;
           padding: 10px;
+          align-items: center;
+          justify-items: center;
+          text-align: center;
         }
 
         .trust-icon {
           width: 34px;
           height: 34px;
+          place-self: center;
         }
 
         .catalog .section-heading h2,
@@ -6035,20 +6107,72 @@
 
         .pc-grid,
         .hardware-grid {
+          gap: 10px;
+        }
+
+        .pc-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .hardware-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 10px;
         }
 
         .product-card {
-          min-height: 340px;
+          min-height: 382px;
           border-radius: 12px;
         }
 
+        .pc-grid .product-card {
+          min-height: 456px;
+          border-radius: 18px;
+        }
+
         .product-card .photo {
-          height: 118px;
-          min-height: 118px;
-          margin-bottom: -8px;
+          height: 128px;
+          min-height: 128px;
+          margin-bottom: -14px;
           padding: 10px 8px 0;
+        }
+
+        .pc-grid .product-card .photo {
+          height: 196px;
+          min-height: 196px;
+          margin-bottom: -10px;
+          padding: 14px 12px 0;
+        }
+
+        .product-card .product-cutout {
+          height: calc(100% + 34px);
+          bottom: -12px;
+          transform: translateX(-50%) scale(1.01);
+        }
+
+        .pc-grid .product-card .product-cutout {
+          height: calc(100% + 44px);
+          bottom: -14px;
+          transform: translateX(-50%) scale(1.03);
+        }
+
+        .product-card.hardware-card .product-cutout,
+        .product-card.hardware-card .photo.square .product-cutout {
+          width: 78%;
+          height: calc(100% - 8px);
+          bottom: 8px;
+          transform: translateX(-50%);
+        }
+
+        .product-card.hardware-card.category-fonte .product-cutout,
+        .product-card.hardware-card.category-fonte .photo.square .product-cutout {
+          width: 84%;
+          height: calc(100% - 8px);
+          bottom: 8px;
+        }
+
+        .product-card[data-product-id="pcgameri53330gtx550ti"] .product-cutout {
+          transform: translateX(-50%) translateY(5px) scale(1.03);
         }
 
         .product-card .body {
@@ -6056,22 +6180,47 @@
         }
 
         .product-card h3 {
-          min-height: 38px;
-          font-size: 13px;
+          min-height: 54px;
+          font-size: 12.8px;
+          line-height: 1.26;
+          -webkit-line-clamp: 3;
+        }
+
+        .pc-grid .product-card h3 {
+          min-height: 0;
+          font-size: 17px;
+          line-height: 1.2;
+          -webkit-line-clamp: 2;
         }
 
         .summary-specs {
-          min-height: 52px;
-          font-size: 11px;
+          min-height: 62px;
+          font-size: 11.3px;
+        }
+
+        .pc-grid .summary-specs {
+          min-height: 0;
+          font-size: 13px;
+          line-height: 1.35;
         }
 
         .summary-price strong {
           font-size: 19px;
         }
 
+        .pc-grid .summary-price strong {
+          font-size: 25px;
+        }
+
         .product-card .config-toggle {
           min-height: 38px;
           font-size: 11px;
+        }
+
+        .pc-grid .product-card .config-toggle,
+        .pc-grid .product-card .card-actions .button {
+          min-height: 46px;
+          font-size: 12px;
         }
 
         .assembly-showcase,
@@ -6190,7 +6339,7 @@
 
         .assembly-showcase .assembly-cta,
         .cleaning-submit {
-          width: 290px !important;
+          width: 270px !important;
           max-width: 100% !important;
           justify-self: center;
           align-self: center;
@@ -6248,23 +6397,36 @@
 
         .review-card blockquote {
           font-size: 13px;
+          text-align: center;
         }
 
         .mobily-brand-row {
-          display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 13px 16px;
-          padding-top: 8px;
+          display: flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 22px;
+          padding: 12px 2px 2px;
+          overflow-x: auto;
+          overflow-y: hidden;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+        }
+
+        .mobily-brand-row::-webkit-scrollbar {
+          display: none;
         }
 
         .brand-tile {
-          min-height: 26px;
+          flex: 0 0 96px;
+          min-height: 36px;
+          overflow: visible;
         }
 
         .brand-tile img {
-          height: 24px;
-          max-width: 76px;
-          max-height: 24px;
+          height: 32px;
+          max-width: 96px;
+          max-height: 32px;
         }
 
         .contact-card {
@@ -6288,6 +6450,7 @@
         <a href="#montagem-pc"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5 5L4 17v3h3l5.7-5.7a4 4 0 0 0 5-5l-2.4 2.4-3-3 2.4-2.4Z"></path></svg></span>Monte seu PC</a>
         <a href="#hardware-products"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"></rect><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"></path></svg></span>Hardware</a>
         <a href="#limpeza-pcs"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 11h8"></path><path d="M9 11V5a3 3 0 0 1 6 0v6"></path><path d="M7 11h10l-1 9H8l-1-9Z"></path><path d="M10 15h4"></path></svg></span>Limpeza de PC</a>
+        <a href="./fase2/achados.html"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 1.7 5.1L19 10l-5.3 1.9L12 17l-1.7-5.1L5 10l5.3-1.9L12 3Z"></path><path d="m19 15 .8 2.4 2.2.8-2.2.8-.8 2.4-.8-2.4-2.2-.8 2.2-.8.8-2.4Z"></path></svg></span>MOBILYTECH FINDS</a>
         <a href="#contato"><span class="nav-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 6h14v9H8l-3 3V6Z"></path><path d="M9 10h.01M12 10h.01M15 10h.01"></path></svg></span>Suporte</a>
       </nav>
       <form class="site-search" id="site-search" role="search">
@@ -6725,6 +6888,7 @@
             <a href="#hardware-products">Hardware</a>
             <a href="#montagem-pc">Monte seu PC</a>
             <a href="#limpeza-pcs">Limpeza de PC</a>
+            <a href="./fase2/achados.html">MOBILYTECH FINDS</a>
           </div>
           <div class="footer-column">
             <h3>Formas de pagamento</h3>
@@ -7323,7 +7487,7 @@
         if (cartCheckoutButton) cartCheckoutButton.disabled = count === 0;
         const total = cart.reduce((sum, item) => sum + cartItemTotal(item), 0);
         if (cartTotalOutput) cartTotalOutput.textContent = formatCurrency(total);
-        if (headerCartTotal) headerCartTotal.textContent = formatCurrency(total);
+        if (headerCartTotal) headerCartTotal.textContent = count ? formatCurrency(total) : "0 itens";
         if (!cartItemsContainer) return;
         if (!count) {
           cartItemsContainer.innerHTML = '<p class="cart-empty">Seu carrinho ainda esta vazio.</p>';
@@ -7565,7 +7729,7 @@
         return `
         <article class="card product-card ${isHardware ? "hardware-card" : "pc-card"} category-${escapeHtml(category)}" data-product-id="${escapeHtml(product.id || "")}" data-base-price="${basePrice}">
           <button class="photo ${escapeHtml(photoClass)}" type="button" data-lightbox-gallery="${escapeHtml(encodeMediaGallery(productImages))}" data-lightbox-alt="${escapeHtml(product.title)}" aria-label="Ampliar fotos de ${escapeHtml(product.title)}">
-            <img class="product-cutout" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" loading="lazy">
+            <img class="product-cutout" src="${escapeHtml(image)}" alt="${escapeHtml(product.title)}" loading="eager" decoding="async">
           </button>
           <div class="body">
             <div class="product-summary">
