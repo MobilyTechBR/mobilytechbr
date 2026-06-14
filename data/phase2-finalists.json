@@ -1,7 +1,11 @@
 {
-  "generatedAt": "2026-06-13 12:07:32",
-  "status": "public-curated-selection",
-  "strategy": "Curadoria MobilyTech para produtos complementares de setup, limpeza e upgrades.",
+  "generatedAt": "2026-06-13 23:59:30",
+  "status": "draft-for-approval-no-paid-ads",
+  "strategy": "Vercel storefront with Wix/Premium bridge planning.",
+  "backupPath": "C:\\Users\\MF\\Documents\\Site Vercel backups\\Site Vercel backup antes fase2 hibrida 2026-06-13_08-48-34.zip",
+  "wixPremiumSiteId": "85e985c5-2904-452f-85e2-a98f6d3b1cac",
+  "wixDomain": "https://www.mobilytech.com.br/",
+  "vercelProduction": "https://mobilytechbr.vercel.app",
   "sources": [
     "https://tendencias.mercadolivre.com.br/",
     "https://www.facebook.com/ads/library",
@@ -23,13 +27,13 @@
       "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
       "reviews": "Boa prova social para velocidade, praticidade e uso plug-and-play",
       "returnPolicy": "Mercado Livre indica Compra Garantida e devolucao gratis quando aplicavel; confirmar oferta final antes de anunciar",
-      "operationModel": "Produto selecionado para compra externa",
-      "whySell": "Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.",
+      "operationModel": "Testar afiliado primeiro e depois dropshipping automatizado",
+      "whySell": "Transforme um SSD NVMe parado em armazenamento externo rapido para jogos, backups e arquivos pesados. Um upgrade pequeno que combina muito com quem compra PC revisado e quer mais espaco sem abrir o gabinete.",
       "costTarget": "R$58 a R$75",
       "sellTarget": "R$119 a R$139",
-      "margin": "Margem bruta alvo de R$40 a R$65 antes de campanhas e taxas",
+      "margin": "Margem bruta alvo de R$40 a R$65 antes de taxas",
       "confidence": "Alta",
-      "wixCategory": "MOBILYTECH FINDS / Armazenamento",
+      "wixCategory": "MobilyTech Finds / Armazenamento",
       "creativeAngles": [
         "Transforme SSD parado em armazenamento externo rapido",
         "Backup de jogos, fotos e projetos sem abrir o PC"
@@ -45,8 +49,8 @@
       "affiliateUrl": "https://meli.la/1DNJP2s",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/case-ssd-nvme.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -61,14 +65,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/case-ssd-nvme-01.jpg",
           "angle": "Transforme SSD parado em armazenamento externo rapido",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/case-ssd-nvme-02.jpg",
           "angle": "Backup de jogos, fotos e projetos sem abrir o PC",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -93,13 +97,13 @@
       "sellerReputation": "+10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista",
       "reviews": "Alta prova social: facil instalacao e bom custo-beneficio",
       "returnPolicy": "Devolucao gratis em 30 dias na oferta vista e Compra Garantida",
-      "operationModel": "Produto selecionado com fornecedor estavel",
-      "whySell": "Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.",
+      "operationModel": "Afiliado primeiro, dropshipping automatizado se houver fornecedor estavel",
+      "whySell": "Reaproveite HDs e SSDs de notebook como backup externo em poucos minutos. E barato, util e resolve aquela falta de espaco sem complicar o setup.",
       "costTarget": "R$17,50 a R$30",
       "sellTarget": "R$49 a R$69",
-      "margin": "Margem bruta alvo de R$20 a R$35 antes de campanhas e taxas",
+      "margin": "Margem bruta alvo de R$20 a R$35 antes de taxas",
       "confidence": "Alta",
-      "wixCategory": "MOBILYTECH FINDS / Armazenamento",
+      "wixCategory": "MobilyTech Finds / Armazenamento",
       "creativeAngles": [
         "Nao jogue fora o HD antigo: transforme em backup externo",
         "Upgrade simples para quem comprou PC revisado"
@@ -115,8 +119,8 @@
       "affiliateUrl": "https://meli.la/27TQAft",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/case-ssd-sata.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -131,14 +135,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/case-ssd-sata-01.jpg",
           "angle": "Nao jogue fora o HD antigo: transforme em backup externo",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/case-ssd-sata-02.jpg",
           "angle": "Upgrade simples para quem comprou PC revisado",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -163,13 +167,13 @@
       "sellerReputation": "Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas",
       "reviews": "Comentarios destacam graves, clareza, custo-beneficio e uso para jogos/musica",
       "returnPolicy": "ML com devolucao gratis/Compra Garantida quando aplicavel; confirmar oferta final",
-      "operationModel": "Produto selecionado somente com fornecedor oficial ou confiavel",
-      "whySell": "Produto quente em TikTok/audio e encaixa bem com setup gamer sem parecer aleatorio no site.",
+      "operationModel": "Afiliado primeiro; dropshipping so com fornecedor oficial/confiavel",
+      "whySell": "Som limpo, grave forte e visual discreto para jogar, estudar e ouvir musica sem depender de headset grande. Uma escolha custo-beneficio para setup gamer compacto.",
       "costTarget": "R$95 a R$115",
       "sellTarget": "R$149 a R$179",
-      "margin": "Margem apertada; melhor para conteudo e ticket complementar",
+      "margin": "Margem apertada no afiliado; melhor para conteudo e ticket complementar",
       "confidence": "Media-alta",
-      "wixCategory": "MOBILYTECH FINDS / Audio",
+      "wixCategory": "MobilyTech Finds / Audio",
       "creativeAngles": [
         "Som de monitor gastando menos que headset gamer comum",
         "Setup limpo para jogar, estudar e ouvir musica"
@@ -185,8 +189,8 @@
       "affiliateUrl": "https://meli.la/1WRhUoF",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/fone-kz-castor.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -201,14 +205,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/fone-kz-castor-01.jpg",
           "angle": "Som de monitor gastando menos que headset gamer comum",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/fone-kz-castor-02.jpg",
           "angle": "Setup limpo para jogar, estudar e ouvir musica",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -234,12 +238,12 @@
       "reviews": "Sinal positivo por ser acessorio de baixo risco e uso recorrente",
       "returnPolicy": "Devolucao gratis em 30 dias quando indicada no ML",
       "operationModel": "Dropshipping automatizado com estoque reserva local para combos",
-      "whySell": "Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.",
+      "whySell": "Kit pratico para tirar poeira, cuidar dos contatos e manter o PC com cara de novo entre uma limpeza profissional e outra. Ideal para quem quer preservar desempenho e aparencia.",
       "costTarget": "R$21 a R$35",
       "sellTarget": "R$59 a R$89",
-      "margin": "Boa margem em kit/combo; campanha fria precisa comunicacao forte",
+      "margin": "Boa margem em kit/combo; campanha fria precisa criativo forte",
       "confidence": "Alta",
-      "wixCategory": "MOBILYTECH FINDS / Limpeza",
+      "wixCategory": "MobilyTech Finds / Limpeza",
       "creativeAngles": [
         "Poeira e estatica: o erro silencioso que mata desempenho",
         "Kit simples para manter teclado, placa e gabinete apresentaveis"
@@ -255,8 +259,8 @@
       "affiliateUrl": "https://meli.la/2qJ8vr9",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/kit-limpeza-esd.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -271,14 +275,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/kit-limpeza-esd-01.jpg",
           "angle": "Poeira e estatica: o erro silencioso que mata desempenho",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/kit-limpeza-esd-02.jpg",
           "angle": "Kit simples para manter teclado, placa e gabinete apresentaveis",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -303,13 +307,13 @@
       "sellerReputation": "Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas",
       "reviews": "Poucas avaliacoes; review indica que e fraco, mas aceitavel pelo preco",
       "returnPolicy": "Devolucao gratis indicada na oferta vista",
-      "operationModel": "Produto selecionado apos verificacao de qualidade",
-      "whySell": "Criativo de antes/depois funciona bem, mas precisa expectativa honesta.",
+      "operationModel": "Afiliado primeiro; dropshipping apenas se qualidade for validada",
+      "whySell": "Para mesa, teclado, notebook e cantos do setup que acumulam poeira todo dia. Um acessorio simples para manter o ambiente mais limpo sem desmontar nada.",
       "costTarget": "R$21 a R$30",
       "sellTarget": "R$49 a R$69",
       "margin": "Margem boa, mas risco de suporte maior se expectativa for mal comunicada",
       "confidence": "Media",
-      "wixCategory": "MOBILYTECH FINDS / Limpeza",
+      "wixCategory": "MobilyTech Finds / Limpeza",
       "creativeAngles": [
         "Teclado cheio de migalha e poeira em 30 segundos",
         "Limpeza rapida para mesa, notebook e setup gamer"
@@ -325,8 +329,8 @@
       "affiliateUrl": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
       "affiliateReady": false,
       "affiliateButton": "Ver oferta no Mercado Livre",
-      "affiliateStatus": "Oferta em validacao antes de qualquer campanha paga.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Oferta selecionada para conferir no Mercado Livre.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/mini-aspirador-teclado.jpg",
       "selectedCreativeVariant": 2,
       "researchLinks": {
@@ -341,7 +345,7 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/mini-aspirador-teclado-01.jpg",
           "angle": "Teclado cheio de migalha e poeira em 30 segundos",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -355,7 +359,7 @@
           "variant": 3,
           "file": "./assets/phase2-creatives/mini-aspirador-teclado-03.jpg",
           "angle": "Oferta e chamada para Mercado Livre",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         }
       ],
@@ -374,12 +378,12 @@
       "reviews": "Produto de necessidade recorrente; validar avaliacoes no link final",
       "returnPolicy": "Compra Garantida/marketplace; confirmar na oferta final",
       "operationModel": "Afiliado primeiro",
-      "whySell": "Resolve problema comum de notebook com poucas portas e complementa PCs/notebooks.",
+      "whySell": "Faltou porta USB no notebook ou no setup? Esse hub resolve mouse, teclado, pendrive e perifericos em uma conexao so, sem gambiarra.",
       "costTarget": "R$19 a R$35",
       "sellTarget": "R$49 a R$79",
       "margin": "Margem razoavel, melhor como produto de volume/remarketing",
       "confidence": "Media-alta",
-      "wixCategory": "MOBILYTECH FINDS / Conectividade",
+      "wixCategory": "MobilyTech Finds / Conectividade",
       "creativeAngles": [
         "Falta porta USB no notebook? Resolva sem gambiarra",
         "Mouse, teclado, pendrive e headset no mesmo hub"
@@ -395,8 +399,8 @@
       "affiliateUrl": "https://meli.la/2GBaCfz",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/hub-usb-c.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -411,14 +415,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/hub-usb-c-01.jpg",
           "angle": "Falta porta USB no notebook? Resolva sem gambiarra",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/hub-usb-c-02.jpg",
           "angle": "Mouse, teclado, pendrive e headset no mesmo hub",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -443,13 +447,13 @@
       "sellerReputation": "Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa",
       "reviews": "Sinal bom para setups com GPUs pesadas, mas volume menor que cases/hubs",
       "returnPolicy": "Confirmar devolucao e Compra Garantida na oferta escolhida",
-      "operationModel": "Produto selecionado para campanha inicial controlada",
-      "whySell": "Visual forte para conteudo e conversa com PCs gamer montados.",
+      "operationModel": "Testar afiliado primeiro e so depois dropshipping",
+      "whySell": "Ajuda a deixar a placa de video reta, melhora o visual interno do gabinete e reduz tensao no slot PCIe. Pequeno detalhe que deixa o setup mais profissional.",
       "costTarget": "R$19 a R$45 para versao simples; RGB pode passar de R$100",
       "sellTarget": "R$59 a R$99 simples; R$129+ RGB",
       "margin": "Boa margem se fornecedor barato e qualidade aceitavel",
       "confidence": "Media",
-      "wixCategory": "MOBILYTECH FINDS / Setup Gamer",
+      "wixCategory": "MobilyTech Finds / Setup Gamer",
       "creativeAngles": [
         "Sua placa de video esta torta? Evite peso no slot PCIe",
         "Setup gamer mais limpo com suporte ajustavel"
@@ -465,8 +469,8 @@
       "affiliateUrl": "https://meli.la/1ycmCJ9",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/suporte-gpu-antisag.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -481,14 +485,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/suporte-gpu-antisag-01.jpg",
           "angle": "Sua placa de video esta torta? Evite peso no slot PCIe",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/suporte-gpu-antisag-02.jpg",
           "angle": "Setup gamer mais limpo com suporte ajustavel",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -514,12 +518,12 @@
       "reviews": "Boa atratividade visual, mas nicho mais estetico",
       "returnPolicy": "Confirmar compatibilidade e devolucao na oferta escolhida",
       "operationModel": "Afiliado primeiro",
-      "whySell": "Produto visual para conteudo e publico gamer que gosta de customizacao.",
+      "whySell": "Troque o visual do teclado mecanico sem comprar outro teclado. Um upgrade barato para personalizar o setup e dar cara nova para a mesa.",
       "costTarget": "R$28 a R$70",
       "sellTarget": "R$79 a R$149",
-      "margin": "Boa margem em campanha parceira, mas exige conteudo claro de compatibilidade",
+      "margin": "Boa margem em dropshipping, mas exige conteudo claro de compatibilidade",
       "confidence": "Media",
-      "wixCategory": "MOBILYTECH FINDS / Setup Gamer",
+      "wixCategory": "MobilyTech Finds / Setup Gamer",
       "creativeAngles": [
         "Teclado antigo, cara nova em minutos",
         "Personalize o setup sem comprar teclado novo"
@@ -535,8 +539,8 @@
       "affiliateUrl": "https://meli.la/2tNDMiC",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/keycaps-pbt.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -551,14 +555,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/keycaps-pbt-01.jpg",
           "angle": "Teclado antigo, cara nova em minutos",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/keycaps-pbt-02.jpg",
           "angle": "Personalize o setup sem comprar teclado novo",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -584,12 +588,12 @@
       "reviews": "Demanda alta por ABNT2/RGB; precisa filtrar qualidade",
       "returnPolicy": "Usar marketplace com politica clara de devolucao e garantia",
       "operationModel": "Afiliado primeiro",
-      "whySell": "Periferico principal do setup; bom para combos com PCs e anuncios de retargeting.",
+      "whySell": "Teclado mecanico com RGB e layout ABNT2 para jogar, digitar e montar um setup completo. Bom para quem quer sentir o upgrade todo dia.",
       "costTarget": "R$80 a R$180 conforme modelo",
       "sellTarget": "Afiliado: comissao; loja propria so apos fornecedor validado",
-      "margin": "Melhor como produto parceiro por reduzir suporte e garantia direta",
+      "margin": "Melhor como afiliado por reduzir suporte/garantia",
       "confidence": "Media",
-      "wixCategory": "MOBILYTECH FINDS / Perifericos",
+      "wixCategory": "MobilyTech Finds / Perifericos",
       "creativeAngles": [
         "Switch red, RGB e ABNT2 para jogar sem adaptacao",
         "O upgrade mais visivel do setup"
@@ -605,8 +609,8 @@
       "affiliateUrl": "https://meli.la/2zS3ZBX",
       "affiliateReady": true,
       "affiliateButton": "Compre pelo Mercado Livre",
-      "affiliateStatus": "Escolhido para complementar setups MobilyTech.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/teclado-mecanico-abnt2.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -621,14 +625,14 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-01.jpg",
           "angle": "Switch red, RGB e ABNT2 para jogar sem adaptacao",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
           "variant": 2,
           "file": "./assets/phase2-creatives/teclado-mecanico-abnt2-02.jpg",
           "angle": "O upgrade mais visivel do setup",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -649,17 +653,17 @@
       "sourceUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
       "currentPrice": "Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar",
       "shipping": "Produto leve; bom para importacao se prazo for comunicado",
-      "delivery": "Melhor como produto parceiro ate achar fornecedor ativo",
+      "delivery": "Melhor como afiliado/teste ate achar fornecedor ativo",
       "sellerReputation": "Validacao fraca nesta rodada por oferta indisponivel",
       "reviews": "Boa ideia visual para criativo, mas precisa fornecedor com estoque",
       "returnPolicy": "Confirmar devolucao e funcionamento antes de publicar",
       "operationModel": "Testar afiliado primeiro",
-      "whySell": "Produto barato e muito visual, bom para conteudo de setup.",
+      "whySell": "Luz de fundo para monitor que deixa o setup mais bonito e ajuda no conforto visual em ambientes escuros. Um detalhe barato que muda a aparencia da mesa.",
       "costTarget": "R$15 a R$35",
       "sellTarget": "R$49 a R$79",
       "margin": "Boa no papel, mas depende de fornecedor ativo e qualidade",
       "confidence": "Baixa-media",
-      "wixCategory": "MOBILYTECH FINDS / Setup Gamer",
+      "wixCategory": "MobilyTech Finds / Setup Gamer",
       "creativeAngles": [
         "Deixe o monitor mais confortavel a noite",
         "Setup com cara gamer gastando pouco"
@@ -675,8 +679,8 @@
       "affiliateUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
       "affiliateReady": false,
       "affiliateButton": "Ver oferta no Mercado Livre",
-      "affiliateStatus": "Oferta em validacao antes de qualquer campanha paga.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao.",
+      "affiliateStatus": "Oferta selecionada para conferir no Mercado Livre.",
+      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
       "productImage": "./assets/phase2-affiliates/bias-light-led.jpg",
       "selectedCreativeVariant": 2,
       "researchLinks": {
@@ -691,7 +695,7 @@
           "variant": 1,
           "file": "./assets/phase2-creatives/bias-light-led-01.jpg",
           "angle": "Deixe o monitor mais confortavel a noite",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         },
         {
@@ -705,7 +709,7 @@
           "variant": 3,
           "file": "./assets/phase2-creatives/bias-light-led-03.jpg",
           "angle": "Oferta e chamada para Mercado Livre",
-          "status": "alternativa para aprovacao",
+          "status": "alternativa de criativo",
           "selected": false
         }
       ],

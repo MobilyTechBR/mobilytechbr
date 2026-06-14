@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="88" viewBox="0 0 240 88" role="img" aria-label="Crucial">
+  <text x="111" y="57" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="50" font-weight="900" fill="#f8fbff" letter-spacing="-3">crucial</text>
+  <path d="M44 64h115" stroke="#f8fbff" stroke-width="4" stroke-linecap="round"/>
+  <text x="178" y="67" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="800" fill="#f8fbff" opacity=".85">by Micron</text>
+</svg>
