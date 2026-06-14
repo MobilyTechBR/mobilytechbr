@@ -1,6 +1,6 @@
 # MobilyTech BR - Fase 2 Hibrida
 
-Gerado em: 2026-06-13 12:07:32
+Gerado em: 2026-06-13 23:59:30
 
 ## Objetivo
 
@@ -33,8 +33,8 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Testar afiliado primeiro e depois dropshipping automatizado
 - Preco/frete: R$59,98 no Mercado Livre; Shopee em torno de R$74,57 | Frete gratis/por cupom em ofertas vistas; prazo depende do vendedor e CEP
 - Reputacao: +5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech
-- Por que vender: Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.
-- Margem: Margem bruta alvo de R$40 a R$65 antes de trafego e taxas
+- Por que vender: Transforme um SSD NVMe parado em armazenamento externo rapido para jogos, backups e arquivos pesados. Um upgrade pequeno que combina muito com quem compra PC revisado e quer mais espaco sem abrir o gabinete.
+- Margem: Margem bruta alvo de R$40 a R$65 antes de taxas
 - Risco: Precisa separar NVMe de SATA para evitar compra errada.
 - Link: https://www.mercadolivre.com.br/case-para-ssd-m2-nvme-externo-usb-c-31-adaptador-nvme-2230-2242-2260-2280-aluminio-m-key-ate-4tb-10gbps-inv-tech/p/MLB29349887
 - Pesquisa: [Google Trends](https://trends.google.com/trends/explore?geo=BR&q=Case%20SSD%20M.2%20NVMe%20USB-C%2010Gbps) | [Meta Ads Library](https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Case%20SSD%20M.2%20NVMe%20USB-C%2010Gbps&search_type=keyword_unordered&media_type=all) | [TikTok Creative Center](https://ads.tiktok.com/business/creativecenter) | [ML Tendencias](https://tendencias.mercadolivre.com.br/Case-SSD-M.2-NVMe-USB-C-10Gbps)
@@ -45,8 +45,8 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Afiliado primeiro, dropshipping automatizado se houver fornecedor estavel
 - Preco/frete: R$22 com opcoes a partir de R$17,50 | Algumas opcoes com frete gratis; envio nacional
 - Reputacao: +10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista
-- Por que vender: Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.
-- Margem: Margem bruta alvo de R$20 a R$35 antes de trafego e taxas
+- Por que vender: Reaproveite HDs e SSDs de notebook como backup externo em poucos minutos. E barato, util e resolve aquela falta de espaco sem complicar o setup.
+- Margem: Margem bruta alvo de R$20 a R$35 antes de taxas
 - Risco: Produto comoditizado; diferencial precisa ser conteudo e kit com SSD/limpeza.
 - Link: https://www.mercadolivre.com.br/case-slim-hd-ssd-adaptador-usb-30-sata-3-externo-6gbps-ps4/p/MLB27786386
 - Pesquisa: [Google Trends](https://trends.google.com/trends/explore?geo=BR&q=Case%20SSD/HD%20SATA%202.5%20USB%203.0) | [Meta Ads Library](https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Case%20SSD/HD%20SATA%202.5%20USB%203.0&search_type=keyword_unordered&media_type=all) | [TikTok Creative Center](https://ads.tiktok.com/business/creativecenter) | [ML Tendencias](https://tendencias.mercadolivre.com.br/Case-SSD/HD-SATA-2.5-USB-3.0)
@@ -57,7 +57,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Afiliado primeiro; dropshipping so com fornecedor oficial/confiavel
 - Preco/frete: R$114 no Mercado Livre; Shopee oficial foi visto em torno de R$109 com cupom | ML com frete gratis em oferta vista; Shopee pode depender de cupom/importacao
 - Reputacao: Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas
-- Por que vender: Produto quente em TikTok/audio e encaixa bem com setup gamer sem parecer aleatorio no site.
+- Por que vender: Som limpo, grave forte e visual discreto para jogar, estudar e ouvir musica sem depender de headset grande. Uma escolha custo-beneficio para setup gamer compacto.
 - Margem: Margem apertada no afiliado; melhor para conteudo e ticket complementar
 - Risco: Audio e muito subjetivo; evitar promessa exagerada de qualidade profissional.
 - Link: https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243
@@ -69,8 +69,8 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Dropshipping automatizado com estoque reserva local para combos
 - Preco/frete: Ofertas entre cerca de R$21 e R$58 conforme composicao | Algumas ofertas com frete gratis; verificar cupom/CEP
 - Reputacao: Oferta vista de loja Tapcamp com +100 mil vendas
-- Por que vender: Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.
-- Margem: Boa margem em kit/combo; trafego frio precisa criativo forte
+- Por que vender: Kit pratico para tirar poeira, cuidar dos contatos e manter o PC com cara de novo entre uma limpeza profissional e outra. Ideal para quem quer preservar desempenho e aparencia.
+- Margem: Boa margem em kit/combo; campanha fria precisa criativo forte
 - Risco: Nao prometer recuperacao de componente; vender como prevencao e cuidado.
 - Link: https://www.mercadolivre.com.br/kit-limpeza-esd-antiestatico-para-pc-com-5-pecas/p/MLB37963040
 - Pesquisa: [Google Trends](https://trends.google.com/trends/explore?geo=BR&q=Kit%20limpeza%20ESD%20antiestatico%20para%20PC) | [Meta Ads Library](https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=BR&q=Kit%20limpeza%20ESD%20antiestatico%20para%20PC&search_type=keyword_unordered&media_type=all) | [TikTok Creative Center](https://ads.tiktok.com/business/creativecenter) | [ML Tendencias](https://tendencias.mercadolivre.com.br/Kit-limpeza-ESD-antiestatico-para-PC)
@@ -81,7 +81,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Afiliado primeiro; dropshipping apenas se qualidade for validada
 - Preco/frete: R$21,62 na oferta House Tools | Envio para todo o pais; frete/prazo por CEP
 - Reputacao: Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas
-- Por que vender: Criativo de antes/depois funciona bem, mas precisa expectativa honesta.
+- Por que vender: Para mesa, teclado, notebook e cantos do setup que acumulam poeira todo dia. Um acessorio simples para manter o ambiente mais limpo sem desmontar nada.
 - Margem: Margem boa, mas risco de suporte maior se expectativa for mal comunicada
 - Risco: Potencia limitada; criativo precisa ser honesto para reduzir reclamacao.
 - Link: https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM
@@ -93,7 +93,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Afiliado primeiro
 - Preco/frete: R$19,27 em oferta Chrome Technology vista em busca | Confirmar CEP; produto leve e facil de enviar
 - Reputacao: Loja oficial Chrome Technology em oferta vista
-- Por que vender: Resolve problema comum de notebook com poucas portas e complementa PCs/notebooks.
+- Por que vender: Faltou porta USB no notebook ou no setup? Esse hub resolve mouse, teclado, pendrive e perifericos em uma conexao so, sem gambiarra.
 - Margem: Margem razoavel, melhor como produto de volume/remarketing
 - Risco: Concorrencia alta; diferenciar por curadoria e garantia do marketplace.
 - Link: https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539
@@ -105,7 +105,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Testar afiliado primeiro e so depois dropshipping
 - Preco/frete: Ofertas vistas de R$19,90 a R$134,99 conforme marca/RGB | Frete geralmente simples; confirmar vendedor final
 - Reputacao: Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa
-- Por que vender: Visual forte para criativos e conversa com PCs gamer montados.
+- Por que vender: Ajuda a deixar a placa de video reta, melhora o visual interno do gabinete e reduz tensao no slot PCIe. Pequeno detalhe que deixa o setup mais profissional.
 - Margem: Boa margem se fornecedor barato e qualidade aceitavel
 - Risco: Medidas de gabinete variam; incluir guia de compatibilidade.
 - Link: https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362
@@ -117,7 +117,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Afiliado primeiro
 - Preco/frete: Ofertas de R$28 a R$130+ conforme quantidade/perfil | Frete gratis em algumas ofertas; internacional exige atencao a prazo
 - Reputacao: Algumas ofertas com +50 vendas; buscar kits com mais prova social antes de anuncio
-- Por que vender: Produto visual para criativos e publico gamer que gosta de customizacao.
+- Por que vender: Troque o visual do teclado mecanico sem comprar outro teclado. Um upgrade barato para personalizar o setup e dar cara nova para a mesa.
 - Margem: Boa margem em dropshipping, mas exige conteudo claro de compatibilidade
 - Risco: Compatibilidade ABNT/ANSI/perfil gera devolucao se nao explicar bem.
 - Link: https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672
@@ -129,7 +129,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Afiliado primeiro
 - Preco/frete: Preco varia bastante; validar SKU final antes de campanha | Produto maior; frete influencia conversao
 - Reputacao: Busca indica bom custo-beneficio, mas tambem relatos de durabilidade a checar
-- Por que vender: Periferico principal do setup; bom para combos com PCs e anuncios de retargeting.
+- Por que vender: Teclado mecanico com RGB e layout ABNT2 para jogar, digitar e montar um setup completo. Bom para quem quer sentir o upgrade todo dia.
 - Margem: Melhor como afiliado por reduzir suporte/garantia
 - Risco: Garantia e suporte podem consumir margem se vendido como estoque proprio.
 - Link: https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221
@@ -141,7 +141,7 @@ Criar uma versao alternativa no Vercel, sem alterar a home principal, usando a b
 - Modelo: Testar afiliado primeiro
 - Preco/frete: Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar | Produto leve; bom para importacao se prazo for comunicado
 - Reputacao: Validacao fraca nesta rodada por oferta indisponivel
-- Por que vender: Produto barato e muito visual, bom para conteudo de setup.
+- Por que vender: Luz de fundo para monitor que deixa o setup mais bonito e ajuda no conforto visual em ambientes escuros. Um detalhe barato que muda a aparencia da mesa.
 - Margem: Boa no papel, mas depende de fornecedor ativo e qualidade
 - Risco: Fornecedor atual precisa ser trocado; nao subir anuncio antes de validar estoque.
 - Link: https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735

@@ -140,7 +140,14 @@ function normalizeAddonOption(option) {
   return { ...option, label, price };
 }
 
+function productCategory(product) {
+  return String(product?.category || product?.type || "").toLowerCase();
+}
+
 function productAddonGroups(product, globalAddons = []) {
+  if (productCategory(product) !== "pc") {
+    return Object.fromEntries(Object.keys(ADDON_CATEGORIES).map((category) => [category, []]));
+  }
   const source = product.addons || product.options || {};
   return Object.fromEntries(Object.keys(ADDON_CATEGORIES).map((category) => {
     const globalOptions = Array.isArray(globalAddons)
@@ -154,6 +161,7 @@ function productAddonGroups(product, globalAddons = []) {
 
 function normalizeSelectedAddons(product, selectedAddons, globalAddons = []) {
   if (!Array.isArray(selectedAddons) || selectedAddons.length === 0) return [];
+  if (productCategory(product) !== "pc") return [];
 
   const groups = productAddonGroups(product, globalAddons);
   const usedOptions = new Set();

@@ -736,16 +736,16 @@ function defaultShippingForCategory_(category, price) {
   const insuranceValue = Number.isFinite(price) && price > 0 ? price : undefined;
   if (category === "ssd") {
     return {
-      weightKg: 0.35,
-      heightCm: 6,
-      widthCm: 12,
+      weightKg: 1,
+      heightCm: 7,
+      widthCm: 13,
       lengthCm: 15,
       insuranceValue
     };
   }
   if (category === "fonte") {
     return {
-      weightKg: 2.2,
+      weightKg: 3.5,
       heightCm: 15,
       widthCm: 25,
       lengthCm: 30,

@@ -72,8 +72,8 @@ Fluxo atual:
 
 Medidas automaticas dos rascunhos:
 
-- SSD: `15 x 12 x 6 cm`, `0.35 kg`.
-- Fonte: `30 x 25 x 15 cm`, `2.2 kg`.
+- SSD: `15 x 13 x 7 cm`, `1 kg`.
+- Fonte: `30 x 25 x 15 cm`, `3.5 kg`.
 
 Para os botoes de aprovar/desfazer realmente alterarem o site, configure nas **Propriedades do script** do Apps Script:
 

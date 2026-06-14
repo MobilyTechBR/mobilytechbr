@@ -189,7 +189,7 @@
         text-transform: uppercase;
       }
       .grid { display: grid; gap: 16px; }
-      .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .stats { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
       .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .card {
         border: 1px solid var(--line);
@@ -399,6 +399,11 @@
               <strong id="activeSwaps">--</strong>
               <span>Swaps e upgrades</span>
             </article>
+            <article class="card stat-card">
+              <small>MobilyTech Finds</small>
+              <strong id="activeFinds">--</strong>
+              <span>Dropshipping manual e curadoria</span>
+            </article>
           </div>
         </section>
 
@@ -442,6 +447,15 @@
               <p><code>fase2/minha-conta.html</code> prepara login, retirada, rastreio e status para Wix Members/Wix Stores.</p>
               <div class="card-actions">
                 <a class="btn btn-red" href="../fase2/minha-conta.html">Ver conta</a>
+              </div>
+            </article>
+            <article class="card">
+              <small>Curadoria tech</small>
+              <h3>MobilyTech Finds</h3>
+              <p>Edite fornecedor, preco de venda, custo e margem em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois.</p>
+              <div class="card-actions">
+                <a class="btn btn-red" href="../fase2/achados.html">Ver pagina</a>
+                <a class="btn btn-ghost" href="../data/phase2-finalists.json">Ver JSON</a>
               </div>
             </article>
           </div>
@@ -497,19 +511,22 @@
       }
 
       async function hydrateDashboard() {
-        const [products, addons, swaps] = await Promise.all([
+        const [products, addons, swaps, finalists] = await Promise.all([
           readJson("../data/products.json", []),
           readJson("../data/addons.json", []),
-          readJson("../data/swaps.json", [])
+          readJson("../data/swaps.json", []),
+          readJson("../data/phase2-finalists.json", { finalists: [] })
         ]);
         const productList = Array.isArray(products) ? products : [];
-        const ownProducts = productList.filter((item) => item && item.category !== "affiliate");
+        const ownProducts = productList.filter((item) => item && !["affiliate", "dropshipping"].includes(item.category));
         const pcs = productList.filter((item) => item && item.category === "pc");
+        const finds = Array.isArray(finalists?.finalists) ? finalists.finalists : [];
 
         $("#activeProducts").textContent = countActive(ownProducts);
         $("#activePcs").textContent = countActive(pcs);
         $("#activeAddons").textContent = countActive(Array.isArray(addons) ? addons : []);
         $("#activeSwaps").textContent = countActive(Array.isArray(swaps) ? swaps : []);
+        $("#activeFinds").textContent = countActive(finds);
         $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
       }
 

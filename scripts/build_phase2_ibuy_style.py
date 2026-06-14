@@ -89,6 +89,10 @@ PUBLIC_FIND_FIELDS = {
     "publicPartnerNote",
     "productImage",
     "selectedCreative",
+    "purchaseMode",
+    "productId",
+    "salePrice",
+    "manualFulfillment",
 }
 
 
@@ -618,9 +622,9 @@ def css() -> str:
     .topbar-inner{height:44px;max-width:1540px;margin:auto;display:flex;align-items:center;justify-content:center;gap:30px;color:#222;font-size:15px}
     .topbar p{margin:0}.ticker-arrow{border:0;background:transparent;font-size:34px;color:#9ca3af;cursor:pointer}
     .site-header{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-    .nav-shell{max-width:1540px;margin:auto;height:76px;padding:0 22px;display:grid;grid-template-columns:minmax(178px,210px) minmax(520px,1fr) minmax(220px,360px) 44px 68px;align-items:center;gap:18px}
+    .nav-shell{max-width:1540px;margin:auto;height:76px;padding:0 22px;display:grid;grid-template-columns:minmax(160px,184px) minmax(620px,1fr) minmax(160px,250px) 34px 52px;align-items:center;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap;min-width:0}.brand img{width:44px;height:44px;object-fit:contain;flex:0 0 auto}.brand span{overflow:hidden;text-overflow:ellipsis}
-    .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:18px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:15px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}
+    .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:9px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
     .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
     main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}
@@ -631,10 +635,11 @@ def css() -> str:
     .hero-deal-card{position:relative;z-index:2;background:rgba(255,255,255,.92);color:#111;border-radius:14px;padding:24px;box-shadow:var(--shadow);align-self:center}.hero-deal-card span{font-weight:1000;color:var(--red);text-transform:uppercase;font-size:12px}.hero-deal-card h2{font-size:22px;line-height:1.14;margin:10px 0}.hero-deal-card p{color:#555;font-weight:800}.hero-deal-card strong{font-size:28px;display:block;margin:12px 0}.small-link{border:2px solid #111;background:transparent;border-radius:999px;padding:10px 18px;font-weight:1000;cursor:pointer}
     .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:0 0 36px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.06)}.trust-row article{display:grid;grid-template-columns:46px 1fr;grid-template-rows:auto auto;gap:2px 12px;align-items:center;padding:22px 28px;border-right:1px solid var(--line)}.trust-row article:last-child{border-right:0}.trust-row span{grid-row:1/3;width:42px;height:42px;border-radius:12px;background:#e9fbfa;color:#048b82;display:grid;place-items:center;font-size:24px}.trust-row strong{font-size:17px}.trust-row small{color:#69717c;font-weight:800}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:36px 0 18px}.section-head h2{font-size:34px;margin:0;line-height:1.08}.section-head p{max-width:760px;color:#626a76;font-weight:800}.section-head a{font-weight:1000;color:#0d6fca}.section-kicker{margin:0 0 8px;color:var(--red);font-size:14px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}
+    section[id], .product-card[id], .find-card[id], .page-hero[id]{scroll-margin-top:138px}
     .product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}.catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hardware-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
-    .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:390px}.product-media{height:204px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:18px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:92%;max-height:78%;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media img{max-width:82%;max-height:46%;transform:translateY(-6px)}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:18px;line-height:1.22;margin:0;font-weight:1000;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.spec-line{color:#58606c;font-weight:800;font-size:14px;min-height:40px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.price{font-size:23px;font-weight:1000}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px;margin-right:8px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}.cart-btn .cart-icon{font-size:16px;line-height:1}
+    .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:390px}.product-media{height:204px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:18px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:92%;max-height:78%;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media img{max-width:82%;max-height:46%;transform:translateY(-6px)}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:18px;line-height:1.22;margin:0;font-weight:1000;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.spec-line{color:#58606c;font-weight:800;font-size:14px;min-height:40px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.price{font-size:23px;font-weight:1000}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px;margin-right:8px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:nowrap}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
-    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:16px;display:flex;flex-direction:column;gap:10px;min-height:390px}.find-media{height:190px;border-radius:14px;background:#f4f7fb;display:grid;place-items:center;overflow:hidden}.find-media img{width:auto;height:auto;max-width:88%;max-height:88%;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.market-btn{margin-top:auto;min-height:42px;border-radius:999px;border:0;background:linear-gradient(90deg,#fff159,#ffe000);color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px}.market-btn img{height:30px;width:auto;max-width:72px;object-fit:contain}
+    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:16px;display:flex;flex-direction:column;gap:10px;min-height:390px}.find-media{height:190px;border-radius:14px;background:#f4f7fb;display:grid;place-items:center;overflow:hidden}.find-media img{width:auto;height:auto;max-width:88%;max-height:88%;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.market-btn{margin-top:auto;min-height:42px;border-radius:999px;border:0;background:linear-gradient(90deg,#fff159,#ffe000);color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none}.market-btn img{height:30px;width:auto;max-width:72px;object-fit:contain}.market-mobilytech{background:linear-gradient(90deg,#19f5d0,#15a7ff);color:#031014;box-shadow:0 10px 24px rgba(21,167,255,.22)}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
     .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08)}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:18px}.clean-form-visual img{width:100%;height:100%;max-height:520px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.lead-form textarea{min-height:110px;resize:vertical}
     .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(14px,1.6vw,26px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line img{height:34px;max-width:92px;width:auto;object-fit:contain;filter:brightness(0) contrast(1.08);opacity:.95;flex:0 1 auto}
@@ -683,6 +688,7 @@ def css() -> str:
       .trust-row article:last-child{border-bottom:0}
       .section-head{align-items:start;flex-direction:column}
       .section-head h2{font-size:28px}
+      section[id], .product-card[id], .find-card[id], .page-hero[id]{scroll-margin-top:216px}
       .product-grid,.catalog-grid{grid-template-columns:1fr;gap:14px;max-width:390px;margin-inline:auto}
       .hardware-grid,#homeHardwareGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:none;margin-inline:0}
       .product-media{height:150px;padding:12px}
@@ -699,9 +705,9 @@ def css() -> str:
       .spec-line{font-size:12px;min-height:34px}
       .product-card[data-kind="pc"] .spec-line{min-height:0}
       .card-actions{gap:7px}
-      .ghost-btn,.cart-btn{height:38px;font-size:11px}
+      .ghost-btn,.cart-btn{height:38px;font-size:10px}
       .product-card[data-kind="pc"] .ghost-btn,.product-card[data-kind="pc"] .cart-btn{height:44px;font-size:13px}
-      .cart-btn .cart-icon{font-size:14px}
+      .cart-btn .cart-icon{font-size:13px}
       .ibp-panels{gap:14px}
       .service-panel-image{aspect-ratio:1.535/1;min-height:0}
       .finds-preview,.finds-grid{grid-template-columns:1fr;max-width:360px;margin-inline:auto}
@@ -719,8 +725,8 @@ def css() -> str:
       .reviews-grid{grid-template-columns:1fr}
       .score-card{grid-column:auto}
       .about-strip,.powered-row{align-items:start;flex-direction:column}
-      .brand-line{width:100%;gap:18px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-top:12px}
-      .brand-line img{height:28px;max-width:82px;flex:0 0 auto}
+      .brand-line{width:100%;gap:14px 18px;justify-content:center;flex-wrap:wrap;overflow:visible;padding-top:12px}
+      .brand-line img{height:24px;max-width:74px;flex:0 1 auto}
       .footer{grid-template-columns:1fr}
       .page-hero{min-height:0;padding:24px 18px;gap:14px}
       .page-hero h1{font-size:30px;line-height:1.05}
@@ -836,7 +842,7 @@ def js(products, finalists, addons, swaps) -> str:
         .slice(0, 4);
       const sectionResults = sections.map(({{ item }}) => item);
       const products = DATA.products
-        .filter((item) => item.active !== false)
+        .filter((item) => item.active !== false && !["dropshipping", "affiliate"].includes(item.category))
         .filter((item) => matchesSearch([item.title, item.badge, specs(item).join(" "), item.category].join(" "), q))
         .map((item) => ({{ item, score: searchScore(item.title, [item.badge, specs(item).join(" "), item.category].join(" "), q) }}))
         .sort((a, b) => b.score - a.score)
@@ -913,17 +919,27 @@ def js(products, finalists, addons, swaps) -> str:
       const input = $("#siteSearch");
       if (query && input) input.value = query;
     }}
+    function scrollElementIntoView(target) {{
+      if (!target) return;
+      const header = $(".site-header");
+      const offset = (header ? header.getBoundingClientRect().height : 0) + 18;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({{ top: Math.max(0, top), behavior:"smooth" }});
+    }}
     function scrollToHashTarget() {{
       if (!window.location.hash) return;
       const target = document.querySelector(window.location.hash);
       if (!target) return;
-      setTimeout(() => target.scrollIntoView({{ behavior:"smooth", block:"center" }}), 80);
+      setTimeout(() => scrollElementIntoView(target), 80);
     }}
     function productType(product) {{ return product.category === "pc" ? "pc" : "hardware"; }}
+    function isConfigurablePc(product) {{ return product?.category === "pc"; }}
     function productTotal(item) {{
       const product = productById(item.productId);
       if (!product) return 0;
-      const extras = [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].reduce((sum, option) => sum + Number(option.price || 0), 0);
+      const extras = isConfigurablePc(product)
+        ? [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].reduce((sum, option) => sum + Number(option.price || 0), 0)
+        : 0;
       return Number(product.price || 0) + extras;
     }}
     function saveCart() {{ localStorage.setItem(cartKey, JSON.stringify(cart)); renderCart(); }}
@@ -938,7 +954,7 @@ def js(products, finalists, addons, swaps) -> str:
       const node = $(target);
       if (!node) return;
       const search = norm($("#siteSearch")?.value || "");
-      let products = DATA.products.filter((item) => item.active !== false);
+      let products = DATA.products.filter((item) => item.active !== false && !["dropshipping", "affiliate"].includes(item.category));
       if (filter === "pc") products = products.filter((item) => item.category === "pc");
       if (filter === "hardware") products = products.filter((item) => item.category !== "pc");
       if (target === "#homePcGrid") products = products.filter((item) => item.category === "pc");
@@ -977,15 +993,18 @@ def js(products, finalists, addons, swaps) -> str:
       const market = item.marketplace || {{}};
       const image = asset(item.productImage || item.selectedCreative);
       const logo = asset(market.logo || "assets/mercado-livre-logo.svg");
+      const isManual = item.purchaseMode === "manual-dropshipping";
+      const price = item.salePrice ? money(item.salePrice) : (item.currentPrice || "");
+      const action = isManual
+        ? `<button class="market-btn market-mobilytech" type="button" data-add="${{item.productId || item.id}}"><span class="cart-icon" aria-hidden="true">&#128722;</span>Adicionar ao carrinho</button>`
+        : `<a class="market-btn" href="${{item.affiliateUrl || item.sourceUrl}}" target="_blank" rel="noopener"><img src="${{logo}}" alt="" aria-hidden="true">${{item.affiliateButton || market.button || "Compre pelo marketplace"}}</a>`;
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
         <span class="find-meta">${{item.confidence || "Curadoria MobilyTech"}}</span>
         <h3>${{item.title}}</h3>
         <p>${{item.whySell || item.publicPartnerNote || ""}}</p>
-        <p><strong>${{item.currentPrice || ""}}</strong></p>
-        <a class="market-btn" href="${{item.affiliateUrl || item.sourceUrl}}" target="_blank" rel="noopener">
-          <img src="${{logo}}" alt="" aria-hidden="true">${{item.affiliateButton || market.button || "Compre pelo marketplace"}}
-        </a>
+        <p><strong>${{price}}</strong></p>
+        ${{action}}
       </article>`;
     }}
     function addBaseProduct(productId) {{
@@ -996,6 +1015,7 @@ def js(products, finalists, addons, swaps) -> str:
     function addConfiguredProduct(productId) {{
       const product = productById(productId);
       if (!product) return;
+      if (!isConfigurablePc(product)) return addBaseProduct(productId);
       const selectedAddons = $$("#modalBody input[data-addon]:checked").map((input) => ({{
         category: input.dataset.category,
         index: Number(input.dataset.index),
@@ -1019,18 +1039,20 @@ def js(products, finalists, addons, swaps) -> str:
       const modal = $("#productModal");
       const body = $("#modalBody");
       const specItems = specs(product).map((item) => `<span>${{item}}</span>`).join("");
-      const swapGroups = availableSwaps(product);
+      const isPc = isConfigurablePc(product);
+      const swapGroups = isPc ? availableSwaps(product) : [];
       const swapHtml = swapGroups.map((group) => group.options.length ? `<div class="option-box"><strong>${{group.label}}</strong>${{group.options.map((option, index) => `<label><span><input type="checkbox" data-swap data-target="${{group.target}}" data-index="${{index}}" data-label="${{option.label}}" data-price="${{option.price}}"> ${{option.label}}</span><b>${{money(option.price)}}</b></label>`).join("")}}</div>` : "").join("");
-      const addonHtml = DATA.addons.filter((item) => item.active !== false).map((option, index) => `<label><span><input type="checkbox" data-addon data-category="${{option.category}}" data-index="${{index}}" data-label="${{option.label}}" data-price="${{option.price}}"> ${{option.label}}</span><b>+${{money(option.price)}}</b></label>`).join("");
+      const addonHtml = isPc ? DATA.addons.filter((item) => item.active !== false).map((option, index) => `<label><span><input type="checkbox" data-addon data-category="${{option.category}}" data-index="${{index}}" data-label="${{option.label}}" data-price="${{option.price}}"> ${{option.label}}</span><b>+${{money(option.price)}}</b></label>`).join("") : "";
+      const configHtml = isPc
+        ? `${{swapHtml ? `<h3>Trocas disponiveis</h3>${{swapHtml}}` : ""}}${{addonHtml ? `<h3>Adicionais</h3><div class="option-box">${{addonHtml}}</div>` : ""}}<button class="btn btn-red full" type="button" data-add-config="${{product.id}}"><span aria-hidden="true">&#128722;</span> Adicionar configurado</button>`
+        : `<button class="btn btn-red full" type="button" data-add="${{product.id}}"><span aria-hidden="true">&#128722;</span> Adicionar ao carrinho</button>`;
       body.innerHTML = `<div class="modal-grid">
         <img src="${{asset(product.cutout || product.image)}}" alt="${{product.title}}">
         <div>
           <h2>${{product.title}}</h2>
           <p class="price">${{money(product.price)}}</p>
           <div class="spec-list">${{specItems}}</div>
-          ${{swapHtml ? `<h3>Trocas disponiveis</h3>${{swapHtml}}` : ""}}
-          <h3>Adicionais</h3><div class="option-box">${{addonHtml}}</div>
-          <button class="btn btn-red full" type="button" data-add-config="${{product.id}}"><span aria-hidden="true">&#128722;</span> Adicionar configurado</button>
+          ${{configHtml}}
         </div>
       </div>`;
       modal?.showModal();
@@ -1213,6 +1235,7 @@ def js(products, finalists, addons, swaps) -> str:
       window.currentFilter = button.dataset.filter;
       renderProducts("#catalogGrid", window.currentFilter);
     }}));
+    window.addEventListener("hashchange", scrollToHashTarget);
     renderProducts("#homePcGrid", "pc", Number($("#homePcGrid")?.dataset.limit || 999));
     renderProducts("#homeHardwareGrid", "hardware", Number($("#homeHardwareGrid")?.dataset.limit || 999));
     renderProducts("#catalogGrid", "all");

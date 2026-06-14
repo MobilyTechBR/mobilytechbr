@@ -7251,10 +7251,10 @@
       };
 
       const productAddons = (product, globalAddons = []) => {
+        if (productCategory(product) !== "pc") return [];
         const source = product.addons || product.options || {};
-        const includeGlobal = productCategory(product) === "pc" || product.allowGlobalAddons === true;
         return addonCategories.map((category) => {
-          const globalOptions = includeGlobal && Array.isArray(globalAddons)
+          const globalOptions = Array.isArray(globalAddons)
             ? globalAddons.filter((option) => option?.category === category.key)
             : [];
           const productOptions = Array.isArray(source[category.key]) ? source[category.key] : [];

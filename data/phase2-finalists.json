@@ -1,6 +1,6 @@
 {
   "generatedAt": "2026-06-13 23:59:30",
-  "status": "draft-for-approval-no-paid-ads",
+  "status": "public-curated-manual-dropshipping-no-paid-ads-until-approval",
   "strategy": "Vercel storefront with Wix/Premium bridge planning.",
   "backupPath": "C:\\Users\\MF\\Documents\\Site Vercel backups\\Site Vercel backup antes fase2 hibrida 2026-06-13_08-48-34.zip",
   "wixPremiumSiteId": "85e985c5-2904-452f-85e2-a98f6d3b1cac",
@@ -48,9 +48,9 @@
       },
       "affiliateUrl": "https://meli.la/1DNJP2s",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/case-ssd-nvme.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -83,7 +83,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/case-ssd-nvme-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/case-ssd-nvme-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-case-ssd-nvme",
+      "manualFulfillment": true,
+      "supplierCost": 70,
+      "salePrice": 129,
+      "marginPercent": "45.7%"
     },
     {
       "id": "case-ssd-sata",
@@ -118,9 +124,9 @@
       },
       "affiliateUrl": "https://meli.la/27TQAft",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/case-ssd-sata.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -153,7 +159,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/case-ssd-sata-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/case-ssd-sata-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-case-ssd-sata",
+      "manualFulfillment": true,
+      "supplierCost": 25,
+      "salePrice": 59,
+      "marginPercent": "57.6%"
     },
     {
       "id": "fone-kz-castor",
@@ -188,9 +200,9 @@
       },
       "affiliateUrl": "https://meli.la/1WRhUoF",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/fone-kz-castor.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -223,7 +235,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/fone-kz-castor-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/fone-kz-castor-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-fone-kz-castor",
+      "manualFulfillment": true,
+      "supplierCost": 115,
+      "salePrice": 169,
+      "marginPercent": "32.0%"
     },
     {
       "id": "kit-limpeza-esd",
@@ -258,9 +276,9 @@
       },
       "affiliateUrl": "https://meli.la/2qJ8vr9",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/kit-limpeza-esd.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -293,7 +311,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/kit-limpeza-esd-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/kit-limpeza-esd-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-kit-limpeza-esd",
+      "manualFulfillment": true,
+      "supplierCost": 35,
+      "salePrice": 79,
+      "marginPercent": "55.7%"
     },
     {
       "id": "mini-aspirador-teclado",
@@ -327,10 +351,10 @@
         "class": "market-ml"
       },
       "affiliateUrl": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
-      "affiliateReady": false,
-      "affiliateButton": "Ver oferta no Mercado Livre",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Oferta selecionada para conferir no Mercado Livre.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/mini-aspirador-teclado.jpg",
       "selectedCreativeVariant": 2,
       "researchLinks": {
@@ -363,7 +387,13 @@
           "selected": false
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/mini-aspirador-teclado-02.jpg"
+      "selectedCreative": "./assets/phase2-creatives/mini-aspirador-teclado-02.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-mini-aspirador-teclado",
+      "manualFulfillment": true,
+      "supplierCost": 25,
+      "salePrice": 59,
+      "marginPercent": "57.6%"
     },
     {
       "id": "hub-usb-c",
@@ -398,9 +428,9 @@
       },
       "affiliateUrl": "https://meli.la/2GBaCfz",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/hub-usb-c.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -433,7 +463,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/hub-usb-c-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/hub-usb-c-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-hub-usb-c",
+      "manualFulfillment": true,
+      "supplierCost": 30,
+      "salePrice": 69,
+      "marginPercent": "56.5%"
     },
     {
       "id": "suporte-gpu-antisag",
@@ -468,9 +504,9 @@
       },
       "affiliateUrl": "https://meli.la/1ycmCJ9",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/suporte-gpu-antisag.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -503,7 +539,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/suporte-gpu-antisag-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/suporte-gpu-antisag-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-suporte-gpu-antisag",
+      "manualFulfillment": true,
+      "supplierCost": 45,
+      "salePrice": 89,
+      "marginPercent": "49.4%"
     },
     {
       "id": "keycaps-pbt",
@@ -538,9 +580,9 @@
       },
       "affiliateUrl": "https://meli.la/2tNDMiC",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/keycaps-pbt.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -573,7 +615,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/keycaps-pbt-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/keycaps-pbt-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-keycaps-pbt",
+      "manualFulfillment": true,
+      "supplierCost": 70,
+      "salePrice": 129,
+      "marginPercent": "45.7%"
     },
     {
       "id": "teclado-mecanico-abnt2",
@@ -608,9 +656,9 @@
       },
       "affiliateUrl": "https://meli.la/2zS3ZBX",
       "affiliateReady": true,
-      "affiliateButton": "Compre pelo Mercado Livre",
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/teclado-mecanico-abnt2.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -643,7 +691,13 @@
           "selected": true
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/teclado-mecanico-abnt2-03.jpg"
+      "selectedCreative": "./assets/phase2-creatives/teclado-mecanico-abnt2-03.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-teclado-mecanico-abnt2",
+      "manualFulfillment": true,
+      "supplierCost": 130,
+      "salePrice": 179,
+      "marginPercent": "27.4%"
     },
     {
       "id": "bias-light-led",
@@ -677,10 +731,10 @@
         "class": "market-ml"
       },
       "affiliateUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
-      "affiliateReady": false,
-      "affiliateButton": "Ver oferta no Mercado Livre",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Oferta selecionada para conferir no Mercado Livre.",
-      "publicPartnerNote": "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
       "productImage": "./assets/phase2-affiliates/bias-light-led.jpg",
       "selectedCreativeVariant": 2,
       "researchLinks": {
@@ -713,7 +767,323 @@
           "selected": false
         }
       ],
-      "selectedCreative": "./assets/phase2-creatives/bias-light-led-02.jpg"
+      "selectedCreative": "./assets/phase2-creatives/bias-light-led-02.jpg",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-bias-light-led",
+      "manualFulfillment": true,
+      "supplierCost": 35,
+      "salePrice": 69,
+      "marginPercent": "49.3%"
+    },
+    {
+      "id": "adaptador-bluetooth-usb-5",
+      "title": "Adaptador Bluetooth USB 5.0 para PC",
+      "niche": "Conectividade e setup",
+      "platform": "Mercado Livre / Shopee / Amazon",
+      "sourceUrl": "https://lista.mercadolivre.com.br/adaptador-bluetooth-usb-5.0-pc",
+      "currentPrice": "Ofertas geralmente entre R$20 e R$35; validar vendedor ativo antes de campanha",
+      "shipping": "Produto pequeno, facil de enviar e com baixo peso logistico",
+      "delivery": "Marketplaces nacionais tendem a entregar rapido; Shopee/AliExpress podem variar",
+      "sellerReputation": "Buscar vendedor com alta reputacao e bom volume de vendas antes de escalar",
+      "reviews": "Demanda recorrente para controle, fone, caixas e perifericos sem fio",
+      "returnPolicy": "Usar fornecedor com devolucao clara e Compra Garantida quando aplicavel",
+      "operationModel": "Dropshipping manual com validacao de fornecedor antes de anuncio pago",
+      "whySell": "Transforma qualquer PC sem Bluetooth em um setup pronto para fones, controles, caixas de som e perifericos sem fio. Produto pequeno, barato e facil de explicar em criativos curtos.",
+      "costTarget": "R$20 a R$30",
+      "sellTarget": "R$49 a R$59",
+      "margin": "Margem bruta alvo acima de 40% antes de taxas",
+      "confidence": "Media-alta",
+      "risk": "Compatibilidade com Windows e qualidade do chip precisam estar claras para reduzir suporte.",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-adaptador-bluetooth-usb-5",
+      "manualFulfillment": true,
+      "supplierCost": 25,
+      "salePrice": 59,
+      "marginPercent": "57.6%",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "MobilyTech BR",
+        "logo": "assets/mobilytech-logo.png",
+        "button": "Adicionar ao carrinho",
+        "class": "market-mobilytech"
+      },
+      "productImage": "./assets/phase2-affiliates/adaptador-bluetooth-usb-5.svg",
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/adaptador-bluetooth-usb-5-01.svg",
+          "angle": "Transforma qualquer PC sem Bluetooth em um setup pronto para fones, controles, caixas de s",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/adaptador-bluetooth-usb-5-02.svg",
+          "angle": "Compatibilidade com Windows e qualidade do chip precisam estar claras para reduzir suporte",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/adaptador-bluetooth-usb-5-03.svg",
+          "angle": "Oferta selecionada para complementar seu setup.",
+          "status": "selecionado para vitrine",
+          "selected": true
+        }
+      ],
+      "selectedCreative": "./assets/phase2-creatives/adaptador-bluetooth-usb-5-03.svg",
+      "selectedCreativeVariant": 3
+    },
+    {
+      "id": "mousepad-gamer-rgb-xl",
+      "title": "Mousepad gamer RGB XL",
+      "niche": "Setup gamer e estetica",
+      "platform": "Mercado Livre / Shopee / AliExpress",
+      "sourceUrl": "https://lista.mercadolivre.com.br/mousepad-gamer-rgb-grande",
+      "currentPrice": "Ofertas variam por tamanho; validar SKU entre R$45 e R$70",
+      "shipping": "Produto leve, mas volumoso; frete precisa ser conferido por CEP",
+      "delivery": "Fornecedor nacional reduz risco de prazo e devolucao",
+      "sellerReputation": "Escolher anuncio com muitas avaliacoes e fotos reais de compradores",
+      "reviews": "Produto visual forte para criativo, especialmente setup antes/depois",
+      "returnPolicy": "Confirmar troca/devolucao e funcionamento dos LEDs antes de anunciar",
+      "operationModel": "Dropshipping manual com teste pequeno de criativo",
+      "whySell": "Da cara de setup gamer em segundos, organiza teclado e mouse e ainda cria um visual RGB chamativo para quem quer melhorar a mesa sem trocar o PC.",
+      "costTarget": "R$45 a R$65",
+      "sellTarget": "R$89 a R$119",
+      "margin": "Margem bruta alvo de 25% a 40% antes de taxas",
+      "confidence": "Media",
+      "risk": "Tamanho e qualidade do LED variam muito; especificar dimensoes com clareza.",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-mousepad-gamer-rgb-xl",
+      "manualFulfillment": true,
+      "supplierCost": 60,
+      "salePrice": 99,
+      "marginPercent": "39.4%",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "MobilyTech BR",
+        "logo": "assets/mobilytech-logo.png",
+        "button": "Adicionar ao carrinho",
+        "class": "market-mobilytech"
+      },
+      "productImage": "./assets/phase2-affiliates/mousepad-gamer-rgb-xl.svg",
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/mousepad-gamer-rgb-xl-01.svg",
+          "angle": "Da cara de setup gamer em segundos, organiza teclado e mouse e ainda cria um visual RGB ch",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/mousepad-gamer-rgb-xl-02.svg",
+          "angle": "Tamanho e qualidade do LED variam muito; especificar dimensoes com clareza.",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/mousepad-gamer-rgb-xl-03.svg",
+          "angle": "Oferta selecionada para complementar seu setup.",
+          "status": "selecionado para vitrine",
+          "selected": true
+        }
+      ],
+      "selectedCreative": "./assets/phase2-creatives/mousepad-gamer-rgb-xl-03.svg",
+      "selectedCreativeVariant": 3
+    },
+    {
+      "id": "cabo-displayport-14-2m",
+      "title": "Cabo DisplayPort 1.4 2m",
+      "niche": "Video e monitores",
+      "platform": "Mercado Livre / Amazon",
+      "sourceUrl": "https://lista.mercadolivre.com.br/cabo-displayport-1.4-2m",
+      "currentPrice": "Ofertas vistas em faixas variadas; buscar cabo 1.4 com boa avaliacao",
+      "shipping": "Produto pequeno e resistente, bom para envio nacional",
+      "delivery": "Marketplaces locais costumam entregar rapido para capitais",
+      "sellerReputation": "Priorizar anuncios com especificacao 1.4, 4K/144Hz e boas avaliacoes",
+      "reviews": "Resolve dor real de monitor gamer sem sinal ou travado em Hz menor",
+      "returnPolicy": "Usar marketplace com devolucao clara por incompatibilidade",
+      "operationModel": "Dropshipping manual ou afiliado, conforme margem do fornecedor",
+      "whySell": "Ideal para quem comprou ou montou PC gamer e quer usar monitor em alta taxa de atualizacao sem perder qualidade. Um acessorio simples que evita gargalo no setup.",
+      "costTarget": "R$55 a R$70",
+      "sellTarget": "R$89 a R$109",
+      "margin": "Margem bruta alvo de 20% a 35% antes de taxas",
+      "confidence": "Media-alta",
+      "risk": "Evitar promessa de resolucao/Hz sem confirmar especificacao real do cabo.",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-cabo-displayport-14-2m",
+      "manualFulfillment": true,
+      "supplierCost": 68,
+      "salePrice": 99,
+      "marginPercent": "31.3%",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "MobilyTech BR",
+        "logo": "assets/mobilytech-logo.png",
+        "button": "Adicionar ao carrinho",
+        "class": "market-mobilytech"
+      },
+      "productImage": "./assets/phase2-affiliates/cabo-displayport-14-2m.svg",
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/cabo-displayport-14-2m-01.svg",
+          "angle": "Ideal para quem comprou ou montou PC gamer e quer usar monitor em alta taxa de atualizacao",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/cabo-displayport-14-2m-02.svg",
+          "angle": "Evitar promessa de resolucao/Hz sem confirmar especificacao real do cabo.",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/cabo-displayport-14-2m-03.svg",
+          "angle": "Oferta selecionada para complementar seu setup.",
+          "status": "selecionado para vitrine",
+          "selected": true
+        }
+      ],
+      "selectedCreative": "./assets/phase2-creatives/cabo-displayport-14-2m-03.svg",
+      "selectedCreativeVariant": 3
+    },
+    {
+      "id": "adaptador-wifi-dual-band-usb",
+      "title": "Adaptador Wi-Fi USB dual band",
+      "niche": "Conectividade e rede",
+      "platform": "Mercado Livre / Shopee / AliExpress",
+      "sourceUrl": "https://lista.mercadolivre.com.br/adaptador-wifi-usb-dual-band",
+      "currentPrice": "Ofertas comuns entre R$25 e R$45; validar chipset e antena",
+      "shipping": "Leve e facil de enviar; prazo depende do vendedor escolhido",
+      "delivery": "Fornecedor nacional ajuda muito no suporte e garantia",
+      "sellerReputation": "Escolher vendedor com bom historico em informatica/conectividade",
+      "reviews": "Demanda recorrente para PCs sem placa Wi-Fi e clientes que nao querem cabo",
+      "returnPolicy": "Confirmar devolucao e compatibilidade Windows antes de publicar",
+      "operationModel": "Dropshipping manual com margem editavel por fornecedor",
+      "whySell": "Leva internet Wi-Fi para PCs de mesa sem abrir gabinete, sem tecnico e sem cabo atravessando o quarto. Combina muito com PCs revisados vendidos pela loja.",
+      "costTarget": "R$25 a R$40",
+      "sellTarget": "R$59 a R$79",
+      "margin": "Margem bruta alvo acima de 35% antes de taxas",
+      "confidence": "Alta",
+      "risk": "Drivers e compatibilidade podem gerar duvida; deixar instrucoes simples.",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-adaptador-wifi-dual-band-usb",
+      "manualFulfillment": true,
+      "supplierCost": 35,
+      "salePrice": 79,
+      "marginPercent": "55.7%",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "MobilyTech BR",
+        "logo": "assets/mobilytech-logo.png",
+        "button": "Adicionar ao carrinho",
+        "class": "market-mobilytech"
+      },
+      "productImage": "./assets/phase2-affiliates/adaptador-wifi-dual-band-usb.svg",
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/adaptador-wifi-dual-band-usb-01.svg",
+          "angle": "Leva internet Wi-Fi para PCs de mesa sem abrir gabinete, sem tecnico e sem cabo atravessan",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/adaptador-wifi-dual-band-usb-02.svg",
+          "angle": "Drivers e compatibilidade podem gerar duvida; deixar instrucoes simples.",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/adaptador-wifi-dual-band-usb-03.svg",
+          "angle": "Oferta selecionada para complementar seu setup.",
+          "status": "selecionado para vitrine",
+          "selected": true
+        }
+      ],
+      "selectedCreative": "./assets/phase2-creatives/adaptador-wifi-dual-band-usb-03.svg",
+      "selectedCreativeVariant": 3
+    },
+    {
+      "id": "suporte-notebook-aluminio",
+      "title": "Suporte de notebook em aluminio",
+      "niche": "Ergonomia e setup",
+      "platform": "Mercado Livre / Amazon",
+      "sourceUrl": "https://www.mercadolivre.com.br/suporte-notebook-aluminio-dobravel-it-blue-le-066-ajustavel-portatil/p/MLB43880044",
+      "currentPrice": "Referencia vista em torno de R$31 em anuncio Mercado Livre, variando por modelo",
+      "shipping": "Produto leve e de facil envio, mas volume deve ser conferido",
+      "delivery": "Fornecedor nacional recomendado para reduzir prazo e trocas",
+      "sellerReputation": "Referencia consultada mostrou loja oficial, vendas e avaliacoes do produto; validar antes de campanha",
+      "reviews": "Dor clara: postura, aquecimento e organizacao da mesa",
+      "returnPolicy": "Priorizar Compra Garantida/devolucao gratis quando aplicavel",
+      "operationModel": "Dropshipping manual com teste de criativo de ergonomia",
+      "whySell": "Eleva o notebook, melhora a postura e ajuda na ventilacao da maquina. E uma compra simples para deixar setup de estudo, trabalho ou jogo mais organizado.",
+      "costTarget": "R$31 a R$45",
+      "sellTarget": "R$79 a R$99",
+      "margin": "Margem bruta alvo acima de 40% antes de taxas",
+      "confidence": "Media-alta",
+      "risk": "Modelos fragilizados podem gerar reclamacao; validar material e dimensoes.",
+      "purchaseMode": "manual-dropshipping",
+      "productId": "find-suporte-notebook-aluminio",
+      "manualFulfillment": true,
+      "supplierCost": 40,
+      "salePrice": 89,
+      "marginPercent": "55.1%",
+      "affiliateReady": true,
+      "affiliateButton": "Adicionar ao carrinho",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "primaryMarketplace": "mercado-livre",
+      "marketplace": {
+        "name": "MobilyTech BR",
+        "logo": "assets/mobilytech-logo.png",
+        "button": "Adicionar ao carrinho",
+        "class": "market-mobilytech"
+      },
+      "productImage": "./assets/phase2-affiliates/suporte-notebook-aluminio.svg",
+      "creatives": [
+        {
+          "variant": 1,
+          "file": "./assets/phase2-creatives/suporte-notebook-aluminio-01.svg",
+          "angle": "Eleva o notebook, melhora a postura e ajuda na ventilacao da maquina. E uma compra simples",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 2,
+          "file": "./assets/phase2-creatives/suporte-notebook-aluminio-02.svg",
+          "angle": "Modelos fragilizados podem gerar reclamacao; validar material e dimensoes.",
+          "status": "alternativa de criativo",
+          "selected": false
+        },
+        {
+          "variant": 3,
+          "file": "./assets/phase2-creatives/suporte-notebook-aluminio-03.svg",
+          "angle": "Oferta selecionada para complementar seu setup.",
+          "status": "selecionado para vitrine",
+          "selected": true
+        }
+      ],
+      "selectedCreative": "./assets/phase2-creatives/suporte-notebook-aluminio-03.svg",
+      "selectedCreativeVariant": 3
     }
   ]
 }

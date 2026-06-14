@@ -20,6 +20,7 @@ DATA_DIR = ROOT / "data"
 DOCS_DIR = ROOT / "docs"
 CREATIVE_DIR = ROOT / "assets" / "phase2-creatives"
 BRAND_LOGO_DIR = ROOT / "assets" / "brand-logos"
+BRAND_OFFICIAL_DIR = ROOT / "assets" / "brand-officials"
 AFFILIATE_IMAGE_DIR = ROOT / "assets" / "phase2-affiliates"
 OUTPUT_DIR = Path.home() / "Documents" / "New project" / "outputs" / "mobilytech_fase2_hibrida_2026-06-13"
 
@@ -42,6 +43,29 @@ BRANDS = [
     {"id": "crucial", "name": "Crucial", "accent": "#60a5fa"},
     {"id": "pny", "name": "PNY", "accent": "#94a3b8"},
 ]
+
+SALES_COPY = {
+    "case-ssd-nvme": "Transforme um SSD NVMe parado em armazenamento externo rapido para jogos, backups e arquivos pesados. Um upgrade pequeno que combina muito com quem compra PC revisado e quer mais espaco sem abrir o gabinete.",
+    "case-ssd-sata": "Reaproveite HDs e SSDs de notebook como backup externo em poucos minutos. E barato, util e resolve aquela falta de espaco sem complicar o setup.",
+    "fone-kz-castor": "Som limpo, grave forte e visual discreto para jogar, estudar e ouvir musica sem depender de headset grande. Uma escolha custo-beneficio para setup gamer compacto.",
+    "kit-limpeza-esd": "Kit pratico para tirar poeira, cuidar dos contatos e manter o PC com cara de novo entre uma limpeza profissional e outra. Ideal para quem quer preservar desempenho e aparencia.",
+    "mini-aspirador-teclado": "Para mesa, teclado, notebook e cantos do setup que acumulam poeira todo dia. Um acessorio simples para manter o ambiente mais limpo sem desmontar nada.",
+    "hub-usb-c": "Faltou porta USB no notebook ou no setup? Esse hub resolve mouse, teclado, pendrive e perifericos em uma conexao so, sem gambiarra.",
+    "suporte-gpu-antisag": "Ajuda a deixar a placa de video reta, melhora o visual interno do gabinete e reduz tensao no slot PCIe. Pequeno detalhe que deixa o setup mais profissional.",
+    "keycaps-pbt": "Troque o visual do teclado mecanico sem comprar outro teclado. Um upgrade barato para personalizar o setup e dar cara nova para a mesa.",
+    "teclado-mecanico-abnt2": "Teclado mecanico com RGB e layout ABNT2 para jogar, digitar e montar um setup completo. Bom para quem quer sentir o upgrade todo dia.",
+    "bias-light-led": "Luz de fundo para monitor que deixa o setup mais bonito e ajuda no conforto visual em ambientes escuros. Um detalhe barato que muda a aparencia da mesa.",
+}
+
+NAV_ICONS = {
+    "home": '<path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/>',
+    "ofertas": '<path d="M4 7h16v4H4z"/><path d="M6 11h12v8H6z"/><path d="M9 7V5h6v2"/>',
+    "montagem": '<path d="M5 8h14v8H5z"/><path d="M9 20h6"/><path d="M12 16v4"/><path d="M8 11h2m4 0h2"/>',
+    "limpeza": '<path d="M6 14c3-1 4-4 4-9 3 2 5 5 6 9"/><path d="M5 14h14l-1 6H6z"/><path d="M8 17h8"/>',
+    "achados": '<path d="m12 3 1.8 5.4 5.2 1.8-5.2 1.8L12 17.5 10.2 12 5 10.2l5.2-1.8z"/><path d="m18 15 .7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7z"/>',
+    "avaliacoes": '<path d="M12 3 9.2 8.8 3 9.7l4.5 4.4-1.1 6.2L12 17.4l5.6 2.9-1.1-6.2L21 9.7l-6.2-.9z"/>',
+    "contato": '<path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/>',
+}
 
 
 def slugify(value: str) -> str:
@@ -87,9 +111,9 @@ FINALISTS = [
         "whySell": "Casa muito bem com SSDs, upgrades e clientes que compram PCs usados/revisados.",
         "costTarget": "R$58 a R$75",
         "sellTarget": "R$119 a R$139",
-        "margin": "Margem bruta alvo de R$40 a R$65 antes de trafego e taxas",
+        "margin": "Margem bruta alvo de R$40 a R$65 antes de taxas",
         "confidence": "Alta",
-        "wixCategory": "Achados Tech / Armazenamento",
+        "wixCategory": "MobilyTech Finds / Armazenamento",
         "creativeAngles": [
             "Transforme SSD parado em armazenamento externo rapido",
             "Backup de jogos, fotos e projetos sem abrir o PC"
@@ -112,9 +136,9 @@ FINALISTS = [
         "whySell": "Produto barato, demonstravel em video e perfeito para reaproveitar HD/SSD de notebook.",
         "costTarget": "R$17,50 a R$30",
         "sellTarget": "R$49 a R$69",
-        "margin": "Margem bruta alvo de R$20 a R$35 antes de trafego e taxas",
+        "margin": "Margem bruta alvo de R$20 a R$35 antes de taxas",
         "confidence": "Alta",
-        "wixCategory": "Achados Tech / Armazenamento",
+        "wixCategory": "MobilyTech Finds / Armazenamento",
         "creativeAngles": [
             "Nao jogue fora o HD antigo: transforme em backup externo",
             "Upgrade simples para quem comprou PC revisado"
@@ -139,7 +163,7 @@ FINALISTS = [
         "sellTarget": "R$149 a R$179",
         "margin": "Margem apertada no afiliado; melhor para conteudo e ticket complementar",
         "confidence": "Media-alta",
-        "wixCategory": "Achados Tech / Audio",
+        "wixCategory": "MobilyTech Finds / Audio",
         "creativeAngles": [
             "Som de monitor gastando menos que headset gamer comum",
             "Setup limpo para jogar, estudar e ouvir musica"
@@ -162,9 +186,9 @@ FINALISTS = [
         "whySell": "Conecta diretamente com a secao de limpeza de PCs e pode virar upsell no checkout.",
         "costTarget": "R$21 a R$35",
         "sellTarget": "R$59 a R$89",
-        "margin": "Boa margem em kit/combo; trafego frio precisa criativo forte",
+        "margin": "Boa margem em kit/combo; campanha fria precisa criativo forte",
         "confidence": "Alta",
-        "wixCategory": "Achados Tech / Limpeza",
+        "wixCategory": "MobilyTech Finds / Limpeza",
         "creativeAngles": [
             "Poeira e estatica: o erro silencioso que mata desempenho",
             "Kit simples para manter teclado, placa e gabinete apresentaveis"
@@ -189,7 +213,7 @@ FINALISTS = [
         "sellTarget": "R$49 a R$69",
         "margin": "Margem boa, mas risco de suporte maior se expectativa for mal comunicada",
         "confidence": "Media",
-        "wixCategory": "Achados Tech / Limpeza",
+        "wixCategory": "MobilyTech Finds / Limpeza",
         "creativeAngles": [
             "Teclado cheio de migalha e poeira em 30 segundos",
             "Limpeza rapida para mesa, notebook e setup gamer"
@@ -214,7 +238,7 @@ FINALISTS = [
         "sellTarget": "R$49 a R$79",
         "margin": "Margem razoavel, melhor como produto de volume/remarketing",
         "confidence": "Media-alta",
-        "wixCategory": "Achados Tech / Conectividade",
+        "wixCategory": "MobilyTech Finds / Conectividade",
         "creativeAngles": [
             "Falta porta USB no notebook? Resolva sem gambiarra",
             "Mouse, teclado, pendrive e headset no mesmo hub"
@@ -239,7 +263,7 @@ FINALISTS = [
         "sellTarget": "R$59 a R$99 simples; R$129+ RGB",
         "margin": "Boa margem se fornecedor barato e qualidade aceitavel",
         "confidence": "Media",
-        "wixCategory": "Achados Tech / Setup Gamer",
+        "wixCategory": "MobilyTech Finds / Setup Gamer",
         "creativeAngles": [
             "Sua placa de video esta torta? Evite peso no slot PCIe",
             "Setup gamer mais limpo com suporte ajustavel"
@@ -264,7 +288,7 @@ FINALISTS = [
         "sellTarget": "R$79 a R$149",
         "margin": "Boa margem em dropshipping, mas exige conteudo claro de compatibilidade",
         "confidence": "Media",
-        "wixCategory": "Achados Tech / Setup Gamer",
+        "wixCategory": "MobilyTech Finds / Setup Gamer",
         "creativeAngles": [
             "Teclado antigo, cara nova em minutos",
             "Personalize o setup sem comprar teclado novo"
@@ -289,7 +313,7 @@ FINALISTS = [
         "sellTarget": "Afiliado: comissao; loja propria so apos fornecedor validado",
         "margin": "Melhor como afiliado por reduzir suporte/garantia",
         "confidence": "Media",
-        "wixCategory": "Achados Tech / Perifericos",
+        "wixCategory": "MobilyTech Finds / Perifericos",
         "creativeAngles": [
             "Switch red, RGB e ABNT2 para jogar sem adaptacao",
             "O upgrade mais visivel do setup"
@@ -314,7 +338,7 @@ FINALISTS = [
         "sellTarget": "R$49 a R$79",
         "margin": "Boa no papel, mas depende de fornecedor ativo e qualidade",
         "confidence": "Baixa-media",
-        "wixCategory": "Achados Tech / Setup Gamer",
+        "wixCategory": "MobilyTech Finds / Setup Gamer",
         "creativeAngles": [
             "Deixe o monitor mais confortavel a noite",
             "Setup com cara gamer gastando pouco"
@@ -353,15 +377,14 @@ for item in FINALISTS:
     item["marketplace"] = MARKETPLACES["mercado-livre"]
     item["affiliateUrl"] = affiliate_url or item["sourceUrl"]
     item["affiliateReady"] = bool(affiliate_url)
-    item["affiliateButton"] = "Compre pelo Mercado Livre" if affiliate_url else "Validar oferta no Mercado Livre"
+    item["affiliateButton"] = "Compre pelo Mercado Livre" if affiliate_url else "Ver oferta no Mercado Livre"
     item["affiliateStatus"] = (
-        "Oferta parceira do Mercado Livre validada para teste."
+        "Curadoria MobilyTech em marketplace confiavel."
         if affiliate_url
-        else "Oferta em validacao antes de qualquer campanha paga."
+        else "Oferta selecionada para conferir no Mercado Livre."
     )
-    item["publicPartnerNote"] = (
-        "Produto parceiro selecionado para complementar setups, upgrades e manutencao."
-    )
+    item["whySell"] = SALES_COPY.get(item["id"], item["whySell"])
+    item["publicPartnerNote"] = "Selecionado para complementar setups, upgrades e manutencao com compra segura."
     item["productImage"] = f"./assets/phase2-affiliates/{item['id']}.jpg"
     item["selectedCreativeVariant"] = 3 if affiliate_url else 2
     item["researchLinks"] = {
@@ -451,7 +474,7 @@ def creative_svg(item: dict, variant: int) -> str:
   <rect x="680" y="748" width="275" height="138" rx="30" fill="{glow}" fill-opacity="0.22" stroke="{glow}" stroke-opacity="0.72"/>
   <text x="818" y="829" font-size="28" font-weight="950" fill="#ffffff" text-anchor="middle">{cta}</text>
   <text x="120" y="932" font-size="18" font-weight="800" fill="#9fb7c7">{html.escape(" | ".join(risk_lines))}</text>
-  <text x="120" y="970" font-size="16" font-weight="700" fill="#5edcff">Criativo rascunho: precisa aprovacao antes de trafego pago.</text>
+  <text x="120" y="970" font-size="16" font-weight="700" fill="#5edcff">Curadoria MobilyTech para setups, upgrades e manutencao.</text>
 </svg>"""
 
 
@@ -592,7 +615,7 @@ def write_creatives() -> None:
                         if variant <= len(item["creativeAngles"])
                         else f"Oferta e chamada para {item['marketplace']['name']}"
                     ),
-                    "status": "selecionado para vitrine" if selected else "alternativa para aprovacao",
+                    "status": "selecionado para vitrine" if selected else "alternativa de criativo",
                     "selected": selected,
                 }
             )
@@ -635,14 +658,25 @@ def brand_logo_svg(brand: dict) -> str:
 
 
 def write_brand_logos() -> None:
-    BRAND_LOGO_DIR.mkdir(parents=True, exist_ok=True)
+    BRAND_OFFICIAL_DIR.mkdir(parents=True, exist_ok=True)
+    mobily_logo = ROOT / "assets" / "mobilytech-logo.png"
+    mobily_official = BRAND_OFFICIAL_DIR / "mobilytech.png"
+    if mobily_logo.exists() and not mobily_official.exists():
+        mobily_official.write_bytes(mobily_logo.read_bytes())
     for brand in BRANDS:
-        (BRAND_LOGO_DIR / f"{brand['id']}.svg").write_text(brand_logo_svg(brand), encoding="utf-8")
+        official = BRAND_OFFICIAL_DIR / f"{brand['id']}.svg"
+        fallback = BRAND_LOGO_DIR / f"{brand['id']}.svg"
+        if official.exists():
+            continue
+        if fallback.exists():
+            official.write_text(fallback.read_text(encoding="utf-8"), encoding="utf-8")
+        else:
+            official.write_text(brand_logo_svg(brand), encoding="utf-8")
 
 
 def brand_logo_cards(prefix: str = "./") -> str:
     return "\n".join(
-        f'          <span class="brand-pill" style="--brand-accent:{brand["accent"]}"><img src="{prefix}assets/brand-tiles/{brand["id"]}.jpg" alt="{html.escape(brand["name"])}"></span>'
+        f'          <span class="brand-pill" style="--brand-accent:{brand["accent"]}"><img src="{prefix}assets/brand-officials/{brand["id"]}.svg" alt="{html.escape(brand["name"])}"></span>'
         for brand in BRANDS
     )
 
@@ -651,7 +685,7 @@ def write_phase2_json() -> Path:
     payload = {
         "generatedAt": GENERATED_AT,
         "status": "draft-for-approval-no-paid-ads",
-        "strategy": "Vercel alternative preview first, then Wix/Premium bridge after approval.",
+        "strategy": "Vercel storefront with Wix/Premium bridge planning.",
         "backupPath": str(BACKUP_PATH),
         "wixPremiumSiteId": WIX_PREMIUM_SITE_ID,
         "wixDomain": WIX_DOMAIN,
@@ -677,8 +711,8 @@ def write_page() -> Path:
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MobilyTech BR | Fase 2 Hibrida</title>
-  <meta name="description" content="Rascunho alternativo MobilyTech BR inspirado em iBUYPOWER e KaBuM, com base Vercel e plano de hibridizacao Wix." />
+  <title>MobilyTech BR | PCs revisados e hardware</title>
+  <meta name="description" content="MobilyTech BR: PCs revisados, hardware, montagem sob orcamento, limpeza de PCs e curadoria MobilyTech Finds." />
   <link rel="icon" href="./assets/favicon.png" />
   <style>
     :root {
@@ -740,31 +774,56 @@ def write_page() -> Path:
     .nav-row {
       height: 78px;
       display: grid;
-      grid-template-columns: 190px 1fr 315px 114px;
+      grid-template-columns: 180px minmax(0, 1fr) 220px 90px;
       align-items: center;
-      gap: 20px;
+      gap: 8px;
     }
     .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
     .brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.42)); }
-    .brand span { font-size: 20px; font-weight: 950; white-space: nowrap; }
+    .brand span { font-size: 18px; font-weight: 950; white-space: nowrap; }
     .menu {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      gap: 18px;
+      gap: 7px;
       overflow-x: auto;
       scrollbar-width: none;
     }
     .menu::-webkit-scrollbar { display: none; }
     .menu a {
-      font-size: 14px;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 11.5px;
       font-weight: 900;
       color: #e4f8ff;
       white-space: nowrap;
       opacity: .95;
-      padding: 10px 2px;
+      padding: 0 8px;
+      border: 1px solid rgba(121,247,255,.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,.045);
     }
     .menu a:hover { color: var(--cyan); }
+    .nav-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-grid;
+      place-items: center;
+      color: var(--cyan);
+      flex: 0 0 auto;
+    }
+    .nav-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
     .search {
       display: flex;
       align-items: center;
@@ -990,7 +1049,7 @@ def write_page() -> Path:
       border: 1px solid rgba(121,247,255,.2);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 16px 28px rgba(0,0,0,.18);
     }
-    .affiliate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .affiliate-photo img { width: auto; height: auto; max-width: 92%; max-height: 88%; object-fit: contain; display: block; border-radius: 12px; }
     .market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .market-badge {
       display: inline-flex;
@@ -1026,7 +1085,7 @@ def write_page() -> Path:
       box-shadow: 0 0 26px rgba(255,230,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
       backdrop-filter: blur(12px);
     }
-    .market-button img { width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto; }
+    .market-button img { width: 27px; height: 27px; object-fit: contain; flex: 0 0 auto; }
     .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .badge {
       align-self: flex-start;
@@ -1069,27 +1128,29 @@ def write_page() -> Path:
     }
     .brand-wall h2 { text-align: center; margin-bottom: 26px; }
     .brand-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: clamp(16px, 2vw, 30px);
+      overflow-x: auto;
+      scrollbar-width: none;
     }
+    .brand-row::-webkit-scrollbar { display: none; }
     .brand-pill {
-      width: 100%;
-      min-width: 0;
-      aspect-ratio: 1.5 / 1;
+      flex: 0 0 auto;
+      min-width: 74px;
       display: grid;
       place-items: center;
       padding: 0;
-      border-radius: 24px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
-      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
-      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
     }
-    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
-    .brand-pill:last-child { grid-column: 2 / 3; }
-    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+    .brand-pill img { display: block; width: auto; height: 32px; max-width: 112px; max-height: 32px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.22)); }
     .policy-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1263,7 +1324,8 @@ def write_page() -> Path:
         padding: 1px 18px 1px 0;
         mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 24px), transparent 100%);
       }
-      .menu a { font-size: 11px; padding: 6px 0; }
+      .menu a { min-height: 31px; font-size: 10.5px; padding: 0 10px; }
+      .nav-icon, .nav-icon svg { width: 14px; height: 14px; }
       .search { grid-area: search; height: 36px; }
       .search input { font-size: 14px; }
       .cart-btn { grid-area: cart; min-height: 38px; padding: 0 13px; font-size: 12px; }
@@ -1325,7 +1387,7 @@ def write_page() -> Path:
       .affiliate-photo { border-radius: 13px; }
       .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
       .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
-      .market-button img { width: 18px; height: 18px; }
+      .market-button img { width: 21px; height: 21px; }
       .affiliate-status { font-size: 9px; min-height: 0; }
       .finalist-card h3 { font-size: 12px; }
       .finalist-card p,
@@ -1341,9 +1403,10 @@ def write_page() -> Path:
       .badge { font-size: 9px; padding: 4px 7px; }
       .reviews-grid, .policy-grid { grid-template-columns: 1fr; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-row { display: flex; flex-wrap: nowrap; gap: 18px; overflow-x: auto; }
       .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
-      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
+      .brand-pill { min-width: 78px; }
+      .brand-pill img { height: 27px; max-width: 92px; max-height: 27px; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -1352,8 +1415,8 @@ def write_page() -> Path:
 <body>
   <div class="promo-strip">
     <div class="shell">
-      <span>Preview MobilyTech: <strong>PCs revisados + Achados Tech</strong></span>
-      <span>Sem anuncio pago sem aprovacao</span>
+      <span>MobilyTech BR: <strong>PCs revisados + MobilyTech Finds</strong></span>
+      <span>Ofertas e campanhas com curadoria</span>
     </div>
   </div>
   <nav class="top-nav">
@@ -1363,13 +1426,13 @@ def write_page() -> Path:
         <span>MobilyTech BR</span>
       </a>
       <div class="menu" aria-label="Navegacao principal">
-        <a href="./fase2/ofertas.html">Ofertas</a>
-        <a href="./fase2/ofertas.html#pcs">PC Gamer</a>
-        <a href="./fase2/montagem.html">Monte seu PC</a>
-        <a href="./fase2/limpeza.html">Limpeza</a>
-        <a href="./fase2/achados.html">Achados Tech</a>
-        <a href="./fase2/avaliacoes.html">Avaliacoes</a>
-        <a href="./fase2/contato.html">Suporte</a>
+        <a href="./fase2/ofertas.html"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v4H4z"/><path d="M6 11h12v8H6z"/><path d="M9 7V5h6v2"/></svg></span>Ofertas</a>
+        <a href="./fase2/ofertas.html#pcs"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8h14v8H5z"/><path d="M9 20h6"/><path d="M12 16v4"/><path d="M8 11h2m4 0h2"/></svg></span>PC Gamer</a>
+        <a href="./fase2/montagem.html"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8h14v8H5z"/><path d="M9 20h6"/><path d="M12 16v4"/><path d="M8 11h2m4 0h2"/></svg></span>Monte seu PC</a>
+        <a href="./fase2/limpeza.html"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 14c3-1 4-4 4-9 3 2 5 5 6 9"/><path d="M5 14h14l-1 6H6z"/><path d="M8 17h8"/></svg></span>Limpeza</a>
+        <a href="./fase2/achados.html"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 3 1.8 5.4 5.2 1.8-5.2 1.8L12 17.5 10.2 12 5 10.2l5.2-1.8z"/><path d="m18 15 .7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7z"/></svg></span>MobilyTech Finds</a>
+        <a href="./fase2/avaliacoes.html"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 9.2 8.8 3 9.7l4.5 4.4-1.1 6.2L12 17.4l5.6 2.9-1.1-6.2L21 9.7l-6.2-.9z"/></svg></span>Avaliacoes</a>
+        <a href="./fase2/contato.html"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></span>Suporte</a>
       </div>
       <label class="search" aria-label="Pesquisar">
         <span>⌕</span>
@@ -1384,12 +1447,12 @@ def write_page() -> Path:
       <div class="hero-panel">
         <div class="hero-content">
           <div>
-            <span class="eyebrow">Preview Vercel + ponte Wix</span>
-            <h1>MobilyTech BR em modo loja gamer</h1>
-            <p class="lead">Uma versao alternativa inspirada na estrutura da iBUYPOWER e energia visual da KaBuM, preservando PCs reais, swaps, limpeza, garantia e o plano hibrido com Wix Stores.</p>
+            <span class="eyebrow">Confianca que voce sente</span>
+            <h1>PCs revisados, upgrades e achados tech com garantia.</h1>
+            <p class="lead">A MobilyTech BR une PCs reais revisados, hardware selecionado, limpeza especializada, montagem sob orcamento e curadoria de produtos para setup.</p>
             <div class="hero-actions">
               <a class="primary" href="./fase2/ofertas.html">Ver PCs e ofertas</a>
-              <a class="ghost" href="./fase2/achados.html">Ver Achados Tech</a>
+              <a class="ghost" href="./fase2/achados.html">Ver MobilyTech Finds</a>
             </div>
           </div>
           <div class="hero-stage">
@@ -1397,7 +1460,7 @@ def write_page() -> Path:
             <div class="hero-card-mini">
               <span>Julho Tech</span>
               <strong>PCs + upgrades</strong>
-              <p class="specs">Cupom e campanhas ficam bloqueados ate sua aprovacao.</p>
+              <p class="specs">Ofertas reais, upgrades claros e atendimento humano.</p>
             </div>
           </div>
         </div>
@@ -1408,7 +1471,7 @@ def write_page() -> Path:
       <div class="section-head">
         <div>
           <h2>Promocoes atuais MobilyTech</h2>
-          <p class="sub">PCs e hardware reais do catalogo atual, com botoes de configuracao e carrinho de rascunho para manter a logica viva.</p>
+          <p class="sub">PCs e hardware reais do catalogo atual, com configuracao, carrinho e atendimento pelos canais da MobilyTech.</p>
         </div>
         <a class="ghost" href="./fase2/ofertas.html">Abrir catalogo completo</a>
       </div>
@@ -1441,22 +1504,12 @@ def write_page() -> Path:
     <section id="achados" class="section shell">
       <div class="section-head">
         <div>
-          <h2>Achados Tech selecionados</h2>
-          <p class="sub">Produtos de parceiros para testar como vitrine complementar. Nada daqui vira anuncio pago sem aprovacao.</p>
+          <h2>MobilyTech Finds selecionados</h2>
+          <p class="sub">Produtos tech escolhidos para completar setups, upgrades e manutencao com compra segura em marketplaces.</p>
         </div>
-        <a class="ghost" href="./fase2/achados.html">Abrir pagina de achados</a>
+        <a class="ghost" href="./fase2/achados.html">Abrir MobilyTech Finds</a>
       </div>
       <div id="finalistGrid" class="finalist-grid"></div>
-    </section>
-
-    <section class="section shell">
-      <div class="section-head">
-        <div>
-          <h2>Criativos para aprovacao</h2>
-          <p class="sub">Dois rascunhos por produto: problema, demonstracao, prova/beneficio e oferta. O orçamento de trafego fica para aprovacao manual.</p>
-        </div>
-      </div>
-      <div id="creativeGrid" class="creative-grid"></div>
     </section>
 
     <section id="avaliacoes" class="section shell">
@@ -1498,21 +1551,21 @@ __BRAND_LOGOS__
       <div class="section-head">
         <div>
           <h2>Regras claras antes da compra</h2>
-          <p class="sub">Texto preventivo para manter a loja mais alinhada ao e-commerce brasileiro. Deve ser revisado juridicamente antes da versao final.</p>
+          <p class="sub">Informacoes preventivas para manter a compra transparente e alinhada ao e-commerce brasileiro.</p>
         </div>
       </div>
       <div class="policy-grid">
         <article class="policy-card">
           <h3>Arrependimento online</h3>
-          <p>Em compras online, o direito de arrependimento de 7 dias deve ser respeitado quando aplicavel. Nao recomendo remover essa regra no e-commerce.</p>
+          <p>Em compras online, o direito de arrependimento de 7 dias deve ser respeitado quando aplicavel.</p>
         </article>
         <article class="policy-card">
           <h3>Garantia MobilyTech</h3>
           <p>PCs revisados podem ter garantia comercial de 14 dias para defeitos preexistentes comprovados, sem cobrir danos por mau uso, alteracao indevida ou manipulacao apos a entrega.</p>
         </article>
         <article class="policy-card">
-          <h3>Achados Tech</h3>
-          <p>Produtos parceiros precisam informar loja de origem, prazo, devolucao e suporte de forma clara antes de virar campanha paga.</p>
+          <h3>MobilyTech Finds</h3>
+          <p>A curadoria informa loja de origem, prazo, devolucao e suporte do marketplace para o cliente comprar com mais clareza.</p>
         </article>
       </div>
     </section>
@@ -1529,7 +1582,7 @@ __BRAND_LOGOS__
       <div>
         <h3>Loja</h3>
         <a href="./fase2/ofertas.html">PC Gamer</a>
-        <a href="./fase2/achados.html">Achados Tech</a>
+        <a href="./fase2/achados.html">MobilyTech Finds</a>
         <a href="./fase2/montagem.html">Montagem</a>
         <a href="./fase2/limpeza.html">Limpeza</a>
       </div>
@@ -1640,6 +1693,7 @@ __BRAND_LOGOS__
 
     function renderCreatives() {
       const grid = qs('#creativeGrid');
+      if (!grid) return;
       grid.innerHTML = '';
       state.finalists.forEach(item => {
         (item.creatives || []).forEach(creative => {
@@ -1707,7 +1761,7 @@ __BRAND_LOGOS__
               <span>${option.label} <strong>${option.price >= 0 ? '+' : ''}${money(option.price)}</strong></span>
             </label>`).join('') || '<p class="specs">Nenhum adicional disponivel para este item.</p>'}
           <button class="primary" type="button" id="addConfigured">Adicionar configurado</button>
-          <p class="sr-note">Rascunho funcional: o checkout real continua no fluxo original/Wix apos aprovacao da arquitetura hibrida.</p>`;
+          <p class="sr-note">Finalize a compra pelo metodo disponivel no site ou chame a MobilyTech para combinar pagamento, frete e retirada.</p>`;
         drawer.querySelector('#closeDrawer').onclick = closeDrawer;
         drawer.querySelectorAll('[data-option]').forEach(input => {
           input.onchange = event => {
@@ -1850,12 +1904,12 @@ def page_nav(prefix: str = "../", active: str = "") -> str:
         ("Ofertas", "ofertas.html", "ofertas"),
         ("Monte seu PC", "montagem.html", "montagem"),
         ("Limpeza", "limpeza.html", "limpeza"),
-        ("Achados Tech", "achados.html", "achados"),
+        ("MobilyTech Finds", "achados.html", "achados"),
         ("Avaliacoes", "avaliacoes.html", "avaliacoes"),
         ("Contato", "contato.html", "contato"),
     ]
     return "\n".join(
-        f'<a class="{"active" if key == active else ""}" href="{href}">{label}</a>'
+        f'<a class="{"active" if key == active else ""}" href="{href}"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24">{NAV_ICONS.get(key, "")}</svg></span>{label}</a>'
         for label, href, key in items
     )
 
@@ -1903,10 +1957,41 @@ def subpage_css() -> str:
     }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 950; font-size: 20px; }
     .brand img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.42)); }
-    .menu { display: flex; justify-content: flex-end; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    .menu { display: flex; justify-content: flex-start; gap: 7px; overflow-x: auto; scrollbar-width: none; }
     .menu::-webkit-scrollbar { display: none; }
-    .menu a { white-space: nowrap; font-size: 14px; font-weight: 950; color: #dff8ff; padding: 8px 0; }
+    .menu a {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 950;
+      color: #dff8ff;
+      padding: 0 10px;
+      border: 1px solid rgba(121,247,255,.16);
+      border-radius: 999px;
+      background: rgba(255,255,255,.045);
+    }
     .menu a.active, .menu a:hover { color: var(--cyan); }
+    .nav-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-grid;
+      place-items: center;
+      color: var(--cyan);
+      flex: 0 0 auto;
+    }
+    .nav-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
     .page-hero {
       margin: 28px auto 22px;
       min-height: 310px;
@@ -2046,7 +2131,7 @@ def subpage_css() -> str:
       border: 1px solid rgba(121,247,255,.2);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 16px 28px rgba(0,0,0,.18);
     }
-    .affiliate-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .affiliate-photo img { width: auto; height: auto; max-width: 92%; max-height: 88%; object-fit: contain; display: block; border-radius: 12px; }
     .market-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .market-badge {
       display: inline-flex;
@@ -2081,7 +2166,7 @@ def subpage_css() -> str:
       box-shadow: 0 0 26px rgba(255,230,0,.16), inset 0 1px 0 rgba(255,255,255,.45);
       backdrop-filter: blur(12px);
     }
-    .market-button img { width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto; }
+    .market-button img { width: 27px; height: 27px; object-fit: contain; flex: 0 0 auto; }
     .market-button.market-ml { background: linear-gradient(135deg, #fff159 0%, #ffe000 42%, #28a8ff 120%); }
     .finalist-card h3 { font-size: 15px; line-height: 1.18; }
     .finalist-card p { margin: 0; font-size: 12px; color: var(--muted); }
@@ -2098,23 +2183,30 @@ def subpage_css() -> str:
       border: 1px solid rgba(121,247,255,.2);
       box-shadow: 0 22px 58px rgba(0,0,0,.32), inset 0 0 0 1px rgba(255,255,255,.035);
     }
-    .brand-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; align-items: center; }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      gap: clamp(16px, 2vw, 30px);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .brand-row::-webkit-scrollbar { display: none; }
     .brand-pill {
-      width: 100%;
-      min-width: 0;
-      aspect-ratio: 1.5 / 1;
+      flex: 0 0 auto;
+      min-width: 74px;
       display: grid;
       place-items: center;
       padding: 0;
-      border-radius: 24px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid color-mix(in srgb, var(--brand-accent), rgba(255,255,255,.16) 52%);
-      box-shadow: 0 0 24px color-mix(in srgb, var(--brand-accent), transparent 78%);
-      overflow: hidden;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
     }
-    .brand-pill:nth-last-child(2) { grid-column: 1 / 2; }
-    .brand-pill:last-child { grid-column: 2 / 3; }
-    .brand-pill img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
+    .brand-pill img { display: block; width: auto; height: 32px; max-width: 112px; max-height: 32px; object-fit: contain; filter: drop-shadow(0 0 10px rgba(23,217,255,.22)); }
     footer { margin-top: 40px; padding: 38px 0; border-top: 1px solid rgba(121,247,255,.16); background: #03070d; }
     .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(4, 1fr); gap: 22px; }
     footer h3 { margin: 0 0 12px; font-size: 16px; }
@@ -2130,8 +2222,9 @@ def subpage_css() -> str:
       .nav-row { grid-template-columns: 1fr; gap: 10px; padding: 12px 0; }
       .brand { font-size: 16px; }
       .brand img { width: 34px; height: 34px; }
-      .menu { justify-content: start; gap: 11px; padding-right: 20px; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 24px), transparent 100%); }
-      .menu a { font-size: 11px; }
+      .menu { justify-content: start; gap: 7px; padding-right: 20px; mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 24px), transparent 100%); }
+      .menu a { min-height: 31px; font-size: 10.5px; padding: 0 10px; }
+      .nav-icon, .nav-icon svg { width: 14px; height: 14px; }
       .page-hero { grid-template-columns: 1fr; min-height: auto; padding: 24px 18px; border-radius: 20px; gap: 14px; }
       .page-hero img { max-height: 150px; justify-self: center; }
       h1 { font-size: 30px; line-height: 1.02; }
@@ -2152,14 +2245,15 @@ def subpage_css() -> str:
       .affiliate-photo { border-radius: 13px; }
       .market-row { align-items: flex-start; flex-direction: column; gap: 6px; }
       .market-button { min-height: 34px; font-size: 10px; gap: 5px; white-space: normal; line-height: 1.12; padding: 5px 8px; }
-      .market-button img { width: 18px; height: 18px; }
+      .market-button img { width: 21px; height: 21px; }
       .affiliate-status { font-size: 9px; min-height: 0; }
       .finalist-card h3 { font-size: 12px; }
       .creative-card span { font-size: 10.5px; line-height: 1.25; }
       .brand-wall { padding: 20px 12px; }
-      .brand-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .brand-row { display: flex; flex-wrap: nowrap; gap: 18px; overflow-x: auto; }
       .brand-pill, .brand-pill:nth-last-child(2), .brand-pill:last-child { grid-column: auto; }
-      .brand-pill { aspect-ratio: 1.5 / 1; border-radius: 16px; }
+      .brand-pill { min-width: 78px; }
+      .brand-pill img { height: 27px; max-width: 92px; max-height: 27px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       footer .brand-block { grid-column: 1 / -1; }
     }
@@ -2231,7 +2325,7 @@ def shared_footer(prefix: str = "../") -> str:
       <div>
         <h3>Loja</h3>
         <a href="ofertas.html">PC Gamer</a>
-        <a href="achados.html">Achados Tech</a>
+        <a href="achados.html">MobilyTech Finds</a>
         <a href="montagem.html">Montagem</a>
         <a href="limpeza.html">Limpeza</a>
       </div>
@@ -2244,7 +2338,7 @@ def shared_footer(prefix: str = "../") -> str:
       <div>
         <h3>Empresa</h3>
         <a href="avaliacoes.html">Avaliacoes</a>
-        <a href="../fase2-hibrida.html">Preview principal</a>
+        <a href="../fase2-hibrida.html">Pagina principal</a>
         <a href="{prefix}admin/index.html">Painel legado</a>
       </div>
       <div>
@@ -2280,7 +2374,7 @@ def subpage_html(active: str, title: str, subtitle: str, hero_image: str, conten
   </nav>
   <header class="shell page-hero">
     <div>
-      <span class="eyebrow">Fase 2 hibrida</span>
+      <span class="eyebrow">MobilyTech BR</span>
       <h1>{html.escape(title)}</h1>
       <p>{html.escape(subtitle)}</p>
     </div>
@@ -2346,13 +2440,13 @@ def write_subpages() -> list[Path]:
     pages = {
         "index.html": subpage_html(
             "home",
-            "Fase 2 MobilyTech",
-            "Indice das subpaginas do preview hibrido, mantendo a home principal como vitrine inspirada na iBUYPOWER.",
+            "MobilyTech BR",
+            "Navegue pelas paginas principais da loja: PCs, montagem, limpeza, avaliacoes, contato e MobilyTech Finds.",
             "../assets/generated/pcryzen-5-3600-cutout.png",
             """  <section class="section shell">
     <div class="grid two">
       <a class="card text-card" href="ofertas.html"><h3>Ofertas e PCs</h3><p>Catalogo separado de PCs, SSDs, fonte e hardware real.</p></a>
-      <a class="card text-card" href="achados.html"><h3>Achados Tech</h3><p>Produtos parceiros e criativos para aprovacao.</p></a>
+      <a class="card text-card" href="achados.html"><h3>MobilyTech Finds</h3><p>Produtos tech selecionados para complementar setups, upgrades e manutencao.</p></a>
       <a class="card text-card" href="montagem.html"><h3>Monte seu PC</h3><p>Pagina propria para montagem sob orcamento.</p></a>
       <a class="card text-card" href="limpeza.html"><h3>Limpeza</h3><p>Pagina propria para limpeza e relatorio.</p></a>
     </div>
@@ -2378,19 +2472,19 @@ def write_subpages() -> list[Path]:
         ),
         "achados.html": subpage_html(
             "achados",
-            "Achados Tech e criativos",
-            "Produtos parceiros da Fase 2, com criativos separados para aprovacao antes de trafego pago.",
-            "../assets/generated/global-kit-mouse-teclado-pichau-cutout.png",
+            "MobilyTech Finds",
+            "Produtos tech selecionados para complementar setups, upgrades e manutencao, com compra segura em marketplaces.",
+            "../assets/mobilytech-character-cutout.png",
             f"""  <section class="section shell">
-    <h2>Finalistas escolhidos</h2>
+    <h2>Produtos selecionados</h2>
     <div class="grid finalists">
 {finalist_grid}
     </div>
   </section>
   <section class="section shell">
-    <h2>Criativos para aprovacao</h2>
-    <div class="creative-grid">
-{creative_grid}
+    <div class="card text-card">
+      <h3>Curadoria MobilyTech</h3>
+      <p>Esta selecao prioriza acessorios uteis para quem compra, monta ou cuida de PCs: armazenamento, organizacao, limpeza, conectividade e setup gamer.</p>
     </div>
   </section>""" + brand_wall,
         ),
@@ -2414,7 +2508,7 @@ def write_subpages() -> list[Path]:
             """  <section class="section shell">
     <div class="grid two">
       <article class="card text-card"><h3>Limpeza com relatorio</h3><p>Antes/depois, cuidado com poeira, organizacao visual e registro para o cliente acompanhar o servico.</p><a class="btn" href="#agendamento">Agendar limpeza</a></article>
-      <article class="card text-card"><h3>Produtos relacionados</h3><p>Kits de limpeza e acessorios da Fase 2 podem virar upsell sem alterar o servico principal.</p><a class="btn ghost" href="achados.html">Ver Achados Tech</a></article>
+      <article class="card text-card"><h3>Produtos relacionados</h3><p>Kits de limpeza e acessorios da curadoria MobilyTech complementam o servico principal sem misturar atendimento com venda.</p><a class="btn ghost" href="achados.html">Ver MobilyTech Finds</a></article>
     </div>
   </section>
   <section id="agendamento" class="section shell">
@@ -2429,7 +2523,7 @@ def write_subpages() -> list[Path]:
           <input name="name" autocomplete="name" placeholder="Seu nome" required>
         </label>
         <label>Numero
-          <input name="phone" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999" required>
+          <input name="phone" autocomplete="tel" inputmode="tel" placeholder="(DDD) 9XXXX-XXXX" required>
         </label>
         <label class="full">E-mail
           <input name="email" type="email" autocomplete="email" placeholder="seuemail@email.com" required>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" role="img" aria-label="Adaptador Bluetooth USB 5.0 para PC">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="35%" r="70%"><stop offset="0" stop-color="#0ddbd0" stop-opacity=".35"/><stop offset="1" stop-color="#071015"/></radialGradient>
+    <linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0ddbd0"/><stop offset="1" stop-color="#2058ff"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="8" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="900" height="650" rx="42" fill="url(#g)"/>
+  <rect x="56" y="54" width="788" height="542" rx="34" fill="#0b141b" stroke="#0ddbd0" stroke-opacity=".55" stroke-width="3"/>
+  <circle cx="642" cy="286" r="150" fill="url(#b)" opacity=".18" filter="url(#glow)"/>
+  <rect x="560" y="220" width="205" height="155" rx="34" fill="#101b24" stroke="#0ddbd0" stroke-width="5" filter="url(#glow)"/>
+  <path d="M618 376 C625 450 700 450 708 376" fill="none" stroke="#0ddbd0" stroke-width="16" stroke-linecap="round"/>
+  <path d="M610 292 h105 M610 330 h80" stroke="#fff" stroke-width="18" stroke-linecap="round" opacity=".9"/>
+  <text x="90" y="152" font-family="Arial, sans-serif" font-size="30" font-weight="800" fill="#0ddbd0" letter-spacing="3">CRIATIVO 1</text>
+  <text x="90" y="244" font-family="Arial, sans-serif" font-size="46" font-weight="900" fill="#f8fafc"><tspan x="90" dy="0">Adaptador Bluetooth USB</tspan><tspan x="90" dy="38">5.0 para PC</tspan></text>
+  <text x="90" y="420" font-family="Arial, sans-serif" font-size="25" font-weight="700" fill="#b7c4cf">Transforma qualquer PC sem Bluetooth em um setup pronto para fones, controles, c</text>
+  <rect x="90" y="476" width="260" height="58" rx="29" fill="url(#b)"/>
+  <text x="220" y="513" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#031014">Ver no site</text>
+</svg>
