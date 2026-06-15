@@ -36,5 +36,5 @@ Resumo:
 ## Observacoes importantes
 
 - O crocheck manual com ChatGPT via Computer Use ficou pendente neste ambiente porque a ferramenta de Computer Use nao apareceu disponivel na busca de ferramentas desta sessao. A auditoria automatizada foi usada como fallback objetivo.
-- O dominio `www.mobilytech.com.br` continua conectado ao Wix premium, enquanto o projeto Vercel `mobilytechbr` ainda nao tem esse dominio anexado. A ponte final Wix/Vercel esta documentada em `docs/wix-hybrid-premium-status-2026-06-15.md`.
-- Login real via Google/Microsoft deve ser implementado por fluxo oficial de autenticacao antes de expor botao de login social real ao cliente.
+- O dominio `www.mobilytech.com.br` continua conectado ao Wix premium. Em 2026-06-15 foi validado que ele renderiza o frontend Vercel por Custom Embed/iframe (`?wixBridge=1`). Evidencias: `C:\Users\MF\Documents\New project\mobilytech-qa-2026-06-15\wix-final-cursor-check`.
+- Login real via Google/Microsoft deve ser implementado por fluxo oficial de autenticacao antes de expor botao de login social real ao cliente. Wix Headless OAuth App gera `secret`; nao criar esse app sem canal seguro confirmado para salvar o segredo em env vars.

@@ -241,7 +241,7 @@ def header(prefix: str, active: str = "home") -> str:
         <div class="search-zone">
           <label class="search-pill">
             <span aria-hidden="true">&#128269;</span>
-            <input id="siteSearch" type="search" placeholder="Buscar PCs, SSDs, limpeza...">
+            <input id="siteSearch" type="search" placeholder="Buscar PCs, SSDs...">
           </label>
           <div class="search-results" id="searchResults" hidden></div>
         </div>
@@ -823,11 +823,11 @@ def css() -> str:
       .finds-band{padding:20px;gap:16px}
       .finds-text h2{font-size:30px;line-height:1.05}
       .finds-text p{font-size:13.5px;line-height:1.45}
-      .find-media{height:132px;padding:10px}
-      .find-media img{max-height:104px;max-width:82%}
-      .find-card{padding:12px;border-radius:16px;min-height:340px}
-      .find-card h3{font-size:13px;line-height:1.22;min-height:32px}
-      .find-card p{font-size:11px;line-height:1.35;overflow-wrap:anywhere}
+      .find-media{height:138px;padding:10px}
+      .find-media img{max-height:118px;max-width:84%}
+      .find-card{padding:14px;border-radius:16px;min-height:352px}
+      .find-card h3{font-size:13.5px;line-height:1.25;min-height:34px}
+      .find-card p{font-size:12px;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
       .find-price{font-size:16px}
       .find-meta{font-size:10px}
       .market-btn{min-height:38px;font-size:10px;width:100%;padding:0 8px}
@@ -838,8 +838,8 @@ def css() -> str:
       .score-card{grid-column:auto}
       .about-strip,.powered-row{align-items:start;flex-direction:column}
       .about-strip h2,.powered-row h2{font-size:24px;line-height:1.08}
-      .brand-line{width:100%;gap:20px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-top:12px}
-      .brand-line .brand-logo{height:28px;max-width:92px;flex:0 0 auto}
+      .brand-line{width:100%;gap:16px 20px;justify-content:center;flex-wrap:wrap;overflow:visible;padding-top:12px}
+      .brand-line .brand-logo{height:24px;max-width:78px;flex:0 0 auto}
       .footer{grid-template-columns:1fr}
       .page-hero{min-height:0;padding:24px 18px;gap:14px}
       .page-hero h1{font-size:30px;line-height:1.05}

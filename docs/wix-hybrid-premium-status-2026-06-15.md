@@ -20,7 +20,30 @@ O dominio `www.mobilytech.com.br` esta conectado ao Wix premium. O projeto Verce
 - `mobilytechbr-mobily-tech-s-projects.vercel.app`
 - `mobilytechbr-git-main-mobily-tech-s-projects.vercel.app`
 
-Conclusao pratica: hoje o visual fase 2 servido pelo repo/Vercel ainda nao e automaticamente o mesmo conteudo servido pelo dominio Wix. Para que `www.mobilytech.com.br` mostre exatamente o site Vercel, e necessario escolher uma das pontes abaixo.
+Conclusao pratica atualizada: `www.mobilytech.com.br` esta servindo o visual fase 2 por uma ponte Wix Custom Embed com iframe apontando para `https://mobilytechbr.vercel.app/?wixBridge=1`. Isso preserva o dominio Wix e a renderizacao do frontend Vercel, mas nao equivale a uma implementacao Wix Headless nativa completa.
+
+Evidencia de QA em 2026-06-15:
+
+- Desktop e mobile renderizaram `MobilyTech BR | Loja gamer`.
+- O iframe `#mtb-vercel-frame` estava ativo e preenchendo a viewport.
+- O iframe apontou para `https://mobilytechbr.vercel.app/?wixBridge=1`.
+- Sem overflow horizontal detectado.
+- Sem termos publicos proibidos detectados.
+- Prints e JSON: `C:\Users\MF\Documents\New project\mobilytech-qa-2026-06-15\wix-final-cursor-check`.
+
+Limite descoberto na mesma rodada:
+
+- A home `https://www.mobilytech.com.br/` funciona.
+- URLs diretas como `https://www.mobilytech.com.br/fase2/ofertas.html`, `/fase2/achados.html`, `/fase2/limpeza.html`, `/fase2/montagem.html`, `/fase2/avaliacoes.html`, `/fase2/minha-conta.html` e `/fase2/contato.html` retornam 404 do Wix.
+- A configuracao SEO do Wix ja esta com `shouldUsePartialRouteMatch=true`, entao essa opcao nao corrige o problema.
+- Para rotas publicas completas no dominio Wix, as opcoes reais sao: criar paginas/roteamento equivalente no Wix, usar URLs por query/hash na home Wix para controlar o iframe, ou anexar o dominio ao Vercel e consumir Wix via APIs/headless.
+
+Mitigacao aplicada:
+
+- O Custom Embed JS do Wix foi atualizado para aceitar `mtbPath`, `mtbRoute` ou `pagePath` na query, alem de hashes equivalentes.
+- Exemplo funcional: `https://www.mobilytech.com.br/?mtbPath=%2Ffase2%2Fofertas.html`.
+- QA confirmou que essa URL carrega o iframe em `https://mobilytechbr.vercel.app/fase2/ofertas.html?wixBridge=1`.
+- Evidencias: `C:\Users\MF\Documents\New project\mobilytech-qa-2026-06-15\wix-query-route-check`.
 
 ## Opcoes reais de ponte
 
@@ -34,7 +57,8 @@ Conclusao pratica: hoje o visual fase 2 servido pelo repo/Vercel ainda nao e aut
 
 3. Embutir o Vercel dentro do Wix.
    - Vantagem: preserva visual rapidamente dentro de uma pagina Wix.
-   - Limite: pior para SEO, login, checkout, rastreio e responsividade; nao e recomendado como solucao final.
+   - Estado atual: esta e a ponte em uso no Wix premium.
+   - Limite: pior para SEO, login, checkout, rastreio e integracoes Wix profundas; funciona como espelho visual, nao como backend Wix completo. No estado atual, apenas a home Wix renderiza a ponte; subrotas `/fase2/...` no dominio Wix retornam 404.
 
 ## Catalogo Wix
 
@@ -50,9 +74,12 @@ A pagina `fase2/minha-conta.html` foi mantida como consulta segura de pedido e a
 
 Login real com Google/Microsoft deve ser feito por um fluxo de autenticacao oficial, como Wix Members/Headless OAuth ou outro provedor seguro. Nao expor botao de login real sem esse backend configurado.
 
+Em 2026-06-15 foi confirmado que Wix Headless OAuth App e o caminho oficial para login real, mas a API de criacao retorna `secret`. Como o ambiente local nao tem `.vercel/project.json`, `VERCEL_TOKEN` nem Vercel CLI no PATH, nao ha canal seguro confirmado para gravar o segredo direto em env var do deploy. Decisao segura: nao criar OAuth App ate haver armazenamento seguro confirmado para o segredo.
+
 ## Decisao operacional atual
 
 - Manter o repo/Vercel como fonte visual e funcional da fase 2.
-- Manter Wix premium limpo e pronto para backend, sem produtos genericos visiveis.
-- Documentar que a etapa "dominio Wix servindo visual Vercel com backend Wix" ainda exige decisao tecnica de dominio/headless.
+- Manter Wix premium com ponte visual via iframe enquanto a versao headless real nao esta pronta.
+- Manter Wix Stores premium limpo, sem produtos genericos visiveis.
+- Documentar que a etapa "backend Wix real com login/headless" ainda exige OAuth seguro e adaptacao tecnica.
 - Nao publicar itens de dropshipping/afiliado no Wix Stores visivel ate que os produtos estejam curados e o fluxo de frete/checkout esteja decidido.
