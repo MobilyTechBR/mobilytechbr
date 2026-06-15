@@ -1036,6 +1036,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function addBaseProduct(productId) {{
       cart.push({{ productId, selectedAddons: [], selectedSwaps: [] }});
       saveCart();
+      openCart();
       showToast("Produto adicionado ao carrinho.");
     }}
     function addConfiguredProduct(productId) {{
@@ -1057,6 +1058,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       cart.push({{ productId, selectedAddons, selectedSwaps }});
       saveCart();
       $("#productModal")?.close();
+      openCart();
       showToast("Produto configurado adicionado ao carrinho.");
     }}
     function productDetail(productId) {{
