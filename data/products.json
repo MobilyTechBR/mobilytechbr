@@ -296,7 +296,8 @@
       "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
       "returnPolicy": "Mercado Livre indica Compra Garantida e devolucao gratis quando aplicavel; confirmar oferta final antes de anunciar",
       "risk": "Precisa separar NVMe de SATA para evitar compra errada."
-    }
+    },
+    "cutout": "./assets/generated/find-case-ssd-nvme-cutout.png"
   },
   {
     "id": "find-case-ssd-sata",
@@ -339,7 +340,8 @@
       "sellerReputation": "+10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista",
       "returnPolicy": "Devolucao gratis em 30 dias na oferta vista e Compra Garantida",
       "risk": "Produto comoditizado; diferencial precisa ser conteudo e kit com SSD/limpeza."
-    }
+    },
+    "cutout": "./assets/generated/find-case-ssd-sata-cutout.png"
   },
   {
     "id": "find-fone-kz-castor",
@@ -382,7 +384,8 @@
       "sellerReputation": "Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas",
       "returnPolicy": "ML com devolucao gratis/Compra Garantida quando aplicavel; confirmar oferta final",
       "risk": "Audio e muito subjetivo; evitar promessa exagerada de qualidade profissional."
-    }
+    },
+    "cutout": "./assets/generated/find-fone-kz-castor-cutout.png"
   },
   {
     "id": "find-kit-limpeza-esd",
@@ -425,7 +428,8 @@
       "sellerReputation": "Oferta vista de loja Tapcamp com +100 mil vendas",
       "returnPolicy": "Devolucao gratis em 30 dias quando indicada no ML",
       "risk": "Nao prometer recuperacao de componente; vender como prevencao e cuidado."
-    }
+    },
+    "cutout": "./assets/generated/find-kit-limpeza-esd-cutout.png"
   },
   {
     "id": "find-mini-aspirador-teclado",
@@ -468,7 +472,8 @@
       "sellerReputation": "Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas",
       "returnPolicy": "Devolucao gratis indicada na oferta vista",
       "risk": "Potencia limitada; criativo precisa ser honesto para reduzir reclamacao."
-    }
+    },
+    "cutout": "./assets/generated/find-mini-aspirador-teclado-cutout.png"
   },
   {
     "id": "find-hub-usb-c",
@@ -511,7 +516,8 @@
       "sellerReputation": "Loja oficial Chrome Technology em oferta vista",
       "returnPolicy": "Compra Garantida/marketplace; confirmar na oferta final",
       "risk": "Concorrencia alta; diferenciar por curadoria e garantia do marketplace."
-    }
+    },
+    "cutout": "./assets/generated/find-hub-usb-c-cutout.png"
   },
   {
     "id": "find-suporte-gpu-antisag",
@@ -554,7 +560,8 @@
       "sellerReputation": "Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa",
       "returnPolicy": "Confirmar devolucao e Compra Garantida na oferta escolhida",
       "risk": "Medidas de gabinete variam; incluir guia de compatibilidade."
-    }
+    },
+    "cutout": "./assets/generated/find-suporte-gpu-antisag-cutout.png"
   },
   {
     "id": "find-keycaps-pbt",
@@ -597,7 +604,8 @@
       "sellerReputation": "Algumas ofertas com +50 vendas; buscar kits com mais prova social antes de anuncio",
       "returnPolicy": "Confirmar compatibilidade e devolucao na oferta escolhida",
       "risk": "Compatibilidade ABNT/ANSI/perfil gera devolucao se nao explicar bem."
-    }
+    },
+    "cutout": "./assets/generated/find-keycaps-pbt-cutout.png"
   },
   {
     "id": "find-teclado-mecanico-abnt2",
@@ -640,7 +648,8 @@
       "sellerReputation": "Busca indica bom custo-beneficio, mas tambem relatos de durabilidade a checar",
       "returnPolicy": "Usar marketplace com politica clara de devolucao e garantia",
       "risk": "Garantia e suporte podem consumir margem se vendido como estoque proprio."
-    }
+    },
+    "cutout": "./assets/generated/find-teclado-mecanico-abnt2-cutout.png"
   },
   {
     "id": "find-bias-light-led",
@@ -683,7 +692,8 @@
       "sellerReputation": "Validacao fraca nesta rodada por oferta indisponivel",
       "returnPolicy": "Confirmar devolucao e funcionamento antes de publicar",
       "risk": "Fornecedor atual precisa ser trocado; nao subir anuncio antes de validar estoque."
-    }
+    },
+    "cutout": "./assets/generated/find-bias-light-led-cutout.png"
   },
   {
     "id": "find-adaptador-bluetooth-usb-5",
@@ -726,7 +736,8 @@
       "sellerReputation": "Buscar vendedor com alta reputacao e bom volume de vendas antes de escalar",
       "returnPolicy": "Usar fornecedor com devolucao clara e Compra Garantida quando aplicavel",
       "risk": "Compatibilidade com Windows e qualidade do chip precisam estar claras para reduzir suporte."
-    }
+    },
+    "cutout": "./assets/generated/find-adaptador-bluetooth-usb-5-cutout.png"
   },
   {
     "id": "find-mousepad-gamer-rgb-xl",
@@ -769,7 +780,8 @@
       "sellerReputation": "Escolher anuncio com muitas avaliacoes e fotos reais de compradores",
       "returnPolicy": "Confirmar troca/devolucao e funcionamento dos LEDs antes de anunciar",
       "risk": "Tamanho e qualidade do LED variam muito; especificar dimensoes com clareza."
-    }
+    },
+    "cutout": "./assets/generated/find-mousepad-gamer-rgb-xl-cutout.png"
   },
   {
     "id": "find-cabo-displayport-14-2m",
@@ -812,7 +824,8 @@
       "sellerReputation": "Priorizar anuncios com especificacao 1.4, 4K/144Hz e boas avaliacoes",
       "returnPolicy": "Usar marketplace com devolucao clara por incompatibilidade",
       "risk": "Evitar promessa de resolucao/Hz sem confirmar especificacao real do cabo."
-    }
+    },
+    "cutout": "./assets/generated/find-cabo-displayport-14-2m-cutout.png"
   },
   {
     "id": "find-adaptador-wifi-dual-band-usb",
@@ -855,7 +868,8 @@
       "sellerReputation": "Escolher vendedor com bom historico em informatica/conectividade",
       "returnPolicy": "Confirmar devolucao e compatibilidade Windows antes de publicar",
       "risk": "Drivers e compatibilidade podem gerar duvida; deixar instrucoes simples."
-    }
+    },
+    "cutout": "./assets/generated/find-adaptador-wifi-dual-band-usb-cutout.png"
   },
   {
     "id": "find-suporte-notebook-aluminio",
@@ -898,6 +912,7 @@
       "sellerReputation": "Referencia consultada mostrou loja oficial, vendas e avaliacoes do produto; validar antes de campanha",
       "returnPolicy": "Priorizar Compra Garantida/devolucao gratis quando aplicavel",
       "risk": "Modelos fragilizados podem gerar reclamacao; validar material e dimensoes."
-    }
+    },
+    "cutout": "./assets/generated/find-suporte-notebook-aluminio-cutout.png"
   }
 ]
