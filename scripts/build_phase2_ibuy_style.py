@@ -539,8 +539,8 @@ def conta_page(prefix: str) -> str:
           <h2>Login seguro do cliente</h2>
           <p>Entre na sua conta para acompanhar compras, salvar enderecos e consultar pedidos sem perder o historico de atendimento. Dados de pagamento ficam somente nos provedores de checkout.</p>
           <div class="account-actions">
-            <a class="btn btn-red" href="https://www.mobilytech.com.br/account/my-account" target="_blank" rel="noopener">Entrar com conta segura</a>
-            <a class="btn btn-white" href="https://www.mobilytech.com.br/account/my-orders" target="_blank" rel="noopener">Ver meus pedidos</a>
+            <a class="btn btn-red" href="https://www.mobilytech.com.br/account/my-account" target="_top" rel="noopener">Entrar com conta segura</a>
+            <a class="btn btn-white" href="https://www.mobilytech.com.br/account/my-orders" target="_top" rel="noopener">Ver meus pedidos</a>
           </div>
         </article>
         <article class="account-card">
