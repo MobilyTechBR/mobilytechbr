@@ -5,6 +5,11 @@ const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const ADDONS_FILE = path.join(process.cwd(), "data", "addons.json");
 const MERCADO_PAGO_API = "https://api.mercadopago.com/checkout/preferences";
 const { quoteMelhorEnvio } = require("./shipping-quote");
+const {
+  formatFulfillmentItems,
+  resolveShippingSelection,
+  splitFulfillmentProducts
+} = require("./fulfillment-shipping");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("./product-swaps");
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -282,25 +287,11 @@ function splitPhone(value = "") {
   return digits ? { number: digits } : undefined;
 }
 
-async function normalizeShipping(product, shipping) {
-  if (!shipping || !shipping.postalCode || !shipping.serviceId) return null;
-  const quoteResult = await quoteMelhorEnvio(product, shipping.postalCode);
-  const selected = quoteResult.quotes.find((quote) => String(quote.id) === String(shipping.serviceId));
-  if (!selected) {
-    const error = new Error("Frete selecionado nao esta mais disponivel.");
-    error.statusCode = 400;
-    throw error;
-  }
-
-  return {
-    ...shipping,
-    postalCode: onlyDigits(shipping.postalCode),
-    serviceId: String(selected.id),
-    serviceName: selected.name,
-    carrier: selected.company,
-    price: selected.price,
-    deliveryTime: selected.deliveryTime
-  };
+async function normalizeShipping(products, shipping) {
+  return resolveShippingSelection(products, shipping, {
+    quoteMelhorEnvio,
+    aggregateShippingProduct
+  });
 }
 
 module.exports = async function createPreference(request, response) {
@@ -333,10 +324,13 @@ module.exports = async function createPreference(request, response) {
       loadGlobalSwaps()
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
-    const shippingProduct = checkoutItems.length === 1
-      ? checkoutItems[0].product
-      : aggregateShippingProduct(checkoutItems.map((item) => item.product));
-    const normalizedShipping = await normalizeShipping(shippingProduct, shipping);
+    const checkoutProducts = checkoutItems.map((item) => item.product);
+    const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
+    const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
+    const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
+    const manualFulfillmentItems = manualFulfillmentRequired
+      ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
+      : [];
     const origin = requestOrigin(request);
     const checkoutReference = checkoutItems.length === 1
       ? checkoutItems[0].product.id
@@ -429,11 +423,19 @@ module.exports = async function createPreference(request, response) {
         selected_addons: allAddons.map((addon) => `${addon.productId}:${addon.category}:${addon.label}`).join("; "),
         selected_swaps: allSwaps.map((swap) => `${swap.productId}:${swap.target}:${swap.label}`).join("; "),
         shipping_requested: normalizedShipping ? "true" : "false",
-        shipping_provider: normalizedShipping ? "melhor-envio" : "",
+        shipping_provider: normalizedShipping?.provider || "",
         shipping_service_id: normalizedShipping?.serviceId || "",
         shipping_service_name: normalizedShipping?.serviceName || "",
         shipping_carrier: normalizedShipping?.carrier || "",
         shipping_price: normalizedShipping ? String(normalizedShipping.price) : "",
+        shipping_physical_service_id: normalizedShipping?.physicalServiceId || "",
+        shipping_physical_carrier: normalizedShipping?.physicalCarrier || "",
+        shipping_physical_service_name: normalizedShipping?.physicalServiceName || "",
+        shipping_physical_price: normalizedShipping?.physicalPrice !== undefined ? String(normalizedShipping.physicalPrice) : "",
+        shipping_supplier_price: normalizedShipping?.supplierPrice !== undefined ? String(normalizedShipping.supplierPrice) : "",
+        manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
+        manual_fulfillment_product_ids: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
+        manual_fulfillment_items: formatFulfillmentItems(manualFulfillmentItems),
         mercado_pago_fee_adjustment: String(mercadoFeeAdjustment),
         shipping_postal_code: normalizedShipping?.postalCode || "",
         shipping_customer: normalizedShipping ? JSON.stringify(customer) : ""

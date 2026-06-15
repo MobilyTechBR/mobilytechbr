@@ -1,4 +1,10 @@
 const crypto = require("crypto");
+const {
+  fulfillmentItemsForIds,
+  formatFulfillmentItems,
+  isManualShippingProvider,
+  loadProductsFromDisk
+} = require("./fulfillment-shipping");
 
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";
 
@@ -65,6 +71,16 @@ function isPaidStatus(value) {
   return /^(paid|approved|completed|confirmed)$/i.test(String(value || ""));
 }
 
+function productIdsFromMetadata(metadata) {
+  return [
+    metadata.productIds,
+    metadata.productId
+  ].join(";")
+    .split(";")
+    .map((item) => String(item || "").trim())
+    .filter(Boolean);
+}
+
 async function notifyOrder(request, body) {
   const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT || DEFAULT_ORDER_ENDPOINT;
   if (!endpoint) return { sent: false };
@@ -75,19 +91,26 @@ async function notifyOrder(request, body) {
   const status = String(readPath(body, ["data.status", "status", "data.billing.status", "billing.status", "data.checkout.status", "checkout.status"]) || "approved");
   const amountPaid = readPath(body, ["data.amount", "amount", "data.totalAmount", "totalAmount", "data.billing.amount", "billing.amount"]) || "";
   const shippingRequested = metadata.shippingRequested === "true";
+  const manualFulfillmentRequired = metadata.manualFulfillmentRequired === "true" || isManualShippingProvider(metadata.shippingProvider);
+  let manualFulfillmentItems = metadata.manualFulfillmentItems || "";
+  if (manualFulfillmentRequired && !manualFulfillmentItems) {
+    const products = await loadProductsFromDisk().catch(() => []);
+    manualFulfillmentItems = formatFulfillmentItems(fulfillmentItemsForIds(products, productIdsFromMetadata(metadata)));
+  }
   const origin = requestOrigin(request);
-  const confirmationToken = shippingRequested ? signPayload({
+  const canAutoConfirmLabel = shippingRequested && !manualFulfillmentRequired && metadata.shippingProvider !== "mixed";
+  const confirmationToken = canAutoConfirmLabel ? signPayload({
     paymentProvider: "abacate",
     paymentStatus: "approved",
     paymentId,
     productId: metadata.productId || String(metadata.productIds || "").split(";")[0].trim(),
     productTitle: metadata.productTitles,
     shipping: {
-      provider: metadata.shippingProvider,
-      serviceId: metadata.shippingServiceId,
-      serviceName: metadata.shippingServiceName,
-      carrier: metadata.shippingCarrier,
-      price: metadata.shippingPrice,
+      provider: "melhor-envio",
+      serviceId: metadata.shippingPhysicalServiceId || metadata.shippingServiceId,
+      serviceName: metadata.shippingPhysicalServiceName || metadata.shippingServiceName,
+      carrier: metadata.shippingPhysicalCarrier || metadata.shippingCarrier,
+      price: metadata.shippingPhysicalPrice || metadata.shippingPrice,
       postalCode: metadata.shippingPostalCode,
       customer: shippingCustomer
     },
@@ -117,9 +140,16 @@ async function notifyOrder(request, body) {
     `Telefone: ${shippingCustomer.phone || ""}`,
     `Endereco: ${[shippingCustomer.street, shippingCustomer.number, shippingCustomer.complement, shippingCustomer.district, shippingCustomer.city, shippingCustomer.state].filter(Boolean).join(", ")}`,
     "",
-    shippingRequested
-      ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
-      : "Pedido sem frete: retirada local selecionada."
+    manualFulfillmentRequired
+      ? [
+        "ACAO MANUAL NECESSARIA: pedido com item enviado por fornecedor parceiro.",
+        "Nao compre etiqueta Melhor Envio para estes itens.",
+        manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
+        "Use o link/fornecedor acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
+      ].join("\n")
+      : (shippingRequested
+        ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
+        : "Pedido sem frete: retirada local selecionada.")
   ];
 
   const form = new URLSearchParams({
@@ -139,7 +169,7 @@ async function notifyOrder(request, body) {
     customer_name: shippingCustomer.name || "",
     customer_email: shippingCustomer.email || "",
     customer_phone: shippingCustomer.phone || "",
-    delivery_mode: shippingRequested ? "shipping" : "pickup",
+    delivery_mode: manualFulfillmentRequired ? (metadata.shippingProvider === "mixed" ? "mixed_shipping" : "supplier_shipping") : (shippingRequested ? "shipping" : "pickup"),
     shipping_requested: shippingRequested ? "true" : "false",
     shipping_provider: metadata.shippingProvider || "",
     shipping_service_id: metadata.shippingServiceId || "",
@@ -148,6 +178,14 @@ async function notifyOrder(request, body) {
     shipping_price: metadata.shippingPrice || "",
     shipping_postal_code: metadata.shippingPostalCode || "",
     shipping_customer: metadata.shippingCustomer || "",
+    shipping_physical_service_id: metadata.shippingPhysicalServiceId || "",
+    shipping_physical_carrier: metadata.shippingPhysicalCarrier || "",
+    shipping_physical_service_name: metadata.shippingPhysicalServiceName || "",
+    shipping_physical_price: metadata.shippingPhysicalPrice || "",
+    shipping_supplier_price: metadata.shippingSupplierPrice || "",
+    manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
+    manual_fulfillment_product_ids: metadata.manualFulfillmentProductIds || "",
+    manual_fulfillment_items: manualFulfillmentItems || "",
     confirmar_etiqueta: confirmationUrl,
     label_confirmation_url: confirmationUrl
   });

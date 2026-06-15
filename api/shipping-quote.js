@@ -3,6 +3,7 @@ const path = require("path");
 
 const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const MELHOR_ENVIO_API = process.env.MELHOR_ENVIO_API_BASE || "https://www.melhorenvio.com.br/api/v2";
+const { buildShippingQuotes, onlyDigits } = require("./fulfillment-shipping");
 const DEFAULT_MELHOR_ENVIO_SERVICE_IDS = [
   1, 2, 17, // Correios: PAC, SEDEX, Mini Envios
   3, 4, 27, // Jadlog
@@ -28,10 +29,6 @@ async function readJsonBody(request) {
   let raw = "";
   for await (const chunk of request) raw += chunk;
   return raw ? JSON.parse(raw) : {};
-}
-
-function onlyDigits(value) {
-  return String(value || "").replace(/\D/g, "");
 }
 
 function parsePositiveNumber(value) {
@@ -267,15 +264,18 @@ module.exports = async function shippingQuote(request, response) {
       sendJson(response, 404, { error: "Um ou mais produtos do carrinho nao estao disponiveis." });
       return;
     }
-    const product = cartProducts.length
-      ? aggregatePackage(cartProducts)
-      : products.find((item) => item.id === productId && item.active !== false);
-    if (!product) {
+    const productsForShipping = cartProducts.length
+      ? cartProducts
+      : [products.find((item) => item.id === productId && item.active !== false)].filter(Boolean);
+    if (!productsForShipping.length) {
       sendJson(response, 404, { error: "Produto nao encontrado ou inativo." });
       return;
     }
 
-    const result = await quoteMelhorEnvio(product, postalCode);
+    const result = await buildShippingQuotes(productsForShipping, postalCode, {
+      quoteMelhorEnvio,
+      aggregateShippingProduct: aggregatePackage
+    });
     if (!result.quotes.length) {
       sendJson(response, 404, { error: "Nenhuma opcao de frete disponivel para esse CEP." });
       return;
@@ -284,7 +284,7 @@ module.exports = async function shippingQuote(request, response) {
     sendJson(response, 200, {
       productId: cartProducts.length ? "cart" : productId,
       postalCode: onlyDigits(postalCode),
-      provider: "melhor-envio",
+      provider: result.provider,
       quotes: result.quotes
     });
   } catch (error) {
@@ -296,3 +296,4 @@ module.exports = async function shippingQuote(request, response) {
 };
 
 module.exports.quoteMelhorEnvio = quoteMelhorEnvio;
+module.exports.aggregatePackage = aggregatePackage;

@@ -11,6 +11,7 @@
 const MOBILYTECH = {
   SPREADSHEET_ID: "COLE_AQUI_O_ID_DA_PLANILHA",
   ORDERS_SHEET: "Pedidos",
+  SALES_SHEET: "Vendas_PCs",
   SETTINGS_SHEET: "Configuracoes",
   PRICE_REVIEW_SHEET: "Revisao de precos",
   NEW_LISTINGS_SHEET: "Novos anuncios",
@@ -38,6 +39,8 @@ const ORDER_HEADERS = [
   "Cep",
   "Endereco",
   "LinkConfirmarEtiqueta",
+  "FornecedorItens",
+  "ObservacoesOperacao",
   "DecisaoEtiqueta",
   "CodigoRastreio",
   "LinkRastreio",
@@ -115,9 +118,22 @@ const NEW_LISTING_HEADERS = [
   "Conectores"
 ];
 
+const SALES_HEADERS = [
+  "Dia da Venda",
+  "Modelo/Descrição do PC",
+  "Configuração Detalhada",
+  "Preço de Compra (R$)",
+  "Custos Adicionais (R$)",
+  "Custo Total (R$)",
+  "Preço de Venda (R$)",
+  "Lucro Bruto (R$)",
+  "Margem (%)"
+];
+
 function setupMobilyTechPostSale() {
   const ss = spreadsheet_();
   ensureSheet_(ss, MOBILYTECH.ORDERS_SHEET, ORDER_HEADERS);
+  ensureSheet_(ss, MOBILYTECH.SALES_SHEET, SALES_HEADERS);
   const settings = ensureSheet_(ss, MOBILYTECH.SETTINGS_SHEET, ["Chave", "Valor", "Observacao"]);
   seedSettings_(settings);
   ensureSheet_(ss, MOBILYTECH.PRICE_REVIEW_SHEET, PRICE_HEADERS);
@@ -137,6 +153,13 @@ function processMobilyTechAutomations() {
 
 function doPost(e) {
   const payload = parseIncomingPayload_(e);
+  const action = String(payload.action || payload.event_type || payload.type || "");
+  if (action === "register-manual-sale" || action === "manual_sale_registration") {
+    const result = registerManualSale_(payload);
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true, ...result }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   const row = upsertOrder_(payload);
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true, row }))
@@ -208,7 +231,10 @@ function sendSellerSaleAlert_(order, settings) {
   const subject = "Parabens, voce vendeu no site - MobilyTechBR";
   const denyUrl = buildActionUrl_("deny-label", order.PedidoID);
   const labelUrl = order.LinkConfirmarEtiqueta || "";
-  const actionHtml = order.ModoEntrega === "shipping"
+  const manualFulfillment = ["supplier_shipping", "mixed_shipping"].indexOf(String(order.ModoEntrega || "")) >= 0 || Boolean(order.FornecedorItens);
+  const actionHtml = manualFulfillment
+    ? "<p style='margin:18px 0 0;color:#f8d04c;font-weight:800'>Operacao manual: comprar no fornecedor/parceiro, acompanhar rastreio e atualizar o pedido. Nao use etiqueta Melhor Envio para estes itens.</p>"
+    : order.ModoEntrega === "shipping"
     ? `<p style="margin:18px 0 0"><a href="${labelUrl}" style="${buttonStyle_()}">Confirmar etiqueta</a><a href="${denyUrl}" style="${buttonStyle_("secondary")}">Negar etiqueta</a></p>`
     : "<p style='margin:18px 0 0;color:#bcd4df;font-weight:700'>Retirada local selecionada. Combine o horario com o cliente.</p>";
 
@@ -230,6 +256,10 @@ function sendSellerSaleAlert_(order, settings) {
         ["Entrega", deliverySummary_(order)],
         ["Endereco", order.Endereco]
       ]),
+      manualFulfillment ? detailBlock_("Operacao com fornecedor", [
+        ["Itens", order.FornecedorItens || "Nao detalhado"],
+        ["Observacoes", order.ObservacoesOperacao || "Comprar no fornecedor, acompanhar envio e atualizar rastreio manualmente."]
+      ]) : "",
       actionHtml
     ]
   });
@@ -1186,6 +1216,10 @@ function normalizeOrder_(payload) {
     Cep: payload.shipping_postal_code || shippingCustomer.postalCode || "",
     Endereco: [shippingCustomer.street, shippingCustomer.number, shippingCustomer.complement, shippingCustomer.district, shippingCustomer.city, shippingCustomer.state].filter(Boolean).join(", "),
     LinkConfirmarEtiqueta: payload.label_confirmation_url || payload.confirmar_etiqueta || "",
+    FornecedorItens: payload.manual_fulfillment_items || "",
+    ObservacoesOperacao: payload.manual_fulfillment_required === "true"
+      ? "Venda com item de fornecedor/parceiro. Cliente pagou frete separado no checkout. Comprar no fornecedor, acompanhar rastreio e atualizar o pedido."
+      : "",
     DecisaoEtiqueta: "",
     CodigoRastreio: payload.tracking_code || payload.codigo_rastreio || payload.CodigoRastreio || "",
     LinkRastreio: payload.tracking_url || payload.link_rastreio || payload.LinkRastreio || "",
@@ -1196,6 +1230,82 @@ function normalizeOrder_(payload) {
     ReembolsoManual: "",
     AtualizadoEm: new Date()
   };
+}
+
+function registerManualSale_(payload) {
+  const sheet = ensureSheet_(spreadsheet_(), MOBILYTECH.SALES_SHEET, SALES_HEADERS);
+  const productId = String(payload.product_id || payload.productId || "").trim();
+  const saleDate = parseSaleDate_(payload.sale_date || payload.saleDate) || new Date();
+  const title = String(payload.product_title || payload.productTitle || payload.title || "Produto MobilyTech").trim();
+  const configuration = String(payload.final_configuration || payload.finalConfiguration || payload.configuration || payload.description || "").trim();
+  const purchasePrice = parseMoneyNumber_(payload.purchase_price || payload.purchasePrice || payload.base_cost || payload.baseCost || 0);
+  const additionalCosts = parseMoneyNumber_(payload.additional_costs || payload.additionalCosts || 0);
+  const salePrice = parseMoneyNumber_(payload.sale_price || payload.salePrice || payload.price || 0);
+  if (!title || !salePrice) {
+    throw new Error("Informe produto e valor de venda para registrar a venda.");
+  }
+  const row = Math.max(sheet.getLastRow() + 1, 2);
+  sheet.getRange(row, 1, 1, SALES_HEADERS.length).setValues([[
+    saleDate,
+    title,
+    configuration,
+    purchasePrice,
+    additionalCosts,
+    `=D${row}+E${row}`,
+    salePrice,
+    `=G${row}-F${row}`,
+    `=IF(G${row}>0,(G${row}-F${row})/G${row},"")`
+  ]]);
+
+  let github = { ok: false, skipped: true, message: "Produto nao informado para desativar no site." };
+  if (productId && String(payload.deactivate_product || payload.deactivateProduct || "true") !== "false") {
+    github = markSoldProductOnGithub_(productId, {
+      saleDate,
+      salePrice,
+      purchasePrice,
+      additionalCosts,
+      configuration,
+      channel: payload.channel || payload.sale_channel || "Painel MobilyTech",
+      notes: payload.notes || ""
+    });
+  }
+  return {
+    sheet: MOBILYTECH.SALES_SHEET,
+    row,
+    productId,
+    github
+  };
+}
+
+function markSoldProductOnGithub_(productId, sale) {
+  return updateGithubProducts_((products) => {
+    const product = products.find((item) => String(item.id) === String(productId));
+    if (!product) return { changed: false, message: "Produto nao encontrado em data/products.json." };
+    product.active = false;
+    product.sold = true;
+    product.soldAt = sale.saleDate instanceof Date ? Utilities.formatDate(sale.saleDate, Session.getScriptTimeZone(), "yyyy-MM-dd") : String(sale.saleDate || "");
+    product.sale = {
+      price: sale.salePrice,
+      purchasePrice: sale.purchasePrice,
+      additionalCosts: sale.additionalCosts,
+      configuration: sale.configuration,
+      channel: sale.channel,
+      notes: sale.notes
+    };
+    return { changed: true };
+  }, `Registra venda e desativa ${productId}`);
+}
+
+function parseSaleDate_(value) {
+  if (!value) return null;
+  if (value instanceof Date) return value;
+  const text = String(value).trim();
+  const iso = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (iso) return new Date(Number(iso[1]), Number(iso[2]) - 1, Number(iso[3]));
+  const br = text.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (br) return new Date(Number(br[3]), Number(br[2]) - 1, Number(br[1]));
+  const parsed = new Date(text);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
 function denyLabel_(orderId, token) {
@@ -1618,6 +1728,8 @@ function blockTitleStyle_() {
 
 function deliverySummary_(order) {
   if (order.ModoEntrega === "pickup") return "Retirada local - Vila Suzana, Sao Paulo, SP";
+  if (order.ModoEntrega === "supplier_shipping") return ["Entrega parceira", order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
+  if (order.ModoEntrega === "mixed_shipping") return ["Envio misto", order.Transportadora, order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
   return [order.Transportadora, order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
 }
 
@@ -1625,6 +1737,11 @@ function parseIncomingPayload_(e) {
   if (e.postData && e.postData.contents) {
     const type = String(e.postData.type || "");
     if (type.includes("application/json")) return JSON.parse(e.postData.contents);
+    try {
+      return JSON.parse(e.postData.contents);
+    } catch (_error) {
+      // Webhooks no-cors podem chegar como text/plain; se nao for JSON, usar parametros.
+    }
   }
   return e.parameter || {};
 }

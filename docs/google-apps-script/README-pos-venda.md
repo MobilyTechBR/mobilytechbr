@@ -84,3 +84,14 @@ Para os botoes de aprovar/desfazer realmente alterarem o site, configure nas **P
 - `GITHUB_PRODUCTS_PATH`: `data/products.json`
 
 Sem `GITHUB_TOKEN`, o script ainda envia os e-mails e registra a revisao na planilha, mas nao altera o site sozinho.
+
+## Registro de venda pelo painel
+
+O painel interno pode registrar uma venda manual na aba `Vendas_PCs` e, se o GitHub estiver configurado no Apps Script, desativar o produto vendido em `data/products.json`.
+
+Na Vercel, configure:
+
+- `ADMIN_WRITE_TOKEN`: token privado para autorizar a chamada do painel para `/api/register-sale`.
+- `SALES_REGISTRATION_ENDPOINT`: URL do Web App do Apps Script. Se nao existir, a funcao usa `ORDER_NOTIFICATION_ENDPOINT`.
+
+No Apps Script, mantenha as propriedades de GitHub acima se quiser que o produto seja desativado automaticamente. Sem `GITHUB_TOKEN`, a venda ainda pode ser registrada na planilha, mas a remocao do site precisa ser aplicada pelo JSON revisado baixado no painel.

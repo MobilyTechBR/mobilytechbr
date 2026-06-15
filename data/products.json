@@ -264,7 +264,7 @@
     "costPrice": 70,
     "marginPercent": "45.7%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/case-para-ssd-m2-nvme-externo-usb-c-31-adaptador-nvme-2230-2242-2260-2280-aluminio-m-key-ate-4tb-10gbps-inv-tech/p/MLB29349887",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/case-ssd-nvme.jpg",
@@ -284,11 +284,14 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 129
+      "insuranceValue": 129,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
-      "currentPrice": "R$59,98 no Mercado Livre; Shopee em torno de R$74,57",
+      "currentPrice": "R$59,98 no Mercado Livre.",
       "shipping": "Frete gratis/por cupom em ofertas vistas; prazo depende do vendedor e CEP",
       "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
       "returnPolicy": "Mercado Livre indica Compra Garantida e devolucao gratis quando aplicavel; confirmar oferta final antes de anunciar",
@@ -324,7 +327,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 59
+      "insuranceValue": 59,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -344,7 +350,7 @@
     "costPrice": 115,
     "marginPercent": "32.0%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee / AliExpress",
+    "supplierPlatform": "Mercado Livre / AliExpress",
     "supplierUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/fone-kz-castor.jpg",
@@ -364,12 +370,15 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 169
+      "insuranceValue": 169,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
-      "currentPrice": "R$114 no Mercado Livre; Shopee oficial foi visto em torno de R$109 com cupom",
-      "shipping": "ML com frete gratis em oferta vista; Shopee pode depender de cupom/importacao",
+      "currentPrice": "R$114 no Mercado Livre.",
+      "shipping": "ML com frete gratis em oferta vista.",
       "sellerReputation": "Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas",
       "returnPolicy": "ML com devolucao gratis/Compra Garantida quando aplicavel; confirmar oferta final",
       "risk": "Audio e muito subjetivo; evitar promessa exagerada de qualidade profissional."
@@ -384,7 +393,7 @@
     "costPrice": 35,
     "marginPercent": "55.7%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/kit-limpeza-esd-antiestatico-para-pc-com-5-pecas/p/MLB37963040",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/kit-limpeza-esd.jpg",
@@ -404,7 +413,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 79
+      "insuranceValue": 79,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -424,7 +436,7 @@
     "costPrice": 25,
     "marginPercent": "57.6%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/mini-aspirador-teclado.jpg",
@@ -444,7 +456,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 59
+      "insuranceValue": 59,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -484,7 +499,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 69
+      "insuranceValue": 69,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -524,7 +542,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 89
+      "insuranceValue": 89,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -564,7 +585,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 129
+      "insuranceValue": 129,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -584,7 +608,7 @@
     "costPrice": 130,
     "marginPercent": "27.4%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Amazon / Shopee",
+    "supplierPlatform": "Mercado Livre / Amazon",
     "supplierUrl": "https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/teclado-mecanico-abnt2.jpg",
@@ -604,7 +628,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 179
+      "insuranceValue": 179,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -624,7 +651,7 @@
     "costPrice": 35,
     "marginPercent": "49.3%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee / AliExpress",
+    "supplierPlatform": "Mercado Livre / AliExpress",
     "supplierUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/bias-light-led.jpg",
@@ -644,7 +671,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 69
+      "insuranceValue": 69,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -664,10 +694,10 @@
     "costPrice": 25,
     "marginPercent": "57.6%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee / Amazon",
+    "supplierPlatform": "Mercado Livre / Amazon",
     "supplierUrl": "https://lista.mercadolivre.com.br/adaptador-bluetooth-usb-5.0-pc",
     "badge": "MobilyTech Finds",
-    "image": "./assets/phase2-affiliates/adaptador-bluetooth-usb-5.svg",
+    "image": "./assets/phase2-affiliates/adaptador-bluetooth-usb-5.jpg",
     "photo": "square",
     "tags": [
       "MobilyTech Finds",
@@ -684,7 +714,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 59
+      "insuranceValue": 59,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -704,10 +737,10 @@
     "costPrice": 60,
     "marginPercent": "39.4%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee / AliExpress",
+    "supplierPlatform": "Mercado Livre / AliExpress",
     "supplierUrl": "https://lista.mercadolivre.com.br/mousepad-gamer-rgb-grande",
     "badge": "MobilyTech Finds",
-    "image": "./assets/phase2-affiliates/mousepad-gamer-rgb-xl.svg",
+    "image": "./assets/phase2-affiliates/mousepad-gamer-rgb-xl.webp",
     "photo": "square",
     "tags": [
       "MobilyTech Finds",
@@ -724,7 +757,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 99
+      "insuranceValue": 99,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -747,7 +783,7 @@
     "supplierPlatform": "Mercado Livre / Amazon",
     "supplierUrl": "https://lista.mercadolivre.com.br/cabo-displayport-1.4-2m",
     "badge": "MobilyTech Finds",
-    "image": "./assets/phase2-affiliates/cabo-displayport-14-2m.svg",
+    "image": "./assets/phase2-affiliates/cabo-displayport-14-2m.jpg",
     "photo": "square",
     "tags": [
       "MobilyTech Finds",
@@ -764,7 +800,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 99
+      "insuranceValue": 99,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -784,10 +823,10 @@
     "costPrice": 35,
     "marginPercent": "55.7%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Shopee / AliExpress",
+    "supplierPlatform": "Mercado Livre / AliExpress",
     "supplierUrl": "https://lista.mercadolivre.com.br/adaptador-wifi-usb-dual-band",
     "badge": "MobilyTech Finds",
-    "image": "./assets/phase2-affiliates/adaptador-wifi-dual-band-usb.svg",
+    "image": "./assets/phase2-affiliates/adaptador-wifi-dual-band-usb.jpg",
     "photo": "square",
     "tags": [
       "MobilyTech Finds",
@@ -804,7 +843,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 79
+      "insuranceValue": 79,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {
@@ -827,7 +869,7 @@
     "supplierPlatform": "Mercado Livre / Amazon",
     "supplierUrl": "https://www.mercadolivre.com.br/suporte-notebook-aluminio-dobravel-it-blue-le-066-ajustavel-portatil/p/MLB43880044",
     "badge": "MobilyTech Finds",
-    "image": "./assets/phase2-affiliates/suporte-notebook-aluminio.svg",
+    "image": "./assets/phase2-affiliates/suporte-notebook-aluminio.jpg",
     "photo": "square",
     "tags": [
       "MobilyTech Finds",
@@ -844,7 +886,10 @@
       "heightCm": 8,
       "widthCm": 18,
       "lengthCm": 24,
-      "insuranceValue": 89
+      "insuranceValue": 89,
+      "mode": "supplier-fixed",
+      "customerPrice": 29.9,
+      "deliveryTime": 7
     },
     "featured": false,
     "sourceNotes": {

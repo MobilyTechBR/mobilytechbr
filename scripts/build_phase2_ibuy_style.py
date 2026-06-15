@@ -78,14 +78,20 @@ PUBLIC_FIND_FIELDS = {
     "niche",
     "whySell",
     "marketplace",
+    "affiliateLinks",
     "affiliateUrl",
     "affiliateReady",
     "affiliateButton",
     "publicPartnerNote",
+    "confidence",
+    "currentPrice",
+    "platform",
     "productImage",
     "selectedCreative",
     "productId",
     "salePrice",
+    "shipping",
+    "shippingCustomerPrice",
 }
 
 PUBLIC_PRODUCT_FIELDS = {
@@ -109,12 +115,58 @@ PUBLIC_PRODUCT_FIELDS = {
 }
 
 
-def public_finds_payload(finalists):
+def public_finds_payload(finalists, products=None):
     items = finalists.get("finalists", []) if isinstance(finalists, dict) else []
-    public_items = []
+    product_items = products or []
+    finalists_by_product_id = {}
     for item in items:
+        for key in (item.get("productId"), f"find-{item.get('id', '')}" if item.get("id") else None):
+            if key:
+                finalists_by_product_id[key] = item
+    public_items = []
+    for product in product_items:
+        if product.get("active") is False or product.get("category") != "dropshipping":
+            continue
+        finalist = finalists_by_product_id.get(product.get("id"), {})
+        source_notes = product.get("sourceNotes") or {}
+        specs_data = product.get("specs") or {}
+        clean_item = {
+            "id": product.get("id"),
+            "productId": product.get("id"),
+            "title": product.get("title"),
+            "niche": finalist.get("niche") or specs_data.get("category") or "Setup e tecnologia",
+            "whySell": finalist.get("whySell")
+            or product.get("description")
+            or "Produto selecionado para complementar seu setup com compra pelo site e atendimento MobilyTech.",
+            "confidence": finalist.get("confidence") or product.get("badge") or "Curadoria MobilyTech",
+            "platform": product.get("supplierPlatform") or finalist.get("platform") or "MobilyTech BR",
+            "currentPrice": source_notes.get("currentPrice") or finalist.get("currentPrice") or "",
+            "productImage": product.get("image") or finalist.get("productImage") or finalist.get("selectedCreative"),
+            "selectedCreative": finalist.get("selectedCreative") or product.get("image"),
+            "salePrice": product.get("price") or finalist.get("salePrice"),
+            "shipping": product.get("shipping") or finalist.get("shipping"),
+            "shippingCustomerPrice": (product.get("shipping") or {}).get("customerPrice")
+            or finalist.get("shippingCustomerPrice")
+            or (finalist.get("shipping") or {}).get("customerPrice"),
+            "marketplace": {
+                "name": "MobilyTech BR",
+                "logo": "assets/mobilytech-logo.png",
+                "button": "Adicionar ao carrinho",
+                "class": "market-mobilytech",
+            },
+            "affiliateReady": True,
+            "affiliateButton": "Adicionar ao carrinho",
+            "publicPartnerNote": "Produto selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+            "storeCheckout": True,
+            "publicGroup": "vendidos",
+        }
+        public_items.append(clean_item)
+    for item in items:
+        if item.get("purchaseMode") == "manual-dropshipping" or bool(item.get("manualFulfillment")):
+            continue
         clean_item = {key: item.get(key) for key in PUBLIC_FIND_FIELDS if key in item}
         clean_item["storeCheckout"] = item.get("purchaseMode") == "manual-dropshipping" or bool(item.get("manualFulfillment"))
+        clean_item["publicGroup"] = "vendidos" if clean_item["storeCheckout"] else "recomendacoes"
         if clean_item["storeCheckout"]:
             clean_item.pop("affiliateUrl", None)
         clean_item.setdefault(
@@ -153,26 +205,30 @@ def page_links(prefix: str) -> dict[str, str]:
 def header(prefix: str, active: str = "home") -> str:
     links = page_links(prefix)
     nav = [
-        ("ofertas", "Ofertas"),
-        ("ofertas", "PC Gamer"),
-        ("montagem", "Monte seu PC"),
-        ("ofertas", "Hardware"),
-        ("limpeza", "Limpeza"),
-        ("achados", "MobilyTech Finds"),
-        ("avaliacoes", "Avaliacoes"),
-        ("conta", "Conta"),
-        ("contato", "Suporte"),
+        ("ofertas", "Ofertas", "ofertas"),
+        ("ofertas", "PC Gamer", "ofertas"),
+        ("montagem", "Monte seu PC", "montagem"),
+        ("ofertas", "Hardware", "ofertas"),
+        ("limpeza", "Limpeza", "limpeza"),
+        ("achados", "MobilyTech Finds", "achados"),
+        ("avaliacoes", "Avaliacoes", "avaliacoes"),
+        ("conta", "Conta", "conta"),
+        ("contato", "Suporte", "contato"),
     ]
-    nav_html = "\n".join(
-        f'<a class="nav-link{" active" if key == active else ""}" href="{links[key]}">{label}</a>'
-        for key, label in nav
-    )
+    nav_parts = []
+    for index, (href_key, label, active_key) in enumerate(nav):
+        if index:
+            nav_parts.append('<span class="nav-separator" aria-hidden="true">|</span>')
+        nav_parts.append(
+            f'<a class="nav-link{" active" if active_key == active else ""}" href="{links[href_key]}">{label}</a>'
+        )
+    nav_html = "\n".join(nav_parts)
     return f"""
     <header class="site-header">
       <div class="topbar">
         <div class="topbar-inner">
           <button class="ticker-arrow" type="button" aria-label="Promocao anterior">&#8249;</button>
-          <p>Julho Tech MobilyTech: PCs revisados, upgrades e limpeza com atendimento humano.</p>
+          <p>Julio na MobilyTech: use o cupom MOBMEN para 6% OFF em PCs revisados selecionados.</p>
           <button class="ticker-arrow" type="button" aria-label="Proxima promocao">&#8250;</button>
         </div>
       </div>
@@ -189,8 +245,10 @@ def header(prefix: str, active: str = "home") -> str:
           </label>
           <div class="search-results" id="searchResults" hidden></div>
         </div>
-        <a class="icon-action" href="{links["conta"]}" aria-label="Minha conta">
-          <span aria-hidden="true">&#9787;</span>
+        <a class="icon-action account-action" href="{links["conta"]}" aria-label="Minha conta">
+          <span aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.05c-4.2 0-7.6 2.33-7.6 5.2 0 .62.5 1.12 1.12 1.12h12.96c.62 0 1.12-.5 1.12-1.12 0-2.87-3.4-5.2-7.6-5.2Z"/></svg>
+          </span>
         </a>
         <button class="cart-mini" id="cartButton" type="button" aria-label="Abrir carrinho">
           <span aria-hidden="true">&#128722;</span>
@@ -204,7 +262,7 @@ def header(prefix: str, active: str = "home") -> str:
 def footer(prefix: str) -> str:
     links = page_links(prefix)
     brand_logos = "\n".join(
-        f'<img src="{prefix}assets/brand-logos/{brand_id}.svg" alt="{name}">'
+        f'<img class="brand-logo logo-{brand_id}" src="{prefix}assets/brand-officials/{brand_id}.svg" alt="{name}">'
         for brand_id, name in BRANDS
     )
     return f"""
@@ -336,7 +394,7 @@ def home_main(products, finalists, prefix: str) -> str:
         <div class="finds-text">
           <p class="section-kicker">Curadoria MobilyTech</p>
           <h2>MobilyTech Finds</h2>
-          <p>Produtos escolhidos para completar setup, manutencao e upgrades, com compra por marketplace confiavel.</p>
+          <p>Produtos escolhidos para completar setup, manutencao e upgrades. Recomendacoes externas usam Mercado Livre, Amazon ou AliExpress.</p>
           <a class="btn btn-dark" href="{links["achados"]}">Ver selecionados</a>
         </div>
         <div class="finds-preview" id="homeFindsGrid" data-limit="3"></div>
@@ -378,17 +436,25 @@ def finds_page(prefix: str) -> str:
       <section class="page-hero page-hero-finds">
         <div>
           <h1>MobilyTech Finds</h1>
-          <p>Achados de tecnologia para complementar seu setup, com descricao direta e link de compra no marketplace parceiro.</p>
+          <p>Complemente seu setup com acessorios, upgrades e gadgets selecionados pela curadoria MobilyTech.</p>
         </div>
         <img src="../assets/mobilytech-character-cutout.png" alt="Personagem MobilyTech">
       </section>
       <section class="section-head">
         <div>
-          <p class="section-kicker">Produtos selecionados</p>
-          <h2>Complementos para setup, limpeza e upgrades</h2>
+          <p class="section-kicker">Vendidos pela MobilyTech</p>
+          <h2>Produtos selecionados para completar seu setup</h2>
         </div>
       </section>
-      <div class="finds-grid" id="findsGrid"></div>
+      <div class="finds-grid" id="findsGrid" data-group="vendidos"></div>
+      <section class="section-head finds-section-head">
+        <div>
+          <p class="section-kicker">MobilyTech recomenda</p>
+          <h2>Boas compras nos marketplaces parceiros</h2>
+          <p>Itens que fazem sentido para setup, manutencao e uso diario, com compra feita diretamente no Mercado Livre, Amazon ou AliExpress.</p>
+        </div>
+      </section>
+      <div class="finds-grid finds-grid-recommendations" id="findsRecommendedGrid" data-group="recomendacoes"></div>
     </main>
     """
 
@@ -437,7 +503,7 @@ def limpeza_page(prefix: str) -> str:
         <img src="../assets/phase2-service-clean-reference.png" alt="Limpeza de PC MobilyTech">
       </section>
       <section class="split-form">
-        <div class="form-copy">
+        <div class="form-copy clean-page-copy">
           <p class="section-kicker">Servico especializado</p>
           <h2>Limpeza completa do seu PC</h2>
           <ul>
@@ -445,6 +511,7 @@ def limpeza_page(prefix: str) -> str:
             <li>Troca de pasta termica quando combinada.</li>
             <li>Relatorio do estado do computador.</li>
           </ul>
+          <img class="clean-side-image" src="../assets/phase2-clean-form-visual.png" alt="PC limpo com kit de limpeza">
         </div>
         <form class="lead-form" id="cleanForm">
           <label>Nome completo<input name="name" placeholder="Seu nome" required></label>
@@ -462,7 +529,7 @@ def reviews_section(link: str | None = None) -> str:
     cards = "\n".join(
         f"""
         <article class="review-card">
-          <div class="stars">★★★★★</div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p>"{clean_text(item["text"])}"</p>
           <strong>{clean_text(item["name"])}</strong>
           <small>{clean_text(item["source"])}</small>
@@ -483,7 +550,7 @@ def reviews_section(link: str | None = None) -> str:
       <section class="reviews-grid">
         <article class="score-card">
           <strong>5,0</strong>
-          <div class="stars">★★★★★</div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
           <p>avaliacoes reais na OLX e Marketplace</p>
         </article>
         {cards}
@@ -518,6 +585,7 @@ def contato_page(prefix: str) -> str:
         <article><h2>WhatsApp</h2><p>+55 (11) 95480-1967</p><a class="btn btn-dark" href="https://wa.me/5511954801967">Chamar no WhatsApp</a></article>
         <article><h2>E-mail</h2><p>mobilytechbr@gmail.com</p><a class="btn btn-dark" href="mailto:mobilytechbr@gmail.com">Enviar e-mail</a></article>
         <article><h2>Retirada local</h2><p>Vila Suzana, Sao Paulo, SP.</p><p>Retirada combinada apos confirmacao do pedido.</p></article>
+        <article class="shipping-contact-card"><img src="../assets/brazil-flag-glass.png" alt="" aria-hidden="true"><h2>Envio para todo o Brasil</h2><p>Envio por transportadora ou Correios, conforme disponibilidade do Melhor Envio, com opcao de rastreio.</p></article>
         <article><h2>Garantia</h2><p>Garantia de 14 dias para defeitos preexistentes comprovados, com avaliacao tecnica e suporte direto.</p></article>
       </section>
     </main>
@@ -541,6 +609,19 @@ def conta_page(prefix: str) -> str:
           <div class="account-actions">
             <a class="btn btn-red" href="https://wa.me/5511954801967?text=Ol%C3%A1%2C%20quero%20acompanhar%20meu%20pedido%20na%20MobilyTech%20BR." target="_blank" rel="noopener">Acompanhar pelo WhatsApp</a>
             <a class="btn btn-white" href="mailto:mobilytechbr@gmail.com?subject=Acompanhamento%20de%20pedido%20MobilyTech%20BR">Enviar e-mail</a>
+          </div>
+        </article>
+        <article class="account-card">
+          <p class="section-kicker">Acesso seguro</p>
+          <h2>Conta do cliente</h2>
+          <p>Entre com o numero do pedido e o e-mail usado na compra para receber atendimento seguro. Pagamentos e dados sensiveis ficam protegidos nos provedores oficiais de checkout.</p>
+          <div class="login-preview" aria-label="Acesso seguro do cliente">
+            <button type="button" data-focus-order><span>#</span> Localizar pedido</button>
+            <button type="button" data-support-login><span>?</span> Falar com suporte</button>
+          </div>
+          <div class="account-actions">
+            <a class="btn btn-dark" href="#orderLookupForm">Localizar pedido</a>
+            <a class="btn btn-white outline-account" href="https://wa.me/5511954801967?text=Ola%2C%20quero%20ajuda%20com%20meu%20pedido%20MobilyTech%20BR." target="_blank" rel="noopener">Ajuda com pedido</a>
           </div>
         </article>
         <article class="account-card">
@@ -608,8 +689,8 @@ def cart_drawer(prefix: str) -> str:
         <div id="shippingQuotes" class="shipping-quotes"></div>
       </details>
       <div class="checkout-actions">
-        <button class="btn btn-red full" id="checkoutMercado" type="button">Pagar pelo Mercado Pago</button>
-        <button class="btn btn-dark full" id="checkoutAbacate" type="button">Pagar pelo Abacate Pay</button>
+        <button class="btn checkout-pay checkout-mercado full" id="checkoutMercado" type="button"><img src="{prefix}assets/mercado-pago-logo.svg" alt="" aria-hidden="true">Pagar pelo Mercado Pago</button>
+        <button class="btn checkout-pay checkout-abacate full" id="checkoutAbacate" type="button"><img src="{prefix}assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Pagar pelo Abacate Pay</button>
       </div>
       <p class="drawer-note">O pagamento usa as rotas seguras ja configuradas na MobilyTech BR. Frete automatico pelo Melhor Envio quando disponivel.</p>
     </aside>
@@ -650,34 +731,34 @@ def css() -> str:
     .site-header{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}
     .nav-shell{max-width:1540px;margin:auto;height:76px;padding:0 22px;display:grid;grid-template-columns:minmax(160px,184px) minmax(620px,1fr) minmax(160px,250px) 34px 52px;align-items:center;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap;min-width:0}.brand img{width:44px;height:44px;object-fit:contain;flex:0 0 auto}.brand span{overflow:hidden;text-overflow:ellipsis}
-    .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:9px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}
+    .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:8px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
-    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
+    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center}.account-action svg{width:18px;height:18px;fill:#111}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
     main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}
     .hero-slider:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 84%,rgba(255,255,255,.26),transparent 26%),radial-gradient(circle at 82% 20%,rgba(255,255,255,.25),transparent 20%);pointer-events:none}
     .hero-copy{position:relative;z-index:2;max-width:620px}.hero-copy h1{font-size:48px;line-height:1.02;margin:0 0 18px;font-weight:1000;letter-spacing:0}.hero-copy p{font-size:21px;font-weight:800;margin:0 0 26px;max-width:620px}
     .hero-actions{display:flex;gap:16px;flex-wrap:wrap}.btn{border:0;border-radius:999px;min-height:50px;padding:0 28px;display:inline-flex;align-items:center;justify-content:center;gap:12px;font-weight:1000;cursor:pointer;transition:.2s transform,.2s box-shadow}.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.16)}.btn-red{background:var(--red);color:#fff}.btn-white{background:#fff;color:#111}.btn-dark{background:#111;color:#fff}.full{width:100%}
     .hero-pc{position:relative;z-index:1;justify-self:center;max-height:390px;object-fit:contain;filter:drop-shadow(0 0 0 #fff) drop-shadow(7px 10px 0 rgba(255,255,255,.92)) drop-shadow(0 24px 40px rgba(0,0,0,.34))}
     .hero-deal-card{position:relative;z-index:2;background:rgba(255,255,255,.92);color:#111;border-radius:14px;padding:24px;box-shadow:var(--shadow);align-self:center}.hero-deal-card span{font-weight:1000;color:var(--red);text-transform:uppercase;font-size:12px}.hero-deal-card h2{font-size:22px;line-height:1.14;margin:10px 0}.hero-deal-card p{color:#555;font-weight:800}.hero-deal-card strong{font-size:28px;display:block;margin:12px 0}.small-link{border:2px solid #111;background:transparent;border-radius:999px;padding:10px 18px;font-weight:1000;cursor:pointer}
-    .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:0 0 36px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.06)}.trust-row article{display:grid;grid-template-columns:46px 1fr;grid-template-rows:auto auto;gap:2px 12px;align-items:center;padding:22px 28px;border-right:1px solid var(--line)}.trust-row article:last-child{border-right:0}.trust-row span{grid-row:1/3;width:42px;height:42px;border-radius:12px;background:#e9fbfa;color:#048b82;display:grid;place-items:center;font-size:24px}.trust-row strong{font-size:17px}.trust-row small{color:#69717c;font-weight:800}
+    .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:0 0 36px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.06)}.trust-row article{display:grid;grid-template-columns:48px 1fr;grid-template-rows:auto auto;gap:2px 12px;align-items:center;padding:22px 28px;border-right:1px solid var(--line)}.trust-row article:last-child{border-right:0}.trust-row span{grid-row:1/3;width:42px;height:42px;border-radius:12px;background:#e9fbfa;color:#048b82;display:grid;place-items:center;font-size:23px;line-height:1}.trust-row strong{font-size:17px}.trust-row small{color:#69717c;font-weight:800}
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:36px 0 18px}.section-head h2{font-size:34px;margin:0;line-height:1.08}.section-head p{max-width:760px;color:#626a76;font-weight:800}.section-head a{font-weight:1000;color:#0d6fca}.section-kicker{margin:0 0 8px;color:var(--red);font-size:14px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}
     section[id], .product-card[id], .find-card[id], .page-hero[id]{scroll-margin-top:138px}
     .product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}.catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hardware-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
-    .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:390px}.product-media{height:204px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:18px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:92%;max-height:78%;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media img{max-width:82%;max-height:46%;transform:translateY(-6px)}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:18px;line-height:1.22;margin:0;font-weight:1000;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.spec-line{color:#58606c;font-weight:800;font-size:14px;min-height:40px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.price{font-size:23px;font-weight:1000}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px;margin-right:8px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:nowrap}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
+    .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price{font-size:23px;font-weight:1000}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px;margin-right:8px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
-    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:16px;display:flex;flex-direction:column;gap:10px;min-height:390px}.find-media{height:190px;border-radius:14px;background:#f4f7fb;display:grid;place-items:center;overflow:hidden}.find-media img{width:auto;height:auto;max-width:88%;max-height:88%;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.market-btn{margin-top:auto;min-height:42px;border-radius:999px;border:0;background:linear-gradient(90deg,#fff159,#ffe000);color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none}.market-btn img{height:30px;width:auto;max-width:72px;object-fit:contain}.market-mobilytech{background:linear-gradient(90deg,#19f5d0,#15a7ff);color:#031014;box-shadow:0 10px 24px rgba(21,167,255,.22)}
+    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:21px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:0;background:linear-gradient(90deg,#fff159,#ffe000);color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none}.market-btn img{height:31px;width:auto;max-width:78px;object-fit:contain}.market-mobilytech{background:linear-gradient(90deg,#19f5d0,#15a7ff);color:#031014;box-shadow:0 10px 24px rgba(21,167,255,.22)}.market-ml{background:linear-gradient(90deg,#fff159,#ffe35d 55%,#00a650);color:#26220a}.market-amazon{background:linear-gradient(90deg,#111820,#232f3e 58%,#ff9900);color:#fff}.market-ali{background:linear-gradient(90deg,#ff4747,#ff6a00);color:#fff}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
-    .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08)}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:18px}.clean-form-visual img{width:100%;height:100%;max-height:520px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.lead-form textarea{min-height:110px;resize:vertical}
-    .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(14px,1.6vw,26px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line img{height:34px;max-width:92px;width:auto;object-fit:contain;filter:brightness(0) contrast(1.08);opacity:.95;flex:0 1 auto}
+    .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{grid-template-columns:1.05fr .95fr;background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08);padding:22px 24px;align-items:center}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:12px}.clean-form-visual img{width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08);background:#fff}.clean-page-copy{display:flex;flex-direction:column;gap:16px}.clean-side-image{width:100%;max-height:340px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.inline-clean .lead-form{gap:10px;align-self:center}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.inline-clean .lead-form input{padding:11px 14px}.inline-clean .btn-red{min-height:48px}.lead-form textarea{min-height:110px;resize:vertical}
+    .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,2vw,34px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line .brand-logo{height:34px;max-width:116px;width:auto;object-fit:contain;opacity:1;flex:0 0 auto;filter:invert(1) saturate(.2) brightness(.9)}.brand-line .logo-microsoft{filter:none;height:32px;max-width:112px}.brand-line .logo-intel{max-width:88px}.brand-line .logo-kingston,.brand-line .logo-crucial{max-width:120px}
     .footer{max-width:1540px;margin:20px auto 0;padding:36px 22px;display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:34px;border-top:1px solid var(--line)}.footer h3{font-size:17px;margin:0 0 14px}.footer a{display:block;margin:8px 0;color:#303742;font-weight:800}.footer-brand img{width:52px}.footer-brand strong{display:block;font-size:19px;margin-top:10px}.footer-brand p,.payment-box p{color:#626a76;font-weight:800}.socials{display:flex;gap:12px}.socials img{width:24px;height:24px;object-fit:contain}.payment-icons{display:flex;gap:12px;align-items:center}.payment-icons img{height:26px;width:auto}.copyright{max-width:1540px;margin:0 auto;padding:0 22px 28px;color:#6b7280;font-weight:800}
     .page-hero{min-height:320px;border-radius:0 0 18px 18px;margin-bottom:32px;padding:54px 64px;display:grid;grid-template-columns:1fr 480px;align-items:center;overflow:hidden;background:linear-gradient(90deg,#f5f6f8,#ffffff);position:relative}.page-hero h1{font-size:48px;line-height:1.02;margin:0 0 14px}.page-hero p{font-size:20px;color:#4b5563;font-weight:800;max-width:700px}.page-hero img{justify-self:end;max-height:300px;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}.page-hero-products{background:linear-gradient(90deg,#f4f4f4,#fff 48%,#e8f5ff)}.page-hero-finds{background:linear-gradient(90deg,#fff7df,#fff 45%,#e7fbff)}.page-hero-build{background:linear-gradient(90deg,#fbe6e6,#fff 46%,#f1f1f1)}.page-hero-clean{background:linear-gradient(90deg,#effbe7,#fff 46%,#e8f5ff)}.page-hero-reviews,.page-hero-contact{grid-template-columns:1fr;background:#f7f8fb}
-    .filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}.filter-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 22px;font-weight:1000;cursor:pointer}.filter-chip.active{background:#111;color:#fff}.contact-grid article{background:#fff;border-radius:16px;padding:26px;box-shadow:0 8px 24px rgba(0,0,0,.07)}.contact-grid h2{margin:0 0 8px}
+    .filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}.filter-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 22px;font-weight:1000;cursor:pointer}.filter-chip.active{background:#111;color:#fff}.contact-grid article{background:#fff;border-radius:16px;padding:26px;box-shadow:0 8px 24px rgba(0,0,0,.07)}.contact-grid h2{margin:0 0 8px}.shipping-contact-card{position:relative;overflow:hidden}.shipping-contact-card img{position:absolute;right:18px;top:18px;width:58px;height:58px;object-fit:contain;opacity:.92;filter:drop-shadow(0 8px 14px rgba(0,0,0,.12))}.shipping-contact-card h2,.shipping-contact-card p{max-width:calc(100% - 70px)}
     .page-hero-account{grid-template-columns:1fr;background:linear-gradient(90deg,#e9fbfa,#fff 45%,#e8f5ff)}
     .account-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin:44px 0;align-items:start}
     .account-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(13,23,38,.08);padding:28px;min-width:0}
-    .account-card-main{background:linear-gradient(135deg,#111 0%,#1c2633 55%,#154f78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}
+    .account-card-main{background:linear-gradient(135deg,#111 0%,#1c2633 55%,#154f78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.login-preview{display:grid;gap:10px;margin-top:16px}.login-preview button{height:48px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2d3440;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.login-preview span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#f0f4f8;color:#111}
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
-    .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);transition:.25s transform;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{display:block;margin:12px 0;font-weight:1000}.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);transition:.25s transform;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{display:block;margin:12px 0;font-weight:1000}.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:linear-gradient(90deg,#fff159,#ffe066 48%,#42c7f4);color:#1d2730}.checkout-abacate{background:linear-gradient(90deg,#d7ff5c,#1ce2a8 46%,#0b8f69);color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
     @media (max-width:1100px){
       .nav-shell{grid-template-columns:auto 1fr auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/4;order:3;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.icon-action{display:none}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid{grid-template-columns:1fr}
@@ -693,7 +774,8 @@ def css() -> str:
       .cart-mini{height:38px;font-size:23px}
       .cart-mini strong{min-width:18px;height:18px;font-size:11px}
       .main-nav{grid-column:1/4;order:3;width:100%;gap:7px;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding:2px 0 5px}
-      .nav-link{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:32px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-size:11.5px;line-height:1;background:#fff}
+      .nav-link{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:32px;border:0;border-bottom:3px solid transparent;border-radius:0;padding:7px 2px;font-size:11.5px;line-height:1;background:transparent}
+      .nav-separator{display:inline-flex;align-items:center;color:#b8bec8;font-size:13px}
       .search-zone{grid-column:1/4;order:2;width:100%}
       .search-pill{height:40px}
       .search-results{top:calc(100% + 8px);max-height:300px}
@@ -717,10 +799,10 @@ def css() -> str:
       section[id], .product-card[id], .find-card[id], .page-hero[id]{scroll-margin-top:216px}
       .product-grid,.catalog-grid{grid-template-columns:1fr;gap:14px;max-width:390px;margin-inline:auto}
       .hardware-grid,#homeHardwareGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:none;margin-inline:0}
-      .product-media{height:150px;padding:12px}
-      .product-media img{max-height:76%;max-width:88%}
-      .product-card[data-kind="pc"] .product-media{height:210px;padding:16px}
-      .product-card[data-kind="pc"] .product-media img{max-height:172px;max-width:86%;transform:translateY(-4px)}
+      .product-media{height:154px;padding:16px 12px 8px}
+      .product-media img{max-height:94px;max-width:84%}
+      .product-card[data-kind="pc"] .product-media{height:214px;padding:20px 14px 10px}
+      .product-card[data-kind="pc"] .product-media img{max-height:166px;max-width:80%;transform:none}
       .product-body{padding:12px;gap:8px}
       .product-card h3{font-size:14px;min-height:34px}
       .product-card[data-kind="pc"] h3{font-size:16px;min-height:0}
@@ -736,23 +818,28 @@ def css() -> str:
       .cart-btn .cart-icon{font-size:13px}
       .ibp-panels{gap:14px}
       .service-panel-image{aspect-ratio:1.535/1;min-height:0}
-      .finds-preview,.finds-grid{grid-template-columns:1fr;max-width:360px;margin-inline:auto}
+      .finds-preview{grid-template-columns:1fr;max-width:360px;margin-inline:auto}
+      .finds-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:none;margin-inline:0}
       .finds-band{padding:20px;gap:16px}
       .finds-text h2{font-size:30px;line-height:1.05}
       .finds-text p{font-size:13.5px;line-height:1.45}
-      .find-media{height:172px}
-      .find-media img{max-height:145px;max-width:84%}
-      .find-card{padding:18px;border-radius:18px;min-height:auto}
-      .find-card h3{font-size:15px;line-height:1.25}
-      .find-card p{font-size:12.5px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-      .market-btn{min-height:42px;font-size:12px;width:100%}
+      .find-media{height:132px;padding:10px}
+      .find-media img{max-height:104px;max-width:82%}
+      .find-card{padding:12px;border-radius:16px;min-height:340px}
+      .find-card h3{font-size:13px;line-height:1.22;min-height:32px}
+      .find-card p{font-size:11px;line-height:1.35;overflow-wrap:anywhere}
+      .find-price{font-size:16px}
+      .find-meta{font-size:10px}
+      .market-btn{min-height:38px;font-size:10px;width:100%;padding:0 8px}
+      .market-btn img{height:23px;max-width:58px}
       .reviews-head{display:flex;text-align:center;align-items:center}
       .reviews-head div{justify-self:auto;text-align:center}
       .reviews-grid{grid-template-columns:1fr}
       .score-card{grid-column:auto}
       .about-strip,.powered-row{align-items:start;flex-direction:column}
-      .brand-line{width:100%;gap:14px 18px;justify-content:center;flex-wrap:wrap;overflow:visible;padding-top:12px}
-      .brand-line img{height:24px;max-width:74px;flex:0 1 auto}
+      .about-strip h2,.powered-row h2{font-size:24px;line-height:1.08}
+      .brand-line{width:100%;gap:20px;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-top:12px}
+      .brand-line .brand-logo{height:28px;max-width:92px;flex:0 0 auto}
       .footer{grid-template-columns:1fr}
       .page-hero{min-height:0;padding:24px 18px;gap:14px}
       .page-hero h1{font-size:30px;line-height:1.05}
@@ -776,7 +863,16 @@ def css() -> str:
       .shipping-option{grid-template-columns:1fr;align-items:start}
       .ship-price{justify-self:end}
       .inline-clean{padding:18px;gap:18px}
-      .clean-form-visual img{max-height:300px}
+      .inline-clean .lead-form{gap:10px}
+      .inline-clean .lead-form input{padding:11px 13px}
+      .inline-clean .btn-red{min-height:48px}
+      .clean-form-visual img{max-height:260px}
+      .shipping-contact-card img{width:44px;height:44px;right:14px;top:14px}
+      .shipping-contact-card h2,.shipping-contact-card p{max-width:calc(100% - 52px)}
+    }
+    @media (max-width:360px){
+      .finds-grid{grid-template-columns:1fr}
+      .find-card{max-width:340px;margin-inline:auto}
     }
     """
 
@@ -784,7 +880,7 @@ def css() -> str:
 def js(products, finalists, addons, swaps) -> str:
     payloads = {
         "products": public_products_payload(products),
-        "finds": public_finds_payload(finalists),
+        "finds": public_finds_payload(finalists, products),
         "addons": addons,
         "swaps": swaps,
     }
@@ -815,9 +911,9 @@ def js(products, finalists, addons, swaps) -> str:
       {{ type:"Secao", icon:"SSD", title:"Hardware e upgrades", description:"SSDs, fonte e pecas disponiveis para compra.", href: ROUTES.ofertas + "#catalogGrid", terms:"ssd hardware fonte upgrade peca armazenamento sata nvme" }},
       {{ type:"Servico", icon:"$" , title:"Monte seu PC", description:"Orcamento personalizado para montagem sob demanda.", href: ROUTES.montagem, terms:"montagem monte seu pc montar computador orcamento custom personalizado" }},
       {{ type:"Servico", icon:"OK", title:"Limpeza de PC", description:"Agendamento de limpeza, pasta termica e relatorio.", href: ROUTES.limpeza, terms:"limpeza limpar pc pasta termica manutencao agendar relatorio" }},
-      {{ type:"Loja", icon:"MT", title:"MobilyTech Finds", description:"Curadoria tech com ofertas selecionadas.", href: ROUTES.achados + "#findsGrid", terms:"mobilytech finds tech oferta mercado livre amazon shopee aliexpress curadoria" }},
+      {{ type:"Loja", icon:"MT", title:"MobilyTech Finds", description:"Curadoria tech com ofertas selecionadas.", href: ROUTES.achados + "#findsGrid", terms:"mobilytech finds tech oferta mercado livre amazon aliexpress curadoria" }},
       {{ type:"Prova", icon:"5", title:"Avaliacoes", description:"Prova social, OLX, Marketplace e historico de entregas.", href: ROUTES.avaliacoes, terms:"avaliacoes reviews prova social olx facebook marketplace estrelas reputacao" }},
-      {{ type:"Conta", icon:"ID", title:"Minha conta e pedidos", description:"Login seguro, endereco, retirada e acompanhamento do pedido.", href: ROUTES.conta, terms:"minha conta login google wix members pedido pedidos endereco rastreio retirada status" }},
+      {{ type:"Conta", icon:"ID", title:"Minha conta e pedidos", description:"Acesso seguro, retirada e acompanhamento do pedido.", href: ROUTES.conta, terms:"minha conta pedido pedidos endereco rastreio retirada status acompanhamento suporte" }},
       {{ type:"Contato", icon:"WA", title:"Contato e suporte", description:"WhatsApp, e-mail, retirada e atendimento humano.", href: ROUTES.contato, terms:"contato suporte whatsapp email instagram retirada vila suzana" }},
       {{ type:"Loja", icon:"C", title:"Carrinho e checkout", description:"Finalizar compra com frete, Mercado Pago ou Abacate Pay.", href: "#cart", terms:"carrinho checkout pagamento mercado pago abacate pay frete correios melhor envio finalizar" }}
     ];
@@ -1010,10 +1106,29 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const node = $(target);
       if (!node) return;
       const search = norm($("#siteSearch")?.value || "");
+      const group = node.dataset.group;
       let items = DATA.finds.filter((item) => item.affiliateReady !== false);
+      if (group) items = items.filter((item) => (item.publicGroup || "vendidos") === group);
       if (search) items = items.filter((item) => norm([item.title, item.whySell, item.niche, item.platform, item.marketplace?.name].join(" ")).includes(search));
       items = items.slice(0, limit);
       node.innerHTML = items.map(findCard).join("") || '<p class="empty">Nenhum achado encontrado.</p>';
+    }}
+    function findProductId(item) {{
+      return item.productId || (item.id ? `find-${{item.id}}` : "");
+    }}
+    function marketClass(name="") {{
+      const value = norm(name);
+      if (value.includes("amazon")) return "market-amazon";
+      if (value.includes("aliexpress") || value.includes("ali express")) return "market-ali";
+      if (value.includes("mercado")) return "market-ml";
+      return "";
+    }}
+    function marketLogo(name="") {{
+      const value = norm(name);
+      if (value.includes("amazon")) return "assets/amazon-logo.svg";
+      if (value.includes("aliexpress") || value.includes("ali express")) return "assets/aliexpress-logo.svg";
+      if (value.includes("mercado")) return "assets/mercado-livre-logo.svg";
+      return "assets/mobilytech-logo.png";
     }}
     function findCard(item) {{
       const market = item.marketplace || {{}};
@@ -1021,15 +1136,24 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const logo = asset(market.logo || "assets/mercado-livre-logo.svg");
       const isManual = item.storeCheckout === true;
       const price = item.salePrice ? money(item.salePrice) : (item.currentPrice || "");
+      const buttonLabel = item.affiliateButton || market.button || "Ver oferta";
+      const affiliateLinks = Array.isArray(item.affiliateLinks) ? item.affiliateLinks.filter((link) => link && link.url) : [];
+      const linkButton = (link) => {{
+        const name = link.name || link.platform || market.name || "Marketplace";
+        const className = link.class || marketClass(name);
+        const label = link.button || `Ver oferta na ${{name}}`;
+        const linkLogo = asset(link.logo || marketLogo(name));
+        return `<a class="market-btn ${{className}}" href="${{link.url}}" target="_blank" rel="noopener"><img src="${{linkLogo}}" alt="" aria-hidden="true">${{label}}</a>`;
+      }};
       const action = isManual
-        ? `<button class="market-btn market-mobilytech" type="button" data-add="${{item.productId || item.id}}"><span class="cart-icon" aria-hidden="true">&#128722;</span>Adicionar ao carrinho</button>`
-        : `<a class="market-btn" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener"><img src="${{logo}}" alt="" aria-hidden="true">${{item.affiliateButton || market.button || "Compre pelo marketplace"}}</a>`;
+        ? `<div class="market-actions"><button class="market-btn market-mobilytech" type="button" data-add="${{findProductId(item)}}"><span class="cart-icon" aria-hidden="true">&#128722;</span>Adicionar ao carrinho</button></div>`
+        : `<div class="market-actions">${{affiliateLinks.length ? affiliateLinks.map(linkButton).join("") : `<a class="market-btn ${{market.class || ""}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener"><img src="${{logo}}" alt="" aria-hidden="true">${{buttonLabel}}</a>`}}</div>`;
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
         <span class="find-meta">${{item.confidence || "Curadoria MobilyTech"}}</span>
         <h3>${{item.title}}</h3>
         <p>${{item.whySell || item.publicPartnerNote || ""}}</p>
-        <p><strong>${{price}}</strong></p>
+        <div class="find-price">${{price}}</div>
         ${{action}}
       </article>`;
     }}
@@ -1157,8 +1281,10 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         const data = await response.json();
         if (!response.ok || !Array.isArray(data.quotes)) throw new Error(data.error || "Frete indisponivel agora.");
         box.innerHTML = data.quotes.map((quote, index) => {{
-          const company = quote.company || "Transportadora";
-          const service = quote.name || "Servico";
+          const company = typeof quote.company === "string"
+            ? quote.company
+            : (quote.company?.name || quote.company_name || "Transportadora");
+          const service = quote.name || quote.service || quote.service_name || "Servico";
           const rawTime = quote.deliveryTime || quote.delivery_time || "";
           const time = rawTime ? `${{rawTime}} dia(s) uteis` : "prazo sob consulta";
           return `<label class="shipping-option">
@@ -1179,8 +1305,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     }}
     async function startCheckout(endpoint, button) {{
       if (!cart.length) return showToast("Seu carrinho esta vazio.");
-      const original = button.textContent;
-      button.textContent = "Abrindo checkout...";
+      const original = button.innerHTML;
+      button.innerHTML = "Abrindo checkout...";
       button.disabled = true;
       try {{
         const response = await fetch(endpoint, {{
@@ -1194,7 +1320,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       }} catch(error) {{
         showToast(error.message);
       }} finally {{
-        button.textContent = original;
+        button.innerHTML = original;
         button.disabled = false;
       }}
     }}
@@ -1226,6 +1352,19 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const detail = event.target.closest("[data-detail]");
       const addConfig = event.target.closest("[data-add-config]");
       const remove = event.target.closest("[data-remove]");
+      const focusOrder = event.target.closest("[data-focus-order]");
+      const supportLogin = event.target.closest("[data-support-login]");
+      if (focusOrder) {{
+        const form = $("#orderLookupForm");
+        const firstInput = form?.querySelector("input");
+        scrollElementIntoView(form);
+        setTimeout(() => firstInput?.focus(), 160);
+        return;
+      }}
+      if (supportLogin) {{
+        window.open("https://wa.me/5511954801967?text=Ola%2C%20quero%20ajuda%20com%20minha%20conta%20MobilyTech%20BR.", "_blank");
+        return;
+      }}
       if (add) addBaseProduct(add.dataset.add);
       if (detail) productDetail(detail.dataset.detail);
       if (addConfig) addConfiguredProduct(addConfig.dataset.addConfig);
@@ -1248,6 +1387,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       renderProducts("#catalogGrid", window.currentFilter || "all");
       renderFinds("#homeFindsGrid", Number($("#homeFindsGrid")?.dataset.limit || 999));
       renderFinds("#findsGrid");
+      renderFinds("#findsRecommendedGrid");
     }});
     $("#siteSearch")?.addEventListener("focus", renderSearchResults);
     $("#siteSearch")?.addEventListener("keydown", (event) => {{
@@ -1269,6 +1409,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     renderProducts("#catalogGrid", "all");
     renderFinds("#homeFindsGrid", Number($("#homeFindsGrid")?.dataset.limit || 999));
     renderFinds("#findsGrid");
+    renderFinds("#findsRecommendedGrid");
     renderCart();
     scrollToHashTarget();
     """
@@ -1388,7 +1529,7 @@ def main():
                 "- Subpaginas: `fase2/`.",
                 "- Visual: estrutura clara inspirada em iBUYPOWER, com conteudo e assets MobilyTech.",
                 "- Backend preservado: carrinho chama rotas Vercel de frete, Mercado Pago e Abacate Pay.",
-                "- Conta/pedidos: pagina de ponte preparada para Wix Members, retirada e acompanhamento por atendimento.",
+                "- Conta/pedidos: pagina de consulta e atendimento preparada para retirada, envio e acompanhamento.",
                 "- Linguagem publica: sem termos de teste, rascunho, dropshipping ou aprovacao interna.",
             ]
         ),

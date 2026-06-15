@@ -6,6 +6,11 @@ const ADDONS_FILE = path.join(process.cwd(), "data", "addons.json");
 const ABACATE_PRODUCTS_CREATE_API = "https://api.abacatepay.com/v2/products/create";
 const ABACATE_CHECKOUT_API = "https://api.abacatepay.com/v2/checkouts/create";
 const { quoteMelhorEnvio } = require("./shipping-quote");
+const {
+  formatFulfillmentItems,
+  resolveShippingSelection,
+  splitFulfillmentProducts
+} = require("./fulfillment-shipping");
 const { abacateCheckoutGrossUp } = require("./payment-fees");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("./product-swaps");
 
@@ -262,25 +267,11 @@ function aggregateShippingProduct(products) {
   };
 }
 
-async function normalizeShipping(product, shipping) {
-  if (!shipping || !shipping.postalCode || !shipping.serviceId) return null;
-  const quoteResult = await quoteMelhorEnvio(product, shipping.postalCode);
-  const selected = quoteResult.quotes.find((quote) => String(quote.id) === String(shipping.serviceId));
-  if (!selected) {
-    const error = new Error("Frete selecionado nao esta mais disponivel.");
-    error.statusCode = 400;
-    throw error;
-  }
-
-  return {
-    ...shipping,
-    postalCode: onlyDigits(shipping.postalCode),
-    serviceId: String(selected.id),
-    serviceName: selected.name,
-    carrier: selected.company,
-    price: selected.price,
-    deliveryTime: selected.deliveryTime
-  };
+async function normalizeShipping(products, shipping) {
+  return resolveShippingSelection(products, shipping, {
+    quoteMelhorEnvio,
+    aggregateShippingProduct
+  });
 }
 
 function totalFromCheckoutItems(checkoutItems, normalizedShipping) {
@@ -410,10 +401,13 @@ module.exports = async function createAbacateCheckout(request, response) {
     const { shipping } = payload;
     const [products, globalAddons, globalSwaps] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps()]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
-    const shippingProduct = checkoutItems.length === 1
-      ? checkoutItems[0].product
-      : aggregateShippingProduct(checkoutItems.map((item) => item.product));
-    const normalizedShipping = await normalizeShipping(shippingProduct, shipping);
+    const checkoutProducts = checkoutItems.map((item) => item.product);
+    const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
+    const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
+    const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
+    const manualFulfillmentItems = manualFulfillmentRequired
+      ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
+      : [];
     const origin = requestOrigin(request);
     const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping);
     const abacateFeeInfo = abacateCheckoutGrossUp(baseCheckoutTotal);
@@ -444,11 +438,19 @@ module.exports = async function createAbacateCheckout(request, response) {
         selectedAddons: checkoutItems.flatMap((item) => item.addons.map((addon) => `${item.product.id}:${addon.category}:${addon.label}`)).join("; "),
         selectedSwaps: checkoutItems.flatMap((item) => item.swaps.map((swap) => `${item.product.id}:${swap.target}:${swap.label}`)).join("; "),
         shippingRequested: normalizedShipping ? "true" : "false",
-        shippingProvider: normalizedShipping ? "melhor-envio" : "",
+        shippingProvider: normalizedShipping?.provider || "",
         shippingServiceId: normalizedShipping?.serviceId || "",
         shippingServiceName: normalizedShipping?.serviceName || "",
         shippingCarrier: normalizedShipping?.carrier || "",
         shippingPrice: normalizedShipping ? String(normalizedShipping.price) : "",
+        shippingPhysicalServiceId: normalizedShipping?.physicalServiceId || "",
+        shippingPhysicalCarrier: normalizedShipping?.physicalCarrier || "",
+        shippingPhysicalServiceName: normalizedShipping?.physicalServiceName || "",
+        shippingPhysicalPrice: normalizedShipping?.physicalPrice !== undefined ? String(normalizedShipping.physicalPrice) : "",
+        shippingSupplierPrice: normalizedShipping?.supplierPrice !== undefined ? String(normalizedShipping.supplierPrice) : "",
+        manualFulfillmentRequired: manualFulfillmentRequired ? "true" : "false",
+        manualFulfillmentProductIds: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
+        manualFulfillmentItems: formatFulfillmentItems(manualFulfillmentItems),
         abacateFeeAdjustment: String(abacateFeeAdjustment),
         baseTotal: String(baseCheckoutTotal),
         finalTotal: String(finalCheckoutTotal),

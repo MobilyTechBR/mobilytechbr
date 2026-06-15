@@ -230,6 +230,115 @@
       .card ul, .card ol { margin: 14px 0 0; padding-left: 20px; }
       .card li + li { margin-top: 8px; }
       .card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+      .editor-panel {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 12px 36px rgba(13, 23, 38, .08);
+        overflow: hidden;
+      }
+      .editor-toolbar {
+        padding: 20px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+      .editor-toolbar p { margin: 4px 0 0; color: var(--muted); font-weight: 800; }
+      .table-wrap { overflow-x: auto; }
+      .finds-table {
+        width: 100%;
+        min-width: 1100px;
+        border-collapse: collapse;
+      }
+      .finds-table th,
+      .finds-table td {
+        padding: 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+        font-size: 13px;
+      }
+      .finds-table th {
+        background: #f7f8fb;
+        color: #59616d;
+        font-weight: 1000;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        white-space: nowrap;
+      }
+      .finds-table input,
+      .finds-table select,
+      .finds-table textarea {
+        width: 100%;
+        border: 1px solid #d8dde7;
+        border-radius: 10px;
+        padding: 9px 10px;
+        background: #fff;
+        color: #111;
+        font-weight: 800;
+      }
+      .finds-table textarea { min-height: 68px; resize: vertical; }
+      .finds-table .narrow { width: 86px; }
+      .finds-table .link-cell { min-width: 210px; }
+      .editor-note {
+        padding: 14px 22px 18px;
+        color: #6d5108;
+        background: #fff8e8;
+        font-weight: 900;
+      }
+      .sale-form {
+        padding: 22px;
+        display: grid;
+        gap: 16px;
+      }
+      .sale-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+      .field label {
+        color: #59616d;
+        font-size: 12px;
+        font-weight: 1000;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        border: 1px solid #d8dde7;
+        border-radius: 12px;
+        padding: 12px 13px;
+        background: #fff;
+        color: #111;
+        font-weight: 900;
+      }
+      .field textarea { min-height: 108px; resize: vertical; }
+      .field.full { grid-column: 1 / -1; }
+      .sale-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+      .sale-status {
+        border-radius: 14px;
+        padding: 14px 16px;
+        background: #eef8ff;
+        color: #19435a;
+        font-weight: 900;
+        display: none;
+      }
+      .sale-status.is-error { display: block; background: #fff0f0; color: #9b1515; }
+      .sale-status.is-ok { display: block; background: #ecfff8; color: #047d74; }
+      .sale-status.is-info { display: block; }
       .workflow {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -295,6 +404,7 @@
         .hero, .workflow { grid-template-columns: 1fr; }
         .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .cards { grid-template-columns: 1fr; }
+        .sale-grid { grid-template-columns: 1fr; }
       }
       @media (max-width: 620px) {
         .desktop-copy { display: none; }
@@ -330,6 +440,8 @@
         .section-head > div { width: 100%; max-width: 100%; }
         .section-head h2 { font-size: 28px; }
         .btn { width: 100%; min-height: 46px; }
+        .editor-toolbar { align-items: flex-start; flex-direction: column; }
+        .finds-table { min-width: 980px; }
         footer { flex-direction: column; align-items: flex-start; }
       }
     </style>
@@ -352,7 +464,7 @@
         <nav class="header-actions" aria-label="Acoes rapidas">
           <a class="btn btn-red" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Abrir Pages CMS</a>
           <a class="btn btn-dark" href="https://manage.wix.com/dashboard/" target="_blank" rel="noreferrer">Abrir Wix</a>
-          <a class="btn btn-ghost" href="../fase2-hibrida.html">Ver Fase 2</a>
+          <a class="btn btn-ghost" href="../fase2-hibrida.html">Ver site</a>
         </nav>
       </header>
 
@@ -402,7 +514,7 @@
             <article class="card stat-card">
               <small>MobilyTech Finds</small>
               <strong id="activeFinds">--</strong>
-              <span>Dropshipping manual e curadoria</span>
+              <span>Curadoria e venda assistida</span>
             </article>
           </div>
         </section>
@@ -419,7 +531,7 @@
             <article class="card">
               <small>Catalogo principal</small>
               <h3>PCs e hardware</h3>
-              <p>Edite nome, preco, fotos, estoque, frete, links e pecas em <code>data/products.json</code>.</p>
+        <p>Edite nome, preco, fotos, estoque, frete, links, status de venda e pecas em <code>data/products.json</code>.</p>
               <div class="card-actions">
                 <a class="btn btn-red" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Editar no CMS</a>
               </div>
@@ -444,7 +556,7 @@
             <article class="card">
               <small>Clientes</small>
               <h3>Conta e pedidos</h3>
-              <p><code>fase2/minha-conta.html</code> prepara login, retirada, rastreio e status para Wix Members/Wix Stores.</p>
+              <p><code>fase2/minha-conta.html</code> prepara conta, retirada, rastreio e status para a camada comercial.</p>
               <div class="card-actions">
                 <a class="btn btn-red" href="../fase2/minha-conta.html">Ver conta</a>
               </div>
@@ -452,12 +564,130 @@
             <article class="card">
               <small>Curadoria tech</small>
               <h3>MobilyTech Finds</h3>
-              <p>Edite fornecedor, preco de venda, custo e margem em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois.</p>
+              <p>Edite fornecedor, preco de venda, custo, margem e links em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois. Links de associados ficam restritos a Mercado Livre, Amazon e AliExpress.</p>
               <div class="card-actions">
                 <a class="btn btn-red" href="../fase2/achados.html">Ver pagina</a>
                 <a class="btn btn-ghost" href="../data/phase2-finalists.json">Ver JSON</a>
               </div>
             </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="finds-editor-title">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Editor local</p>
+              <h2 id="finds-editor-title">MobilyTech Finds, margem e links</h2>
+              <p>Revise produtos vendidos pela MobilyTech e recomendacoes de afiliados. O painel gera um JSON revisado para aplicar no repo sem expor credenciais e mantem download seguro como fallback.</p>
+            </div>
+          </div>
+          <div class="editor-panel">
+            <div class="editor-toolbar">
+              <div>
+                <strong>Campos rapidos</strong>
+                <p>Edite titulo, grupo publico, fornecedor, imagem, preco, custo, frete cobrado do cliente, margem e links Mercado Livre, Amazon ou AliExpress.</p>
+              </div>
+              <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
+              <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
+            </div>
+            <div class="table-wrap">
+              <table class="finds-table" aria-label="Editor local de MobilyTech Finds">
+                <thead>
+                  <tr>
+                    <th>Ativo</th>
+                    <th>Grupo</th>
+                    <th>Produto</th>
+                    <th>Fornecedor</th>
+                    <th>Imagem</th>
+                    <th>Preco</th>
+                    <th>Custo</th>
+                    <th>Frete cliente</th>
+                    <th>Margem</th>
+                    <th>Modo</th>
+                    <th>Descricao</th>
+                    <th>Mercado Livre</th>
+                    <th>Amazon</th>
+                    <th>AliExpress</th>
+                  </tr>
+                </thead>
+                <tbody id="findsEditorRows">
+                  <tr><td colspan="14">Carregando MobilyTech Finds...</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="editor-note">Use o JSON revisado para atualizar <code>data/phase2-finalists.json</code> e gerar o site novamente. O fluxo automatico de escrita deve ficar atras de token administrativo; sem token, o download continua sendo o caminho seguro.</div>
+          </div>
+        </section>
+
+        <section aria-labelledby="sale-register-title">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Venda registrada</p>
+              <h2 id="sale-register-title">Registrar venda e atualizar planilha</h2>
+              <p>Use quando vender um PC ou item fisico fora do checkout. O registro entra na aba <code>Vendas_PCs</code> e, se o GitHub estiver configurado no Apps Script, o produto fica inativo no site.</p>
+            </div>
+          </div>
+          <div class="editor-panel">
+            <div class="editor-toolbar">
+              <div>
+                <strong>Fluxo seguro</strong>
+                <p>Escolha o produto, confirme o valor real vendido e descreva a configuracao final caso tenha upgrade, troca ou desconto.</p>
+              </div>
+              <button class="btn btn-ghost" type="button" id="downloadSalePayload">Baixar registro</button>
+            </div>
+            <form class="sale-form" id="saleRegisterForm">
+              <div class="sale-grid">
+                <div class="field full">
+                  <label for="saleProduct">Produto vendido</label>
+                  <select id="saleProduct" required>
+                    <option value="">Carregando produtos...</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="saleDate">Dia da venda</label>
+                  <input id="saleDate" type="date" required>
+                </div>
+                <div class="field">
+                  <label for="salePriceMode">Valor de venda</label>
+                  <select id="salePriceMode">
+                    <option value="original">Usar preco atual do site</option>
+                    <option value="custom">Informar preco personalizado</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="salePrice">Preco vendido (R$)</label>
+                  <input id="salePrice" inputmode="decimal" placeholder="Ex.: 1000,00" required>
+                </div>
+                <div class="field">
+                  <label for="purchasePrice">Preco de compra (R$)</label>
+                  <input id="purchasePrice" inputmode="decimal" placeholder="Ex.: 700,00">
+                </div>
+                <div class="field">
+                  <label for="additionalCosts">Custos adicionais (R$)</label>
+                  <input id="additionalCosts" inputmode="decimal" placeholder="Ex.: 120,00">
+                </div>
+                <div class="field">
+                  <label for="saleChannel">Canal</label>
+                  <input id="saleChannel" placeholder="Site, OLX, Facebook, Mercado Livre">
+                </div>
+                <div class="field full">
+                  <label for="finalConfiguration">Configuracao final vendida</label>
+                  <textarea id="finalConfiguration" placeholder="Ex.: i5-3330, 16GB RAM, SSD 480GB, GTX 550 Ti, fonte 750W."></textarea>
+                </div>
+                <div class="field full">
+                  <label for="adminWriteToken">Token administrativo local</label>
+                  <input id="adminWriteToken" type="password" autocomplete="off" placeholder="Opcional: usado apenas no seu navegador para chamar /api/register-sale">
+                </div>
+              </div>
+              <label class="field">
+                <span><input id="deactivateAfterSale" type="checkbox" checked> Desativar produto do site apos registrar a venda</span>
+              </label>
+              <div class="sale-actions">
+                <button class="btn btn-red" type="submit">Registrar venda</button>
+                <button class="btn btn-dark" type="button" id="downloadSoldProducts">Baixar products.json atualizado</button>
+              </div>
+              <div class="sale-status is-info" id="saleStatus">Pronto para registrar quando os dados forem preenchidos.</div>
+            </form>
           </div>
         </section>
 
@@ -468,7 +698,7 @@
             <ol>
               <li>Edite produtos, adicionais ou swaps pelo Pages CMS.</li>
               <li>Confirme que fotos e precos estao certos.</li>
-              <li>Abra a Fase 2 e teste busca, carrinho, frete e checkout.</li>
+              <li>Abra o site e valide busca, carrinho, frete e checkout.</li>
               <li>So depois sincronize ou replique a mudanca no Wix Stores.</li>
             </ol>
           </article>
@@ -479,7 +709,7 @@
               <li><b>1</b><span>Produto ativo no JSON tambem precisa ficar ativo no Wix quando for vender por la.</span></li>
               <li><b>2</b><span>Preco, foto, SKU, peso e medidas precisam ser iguais para frete e checkout nao divergirem.</span></li>
               <li><b>3</b><span>Pedidos Wix devem apontar para o mesmo atendimento, e-mail e WhatsApp da loja.</span></li>
-              <li><b>4</b><span>Login e enderecos entram por Wix Members; cartao fica apenas nos provedores.</span></li>
+              <li><b>4</b><span>Conta e enderecos entram pela camada segura; cartao fica apenas nos provedores.</span></li>
             </ul>
           </article>
         </section>
@@ -498,6 +728,17 @@
     <script>
       const $ = (selector) => document.querySelector(selector);
       const countActive = (items = []) => items.filter((item) => item && item.active !== false).length;
+      let findsState = null;
+      let productsState = [];
+      let lastSalePayload = null;
+
+      function escapeHtml(value = "") {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
 
       async function readJson(path, fallback) {
         try {
@@ -510,6 +751,250 @@
         }
       }
 
+      function getAffiliateLink(item, name) {
+        const links = Array.isArray(item.affiliateLinks) ? item.affiliateLinks : [];
+        const found = links.find((link) => String(link.name || link.platform || "").toLowerCase().includes(name));
+        return found?.url || "";
+      }
+
+      function upsertAffiliateLink(item, name, url) {
+        const cleanUrl = String(url || "").trim();
+        const logos = {
+          "mercado": "assets/mercado-livre-logo.svg",
+          "amazon": "assets/amazon-logo.svg",
+          "aliexpress": "assets/aliexpress-logo.svg"
+        };
+        const labels = {
+          "mercado": "Ver oferta no Mercado Livre",
+          "amazon": "Ver oferta na Amazon",
+          "aliexpress": "Ver oferta no AliExpress"
+        };
+        item.affiliateLinks = Array.isArray(item.affiliateLinks) ? item.affiliateLinks : [];
+        const idx = item.affiliateLinks.findIndex((link) => String(link.name || link.platform || "").toLowerCase().includes(name));
+        if (!cleanUrl) {
+          if (idx >= 0) item.affiliateLinks.splice(idx, 1);
+          return;
+        }
+        const payload = {
+          name: name === "mercado" ? "Mercado Livre" : name === "amazon" ? "Amazon" : "AliExpress",
+          url: cleanUrl,
+          logo: logos[name],
+          button: labels[name],
+          class: name === "mercado" ? "market-ml" : name === "amazon" ? "market-amazon" : "market-ali"
+        };
+        if (idx >= 0) item.affiliateLinks[idx] = { ...item.affiliateLinks[idx], ...payload };
+        else item.affiliateLinks.push(payload);
+      }
+
+      function updateFind(index, field, value) {
+        const item = findsState?.finalists?.[index];
+        if (!item) return;
+        if (field === "active") item.active = value === "true";
+        else if (field === "storeCheckout") {
+          item.storeCheckout = value === "true";
+          item.purchaseMode = item.storeCheckout ? "manual-dropshipping" : "affiliate";
+          item.publicGroup = item.storeCheckout ? "vendidos" : "recomendacoes";
+        } else if (field === "shippingCustomerPrice") {
+          const number = Number(String(value).replace(",", "."));
+          item.shippingCustomerPrice = Number.isFinite(number) ? number : 0;
+          item.shipping = item.shipping && typeof item.shipping === "object" ? item.shipping : {};
+          item.shipping.mode = "supplier-fixed";
+          item.shipping.customerPrice = item.shippingCustomerPrice;
+          item.shipping.deliveryTime = item.shipping.deliveryTime || 7;
+        } else if (["salePrice", "supplierCost"].includes(field)) {
+          const number = Number(String(value).replace(",", "."));
+          if (Number.isFinite(number)) item[field] = number;
+          if (Number.isFinite(item.salePrice) && Number.isFinite(item.supplierCost) && item.salePrice > 0) {
+            item.marginPercent = `${(((item.salePrice - item.supplierCost) / item.salePrice) * 100).toFixed(1)}%`;
+          }
+        } else if (field.startsWith("link:")) {
+          upsertAffiliateLink(item, field.split(":")[1], value);
+        } else item[field] = value;
+      }
+
+      function makeFindId(title) {
+        const base = String(title || "novo-item")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .slice(0, 52) || "novo-item";
+        const existing = new Set((findsState?.finalists || []).map((item) => String(item.id || "")));
+        let id = base;
+        let count = 2;
+        while (existing.has(id)) id = `${base}-${count++}`;
+        return id;
+      }
+
+      function addFindItem() {
+        findsState = findsState && typeof findsState === "object" ? findsState : { finalists: [] };
+        findsState.finalists = Array.isArray(findsState.finalists) ? findsState.finalists : [];
+        const title = "Novo produto MobilyTech Finds";
+        findsState.finalists.push({
+          id: makeFindId(title),
+          active: true,
+          title,
+          publicGroup: "vendidos",
+          storeCheckout: true,
+          purchaseMode: "manual-dropshipping",
+          platform: "MobilyTech BR",
+          salePrice: 0,
+          supplierCost: 0,
+          shippingCustomerPrice: 0,
+          marginPercent: "",
+          productImage: "",
+          whySell: "Descreva em uma frase por que este produto combina com setups MobilyTech.",
+          publicPartnerNote: "Produto selecionado para complementar setups MobilyTech.",
+          affiliateLinks: [],
+          shipping: { mode: "supplier-fixed", customerPrice: 0, deliveryTime: 7 }
+        });
+        renderFindsEditor(findsState.finalists);
+      }
+
+      function moneyNumber(value) {
+        if (value === null || value === undefined || value === "") return 0;
+        const normalized = String(value).replace(/[^\d,.-]/g, "").replace(/\./g, "").replace(",", ".");
+        const number = Number(normalized);
+        return Number.isFinite(number) ? number : 0;
+      }
+
+      function moneyInput(value) {
+        const number = Number(value || 0);
+        return Number.isFinite(number) && number > 0 ? number.toFixed(2).replace(".", ",") : "";
+      }
+
+      function specsText(product) {
+        const specs = product?.specs || {};
+        const parts = [
+          specs.processor,
+          specs.memory,
+          specs.gpu,
+          specs.storage,
+          specs.powerSupply,
+          specs.brand,
+          specs.model,
+          specs.capacity,
+          specs.interface
+        ].filter(Boolean);
+        return parts.length ? parts.join(" / ") : (Array.isArray(product?.tags) ? product.tags.join(" / ") : "");
+      }
+
+      function renderSaleProducts(products) {
+        const select = $("#saleProduct");
+        if (!select) return;
+        const ownProducts = products
+          .filter((item) => item && item.active !== false && !["affiliate", "dropshipping"].includes(item.category))
+          .sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")));
+        select.innerHTML = '<option value="">Selecione um produto ativo...</option>' + ownProducts.map((item) => (
+          `<option value="${escapeHtml(item.id)}">${escapeHtml(item.title || item.id)} - R$ ${escapeHtml(moneyInput(item.price) || item.price || "")}</option>`
+        )).join("");
+      }
+
+      function selectedSaleProduct() {
+        const id = $("#saleProduct")?.value;
+        return productsState.find((item) => String(item.id) === String(id)) || null;
+      }
+
+      function syncSaleProductFields() {
+        const product = selectedSaleProduct();
+        if (!product) return;
+        if ($("#salePriceMode")?.value !== "custom") $("#salePrice").value = moneyInput(product.price);
+        $("#finalConfiguration").value = specsText(product);
+      }
+
+      function buildSalePayload() {
+        const product = selectedSaleProduct();
+        if (!product) throw new Error("Selecione o produto vendido.");
+        const salePrice = moneyNumber($("#salePrice")?.value);
+        if (!salePrice) throw new Error("Informe o valor da venda.");
+        const payload = {
+          action: "register-manual-sale",
+          event_type: "manual_sale_registration",
+          product_id: product.id,
+          product_title: product.title,
+          sale_date: $("#saleDate")?.value || new Date().toISOString().slice(0, 10),
+          sale_price: salePrice,
+          purchase_price: moneyNumber($("#purchasePrice")?.value),
+          additional_costs: moneyNumber($("#additionalCosts")?.value),
+          final_configuration: $("#finalConfiguration")?.value || specsText(product),
+          channel: $("#saleChannel")?.value || "Painel MobilyTech",
+          deactivate_product: $("#deactivateAfterSale")?.checked !== false
+        };
+        lastSalePayload = payload;
+        return payload;
+      }
+
+      function soldProductsJson() {
+        const payload = lastSalePayload || buildSalePayload();
+        return productsState.map((item) => {
+          if (String(item.id) !== String(payload.product_id)) return item;
+          return {
+            ...item,
+            active: false,
+            sold: true,
+            soldAt: payload.sale_date,
+            sale: {
+              price: payload.sale_price,
+              purchasePrice: payload.purchase_price,
+              additionalCosts: payload.additional_costs,
+              configuration: payload.final_configuration,
+              channel: payload.channel
+            }
+          };
+        });
+      }
+
+      function setSaleStatus(message, type = "info") {
+        const status = $("#saleStatus");
+        if (!status) return;
+        status.className = `sale-status is-${type}`;
+        status.textContent = message;
+      }
+
+      function renderFindsEditor(finds) {
+        const tbody = $("#findsEditorRows");
+        if (!tbody) return;
+        if (!Array.isArray(finds) || !finds.length) {
+          tbody.innerHTML = '<tr><td colspan="14">Nenhum item em MobilyTech Finds.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = finds.map((item, index) => `
+          <tr>
+            <td><select data-find="${index}" data-field="active" class="narrow"><option value="true"${item.active !== false ? " selected" : ""}>Sim</option><option value="false"${item.active === false ? " selected" : ""}>Nao</option></select></td>
+            <td><select data-find="${index}" data-field="publicGroup"><option value="vendidos"${item.publicGroup === "vendidos" ? " selected" : ""}>Vendidos</option><option value="recomendacoes"${item.publicGroup !== "vendidos" ? " selected" : ""}>Recomenda</option></select></td>
+            <td><textarea data-find="${index}" data-field="title">${escapeHtml(item.title || "")}</textarea></td>
+            <td><input data-find="${index}" data-field="platform" value="${escapeHtml(item.platform || "")}"></td>
+            <td><textarea data-find="${index}" data-field="productImage">${escapeHtml(item.productImage || item.selectedCreative || "")}</textarea></td>
+            <td><input data-find="${index}" data-field="salePrice" class="narrow" value="${escapeHtml(item.salePrice ?? "")}"></td>
+            <td><input data-find="${index}" data-field="supplierCost" class="narrow" value="${escapeHtml(item.supplierCost ?? "")}"></td>
+            <td><input data-find="${index}" data-field="shippingCustomerPrice" class="narrow" value="${escapeHtml(item.shippingCustomerPrice ?? item.shipping?.customerPrice ?? "")}"></td>
+            <td><input data-find="${index}" data-field="marginPercent" class="narrow" value="${escapeHtml(item.marginPercent || "")}"></td>
+            <td><select data-find="${index}" data-field="storeCheckout"><option value="true"${item.storeCheckout === true ? " selected" : ""}>Carrinho</option><option value="false"${item.storeCheckout !== true ? " selected" : ""}>Afiliado</option></select></td>
+            <td><textarea data-find="${index}" data-field="whySell">${escapeHtml(item.whySell || "")}</textarea></td>
+            <td class="link-cell"><input data-find="${index}" data-field="link:mercado" value="${escapeHtml(getAffiliateLink(item, "mercado") || item.affiliateUrl || "")}"></td>
+            <td class="link-cell"><input data-find="${index}" data-field="link:amazon" value="${escapeHtml(getAffiliateLink(item, "amazon"))}"></td>
+            <td class="link-cell"><input data-find="${index}" data-field="link:aliexpress" value="${escapeHtml(getAffiliateLink(item, "aliexpress"))}"></td>
+          </tr>
+        `).join("");
+        tbody.querySelectorAll("[data-find]").forEach((field) => {
+          field.addEventListener("input", () => updateFind(Number(field.dataset.find), field.dataset.field, field.value));
+          field.addEventListener("change", () => updateFind(Number(field.dataset.find), field.dataset.field, field.value));
+        });
+      }
+
+      function downloadJson(filename, data) {
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
       async function hydrateDashboard() {
         const [products, addons, swaps, finalists] = await Promise.all([
           readJson("../data/products.json", []),
@@ -518,9 +1003,11 @@
           readJson("../data/phase2-finalists.json", { finalists: [] })
         ]);
         const productList = Array.isArray(products) ? products : [];
+        productsState = productList;
         const ownProducts = productList.filter((item) => item && !["affiliate", "dropshipping"].includes(item.category));
         const pcs = productList.filter((item) => item && item.category === "pc");
         const finds = Array.isArray(finalists?.finalists) ? finalists.finalists : [];
+        findsState = finalists;
 
         $("#activeProducts").textContent = countActive(ownProducts);
         $("#activePcs").textContent = countActive(pcs);
@@ -528,7 +1015,69 @@
         $("#activeSwaps").textContent = countActive(Array.isArray(swaps) ? swaps : []);
         $("#activeFinds").textContent = countActive(finds);
         $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
+        renderFindsEditor(finds);
+        renderSaleProducts(productList);
+        syncSaleProductFields();
       }
+
+      $("#exportFinds")?.addEventListener("click", () => {
+        if (!findsState) return;
+        downloadJson("phase2-finalists-revisado-mobilytech.json", findsState);
+      });
+      $("#addFindItem")?.addEventListener("click", addFindItem);
+
+      $("#saleDate") && ($("#saleDate").value = new Date().toISOString().slice(0, 10));
+      $("#adminWriteToken") && ($("#adminWriteToken").value = localStorage.getItem("mobilytechAdminWriteToken") || "");
+      $("#adminWriteToken")?.addEventListener("change", (event) => {
+        localStorage.setItem("mobilytechAdminWriteToken", event.target.value || "");
+      });
+      $("#saleProduct")?.addEventListener("change", syncSaleProductFields);
+      $("#salePriceMode")?.addEventListener("change", () => {
+        const product = selectedSaleProduct();
+        if (product && $("#salePriceMode")?.value !== "custom") $("#salePrice").value = moneyInput(product.price);
+      });
+      $("#downloadSalePayload")?.addEventListener("click", () => {
+        try {
+          const payload = buildSalePayload();
+          downloadJson(`registro-venda-${payload.product_id || "mobilytech"}.json`, payload);
+          setSaleStatus("Registro baixado. Use este arquivo como seguranca se a automacao ainda nao estiver configurada.", "ok");
+        } catch (error) {
+          setSaleStatus(error.message || "Nao foi possivel gerar o registro.", "error");
+        }
+      });
+      $("#downloadSoldProducts")?.addEventListener("click", () => {
+        try {
+          const payload = buildSalePayload();
+          downloadJson(`products-com-${payload.product_id}-vendido.json`, soldProductsJson());
+          setSaleStatus("products.json atualizado foi baixado com o produto desativado.", "ok");
+        } catch (error) {
+          setSaleStatus(error.message || "Nao foi possivel gerar products.json atualizado.", "error");
+        }
+      });
+      $("#saleRegisterForm")?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        try {
+          const payload = buildSalePayload();
+          const token = $("#adminWriteToken")?.value || "";
+          setSaleStatus("Registrando venda na automacao...", "info");
+          const response = await fetch("../api/register-sale", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Token": token
+            },
+            body: JSON.stringify(payload)
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false) {
+            setSaleStatus(result.error || result.result?.message || "Automacao ainda nao configurada. Baixe o registro e o products.json atualizado como fallback.", "error");
+            return;
+          }
+          setSaleStatus(`Venda registrada. Linha ${result.result?.row || result.result?.result?.row || "confirmada"} na planilha.`, "ok");
+        } catch (error) {
+          setSaleStatus(error.message || "Erro ao registrar venda.", "error");
+        }
+      });
 
       hydrateDashboard();
     </script>

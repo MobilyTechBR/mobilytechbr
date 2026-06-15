@@ -1,4 +1,10 @@
 const crypto = require("crypto");
+const {
+  fulfillmentItemsForIds,
+  formatFulfillmentItems,
+  isManualShippingProvider,
+  loadProductsFromDisk
+} = require("./fulfillment-shipping");
 
 const MERCADO_PAGO_PAYMENT_API = "https://api.mercadopago.com/v1/payments";
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";
@@ -44,6 +50,16 @@ function signPayload(payload) {
   return `${encoded}.${signature}`;
 }
 
+function productIdsFromMetadata(metadata) {
+  return [
+    metadata.product_ids,
+    metadata.product_id
+  ].join(";")
+    .split(";")
+    .map((item) => String(item || "").trim())
+    .filter(Boolean);
+}
+
 async function fetchPayment(paymentId) {
   const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
   if (!accessToken) {
@@ -76,17 +92,24 @@ async function notifyOrder(request, payment) {
   const metadata = payment.metadata || {};
   const shippingRequested = metadata.shipping_requested === "true";
   const shippingCustomer = metadata.shipping_customer ? JSON.parse(metadata.shipping_customer) : {};
+  const manualFulfillmentRequired = metadata.manual_fulfillment_required === "true" || isManualShippingProvider(metadata.shipping_provider);
+  let manualFulfillmentItems = metadata.manual_fulfillment_items || "";
+  if (manualFulfillmentRequired && !manualFulfillmentItems) {
+    const products = await loadProductsFromDisk().catch(() => []);
+    manualFulfillmentItems = formatFulfillmentItems(fulfillmentItemsForIds(products, productIdsFromMetadata(metadata)));
+  }
   const origin = requestOrigin(request);
-  const confirmationToken = shippingRequested ? signPayload({
+  const canAutoConfirmLabel = shippingRequested && !manualFulfillmentRequired && metadata.shipping_provider !== "mixed";
+  const confirmationToken = canAutoConfirmLabel ? signPayload({
     paymentId: payment.id,
     productId: metadata.product_id,
     productTitle: metadata.product_title,
     shipping: {
-      provider: metadata.shipping_provider,
-      serviceId: metadata.shipping_service_id,
-      serviceName: metadata.shipping_service_name,
-      carrier: metadata.shipping_carrier,
-      price: metadata.shipping_price,
+      provider: "melhor-envio",
+      serviceId: metadata.shipping_physical_service_id || metadata.shipping_service_id,
+      serviceName: metadata.shipping_physical_service_name || metadata.shipping_service_name,
+      carrier: metadata.shipping_physical_carrier || metadata.shipping_carrier,
+      price: metadata.shipping_physical_price || metadata.shipping_price,
       postalCode: metadata.shipping_postal_code,
       customer: shippingCustomer
     },
@@ -118,9 +141,16 @@ async function notifyOrder(request, payment) {
     `Telefone: ${shippingCustomer.phone || ""}`,
     `Endereco: ${[shippingCustomer.street, shippingCustomer.number, shippingCustomer.complement, shippingCustomer.district, shippingCustomer.city, shippingCustomer.state].filter(Boolean).join(", ")}`,
     "",
-    shippingRequested
-      ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
-      : "Pedido sem frete: retirada local selecionada."
+    manualFulfillmentRequired
+      ? [
+        "ACAO MANUAL NECESSARIA: pedido com item enviado por fornecedor parceiro.",
+        "Nao compre etiqueta Melhor Envio para estes itens.",
+        manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
+        "Use o link/fornecedor acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
+      ].join("\n")
+      : (shippingRequested
+        ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
+        : "Pedido sem frete: retirada local selecionada.")
   ];
 
   const form = new URLSearchParams({
@@ -140,7 +170,7 @@ async function notifyOrder(request, payment) {
     customer_name: customerName,
     customer_email: customerEmail,
     customer_phone: shippingCustomer.phone || "",
-    delivery_mode: shippingRequested ? "shipping" : "pickup",
+    delivery_mode: manualFulfillmentRequired ? (metadata.shipping_provider === "mixed" ? "mixed_shipping" : "supplier_shipping") : (shippingRequested ? "shipping" : "pickup"),
     shipping_requested: shippingRequested ? "true" : "false",
     shipping_provider: metadata.shipping_provider || "",
     shipping_service_id: metadata.shipping_service_id || "",
@@ -149,6 +179,14 @@ async function notifyOrder(request, payment) {
     shipping_price: metadata.shipping_price || "",
     shipping_postal_code: metadata.shipping_postal_code || shippingCustomer.postalCode || "",
     shipping_customer: metadata.shipping_customer || "",
+    shipping_physical_service_id: metadata.shipping_physical_service_id || "",
+    shipping_physical_carrier: metadata.shipping_physical_carrier || "",
+    shipping_physical_service_name: metadata.shipping_physical_service_name || "",
+    shipping_physical_price: metadata.shipping_physical_price || "",
+    shipping_supplier_price: metadata.shipping_supplier_price || "",
+    manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
+    manual_fulfillment_product_ids: metadata.manual_fulfillment_product_ids || "",
+    manual_fulfillment_items: manualFulfillmentItems || "",
     confirmar_etiqueta: confirmationUrl,
     label_confirmation_url: confirmationUrl
   });
