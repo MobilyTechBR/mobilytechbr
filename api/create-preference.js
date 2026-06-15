@@ -9,8 +9,8 @@ const {
   formatFulfillmentItems,
   resolveShippingSelection,
   splitFulfillmentProducts
-} = require("./fulfillment-shipping");
-const { loadGlobalSwaps, normalizeSelectedSwaps } = require("./product-swaps");
+} = require("../lib/fulfillment-shipping");
+const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
   peripherals: "Kit perifericos"

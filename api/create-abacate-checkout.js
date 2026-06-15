@@ -10,9 +10,9 @@ const {
   formatFulfillmentItems,
   resolveShippingSelection,
   splitFulfillmentProducts
-} = require("./fulfillment-shipping");
-const { abacateCheckoutGrossUp } = require("./payment-fees");
-const { loadGlobalSwaps, normalizeSelectedSwaps } = require("./product-swaps");
+} = require("../lib/fulfillment-shipping");
+const { abacateCheckoutGrossUp } = require("../lib/payment-fees");
+const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",

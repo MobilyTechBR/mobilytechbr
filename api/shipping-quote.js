@@ -3,7 +3,7 @@ const path = require("path");
 
 const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const MELHOR_ENVIO_API = process.env.MELHOR_ENVIO_API_BASE || "https://www.melhorenvio.com.br/api/v2";
-const { buildShippingQuotes, onlyDigits } = require("./fulfillment-shipping");
+const { buildShippingQuotes, onlyDigits } = require("../lib/fulfillment-shipping");
 const DEFAULT_MELHOR_ENVIO_SERVICE_IDS = [
   1, 2, 17, // Correios: PAC, SEDEX, Mini Envios
   3, 4, 27, // Jadlog
