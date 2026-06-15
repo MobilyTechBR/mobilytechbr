@@ -535,12 +535,12 @@ def conta_page(prefix: str) -> str:
       </section>
       <section class="account-grid" aria-label="Area do cliente">
         <article class="account-card account-card-main">
-          <p class="section-kicker">Acesso seguro</p>
-          <h2>Login seguro do cliente</h2>
-          <p>Entre na sua conta para acompanhar compras, salvar enderecos e consultar pedidos sem perder o historico de atendimento. Dados de pagamento ficam somente nos provedores de checkout.</p>
+          <p class="section-kicker">Acompanhamento</p>
+          <h2>Minha compra e atendimento</h2>
+          <p>Acompanhe compras, combine retirada e consulte pedidos sem perder o historico do atendimento. Dados de pagamento ficam somente nos provedores de checkout.</p>
           <div class="account-actions">
-            <a class="btn btn-red" href="https://www.mobilytech.com.br/account/my-account" target="_top" rel="noopener">Entrar com conta segura</a>
-            <a class="btn btn-white" href="https://www.mobilytech.com.br/account/my-orders" target="_top" rel="noopener">Ver meus pedidos</a>
+            <a class="btn btn-red" href="https://wa.me/5511954801967?text=Ol%C3%A1%2C%20quero%20acompanhar%20meu%20pedido%20na%20MobilyTech%20BR." target="_blank" rel="noopener">Acompanhar pelo WhatsApp</a>
+            <a class="btn btn-white" href="mailto:mobilytechbr@gmail.com?subject=Acompanhamento%20de%20pedido%20MobilyTech%20BR">Enviar e-mail</a>
           </div>
         </article>
         <article class="account-card">
