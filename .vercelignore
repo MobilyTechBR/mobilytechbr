@@ -1,0 +1,17 @@
+# Keep production deployments lean. These files are useful in the repo/local
+# workspace, but should not be uploaded as public/static deployment output.
+
+.git/
+.github/
+backups/
+docs/
+scripts/
+
+*.docx
+*.xlsx
+*.zip
+MOBILYTECH_STATE.md
+design-qa.md
+
+__pycache__/
+*.pyc
