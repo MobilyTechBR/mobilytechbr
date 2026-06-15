@@ -76,12 +76,7 @@ PUBLIC_FIND_FIELDS = {
     "id",
     "title",
     "niche",
-    "platform",
-    "sourceUrl",
-    "currentPrice",
     "whySell",
-    "confidence",
-    "primaryMarketplace",
     "marketplace",
     "affiliateUrl",
     "affiliateReady",
@@ -89,10 +84,28 @@ PUBLIC_FIND_FIELDS = {
     "publicPartnerNote",
     "productImage",
     "selectedCreative",
-    "purchaseMode",
     "productId",
     "salePrice",
-    "manualFulfillment",
+}
+
+PUBLIC_PRODUCT_FIELDS = {
+    "id",
+    "active",
+    "category",
+    "title",
+    "price",
+    "old",
+    "badge",
+    "image",
+    "cutout",
+    "gallery",
+    "photo",
+    "tags",
+    "specs",
+    "links",
+    "shipping",
+    "featured",
+    "swaps",
 }
 
 
@@ -101,6 +114,9 @@ def public_finds_payload(finalists):
     public_items = []
     for item in items:
         clean_item = {key: item.get(key) for key in PUBLIC_FIND_FIELDS if key in item}
+        clean_item["storeCheckout"] = item.get("purchaseMode") == "manual-dropshipping" or bool(item.get("manualFulfillment"))
+        if clean_item["storeCheckout"]:
+            clean_item.pop("affiliateUrl", None)
         clean_item.setdefault(
             "publicPartnerNote",
             "Selecionado para complementar setups, upgrades e manutencao com compra segura.",
@@ -109,8 +125,18 @@ def public_finds_payload(finalists):
     return public_items
 
 
+def public_products_payload(products):
+    public_items = []
+    for item in products:
+        clean_item = {key: item.get(key) for key in PUBLIC_PRODUCT_FIELDS if key in item}
+        if clean_item.get("category") in {"dropshipping", "affiliate"}:
+            clean_item["category"] = "finds"
+        public_items.append(clean_item)
+    return public_items
+
+
 def page_links(prefix: str) -> dict[str, str]:
-    home = f"{prefix}fase2-hibrida.html" if prefix else "./fase2-hibrida.html"
+    home = f"{prefix}index.html" if prefix else "./index.html"
     base = f"{prefix}fase2/"
     return {
         "home": home,
@@ -757,7 +783,7 @@ def css() -> str:
 
 def js(products, finalists, addons, swaps) -> str:
     payloads = {
-        "products": products,
+        "products": public_products_payload(products),
         "finds": public_finds_payload(finalists),
         "addons": addons,
         "swaps": swaps,
@@ -775,7 +801,7 @@ def js(products, finalists, addons, swaps) -> str:
     const norm = (value) => String(value || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
     const productById = (id) => DATA.products.find((item) => item.id === id);
     const ROUTES = {{
-      home: assetBase + "fase2-hibrida.html",
+      home: assetBase + "index.html",
       ofertas: assetBase + "fase2/ofertas.html",
       achados: assetBase + "fase2/achados.html",
       montagem: assetBase + "fase2/montagem.html",
@@ -842,7 +868,7 @@ def js(products, finalists, addons, swaps) -> str:
         .slice(0, 4);
       const sectionResults = sections.map(({{ item }}) => item);
       const products = DATA.products
-        .filter((item) => item.active !== false && !["dropshipping", "affiliate"].includes(item.category))
+.filter((item) => item.active !== false && !["finds", "affiliate"].includes(item.category))
         .filter((item) => matchesSearch([item.title, item.badge, specs(item).join(" "), item.category].join(" "), q))
         .map((item) => ({{ item, score: searchScore(item.title, [item.badge, specs(item).join(" "), item.category].join(" "), q) }}))
         .sort((a, b) => b.score - a.score)
@@ -954,7 +980,7 @@ def js(products, finalists, addons, swaps) -> str:
       const node = $(target);
       if (!node) return;
       const search = norm($("#siteSearch")?.value || "");
-      let products = DATA.products.filter((item) => item.active !== false && !["dropshipping", "affiliate"].includes(item.category));
+let products = DATA.products.filter((item) => item.active !== false && !["finds", "affiliate"].includes(item.category));
       if (filter === "pc") products = products.filter((item) => item.category === "pc");
       if (filter === "hardware") products = products.filter((item) => item.category !== "pc");
       if (target === "#homePcGrid") products = products.filter((item) => item.category === "pc");
@@ -993,11 +1019,11 @@ def js(products, finalists, addons, swaps) -> str:
       const market = item.marketplace || {{}};
       const image = asset(item.productImage || item.selectedCreative);
       const logo = asset(market.logo || "assets/mercado-livre-logo.svg");
-      const isManual = item.purchaseMode === "manual-dropshipping";
+      const isManual = item.storeCheckout === true;
       const price = item.salePrice ? money(item.salePrice) : (item.currentPrice || "");
       const action = isManual
         ? `<button class="market-btn market-mobilytech" type="button" data-add="${{item.productId || item.id}}"><span class="cart-icon" aria-hidden="true">&#128722;</span>Adicionar ao carrinho</button>`
-        : `<a class="market-btn" href="${{item.affiliateUrl || item.sourceUrl}}" target="_blank" rel="noopener"><img src="${{logo}}" alt="" aria-hidden="true">${{item.affiliateButton || market.button || "Compre pelo marketplace"}}</a>`;
+        : `<a class="market-btn" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener"><img src="${{logo}}" alt="" aria-hidden="true">${{item.affiliateButton || market.button || "Compre pelo marketplace"}}</a>`;
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
         <span class="find-meta">${{item.confidence || "Curadoria MobilyTech"}}</span>
@@ -1279,6 +1305,12 @@ def main():
     FASE2_DIR.mkdir(exist_ok=True)
 
     pages = {
+        ROOT / "index.html": (
+            "MobilyTech BR | Loja gamer",
+            home_main(products, finalists, "./"),
+            "./",
+            "home",
+        ),
         ROOT / "fase2-hibrida.html": (
             "MobilyTech BR | Loja gamer",
             home_main(products, finalists, "./"),
@@ -1349,7 +1381,8 @@ def main():
                 "",
                 f"Gerado em: {GENERATED_AT}",
                 "",
-                "- Preview principal: `fase2-hibrida.html`.",
+                "- Home oficial: `index.html`.",
+                "- Preview alternativo preservado: `fase2-hibrida.html`.",
                 "- Subpaginas: `fase2/`.",
                 "- Visual: estrutura clara inspirada em iBUYPOWER, com conteudo e assets MobilyTech.",
                 "- Backend preservado: carrinho chama rotas Vercel de frete, Mercado Pago e Abacate Pay.",
