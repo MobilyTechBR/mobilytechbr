@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "src": "/admin(?:/index\\.html)?/?",
+      "dest": "/api/admin.js"
+    },
+    {
+      "src": "/private/(.*)",
+      "status": 404
+    },
+    {
+      "handle": "filesystem"
+    }
+  ]
+}

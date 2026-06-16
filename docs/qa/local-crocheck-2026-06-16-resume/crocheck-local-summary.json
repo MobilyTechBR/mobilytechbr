@@ -1,0 +1,90 @@
+{
+  "generatedAt": "2026-06-16",
+  "scope": "MobilyTech BR local crocheck after profile/cart/finds changes",
+  "status": "local-pass-external-chatgpt-ui-unavailable-in-this-session",
+  "evidenceDir": "docs/qa/local-crocheck-2026-06-16-resume",
+  "fixesApplied": [
+    "Removed automatic coupon persistence so MOBMEN is not prefilled or surfaced to clean users.",
+    "Removed textual Conta nav link because the account/profile icon now owns account access.",
+    "Reduced desktop search width and nav gap so Suporte no longer collides with search."
+  ],
+  "objectiveChecks": [
+    {
+      "label": "home-desktop",
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0,
+      "hasMobmen": false
+    },
+    {
+      "label": "achados-desktop",
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0,
+      "hasMobmen": false,
+      "cards": 104,
+      "marketButtons": 104,
+      "mobilytechButtons": 50,
+      "verOfertaButtons": 54,
+      "shopeeButtons": 12
+    },
+    {
+      "label": "conta-desktop",
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0,
+      "hasMobmen": false
+    },
+    {
+      "label": "home-mobile",
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0,
+      "hasMobmen": false
+    },
+    {
+      "label": "achados-mobile",
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0,
+      "hasMobmen": false
+    },
+    {
+      "label": "conta-mobile",
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0,
+      "hasMobmen": false
+    },
+    {
+      "label": "supplier-cart",
+      "cartCount": 1,
+      "couponValue": "",
+      "hasMobmen": false,
+      "supplierShipping": true,
+      "total": "R$ 178,90",
+      "mercadoPago": "rgb(255, 241, 89)",
+      "abacatePay": "rgb(24, 242, 139)"
+    },
+    {
+      "label": "header-final",
+      "hasContaNav": false,
+      "lastLinkClearancePx": 29.625,
+      "overflowX": false,
+      "brokenImages": 0,
+      "logs": 0
+    }
+  ],
+  "visualScores": {
+    "desktopHeaderPopover": 9,
+    "cartCheckoutDrawer": 8.6,
+    "accountPage": 8.8,
+    "findsDesktopMobile": 8.5,
+    "overallLocal": 8.8
+  },
+  "remainingRisks": [
+    "External ChatGPT UI/Computer Use was not exposed by tool discovery in this resumed session, so this is a local ChatGPT visual pass rather than a separate UI conversation.",
+    "Live Wix app image test still depends on Wix connector reauthentication or logged-in panel access.",
+    "Production deploy/QA still pending for this latest local batch."
+  ]
+}

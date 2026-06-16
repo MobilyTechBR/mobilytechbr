@@ -1,0 +1,21 @@
+{
+  "cleanCartReport2": {
+    "abacate": {
+      "bg": "rgb(24, 242, 139)",
+      "bgImage": "none"
+    },
+    "cartCount": "1",
+    "couponValue": "",
+    "drawerOpen": true,
+    "hasMobmen": false,
+    "mercadoPago": {
+      "bg": "rgb(255, 241, 89)",
+      "bgImage": "none"
+    },
+    "supplierShipping": true,
+    "text": "LOJA ONLINE\nCarrinho\n×\nDock station USB-C 8 em 1 com HDMI\nSem opcionais\nR$ 149,00\n×\nFrete selecionado\nFornecedor selecionado - Envio direto do fornecedor\nR$ 29,90\nTotal\nR$ 178,90\nCupom promocional\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nEnvio obrigatorio para MobilyTech Finds\nInforme o CEP e selecione o envio direto com rastreio; retirada local nao se aplica.\nCEP\nCalcular frete\nFornecedor selecionado - Envio direto\n18 dia(s) uteis estimados. Frete calculado pela origem do fornecedor.\nR$ 29,90\nPagar pelo Mercado Pago\nPagar pelo Abacate Pay\n\nO pagamento usa as rotas seguras ja configuradas na MobilyTech BR. Frete automatico pelo Melhor Envio quando disponivel.",
+    "total17890": true
+  },
+  "cleanCartLogs2": [],
+  "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\04-cart-supplier-desktop.png"
+}

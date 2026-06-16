@@ -50,6 +50,56 @@ REVIEWS = [
     },
 ]
 
+DEFAULT_SITE_CONTENT = {
+    "homeHero": {
+        "title": "PCs revisados para jogar, trabalhar e criar.",
+        "subtitle": "Computadores testados por especialistas, upgrades sob medida e atendimento direto da MobilyTech BR.",
+        "primaryLabel": "Ver catalogo de PCs",
+        "secondaryLabel": "Monte seu PC",
+        "featuredProductId": "pc-gamer-i5-gt610",
+        "featuredKicker": "Em destaque",
+    },
+    "servicePanels": {
+        "build": {
+            "image": "./assets/phase2-service-build-reference.png",
+            "alt": "Monte seu PC MobilyTech",
+            "label": "Monte seu PC - solicitar orcamento",
+        },
+        "clean": {
+            "image": "./assets/phase2-service-clean-reference.png",
+            "alt": "Limpeza de PC MobilyTech",
+            "label": "Limpeza de PC - agendar limpeza",
+        },
+        "cleanFormImage": "./assets/phase2-clean-form-visual.png",
+    },
+    "pages": {
+        "ofertas": {
+            "title": "PCs revisados e hardware em estoque",
+            "intro": "Catalogo visual inspirado em lojas gamer, com produtos reais da MobilyTech BR, carrinho, frete e checkout online.",
+            "image": "",
+        },
+        "achados": {
+            "title": "MobilyTech Finds",
+            "intro": "Complemente seu setup com acessorios, upgrades e gadgets selecionados pela curadoria MobilyTech.",
+            "image": "./assets/mobilytech-character-cutout.png",
+        },
+        "montagem": {
+            "title": "Monte seu PC com a MobilyTech BR",
+            "intro": "Conte o objetivo, o orcamento e o que voce ja tem. A gente monta uma proposta coerente, sem empurrar peca desnecessaria.",
+            "image": "./assets/phase2-service-build-reference.png",
+        },
+        "limpeza": {
+            "title": "Limpeza e relatorio do PC",
+            "intro": "Servico de limpeza com cuidado, organizacao e registro visual do antes/depois para manter o computador confiavel.",
+            "image": "./assets/phase2-service-clean-reference.png",
+        },
+        "conta": {
+            "title": "Minha conta e pedidos",
+            "intro": "Entre com sua conta para acompanhar pedidos, dados de entrega e suporte de pos-venda em um lugar so.",
+        },
+    },
+}
+
 
 def load_json(name: str, default):
     path = DATA / name
@@ -70,6 +120,26 @@ def money(value) -> str:
 
 def clean_text(value: str) -> str:
     return html.escape(str(value or ""), quote=True)
+
+
+def merge_dict(default: dict, override: dict | None) -> dict:
+    result = json.loads(json.dumps(default, ensure_ascii=False))
+    if not isinstance(override, dict):
+        return result
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(result.get(key), dict):
+            result[key] = merge_dict(result[key], value)
+        else:
+            result[key] = value
+    return result
+
+
+def asset_path(prefix: str, path: str) -> str:
+    return f"{prefix}{str(path or '').replace('./', '')}"
+
+
+def product_by_id(products, product_id):
+    return next((item for item in products if str(item.get("id")) == str(product_id)), None)
 
 
 PUBLIC_FIND_FIELDS = {
@@ -215,7 +285,6 @@ def header(prefix: str, active: str = "home") -> str:
         ("limpeza", "Limpeza", "limpeza"),
         ("achados", "MobilyTech Finds", "achados"),
         ("avaliacoes", "Avaliacoes", "avaliacoes"),
-        ("conta", "Conta", "conta"),
         ("contato", "Suporte", "contato"),
     ]
     nav_parts = []
@@ -226,12 +295,13 @@ def header(prefix: str, active: str = "home") -> str:
             f'<a class="nav-link{" active" if active_key == active else ""}" href="{links[href_key]}">{label}</a>'
         )
     nav_html = "\n".join(nav_parts)
+    account_button_class = "icon-action account-action" + (" active" if active == "conta" else "")
     return f"""
     <header class="site-header">
       <div class="topbar">
         <div class="topbar-inner">
           <button class="ticker-arrow" type="button" aria-label="Promocao anterior">&#8249;</button>
-          <p>Julio na MobilyTech: use o cupom MOBMEN para 6% OFF em PCs revisados selecionados.</p>
+          <p>Ofertas MobilyTech BR: PCs revisados, upgrades e atendimento direto para fechar sua compra com seguranca.</p>
           <button class="ticker-arrow" type="button" aria-label="Proxima promocao">&#8250;</button>
         </div>
       </div>
@@ -248,11 +318,31 @@ def header(prefix: str, active: str = "home") -> str:
           </label>
           <div class="search-results" id="searchResults" hidden></div>
         </div>
-        <a class="icon-action account-action" href="{links["conta"]}" aria-label="Minha conta">
-          <span aria-hidden="true">
-            <svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.05c-4.2 0-7.6 2.33-7.6 5.2 0 .62.5 1.12 1.12 1.12h12.96c.62 0 1.12-.5 1.12-1.12 0-2.87-3.4-5.2-7.6-5.2Z"/></svg>
-          </span>
-        </a>
+        <div class="account-menu-wrap">
+          <button class="{account_button_class}" id="accountMenuButton" type="button" aria-label="Abrir menu da conta" aria-controls="accountPopover" aria-expanded="false">
+            <span aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="img" focusable="false"><path d="M12 12.25a4.25 4.25 0 1 0 0-8.5 4.25 4.25 0 0 0 0 8.5Zm0 2.05c-4.2 0-7.6 2.33-7.6 5.2 0 .62.5 1.12 1.12 1.12h12.96c.62 0 1.12-.5 1.12-1.12 0-2.87-3.4-5.2-7.6-5.2Z"/></svg>
+            </span>
+          </button>
+          <div class="account-popover" id="accountPopover" hidden>
+            <p class="account-popover-kicker" id="accountGreeting">Conta MobilyTech</p>
+            <strong id="accountMenuTitle">Entre para ver seus pedidos</strong>
+            <small id="accountMenuStatus">Acesse com Google para acompanhar compras e dados de entrega.</small>
+            <div class="account-popover-actions" id="accountGuestActions">
+              <a class="account-login google-login" id="accountGoogleLogin" href="/api/auth-google-start">Entrar com Google</a>
+              <a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/auth-microsoft-start">Entrar com Microsoft</a>
+            </div>
+            <nav class="account-popover-links" aria-label="Atalhos da conta">
+              <a href="{links["conta"]}#minha-conta">Central Minha Conta</a>
+              <a href="{links["conta"]}#meus-pedidos">Meus pedidos</a>
+              <a href="{links["conta"]}#enderecos">Enderecos</a>
+              <a href="{links["conta"]}#retirada">Retirada local</a>
+              <a href="{links["contato"]}">Suporte</a>
+              <a id="accountAdminLink" href="{prefix}admin" hidden>Painel interno</a>
+              <a id="accountLogout" href="/api/auth-logout?returnTo=/" hidden>Sair</a>
+            </nav>
+          </div>
+        </div>
         <button class="cart-mini" id="cartButton" type="button" aria-label="Abrir carrinho">
           <span aria-hidden="true">&#128722;</span>
           <strong id="cartCount">0</strong>
@@ -335,26 +425,32 @@ def product_seed(products):
     return pcs, hardware
 
 
-def home_main(products, finalists, prefix: str) -> str:
+def home_main(products, finalists, prefix: str, site_content: dict | None = None) -> str:
+    content = merge_dict(DEFAULT_SITE_CONTENT, site_content or {})
+    home = content["homeHero"]
+    panels = content["servicePanels"]
     pcs, hardware = product_seed(products)
-    hero_product = pcs[0] if pcs else (products[0] if products else {})
+    configured_product = product_by_id(products, home.get("featuredProductId"))
+    hero_product = configured_product or (pcs[0] if pcs else (products[0] if products else {}))
     hero_image = hero_product.get("cutout") or hero_product.get("image") or "./assets/mobilytech-logo.png"
     hero_specs = hero_product.get("specs", {})
     links = page_links(prefix)
+    build_panel = panels.get("build", {})
+    clean_panel = panels.get("clean", {})
     return f"""
     <main>
       <section class="hero-slider" id="inicio">
         <div class="hero-copy">
-          <h1>PCs revisados para jogar, trabalhar e criar.</h1>
-          <p>Computadores testados por especialistas, upgrades sob medida e atendimento direto da MobilyTech BR.</p>
+          <h1>{clean_text(home.get("title"))}</h1>
+          <p>{clean_text(home.get("subtitle"))}</p>
           <div class="hero-actions">
-            <a class="btn btn-red" href="{links["ofertas"]}">Ver catalogo de PCs <span>&rarr;</span></a>
-            <a class="btn btn-white" href="{links["montagem"]}">Monte seu PC</a>
+            <a class="btn btn-red" href="{links["ofertas"]}">{clean_text(home.get("primaryLabel"))} <span>&rarr;</span></a>
+            <a class="btn btn-white" href="{links["montagem"]}">{clean_text(home.get("secondaryLabel"))}</a>
           </div>
         </div>
         <img class="hero-pc" src="{prefix}{hero_image.replace("./", "")}" alt="{clean_text(hero_product.get("title", "PC MobilyTech"))}">
         <aside class="hero-deal-card">
-          <span>Em destaque</span>
+          <span>{clean_text(home.get("featuredKicker"))}</span>
           <h2>{clean_text(hero_product.get("title", "PC MobilyTech"))}</h2>
           <p>{clean_text(hero_specs.get("memory", "PC revisado"))} &middot; {clean_text(hero_specs.get("storage", "SSD"))}</p>
           <strong>{money(hero_product.get("price"))}</strong>
@@ -377,12 +473,12 @@ def home_main(products, finalists, prefix: str) -> str:
       <div class="product-grid compact" id="homePcGrid" data-limit="5"></div>
       <section class="ibp-panels" id="servicos">
         <a class="service-panel service-panel-image service-build-image" href="{links["montagem"]}" aria-label="Solicitar orcamento de montagem de PC">
-          <img src="{prefix}assets/phase2-service-build-reference.png" alt="Monte seu PC MobilyTech">
-          <span>Monte seu PC - solicitar orcamento</span>
+          <img src="{asset_path(prefix, build_panel.get("image"))}" alt="{clean_text(build_panel.get("alt"))}">
+          <span>{clean_text(build_panel.get("label"))}</span>
         </a>
         <a class="service-panel service-panel-image service-clean-image" href="{links["limpeza"]}" aria-label="Agendar limpeza de PC">
-          <img src="{prefix}assets/phase2-service-clean-reference.png" alt="Limpeza de PC MobilyTech">
-          <span>Limpeza de PC - agendar limpeza</span>
+          <img src="{asset_path(prefix, clean_panel.get("image"))}" alt="{clean_text(clean_panel.get("alt"))}">
+          <span>{clean_text(clean_panel.get("label"))}</span>
         </a>
       </section>
       <section class="section-head" id="hardware">
@@ -397,25 +493,28 @@ def home_main(products, finalists, prefix: str) -> str:
         <div class="finds-text">
           <p class="section-kicker">Curadoria MobilyTech</p>
           <h2>MobilyTech Finds</h2>
-          <p>Produtos escolhidos para completar setup, manutencao e upgrades. Recomendacoes externas usam Mercado Livre, Amazon ou AliExpress.</p>
+          <p>Produtos escolhidos para completar setup, manutencao e upgrades. Recomendacoes externas usam Mercado Livre, Amazon, Shopee ou AliExpress.</p>
           <a class="btn btn-dark" href="{links["achados"]}">Ver selecionados</a>
         </div>
         <div class="finds-preview" id="homeFindsGrid" data-limit="3"></div>
       </section>
       {reviews_section(links["avaliacoes"])}
-      {cleaning_inline_form(prefix)}
+      {cleaning_inline_form(prefix, panels)}
     </main>
     """
 
 
-def products_page(title: str, intro: str, prefix: str) -> str:
+def products_page(page: dict, prefix: str) -> str:
+    image = page.get("image") or ""
+    image_html = f'<img src="{asset_path(prefix, image)}" alt="Catalogo MobilyTech BR">' if image else ""
     return f"""
     <main>
       <section class="page-hero page-hero-products">
         <div>
-          <h1>{title}</h1>
-          <p>{intro}</p>
+          <h1>{clean_text(page.get("title"))}</h1>
+          <p>{clean_text(page.get("intro"))}</p>
         </div>
+        {image_html}
       </section>
       <section class="section-head">
         <div>
@@ -433,15 +532,16 @@ def products_page(title: str, intro: str, prefix: str) -> str:
     """
 
 
-def finds_page(prefix: str) -> str:
-    return """
+def finds_page(prefix: str, page: dict) -> str:
+    image = page.get("image") or "./assets/mobilytech-character-cutout.png"
+    return f"""
     <main>
       <section class="page-hero page-hero-finds">
         <div>
-          <h1>MobilyTech Finds</h1>
-          <p>Complemente seu setup com acessorios, upgrades e gadgets selecionados pela curadoria MobilyTech.</p>
+          <h1>{clean_text(page.get("title"))}</h1>
+          <p>{clean_text(page.get("intro"))}</p>
         </div>
-        <img src="../assets/mobilytech-character-cutout.png" alt="Personagem MobilyTech">
+        <img src="{asset_path(prefix, image)}" alt="MobilyTech Finds">
       </section>
       <section class="section-head">
         <div>
@@ -454,7 +554,7 @@ def finds_page(prefix: str) -> str:
         <div>
           <p class="section-kicker">MobilyTech recomenda</p>
           <h2>Boas compras nos marketplaces parceiros</h2>
-          <p>Itens que fazem sentido para setup, manutencao e uso diario, com compra feita diretamente no Mercado Livre, Amazon ou AliExpress.</p>
+          <p>Itens que fazem sentido para setup, manutencao e uso diario, com compra feita diretamente no Mercado Livre, Amazon, Shopee ou AliExpress.</p>
         </div>
       </section>
       <div class="finds-grid finds-grid-recommendations" id="findsRecommendedGrid" data-group="recomendacoes"></div>
@@ -462,15 +562,16 @@ def finds_page(prefix: str) -> str:
     """
 
 
-def montagem_page(prefix: str) -> str:
-    return """
+def montagem_page(prefix: str, page: dict) -> str:
+    image = page.get("image") or "./assets/phase2-service-build-reference.png"
+    return f"""
     <main>
       <section class="page-hero page-hero-build">
         <div>
-          <h1>Monte seu PC com a MobilyTech BR</h1>
-          <p>Conte o objetivo, o orcamento e o que voce ja tem. A gente monta uma proposta coerente, sem empurrar peca desnecessaria.</p>
+          <h1>{clean_text(page.get("title"))}</h1>
+          <p>{clean_text(page.get("intro"))}</p>
         </div>
-        <img src="../assets/phase2-service-build-reference.png" alt="Monte seu PC MobilyTech">
+        <img src="{asset_path(prefix, image)}" alt="Monte seu PC MobilyTech">
       </section>
       <section class="split-form">
         <div class="form-copy">
@@ -495,15 +596,17 @@ def montagem_page(prefix: str) -> str:
     """
 
 
-def limpeza_page(prefix: str) -> str:
-    return """
+def limpeza_page(prefix: str, page: dict, service_panels: dict) -> str:
+    image = page.get("image") or "./assets/phase2-service-clean-reference.png"
+    side_image = service_panels.get("cleanFormImage") or "./assets/phase2-clean-form-visual.png"
+    return f"""
     <main>
       <section class="page-hero page-hero-clean">
         <div>
-          <h1>Limpeza e relatorio do PC</h1>
-          <p>Servico de limpeza com cuidado, organizacao e registro visual do antes/depois para manter o computador confiavel.</p>
+          <h1>{clean_text(page.get("title"))}</h1>
+          <p>{clean_text(page.get("intro"))}</p>
         </div>
-        <img src="../assets/phase2-service-clean-reference.png" alt="Limpeza de PC MobilyTech">
+        <img src="{asset_path(prefix, image)}" alt="Limpeza de PC MobilyTech">
       </section>
       <section class="split-form">
         <div class="form-copy clean-page-copy">
@@ -514,7 +617,7 @@ def limpeza_page(prefix: str) -> str:
             <li>Troca de pasta termica quando combinada.</li>
             <li>Relatorio do estado do computador.</li>
           </ul>
-          <img class="clean-side-image" src="../assets/phase2-clean-form-visual.png" alt="PC limpo com kit de limpeza">
+          <img class="clean-side-image" src="{asset_path(prefix, side_image)}" alt="PC limpo com kit de limpeza">
         </div>
         <form class="lead-form" id="cleanForm">
           <label>Nome completo<input name="name" placeholder="Seu nome" required></label>
@@ -595,75 +698,92 @@ def contato_page(prefix: str) -> str:
     """
 
 
-def conta_page(prefix: str) -> str:
-    return """
+def conta_page(prefix: str, page: dict) -> str:
+    return f"""
     <main>
       <section class="page-hero page-hero-account">
         <div>
-          <h1>Minha conta e pedidos</h1>
-          <p>Acompanhe compras, combine retirada e fale com a MobilyTech BR sem perder o historico do atendimento.</p>
+          <h1>{clean_text(page.get("title"))}</h1>
+          <p>{clean_text(page.get("intro"))}</p>
         </div>
       </section>
-      <section class="account-grid" aria-label="Area do cliente">
-        <article class="account-card account-card-main">
-          <p class="section-kicker">Acompanhamento</p>
-          <h2>Minha compra e atendimento</h2>
-          <p>Acompanhe compras, combine retirada e consulte pedidos sem perder o historico do atendimento. Dados de pagamento ficam somente nos provedores de checkout.</p>
-          <div class="account-actions">
-            <a class="btn btn-red" href="https://wa.me/5511954801967?text=Ol%C3%A1%2C%20quero%20acompanhar%20meu%20pedido%20na%20MobilyTech%20BR." target="_blank" rel="noopener">Acompanhar pelo WhatsApp</a>
-            <a class="btn btn-white" href="mailto:mobilytechbr@gmail.com?subject=Acompanhamento%20de%20pedido%20MobilyTech%20BR">Enviar e-mail</a>
-          </div>
-        </article>
-        <article class="account-card">
-          <p class="section-kicker">Acesso seguro</p>
-          <h2>Conta do cliente</h2>
-          <p>Entre com o numero do pedido e o e-mail usado na compra para receber atendimento seguro. Pagamentos e dados sensiveis ficam protegidos nos provedores oficiais de checkout.</p>
-          <div class="login-preview" aria-label="Acesso seguro do cliente">
-            <button type="button" data-focus-order><span>#</span> Localizar pedido</button>
-            <button type="button" data-support-login><span>?</span> Falar com suporte</button>
-          </div>
-          <div class="account-actions">
-            <a class="btn btn-dark" href="#orderLookupForm">Localizar pedido</a>
-            <a class="btn btn-white outline-account" href="https://wa.me/5511954801967?text=Ola%2C%20quero%20ajuda%20com%20meu%20pedido%20MobilyTech%20BR." target="_blank" rel="noopener">Ajuda com pedido</a>
-          </div>
-        </article>
-        <article class="account-card">
-          <p class="section-kicker">Pedido online</p>
-          <h2>Status esperados</h2>
-          <ol class="order-timeline">
-            <li><b>1</b><span><strong>Pagamento pendente</strong><small>Pedido recebido e aguardando confirmacao.</small></span></li>
-            <li><b>2</b><span><strong>Pagamento aprovado</strong><small>Preparacao do PC, hardware ou item selecionado.</small></span></li>
-            <li><b>3</b><span><strong>Despachado</strong><small>Codigo de rastreio enviado quando houver frete.</small></span></li>
-            <li><b>4</b><span><strong>Em transporte</strong><small>Atualizacao pelo envio contratado.</small></span></li>
-            <li><b>5</b><span><strong>Entregue ou retirada combinada</strong><small>Finalizacao do atendimento e pos-venda.</small></span></li>
-          </ol>
-        </article>
-        <article class="account-card">
-          <p class="section-kicker">Retirada local</p>
-          <h2>Retirada a combinar</h2>
-          <p>Quando o cliente escolhe retirada em Vila Suzana, a conta mostra o pedido aprovado e o contato para combinar horario com a loja.</p>
-          <a class="btn btn-dark full" href="https://wa.me/5511954801967?text=Ola%2C%20quero%20combinar%20a%20retirada%20do%20meu%20pedido%20MobilyTech%20BR." target="_blank" rel="noopener">Combinar pelo WhatsApp</a>
-        </article>
-        <article class="account-card">
-          <p class="section-kicker">Consulta rapida</p>
-          <h2>Precisa localizar um pedido?</h2>
-          <form class="lead-form compact-form" id="orderLookupForm">
-            <label>Numero do pedido<input name="order" placeholder="Ex: MTB-1024"></label>
-            <label>E-mail usado na compra<input name="email" type="email" placeholder="seu@email.com"></label>
-            <button class="btn btn-red full" type="submit">Pedir ajuda pelo WhatsApp</button>
-          </form>
-        </article>
+      <section class="account-layout" aria-label="Area do cliente">
+        <div class="account-primary">
+          <article class="account-card account-login-card" id="minha-conta">
+            <p class="section-kicker">Acesso seguro</p>
+            <h2>Conta do cliente</h2>
+            <p id="accountPageIntro">Entre com Google para ver pedidos vinculados ao seu e-mail. Senhas ficam no provedor de login e dados de pagamento ficam no Mercado Pago, PayPal ou outro checkout oficial.</p>
+            <div class="account-session" id="accountPagePanel">
+              <div class="account-avatar" aria-hidden="true">MT</div>
+              <div>
+                <strong>Voce ainda nao entrou.</strong>
+                <small>Use um login seguro para carregar seus pedidos quando eles estiverem disponiveis.</small>
+              </div>
+            </div>
+            <div class="account-login-options" id="accountPageGuestActions">
+              <a class="account-login google-login" href="/api/auth-google-start">Entrar com Google</a>
+              <a class="account-login microsoft-login" href="/api/auth-microsoft-start">Entrar com Microsoft</a>
+            </div>
+          </article>
+          <article class="account-card" id="meus-pedidos">
+            <p class="section-kicker">Meus pedidos</p>
+            <h2>Historico e status</h2>
+            <div class="orders-panel" id="ordersPanel">
+              <p class="empty">Entre na sua conta para carregar pedidos vinculados ao seu e-mail.</p>
+            </div>
+          </article>
+          <article class="account-card" id="enderecos">
+            <p class="section-kicker">Dados de entrega</p>
+            <h2>Enderecos e checkout</h2>
+            <p>Enderecos usados em pedidos aparecem junto do pedido quando o checkout envia esses dados para a MobilyTech BR. Cartoes e carteiras digitais nao sao armazenados pela loja.</p>
+            <div class="secure-note-list">
+              <span>Login por provedor oficial</span>
+              <span>Cartao somente no checkout</span>
+              <span>Rastreio vinculado ao pedido</span>
+            </div>
+          </article>
+        </div>
+        <aside class="account-side">
+          <article class="account-card account-card-main" id="retirada">
+            <p class="section-kicker">Retirada local</p>
+            <h2>Retirada a combinar</h2>
+            <p>Quando o pedido for aprovado para retirada em Vila Suzana, a conta mostra o status e o contato fica como apoio para combinar horario.</p>
+            <a class="btn whatsapp-btn full" href="https://wa.me/5511954801967?text=Ola%2C%20quero%20combinar%20a%20retirada%20do%20meu%20pedido%20MobilyTech%20BR." target="_blank" rel="noopener"><img src="../assets/whatsapp-icon-clean.png" alt="" aria-hidden="true">Combinar pelo WhatsApp</a>
+          </article>
+          <article class="account-card">
+            <p class="section-kicker">Pedido online</p>
+            <h2>Status esperados</h2>
+            <ol class="order-timeline">
+              <li><b>1</b><span><strong>Pagamento pendente</strong><small>Pedido recebido e aguardando confirmacao.</small></span></li>
+              <li><b>2</b><span><strong>Pagamento aprovado</strong><small>Preparacao do PC, hardware ou item selecionado.</small></span></li>
+              <li><b>3</b><span><strong>Despachado</strong><small>Codigo de rastreio enviado quando houver frete.</small></span></li>
+              <li><b>4</b><span><strong>Em transporte</strong><small>Atualizacao pelo envio contratado.</small></span></li>
+              <li><b>5</b><span><strong>Entregue ou retirada combinada</strong><small>Finalizacao do atendimento e pos-venda.</small></span></li>
+            </ol>
+          </article>
+          <article class="account-card account-support-card">
+            <p class="section-kicker">Atendimento</p>
+            <h2>Suporte quando precisar</h2>
+            <p>Use o suporte quando o pedido nao aparecer na conta, quando houver divergencia ou quando precisar combinar algum detalhe manual.</p>
+            <div class="account-actions">
+              <a class="btn whatsapp-btn" href="https://wa.me/5511954801967?text=Ola%2C%20quero%20ajuda%20com%20meu%20pedido%20MobilyTech%20BR." target="_blank" rel="noopener"><img src="../assets/whatsapp-icon-clean.png" alt="" aria-hidden="true">WhatsApp</a>
+              <a class="btn btn-white outline-account" href="mailto:mobilytechbr@gmail.com?subject=Acompanhamento%20de%20pedido%20MobilyTech%20BR">E-mail</a>
+            </div>
+          </article>
+        </aside>
       </section>
     </main>
     """
 
 
-def cleaning_inline_form(prefix: str) -> str:
+def cleaning_inline_form(prefix: str, service_panels: dict | None = None) -> str:
+    service_panels = service_panels or DEFAULT_SITE_CONTENT["servicePanels"]
+    image = service_panels.get("cleanFormImage") or "./assets/phase2-clean-form-visual.png"
     return f"""
       <section class="inline-clean">
       <div class="clean-form-visual">
         <p class="section-kicker">Servico especializado</p>
-        <img src="{prefix}assets/phase2-clean-form-visual.png" alt="PC limpo com kit de limpeza">
+        <img src="{asset_path(prefix, image)}" alt="PC limpo com kit de limpeza">
       </div>
         <form class="lead-form compact-form" id="cleanFormInline">
           <label>Nome<input name="name" placeholder="Seu nome" required></label>
@@ -686,7 +806,7 @@ def cart_drawer(prefix: str) -> str:
       <div id="cartItems" class="drawer-items"></div>
       <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
       <div class="coupon-box">
-        <label>Cupom promocional<input id="couponCode" autocomplete="off" placeholder="Ex.: MOBMEN"></label>
+        <label>Cupom promocional<input id="couponCode" autocomplete="off" placeholder="Digite seu cupom"></label>
         <small id="couponFeedback">Cupons valem para produtos elegiveis; frete e envio direto ficam separados.</small>
       </div>
       <details class="shipping-box">
@@ -737,11 +857,11 @@ def css() -> str:
     .topbar-inner{height:44px;max-width:1540px;margin:auto;display:flex;align-items:center;justify-content:center;gap:30px;color:#222;font-size:15px}
     .topbar p{margin:0}.ticker-arrow{border:0;background:transparent;font-size:34px;color:#9ca3af;cursor:pointer}
     .site-header{position:sticky;top:0;z-index:20;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-    .nav-shell{max-width:1540px;margin:auto;height:76px;padding:0 22px;display:grid;grid-template-columns:minmax(160px,184px) minmax(620px,1fr) minmax(160px,250px) 34px 52px;align-items:center;gap:10px}
+    .nav-shell{max-width:1540px;margin:auto;height:76px;padding:0 22px;display:grid;grid-template-columns:minmax(160px,184px) minmax(620px,1fr) minmax(150px,210px) 44px 52px;align-items:center;gap:10px}
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap;min-width:0}.brand img{width:44px;height:44px;object-fit:contain;flex:0 0 auto}.brand span{overflow:hidden;text-overflow:ellipsis}
-    .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:8px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
+    .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
-    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center}.account-action svg{width:18px;height:18px;fill:#111}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
+    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:9px;font-weight:1000}.google-login:before{content:"G";width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid #dfe5ef;color:#4285f4;display:grid;place-items:center;font-weight:1000}.microsoft-login:before{content:"";width:22px;height:22px;background:linear-gradient(90deg,#f25022 0 49%,transparent 49% 51%,#7fba00 51%);box-shadow:0 11px 0 #00a4ef,12px 11px 0 #ffb900}.microsoft-login:after{content:"";width:0}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
     main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}
     .hero-slider:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 84%,rgba(255,255,255,.26),transparent 26%),radial-gradient(circle at 82% 20%,rgba(255,255,255,.25),transparent 20%);pointer-events:none}
     .hero-copy{position:relative;z-index:2;max-width:620px}.hero-copy h1{font-size:48px;line-height:1.02;margin:0 0 18px;font-weight:1000;letter-spacing:0}.hero-copy p{font-size:21px;font-weight:800;margin:0 0 26px;max-width:620px}
@@ -754,7 +874,7 @@ def css() -> str:
     .product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}.catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hardware-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
     .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}.price{font-size:23px;font-weight:1000;line-height:1.08}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
-    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:21px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:0;background:linear-gradient(90deg,#fff159,#ffe000);color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none}.market-btn img{height:31px;width:auto;max-width:78px;object-fit:contain}.market-mobilytech{background:linear-gradient(90deg,#19f5d0,#15a7ff);color:#031014;box-shadow:0 10px 24px rgba(21,167,255,.22)}.market-ml{background:linear-gradient(90deg,#fff159,#ffe35d 55%,#00a650);color:#26220a}.market-amazon{background:linear-gradient(90deg,#111820,#232f3e 58%,#ff9900);color:#fff}.market-ali{background:linear-gradient(90deg,#ff4747,#ff6a00);color:#fff}
+    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:21px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:0;background:#fff159;color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08)}.market-btn img{height:31px;width:auto;max-width:78px;object-fit:contain}.market-mobilytech{background:#19f5d0;color:#031014;box-shadow:0 10px 24px rgba(25,245,208,.18)}.market-ml{background:#fff159;color:#26220a}.market-amazon{background:#232f3e;color:#fff;border-top:4px solid #ff9900}.market-shopee{background:#ee4d2d;color:#fff}.market-ali{background:#ff4747;color:#fff}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
     .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{grid-template-columns:1.05fr .95fr;background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08);padding:22px 24px;align-items:center}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:12px}.clean-form-visual img{width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08);background:#fff}.clean-page-copy{display:flex;flex-direction:column;gap:16px}.clean-side-image{width:100%;max-height:340px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.inline-clean .lead-form{gap:10px;align-self:center}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.inline-clean .lead-form input{padding:11px 14px}.inline-clean .btn-red{min-height:48px}.lead-form textarea{min-height:110px;resize:vertical}
     .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,2vw,34px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line .brand-logo{height:34px;max-width:116px;width:auto;object-fit:contain;opacity:1;flex:0 0 auto;filter:invert(1) saturate(.2) brightness(.9)}.brand-line .logo-microsoft{filter:none;height:32px;max-width:112px}.brand-line .logo-intel{max-width:88px}.brand-line .logo-kingston,.brand-line .logo-crucial{max-width:120px}
@@ -762,14 +882,14 @@ def css() -> str:
     .page-hero{min-height:320px;border-radius:0 0 18px 18px;margin-bottom:32px;padding:54px 64px;display:grid;grid-template-columns:1fr 480px;align-items:center;overflow:hidden;background:linear-gradient(90deg,#f5f6f8,#ffffff);position:relative}.page-hero h1{font-size:48px;line-height:1.02;margin:0 0 14px}.page-hero p{font-size:20px;color:#4b5563;font-weight:800;max-width:700px}.page-hero img{justify-self:end;max-height:300px;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}.page-hero-products{background:linear-gradient(90deg,#f4f4f4,#fff 48%,#e8f5ff)}.page-hero-finds{background:linear-gradient(90deg,#fff7df,#fff 45%,#e7fbff)}.page-hero-build{background:linear-gradient(90deg,#fbe6e6,#fff 46%,#f1f1f1)}.page-hero-clean{background:linear-gradient(90deg,#effbe7,#fff 46%,#e8f5ff)}.page-hero-reviews,.page-hero-contact{grid-template-columns:1fr;background:#f7f8fb}
     .filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}.filter-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 22px;font-weight:1000;cursor:pointer}.filter-chip.active{background:#111;color:#fff}.contact-grid article{background:#fff;border-radius:16px;padding:26px;box-shadow:0 8px 24px rgba(0,0,0,.07)}.contact-grid h2{margin:0 0 8px}.shipping-contact-card{position:relative;overflow:hidden}.shipping-contact-card img{position:absolute;right:18px;top:18px;width:58px;height:58px;object-fit:contain;opacity:.92;filter:drop-shadow(0 8px 14px rgba(0,0,0,.12))}.shipping-contact-card h2,.shipping-contact-card p{max-width:calc(100% - 70px)}
     .page-hero-account{grid-template-columns:1fr;background:linear-gradient(90deg,#e9fbfa,#fff 45%,#e8f5ff)}
-    .account-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin:44px 0;align-items:start}
+    .account-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.72fr);gap:24px;margin:44px 0;align-items:start}.account-primary,.account-side{display:grid;gap:20px}
     .account-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(13,23,38,.08);padding:28px;min-width:0}
-    .account-card-main{background:linear-gradient(135deg,#111 0%,#1c2633 55%,#154f78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.login-preview{display:grid;gap:10px;margin-top:16px}.login-preview button{height:48px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2d3440;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.login-preview span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#f0f4f8;color:#111}
+    .account-card-main{background:linear-gradient(135deg,#0b2034 0%,#123f5f 58%,#0b6b78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.account-session{margin:18px 0 0;border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:14px;display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center}.account-avatar{width:54px;height:54px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-weight:1000;overflow:hidden}.account-avatar img{width:100%;height:100%;object-fit:cover}.account-session strong{display:block;font-size:18px}.account-session small{display:block;color:#657081;font-weight:850;line-height:1.35}.account-login-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.orders-panel{display:grid;gap:12px;margin-top:16px}.order-card{border:1px solid var(--line);border-radius:16px;background:#fbfcfd;padding:15px;display:grid;gap:8px}.order-card-head{display:flex;justify-content:space-between;gap:12px;align-items:start}.order-card h3{margin:0;font-size:18px}.order-status-pill{border-radius:999px;background:#e9fbfa;color:#087f78;padding:6px 10px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}.order-card dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}.order-card dt{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#687182;font-weight:1000}.order-card dd{margin:2px 0 0;font-weight:950;color:#18202b}.secure-note-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}.secure-note-list span{border:1px solid #e4eef8;background:#f8fbff;border-radius:12px;padding:12px;font-size:12px;font-weight:1000;color:#23445f;text-align:center}.whatsapp-btn{background:#18c56f;color:#04140b;box-shadow:0 10px 24px rgba(24,197,111,.18)}.whatsapp-btn img{width:22px;height:22px;object-fit:contain}
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
-.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:linear-gradient(90deg,#fff159,#ffe066 48%,#42c7f4);color:#1d2730}.checkout-abacate{background:linear-gradient(90deg,#d7ff5c,#1ce2a8 46%,#0b8f69);color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
     @media (max-width:1100px){
-      .nav-shell{grid-template-columns:auto 1fr auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/4;order:3;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.icon-action{display:none}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid{grid-template-columns:1fr}
+      .nav-shell{grid-template-columns:auto 1fr auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/4;order:3;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.account-menu-wrap{display:none}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid,.account-layout{grid-template-columns:1fr}
     }
     @media (max-width:680px){
       body{font-size:14px}
@@ -853,12 +973,14 @@ def css() -> str:
       .page-hero h1{font-size:30px;line-height:1.05}
       .page-hero p{font-size:14px;line-height:1.45}
       .page-hero img{max-height:160px}
-      .page-hero-account,.account-grid{width:100%;max-width:320px;margin-left:0;margin-right:auto}
-      .account-grid{grid-template-columns:1fr;gap:14px;margin-top:24px;margin-bottom:24px}
+      .page-hero-account,.account-layout{width:100%;max-width:360px;margin-left:0;margin-right:auto}
+      .account-layout{grid-template-columns:1fr;gap:14px;margin-top:24px;margin-bottom:24px}
       .account-card{padding:18px;border-radius:16px}
       .account-card h2{font-size:21px}
       .account-card h2,.account-card p,.account-card small,.order-timeline strong{overflow-wrap:anywhere;word-break:break-word}
       .account-actions{display:grid;gap:10px}
+      .account-login-options,.secure-note-list{grid-template-columns:1fr;display:grid}
+      .order-card dl{grid-template-columns:1fr}
       .order-timeline li{grid-template-columns:34px 1fr;padding:11px}
       .order-timeline b{width:34px;height:34px}
       .modal-grid{grid-template-columns:1fr}
@@ -898,7 +1020,8 @@ def js(products, finalists, addons, swaps) -> str:
     const cartKey = "mobilytech-ibuy-cart-v1";
     const couponKey = "mobilytech-coupon-v1";
     let cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
-    let activeCouponCode = localStorage.getItem(couponKey) || "";
+    let activeCouponCode = "";
+    try {{ localStorage.removeItem(couponKey); }} catch (error) {{}}
     let selectedShipping = null;
     const LOCAL_PROMOTIONS = [
       {{ code:"MOBMEN", percent:6, eligibleCategories:["pc"], label:"6% OFF em PCs revisados selecionados" }}
@@ -908,6 +1031,7 @@ def js(products, finalists, addons, swaps) -> str:
     const asset = (path) => assetBase + String(path || "").replace(/^\\.\\//, "");
     const money = (value) => new Intl.NumberFormat("pt-BR", {{ style:"currency", currency:"BRL" }}).format(Number(value || 0));
     const norm = (value) => String(value || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
+    const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}}[char]));
     const productById = (id) => DATA.products.find((item) => item.id === id);
     const ROUTES = {{
       home: assetBase + "index.html",
@@ -931,6 +1055,124 @@ def js(products, finalists, addons, swaps) -> str:
       {{ type:"Loja", icon:"C", title:"Carrinho e checkout", description:"Finalizar compra com frete, Mercado Pago ou Abacate Pay.", href: "#cart", terms:"carrinho checkout pagamento mercado pago abacate pay frete correios melhor envio finalizar" }}
     ];
     let currentSearchResults = [];
+    let accountSession = {{ authenticated:false, user:null, admin:false, providers:{{}} }};
+    function currentReturnTo() {{
+      return window.location.pathname + window.location.search + window.location.hash;
+    }}
+    function accountLoginHref(provider) {{
+      return `/api/auth-${{provider}}-start?returnTo=${{encodeURIComponent(currentReturnTo())}}`;
+    }}
+    function initials(name="", email="") {{
+      const source = String(name || email || "MT").trim();
+      const parts = source.includes("@") ? [source[0], source.split("@")[0]?.[1]] : source.split(/\\s+/).slice(0, 2).map((part) => part[0]);
+      return parts.filter(Boolean).join("").slice(0, 2).toUpperCase() || "MT";
+    }}
+    function setLoginLinks() {{
+      $$(".google-login").forEach((link) => link.setAttribute("href", accountLoginHref("google")));
+      $$(".microsoft-login").forEach((link) => {{
+        link.setAttribute("href", accountLoginHref("microsoft"));
+        if (accountSession.providers && accountSession.providers.microsoftConfigured === false) link.hidden = true;
+      }});
+      $$("#accountLogout").forEach((link) => link.setAttribute("href", `/api/auth-logout?returnTo=${{encodeURIComponent(currentReturnTo())}}`));
+    }}
+    function renderAccountMenu() {{
+      setLoginLinks();
+      const user = accountSession.user || {{}};
+      const logged = Boolean(accountSession.authenticated);
+      const greeting = $("#accountGreeting");
+      const title = $("#accountMenuTitle");
+      const status = $("#accountMenuStatus");
+      const guest = $("#accountGuestActions");
+      const logout = $("#accountLogout");
+      const admin = $("#accountAdminLink");
+      if (greeting) greeting.textContent = logged ? `Ola, ${{user.name || user.email || "cliente"}}` : "Conta MobilyTech";
+      if (title) title.textContent = logged ? "Central Minha Conta" : "Entre para ver seus pedidos";
+      if (status) status.textContent = logged ? String(user.email || "") : "Acesse com Google para acompanhar compras e dados de entrega.";
+      if (guest) guest.hidden = logged;
+      if (logout) logout.hidden = !logged;
+      if (admin) admin.hidden = !(logged && accountSession.admin);
+    }}
+    function renderAccountPage() {{
+      const panel = $("#accountPagePanel");
+      const guest = $("#accountPageGuestActions");
+      if (!panel) return;
+      const user = accountSession.user || {{}};
+      if (!accountSession.authenticated) {{
+        panel.innerHTML = `<div class="account-avatar" aria-hidden="true">MT</div><div><strong>Voce ainda nao entrou.</strong><small>Use um login seguro para carregar seus pedidos quando eles estiverem disponiveis.</small></div>`;
+        if (guest) guest.hidden = false;
+        renderOrders([]);
+        return;
+      }}
+      const safePicture = /^https:\\/\\//.test(String(user.picture || "")) ? String(user.picture) : "";
+      const avatar = safePicture
+        ? `<img src="${{escapeHtml(safePicture)}}" alt="">`
+        : initials(user.name, user.email);
+      panel.innerHTML = `<div class="account-avatar" aria-hidden="true">${{avatar}}</div><div><strong>${{escapeHtml(user.name || "Cliente MobilyTech")}}</strong><small>${{escapeHtml(user.email || "")}}</small></div>`;
+      if (guest) guest.hidden = true;
+      loadCustomerOrders();
+    }}
+    function normalizeOrder(order) {{
+      return {{
+        id: order.PedidoID || order.orderId || order.payment_id || order.id || "Pedido",
+        status: order.Status || order.status || "Em acompanhamento",
+        product: order.Produto || order.product_title || order.product || "Pedido MobilyTech BR",
+        amount: order.ValorPago || order.amount_paid || order.amount || "",
+        delivery: order.ModoEntrega || order.delivery_mode || "",
+        tracking: order.CodigoRastreio || order.tracking_code || "",
+        carrier: order.Transportadora || order.shipping_carrier || ""
+      }};
+    }}
+    function renderOrders(orders, meta={{}}) {{
+      const panel = $("#ordersPanel");
+      if (!panel) return;
+      if (!accountSession.authenticated) {{
+        panel.innerHTML = '<p class="empty">Entre na sua conta para carregar pedidos vinculados ao seu e-mail.</p>';
+        return;
+      }}
+      if (!Array.isArray(orders) || !orders.length) {{
+        const note = meta.configured === false
+          ? "Sua conta esta pronta. O historico automatico aparece aqui assim que o endpoint seguro de pedidos estiver conectado."
+          : "Nenhum pedido encontrado para este e-mail no momento.";
+        panel.innerHTML = `<p class="empty">${{escapeHtml(note)}}</p>`;
+        return;
+      }}
+      panel.innerHTML = orders.map((raw) => {{
+        const order = normalizeOrder(raw);
+        return `<article class="order-card">
+          <div class="order-card-head"><h3>${{escapeHtml(order.id)}}</h3><span class="order-status-pill">${{escapeHtml(order.status)}}</span></div>
+          <dl>
+            <div><dt>Produto</dt><dd>${{escapeHtml(order.product)}}</dd></div>
+            <div><dt>Valor</dt><dd>${{escapeHtml(order.amount || "Sob consulta")}}</dd></div>
+            <div><dt>Entrega</dt><dd>${{escapeHtml(order.delivery || "A confirmar")}}</dd></div>
+            <div><dt>Rastreio</dt><dd>${{escapeHtml(order.tracking || order.carrier || "Ainda nao disponivel")}}</dd></div>
+          </dl>
+        </article>`;
+      }}).join("");
+    }}
+    async function loadCustomerOrders() {{
+      if (!accountSession.authenticated || !$("#ordersPanel")) return;
+      $("#ordersPanel").innerHTML = '<p class="empty">Carregando pedidos...</p>';
+      try {{
+        const response = await fetch("/api/customer-orders", {{ cache:"no-store" }});
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Nao foi possivel carregar pedidos.");
+        renderOrders(data.orders || [], data);
+      }} catch(error) {{
+        $("#ordersPanel").innerHTML = `<p class="empty">${{escapeHtml(error.message)}}</p>`;
+      }}
+    }}
+    async function loadAccountSession() {{
+      setLoginLinks();
+      try {{
+        const response = await fetch("/api/auth-session", {{ cache:"no-store" }});
+        const data = await response.json();
+        if (response.ok) accountSession = data;
+      }} catch(_error) {{
+        accountSession = {{ authenticated:false, user:null, admin:false, providers:{{ googleConfigured:false, microsoftConfigured:false }} }};
+      }}
+      renderAccountMenu();
+      renderAccountPage();
+    }}
     function specs(product) {{
       const s = product.specs || {{}};
       return [s.processor, s.memory, s.gpu, s.storage, s.brand, s.capacity, s.interface].filter(Boolean).slice(0,4);
@@ -1103,6 +1345,39 @@ def js(products, finalists, addons, swaps) -> str:
         physical: products.filter((product) => !isSupplierProduct(product)).length
       }};
     }}
+    function fixedSupplierShippingQuote(postalCode="") {{
+      const rows = cart.map((item) => ({{ item, product: productById(item.productId) }})).filter((row) => row.product && isSupplierProduct(row.product));
+      if (!rows.length || rows.length !== cart.length) return null;
+      const price = rows.reduce((sum, row) => {{
+        const quantity = Math.max(1, Number(row.item.quantity || 1));
+        return sum + Number(row.product.shipping?.customerPrice || 0) * quantity;
+      }}, 0);
+      const deliveryTime = rows.reduce((max, row) => Math.max(max, Number(row.product.shipping?.deliveryTime || 18)), 0) || 18;
+      return {{
+        id: "supplier-fixed",
+        price: Math.round(price * 100) / 100,
+        postalCode,
+        company: "Fornecedor selecionado",
+        carrier: "Fornecedor selecionado",
+        name: "Envio direto do fornecedor",
+        serviceName: "Envio direto do fornecedor",
+        deliveryTime,
+        mode: "supplier-fixed",
+        originMode: "supplier"
+      }};
+    }}
+    function renderFixedSupplierShipping(box, quote) {{
+      if (!box || !quote) return;
+      selectedShipping = quote;
+      box.innerHTML = `<label class="shipping-option is-selected">
+        <span class="ship-main">
+          <input type="radio" name="shipping" checked>
+          <span class="ship-copy"><strong>Fornecedor selecionado - Envio direto</strong><small>${{quote.deliveryTime}} dia(s) uteis estimados. Frete calculado pela origem do fornecedor.</small></span>
+        </span>
+        <strong class="ship-price">${{money(quote.price)}}</strong>
+      </label>`;
+      renderCart();
+    }}
     function activePromotion() {{
       const code = norm(activeCouponCode).replace(/\\s+/g, "").toUpperCase();
       return LOCAL_PROMOTIONS.find((promo) => promo.code === code) || null;
@@ -1192,6 +1467,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function marketClass(name="") {{
       const value = norm(name);
       if (value.includes("amazon")) return "market-amazon";
+      if (value.includes("shopee")) return "market-shopee";
       if (value.includes("aliexpress") || value.includes("ali express")) return "market-ali";
       if (value.includes("mercado")) return "market-ml";
       return "";
@@ -1199,6 +1475,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function marketLogo(name="") {{
       const value = norm(name);
       if (value.includes("amazon")) return "assets/amazon-logo.svg";
+      if (value.includes("shopee")) return "assets/shopee-logo.svg";
       if (value.includes("aliexpress") || value.includes("ali express")) return "assets/aliexpress-logo.svg";
       if (value.includes("mercado")) return "assets/mercado-livre-logo.svg";
       return "assets/mobilytech-logo.png";
@@ -1209,12 +1486,12 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const logo = asset(market.logo || "assets/mercado-livre-logo.svg");
       const isManual = item.storeCheckout === true;
       const price = item.salePrice ? money(item.salePrice) : (item.currentPrice || "");
-      const buttonLabel = item.affiliateButton || market.button || "Ver oferta";
+      const buttonLabel = "Ver oferta";
       const affiliateLinks = Array.isArray(item.affiliateLinks) ? item.affiliateLinks.filter((link) => link && link.url) : [];
       const linkButton = (link) => {{
         const name = link.name || link.platform || market.name || "Marketplace";
         const className = link.class || marketClass(name);
-        const label = link.button || `Ver oferta na ${{name}}`;
+        const label = "Ver oferta";
         const linkLogo = asset(link.logo || marketLogo(name));
         return `<a class="market-btn ${{className}}" href="${{link.url}}" target="_blank" rel="noopener"><img src="${{linkLogo}}" alt="" aria-hidden="true">${{label}}</a>`;
       }};
@@ -1395,6 +1672,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (!cart.length) return showToast("Adicione um produto primeiro.");
       if (!postalCode.replace(/\\D/g, "")) return showToast("Informe o CEP para calcular.");
       box.innerHTML = "<p>Calculando frete...</p>";
+      const fixedSupplierQuote = state.supplier && !state.physical ? fixedSupplierShippingQuote(postalCode) : null;
+      if (fixedSupplierQuote) {{
+        renderFixedSupplierShipping(box, fixedSupplierQuote);
+        return;
+      }}
       try {{
         const response = await fetch("/api/shipping-quote", {{
           method: "POST",
@@ -1441,7 +1723,9 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           renderCart();
         }}
       }} catch(error) {{
-        box.innerHTML = `<p>${{error.message}}</p>`;
+        const fallbackQuote = state.supplier && !state.physical ? fixedSupplierShippingQuote(postalCode) : null;
+        if (fallbackQuote) renderFixedSupplierShipping(box, fallbackQuote);
+        else box.innerHTML = `<p>${{error.message}}</p>`;
       }}
     }}
     async function startCheckout(endpoint, button) {{
@@ -1483,6 +1767,20 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       window.open(`https://wa.me/5511954801967?text=${{encodeURIComponent(text)}}`, "_blank");
     }}
     document.addEventListener("click", (event) => {{
+      const accountButton = event.target.closest("#accountMenuButton");
+      const accountWrap = event.target.closest(".account-menu-wrap");
+      if (accountButton) {{
+        const popover = $("#accountPopover");
+        const open = popover?.hidden === false;
+        if (popover) popover.hidden = open;
+        accountButton.setAttribute("aria-expanded", open ? "false" : "true");
+        return;
+      }}
+      if (!accountWrap) {{
+        const popover = $("#accountPopover");
+        if (popover) popover.hidden = true;
+        $("#accountMenuButton")?.setAttribute("aria-expanded", "false");
+      }}
       const searchResult = event.target.closest("[data-search-index]");
       if (searchResult) {{
         goSearchResult(currentSearchResults[Number(searchResult.dataset.searchIndex)]);
@@ -1520,7 +1818,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     if ($("#couponCode")) $("#couponCode").value = activeCouponCode;
     $("#couponCode")?.addEventListener("input", (event) => {{
       activeCouponCode = event.currentTarget.value || "";
-      localStorage.setItem(couponKey, activeCouponCode);
+      try {{ localStorage.removeItem(couponKey); }} catch (error) {{}}
       renderCart();
     }});
     $$("#buildForm").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "build"); }}));
@@ -1544,6 +1842,12 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       }}
       if (event.key === "Escape") hideSearchResults();
     }});
+    document.addEventListener("keydown", (event) => {{
+      if (event.key !== "Escape") return;
+      const popover = $("#accountPopover");
+      if (popover) popover.hidden = true;
+      $("#accountMenuButton")?.setAttribute("aria-expanded", "false");
+    }});
     $$(".filter-chip").forEach((button) => button.addEventListener("click", () => {{
       $$(".filter-chip").forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
@@ -1558,12 +1862,13 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     renderFinds("#findsGrid");
     renderFinds("#findsRecommendedGrid");
     renderCart();
+    loadAccountSession();
     scrollToHashTarget();
     """
 
 
 def html_doc(title: str, main: str, prefix: str, active: str, products, finalists, addons, swaps) -> str:
-    return f"""<!doctype html>
+    document = f"""<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8">
@@ -1585,6 +1890,7 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
   </body>
 </html>
 """
+    return "\n".join(line.rstrip() for line in document.splitlines()) + "\n"
 
 
 def main():
@@ -1592,52 +1898,51 @@ def main():
     finalists = load_json("phase2-finalists.json", {"finalists": []})
     addons = load_json("addons.json", [])
     swaps = load_json("swaps.json", [])
+    site_content = merge_dict(DEFAULT_SITE_CONTENT, load_json("site-content.json", {}))
+    pages_content = site_content["pages"]
+    service_panels = site_content["servicePanels"]
     FASE2_DIR.mkdir(exist_ok=True)
 
     pages = {
         ROOT / "index.html": (
             "MobilyTech BR | Loja gamer",
-            home_main(products, finalists, "./"),
+            home_main(products, finalists, "./", site_content),
             "./",
             "home",
         ),
         ROOT / "fase2-hibrida.html": (
             "MobilyTech BR | Loja gamer",
-            home_main(products, finalists, "./"),
+            home_main(products, finalists, "./", site_content),
             "./",
             "home",
         ),
         FASE2_DIR / "index.html": (
             "MobilyTech BR | Loja gamer",
-            home_main(products, finalists, "../"),
+            home_main(products, finalists, "../", site_content),
             "../",
             "home",
         ),
         FASE2_DIR / "ofertas.html": (
             "Ofertas | MobilyTech BR",
-            products_page(
-                "PCs revisados e hardware em estoque",
-                "Catalogo visual inspirado em lojas gamer, com produtos reais da MobilyTech BR, carrinho, frete e checkout online.",
-                "../",
-            ),
+            products_page(pages_content["ofertas"], "../"),
             "../",
             "ofertas",
         ),
         FASE2_DIR / "achados.html": (
             "MobilyTech Finds | MobilyTech BR",
-            finds_page("../"),
+            finds_page("../", pages_content["achados"]),
             "../",
             "achados",
         ),
         FASE2_DIR / "montagem.html": (
             "Monte seu PC | MobilyTech BR",
-            montagem_page("../"),
+            montagem_page("../", pages_content["montagem"]),
             "../",
             "montagem",
         ),
         FASE2_DIR / "limpeza.html": (
             "Limpeza de PC | MobilyTech BR",
-            limpeza_page("../"),
+            limpeza_page("../", pages_content["limpeza"], service_panels),
             "../",
             "limpeza",
         ),
@@ -1649,7 +1954,7 @@ def main():
         ),
         FASE2_DIR / "minha-conta.html": (
             "Minha conta e pedidos | MobilyTech BR",
-            conta_page("../"),
+            conta_page("../", pages_content["conta"]),
             "../",
             "conta",
         ),

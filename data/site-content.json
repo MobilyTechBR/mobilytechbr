@@ -1,0 +1,49 @@
+{
+  "homeHero": {
+    "title": "PCs revisados para jogar, trabalhar e criar.",
+    "subtitle": "Computadores testados por especialistas, upgrades sob medida e atendimento direto da MobilyTech BR.",
+    "primaryLabel": "Ver catalogo de PCs",
+    "secondaryLabel": "Monte seu PC",
+    "featuredProductId": "pc-gamer-i5-gt610",
+    "featuredKicker": "Em destaque"
+  },
+  "servicePanels": {
+    "build": {
+      "image": "./assets/phase2-service-build-reference.png",
+      "alt": "Monte seu PC MobilyTech",
+      "label": "Monte seu PC - solicitar orcamento"
+    },
+    "clean": {
+      "image": "./assets/phase2-service-clean-reference.png",
+      "alt": "Limpeza de PC MobilyTech",
+      "label": "Limpeza de PC - agendar limpeza"
+    },
+    "cleanFormImage": "./assets/phase2-clean-form-visual.png"
+  },
+  "pages": {
+    "ofertas": {
+      "title": "PCs revisados e hardware em estoque",
+      "intro": "Catalogo visual inspirado em lojas gamer, com produtos reais da MobilyTech BR, carrinho, frete e checkout online.",
+      "image": ""
+    },
+    "achados": {
+      "title": "MobilyTech Finds",
+      "intro": "Complemente seu setup com acessorios, upgrades e gadgets selecionados pela curadoria MobilyTech.",
+      "image": "./assets/mobilytech-character-cutout.png"
+    },
+    "montagem": {
+      "title": "Monte seu PC com a MobilyTech BR",
+      "intro": "Conte o objetivo, o orcamento e o que voce ja tem. A gente monta uma proposta coerente, sem empurrar peca desnecessaria.",
+      "image": "./assets/phase2-service-build-reference.png"
+    },
+    "limpeza": {
+      "title": "Limpeza e relatorio do PC",
+      "intro": "Servico de limpeza com cuidado, organizacao e registro visual do antes/depois para manter o computador confiavel.",
+      "image": "./assets/phase2-service-clean-reference.png"
+    },
+    "conta": {
+      "title": "Minha conta e pedidos",
+      "intro": "Entre com sua conta para acompanhar pedidos, dados de entrega e suporte de pos-venda em um lugar so."
+    }
+  }
+}

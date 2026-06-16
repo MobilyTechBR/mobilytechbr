@@ -1,3 +1,5 @@
+const { sessionFromRequest } = require("../lib/auth-session");
+
 async function readJson(req) {
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
@@ -33,8 +35,10 @@ module.exports = async function handler(req, res) {
   }
 
   const body = await readJson(req);
+  const session = sessionFromRequest(req);
+  const hasAdminSession = Boolean(session && session.admin);
   const configuredToken = process.env.ADMIN_WRITE_TOKEN || "";
-  if (!configuredToken) {
+  if (!configuredToken && !hasAdminSession) {
     safeResponse(res, 501, {
       ok: false,
       needsConfig: true,
@@ -44,7 +48,7 @@ module.exports = async function handler(req, res) {
   }
 
   const providedToken = req.headers["x-admin-token"] || body.adminToken || "";
-  if (String(providedToken) !== String(configuredToken)) {
+  if (!hasAdminSession && String(providedToken) !== String(configuredToken)) {
     safeResponse(res, 401, { ok: false, error: "Token administrativo invalido." });
     return;
   }
@@ -54,6 +58,7 @@ module.exports = async function handler(req, res) {
     safeResponse(res, 200, {
       ok: true,
       authenticated: true,
+      authMode: hasAdminSession ? "admin-session" : "admin-token",
       dryRun: true,
       message: "Token administrativo validado sem registrar venda."
     });
@@ -73,7 +78,8 @@ module.exports = async function handler(req, res) {
   const payload = {
     ...body,
     action: "register-manual-sale",
-    event_type: "manual_sale_registration"
+    event_type: "manual_sale_registration",
+    registered_by: session && session.email ? session.email : body.registered_by
   };
   delete payload.adminToken;
 

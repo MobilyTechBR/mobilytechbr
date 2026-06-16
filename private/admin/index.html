@@ -307,6 +307,50 @@
       .finds-table textarea { min-height: 68px; resize: vertical; }
       .finds-table .narrow { width: 86px; }
       .finds-table .link-cell { min-width: 210px; }
+      .site-content-form {
+        padding: 22px;
+        display: grid;
+        gap: 18px;
+      }
+      .content-fieldset {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 18px;
+        display: grid;
+        gap: 14px;
+        background: #fbfcfd;
+      }
+      .content-fieldset h3 {
+        margin: 0;
+        font-size: 20px;
+      }
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .content-grid .wide { grid-column: 1 / -1; }
+      .content-grid label {
+        display: grid;
+        gap: 7px;
+        color: #59616d;
+        font-size: 12px;
+        font-weight: 1000;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .content-grid input,
+      .content-grid select,
+      .content-grid textarea {
+        width: 100%;
+        border: 1px solid #d8dde7;
+        border-radius: 12px;
+        padding: 12px 13px;
+        background: #fff;
+        color: #111;
+        font-weight: 900;
+      }
+      .content-grid textarea { min-height: 78px; resize: vertical; text-transform: none; letter-spacing: 0; }
       .editor-note {
         padding: 14px 22px 18px;
         color: #6d5108;
@@ -347,6 +391,39 @@
       }
       .field textarea { min-height: 108px; resize: vertical; }
       .field.full { grid-column: 1 / -1; }
+      .sale-product-preview {
+        margin-top: 12px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #f8fafc;
+        padding: 14px;
+        display: grid;
+        grid-template-columns: 104px 1fr;
+        gap: 14px;
+        align-items: center;
+      }
+      .sale-product-preview[hidden] { display: none; }
+      .sale-product-preview img {
+        width: 104px;
+        height: 104px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid #e3e9f1;
+        padding: 8px;
+      }
+      .sale-product-preview strong {
+        display: block;
+        font-size: 18px;
+        line-height: 1.15;
+      }
+      .sale-product-preview small {
+        display: block;
+        margin-top: 6px;
+        color: #59616d;
+        font-weight: 900;
+        line-height: 1.35;
+      }
       .sale-actions {
         display: flex;
         flex-wrap: wrap;
@@ -430,6 +507,7 @@
         .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .cards { grid-template-columns: 1fr; }
         .sale-grid { grid-template-columns: 1fr; }
+        .content-grid { grid-template-columns: 1fr; }
       }
       @media (max-width: 620px) {
         .desktop-copy { display: none; }
@@ -590,13 +668,35 @@
             <article class="card">
               <small>Curadoria tech</small>
               <h3>MobilyTech Finds</h3>
-                <p>Edite fornecedor, preco de venda, custo, margem, origem nacional/internacional, frete cobrado do cliente e links em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois. Links de associados ficam restritos a Mercado Livre, Amazon e AliExpress.</p>
+                <p>Edite fornecedor, preco de venda, custo, margem, origem nacional/internacional, frete cobrado do cliente e links em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois. Links de associados ficam restritos a Mercado Livre, Amazon, Shopee e AliExpress.</p>
               <div class="card-actions">
                 <a class="btn btn-red" href="https://www.mobilytech.com.br/">Abrir site oficial</a>
                 <a class="btn btn-ghost" href="../fase2/achados.html">Preview local</a>
                 <a class="btn btn-ghost" href="../data/phase2-finalists.json">Ver JSON</a>
               </div>
             </article>
+          </div>
+        </section>
+
+        <section aria-labelledby="content-editor-title">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Editor visual</p>
+              <h2 id="content-editor-title">Textos, destaque e artes do site</h2>
+              <p>Edite o conteudo visual principal sem mexer no HTML. Baixe o JSON revisado e aplique em <code>data/site-content.json</code> antes de gerar o site.</p>
+            </div>
+          </div>
+          <div class="editor-panel">
+            <div class="editor-toolbar">
+              <div>
+                <strong>Conteudo do site</strong>
+                <p>Hero principal, produto em destaque, banners de servico e textos das paginas fase 2.</p>
+              </div>
+              <button class="btn btn-dark" type="button" id="exportSiteContent">Baixar site-content.json revisado</button>
+            </div>
+            <div class="site-content-form" id="siteContentEditor">
+              <p>Carregando conteudo visual...</p>
+            </div>
           </div>
         </section>
 
@@ -612,7 +712,7 @@
             <div class="editor-toolbar">
               <div>
                 <strong>Campos rapidos</strong>
-                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete cobrado do cliente, margem e links Mercado Livre, Amazon ou AliExpress.</p>
+                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete cobrado do cliente, margem e links Mercado Livre, Amazon, Shopee ou AliExpress.</p>
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
@@ -648,6 +748,7 @@
                     <th>Descricao</th>
                     <th>Mercado Livre</th>
                     <th>Amazon</th>
+                    <th>Shopee</th>
                     <th>AliExpress</th>
                   </tr>
                 </thead>
@@ -683,6 +784,13 @@
                   <select id="saleProduct" required>
                     <option value="">Carregando produtos...</option>
                   </select>
+                  <div class="sale-product-preview" id="saleProductPreview" hidden>
+                    <img id="saleProductPreviewImage" src="../assets/mobilytech-logo.png" alt="">
+                    <div>
+                      <strong id="saleProductPreviewTitle">Produto selecionado</strong>
+                      <small id="saleProductPreviewSpecs">A miniatura aparece aqui para confirmar o PC/hardware antes de registrar.</small>
+                    </div>
+                  </div>
                 </div>
                 <div class="field">
                   <label for="saleDate">Dia da venda</label>
@@ -771,6 +879,7 @@
       const countActive = (items = []) => items.filter((item) => item && item.active !== false).length;
       let findsState = null;
       let productsState = [];
+      let siteContentState = null;
       let lastSalePayload = null;
 
       function escapeHtml(value = "") {
@@ -803,11 +912,13 @@
         const logos = {
           "mercado": "assets/mercado-livre-logo.svg",
           "amazon": "assets/amazon-logo.svg",
+          "shopee": "assets/shopee-logo.svg",
           "aliexpress": "assets/aliexpress-logo.svg"
         };
         const labels = {
           "mercado": "Ver oferta no Mercado Livre",
           "amazon": "Ver oferta na Amazon",
+          "shopee": "Ver oferta na Shopee",
           "aliexpress": "Ver oferta no AliExpress"
         };
         item.affiliateLinks = Array.isArray(item.affiliateLinks) ? item.affiliateLinks : [];
@@ -817,11 +928,11 @@
           return;
         }
         const payload = {
-          name: name === "mercado" ? "Mercado Livre" : name === "amazon" ? "Amazon" : "AliExpress",
+          name: name === "mercado" ? "Mercado Livre" : name === "amazon" ? "Amazon" : name === "shopee" ? "Shopee" : "AliExpress",
           url: cleanUrl,
           logo: logos[name],
           button: labels[name],
-          class: name === "mercado" ? "market-ml" : name === "amazon" ? "market-amazon" : "market-ali"
+          class: name === "mercado" ? "market-ml" : name === "amazon" ? "market-amazon" : name === "shopee" ? "market-shopee" : "market-ali"
         };
         if (idx >= 0) item.affiliateLinks[idx] = { ...item.affiliateLinks[idx], ...payload };
         else item.affiliateLinks.push(payload);
@@ -908,6 +1019,98 @@
           shipping: { mode: "supplier-fixed", originMode: "supplier", customerPays: true, customerPrice: 0, deliveryTime: 7, region: "BR" }
         });
         renderFindsEditor(findsState.finalists);
+      }
+
+      function getPathValue(object, path) {
+        return String(path || "").split(".").reduce((value, key) => value?.[key], object);
+      }
+
+      function setPathValue(object, path, value) {
+        const parts = String(path || "").split(".").filter(Boolean);
+        let target = object;
+        parts.slice(0, -1).forEach((key) => {
+          target[key] = target[key] && typeof target[key] === "object" ? target[key] : {};
+          target = target[key];
+        });
+        target[parts[parts.length - 1]] = value;
+      }
+
+      function contentInput(path, label, type = "input", className = "") {
+        const value = getPathValue(siteContentState, path) || "";
+        if (type === "textarea") {
+          return `<label class="${className}">${label}<textarea data-content-path="${escapeHtml(path)}">${escapeHtml(value)}</textarea></label>`;
+        }
+        return `<label class="${className}">${label}<input data-content-path="${escapeHtml(path)}" value="${escapeHtml(value)}"></label>`;
+      }
+
+      function productOptions(selectedId) {
+        const ownProducts = productsState
+          .filter((item) => item && item.active !== false && !["affiliate", "dropshipping"].includes(item.category))
+          .sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")));
+        return ownProducts.map((item) => (
+          `<option value="${escapeHtml(item.id)}" ${String(item.id) === String(selectedId) ? "selected" : ""}>${escapeHtml(item.title || item.id)}</option>`
+        )).join("");
+      }
+
+      function renderSiteContentEditor() {
+        const editor = $("#siteContentEditor");
+        if (!editor) return;
+        siteContentState = siteContentState && typeof siteContentState === "object" ? siteContentState : {};
+        siteContentState.homeHero = siteContentState.homeHero || {};
+        siteContentState.servicePanels = siteContentState.servicePanels || {};
+        siteContentState.servicePanels.build = siteContentState.servicePanels.build || {};
+        siteContentState.servicePanels.clean = siteContentState.servicePanels.clean || {};
+        siteContentState.pages = siteContentState.pages || {};
+        ["ofertas", "achados", "montagem", "limpeza", "conta"].forEach((key) => {
+          siteContentState.pages[key] = siteContentState.pages[key] || {};
+        });
+        const selectedProductId = siteContentState.homeHero.featuredProductId || "";
+        const pageNames = {
+          ofertas: "Ofertas",
+          achados: "MobilyTech Finds",
+          montagem: "Monte seu PC",
+          limpeza: "Limpeza",
+          conta: "Conta e pedidos"
+        };
+        const pageFields = Object.entries(pageNames).map(([key, label]) => `
+          <div class="content-fieldset">
+            <h3>${label}</h3>
+            <div class="content-grid">
+              ${contentInput(`pages.${key}.title`, "Titulo")}
+              ${contentInput(`pages.${key}.image`, "Imagem/arte")}
+              ${contentInput(`pages.${key}.intro`, "Texto", "textarea", "wide")}
+            </div>
+          </div>
+        `).join("");
+        editor.innerHTML = `
+          <div class="content-fieldset">
+            <h3>Hero principal</h3>
+            <div class="content-grid">
+              ${contentInput("homeHero.title", "Titulo", "textarea", "wide")}
+              ${contentInput("homeHero.subtitle", "Texto", "textarea", "wide")}
+              ${contentInput("homeHero.primaryLabel", "Botao principal")}
+              ${contentInput("homeHero.secondaryLabel", "Botao secundario")}
+              ${contentInput("homeHero.featuredKicker", "Etiqueta do destaque")}
+              <label>Produto em destaque
+                <select data-content-path="homeHero.featuredProductId">
+                  <option value="">Usar primeiro PC ativo</option>
+                  ${productOptions(selectedProductId)}
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="content-fieldset">
+            <h3>Artes dos servicos</h3>
+            <div class="content-grid">
+              ${contentInput("servicePanels.build.image", "Imagem Monte seu PC")}
+              ${contentInput("servicePanels.build.label", "Texto acessivel Monte seu PC")}
+              ${contentInput("servicePanels.clean.image", "Imagem Limpeza")}
+              ${contentInput("servicePanels.clean.label", "Texto acessivel Limpeza")}
+              ${contentInput("servicePanels.cleanFormImage", "Imagem do formulario de limpeza", "input", "wide")}
+            </div>
+          </div>
+          ${pageFields}
+        `;
       }
 
       function moneyNumber(value) {
@@ -1005,8 +1208,27 @@
         return productsState.find((item) => String(item.id) === String(id)) || null;
       }
 
+      function productImage(product) {
+        return String(product?.cutout || product?.image || product?.photo || "../assets/mobilytech-logo.png").replace(/^\.\//, "../");
+      }
+
+      function renderSaleProductPreview(product) {
+        const preview = $("#saleProductPreview");
+        if (!preview) return;
+        if (!product) {
+          preview.hidden = true;
+          return;
+        }
+        $("#saleProductPreviewImage").src = productImage(product);
+        $("#saleProductPreviewImage").alt = product.title || "Produto MobilyTech";
+        $("#saleProductPreviewTitle").textContent = product.title || product.id || "Produto selecionado";
+        $("#saleProductPreviewSpecs").textContent = specsText(product) || product.badge || "Sem especificacao detalhada.";
+        preview.hidden = false;
+      }
+
       function syncSaleProductFields() {
         const product = selectedSaleProduct();
+        renderSaleProductPreview(product);
         if (!product) return;
         if ($("#salePriceMode")?.value !== "custom") $("#salePrice").value = moneyInput(product.price);
         $("#finalConfiguration").value = specsText(product);
@@ -1076,7 +1298,7 @@
         const tbody = $("#findsEditorRows");
         if (!tbody) return;
         if (!Array.isArray(finds) || !finds.length) {
-          tbody.innerHTML = '<tr><td colspan="16">Nenhum item em MobilyTech Finds.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="17">Nenhum item em MobilyTech Finds.</td></tr>';
           return;
         }
         tbody.innerHTML = finds.map((item, index) => `
@@ -1096,6 +1318,7 @@
             <td><textarea data-find="${index}" data-field="whySell">${escapeHtml(item.whySell || "")}</textarea></td>
             <td class="link-cell"><input data-find="${index}" data-field="link:mercado" value="${escapeHtml(getAffiliateLink(item, "mercado") || item.affiliateUrl || "")}"></td>
             <td class="link-cell"><input data-find="${index}" data-field="link:amazon" value="${escapeHtml(getAffiliateLink(item, "amazon"))}"></td>
+            <td class="link-cell"><input data-find="${index}" data-field="link:shopee" value="${escapeHtml(getAffiliateLink(item, "shopee"))}"></td>
             <td class="link-cell"><input data-find="${index}" data-field="link:aliexpress" value="${escapeHtml(getAffiliateLink(item, "aliexpress"))}"></td>
           </tr>
         `).join("");
@@ -1118,11 +1341,12 @@
       }
 
       async function hydrateDashboard() {
-        const [products, addons, swaps, finalists] = await Promise.all([
+        const [products, addons, swaps, finalists, siteContent] = await Promise.all([
           readJson("../data/products.json", []),
           readJson("../data/addons.json", []),
           readJson("../data/swaps.json", []),
-          readJson("../data/phase2-finalists.json", { finalists: [] })
+          readJson("../data/phase2-finalists.json", { finalists: [] }),
+          readJson("../data/site-content.json", {})
         ]);
         const productList = Array.isArray(products) ? products : [];
         productsState = productList;
@@ -1130,6 +1354,7 @@
         const pcs = productList.filter((item) => item && item.category === "pc");
         const finds = Array.isArray(finalists?.finalists) ? finalists.finalists : [];
         findsState = finalists;
+        siteContentState = siteContent && typeof siteContent === "object" ? siteContent : {};
 
         $("#activeProducts").textContent = countActive(ownProducts);
         $("#activePcs").textContent = countActive(pcs);
@@ -1138,6 +1363,7 @@
         $("#activeFinds").textContent = countActive(finds);
         $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
         hydrateMarginControls();
+        renderSiteContentEditor();
         renderFindsEditor(finds);
         renderSaleProducts(productList);
         syncSaleProductFields();
@@ -1146,6 +1372,20 @@
       $("#exportFinds")?.addEventListener("click", () => {
         if (!findsState) return;
         downloadJson("phase2-finalists-revisado-mobilytech.json", findsState);
+      });
+      $("#exportSiteContent")?.addEventListener("click", () => {
+        if (!siteContentState) return;
+        downloadJson("site-content-revisado-mobilytech.json", siteContentState);
+      });
+      $("#siteContentEditor")?.addEventListener("input", (event) => {
+        const path = event.target?.dataset?.contentPath;
+        if (!path) return;
+        setPathValue(siteContentState, path, event.target.value || "");
+      });
+      $("#siteContentEditor")?.addEventListener("change", (event) => {
+        const path = event.target?.dataset?.contentPath;
+        if (!path) return;
+        setPathValue(siteContentState, path, event.target.value || "");
       });
       $("#addFindItem")?.addEventListener("click", addFindItem);
       $("#applyFindMargins")?.addEventListener("click", applyFindMarginDefaults);

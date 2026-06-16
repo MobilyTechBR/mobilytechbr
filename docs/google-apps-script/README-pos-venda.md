@@ -116,6 +116,21 @@ Essa aba separada recebe:
 
 Nao cole este script por cima do projeto `MobilyTech Relatorio Mensal` sem revisar os nomes globais e fazer backup. O caminho mais seguro e manter o pos-venda em um Web App separado apontando para a mesma planilha.
 
+## Historico de pedidos na conta do cliente
+
+A pagina `Minha conta` consulta `/api/customer-orders`, que so responde quando o cliente esta logado no site. Essa funcao da Vercel chama o Apps Script com a acao `lookup-customer-orders`.
+
+Na Vercel, configure:
+
+- `CUSTOMER_ORDERS_ENDPOINT`: URL do Web App do Apps Script.
+- `CUSTOMER_ORDERS_TOKEN`: token secreto compartilhado com o Apps Script.
+
+Nas **Propriedades do script** do Apps Script, configure o mesmo valor em:
+
+- `CUSTOMER_ORDERS_TOKEN`
+
+A consulta e somente leitura: ela le a aba `Pedidos`, filtra por `ClienteEmail` igual ao e-mail da conta logada e retorna apenas campos publicos do pedido. Ela nao altera `Vendas_PCs`, nao chama GitHub, nao dispara e-mails e nao mexe nas colunas `A:I` usadas pelo relatorio mensal.
+
 ## Testes de e-mail
 
 O Apps Script inclui a funcao `sendTestTransactionalEmails()` para enviar exemplos para `mobilytechbr@gmail.com` com assunto marcado como `TESTE CLIENTE` ou `TESTE VENDEDOR`.

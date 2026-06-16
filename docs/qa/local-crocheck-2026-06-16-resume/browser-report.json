@@ -1,0 +1,415 @@
+[
+  {
+    "label": "home-desktop",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Abrir menu da conta",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n1",
+        "Ver catalogo de PCs\n→",
+        "Monte seu PC",
+        "Ver detalhes",
+        "Ver todos os PCs →",
+        "Ver detalhes",
+        "🛒\nAdicionar ao carrinho",
+        "Ver detalhes"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 37,
+      "overflowX": false,
+      "scroll": {
+        "height": 5229,
+        "width": 1265
+      },
+      "title": "MobilyTech BR | Loja gamer",
+      "url": "http://127.0.0.1:4173/?qa=crocheck-local-2026-06-16",
+      "viewport": {
+        "height": 720,
+        "width": 1265
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\01-home-desktop.png"
+  },
+  {
+    "label": "account-popover-desktop",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Abrir menu da conta",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n1",
+        "Ver catalogo de PCs\n→",
+        "Monte seu PC",
+        "Ver detalhes",
+        "Ver todos os PCs →",
+        "Ver detalhes",
+        "🛒\nAdicionar ao carrinho",
+        "Ver detalhes"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 37,
+      "overflowX": false,
+      "scroll": {
+        "height": 5229,
+        "width": 1265
+      },
+      "title": "MobilyTech BR | Loja gamer",
+      "url": "http://127.0.0.1:4173/?qa=crocheck-local-2026-06-16",
+      "viewport": {
+        "height": 720,
+        "width": 1265
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\02-account-popover-desktop.png"
+  },
+  {
+    "label": "achados-desktop",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Abrir menu da conta",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n1",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 181,
+      "overflowX": false,
+      "scroll": {
+        "height": 13796,
+        "width": 1265
+      },
+      "title": "MobilyTech Finds | MobilyTech BR",
+      "url": "http://127.0.0.1:4173/fase2/achados.html?qa=crocheck-local-2026-06-16",
+      "viewport": {
+        "height": 720,
+        "width": 1265
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\03-achados-desktop.png"
+  },
+  {
+    "label": "achados-counts",
+    "counts": {
+      "ali": 12,
+      "amazon": 13,
+      "buttons": 104,
+      "cards": 104,
+      "ml": 17,
+      "mobilytech": 50,
+      "shopee": 12,
+      "verOferta": 54
+    }
+  },
+  {
+    "label": "cart-supplier-desktop",
+    "report": {
+      "abacate": {
+        "bg": "rgb(24, 242, 139)",
+        "bgImage": "none"
+      },
+      "cartCount": "1",
+      "couponValue": "",
+      "drawerOpen": true,
+      "hasMobmen": false,
+      "mercadoPago": {
+        "bg": "rgb(255, 241, 89)",
+        "bgImage": "none"
+      },
+      "supplierShipping": true,
+      "text": "LOJA ONLINE\nCarrinho\n×\nDock station USB-C 8 em 1 com HDMI\nSem opcionais\nR$ 149,00\n×\nFrete selecionado\nFornecedor selecionado - Envio direto do fornecedor\nR$ 29,90\nTotal\nR$ 178,90\nCupom promocional\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nEnvio obrigatorio para MobilyTech Finds\nInforme o CEP e selecione o envio direto com rastreio; retirada local nao se aplica.\nCEP\nCalcular frete\nFornecedor selecionado - Envio direto\n18 dia(s) uteis estimados. Frete calculado pela origem do fornecedor.\nR$ 29,90\nPagar pelo Mercado Pago\nPagar pelo Abacate Pay\n\nO pagamento usa as rotas seguras ja configuradas na MobilyTech BR. Frete automatico pelo Melhor Envio quando disponivel.",
+      "total17890": true
+    },
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\04-cart-supplier-desktop.png",
+    "logs": []
+  },
+  {
+    "label": "conta-desktop",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Abrir menu da conta",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n2",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Combinar pelo WhatsApp",
+        "WhatsApp",
+        "E-mail",
+        "Falar com a loja",
+        "Instagram"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 24,
+      "overflowX": false,
+      "scroll": {
+        "height": 2495,
+        "width": 1265
+      },
+      "title": "Minha conta e pedidos | MobilyTech BR",
+      "url": "http://127.0.0.1:4173/fase2/minha-conta.html?qa=crocheck-local-2026-06-16",
+      "viewport": {
+        "height": 720,
+        "width": 1265
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\05-conta-desktop.png"
+  },
+  {
+    "label": "home-mobile",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n2",
+        "Ver catalogo de PCs\n→",
+        "Monte seu PC",
+        "Ver detalhes",
+        "Ver todos os PCs →",
+        "Ver detalhes",
+        "🛒\nAdicionar ao carrinho",
+        "Ver detalhes",
+        "🛒\nAdicionar ao carrinho"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 37,
+      "overflowX": false,
+      "scroll": {
+        "height": 10669,
+        "width": 375
+      },
+      "title": "MobilyTech BR | Loja gamer",
+      "url": "http://127.0.0.1:4173/?qa=crocheck-local-2026-06-16-mobile",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\06-home-mobile.png"
+  },
+  {
+    "label": "achados-mobile",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n2",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho",
+        "🛒\nAdicionar ao carrinho"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 181,
+      "overflowX": false,
+      "scroll": {
+        "height": 24177,
+        "width": 375
+      },
+      "title": "MobilyTech Finds | MobilyTech BR",
+      "url": "http://127.0.0.1:4173/fase2/achados.html?qa=crocheck-local-2026-06-16-mobile",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\07-achados-mobile.png"
+  },
+  {
+    "label": "conta-mobile",
+    "report": {
+      "broken": [],
+      "buttonsSample": [
+        "‹",
+        "›",
+        "MobilyTech BR",
+        "Ofertas",
+        "PC Gamer",
+        "Monte seu PC",
+        "Hardware",
+        "Limpeza",
+        "MobilyTech Finds",
+        "Avaliacoes",
+        "Conta",
+        "Suporte",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Central Minha Conta",
+        "Meus pedidos",
+        "Enderecos",
+        "Retirada local",
+        "Suporte",
+        "Painel interno",
+        "Sair",
+        "🛒\n2",
+        "Entrar com Google",
+        "Entrar com Microsoft",
+        "Combinar pelo WhatsApp",
+        "WhatsApp",
+        "E-mail",
+        "Falar com a loja",
+        "Instagram",
+        "Facebook"
+      ],
+      "hasAccountWords": true,
+      "hasMobmen": false,
+      "imageCount": 24,
+      "overflowX": false,
+      "scroll": {
+        "height": 4371,
+        "width": 375
+      },
+      "title": "Minha conta e pedidos | MobilyTech BR",
+      "url": "http://127.0.0.1:4173/fase2/minha-conta.html?qa=crocheck-local-2026-06-16-mobile",
+      "viewport": {
+        "height": 844,
+        "width": 375
+      }
+    },
+    "logs": [],
+    "screenshot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\local-crocheck-2026-06-16-resume\\08-conta-mobile.png"
+  }
+]

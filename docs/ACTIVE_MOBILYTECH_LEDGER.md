@@ -132,3 +132,59 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Checagem final dos ultimos logs mostrou `APPCRASH` do Opera GX `132.0.5905.43` em `opera_browser.dll`, excecao `0xc0000005`, as 13:50:02, alem de historico Windows `LiveKernelEvent`/watchdog GPU. O Event Viewer nao mostrou APPCRASH textual do Codex nas ultimas horas.
 - Crashpad do Codex tem dumps recentes em `C:\Users\MF\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\LocalCache\Roaming\Codex\web\Codex\Crashpad\reports`, com arquivos as 13:32 e 13:42. A sessao atual do Codex continuou rodando depois disso.
 - Mitigacao aplicada no fluxo: evitar Opera GX/Browser interno para OAuth/Apps Script e tarefas longas; usar conectores oficiais, Vercel/Gmail/Drive quando disponiveis, shell/HTTP para QA e Opera normal apenas quando login humano for indispensavel. Nao foi feita alteracao destrutiva de driver, perfil do navegador ou cache do Codex.
+
+## Atualizacao 2026-06-16 - conta do cliente e consulta segura de pedidos
+
+- Site fase 2 local: menu de perfil/dropdown, pagina `Minha conta`, cores de checkout, cupom sem exemplo visivel, painel privado e editor de conteudo foram implementados localmente e passaram QA no navegador interno.
+- Allowlist admin correta registrada no codigo: `mobilytechbr@gmail.com` e `julian.l.escribano@gmail.com`; `mobilyfinds@gmail.com` nao deve ser usado.
+- `api/register-sale.js` agora aceita sessao admin assinada ou token legado, mantendo `dryRun`/`mode: "auth-check"` para validar sem registrar venda.
+- `docs/google-apps-script/mobilytech-pos-venda.gs` ganhou a acao `lookup-customer-orders` antes do fallback de `upsertOrder_`, evitando que uma consulta de historico vire pedido novo por engano.
+- A consulta de pedidos e somente leitura, exige `CUSTOMER_ORDERS_TOKEN` nas propriedades do Apps Script, filtra por `ClienteEmail` e retorna apenas campos publicos da aba `Pedidos`; nao altera `Vendas_PCs`, nao toca `A:I`, nao chama GitHub e nao envia e-mails.
+- Testes locais passaram: sintaxe do Apps Script via `vm.Script`, consulta com token ausente/errado sem retorno de dados e consulta com token correto retornando apenas o pedido do e-mail correspondente. Publicacao no Apps Script vivo ainda exige backup/compare por causa da rotina mensal existente.
+
+## Atualizacao 2026-06-16 - MobilyTech Finds 50+50 e frete de fornecedor
+
+- Fonte completa 50 dropshipping + 50 afiliados localizada em `C:\Users\MF\Documents\New project\build_mobilytech_fase1_products.mjs` e internalizada no repo como `data/finds-source-phase1-2026-06-13.json`, com origem, links, notas e contagens preservadas.
+- `data/products.json` agora contem 59 produtos no total, sendo 51 `dropshipping`: os 50 itens da triagem fase 1 estao representados como produtos vendaveis, e o teclado ABNT2 antigo foi preservado como item extra ja existente.
+- `data/phase2-finalists.json` agora tem 104 cards publicos: 50 manuais/vendidos pela MobilyTech e 54 recomendacoes afiliadas. Foram adicionadas 12 recomendacoes Shopee e `defaults.allowedAffiliatePlatforms` inclui Mercado Livre, Amazon, Shopee e AliExpress.
+- Novo asset `assets/shopee-logo.svg`; gerador fase 2 e painel privado reconhecem Shopee em botoes e links. O painel `private/admin/index.html` ganhou coluna Shopee no editor de MobilyTech Finds.
+- Todos os produtos de fornecedor tem frete com `originMode: supplier`, `customerPays: true`, regiao/prazo e `freightBasis` dizendo que o frete deve considerar a origem do fornecedor ate o cliente final.
+- Carrinho fase 2 ganhou fallback local para carrinho composto apenas por MobilyTech Finds: seleciona `Fornecedor selecionado - Envio direto do fornecedor` com o frete fixo do produto quando a rota `/api/shipping-quote` nao esta disponivel em servidor estatico.
+- `lib/fulfillment-shipping.js` agora enriquece `FornecedorItens` para vendedor com quantidade, canal de origem, link, backup, custo estimado, frete cobrado, prazo, base do frete, risco/checagem e instrucao truncada de compra/validacao.
+- QA local: JSONs validos, sem IDs duplicados, sem imagens faltando, `scripts/build_phase2_ibuy_style.py` compila e regenera. Browser interno em `http://localhost:4173/fase2/achados.html` confirmou 50 vendidos, 54 recomendacoes, 12 botoes Shopee, 0 imagens quebradas, 0 erros de console e sem overflow.
+- QA carrinho local: item novo `Dock station USB-C 8 em 1 com HDMI` entra no carrinho, cupom nao aparece para cliente novo, Mercado Pago segue amarelo solido, Abacate Pay verde solido, e frete direto selecionado totaliza R$ 178,90 (R$ 149,00 + R$ 29,90).
+- Pendente antes de publicar essa etapa: deploy/QA production e smoke real de checkout para confirmar que os metadados `manual_fulfillment_items` chegam ao Apps Script/e-mail vendedor com o conteudo enriquecido.
+
+## Atualizacao 2026-06-16 - PayPal e apps Wix gratuitos
+
+- Avaliacao documentada em `docs/wix-paypal-apps-assessment-2026-06-16.md`.
+- PayPal: nao adicionar agora como terceiro checkout vivo. No site Vercel atual, a integracao correta exigiria backend para criar/capturar pedidos, registro/webhook, tratamento de frete/cupom e secrets PayPal em Vercel. Manter Mercado Pago + Abacate Pay ate o fluxo atual estar publicado e validado.
+- Wix conector: chamada atual retornou necessidade de reautenticacao antes de qualquer acao no app. Sem conexao ativa, nao instalar nem contratar apps por API.
+- Apps de imagem: `AI Product Images` e o primeiro candidato gratuito para teste visual; `AI Product Photos and Images` fica como secundario. Testar apenas em imagens duplicadas/nao criticas e comparar com o metodo atual por crocheck antes de substituir o fluxo de imagem.
+- Dropshipping Wix: `DSers` e o melhor candidato gratuito para AliExpress se a operacao migrar para Wix Stores; `AppScenic` pode ser avaliado para fornecedores alternativos, mas exige checagem de frete/preco Brasil.
+- Rejeitados por enquanto: `Zonify` por ser trial/plano pago e `DropCommerce` porque a operacao util de importacao exige plano pago. `Product Upload` serve no maximo como teste limitado gratuito, nao como solucao permanente.
+- Pendente se for testar no Wix: reautenticar o conector Wix ou usar painel Wix logado, confirmar o plano gratuito permanente na tela antes de qualquer instalacao e registrar evidencia visual.
+
+## Atualizacao 2026-06-16 - correcao de cupom no carrinho
+
+- Bug local encontrado no reteste pos-reboot: o navegador ainda preenchia `MOBMEN` no campo de cupom por persistencia antiga em `mobilytech-coupon-v1`, contrariando o pedido de nao entregar cupom pronto ao cliente.
+- Correcao aplicada em `scripts/build_phase2_ibuy_style.py`: o site nao le mais nem grava o cupom em `localStorage`; no carregamento remove a chave legada quando disponivel. O cupom continua valido apenas se o cliente souber e digitar manualmente.
+- Site regenerado e QA Browser local passou: item `Dock station USB-C 8 em 1 com HDMI` no carrinho com campo de cupom vazio, `MOBMEN` ausente da UI, Mercado Pago amarelo solido, Abacate Pay verde solido, sem logs de erro/warn.
+- Frete fornecedor retestado no carrinho: CEP de teste retornou `Fornecedor selecionado - Envio direto do fornecedor`, frete R$ 29,90 e total R$ 178,90 para o produto de R$ 149,00.
+
+## Atualizacao 2026-06-16 - crocheck local pos-retomada
+
+- Evidencias salvas em `docs/qa/local-crocheck-2026-06-16-resume/`, incluindo screenshots desktop/mobile, relatorios JSON e `README.md` do crocheck.
+- Limite da ferramenta: a descoberta nao expos Computer Use/ChatGPT externo nesta sessao retomada. Foi feito crocheck visual local pelo Codex/ChatGPT sobre screenshots; repetir a rodada externa quando a ferramenta visual estiver disponivel.
+- Bloqueador visual encontrado e corrigido: no desktop, a nav textual tinha ficado longa e `Conta`/`Suporte` disputavam espaco com a busca. Solucao: remover `Conta` da nav textual, pois a conta agora fica no icone/dropdown; destacar o icone quando ativo/aberto; reduzir a busca desktop para 210px; reduzir gap da nav para 6px.
+- Medicao final do header: `Conta` nao aparece mais como link textual, `Suporte` fica com 29,6px de folga antes da busca, sem overflow horizontal, sem imagens quebradas e sem logs de erro/warn.
+- Checks finais locais: Home, Achados e Minha Conta em desktop e mobile sem overflow, sem imagens quebradas, sem `MOBMEN` visivel e sem logs de erro/warn.
+- Achados renderizado localmente: 104 cards, 104 botoes, 50 botoes MobilyTech/carrinho, 54 botoes `Ver oferta`, 12 botoes Shopee.
+- Carrinho fornecedor limpo: 1 unidade de `Dock station USB-C 8 em 1 com HDMI`, cupom vazio, frete fornecedor R$ 29,90, total R$ 178,90, Mercado Pago amarelo solido e Abacate Pay verde solido.
+- Status: aprovado localmente para seguir a backup/deploy/QA production, mantendo como pendencia opcional/condicional a repeticao com ChatGPT externo quando o caminho de ferramenta estiver disponivel.
+
+## Atualizacao 2026-06-16 - backup pre-publicacao pos-retomada
+
+- Backup final antes de publicar esta leva criado em `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_backup_pre_publish_2026-06-16_2026-06-16_194156.zip`.
+- Tamanho aproximado: 431,14 MB.
+- O backup excluiu `.git`, `node_modules` e a pasta local `backups` para evitar duplicacao pesada, preservando os arquivos atuais do site, dados, docs, assets e scripts.

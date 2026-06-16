@@ -171,6 +171,11 @@ function processMobilyTechAutomations() {
 function doPost(e) {
   const payload = parseIncomingPayload_(e);
   const action = String(payload.action || payload.event_type || payload.type || "");
+  if (action === "lookup-customer-orders") {
+    return ContentService
+      .createTextOutput(JSON.stringify(lookupCustomerOrders_(payload)))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   if (action === "register-manual-sale" || action === "manual_sale_registration") {
     const result = registerManualSale_(payload);
     return ContentService
@@ -193,6 +198,92 @@ function doGet(e) {
   if (action === "approve-olx-link") return approveOlxLinkReview_(e.parameter.product, e.parameter.hash, e.parameter.token);
   if (action === "reject-olx-link") return rejectOlxLinkReview_(e.parameter.product, e.parameter.hash, e.parameter.token);
   return HtmlService.createHtmlOutput("MobilyTech BR automacoes ativas.");
+}
+
+function lookupCustomerOrders_(payload) {
+  const auth = verifyCustomerOrdersToken_(payload);
+  if (!auth.ok) return auth;
+  const email = normalizeCustomerEmail_(payload.customer_email || payload.customerEmail || payload.email);
+  if (!email) return { ok: false, error: "E-mail do cliente obrigatorio para consultar pedidos." };
+  const limit = Math.min(25, Math.max(1, Number(payload.limit || 20)));
+  const matches = readRows_(ordersSheet_())
+    .filter(({ values }) => normalizeCustomerEmail_(values.ClienteEmail) === email)
+    .sort((a, b) => orderSortValue_(b.values) - orderSortValue_(a.values))
+    .slice(0, limit)
+    .map(({ values }) => publicCustomerOrder_(values));
+  return {
+    ok: true,
+    configured: true,
+    orders: matches
+  };
+}
+
+function verifyCustomerOrdersToken_(payload) {
+  const props = PropertiesService.getScriptProperties();
+  const expected = String(
+    props.getProperty("CUSTOMER_ORDERS_TOKEN") ||
+    props.getProperty("MOBILYTECH_CUSTOMER_ORDERS_TOKEN") ||
+    ""
+  ).trim();
+  if (!expected) {
+    return {
+      ok: false,
+      needsConfig: true,
+      error: "Configure CUSTOMER_ORDERS_TOKEN nas propriedades do Apps Script antes de expor historico de pedidos."
+    };
+  }
+  const provided = String(payload.customer_orders_token || payload.customerOrdersToken || payload.token || "").trim();
+  if (!provided || provided !== expected) {
+    return { ok: false, error: "Token de consulta de pedidos invalido." };
+  }
+  return { ok: true };
+}
+
+function normalizeCustomerEmail_(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
+function publicCustomerOrder_(order) {
+  return {
+    PedidoID: String(order.PedidoID || ""),
+    Status: String(order.Status || ""),
+    Plataforma: String(order.Plataforma || ""),
+    ClienteNome: String(order.ClienteNome || ""),
+    Produto: String(order.Produto || ""),
+    Opcionais: String(order.Opcionais || ""),
+    ValorPago: publicMoney_(order.ValorPago),
+    ModoEntrega: String(order.ModoEntrega || ""),
+    Transportadora: String(order.Transportadora || ""),
+    ServicoFrete: String(order.ServicoFrete || ""),
+    PrecoFrete: publicMoney_(order.PrecoFrete),
+    Cep: String(order.Cep || ""),
+    Endereco: String(order.Endereco || ""),
+    CodigoRastreio: String(order.CodigoRastreio || ""),
+    LinkRastreio: String(order.LinkRastreio || ""),
+    ReembolsoManual: String(order.ReembolsoManual || ""),
+    AtualizadoEm: publicDate_(order.AtualizadoEm)
+  };
+}
+
+function publicMoney_(value) {
+  if (value === "" || value === null || value === undefined) return "";
+  if (typeof value === "number") return `R$ ${value.toFixed(2).replace(".", ",")}`;
+  return String(value);
+}
+
+function publicDate_(value) {
+  if (!value) return "";
+  if (Object.prototype.toString.call(value) === "[object Date]" && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, Session.getScriptTimeZone(), "yyyy-MM-dd HH:mm");
+  }
+  return String(value);
+}
+
+function orderSortValue_(order) {
+  const value = order.AtualizadoEm || order.PedidoID || "";
+  if (Object.prototype.toString.call(value) === "[object Date]" && !isNaN(value.getTime())) return value.getTime();
+  const parsed = Date.parse(String(value || ""));
+  return isNaN(parsed) ? 0 : parsed;
 }
 
 function processPostSaleQueue_(settings) {
