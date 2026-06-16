@@ -217,3 +217,10 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - O seletor `Produto vendido` carregou 9 opcoes, selecionou `Fonte 750W 80 Plus Bronze NVINET - Lacrada - R$ 355,00` e exibiu a miniatura correspondente.
 - Preview validado: `previewHidden:false`, titulo correto, specs `NVINET / NT750`, imagem `../assets/generated/fonte-750w-nvinet-80plus-bronze-cutout.png` renderizada com `naturalWidth:1400` e `naturalHeight:1400`.
 - Sem overflow horizontal, sem imagens quebradas e sem logs warn/error na rota correta `/admin`.
+
+## Atualizacao 2026-06-16 - intervencoes externas agrupadas por e-mail
+
+- Producao confirmou `googleConfigured:false` e `microsoftConfigured:false`; portanto login real, painel admin autenticado e historico de pedidos por conta dependem de OAuth/env vars externas.
+- Checagem local nao encontrou `gcloud`, `clasp`, `vercel` nem `npm` no PATH apos reboot; o conector Vercel disponivel nao expoe CRUD de env vars nem valores sensiveis.
+- E-mail `MobilyTech BR - intervencoes necessarias para destravar login e pedidos` enviado para `me` com a lista agrupada: Google OAuth, Microsoft opcional, `AUTH_SESSION_SECRET`, `CUSTOMER_ORDERS_ENDPOINT`, `CUSTOMER_ORDERS_TOKEN`, acesso/backup do Apps Script vivo e reautenticacao Wix quando for testar apps/imagens.
+- Enquanto isso nao for configurado, nao tentar criar pedido real nem colar Apps Script vivo: seguir apenas com validacoes locais/sem efeito colateral.
