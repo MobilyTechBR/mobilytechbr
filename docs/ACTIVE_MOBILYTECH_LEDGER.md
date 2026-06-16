@@ -12,6 +12,9 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 
 ## Estado em andamento
 
+- Verificado em 2026-06-15: `https://mobilytechbr.vercel.app` responde com a fase 2 correta (`MobilyTech BR | Loja gamer`, `MOBMEN` e `MobilyTech Finds`). Runtime Vercel sem erros recentes apos commit `15cbd7c`.
+- Verificado em 2026-06-15: `https://www.mobilytech.com.br` ainda serve o site Wix antigo/generico (`Inicio | MobilyTech BR`, contem `NovoTec`, nao contem `MOBMEN`). DNS de `www.mobilytech.com.br` ainda aponta para `wixdns.net`.
+- A ponte dominio oficial -> visual Vercel ainda exige configuracao de dominio/DNS/Vercel. A API Wix de Domain DNS usa API key e nao o token comum do conector; nao tentar mudanca DNS sem endpoint/schema confirmado ou intervencao segura do painel.
 - Fechar carrinho com cupom, retirada local e frete de fornecedor separado do Melhor Envio.
 - Completar suporte backend para cupom local `MOBMEN` sem criar nova Vercel Function.
 - Manter dropshipping com frete cobrado do cliente, origem nacional/internacional e margem editavel no painel.
