@@ -201,3 +201,12 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - QA HTTP em producao `https://www.mobilytech.com.br` com `qa=1f4d3c0`: home 200 contendo `/api/account?action=session`; `/api/account?action=session` 200; endpoint legado `/api/auth-session` 200; `/admin` 401 com tela `Painel MobilyTech BR protegido`; `/private/admin/index.html` 404; `/api/register-sale` preservado com 405 em GET.
 - QA HTTP no alias `https://mobilytechbr.vercel.app`: `/api/account?action=session` retornou 200 com JSON de sessao deslogada.
 - QA Browser em producao salvo em `docs/qa/production-account-routes-2026-06-16-1f4d3c0/`: home, Achados, Minha Conta desktop e Achados mobile sem imagens quebradas, sem overflow horizontal, sem logs de erro/warn, e links de conta apontando para `/api/account`.
+
+## Atualizacao 2026-06-16 - verificacao segura da Planilha OLX / Apps Script
+
+- Verificacao somente leitura no Google Drive/Sheets da planilha `Planilha OLX` (`1Wc_ctkvNJh-64Yg30EHGBCjylL92s2BDtXbNhug0VsQ`) confirmou as abas atuais: `Vendas_PCs`, `Pedidos`, `Vendas_PCs_Metadata`, `Configuracoes`, `Revisao de precos`, `Novos anuncios`, `Estoque_Componentes` e `Resumo_Mensal`.
+- `Vendas_PCs` continua com os 9 cabecalhos financeiros originais em `A:I`, preservando a base usada pelo relatorio mensal/organizacao existente. A planilha tem 28 colunas no grid, mas os dados oficiais de venda lidos continuam somente ate `Margem (%)`.
+- `Pedidos` existe separado com os 30 cabecalhos de pos-venda, e `Vendas_PCs_Metadata` existe separado com metadados operacionais. Isso confirma que a arquitetura local evita gravar extras na tabela mensal.
+- `Resumo_Mensal` existe e contem totais mensais formatados de custo, faturamento, lucro e margem; portanto nao se deve sobrescrever o projeto Apps Script mensal nem colar o script de pos-venda por cima dele.
+- Busca Drive por MIME `application/vnd.google-apps.script` nao retornou projetos Apps Script; o conector atual nao permite auditar o codigo vivo do Apps Script. Sem acesso ao codigo vivo, qualquer publicacao deve continuar pela regra segura: backup/compare primeiro ou Web App separado.
+- Producao indica `googleConfigured:false` e `microsoftConfigured:false` em `/api/account?action=session`; logo o teste real de login, painel admin e historico de pedidos esta bloqueado ate configurar OAuth/segredos em Vercel/provedores.
