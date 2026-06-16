@@ -526,6 +526,24 @@ Fluxo local recomendado:
 12. Verificar Vercel e depois dominio oficial Wix.
 13. Enviar e-mail resumo.
 
+## Atualizacao pos-handoff em 2026-06-16
+
+Este bloco registra o que ja foi concluido depois da criacao deste handoff, para evitar que uma proxima conversa volte ao ponto antigo.
+
+- Backup pre-mudancas criado em `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_backup_pre_changes_2026-06-16_122553.zip`.
+- `scripts/build_phase2_ibuy_style.py` foi corrigido para escapar `Qtd. ${{quantity}}` dentro da f-string Python, e o site fase 2 foi regenerado.
+- Testes locais passaram para `node --check`, limite de Vercel Functions, frete por quantidade de fornecedor, bloqueio de quantidade para produto fisico, cupom `MOBMEN`, retirada local, busca, carrinho, desktop/mobile e painel.
+- Publicacao Vercel concluida no `main` com commit `d46d9e2`; production verificada como `READY`.
+- Apps Script separado de pos-venda foi atualizado/publicado sem sobrescrever a rotina mensal existente da planilha. `Vendas_PCs` continua em `A:I`; extras vao para `Vendas_PCs_Metadata`.
+- Endpoints de pos-venda foram configurados na Vercel como variaveis sensiveis de Production. Nao registrar a URL completa do Web App em docs, chat ou prints.
+- `ADMIN_WRITE_TOKEN` segue pendente por decisao segura; `api/register-sale.js` retorna 501 controlado enquanto ele nao existir.
+- O blocker do dominio oficial foi resolvido para `www.mobilytech.com.br`: o CNAME `www` no Wix DNS aponta para Vercel, e Vercel Domains mostra `www.mobilytech.com.br` como `Valid Configuration`.
+- `https://www.mobilytech.com.br/fase2/ofertas.html` responde 200 via Vercel e tem HTML identico ao Vercel de referencia `https://mobilytechbr.vercel.app/fase2/ofertas.html`, SHA-256 `a36c60e328345a139fc1acb5b735bc9533b42d16935f45565d89e591266798ae`.
+- `https://mobilytech.com.br/` permanece no Wix como redirect 301 para `https://www.mobilytech.com.br/`. Durante propagacao, navegadores que cachearam DNS antigo podem mostrar 404 Wix em subrotas; resolvers externos e HTTP direto ja validaram o `www` na Vercel.
+- Crocheck ChatGPT em modo `muito alto`: primeiro bloqueou por subrota 404; depois da correcao DNS aprovou publicacao real, nota 9,1/10, sem blockers.
+- Evidencias atuais: `docs/qa/production-final-2026-06-16-env-redeploy/qa-results.json` e `docs/qa/production-final-2026-06-16-env-redeploy/official-domain-byte-compare.json`.
+- Pendencias restantes: configurar `ADMIN_WRITE_TOKEN` em canal seguro se necessario, rodar testes reais de e-mails transacionais, concluir login/headless com segredo OAuth seguro, decidir favicon/home raiz Wix se desejado, e investigar crash/fechamento do Codex por ultimo.
+
 ## Checklist final para a proxima IA
 
 ### Antes de editar

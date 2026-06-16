@@ -13,7 +13,8 @@ Nota de continuidade 2026-06-16: o handoff oficial mais recente e `docs/HANDOFF_
 - Site Vercel funcional e referencia visual atual: https://mobilytechbr.vercel.app
 - Dominio oficial desejado para cliente: https://www.mobilytech.com.br
 - Site Wix premium/canonico: MobilyTech BR, site ID 85e985c5-2904-452f-85e2-a98f6d3b1cac.
-- O dominio oficial continua dependente da ponte Wix/Vercel ou de configuracao segura de dominio/headless antes de ser tratado como substituto completo do Vercel.
+- Em 2026-06-16, `www.mobilytech.com.br` foi conectado diretamente ao Vercel para as rotas publicas da fase 2. `https://www.mobilytech.com.br/fase2/ofertas.html` responde 200 via Vercel e e byte a byte identico a `https://mobilytechbr.vercel.app/fase2/ofertas.html`.
+- O dominio raiz `https://mobilytech.com.br/` permanece no Wix e redireciona 301 para `https://www.mobilytech.com.br/`. A home raiz com `www` ainda pode ter historico/ponte Wix em caches antigos; a rota publica validada para cliente e `www.mobilytech.com.br/fase2/...`.
 
 ## Fonte tecnica atual
 
@@ -137,8 +138,8 @@ Trocas globais em `data/swaps.json`:
 
 - Site Wix alvo atual: MobilyTech BR.
 - Site ID confirmado em memoria recente: 85e985c5-2904-452f-85e2-a98f6d3b1cac.
-- Dominio Wix atual verificado: https://www.mobilytech.com.br
-- Wix deve ser tratado como migracao em andamento, nao como substituto aprovado automaticamente.
+- Dominio oficial atual: https://www.mobilytech.com.br
+- Estado em 2026-06-16: `www.mobilytech.com.br` serve a fase 2 pelo Vercel; o dominio raiz sem `www` continua no Wix como redirect para `www`. Wix segue como migracao/backend comercial em andamento, nao como substituto headless completo aprovado automaticamente.
 - O usuario comprou Wix principalmente por ferramentas comerciais: marketing, subpaginas, dropshipping, catalogo, chat, painel/gestao e integracoes.
 - A Wix nao deve perder as funcoes do site original. Se alguma funcao nao tiver equivalente nativo, usar ponte com Vercel/Apps Script ate existir substituto.
 - Separar estoque proprio e dropshipping. Produtos fisicos atuais: PCs, SSDs, fonte e adicionais. Dropshipping deve ficar separado e nao misturado com estoque proprio.
@@ -179,6 +180,18 @@ Prioridade 4: manter ou recriar as automacoes:
 - Frete Melhor Envio.
 - Revisao Facebook/OLX.
 - E-mails internos.
+
+## Atualizacao operacional 2026-06-16
+
+- Backup antes das mudancas: `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_backup_pre_changes_2026-06-16_122553.zip`.
+- Build corrigido: `scripts/build_phase2_ibuy_style.py` escapou o trecho JS `Qtd. ${{quantity}}` dentro da f-string Python, e o site foi regenerado.
+- Publicacao Vercel: commit `d46d9e2` no `main`, deployment production `mobilytechbr-8goam0hpd-mobily-tech-s-projects.vercel.app`, estado `READY`.
+- Apps Script/Web App: `setupMobilyTechPostSale` rodou com sucesso; `Vendas_PCs` foi preservada em `A:I`; metadados extras vao para `Vendas_PCs_Metadata`. Endpoints de pos-venda foram configurados na Vercel como variaveis sensiveis. Nao registrar URLs completas de Web App em docs.
+- Dominio oficial: `www.mobilytech.com.br` tem CNAME para Vercel e Vercel Domains mostra `Valid Configuration`. Assets e JSON no `www` respondem 200 via Vercel.
+- Evidencias QA: `docs/qa/production-final-2026-06-16-env-redeploy/qa-results.json` e `docs/qa/production-final-2026-06-16-env-redeploy/official-domain-byte-compare.json`.
+- Crocheck ChatGPT: primeiro bloqueou por subrota 404 no dominio oficial; depois da correcao DNS aprovou publicacao real com nota 9,1/10 e sem blockers.
+- Risco residual temporario: navegadores que cachearam o DNS antigo podem mostrar 404 Wix em subrotas ate expirar cache/TTL. Resolvers externos e HTTP direto ja validaram Vercel no `www`.
+- Pendencias seguintes: `ADMIN_WRITE_TOKEN` seguro para registro manual/admin, testes reais de e-mails transacionais, revisao final de favicon/home raiz se desejado, login/headless com segredo OAuth seguro, e investigacao do crash/fechamento do Codex por ultimo.
 
 ## Primeira instrução para uma conversa nova
 

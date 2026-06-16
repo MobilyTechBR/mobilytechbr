@@ -93,3 +93,20 @@ Em 2026-06-15 foi confirmado que Wix Headless OAuth App e o caminho oficial para
 - Conector Wix confirmou o site canonico `85e985c5-2904-452f-85e2-a98f6d3b1cac` como Premium, Published, custom domain, Velo enabled, Wix Members Area e Wix Stores V3.
 - Conector Vercel confirmou o projeto `mobilytechbr` (`prj_ljqtPnKqvLMRUio4bMAWMtNaGeWz`) com dominios anexados apenas `mobilytechbr.vercel.app`, `mobilytechbr-mobily-tech-s-projects.vercel.app` e `mobilytechbr-git-main-mobily-tech-s-projects.vercel.app`. O dominio `www.mobilytech.com.br` ainda nao esta anexado ao projeto Vercel.
 - Busca oficial Wix encontrou API para `business profile logo`, mas nao confirmou API REST especifica para favicon/site icon. Para trocar favicon do Wix, usar painel/editor Wix ou uma documentacao/API especifica confirmada antes de qualquer chamada.
+
+## Atualizacao de dominio em 2026-06-16
+
+- A limitacao de subrotas 404 no dominio oficial foi resolvida para o host `www.mobilytech.com.br` anexando esse host ao projeto Vercel `mobilytechbr`.
+- No Wix DNS, o CNAME de `www.mobilytech.com.br` foi alterado de `cdn1.wixdns.net` para `3d53bf07e7cc5a82.vercel-dns-017.com`.
+- O dominio raiz `mobilytech.com.br` foi mantido no Wix com os tres A records originais (`185.230.63.171`, `185.230.63.186`, `185.230.63.107`) para continuar redirecionando 301 para `https://www.mobilytech.com.br/`.
+- Vercel Domains marcou `www.mobilytech.com.br` como `Valid Configuration` em Production. O apex `mobilytech.com.br` segue invalido dentro da Vercel porque permanece intencionalmente no Wix como redirect.
+- Validacao HTTP externa confirmou:
+  - `https://www.mobilytech.com.br/` -> 200 via Vercel.
+  - `https://www.mobilytech.com.br/fase2/ofertas.html` -> 200 via Vercel.
+  - `https://www.mobilytech.com.br/assets/mobilytech-logo.png` -> 200 via Vercel.
+  - `https://www.mobilytech.com.br/data/products.json` -> 200 via Vercel.
+  - `https://mobilytech.com.br/` -> 301 via Wix/Pepyaka para `https://www.mobilytech.com.br/`.
+- `https://www.mobilytech.com.br/fase2/ofertas.html` e `https://mobilytechbr.vercel.app/fase2/ofertas.html` retornaram HTML identico, SHA-256 `a36c60e328345a139fc1acb5b735bc9533b42d16935f45565d89e591266798ae`.
+- Evidencia salva em `docs/qa/production-final-2026-06-16-env-redeploy/official-domain-byte-compare.json`.
+- Durante a propagacao, Opera GX e Browser interno ainda mostraram 404 Wix por cache DNS antigo. Isso nao contradiz a validacao externa; aguardar expiracao de cache/TTL antes de usar esses navegadores como prova negativa.
+- Crocheck follow-up com ChatGPT confirmou que o blocker de rota direta no dominio oficial foi resolvido e mudou a avaliacao para aprovado para publicacao real, nota 9,1/10, sem blockers restantes.

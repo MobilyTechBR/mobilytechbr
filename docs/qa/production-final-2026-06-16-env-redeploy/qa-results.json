@@ -1,0 +1,74 @@
+{
+  "createdAt": "2026-06-16T17:17:22.108Z",
+  "target": "MobilyTech BR production after Apps Script endpoint env redeploy",
+  "deployment": {
+    "commit": "d46d9e2",
+    "vercelStatus": "Ready via Vercel dashboard redeploy",
+    "endpointEnv": {
+      "ORDER_NOTIFICATION_ENDPOINT": "configured as sensitive Production env var",
+      "SALES_REGISTRATION_ENDPOINT": "configured as sensitive Production env var",
+      "ADMIN_WRITE_TOKEN": "not configured/untested; register-sale returns 501 without it"
+    }
+  },
+  "browser": "Codex in-app Browser",
+  "checks": {
+    "vercelDesktopHome": {
+      "url": "https://mobilytechbr.vercel.app/?qa=final-env-20260616",
+      "title": "MobilyTech BR | Loja gamer",
+      "noConsoleErrorsOrWarnings": true,
+      "notBlank": true,
+      "hasHero": true,
+      "noBrokenImages": true,
+      "screenshot": "C:/Users/MF/Documents/GitHub/mobilytechbr/docs/qa/production-final-2026-06-16-env-redeploy/desktop-home.png"
+    },
+    "vercelDesktopSearch": {
+      "query": "PNY",
+      "noConsoleErrorsOrWarnings": true,
+      "hasResult": true,
+      "noFrameworkOverlay": true,
+      "noHorizontalScroll": true,
+      "screenshot": "C:/Users/MF/Documents/GitHub/mobilytechbr/docs/qa/production-final-2026-06-16-env-redeploy/desktop-search-pny.png"
+    },
+    "vercelDesktopCart": {
+      "noConsoleErrorsOrWarnings": true,
+      "drawerVisible": true,
+      "quantityTextRendered": true,
+      "noHorizontalScroll": true,
+      "screenshot": "C:/Users/MF/Documents/GitHub/mobilytechbr/docs/qa/production-final-2026-06-16-env-redeploy/desktop-cart-open.png"
+    },
+    "vercelMobileHome": {
+      "url": "https://mobilytechbr.vercel.app/?qa=final-env-mobile-20260616",
+      "title": "MobilyTech BR | Loja gamer",
+      "noConsoleErrorsOrWarnings": true,
+      "notBlank": true,
+      "hasHero": true,
+      "noBrokenImages": true,
+      "noHorizontalScroll": true,
+      "screenshot": "C:/Users/MF/Documents/GitHub/mobilytechbr/docs/qa/production-final-2026-06-16-env-redeploy/mobile-home.png"
+    },
+    "wixOfficialHome": {
+      "url": "https://www.mobilytech.com.br/?qa=final-env-20260616",
+      "title": "Inicio | MobilyTech BR",
+      "iframeCount": 3,
+      "mobilytechIframePresent": true,
+      "noHorizontalScroll": true,
+      "consoleNotes": [
+        {
+          "level": "error",
+          "message": "suspense rendered fallback for - tpaWorker_37 - (TPAWorker)",
+          "source": "Wix/static.parastorage"
+        }
+      ],
+      "screenshot": "C:/Users/MF/Documents/GitHub/mobilytechbr/docs/qa/production-final-2026-06-16-env-redeploy/wix-official-home.png"
+    },
+    "wixRoutes": {
+      "directFase2Ofertas": {
+        "status": 404,
+        "knownPending": true
+      },
+      "mtbPathFase2Ofertas": {
+        "status": 200
+      }
+    }
+  }
+}
