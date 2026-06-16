@@ -326,18 +326,20 @@ function isPendingPaymentStatus_(status) {
 
 function sendSellerSaleAlert_(order, settings, options) {
   options = options || {};
+  const emailVariant = "seller";
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
   const subject = (options.subjectPrefix || "") + "Parabens, voce vendeu no site - MobilyTechBR";
   const denyUrl = buildActionUrl_("deny-label", order.PedidoID);
   const labelUrl = order.LinkConfirmarEtiqueta || "";
   const manualFulfillment = ["supplier_shipping", "mixed_shipping"].indexOf(String(order.ModoEntrega || "")) >= 0 || Boolean(order.FornecedorItens);
   const actionHtml = manualFulfillment
-    ? "<p style='margin:18px 0 0;color:#f8d04c;font-weight:800'>Operacao manual: comprar no canal de origem do produto, acompanhar rastreio e atualizar o pedido. Nao use etiqueta Melhor Envio para estes itens.</p>"
+    ? "<p style='margin:18px 0 0;color:#0b4f9c;font-weight:800'>Operacao manual: comprar no canal de origem do produto, acompanhar rastreio e atualizar o pedido. Nao use etiqueta Melhor Envio para estes itens.</p>"
     : order.ModoEntrega === "shipping"
-    ? `<p style="margin:18px 0 0"><a href="${labelUrl}" style="${buttonStyle_()}">Confirmar etiqueta</a><a href="${denyUrl}" style="${buttonStyle_("secondary")}">Negar etiqueta</a></p>`
-    : "<p style='margin:18px 0 0;color:#bcd4df;font-weight:700'>Retirada local selecionada. Combine o horario com o cliente.</p>";
+    ? `<p style="margin:18px 0 0"><a href="${labelUrl}" style="${buttonStyle_("primary", emailVariant)}">Confirmar etiqueta</a><a href="${denyUrl}" style="${buttonStyle_("secondary", emailVariant)}">Negar etiqueta</a></p>`
+    : "<p style='margin:18px 0 0;color:#315d86;font-weight:700'>Retirada local selecionada. Combine o horario com o cliente.</p>";
 
   const html = emailShell_({
+    variant: emailVariant,
     preheader: "Nova venda confirmada no site.",
     title: "Parabens, voce vendeu no site!",
     intro: "Venda confirmada. Confira os dados abaixo antes de preparar o pedido.",
@@ -347,18 +349,18 @@ function sendSellerSaleAlert_(order, settings, options) {
         ["Opcionais", order.Opcionais || "Nenhum"],
         ["Valor pago", formatMoneyText_(order.ValorPago)],
         ["Plataforma", order.Plataforma]
-      ]),
+      ], emailVariant),
       detailBlock_("Cliente e entrega", [
         ["Cliente", order.ClienteNome],
         ["Email", order.ClienteEmail],
         ["Telefone", order.ClienteTelefone],
         ["Entrega", deliverySummary_(order)],
         ["Endereco", order.Endereco]
-      ]),
+      ], emailVariant),
       manualFulfillment ? detailBlock_("Operacao com envio direto", [
         ["Itens", order.FornecedorItens || "Nao detalhado"],
         ["Observacoes", order.ObservacoesOperacao || "Comprar no canal de origem, acompanhar envio e atualizar rastreio manualmente."]
-      ]) : "",
+      ], emailVariant) : "",
       actionHtml
     ]
   });
@@ -370,6 +372,7 @@ function sendSellerManualFulfillmentAlert_(order, settings, options) {
   settings = settings || {};
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
   const html = emailShell_({
+    variant: "seller",
     preheader: "Venda com item de fornecedor ou operacao manual.",
     title: "Venda com envio direto/manual",
     intro: "Esta venda precisa de acao operacional: conferir o fornecedor, comprar no canal de origem, acompanhar rastreio e atualizar o cliente.",
@@ -379,18 +382,18 @@ function sendSellerManualFulfillmentAlert_(order, settings, options) {
         ["Produto", order.Produto],
         ["Valor pago", formatMoneyText_(order.ValorPago)],
         ["Plataforma", order.Plataforma]
-      ]),
+      ], "seller"),
       detailBlock_("Cliente", [
         ["Nome", order.ClienteNome],
         ["Email", order.ClienteEmail],
         ["Telefone", order.ClienteTelefone],
         ["CEP", order.Cep],
         ["Endereco", order.Endereco]
-      ]),
+      ], "seller"),
       detailBlock_("Operacao", [
         ["Itens fornecedor", order.FornecedorItens || "Nao detalhado"],
         ["Observacoes", order.ObservacoesOperacao || "Comprar no canal de origem, acompanhar envio e atualizar rastreio manualmente."]
-      ])
+      ], "seller")
     ]
   });
   GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Nova venda manual/fornecedor - MobilyTech BR", "Venda com envio direto/manual.", { htmlBody: html, name: "MobilyTech BR" });
@@ -401,6 +404,7 @@ function sendSellerOperationIssueAlert_(order, settings, reason, options) {
   settings = settings || {};
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
   const html = emailShell_({
+    variant: "seller",
     preheader: "Uma etapa de pagamento, frete ou automacao precisa de revisao.",
     title: "Atencao: pedido precisa de revisao",
     intro: "O pedido abaixo encontrou um bloqueio operacional. Confira antes de seguir com preparo, etiqueta, compra de fornecedor ou contato com o cliente.",
@@ -411,12 +415,12 @@ function sendSellerOperationIssueAlert_(order, settings, reason, options) {
         ["Cliente", order.ClienteNome],
         ["Email", order.ClienteEmail],
         ["Telefone", order.ClienteTelefone]
-      ]),
+      ], "seller"),
       detailBlock_("Bloqueio", [
         ["Motivo", reason || order.ObservacoesOperacao || "Falha ou pendencia de pagamento/frete"],
         ["Entrega", deliverySummary_(order)],
         ["Endereco", order.Endereco]
-      ])
+      ], "seller")
     ]
   });
   GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Erro/bloqueio de pedido - MobilyTech BR", "Pedido precisa de revisao.", { htmlBody: html, name: "MobilyTech BR" });
@@ -468,6 +472,7 @@ function sendSellerTrackingAlert_(order, settings, options) {
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
   const trackUrl = order.LinkRastreio || `https://www2.correios.com.br/sistemas/rastreamento/default.cfm?objetos=${encodeURIComponent(order.CodigoRastreio || "")}`;
   const html = emailShell_({
+    variant: "seller",
     preheader: "Pedido marcado como despachado.",
     title: "Pedido despachado",
     intro: "Atualizacao operacional: o cliente deve receber o rastreio. Confira se os dados batem com o envio antes de encerrar a etapa.",
@@ -477,14 +482,14 @@ function sendSellerTrackingAlert_(order, settings, options) {
         ["Produto", order.Produto],
         ["Cliente", order.ClienteNome],
         ["Email", order.ClienteEmail]
-      ]),
+      ], "seller"),
       detailBlock_("Rastreamento", [
         ["Transportadora", order.Transportadora || "Correios"],
         ["Servico", order.ServicoFrete || "Nao informado"],
         ["Codigo", order.CodigoRastreio],
         ["CEP", order.Cep],
         ["Endereco", order.Endereco]
-      ])
+      ], "seller")
     ],
     ctaLabel: order.LinkRastreio ? "Abrir rastreio" : "",
     ctaUrl: order.LinkRastreio ? trackUrl : ""
@@ -512,6 +517,7 @@ function sendSellerDeliveredAlert_(order, settings, options) {
   settings = settings || {};
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
   const html = emailShell_({
+    variant: "seller",
     preheader: "Pedido entregue ao cliente.",
     title: "Pedido entregue",
     intro: "Atualizacao operacional: pedido entregue. Use este aviso para fechar acompanhamento, pos-venda e controle interno.",
@@ -522,8 +528,8 @@ function sendSellerDeliveredAlert_(order, settings, options) {
         ["Cliente", order.ClienteNome],
         ["Email", order.ClienteEmail],
         ["Telefone", order.ClienteTelefone]
-      ]),
-      textBlock_("Proximo passo sugerido", "Se o cliente responder com duvida, priorize suporte de pos-venda. Se estiver tudo certo, este pedido pode ser considerado encerrado no controle interno.")
+      ], "seller"),
+      textBlock_("Proximo passo sugerido", "Se o cliente responder com duvida, priorize suporte de pos-venda. Se estiver tudo certo, este pedido pode ser considerado encerrado no controle interno.", "seller")
     ]
   });
   GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Pedido entregue - controle vendedor - MobilyTech BR", "Pedido entregue ao cliente.", { htmlBody: html, name: "MobilyTech BR" });
@@ -2005,10 +2011,62 @@ function githubConfig_() {
   };
 }
 
-function emailShell_({ preheader, title, intro, blocks = [], ctaLabel, ctaUrl }) {
-  const blocksHtml = blocks.join("");
+function emailTheme_(variant) {
+  if (variant === "seller") {
+    return {
+      pageBg: "#edf4fb",
+      shellBorder: "#bed2e6",
+      headerBg: "#dbeafe",
+      headerBorder: "#aac7e6",
+      headerStripe: "border-top:6px solid #0b4f9c;",
+      accent: "#0b4f9c",
+      title: "#05182f",
+      intro: "#233a54",
+      contentBg: "#ffffff",
+      footerBg: "#edf5fb",
+      footerBorder: "#cbddec",
+      footerText: "#54677c",
+      cardBorder: "#c9dced",
+      cardBg: "#ffffff",
+      label: "#50657b",
+      value: "#05182f",
+      text: "#233a54",
+      buttonBg: "#0b5cad",
+      buttonText: "#ffffff",
+      secondaryBorder: "#8fb0cf",
+      secondaryText: "#0b315f"
+    };
+  }
+  return {
+    pageBg: "#f4f8fc",
+    shellBorder: "#d9e6f0",
+    headerBg: "#eef8ff",
+    headerBorder: "#dcebf5",
+    headerStripe: "",
+    accent: "#008fbb",
+    title: "#061120",
+    intro: "#354556",
+    contentBg: "#ffffff",
+    footerBg: "#f8fbfe",
+    footerBorder: "#e2edf5",
+    footerText: "#657383",
+    cardBorder: "#dfeaf2",
+    cardBg: "#ffffff",
+    label: "#6a7787",
+    value: "#061120",
+    text: "#354556",
+    buttonBg: "#24d8c8",
+    buttonText: "#021018",
+    secondaryBorder: "#a9c5d8",
+    secondaryText: "#102033"
+  };
+}
+
+function emailShell_({ variant = "customer", preheader, title, intro, blocks = [], ctaLabel, ctaUrl }) {
+  const theme = emailTheme_(variant);
+  const blocksHtml = blocks.filter(Boolean).join("");
   const cta = ctaLabel && ctaUrl
-    ? `<p style="text-align:center;margin:26px 0 6px"><a href="${ctaUrl}" style="${buttonStyle_()}">${escapeHtml_(ctaLabel)}</a></p>`
+    ? `<p style="text-align:center;margin:26px 0 6px"><a href="${ctaUrl}" style="${buttonStyle_("primary", variant)}">${escapeHtml_(ctaLabel)}</a></p>`
     : "";
   return `<!doctype html>
   <html>
@@ -2016,19 +2074,19 @@ function emailShell_({ preheader, title, intro, blocks = [], ctaLabel, ctaUrl })
     <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light">
   </head>
-  <body style="margin:0;padding:0;background-color:#f4f8fc!important;color:#061120!important">
-  <div style="display:none;max-height:0;overflow:hidden;color:#f4f8fc">${escapeHtml_(preheader || "")}</div>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f4f8fc" style="background-color:#f4f8fc!important;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#061120!important">
-    <tr><td align="center" bgcolor="#f4f8fc" style="padding:28px 14px;background-color:#f4f8fc!important;color:#061120!important">
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width:680px;border:1px solid #d9e6f0;border-radius:20px;background-color:#ffffff!important;color:#061120!important;overflow:hidden;box-shadow:0 18px 46px rgba(13,39,64,.10)">
-        <tr><td align="center" bgcolor="#eef8ff" style="padding:30px 26px 22px;background-color:#eef8ff!important;color:#061120!important;border-bottom:1px solid #dcebf5">
+  <body style="margin:0;padding:0;background-color:${theme.pageBg}!important;color:${theme.title}!important">
+  <div style="display:none;max-height:0;overflow:hidden;color:${theme.pageBg}">${escapeHtml_(preheader || "")}</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="${theme.pageBg}" style="background-color:${theme.pageBg}!important;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:${theme.title}!important">
+    <tr><td align="center" bgcolor="${theme.pageBg}" style="padding:28px 14px;background-color:${theme.pageBg}!important;color:${theme.title}!important">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width:680px;border:1px solid ${theme.shellBorder};border-radius:20px;background-color:#ffffff!important;color:${theme.title}!important;overflow:hidden;box-shadow:0 18px 46px rgba(13,39,64,.10)">
+        <tr><td align="center" bgcolor="${theme.headerBg}" style="${theme.headerStripe}padding:30px 26px 22px;background-color:${theme.headerBg}!important;color:${theme.title}!important;border-bottom:1px solid ${theme.headerBorder}">
           <img src="${MOBILYTECH.LOGO_URL}" width="92" alt="MobilyTech BR" style="display:block;border-radius:999px;margin:0 auto 16px">
-          <div style="color:#008fbb!important;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase">MobilyTech BR</div>
-          <h1 style="margin:10px 0 0;color:#061120!important;font-size:32px;line-height:1.08">${escapeHtml_(title)}</h1>
-          <p style="margin:14px auto 0;max-width:540px;color:#354556!important;font-size:16px;line-height:1.55;font-weight:700">${escapeHtml_(intro)}</p>
+          <div style="color:${theme.accent}!important;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase">MobilyTech BR</div>
+          <h1 style="margin:10px 0 0;color:${theme.title}!important;font-size:32px;line-height:1.08">${escapeHtml_(title)}</h1>
+          <p style="margin:14px auto 0;max-width:540px;color:${theme.intro}!important;font-size:16px;line-height:1.55;font-weight:700">${escapeHtml_(intro)}</p>
         </td></tr>
-        <tr><td bgcolor="#ffffff" style="padding:10px 26px 28px;background-color:#ffffff!important;color:#061120!important">${blocksHtml}${cta}</td></tr>
-        <tr><td bgcolor="#f8fbfe" style="padding:18px 26px;border-top:1px solid #e2edf5;background-color:#f8fbfe!important;color:#657383!important;font-size:12px;line-height:1.5;text-align:center">
+        <tr><td bgcolor="${theme.contentBg}" style="padding:10px 26px 28px;background-color:${theme.contentBg}!important;color:${theme.title}!important">${blocksHtml}${cta}</td></tr>
+        <tr><td bgcolor="${theme.footerBg}" style="padding:18px 26px;border-top:1px solid ${theme.footerBorder};background-color:${theme.footerBg}!important;color:${theme.footerText}!important;font-size:12px;line-height:1.5;text-align:center">
           MobilyTech BR - PCs e Hardware<br>
           Envio para todo o Brasil | Retirada local | Site oficial | OLX | Facebook Marketplace | Mercado Livre
         </td></tr>
@@ -2039,31 +2097,40 @@ function emailShell_({ preheader, title, intro, blocks = [], ctaLabel, ctaUrl })
   </html>`;
 }
 
-function detailBlock_(title, rows) {
+function detailBlock_(title, rows, variant) {
+  const theme = emailTheme_(variant);
   const rowsHtml = rows
     .filter(([, value]) => value !== undefined && value !== null && String(value) !== "")
-    .map(([label, value]) => `<tr><td style="padding:8px 0;color:#6a7787!important;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em">${escapeHtml_(label)}</td><td style="padding:8px 0;color:#061120!important;font-size:14px;font-weight:900;text-align:right">${escapeHtml_(value)}</td></tr>`)
+    .map(([label, value]) => `<tr><td style="padding:8px 0;color:${theme.label}!important;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em">${escapeHtml_(label)}</td><td style="padding:8px 0;color:${theme.value}!important;font-size:14px;font-weight:900;text-align:right">${escapeHtml_(value)}</td></tr>`)
     .join("");
-  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="color:#061120!important">${rowsHtml}</table></div>`;
+  return `<div style="${cardStyle_(variant)}"><h2 style="${blockTitleStyle_(variant)}">${escapeHtml_(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="color:${theme.value}!important">${rowsHtml}</table></div>`;
 }
 
-function textBlock_(title, text) {
-  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><p style="margin:0;color:#354556!important;font-size:14px;line-height:1.6;font-weight:700">${escapeHtml_(text)}</p></div>`;
+function textBlock_(title, text, variant) {
+  const theme = emailTheme_(variant);
+  return `<div style="${cardStyle_(variant)}"><h2 style="${blockTitleStyle_(variant)}">${escapeHtml_(title)}</h2><p style="margin:0;color:${theme.text}!important;font-size:14px;line-height:1.6;font-weight:700">${escapeHtml_(text)}</p></div>`;
 }
 
-function buttonStyle_(variant) {
-  if (variant === "secondary") {
-    return "display:inline-block;margin:6px 6px;padding:13px 18px;border:1px solid #a9c5d8;border-radius:12px;color:#102033!important;background-color:#ffffff!important;text-decoration:none;font-weight:900";
+function buttonStyle_(type, variant) {
+  if (type && type !== "primary" && type !== "secondary" && !variant) {
+    variant = type;
+    type = "primary";
   }
-  return "display:inline-block;margin:6px 6px;padding:13px 20px;border-radius:12px;color:#021018!important;background-color:#24d8c8!important;text-decoration:none;font-weight:900";
+  const theme = emailTheme_(variant);
+  if (type === "secondary") {
+    return `display:inline-block;margin:6px 6px;padding:13px 18px;border:1px solid ${theme.secondaryBorder};border-radius:12px;color:${theme.secondaryText}!important;background-color:#ffffff!important;text-decoration:none;font-weight:900`;
+  }
+  return `display:inline-block;margin:6px 6px;padding:13px 20px;border-radius:12px;color:${theme.buttonText}!important;background-color:${theme.buttonBg}!important;text-decoration:none;font-weight:900`;
 }
 
-function cardStyle_() {
-  return "margin:14px 0 0;padding:18px;border:1px solid #dfeaf2;border-radius:16px;background-color:#ffffff!important;color:#061120!important";
+function cardStyle_(variant) {
+  const theme = emailTheme_(variant);
+  return `margin:14px 0 0;padding:18px;border:1px solid ${theme.cardBorder};border-radius:16px;background-color:${theme.cardBg}!important;color:${theme.value}!important`;
 }
 
-function blockTitleStyle_() {
-  return "margin:0 0 12px;color:#008fbb!important;font-size:13px;letter-spacing:.08em;text-transform:uppercase";
+function blockTitleStyle_(variant) {
+  const theme = emailTheme_(variant);
+  return `margin:0 0 12px;color:${theme.accent}!important;font-size:13px;letter-spacing:.08em;text-transform:uppercase`;
 }
 
 function deliverySummary_(order) {

@@ -543,7 +543,11 @@ Este bloco registra o que ja foi concluido depois da criacao deste handoff, para
 - Crocheck ChatGPT em modo `muito alto`: primeiro bloqueou por subrota 404; depois da correcao DNS aprovou publicacao real, nota 9,1/10, sem blockers.
 - Evidencias atuais: `docs/qa/production-final-2026-06-16-env-redeploy/qa-results.json` e `docs/qa/production-final-2026-06-16-env-redeploy/official-domain-byte-compare.json`.
 - Investigacao de crash/fechamento: Crashpad do Codex tem dumps em `C:\Users\MF\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\LocalCache\Roaming\Codex\web\Codex\Crashpad\reports`; Windows Event Viewer mostrou `APPCRASH` do Opera GX `132.0.5905.43` em `opera_browser.dll` com excecao `0xc0000005` e historico de watchdog/GPU. Mitigacao: nao usar Browser interno para Google OAuth/Apps Script, evitar Opera headless, preferir conectores/shell/HTTP para QA e Opera normal apenas quando login humano for necessario.
-- Pendencias restantes: configurar `ADMIN_WRITE_TOKEN` em canal seguro se necessario, rodar testes reais de e-mails transacionais, concluir login/headless com segredo OAuth seguro, e decidir favicon/home raiz Wix se desejado.
+- Fechamento adicional: os 11 modelos de e-mails transacionais foram regenerados a partir do Apps Script local e enviados como e-mails reais de teste para a conta MobilyTech/Gmail; os 11 assuntos `[TESTE CLIENTE]`/`[TESTE VENDEDOR]` foram confirmados em `SENT`. Depois do adendo do usuario, os e-mails de vendedor receberam tema proprio em azul mais escuro, faixa superior discreta e botoes/blocos no mesmo tom, mantendo a estrutura; cinco testes `[TESTE VENDEDOR - AJUSTE COR]` foram enviados ao Gmail.
+- Fechamento adicional: `www.mobilytech.com.br` ja serve a home Vercel com titulo `MobilyTech BR | Loja gamer` e link para `assets/favicon.png`; foram adicionados tambem `favicon.ico`, `favicon.png` e `apple-touch-icon.png` na raiz publica para cobrir `/favicon.ico` direto apos deploy.
+- `ADMIN_WRITE_TOKEN`: foi gerado localmente sem imprimir o valor e salvo criptografado por DPAPI em `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_secrets\admin-write-token.dpapi.txt`, com helper `copy-admin-token-to-clipboard.ps1`. O usuario informou que colou o valor na Vercel como env var sensivel de Production e fez redeploy. Validacao segura com token errado retornou 401 em producao, nao 501, confirmando que a env var esta ativa. Foi adicionado `dryRun`/`mode=auth-check` em `api/register-sale.js` para validar o token correto sem registrar venda real.
+- Login/headless: nao criar OAuth App Wix ainda. A documentacao oficial confirma que Create OAuth App retorna `secret`; sem canal seguro para gravar esse segredo em env vars, manter `fase2/minha-conta.html` como consulta/atendimento seguro e nao expor login social real/fake.
+- Pendencias restantes reais: publicar o commit atual, testar `/api/register-sale` com token correto em `dryRun` sem imprimir segredo, verificar `/favicon.ico` no dominio oficial, sincronizar as copias do handoff e investigar crash/fechamento do Codex por ultimo. Wix Headless/Auth real fica como opcional bloqueado por armazenamento seguro de OAuth secret.
 
 ## Checklist final para a proxima IA
 
@@ -573,10 +577,10 @@ Este bloco registra o que ja foi concluido depois da criacao deste handoff, para
 - [ ] MobilyTech Finds em grade, com afiliados e vendidos pela MobilyTech separados internamente.
 - [ ] Painel com registro de venda manual e sync Planilha OLX.
 - [ ] Apps Script sem sobrescrever script antigo.
-- [ ] E-mails transacionais bonitos e testados.
-- [ ] Login/conta/pedidos com caminho seguro Wix Headless/Auth ou documentar bloqueio.
-- [ ] Ponte Wix/dominio oficial usando visual Vercel.
-- [ ] Confirmar favicon/logo no dominio oficial.
+- [x] E-mails transacionais bonitos e testados por previews HTML reais enviados ao Gmail; vendedor diferenciado por azul mais escuro.
+- [x] Login/conta/pedidos: bloqueio seguro documentado; manter consulta de pedido, sem login fake, ate existir armazenamento seguro de OAuth secret.
+- [x] Ponte Wix/dominio oficial usando visual Vercel no `www.mobilytech.com.br`.
+- [x] Confirmar favicon/logo no dominio oficial; root favicon adicionado para deploy Vercel.
 
 ### QA e publicacao
 

@@ -1,0 +1,57 @@
+[
+  {
+    "file": "01-teste-cliente-pedido-recebido-pagamento-pendente-mobilytech-br.html",
+    "subject": "[TESTE CLIENTE] Pedido recebido, pagamento pendente - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "02-teste-cliente-compra-confirmada-mobilytech-br.html",
+    "subject": "[TESTE CLIENTE] Compra confirmada - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "03-teste-cliente-pagamento-aprovado-mobilytech-br.html",
+    "subject": "[TESTE CLIENTE] Pagamento aprovado - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "04-teste-cliente-pedido-despachado-mobilytech-br.html",
+    "subject": "[TESTE CLIENTE] Pedido despachado - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "05-teste-cliente-retirada-a-combinar-mobilytech-br.html",
+    "subject": "[TESTE CLIENTE] Retirada a combinar - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "06-teste-cliente-pedido-entregue-mobilytech-br.html",
+    "subject": "[TESTE CLIENTE] Pedido entregue - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "07-teste-vendedor-parabens-voce-vendeu-no-site-mobilytechbr.html",
+    "subject": "[TESTE VENDEDOR] Parabens, voce vendeu no site - MobilyTechBR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "08-teste-vendedor-nova-venda-manual-fornecedor-mobilytech-br.html",
+    "subject": "[TESTE VENDEDOR] Nova venda manual/fornecedor - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "09-teste-vendedor-pedido-despachado-controle-vendedor-mobilytech-br.html",
+    "subject": "[TESTE VENDEDOR] Pedido despachado - controle vendedor - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "10-teste-vendedor-pedido-entregue-controle-vendedor-mobilytech-br.html",
+    "subject": "[TESTE VENDEDOR] Pedido entregue - controle vendedor - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  },
+  {
+    "file": "11-teste-vendedor-erro-bloqueio-de-pedido-mobilytech-br.html",
+    "subject": "[TESTE VENDEDOR] Erro/bloqueio de pedido - MobilyTech BR",
+    "to": "mobilytechbr@gmail.com"
+  }
+]

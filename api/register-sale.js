@@ -49,6 +49,17 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  const dryRun = body.dryRun === true || String(body.mode || "").toLowerCase() === "auth-check";
+  if (dryRun) {
+    safeResponse(res, 200, {
+      ok: true,
+      authenticated: true,
+      dryRun: true,
+      message: "Token administrativo validado sem registrar venda."
+    });
+    return;
+  }
+
   const endpoint = process.env.SALES_REGISTRATION_ENDPOINT || process.env.ORDER_NOTIFICATION_ENDPOINT || "";
   if (!endpoint) {
     safeResponse(res, 501, {
