@@ -19,5 +19,6 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Atualizar modelo do Google Apps Script para a Planilha OLX correta, sem sobrescrever script antigo do usuario.
 - Regenerar o site fase 2, validar desktop/mobile, busca, carrinho, frete, checkout e painel.
 - Preparar ponte Wix/Headless e dominio oficial como etapa de publicacao/integração, preservando visual Vercel.
-- Registro manual de venda no painel e para vendas fora do site: OLX, Facebook Marketplace e atendimento direto. Venda feita pelo checkout do site deve baixar estoque automaticamente e manter o fluxo de e-mails/status do pedido.
-- Produtos fisicos da MobilyTech BR (PCs, SSDs, fontes e pecas em estoque local) tem estoque unitario por padrao e nao podem ser adicionados ao carrinho mais de uma vez. Produtos de dropshipping/fornecedor podem aceitar quantidade maior.
+- Registro manual de venda no painel e somente para vendas fora do site: OLX, Facebook Marketplace e atendimento direto. Esse registro existe para controle financeiro/planilha, porque essas plataformas ja fazem sua propria mediacao com o cliente.
+- Venda feita pelo checkout do site deve seguir fluxo automatico: confirmar pagamento, disparar e-mails/status do pedido e baixar estoque dos produtos fisicos vendidos.
+- Produtos fisicos da MobilyTech BR (PCs, SSDs, fontes e pecas em estoque local) tem estoque unitario por padrao e nao podem ser adicionados ao carrinho mais de uma vez nem com quantidade maior que 1. Produtos de dropshipping/fornecedor podem aceitar quantidade maior.
