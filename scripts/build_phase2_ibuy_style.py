@@ -682,8 +682,13 @@ def cart_drawer(prefix: str) -> str:
       </div>
       <div id="cartItems" class="drawer-items"></div>
       <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
+      <div class="coupon-box">
+        <label>Cupom promocional<input id="couponCode" autocomplete="off" placeholder="Ex.: MOBMEN"></label>
+        <small id="couponFeedback">Cupons valem para produtos elegiveis; frete e envio parceiro ficam separados.</small>
+      </div>
       <details class="shipping-box">
         <summary>Calcular frete</summary>
+        <div class="delivery-choice" id="deliveryChoice"></div>
         <label>CEP<input id="postalCode" inputmode="numeric" placeholder="00000-000"></label>
         <button class="btn btn-dark full" id="quoteShipping" type="button">Calcular frete</button>
         <div id="shippingQuotes" class="shipping-quotes"></div>
@@ -744,7 +749,7 @@ def css() -> str:
     .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:36px 0 18px}.section-head h2{font-size:34px;margin:0;line-height:1.08}.section-head p{max-width:760px;color:#626a76;font-weight:800}.section-head a{font-weight:1000;color:#0d6fca}.section-kicker{margin:0 0 8px;color:var(--red);font-size:14px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}
     section[id], .product-card[id], .find-card[id], .page-hero[id]{scroll-margin-top:138px}
     .product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}.catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hardware-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
-    .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price{font-size:23px;font-weight:1000}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px;margin-right:8px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
+    .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}.price{font-size:23px;font-weight:1000;line-height:1.08}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
     .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:21px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:0;background:linear-gradient(90deg,#fff159,#ffe000);color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none}.market-btn img{height:31px;width:auto;max-width:78px;object-fit:contain}.market-mobilytech{background:linear-gradient(90deg,#19f5d0,#15a7ff);color:#031014;box-shadow:0 10px 24px rgba(21,167,255,.22)}.market-ml{background:linear-gradient(90deg,#fff159,#ffe35d 55%,#00a650);color:#26220a}.market-amazon{background:linear-gradient(90deg,#111820,#232f3e 58%,#ff9900);color:#fff}.market-ali{background:linear-gradient(90deg,#ff4747,#ff6a00);color:#fff}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
@@ -758,7 +763,7 @@ def css() -> str:
     .account-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(13,23,38,.08);padding:28px;min-width:0}
     .account-card-main{background:linear-gradient(135deg,#111 0%,#1c2633 55%,#154f78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.login-preview{display:grid;gap:10px;margin-top:16px}.login-preview button{height:48px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2d3440;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.login-preview span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#f0f4f8;color:#111}
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
-    .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);transition:.25s transform;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{display:block;margin:12px 0;font-weight:1000}.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:linear-gradient(90deg,#fff159,#ffe066 48%,#42c7f4);color:#1d2730}.checkout-abacate{background:linear-gradient(90deg,#d7ff5c,#1ce2a8 46%,#0b8f69);color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);transition:.25s transform;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:linear-gradient(90deg,#fff159,#ffe066 48%,#42c7f4);color:#1d2730}.checkout-abacate{background:linear-gradient(90deg,#d7ff5c,#1ce2a8 46%,#0b8f69);color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
     @media (max-width:1100px){
       .nav-shell{grid-template-columns:auto 1fr auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/4;order:3;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.icon-action{display:none}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid{grid-template-columns:1fr}
@@ -888,8 +893,13 @@ def js(products, finalists, addons, swaps) -> str:
     const DATA = {json.dumps(payloads, ensure_ascii=False)};
     const assetBase = document.body.dataset.assetBase || "./";
     const cartKey = "mobilytech-ibuy-cart-v1";
+    const couponKey = "mobilytech-coupon-v1";
     let cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+    let activeCouponCode = localStorage.getItem(couponKey) || "";
     let selectedShipping = null;
+    const LOCAL_PROMOTIONS = [
+      {{ code:"MOBMEN", percent:6, eligibleCategories:["pc"], label:"6% OFF em PCs revisados selecionados" }}
+    ];
     const $ = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
     const asset = (path) => assetBase + String(path || "").replace(/^\\.\\//, "");
@@ -1064,6 +1074,65 @@ def js(products, finalists, addons, swaps) -> str:
         : 0;
       return Number(product.price || 0) + extras;
     }}
+    function cartProducts() {{ return cart.map((item) => productById(item.productId)).filter(Boolean); }}
+    function isSupplierProduct(product) {{
+      const text = norm([product?.category, product?.purchaseMode, product?.fulfillmentMode, product?.shipping?.mode].join(" "));
+      return Boolean(product?.manualFulfillment || text.includes("dropshipping") || text.includes("supplier") || text.includes("fornecedor"));
+    }}
+    function cartHasProduct(productId) {{
+      return cart.some((item) => String(item.productId) === String(productId));
+    }}
+    function canAddCartProduct(productId) {{
+      const product = productById(productId);
+      if (!product) return false;
+      if (!isSupplierProduct(product) && cartHasProduct(productId)) {{
+        showToast("Esse item fisico tem estoque unico e ja esta no carrinho.");
+        openCart();
+        return false;
+      }}
+      return true;
+    }}
+    function cartFulfillmentState() {{
+      const products = cartProducts();
+      return {{
+        supplier: products.filter(isSupplierProduct).length,
+        physical: products.filter((product) => !isSupplierProduct(product)).length
+      }};
+    }}
+    function activePromotion() {{
+      const code = norm(activeCouponCode).replace(/\\s+/g, "").toUpperCase();
+      return LOCAL_PROMOTIONS.find((promo) => promo.code === code) || null;
+    }}
+    function couponDiscount() {{
+      const promo = activePromotion();
+      if (!promo) return 0;
+      const eligible = cart.reduce((sum, item) => {{
+        const product = productById(item.productId);
+        if (!product || !promo.eligibleCategories.includes(product.category)) return sum;
+        return sum + productTotal(item);
+      }}, 0);
+      return Math.round((eligible * Number(promo.percent || 0) / 100) * 100) / 100;
+    }}
+    function couponPayload() {{
+      const promo = activePromotion();
+      if (!promo) return null;
+      return {{ code: promo.code, percent: promo.percent, discount: couponDiscount(), label: promo.label }};
+    }}
+    function checkoutSubtotal() {{ return cart.reduce((sum, item) => sum + productTotal(item), 0); }}
+    function checkoutTotal() {{ return Math.max(0, checkoutSubtotal() - couponDiscount()) + (selectedShipping?.price || 0); }}
+    function syncCouponFeedback() {{
+      const feedback = $("#couponFeedback");
+      if (!feedback) return;
+      const typed = ($("#couponCode")?.value || "").trim();
+      if (!typed) {{
+        feedback.textContent = "Cupons valem para produtos elegiveis; frete e envio parceiro ficam separados.";
+        return;
+      }}
+      const promo = activePromotion();
+      feedback.textContent = promo
+        ? `${{promo.label}} aplicado: -${{money(couponDiscount())}}.`
+        : "Cupom nao reconhecido. Verifique o codigo ou tente outro cupom.";
+    }}
     function saveCart() {{ localStorage.setItem(cartKey, JSON.stringify(cart)); renderCart(); }}
     function showToast(message) {{
       const toast = $("#toast");
@@ -1094,7 +1163,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         <div class="product-body">
           <h3>${{product.title}}</h3>
           <p class="spec-line">${{spec}}</p>
-          <div><span>${{old}}</span><span class="price">${{money(product.price)}}</span><p class="installment">12x sob consulta no checkout</p></div>
+          <div><div class="price-row">${{old}}<span class="price">${{money(product.price)}}</span></div><p class="installment">12x sob consulta no checkout</p></div>
           <div class="card-actions">
             <button class="ghost-btn" type="button" data-detail="${{product.id}}">Ver detalhes</button>
             <button class="cart-btn" type="button" data-add="${{product.id}}"><span class="cart-icon" aria-hidden="true">&#128722;</span>Adicionar ao carrinho</button>
@@ -1158,6 +1227,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       </article>`;
     }}
     function addBaseProduct(productId) {{
+      if (!canAddCartProduct(productId)) return;
+      selectedShipping = null;
       cart.push({{ productId, selectedAddons: [], selectedSwaps: [] }});
       saveCart();
       openCart();
@@ -1167,6 +1238,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const product = productById(productId);
       if (!product) return;
       if (!isConfigurablePc(product)) return addBaseProduct(productId);
+      if (!canAddCartProduct(productId)) return;
       const selectedAddons = $$("#modalBody input[data-addon]:checked").map((input) => ({{
         category: input.dataset.category,
         index: Number(input.dataset.index),
@@ -1179,6 +1251,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         label: input.dataset.label,
         price: Number(input.dataset.price || 0)
       }}));
+      selectedShipping = null;
       cart.push({{ productId, selectedAddons, selectedSwaps }});
       saveCart();
       $("#productModal")?.close();
@@ -1237,15 +1310,18 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function renderCart() {{
       const count = cart.length;
       $("#cartCount") && ($("#cartCount").textContent = String(count));
-      const total = cart.reduce((sum, item) => sum + productTotal(item), 0);
-      $("#cartTotal") && ($("#cartTotal").textContent = money(total + (selectedShipping?.price || 0)));
+      const discount = couponDiscount();
+      const shippingPrice = selectedShipping?.price || 0;
+      $("#cartTotal") && ($("#cartTotal").textContent = money(checkoutTotal()));
       const items = $("#cartItems");
       if (!items) return;
       if (!cart.length) {{
         items.innerHTML = '<p class="empty">Seu carrinho ainda esta vazio.</p>';
+        renderDeliveryChoice();
+        syncCouponFeedback();
         return;
       }}
-      items.innerHTML = cart.map((item, index) => {{
+      const cartRows = cart.map((item, index) => {{
         const product = productById(item.productId);
         if (!product) return "";
         const options = [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].map((o) => o.label).join(" + ");
@@ -1255,6 +1331,40 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           <button class="close-drawer" type="button" data-remove="${{index}}" aria-label="Remover">&times;</button>
         </article>`;
       }}).join("");
+      const discountRow = discount > 0
+        ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Cupom ${{activePromotion().code}}</h3><small>${{activePromotion().label}}</small></div><strong>-${{money(discount)}}</strong></article>`
+        : "";
+      const shippingRow = shippingPrice > 0
+        ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Frete selecionado</h3><small>${{selectedShipping.carrier || selectedShipping.company || "Entrega"}} - ${{selectedShipping.serviceName || selectedShipping.name || "servico"}}</small></div><strong>${{money(shippingPrice)}}</strong></article>`
+        : "";
+      items.innerHTML = cartRows + discountRow + shippingRow;
+      renderDeliveryChoice();
+      syncCouponFeedback();
+    }}
+    function renderDeliveryChoice() {{
+      const node = $("#deliveryChoice");
+      if (!node) return;
+      const state = cartFulfillmentState();
+      if (!cart.length) {{
+        node.innerHTML = "";
+        return;
+      }}
+      if (state.supplier && !state.physical) {{
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para MobilyTech Finds</strong><small>O produto sai do fornecedor parceiro. Informe o CEP e selecione o frete do fornecedor; retirada local nao se aplica.</small></span></div>';
+        return;
+      }}
+      if (state.supplier && state.physical) {{
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos usam Melhor Envio ou retirada; MobilyTech Finds usa frete do fornecedor parceiro no mesmo calculo.</small></span></div>';
+        return;
+      }}
+      node.innerHTML = `<button class="shipping-option ${{selectedShipping ? "" : "is-selected"}}" type="button" id="localPickupOption">
+        <span class="ship-copy"><strong>Retirada local em Vila Suzana</strong><small>Sem frete. Combine WhatsApp apos confirmacao do pagamento.</small></span>
+        <strong class="ship-price">Gratis</strong>
+      </button>`;
+      $("#localPickupOption")?.addEventListener("click", () => {{
+        selectedShipping = null;
+        renderCart();
+      }});
     }}
     function openCart() {{
       $("#cartBackdrop")?.removeAttribute("hidden");
@@ -1269,6 +1379,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     async function quoteShipping() {{
       const postalCode = $("#postalCode")?.value || "";
       const box = $("#shippingQuotes");
+      const state = cartFulfillmentState();
       if (!cart.length) return showToast("Adicione um produto primeiro.");
       if (!postalCode.replace(/\\D/g, "")) return showToast("Informe o CEP para calcular.");
       box.innerHTML = "<p>Calculando frete...</p>";
@@ -1296,9 +1407,27 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           </label>`;
         }}).join("");
         box.querySelectorAll("input[name=shipping]").forEach((input) => input.addEventListener("change", () => {{
-          selectedShipping = data.quotes[Number(input.dataset.index)];
+          const quote = data.quotes[Number(input.dataset.index)];
+          selectedShipping = {{
+            ...quote,
+            postalCode: data.postalCode || postalCode,
+            serviceId: quote.id,
+            serviceName: quote.name || quote.service || quote.service_name || "Servico",
+            carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora")
+          }};
           renderCart();
         }}));
+        if (state.supplier && data.quotes.length === 1) {{
+          const quote = data.quotes[0];
+          selectedShipping = {{
+            ...quote,
+            postalCode: data.postalCode || postalCode,
+            serviceId: quote.id,
+            serviceName: quote.name || quote.service || quote.service_name || "Servico",
+            carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora")
+          }};
+          renderCart();
+        }}
       }} catch(error) {{
         box.innerHTML = `<p>${{error.message}}</p>`;
       }}
@@ -1312,7 +1441,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         const response = await fetch(endpoint, {{
           method: "POST",
           headers: {{ "Content-Type": "application/json" }},
-          body: JSON.stringify({{ cartItems: cart, shipping: selectedShipping }})
+          body: JSON.stringify({{ cartItems: cart, shipping: selectedShipping, coupon: couponPayload() }})
         }});
         const data = await response.json();
         if (!response.ok || !data.checkout_url) throw new Error(data.error || "Nao foi possivel abrir o checkout agora.");
@@ -1368,7 +1497,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (add) addBaseProduct(add.dataset.add);
       if (detail) productDetail(detail.dataset.detail);
       if (addConfig) addConfiguredProduct(addConfig.dataset.addConfig);
-      if (remove) {{ cart.splice(Number(remove.dataset.remove), 1); saveCart(); }}
+      if (remove) {{ cart.splice(Number(remove.dataset.remove), 1); selectedShipping = null; saveCart(); }}
     }});
     $("#cartButton")?.addEventListener("click", openCart);
     $("#closeCart")?.addEventListener("click", closeCart);
@@ -1376,6 +1505,12 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     $("#quoteShipping")?.addEventListener("click", quoteShipping);
     $("#checkoutMercado")?.addEventListener("click", (e) => startCheckout("/api/create-preference", e.currentTarget));
     $("#checkoutAbacate")?.addEventListener("click", (e) => startCheckout("/api/create-abacate-checkout", e.currentTarget));
+    if ($("#couponCode")) $("#couponCode").value = activeCouponCode;
+    $("#couponCode")?.addEventListener("input", (event) => {{
+      activeCouponCode = event.currentTarget.value || "";
+      localStorage.setItem(couponKey, activeCouponCode);
+      renderCart();
+    }});
     $$("#buildForm").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "build"); }}));
     $$("#cleanForm, #cleanFormInline").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "clean"); }}));
     $("#orderLookupForm")?.addEventListener("submit", (e) => {{ e.preventDefault(); submitOrderLookup(e.currentTarget); }});

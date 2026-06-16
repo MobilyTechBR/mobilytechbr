@@ -13,5 +13,30 @@
   "marketplaceOlxLinkReviewEnabled": true,
   "marketplaceDraftCreationEnabled": true,
   "marketplaceFacebookProfileUrl": "https://www.facebook.com/marketplace/profile/100035688601043/?ref=permalink&mibextid=6ojiHh",
-  "marketplaceOlxProfileUrl": "https://www.olx.com.br/perfil/julian-859fd666"
+  "marketplaceOlxProfileUrl": "https://www.olx.com.br/perfil/julian-859fd666",
+  "officialCustomerSiteUrl": "https://www.mobilytech.com.br/",
+  "wixPremiumSiteId": "85e985c5-2904-452f-85e2-a98f6d3b1cac",
+  "wixHeadlessBridgeMode": "planned-headless-api",
+  "promotions": [
+    {
+      "code": "MOBMEN",
+      "discountPercent": 6,
+      "appliesTo": "pcs",
+      "excludesShipping": true,
+      "source": "local-preview-until-wix-coupons-bridge"
+    }
+  ],
+  "dropshipping": {
+    "defaultMarginPercent": 25,
+    "manualMinimumMarginPercent": 35,
+    "customerPaysShipping": true,
+    "shippingOrigin": "supplier",
+    "physicalShippingOriginCep": "05641-090",
+    "allowedAffiliatePlatforms": [
+      "Mercado Livre",
+      "Amazon",
+      "AliExpress"
+    ],
+    "preferredOperation": "wix-or-automated-supplier-first-manual-fallback"
+  }
 }

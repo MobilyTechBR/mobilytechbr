@@ -9,9 +9,11 @@ const { quoteMelhorEnvio } = require("./shipping-quote");
 const {
   formatFulfillmentItems,
   resolveShippingSelection,
-  splitFulfillmentProducts
+  splitFulfillmentProducts,
+  validateUniquePhysicalCheckoutItems
 } = require("../lib/fulfillment-shipping");
 const { abacateCheckoutGrossUp } = require("../lib/payment-fees");
+const { discountForCheckoutItems } = require("../lib/promotions");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 
 const ADDON_CATEGORIES = {
@@ -274,13 +276,13 @@ async function normalizeShipping(products, shipping) {
   });
 }
 
-function totalFromCheckoutItems(checkoutItems, normalizedShipping) {
+function totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion = {}) {
   const productsTotal = checkoutItems.reduce((sum, item) => {
     const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
     const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
     return sum + item.unitPrice + addonsTotal + swapsTotal;
   }, 0);
-  return productsTotal + (normalizedShipping ? normalizedShipping.price : 0);
+  return Math.max(0, productsTotal - Number(promotion.discount || 0)) + (normalizedShipping ? normalizedShipping.price : 0);
 }
 
 async function abacateRequest(apiKey, url, options = {}) {
@@ -331,18 +333,27 @@ async function ensureAbacateProduct(apiKey, line) {
   return product.id;
 }
 
-function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment = 0) {
+function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment = 0, promotion = {}) {
   const runId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+  let remainingCouponDiscount = Number(promotion.discount || 0);
   const lines = checkoutItems.flatMap((item) => {
     const productImage = absoluteUrl(origin, item.product.image || item.product.cutout);
     const swapsTotal = item.swaps.reduce((sum, swap) => sum + swap.price, 0);
     const swapDescription = item.swaps.map((swap) => `${swap.targetLabel}: ${swap.label}`).join(" | ");
+    let productPrice = item.unitPrice + swapsTotal;
+    let discountDescription = "";
+    if (remainingCouponDiscount > 0 && productCategory(item.product) === "pc") {
+      const appliedDiscount = Math.min(Math.max(0, productPrice - 1), remainingCouponDiscount);
+      productPrice = toMoney(productPrice - appliedDiscount);
+      remainingCouponDiscount = toMoney(remainingCouponDiscount - appliedDiscount);
+      discountDescription = appliedDiscount > 0 ? `Cupom ${promotion.code}: -R$ ${appliedDiscount.toFixed(2)}` : "";
+    }
     return [
       {
-        externalId: `mobilytech-${runId}-product-${slug(item.product.id)}-${toCents(item.unitPrice + swapsTotal)}`,
+        externalId: `mobilytech-${runId}-product-${slug(item.product.id)}-${toCents(productPrice)}`,
         name: item.product.title || "PC MobilyTech BR",
-        description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription].filter(Boolean).join(" | ") || item.product.title || "PC MobilyTech BR",
-        price: item.unitPrice + swapsTotal,
+        description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription, discountDescription].filter(Boolean).join(" | ") || item.product.title || "PC MobilyTech BR",
+        price: productPrice,
         imageUrl: productImage
       },
       ...item.addons.map((addon) => ({
@@ -401,6 +412,7 @@ module.exports = async function createAbacateCheckout(request, response) {
     const { shipping } = payload;
     const [products, globalAddons, globalSwaps] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps()]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
+    validateUniquePhysicalCheckoutItems(checkoutItems);
     const checkoutProducts = checkoutItems.map((item) => item.product);
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
@@ -409,11 +421,12 @@ module.exports = async function createAbacateCheckout(request, response) {
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
     const origin = requestOrigin(request);
-    const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping);
+    const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
+    const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion);
     const abacateFeeInfo = abacateCheckoutGrossUp(baseCheckoutTotal);
     const abacateFeeAdjustment = abacateFeeInfo.fee;
     const finalCheckoutTotal = abacateFeeInfo.gross;
-    const lines = checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment);
+    const lines = checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment, promotion);
 
     const productIds = [];
     for (const line of lines) {
@@ -451,6 +464,10 @@ module.exports = async function createAbacateCheckout(request, response) {
         manualFulfillmentRequired: manualFulfillmentRequired ? "true" : "false",
         manualFulfillmentProductIds: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
         manualFulfillmentItems: formatFulfillmentItems(manualFulfillmentItems),
+        couponCode: promotion.code || "",
+        couponLabel: promotion.label || "",
+        couponPercent: promotion.percent ? String(promotion.percent) : "",
+        couponDiscount: promotion.discount ? String(promotion.discount) : "",
         abacateFeeAdjustment: String(abacateFeeAdjustment),
         baseTotal: String(baseCheckoutTotal),
         finalTotal: String(finalCheckoutTotal),

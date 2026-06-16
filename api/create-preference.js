@@ -8,8 +8,10 @@ const { quoteMelhorEnvio } = require("./shipping-quote");
 const {
   formatFulfillmentItems,
   resolveShippingSelection,
-  splitFulfillmentProducts
+  splitFulfillmentProducts,
+  validateUniquePhysicalCheckoutItems
 } = require("../lib/fulfillment-shipping");
+const { discountForCheckoutItems } = require("../lib/promotions");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -324,6 +326,7 @@ module.exports = async function createPreference(request, response) {
       loadGlobalSwaps()
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
+    validateUniquePhysicalCheckoutItems(checkoutItems);
     const checkoutProducts = checkoutItems.map((item) => item.product);
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
@@ -350,12 +353,15 @@ module.exports = async function createPreference(request, response) {
       : "";
     const customer = normalizedShipping?.customer || {};
     const customerName = splitName(customer.name);
-    const baseCheckoutTotal = checkoutItems.reduce((sum, item) => {
+    const productsSubtotal = checkoutItems.reduce((sum, item) => {
       const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
       const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
       return sum + item.unitPrice + addonsTotal + swapsTotal;
-    }, 0) + (normalizedShipping ? normalizedShipping.price : 0);
+    }, 0);
+    const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
+    const baseCheckoutTotal = Math.max(0, productsSubtotal - promotion.discount) + (normalizedShipping ? normalizedShipping.price : 0);
     const mercadoFeeAdjustment = mercadoPagoGrossUp(baseCheckoutTotal).fee;
+    let remainingCouponDiscount = promotion.discount;
     const preference = {
       items: [
         ...checkoutItems.flatMap((item) => {
@@ -363,15 +369,23 @@ module.exports = async function createPreference(request, response) {
           const swapDescription = item.swaps.map((swap) => `${swap.targetLabel}: ${swap.label}`).join(" | ");
           const swapsTotal = item.swaps.reduce((sum, swap) => sum + swap.price, 0);
           const adjustedUnitPrice = item.unitPrice + swapsTotal;
+          let productUnitPrice = adjustedUnitPrice;
+          let discountDescription = "";
+          if (remainingCouponDiscount > 0 && productCategory(item.product) === "pc") {
+            const appliedDiscount = Math.min(Math.max(0, productUnitPrice - 1), remainingCouponDiscount);
+            productUnitPrice = toMoney(productUnitPrice - appliedDiscount);
+            remainingCouponDiscount = toMoney(remainingCouponDiscount - appliedDiscount);
+            discountDescription = appliedDiscount > 0 ? `Cupom ${promotion.code}: -R$ ${appliedDiscount.toFixed(2)}` : "";
+          }
           return [
             {
               id: item.product.id,
               title: item.product.title,
-              description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription, addonDescription].filter(Boolean).join(" | ") || item.product.title,
+              description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription, addonDescription, discountDescription].filter(Boolean).join(" | ") || item.product.title,
               picture_url: absoluteUrl(origin, item.product.image || item.product.cutout),
               quantity: 1,
               currency_id: "BRL",
-              unit_price: adjustedUnitPrice
+              unit_price: productUnitPrice
             },
             ...item.addons.map((addon) => ({
               id: `${item.product.id}-${addon.category}-${addon.index}`,
@@ -436,6 +450,11 @@ module.exports = async function createPreference(request, response) {
         manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
         manual_fulfillment_product_ids: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
         manual_fulfillment_items: formatFulfillmentItems(manualFulfillmentItems),
+        coupon_code: promotion.code || "",
+        coupon_label: promotion.label || "",
+        coupon_percent: promotion.percent ? String(promotion.percent) : "",
+        coupon_discount: promotion.discount ? String(promotion.discount) : "",
+        products_subtotal: String(productsSubtotal),
         mercado_pago_fee_adjustment: String(mercadoFeeAdjustment),
         shipping_postal_code: normalizedShipping?.postalCode || "",
         shipping_customer: normalizedShipping ? JSON.stringify(customer) : ""

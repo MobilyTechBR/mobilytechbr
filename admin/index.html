@@ -464,7 +464,7 @@
         <nav class="header-actions" aria-label="Acoes rapidas">
           <a class="btn btn-red" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Abrir Pages CMS</a>
           <a class="btn btn-dark" href="https://manage.wix.com/dashboard/" target="_blank" rel="noreferrer">Abrir Wix</a>
-          <a class="btn btn-ghost" href="../fase2-hibrida.html">Ver site</a>
+          <a class="btn btn-ghost" href="https://www.mobilytech.com.br/">Ver site oficial</a>
         </nav>
       </header>
 
@@ -564,9 +564,10 @@
             <article class="card">
               <small>Curadoria tech</small>
               <h3>MobilyTech Finds</h3>
-              <p>Edite fornecedor, preco de venda, custo, margem e links em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois. Links de associados ficam restritos a Mercado Livre, Amazon e AliExpress.</p>
+                <p>Edite fornecedor, preco de venda, custo, margem, origem nacional/internacional, frete cobrado do cliente e links em <code>data/phase2-finalists.json</code>. Itens manuais compram pelo carrinho e voce faz a operacao depois. Links de associados ficam restritos a Mercado Livre, Amazon e AliExpress.</p>
               <div class="card-actions">
-                <a class="btn btn-red" href="../fase2/achados.html">Ver pagina</a>
+                <a class="btn btn-red" href="https://www.mobilytech.com.br/">Abrir site oficial</a>
+                <a class="btn btn-ghost" href="../fase2/achados.html">Preview local</a>
                 <a class="btn btn-ghost" href="../data/phase2-finalists.json">Ver JSON</a>
               </div>
             </article>
@@ -585,7 +586,7 @@
             <div class="editor-toolbar">
               <div>
                 <strong>Campos rapidos</strong>
-                <p>Edite titulo, grupo publico, fornecedor, imagem, preco, custo, frete cobrado do cliente, margem e links Mercado Livre, Amazon ou AliExpress.</p>
+                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete cobrado do cliente, margem e links Mercado Livre, Amazon ou AliExpress.</p>
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
@@ -598,11 +599,13 @@
                     <th>Grupo</th>
                     <th>Produto</th>
                     <th>Fornecedor</th>
+                    <th>Origem</th>
                     <th>Imagem</th>
                     <th>Preco</th>
                     <th>Custo</th>
                     <th>Frete cliente</th>
                     <th>Margem</th>
+                    <th>Lucro</th>
                     <th>Modo</th>
                     <th>Descricao</th>
                     <th>Mercado Livre</th>
@@ -611,7 +614,7 @@
                   </tr>
                 </thead>
                 <tbody id="findsEditorRows">
-                  <tr><td colspan="14">Carregando MobilyTech Finds...</td></tr>
+                  <tr><td colspan="16">Carregando MobilyTech Finds...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -624,7 +627,7 @@
             <div>
               <p class="section-kicker">Venda registrada</p>
               <h2 id="sale-register-title">Registrar venda e atualizar planilha</h2>
-              <p>Use quando vender um PC ou item fisico fora do checkout. O registro entra na aba <code>Vendas_PCs</code> e, se o GitHub estiver configurado no Apps Script, o produto fica inativo no site.</p>
+              <p>Use para vendas manuais da OLX, Facebook Marketplace ou atendimento direto, fora do checkout do site. O registro entra na aba <code>Vendas_PCs</code> e, se o GitHub estiver configurado no Apps Script, o produto fica inativo no site.</p>
             </div>
           </div>
           <div class="editor-panel">
@@ -668,7 +671,7 @@
                 </div>
                 <div class="field">
                   <label for="saleChannel">Canal</label>
-                  <input id="saleChannel" placeholder="Site, OLX, Facebook, Mercado Livre">
+                  <input id="saleChannel" placeholder="OLX, Facebook Marketplace, atendimento direto">
                 </div>
                 <div class="field full">
                   <label for="finalConfiguration">Configuracao final vendida</label>
@@ -800,7 +803,16 @@
           item.shipping = item.shipping && typeof item.shipping === "object" ? item.shipping : {};
           item.shipping.mode = "supplier-fixed";
           item.shipping.customerPrice = item.shippingCustomerPrice;
+          item.shipping.customerPays = true;
+          item.shipping.originMode = "supplier";
           item.shipping.deliveryTime = item.shipping.deliveryTime || 7;
+        } else if (field === "supplierRegion") {
+          item.supplierRegion = value === "INTL" ? "INTL" : "BR";
+          item.shipping = item.shipping && typeof item.shipping === "object" ? item.shipping : {};
+          item.shipping.region = item.supplierRegion;
+          item.shipping.originMode = "supplier";
+          item.shipping.customerPays = true;
+          item.shipping.deliveryTime = item.shipping.deliveryTime || (item.supplierRegion === "INTL" ? 18 : 7);
         } else if (["salePrice", "supplierCost"].includes(field)) {
           const number = Number(String(value).replace(",", "."));
           if (Number.isFinite(number)) item[field] = number;
@@ -842,12 +854,14 @@
           salePrice: 0,
           supplierCost: 0,
           shippingCustomerPrice: 0,
+          supplierRegion: "BR",
+          customerPaysShipping: true,
           marginPercent: "",
           productImage: "",
           whySell: "Descreva em uma frase por que este produto combina com setups MobilyTech.",
           publicPartnerNote: "Produto selecionado para complementar setups MobilyTech.",
           affiliateLinks: [],
-          shipping: { mode: "supplier-fixed", customerPrice: 0, deliveryTime: 7 }
+          shipping: { mode: "supplier-fixed", originMode: "supplier", customerPays: true, customerPrice: 0, deliveryTime: 7, region: "BR" }
         });
         renderFindsEditor(findsState.finalists);
       }
@@ -952,11 +966,21 @@
         status.textContent = message;
       }
 
+      function findProfitSummary(item) {
+        const sale = moneyNumber(item.salePrice);
+        const cost = moneyNumber(item.supplierCost);
+        const shipping = moneyNumber(item.shippingCustomerPrice ?? item.shipping?.customerPrice);
+        if (!sale || !cost) return "-";
+        const profit = sale - cost;
+        const percent = sale > 0 ? (profit / sale) * 100 : 0;
+        return `R$ ${moneyInput(profit)} / ${percent.toFixed(1)}%`;
+      }
+
       function renderFindsEditor(finds) {
         const tbody = $("#findsEditorRows");
         if (!tbody) return;
         if (!Array.isArray(finds) || !finds.length) {
-          tbody.innerHTML = '<tr><td colspan="14">Nenhum item em MobilyTech Finds.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="16">Nenhum item em MobilyTech Finds.</td></tr>';
           return;
         }
         tbody.innerHTML = finds.map((item, index) => `
@@ -965,11 +989,13 @@
             <td><select data-find="${index}" data-field="publicGroup"><option value="vendidos"${item.publicGroup === "vendidos" ? " selected" : ""}>Vendidos</option><option value="recomendacoes"${item.publicGroup !== "vendidos" ? " selected" : ""}>Recomenda</option></select></td>
             <td><textarea data-find="${index}" data-field="title">${escapeHtml(item.title || "")}</textarea></td>
             <td><input data-find="${index}" data-field="platform" value="${escapeHtml(item.platform || "")}"></td>
+            <td><select data-find="${index}" data-field="supplierRegion" class="narrow"><option value="BR"${item.supplierRegion !== "INTL" ? " selected" : ""}>BR</option><option value="INTL"${item.supplierRegion === "INTL" ? " selected" : ""}>INTL</option></select></td>
             <td><textarea data-find="${index}" data-field="productImage">${escapeHtml(item.productImage || item.selectedCreative || "")}</textarea></td>
             <td><input data-find="${index}" data-field="salePrice" class="narrow" value="${escapeHtml(item.salePrice ?? "")}"></td>
             <td><input data-find="${index}" data-field="supplierCost" class="narrow" value="${escapeHtml(item.supplierCost ?? "")}"></td>
             <td><input data-find="${index}" data-field="shippingCustomerPrice" class="narrow" value="${escapeHtml(item.shippingCustomerPrice ?? item.shipping?.customerPrice ?? "")}"></td>
             <td><input data-find="${index}" data-field="marginPercent" class="narrow" value="${escapeHtml(item.marginPercent || "")}"></td>
+            <td><strong>${escapeHtml(findProfitSummary(item))}</strong></td>
             <td><select data-find="${index}" data-field="storeCheckout"><option value="true"${item.storeCheckout === true ? " selected" : ""}>Carrinho</option><option value="false"${item.storeCheckout !== true ? " selected" : ""}>Afiliado</option></select></td>
             <td><textarea data-find="${index}" data-field="whySell">${escapeHtml(item.whySell || "")}</textarea></td>
             <td class="link-cell"><input data-find="${index}" data-field="link:mercado" value="${escapeHtml(getAffiliateLink(item, "mercado") || item.affiliateUrl || "")}"></td>

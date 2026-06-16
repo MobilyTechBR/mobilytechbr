@@ -25,7 +25,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "ML local tende a ser mais rapido.",
       "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
@@ -94,7 +97,16 @@
       "supplierCost": 70,
       "salePrice": 129,
       "marginPercent": "45.7%",
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "case-ssd-sata",
@@ -106,7 +118,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Depende do vendedor; produto local facilita entrega rapida",
       "sellerReputation": "+10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista",
@@ -175,7 +190,16 @@
       "supplierCost": 25,
       "salePrice": 59,
       "marginPercent": "57.6%",
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "fone-kz-castor",
@@ -184,7 +208,6 @@
       "platform": "Mercado Livre / AliExpress",
       "sourceUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
       "currentPrice": "R$114 no Mercado Livre.",
-      "shipping": "ML com frete gratis em oferta vista.",
       "delivery": "ML mais rapido; AliExpress podem ter prazo maior",
       "sellerReputation": "Produto com 4.8/5 e 175 opinioes; uma opcao alternativa ML tinha vendedor com +5 mil vendas",
       "reviews": "Comentarios destacam graves, clareza, custo-beneficio e uso para jogos/musica",
@@ -259,7 +282,16 @@
       "manualFulfillment": false,
       "supplierCost": 115,
       "salePrice": 169,
-      "marginPercent": "32.0%"
+      "marginPercent": "32.0%",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "INTL",
+      "customerPaysShipping": false,
+      "marginPolicy": {
+        "defaultPercent": 0,
+        "minimumManualPercent": 0,
+        "editableInPanel": true
+      }
     },
     {
       "id": "kit-limpeza-esd",
@@ -271,7 +303,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Varia por vendedor; kits nacionais tendem a chegar antes",
       "sellerReputation": "Oferta vista de loja Tapcamp com +100 mil vendas",
@@ -340,7 +375,16 @@
       "supplierCost": 35,
       "salePrice": 79,
       "marginPercent": "55.7%",
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "mini-aspirador-teclado",
@@ -352,7 +396,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Produto local com vendedor grande tende a ser operacionalmente simples",
       "sellerReputation": "Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas",
@@ -421,7 +468,16 @@
       "supplierCost": 25,
       "salePrice": 59,
       "marginPercent": "57.6%",
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "hub-usb-c",
@@ -433,7 +489,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Boa opcao para afiliado por marketplaces locais",
       "sellerReputation": "Loja oficial Chrome Technology em oferta vista",
@@ -502,7 +561,16 @@
       "supplierCost": 30,
       "salePrice": 69,
       "marginPercent": "56.5%",
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "suporte-gpu-antisag",
@@ -514,7 +582,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "INTL"
       },
       "delivery": "Melhor testar fornecedor nacional ou afiliado antes",
       "sellerReputation": "Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa",
@@ -583,7 +654,16 @@
       "supplierCost": 45,
       "salePrice": 89,
       "marginPercent": "49.4%",
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "INTL",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "keycaps-pbt",
@@ -592,7 +672,6 @@
       "platform": "Mercado Livre / AliExpress",
       "sourceUrl": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
       "currentPrice": "Ofertas de R$28 a R$130+ conforme quantidade/perfil",
-      "shipping": "Frete gratis em algumas ofertas; internacional exige atencao a prazo",
       "delivery": "Afiliado e mais simples ate validar demanda",
       "sellerReputation": "Algumas ofertas com +50 vendas; buscar kits com mais prova social antes de anuncio",
       "reviews": "Boa atratividade visual, mas nicho mais estetico",
@@ -667,7 +746,16 @@
       "manualFulfillment": false,
       "supplierCost": 70,
       "salePrice": 129,
-      "marginPercent": "45.7%"
+      "marginPercent": "45.7%",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "INTL",
+      "customerPaysShipping": false,
+      "marginPolicy": {
+        "defaultPercent": 0,
+        "minimumManualPercent": 0,
+        "editableInPanel": true
+      }
     },
     {
       "id": "teclado-mecanico-abnt2",
@@ -676,7 +764,6 @@
       "platform": "Mercado Livre / Amazon",
       "sourceUrl": "https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221",
       "currentPrice": "Preco varia bastante; validar SKU final antes de campanha",
-      "shipping": "Produto maior; frete influencia conversao",
       "delivery": "Afiliado e mais seguro no inicio",
       "sellerReputation": "Busca indica bom custo-beneficio, mas tambem relatos de durabilidade a checar",
       "reviews": "Demanda alta por ABNT2/RGB; precisa filtrar qualidade",
@@ -751,7 +838,16 @@
       "manualFulfillment": false,
       "supplierCost": 130,
       "salePrice": 179,
-      "marginPercent": "27.4%"
+      "marginPercent": "27.4%",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "BR",
+      "customerPaysShipping": false,
+      "marginPolicy": {
+        "defaultPercent": 0,
+        "minimumManualPercent": 0,
+        "editableInPanel": true
+      }
     },
     {
       "id": "bias-light-led",
@@ -760,7 +856,6 @@
       "platform": "Mercado Livre / AliExpress",
       "sourceUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
       "currentPrice": "Oferta ML vista indisponivel; buscar fornecedor ativo antes de anunciar",
-      "shipping": "Produto leve; bom para importacao se prazo for comunicado",
       "delivery": "Melhor como afiliado/teste ate achar fornecedor ativo",
       "sellerReputation": "Validacao fraca nesta rodada por oferta indisponivel",
       "reviews": "Boa ideia visual para criativo, mas precisa fornecedor com estoque",
@@ -835,7 +930,16 @@
       "manualFulfillment": false,
       "supplierCost": 35,
       "salePrice": 69,
-      "marginPercent": "49.3%"
+      "marginPercent": "49.3%",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "INTL",
+      "customerPaysShipping": false,
+      "marginPolicy": {
+        "defaultPercent": 0,
+        "minimumManualPercent": 0,
+        "editableInPanel": true
+      }
     },
     {
       "id": "adaptador-bluetooth-usb-5",
@@ -847,7 +951,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Marketplaces nacionais tendem a entregar rapido; AliExpress podem variar",
       "sellerReputation": "Buscar vendedor com alta reputacao e bom volume de vendas antes de escalar",
@@ -902,7 +1009,16 @@
       ],
       "selectedCreative": "./assets/phase2-creatives/adaptador-bluetooth-usb-5-03.svg",
       "selectedCreativeVariant": 3,
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "mousepad-gamer-rgb-xl",
@@ -914,7 +1030,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "INTL"
       },
       "delivery": "Fornecedor nacional reduz risco de prazo e devolucao",
       "sellerReputation": "Escolher anuncio com muitas avaliacoes e fotos reais de compradores",
@@ -969,7 +1088,16 @@
       ],
       "selectedCreative": "./assets/phase2-creatives/mousepad-gamer-rgb-xl-03.svg",
       "selectedCreativeVariant": 3,
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "INTL",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "cabo-displayport-14-2m",
@@ -981,7 +1109,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Marketplaces locais costumam entregar rapido para capitais",
       "sellerReputation": "Priorizar anuncios com especificacao 1.4, 4K/144Hz e boas avaliacoes",
@@ -1036,7 +1167,16 @@
       ],
       "selectedCreative": "./assets/phase2-creatives/cabo-displayport-14-2m-03.svg",
       "selectedCreativeVariant": 3,
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "adaptador-wifi-dual-band-usb",
@@ -1048,7 +1188,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "INTL"
       },
       "delivery": "Fornecedor nacional ajuda muito no suporte e garantia",
       "sellerReputation": "Escolher vendedor com bom historico em informatica/conectividade",
@@ -1103,7 +1246,16 @@
       ],
       "selectedCreative": "./assets/phase2-creatives/adaptador-wifi-dual-band-usb-03.svg",
       "selectedCreativeVariant": 3,
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "INTL",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     },
     {
       "id": "suporte-notebook-aluminio",
@@ -1115,7 +1267,10 @@
       "shipping": {
         "mode": "supplier-fixed",
         "customerPrice": 29.9,
-        "deliveryTime": 7
+        "deliveryTime": 7,
+        "originMode": "supplier",
+        "customerPays": true,
+        "region": "BR"
       },
       "delivery": "Fornecedor nacional recomendado para reduzir prazo e trocas",
       "sellerReputation": "Referencia consultada mostrou loja oficial, vendas e avaliacoes do produto; validar antes de campanha",
@@ -1170,7 +1325,27 @@
       ],
       "selectedCreative": "./assets/phase2-creatives/suporte-notebook-aluminio-03.svg",
       "selectedCreativeVariant": 3,
-      "shippingCustomerPrice": 29.9
+      "shippingCustomerPrice": 29.9,
+      "publicGroup": "vendidos",
+      "storeCheckout": true,
+      "supplierRegion": "BR",
+      "customerPaysShipping": true,
+      "marginPolicy": {
+        "defaultPercent": 25,
+        "minimumManualPercent": 35,
+        "editableInPanel": true
+      }
     }
-  ]
+  ],
+  "defaults": {
+    "dropshippingDefaultMarginPercent": 25,
+    "manualSupplierMinimumMarginPercent": 35,
+    "customerPaysDropshippingShipping": true,
+    "allowedAffiliatePlatforms": [
+      "Mercado Livre",
+      "Amazon",
+      "AliExpress"
+    ],
+    "officialSiteUrl": "https://www.mobilytech.com.br/"
+  }
 }

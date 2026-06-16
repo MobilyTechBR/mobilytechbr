@@ -8,7 +8,8 @@ const { quoteMelhorEnvio } = require("./shipping-quote");
 const {
   formatFulfillmentItems,
   resolveShippingSelection,
-  splitFulfillmentProducts
+  splitFulfillmentProducts,
+  validateUniquePhysicalCheckoutItems
 } = require("../lib/fulfillment-shipping");
 const { abacatePixGrossUp } = require("../lib/payment-fees");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
@@ -312,6 +313,7 @@ module.exports = async function createAbacatePix(request, response) {
       loadGlobalSwaps()
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
+    validateUniquePhysicalCheckoutItems(checkoutItems);
     const checkoutProducts = checkoutItems.map((item) => item.product);
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);

@@ -9,15 +9,15 @@
 */
 
 const MOBILYTECH = {
-  SPREADSHEET_ID: "COLE_AQUI_O_ID_DA_PLANILHA",
+  SPREADSHEET_ID: "1Wc_ctkvNJh-64Yg30EHGBCjylL92s2BDtXbNhug0VsQ",
   ORDERS_SHEET: "Pedidos",
   SALES_SHEET: "Vendas_PCs",
   SETTINGS_SHEET: "Configuracoes",
   PRICE_REVIEW_SHEET: "Revisao de precos",
   NEW_LISTINGS_SHEET: "Novos anuncios",
-  SITE_URL: "https://mobilytechbr.vercel.app",
-  SETTINGS_URL: "https://mobilytechbr.vercel.app/data/automation-settings.json",
-  LOGO_URL: "https://mobilytechbr.vercel.app/assets/mobilytech-logo.png",
+  SITE_URL: "https://www.mobilytech.com.br",
+  SETTINGS_URL: "https://www.mobilytech.com.br/data/automation-settings.json",
+  LOGO_URL: "https://www.mobilytech.com.br/assets/mobilytech-logo.png",
   SELLER_EMAIL: "mobilytechbr@gmail.com",
   WHATSAPP_URL: "https://wa.me/5511954801967?text=Ola%2C%20tenho%20uma%20duvida%20sobre%20meu%20pedido%20MobilyTech%20BR."
 };
@@ -161,8 +161,9 @@ function doPost(e) {
       .setMimeType(ContentService.MimeType.JSON);
   }
   const row = upsertOrder_(payload);
+  const stock = maybeMarkPaidOrderProductsSold_(payload);
   return ContentService
-    .createTextOutput(JSON.stringify({ ok: true, row }))
+    .createTextOutput(JSON.stringify({ ok: true, row, stock }))
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -1232,6 +1233,85 @@ function normalizeOrder_(payload) {
   };
 }
 
+function maybeMarkPaidOrderProductsSold_(payload) {
+  const status = String(payload.order_status || "PAGO").toUpperCase();
+  if (status !== "PAGO") return { ok: false, skipped: true, message: "Pedido ainda nao esta pago." };
+  const productIds = productIdsFromPayload_(payload.product_ids || payload.product_id || payload.produto_id || "");
+  if (!productIds.length) return { ok: false, skipped: true, message: "Pedido sem produto informado para baixa de estoque." };
+  const supplierIds = new Set(productIdsFromPayload_(payload.manual_fulfillment_product_ids || ""));
+  const orderId = String(payload.payment_id || payload.pagamento || `pedido-${Date.now()}`);
+  const soldAt = new Date();
+  const sale = {
+    source: "site",
+    paymentId: orderId,
+    platform: payload.platform || "Site",
+    amountPaid: payload.amount_paid || "",
+    deliveryMode: payload.delivery_mode || "",
+    customerEmail: payload.customer_email || payload.email || "",
+    soldAt: Utilities.formatDate(soldAt, Session.getScriptTimeZone(), "yyyy-MM-dd")
+  };
+  return updateGithubProducts_((products) => {
+    const soldIds = [];
+    const skippedIds = [];
+    productIds.forEach((productId) => {
+      const product = products.find((item) => String(item.id) === String(productId));
+      if (!product) {
+        skippedIds.push(`${productId}: nao encontrado`);
+        return;
+      }
+      if (supplierIds.has(productId) || productIsSupplierFulfilled_(product)) {
+        skippedIds.push(`${productId}: fornecedor/dropshipping`);
+        return;
+      }
+      if (product.active === false && product.sold === true) {
+        skippedIds.push(`${productId}: ja baixado`);
+        return;
+      }
+      product.active = false;
+      product.sold = true;
+      product.soldAt = sale.soldAt;
+      product.sale = {
+        ...sale,
+        productId,
+        title: product.title || "",
+        configuration: payload.selected_swaps || payload.selected_addons || ""
+      };
+      soldIds.push(productId);
+    });
+    return {
+      changed: soldIds.length > 0,
+      soldIds,
+      skippedIds,
+      message: soldIds.length ? "" : `Nenhum produto fisico para baixar. ${skippedIds.join("; ")}`
+    };
+  }, `MobilyTechBR: baixa estoque apos pedido ${orderId}`);
+}
+
+function productIdsFromPayload_(value) {
+  return String(value || "")
+    .split(/[;,|]/)
+    .map((item) => String(item || "").trim())
+    .filter(Boolean)
+    .filter((item, index, list) => list.indexOf(item) === index);
+}
+
+function productIsSupplierFulfilled_(product) {
+  const text = normalizeText_([
+    product.category,
+    product.purchaseMode,
+    product.fulfillmentMode,
+    product.shipping && product.shipping.mode
+  ].join(" "));
+  return Boolean(
+    product.manualFulfillment ||
+    text.indexOf("dropshipping") >= 0 ||
+    text.indexOf("supplier") >= 0 ||
+    text.indexOf("fornecedor") >= 0 ||
+    text.indexOf("affiliate") >= 0 ||
+    text.indexOf("afiliado") >= 0
+  );
+}
+
 function registerManualSale_(payload) {
   const sheet = ensureSheet_(spreadsheet_(), MOBILYTECH.SALES_SHEET, SALES_HEADERS);
   const productId = String(payload.product_id || payload.productId || "").trim();
@@ -1631,7 +1711,7 @@ function updateGithubProducts_(mutator, message) {
     const json = Utilities.newBlob(Utilities.base64Decode(String(fileData.content).replace(/\s/g, ""))).getDataAsString("UTF-8");
     const products = JSON.parse(json);
     const mutation = mutator(products);
-    if (!mutation.changed) return { ok: false, message: mutation.message || "Nenhuma alteracao aplicada." };
+    if (!mutation.changed) return { ok: false, ...mutation, message: mutation.message || "Nenhuma alteracao aplicada." };
     const payload = {
       message,
       content: Utilities.base64Encode(JSON.stringify(products, null, 2) + "\n"),
@@ -1648,7 +1728,7 @@ function updateGithubProducts_(mutator, message) {
     if (putResponse.getResponseCode() >= 300) {
       return { ok: false, message: `GitHub recusou gravacao (${putResponse.getResponseCode()}): ${putResponse.getContentText().slice(0, 220)}` };
     }
-    return { ok: true };
+    return { ok: true, ...mutation };
   } catch (error) {
     return { ok: false, message: error.message || "Erro ao atualizar o GitHub." };
   }
