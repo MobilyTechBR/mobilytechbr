@@ -2,8 +2,36 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "routes": [
     {
+      "src": "/api/auth-session/?",
+      "dest": "/api/account.js?action=session"
+    },
+    {
+      "src": "/api/customer-orders/?",
+      "dest": "/api/account.js?action=customer-orders"
+    },
+    {
+      "src": "/api/auth-google-start/?",
+      "dest": "/api/account.js?action=google-start"
+    },
+    {
+      "src": "/api/auth-google-callback/?",
+      "dest": "/api/account.js?action=google-callback"
+    },
+    {
+      "src": "/api/auth-microsoft-start/?",
+      "dest": "/api/account.js?action=microsoft-start"
+    },
+    {
+      "src": "/api/auth-microsoft-callback/?",
+      "dest": "/api/account.js?action=microsoft-callback"
+    },
+    {
+      "src": "/api/auth-logout/?",
+      "dest": "/api/account.js?action=logout"
+    },
+    {
       "src": "/admin(?:/index\\.html)?/?",
-      "dest": "/api/admin.js"
+      "dest": "/api/account.js?action=admin"
     },
     {
       "src": "/private/(.*)",

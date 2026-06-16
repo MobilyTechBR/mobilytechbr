@@ -329,8 +329,8 @@ def header(prefix: str, active: str = "home") -> str:
             <strong id="accountMenuTitle">Entre para ver seus pedidos</strong>
             <small id="accountMenuStatus">Acesse com Google para acompanhar compras e dados de entrega.</small>
             <div class="account-popover-actions" id="accountGuestActions">
-              <a class="account-login google-login" id="accountGoogleLogin" href="/api/auth-google-start">Entrar com Google</a>
-              <a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/auth-microsoft-start">Entrar com Microsoft</a>
+              <a class="account-login google-login" id="accountGoogleLogin" href="/api/account?action=google-start">Entrar com Google</a>
+              <a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/account?action=microsoft-start">Entrar com Microsoft</a>
             </div>
             <nav class="account-popover-links" aria-label="Atalhos da conta">
               <a href="{links["conta"]}#minha-conta">Central Minha Conta</a>
@@ -339,7 +339,7 @@ def header(prefix: str, active: str = "home") -> str:
               <a href="{links["conta"]}#retirada">Retirada local</a>
               <a href="{links["contato"]}">Suporte</a>
               <a id="accountAdminLink" href="{prefix}admin" hidden>Painel interno</a>
-              <a id="accountLogout" href="/api/auth-logout?returnTo=/" hidden>Sair</a>
+              <a id="accountLogout" href="/api/account?action=logout&returnTo=/" hidden>Sair</a>
             </nav>
           </div>
         </div>
@@ -721,8 +721,8 @@ def conta_page(prefix: str, page: dict) -> str:
               </div>
             </div>
             <div class="account-login-options" id="accountPageGuestActions">
-              <a class="account-login google-login" href="/api/auth-google-start">Entrar com Google</a>
-              <a class="account-login microsoft-login" href="/api/auth-microsoft-start">Entrar com Microsoft</a>
+              <a class="account-login google-login" href="/api/account?action=google-start">Entrar com Google</a>
+              <a class="account-login microsoft-login" href="/api/account?action=microsoft-start">Entrar com Microsoft</a>
             </div>
           </article>
           <article class="account-card" id="meus-pedidos">
@@ -1060,7 +1060,7 @@ def js(products, finalists, addons, swaps) -> str:
       return window.location.pathname + window.location.search + window.location.hash;
     }}
     function accountLoginHref(provider) {{
-      return `/api/auth-${{provider}}-start?returnTo=${{encodeURIComponent(currentReturnTo())}}`;
+      return `/api/account?action=${{provider}}-start&returnTo=${{encodeURIComponent(currentReturnTo())}}`;
     }}
     function initials(name="", email="") {{
       const source = String(name || email || "MT").trim();
@@ -1073,7 +1073,7 @@ def js(products, finalists, addons, swaps) -> str:
         link.setAttribute("href", accountLoginHref("microsoft"));
         if (accountSession.providers && accountSession.providers.microsoftConfigured === false) link.hidden = true;
       }});
-      $$("#accountLogout").forEach((link) => link.setAttribute("href", `/api/auth-logout?returnTo=${{encodeURIComponent(currentReturnTo())}}`));
+      $$("#accountLogout").forEach((link) => link.setAttribute("href", `/api/account?action=logout&returnTo=${{encodeURIComponent(currentReturnTo())}}`));
     }}
     function renderAccountMenu() {{
       setLoginLinks();
@@ -1153,7 +1153,7 @@ def js(products, finalists, addons, swaps) -> str:
       if (!accountSession.authenticated || !$("#ordersPanel")) return;
       $("#ordersPanel").innerHTML = '<p class="empty">Carregando pedidos...</p>';
       try {{
-        const response = await fetch("/api/customer-orders", {{ cache:"no-store" }});
+        const response = await fetch("/api/account?action=customer-orders", {{ cache:"no-store" }});
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || "Nao foi possivel carregar pedidos.");
         renderOrders(data.orders || [], data);
@@ -1164,7 +1164,7 @@ def js(products, finalists, addons, swaps) -> str:
     async function loadAccountSession() {{
       setLoginLinks();
       try {{
-        const response = await fetch("/api/auth-session", {{ cache:"no-store" }});
+        const response = await fetch("/api/account?action=session", {{ cache:"no-store" }});
         const data = await response.json();
         if (response.ok) accountSession = data;
       }} catch(_error) {{

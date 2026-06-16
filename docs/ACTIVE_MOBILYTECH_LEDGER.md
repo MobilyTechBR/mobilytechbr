@@ -188,3 +188,12 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Backup final antes de publicar esta leva criado em `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_backup_pre_publish_2026-06-16_2026-06-16_194156.zip`.
 - Tamanho aproximado: 431,14 MB.
 - O backup excluiu `.git`, `node_modules` e a pasta local `backups` para evitar duplicacao pesada, preservando os arquivos atuais do site, dados, docs, assets e scripts.
+
+## Atualizacao 2026-06-16 - consolidacao das rotas de conta/admin
+
+- Pos-publicacao do commit `8582e03`, o HTML entrou em producao, mas as novas rotas separadas `/api/auth-session`, `/api/admin` e correlatas ainda retornavam 404 na Vercel; as APIs antigas continuavam respondendo.
+- Correcao preparada localmente: as novas funcoes de conta, pedidos, OAuth e painel foram consolidadas em uma unica funcao `api/account.js`, com logica em `lib/account-handlers.js`.
+- A pasta `api/` voltou a 12 funcoes publicas, preservando as 11 APIs antigas ja vivas e adicionando apenas a funcao unificada `account.js`.
+- `vercel.json` agora reescreve os endpoints legados de conta para `api/account.js?action=...`, e `/admin` tambem passa pela mesma funcao protegida.
+- O frontend gerado passou a consultar diretamente `/api/account?action=session` e `/api/account?action=customer-orders`; links de login/logout tambem apontam para a rota unificada.
+- QA local sem segredos: sintaxe Node de `api/account.js` e `lib/account-handlers.js` passou; mocks confirmaram sessao 200, pedido sem login 401 e `/admin` sem sessao 401 com tela protegida.
