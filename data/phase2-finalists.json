@@ -57,7 +57,7 @@
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "productImage": "./assets/phase2-affiliates/case-ssd-nvme.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -150,7 +150,7 @@
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "productImage": "./assets/phase2-affiliates/case-ssd-sata.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -335,7 +335,7 @@
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "productImage": "./assets/phase2-affiliates/kit-limpeza-esd.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -428,7 +428,7 @@
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Oferta selecionada para conferir no Mercado Livre.",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "productImage": "./assets/phase2-affiliates/mini-aspirador-teclado.jpg",
       "selectedCreativeVariant": 2,
       "researchLinks": {
@@ -521,7 +521,7 @@
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "productImage": "./assets/phase2-affiliates/hub-usb-c.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -614,7 +614,7 @@
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "productImage": "./assets/phase2-affiliates/suporte-gpu-antisag.jpg",
       "selectedCreativeVariant": 3,
       "researchLinks": {
@@ -975,7 +975,7 @@
       "marginPercent": "57.6%",
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "primaryMarketplace": "mercado-livre",
       "marketplace": {
         "name": "MobilyTech BR",
@@ -1054,7 +1054,7 @@
       "marginPercent": "39.4%",
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "primaryMarketplace": "mercado-livre",
       "marketplace": {
         "name": "MobilyTech BR",
@@ -1133,7 +1133,7 @@
       "marginPercent": "31.3%",
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "primaryMarketplace": "mercado-livre",
       "marketplace": {
         "name": "MobilyTech BR",
@@ -1212,7 +1212,7 @@
       "marginPercent": "55.7%",
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "primaryMarketplace": "mercado-livre",
       "marketplace": {
         "name": "MobilyTech BR",
@@ -1291,7 +1291,7 @@
       "marginPercent": "55.1%",
       "affiliateReady": true,
       "affiliateButton": "Adicionar ao carrinho",
-      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+      "publicPartnerNote": "Produto tech selecionado para complementar setups MobilyTech com atendimento humano e envio direto rastreavel.",
       "primaryMarketplace": "mercado-livre",
       "marketplace": {
         "name": "MobilyTech BR",
@@ -1341,6 +1341,7 @@
     "dropshippingDefaultMarginPercent": 25,
     "manualSupplierMinimumMarginPercent": 35,
     "customerPaysDropshippingShipping": true,
+    "defaultDropshippingShippingPrice": 29.9,
     "allowedAffiliatePlatforms": [
       "Mercado Livre",
       "Amazon",

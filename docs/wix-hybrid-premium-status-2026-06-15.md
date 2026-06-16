@@ -83,3 +83,13 @@ Em 2026-06-15 foi confirmado que Wix Headless OAuth App e o caminho oficial para
 - Manter Wix Stores premium limpo, sem produtos genericos visiveis.
 - Documentar que a etapa "backend Wix real com login/headless" ainda exige OAuth seguro e adaptacao tecnica.
 - Nao publicar itens de dropshipping/afiliado no Wix Stores visivel ate que os produtos estejam curados e o fluxo de frete/checkout esteja decidido.
+
+## Atualizacao de verificacao em 2026-06-16
+
+- `https://mobilytechbr.vercel.app/?qa=2026-06-16-status` respondeu 200 com titulo `MobilyTech BR | Loja gamer`, contendo `MOBMEN` e `MobilyTech Finds`.
+- `https://www.mobilytech.com.br/?qa=2026-06-16-status` respondeu 200 com titulo Wix `Inicio | MobilyTech BR`; o HTML contem iframe/ponte para `mobilytechbr.vercel.app`, mas o HTML externo nao contem diretamente `MOBMEN` nem `MobilyTech Finds`.
+- `https://www.mobilytech.com.br/fase2/ofertas.html?qa=2026-06-16-status` segue retornando 404 no Wix. O workaround por query `https://www.mobilytech.com.br/?mtbPath=%2Ffase2%2Fofertas.html` responde 200 e contem a ponte para Vercel.
+- O favicon do dominio oficial ainda aponta para `https://static.parastorage.com/client/pfavico.ico`, favicon padrao Wix, nao para a logo MobilyTech BR.
+- Conector Wix confirmou o site canonico `85e985c5-2904-452f-85e2-a98f6d3b1cac` como Premium, Published, custom domain, Velo enabled, Wix Members Area e Wix Stores V3.
+- Conector Vercel confirmou o projeto `mobilytechbr` (`prj_ljqtPnKqvLMRUio4bMAWMtNaGeWz`) com dominios anexados apenas `mobilytechbr.vercel.app`, `mobilytechbr-mobily-tech-s-projects.vercel.app` e `mobilytechbr-git-main-mobily-tech-s-projects.vercel.app`. O dominio `www.mobilytech.com.br` ainda nao esta anexado ao projeto Vercel.
+- Busca oficial Wix encontrou API para `business profile logo`, mas nao confirmou API REST especifica para favicon/site icon. Para trocar favicon do Wix, usar painel/editor Wix ou uma documentacao/API especifica confirmada antes de qualquer chamada.

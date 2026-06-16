@@ -90,6 +90,7 @@ async function notifyOrder(request, payment) {
   if (!endpoint) return { sent: false };
 
   const metadata = payment.metadata || {};
+  const orderReference = metadata.order_reference || payment.external_reference || String(payment.id);
   const shippingRequested = metadata.shipping_requested === "true";
   const shippingCustomer = metadata.shipping_customer ? JSON.parse(metadata.shipping_customer) : {};
   const manualFulfillmentRequired = metadata.manual_fulfillment_required === "true" || isManualShippingProvider(metadata.shipping_provider);
@@ -124,7 +125,8 @@ async function notifyOrder(request, payment) {
   const lines = [
     "Novo pedido pago no Mercado Pago.",
     "",
-    `Pagamento: ${payment.id}`,
+    `Pedido: ${orderReference}`,
+    `Pagamento Mercado Pago: ${payment.id}`,
     `Produto: ${metadata.product_title || payment.description || ""}`,
     `Trocas: ${metadata.selected_swaps || "Nenhuma"}`,
     `Opcionais: ${metadata.selected_addons || "Nenhum"}`,
@@ -143,10 +145,10 @@ async function notifyOrder(request, payment) {
     "",
     manualFulfillmentRequired
       ? [
-        "ACAO MANUAL NECESSARIA: pedido com item enviado por fornecedor parceiro.",
+        "ACAO MANUAL NECESSARIA: pedido com item de envio direto MobilyTech Finds.",
         "Nao compre etiqueta Melhor Envio para estes itens.",
         manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
-        "Use o link/fornecedor acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
+        "Use o link/canal de origem acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
       ].join("\n")
       : (shippingRequested
         ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
@@ -159,8 +161,9 @@ async function notifyOrder(request, payment) {
     platform: "Mercado Pago",
     email: customerEmail || "mobilytechbr@gmail.com",
     mensagem: lines.join("\n"),
-    pagamento: String(payment.id),
-    payment_id: String(payment.id),
+    pagamento: orderReference,
+    payment_id: orderReference,
+    provider_payment_id: String(payment.id),
     produto: metadata.product_title || "",
     product_ids: metadata.product_ids || metadata.product_id || "",
     product_title: metadata.product_title || payment.description || "",

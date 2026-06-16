@@ -26,8 +26,10 @@ O Mercado Pago continua usando o webhook proprio que ja esta configurado no proj
 ## Como funciona
 
 - Quando o Mercado Pago ou Abacate Pay confirmar uma venda, o webhook envia os dados para o Apps Script.
+- Quando o checkout Mercado Pago ou Abacate Pay e criado, as funcoes existentes tentam avisar `ORDER_NOTIFICATION_ENDPOINT` com `order_status=PENDENTE`. Se a variavel nao estiver configurada, o checkout continua normal e esse aviso fica apenas pulado.
 - O Apps Script salva o pedido na aba `Pedidos`.
 - A cada 5 minutos, ele envia:
+  - e-mail de pedido recebido/pagamento pendente para o cliente;
   - e-mail de compra confirmada para o cliente;
   - e-mail interno para `mobilytechbr@gmail.com`;
   - e-mail de rastreio quando a coluna `CodigoRastreio` for preenchida e o status virar `DESPACHADO`;
@@ -95,3 +97,39 @@ Na Vercel, configure:
 - `SALES_REGISTRATION_ENDPOINT`: URL do Web App do Apps Script. Se nao existir, a funcao usa `ORDER_NOTIFICATION_ENDPOINT`.
 
 No Apps Script, mantenha as propriedades de GitHub acima se quiser que o produto seja desativado automaticamente. Sem `GITHUB_TOKEN`, a venda ainda pode ser registrada na planilha, mas a remocao do site precisa ser aplicada pelo JSON revisado baixado no painel.
+
+Ao rodar `setupMobilyTechPostSale()` ou registrar a primeira venda depois da atualizacao, a aba `Vendas_PCs` continua usando somente as 9 colunas financeiras originais, de `A:I`.
+
+Isso e importante porque a planilha OLX ja tem um Apps Script de relatorio mensal e ordenacao que trata `Vendas_PCs` como tabela `A:I` e usa colunas auxiliares fora dessa faixa. Para evitar conflito, o registro manual grava informacoes extras em uma aba separada:
+
+- `Vendas_PCs_Metadata`
+
+Essa aba separada recebe:
+
+- `Linha Vendas_PCs`
+- `Dia da Venda`
+- `Canal`
+- `ProdutoID`
+- `Status no Site`
+- `Observacoes`
+- `RegistradoEm`
+
+Nao cole este script por cima do projeto `MobilyTech Relatorio Mensal` sem revisar os nomes globais e fazer backup. O caminho mais seguro e manter o pos-venda em um Web App separado apontando para a mesma planilha.
+
+## Testes de e-mail
+
+O Apps Script inclui a funcao `sendTestTransactionalEmails()` para enviar exemplos para `mobilytechbr@gmail.com` com assunto marcado como `TESTE CLIENTE` ou `TESTE VENDEDOR`.
+
+Modelos cobertos:
+
+- Cliente: pedido recebido/pagamento pendente.
+- Cliente: compra confirmada.
+- Cliente: pagamento aprovado.
+- Cliente: pedido despachado/rastreio.
+- Cliente: retirada a combinar.
+- Cliente: entregue/pos-venda.
+- Vendedor: nova venda no site.
+- Vendedor: nova venda manual/fornecedor.
+- Vendedor: pedido despachado.
+- Vendedor: pedido entregue.
+- Vendedor: erro/bloqueio de pagamento ou frete.

@@ -213,9 +213,13 @@ function normalizeCheckoutItems(products, globalAddons, globalSwaps, payload) {
       throw error;
     }
 
+    const rawQuantity = Number(item?.quantity || item?.qty || 1);
+    const quantity = Number.isFinite(rawQuantity) ? Math.max(1, Math.floor(rawQuantity)) : 1;
+
     return {
       product,
       unitPrice,
+      quantity,
       addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons),
       swaps: normalizeSelectedSwaps(product, item.selectedSwaps, globalSwaps)
     };
@@ -259,7 +263,7 @@ function totalFromCheckoutItems(checkoutItems, normalizedShipping) {
   const productsTotal = checkoutItems.reduce((sum, item) => {
     const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
     const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
-    return sum + item.unitPrice + addonsTotal + swapsTotal;
+    return sum + ((item.unitPrice + addonsTotal + swapsTotal) * item.quantity);
   }, 0);
   return productsTotal + (normalizedShipping ? normalizedShipping.price : 0);
 }
@@ -314,7 +318,7 @@ module.exports = async function createAbacatePix(request, response) {
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
     validateUniquePhysicalCheckoutItems(checkoutItems);
-    const checkoutProducts = checkoutItems.map((item) => item.product);
+    const checkoutProducts = checkoutItems.map((item) => ({ ...item.product, quantity: item.quantity }));
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
     const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
@@ -346,6 +350,7 @@ module.exports = async function createAbacatePix(request, response) {
           externalId,
           checkoutType: checkoutItems.length > 1 ? "cart" : "single_product",
           productIds: checkoutItems.map((item) => item.product.id).join("; "),
+          productQuantities: checkoutItems.map((item) => `${item.product.id}:${item.quantity}`).join("; "),
           productTitles: checkoutItems.map((item) => item.product.title).join("; "),
           selectedAddons: selectedAddons.join("; "),
           selectedSwaps: selectedSwaps.join("; "),

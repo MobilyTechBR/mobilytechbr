@@ -3,7 +3,11 @@ const path = require("path");
 
 const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const MELHOR_ENVIO_API = process.env.MELHOR_ENVIO_API_BASE || "https://www.melhorenvio.com.br/api/v2";
-const { buildShippingQuotes, onlyDigits } = require("../lib/fulfillment-shipping");
+const {
+  buildShippingQuotes,
+  onlyDigits,
+  validateUniquePhysicalCheckoutItems
+} = require("../lib/fulfillment-shipping");
 const DEFAULT_MELHOR_ENVIO_SERVICE_IDS = [
   1, 2, 17, // Correios: PAC, SEDEX, Mini Envios
   3, 4, 27, // Jadlog
@@ -162,8 +166,14 @@ async function loadProducts() {
 
 function productsFromCartItems(products, cartItems) {
   if (!Array.isArray(cartItems) || cartItems.length === 0) return [];
-  const requestedIds = cartItems.map((item) => String(item?.productId || "")).filter(Boolean);
-  return requestedIds.map((id) => products.find((item) => item.id === id && item.active !== false)).filter(Boolean);
+  return cartItems.map((cartItem) => {
+    const id = String(cartItem?.productId || "").trim();
+    const product = products.find((item) => item.id === id && item.active !== false);
+    if (!product) return null;
+    const rawQuantity = Number(cartItem?.quantity || cartItem?.qty || 1);
+    const quantity = Number.isFinite(rawQuantity) ? Math.max(1, Math.floor(rawQuantity)) : 1;
+    return { ...product, quantity };
+  }).filter(Boolean);
 }
 
 async function quoteMelhorEnvio(product, destinationPostalCode) {
@@ -263,6 +273,9 @@ module.exports = async function shippingQuote(request, response) {
     if (hasCart && cartProducts.length !== cartItems.length) {
       sendJson(response, 404, { error: "Um ou mais produtos do carrinho nao estao disponiveis." });
       return;
+    }
+    if (hasCart) {
+      validateUniquePhysicalCheckoutItems(cartProducts);
     }
     const productsForShipping = cartProducts.length
       ? cartProducts

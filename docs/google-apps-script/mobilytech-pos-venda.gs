@@ -12,6 +12,7 @@ const MOBILYTECH = {
   SPREADSHEET_ID: "1Wc_ctkvNJh-64Yg30EHGBCjylL92s2BDtXbNhug0VsQ",
   ORDERS_SHEET: "Pedidos",
   SALES_SHEET: "Vendas_PCs",
+  SALES_METADATA_SHEET: "Vendas_PCs_Metadata",
   SETTINGS_SHEET: "Configuracoes",
   PRICE_REVIEW_SHEET: "Revisao de precos",
   NEW_LISTINGS_SHEET: "Novos anuncios",
@@ -47,9 +48,12 @@ const ORDER_HEADERS = [
   "EmailClienteConfirmacaoEnviado",
   "EmailVendedorVendaEnviado",
   "EmailClienteDespachoEnviado",
+  "EmailVendedorDespachoEnviado",
   "EmailClienteEntregaEnviado",
+  "EmailVendedorEntregaEnviado",
   "ReembolsoManual",
-  "AtualizadoEm"
+  "AtualizadoEm",
+  "EmailClientePagamentoPendenteEnviado"
 ];
 
 const PRICE_HEADERS = [
@@ -130,10 +134,23 @@ const SALES_HEADERS = [
   "Margem (%)"
 ];
 
+// Keep Vendas_PCs as A:I only. The existing OLX monthly report/sort script
+// reads that range as the canonical sales table and uses helper columns later.
+const SALES_METADATA_HEADERS = [
+  "Linha Vendas_PCs",
+  "Dia da Venda",
+  "Canal",
+  "ProdutoID",
+  "Status no Site",
+  "Observações",
+  "RegistradoEm"
+];
+
 function setupMobilyTechPostSale() {
   const ss = spreadsheet_();
   ensureSheet_(ss, MOBILYTECH.ORDERS_SHEET, ORDER_HEADERS);
   ensureSheet_(ss, MOBILYTECH.SALES_SHEET, SALES_HEADERS);
+  ensureSheet_(ss, MOBILYTECH.SALES_METADATA_SHEET, SALES_METADATA_HEADERS);
   const settings = ensureSheet_(ss, MOBILYTECH.SETTINGS_SHEET, ["Chave", "Valor", "Observacao"]);
   seedSettings_(settings);
   ensureSheet_(ss, MOBILYTECH.PRICE_REVIEW_SHEET, PRICE_HEADERS);
@@ -183,6 +200,13 @@ function processPostSaleQueue_(settings) {
   const rows = readRows_(sheet);
   rows.forEach(({ row, values }) => {
     const status = String(values.Status || "").toUpperCase();
+    if (isPendingPaymentStatus_(status)) {
+      if (!values.EmailClientePagamentoPendenteEnviado && values.ClienteEmail) {
+        sendCustomerPaymentPending_(values);
+        sheet.getRange(row, col_("EmailClientePagamentoPendenteEnviado")).setValue(new Date());
+      }
+    }
+
     if (status === "PAGO") {
       if (!values.EmailClienteConfirmacaoEnviado && values.ClienteEmail) {
         sendCustomerConfirmation_(values);
@@ -194,24 +218,37 @@ function processPostSaleQueue_(settings) {
       }
     }
 
-    if (status === "DESPACHADO" && values.CodigoRastreio && !values.EmailClienteDespachoEnviado && values.ClienteEmail) {
-      sendCustomerTracking_(values);
-      sheet.getRange(row, col_("EmailClienteDespachoEnviado")).setValue(new Date());
+    if (status === "DESPACHADO" && values.CodigoRastreio) {
+      if (!values.EmailClienteDespachoEnviado && values.ClienteEmail) {
+        sendCustomerTracking_(values);
+        sheet.getRange(row, col_("EmailClienteDespachoEnviado")).setValue(new Date());
+      }
+      if (settingBool_(settings.sellerNotificationsEnabled, true) && !values.EmailVendedorDespachoEnviado) {
+        sendSellerTrackingAlert_(values, settings);
+        sheet.getRange(row, col_("EmailVendedorDespachoEnviado")).setValue(new Date());
+      }
     }
 
-    if (status === "ENTREGUE" && !values.EmailClienteEntregaEnviado && values.ClienteEmail) {
-      sendCustomerDelivered_(values);
-      sheet.getRange(row, col_("EmailClienteEntregaEnviado")).setValue(new Date());
+    if (status === "ENTREGUE") {
+      if (!values.EmailClienteEntregaEnviado && values.ClienteEmail) {
+        sendCustomerDelivered_(values);
+        sheet.getRange(row, col_("EmailClienteEntregaEnviado")).setValue(new Date());
+      }
+      if (settingBool_(settings.sellerNotificationsEnabled, true) && !values.EmailVendedorEntregaEnviado) {
+        sendSellerDeliveredAlert_(values, settings);
+        sheet.getRange(row, col_("EmailVendedorEntregaEnviado")).setValue(new Date());
+      }
     }
   });
 }
 
-function sendCustomerConfirmation_(order) {
-  const subject = "Compra confirmada - MobilyTech BR";
+function sendCustomerConfirmation_(order, options) {
+  options = options || {};
+  const subject = (options.subjectPrefix || "") + "Compra confirmada - MobilyTech BR";
   const html = emailShell_({
     preheader: "Recebemos seu pedido e vamos preparar tudo com cuidado.",
     title: "Compra confirmada!",
-    intro: `Ola, ${escapeHtml_(order.ClienteNome || "tudo bem")}! A MobilyTech BR agradece sua compra. Vamos preparar o seu pedido para ele chegar prontinho para uso!`,
+    intro: `Ola, ${escapeHtml_(order.ClienteNome || "tudo bem")}! A MobilyTech BR agradece sua compra. Vamos preparar o seu pedido com carinho e manter voce por dentro de cada etapa.`,
     blocks: [
       detailBlock_("Resumo do pedido", [
         ["Produto", order.Produto],
@@ -219,22 +256,83 @@ function sendCustomerConfirmation_(order) {
         ["Valor pago", formatMoneyText_(order.ValorPago)],
         ["Entrega", deliverySummary_(order)]
       ]),
-      textBlock_("Proximos passos", "O seu PC sera despachado o mais breve possivel. Assim que for despachado, sera enviado um codigo de rastreio para que voce possa acompanha-lo durante o envio. Seguimos a disposicao para qualquer duvida que voce tiver.")
+      textBlock_("Proximos passos", customerNextStepText_(order))
     ],
     ctaLabel: "Falar com a MobilyTech BR",
     ctaUrl: MOBILYTECH.WHATSAPP_URL
   });
-  GmailApp.sendEmail(order.ClienteEmail, subject, "Sua compra foi confirmada pela MobilyTech BR.", { htmlBody: html, name: "MobilyTech BR" });
+  GmailApp.sendEmail(options.to || order.ClienteEmail, subject, "Sua compra foi confirmada pela MobilyTech BR.", { htmlBody: html, name: "MobilyTech BR" });
 }
 
-function sendSellerSaleAlert_(order, settings) {
+function sendCustomerPaymentPending_(order, options) {
+  options = options || {};
+  const html = emailShell_({
+    preheader: "Recebemos seu pedido. Falta apenas a confirmacao do pagamento.",
+    title: "Pedido recebido",
+    intro: `Ola, ${escapeHtml_(order.ClienteNome || "tudo bem")}! Recebemos seu pedido na MobilyTech BR. Ele fica como pagamento pendente ate a plataforma confirmar a aprovacao.`,
+    blocks: [
+      detailBlock_("Resumo do pedido", [
+        ["Pedido", order.PedidoID],
+        ["Produto", order.Produto],
+        ["Opcionais", order.Opcionais || "Nenhum"],
+        ["Valor", formatMoneyText_(order.ValorPago)],
+        ["Entrega", deliverySummary_(order)]
+      ]),
+      textBlock_("Proximo passo", "Se voce ja finalizou o pagamento, pode aguardar: assim que a plataforma confirmar, enviamos outro e-mail com a aprovacao e o preparo do pedido. Se preferir, fale com a MobilyTech BR pelo WhatsApp.")
+    ],
+    ctaLabel: "Falar com a MobilyTech BR",
+    ctaUrl: MOBILYTECH.WHATSAPP_URL
+  });
+  GmailApp.sendEmail(options.to || order.ClienteEmail, (options.subjectPrefix || "") + "Pedido recebido, pagamento pendente - MobilyTech BR", "Recebemos seu pedido. Falta apenas a confirmacao do pagamento.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function sendCustomerPaymentApproved_(order, options) {
+  options = options || {};
+  const html = emailShell_({
+    preheader: "Pagamento aprovado. Agora a MobilyTech BR prepara seu pedido.",
+    title: "Pagamento aprovado!",
+    intro: `Boa, ${escapeHtml_(order.ClienteNome || "tudo bem")}! O pagamento foi aprovado e seu pedido entrou na fila de preparo da MobilyTech BR.`,
+    blocks: [
+      detailBlock_("Resumo", [
+        ["Pedido", order.PedidoID],
+        ["Produto", order.Produto],
+        ["Valor aprovado", formatMoneyText_(order.ValorPago)],
+        ["Entrega", deliverySummary_(order)]
+      ]),
+      textBlock_("O que acontece agora", customerNextStepText_(order))
+    ],
+    ctaLabel: "Falar com a MobilyTech BR",
+    ctaUrl: MOBILYTECH.WHATSAPP_URL
+  });
+  GmailApp.sendEmail(options.to || order.ClienteEmail, (options.subjectPrefix || "") + "Pagamento aprovado - MobilyTech BR", "Seu pagamento foi aprovado.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function customerNextStepText_(order) {
+  if (order.ModoEntrega === "pickup") {
+    return "Voce escolheu retirada local. A MobilyTech BR vai combinar o melhor horario pelo WhatsApp ou e-mail depois da confirmacao do pedido.";
+  }
+  if (order.ModoEntrega === "supplier_shipping") {
+    return "Seu pedido segue por envio direto com rastreio. Assim que o codigo ficar disponivel, voce recebe outro e-mail para acompanhar tudo.";
+  }
+  if (order.ModoEntrega === "mixed_shipping") {
+    return "Seu pedido tem envio misto: parte sai pela MobilyTech BR e parte segue por envio direto com rastreio. Vamos avisar sempre que houver atualizacao importante.";
+  }
+  return "Seu pedido sera despachado o mais breve possivel. Assim que o codigo de rastreio ficar disponivel, voce recebe outro e-mail para acompanhar o envio.";
+}
+
+function isPendingPaymentStatus_(status) {
+  return ["PENDENTE", "PENDING", "AGUARDANDO_PAGAMENTO", "AGUARDANDO PAGAMENTO"].indexOf(String(status || "").toUpperCase()) >= 0;
+}
+
+function sendSellerSaleAlert_(order, settings, options) {
+  options = options || {};
   const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
-  const subject = "Parabens, voce vendeu no site - MobilyTechBR";
+  const subject = (options.subjectPrefix || "") + "Parabens, voce vendeu no site - MobilyTechBR";
   const denyUrl = buildActionUrl_("deny-label", order.PedidoID);
   const labelUrl = order.LinkConfirmarEtiqueta || "";
   const manualFulfillment = ["supplier_shipping", "mixed_shipping"].indexOf(String(order.ModoEntrega || "")) >= 0 || Boolean(order.FornecedorItens);
   const actionHtml = manualFulfillment
-    ? "<p style='margin:18px 0 0;color:#f8d04c;font-weight:800'>Operacao manual: comprar no fornecedor/parceiro, acompanhar rastreio e atualizar o pedido. Nao use etiqueta Melhor Envio para estes itens.</p>"
+    ? "<p style='margin:18px 0 0;color:#f8d04c;font-weight:800'>Operacao manual: comprar no canal de origem do produto, acompanhar rastreio e atualizar o pedido. Nao use etiqueta Melhor Envio para estes itens.</p>"
     : order.ModoEntrega === "shipping"
     ? `<p style="margin:18px 0 0"><a href="${labelUrl}" style="${buttonStyle_()}">Confirmar etiqueta</a><a href="${denyUrl}" style="${buttonStyle_("secondary")}">Negar etiqueta</a></p>`
     : "<p style='margin:18px 0 0;color:#bcd4df;font-weight:700'>Retirada local selecionada. Combine o horario com o cliente.</p>";
@@ -257,21 +355,99 @@ function sendSellerSaleAlert_(order, settings) {
         ["Entrega", deliverySummary_(order)],
         ["Endereco", order.Endereco]
       ]),
-      manualFulfillment ? detailBlock_("Operacao com fornecedor", [
+      manualFulfillment ? detailBlock_("Operacao com envio direto", [
         ["Itens", order.FornecedorItens || "Nao detalhado"],
-        ["Observacoes", order.ObservacoesOperacao || "Comprar no fornecedor, acompanhar envio e atualizar rastreio manualmente."]
+        ["Observacoes", order.ObservacoesOperacao || "Comprar no canal de origem, acompanhar envio e atualizar rastreio manualmente."]
       ]) : "",
       actionHtml
     ]
   });
-  GmailApp.sendEmail(sellerEmail, subject, "Nova venda confirmada no site MobilyTechBR.", { htmlBody: html, name: "MobilyTech BR" });
+  GmailApp.sendEmail(options.to || sellerEmail, subject, "Nova venda confirmada no site MobilyTechBR.", { htmlBody: html, name: "MobilyTech BR" });
 }
 
-function sendCustomerTracking_(order) {
+function sendSellerManualFulfillmentAlert_(order, settings, options) {
+  options = options || {};
+  settings = settings || {};
+  const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
+  const html = emailShell_({
+    preheader: "Venda com item de fornecedor ou operacao manual.",
+    title: "Venda com envio direto/manual",
+    intro: "Esta venda precisa de acao operacional: conferir o fornecedor, comprar no canal de origem, acompanhar rastreio e atualizar o cliente.",
+    blocks: [
+      detailBlock_("Pedido", [
+        ["Pedido", order.PedidoID],
+        ["Produto", order.Produto],
+        ["Valor pago", formatMoneyText_(order.ValorPago)],
+        ["Plataforma", order.Plataforma]
+      ]),
+      detailBlock_("Cliente", [
+        ["Nome", order.ClienteNome],
+        ["Email", order.ClienteEmail],
+        ["Telefone", order.ClienteTelefone],
+        ["CEP", order.Cep],
+        ["Endereco", order.Endereco]
+      ]),
+      detailBlock_("Operacao", [
+        ["Itens fornecedor", order.FornecedorItens || "Nao detalhado"],
+        ["Observacoes", order.ObservacoesOperacao || "Comprar no canal de origem, acompanhar envio e atualizar rastreio manualmente."]
+      ])
+    ]
+  });
+  GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Nova venda manual/fornecedor - MobilyTech BR", "Venda com envio direto/manual.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function sendSellerOperationIssueAlert_(order, settings, reason, options) {
+  options = options || {};
+  settings = settings || {};
+  const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
+  const html = emailShell_({
+    preheader: "Uma etapa de pagamento, frete ou automacao precisa de revisao.",
+    title: "Atencao: pedido precisa de revisao",
+    intro: "O pedido abaixo encontrou um bloqueio operacional. Confira antes de seguir com preparo, etiqueta, compra de fornecedor ou contato com o cliente.",
+    blocks: [
+      detailBlock_("Pedido", [
+        ["Pedido", order.PedidoID],
+        ["Produto", order.Produto],
+        ["Cliente", order.ClienteNome],
+        ["Email", order.ClienteEmail],
+        ["Telefone", order.ClienteTelefone]
+      ]),
+      detailBlock_("Bloqueio", [
+        ["Motivo", reason || order.ObservacoesOperacao || "Falha ou pendencia de pagamento/frete"],
+        ["Entrega", deliverySummary_(order)],
+        ["Endereco", order.Endereco]
+      ])
+    ]
+  });
+  GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Erro/bloqueio de pedido - MobilyTech BR", "Pedido precisa de revisao.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function sendCustomerPickup_(order, options) {
+  options = options || {};
+  const html = emailShell_({
+    preheader: "Retirada local a combinar em Vila Suzana.",
+    title: "Retirada a combinar",
+    intro: `Seu pedido esta separado para retirada, ${escapeHtml_(order.ClienteNome || "tudo bem")}. Vamos combinar o melhor horario com voce antes da retirada.`,
+    blocks: [
+      detailBlock_("Pedido", [
+        ["Produto", order.Produto],
+        ["Valor", formatMoneyText_(order.ValorPago)],
+        ["Local", "Vila Suzana, Sao Paulo, SP"]
+      ]),
+      textBlock_("Como combinar", "Fale com a MobilyTech BR pelo WhatsApp para escolher um horario seguro. Leve um documento ou mensagem do pedido para facilitar a conferencia.")
+    ],
+    ctaLabel: "Combinar retirada",
+    ctaUrl: MOBILYTECH.WHATSAPP_URL
+  });
+  GmailApp.sendEmail(options.to || order.ClienteEmail, (options.subjectPrefix || "") + "Retirada a combinar - MobilyTech BR", "Vamos combinar a retirada do seu pedido.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function sendCustomerTracking_(order, options) {
+  options = options || {};
   const trackUrl = order.LinkRastreio || `https://www2.correios.com.br/sistemas/rastreamento/default.cfm?objetos=${encodeURIComponent(order.CodigoRastreio)}`;
   const html = emailShell_({
     preheader: "Seu pedido foi despachado.",
-    title: "Seu PC ja foi despachado!",
+    title: "Seu pedido ja foi despachado!",
     intro: "Seu pedido saiu para envio. Agora voce pode acompanhar o trajeto pelo codigo de rastreamento.",
     blocks: [
       detailBlock_("Rastreamento", [
@@ -283,21 +459,74 @@ function sendCustomerTracking_(order) {
     ctaLabel: "Acompanhar pedido",
     ctaUrl: trackUrl
   });
-  GmailApp.sendEmail(order.ClienteEmail, "Pedido despachado - MobilyTech BR", "Seu pedido foi despachado.", { htmlBody: html, name: "MobilyTech BR" });
+  GmailApp.sendEmail(options.to || order.ClienteEmail, (options.subjectPrefix || "") + "Pedido despachado - MobilyTech BR", "Seu pedido foi despachado.", { htmlBody: html, name: "MobilyTech BR" });
 }
 
-function sendCustomerDelivered_(order) {
+function sendSellerTrackingAlert_(order, settings, options) {
+  options = options || {};
+  settings = settings || {};
+  const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
+  const trackUrl = order.LinkRastreio || `https://www2.correios.com.br/sistemas/rastreamento/default.cfm?objetos=${encodeURIComponent(order.CodigoRastreio || "")}`;
+  const html = emailShell_({
+    preheader: "Pedido marcado como despachado.",
+    title: "Pedido despachado",
+    intro: "Atualizacao operacional: o cliente deve receber o rastreio. Confira se os dados batem com o envio antes de encerrar a etapa.",
+    blocks: [
+      detailBlock_("Pedido", [
+        ["Pedido", order.PedidoID],
+        ["Produto", order.Produto],
+        ["Cliente", order.ClienteNome],
+        ["Email", order.ClienteEmail]
+      ]),
+      detailBlock_("Rastreamento", [
+        ["Transportadora", order.Transportadora || "Correios"],
+        ["Servico", order.ServicoFrete || "Nao informado"],
+        ["Codigo", order.CodigoRastreio],
+        ["CEP", order.Cep],
+        ["Endereco", order.Endereco]
+      ])
+    ],
+    ctaLabel: order.LinkRastreio ? "Abrir rastreio" : "",
+    ctaUrl: order.LinkRastreio ? trackUrl : ""
+  });
+  GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Pedido despachado - controle vendedor - MobilyTech BR", "Pedido marcado como despachado.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function sendCustomerDelivered_(order, options) {
+  options = options || {};
   const html = emailShell_({
     preheader: "Pedido entregue. Conte com a gente no pos-venda.",
     title: "Seu pedido chegou!",
-    intro: "Tomara que voce curta bastante o PC. Se precisar de ajuda com instalacao, configuracao basica ou qualquer duvida inicial, chama a MobilyTech BR.",
+    intro: "Tomara que voce curta bastante seu pedido. Se precisar de ajuda com instalacao, configuracao basica ou qualquer duvida inicial, chama a MobilyTech BR.",
     blocks: [
       textBlock_("Obrigado pela confianca", "Depois de testar tudo, se puder deixar uma avaliacao, isso ajuda muito outras pessoas a comprarem com seguranca tambem.")
     ],
     ctaLabel: "Falar no WhatsApp",
     ctaUrl: MOBILYTECH.WHATSAPP_URL
   });
-  GmailApp.sendEmail(order.ClienteEmail, "Pedido entregue - MobilyTech BR", "Seu pedido foi entregue.", { htmlBody: html, name: "MobilyTech BR" });
+  GmailApp.sendEmail(options.to || order.ClienteEmail, (options.subjectPrefix || "") + "Pedido entregue - MobilyTech BR", "Seu pedido foi entregue.", { htmlBody: html, name: "MobilyTech BR" });
+}
+
+function sendSellerDeliveredAlert_(order, settings, options) {
+  options = options || {};
+  settings = settings || {};
+  const sellerEmail = settings.sellerEmail || MOBILYTECH.SELLER_EMAIL;
+  const html = emailShell_({
+    preheader: "Pedido entregue ao cliente.",
+    title: "Pedido entregue",
+    intro: "Atualizacao operacional: pedido entregue. Use este aviso para fechar acompanhamento, pos-venda e controle interno.",
+    blocks: [
+      detailBlock_("Pedido", [
+        ["Pedido", order.PedidoID],
+        ["Produto", order.Produto],
+        ["Cliente", order.ClienteNome],
+        ["Email", order.ClienteEmail],
+        ["Telefone", order.ClienteTelefone]
+      ]),
+      textBlock_("Proximo passo sugerido", "Se o cliente responder com duvida, priorize suporte de pos-venda. Se estiver tudo certo, este pedido pode ser considerado encerrado no controle interno.")
+    ]
+  });
+  GmailApp.sendEmail(options.to || sellerEmail, (options.subjectPrefix || "") + "Pedido entregue - controle vendedor - MobilyTech BR", "Pedido entregue ao cliente.", { htmlBody: html, name: "MobilyTech BR" });
 }
 
 function runMarketplacePriceReview_(settings) {
@@ -1219,7 +1448,7 @@ function normalizeOrder_(payload) {
     LinkConfirmarEtiqueta: payload.label_confirmation_url || payload.confirmar_etiqueta || "",
     FornecedorItens: payload.manual_fulfillment_items || "",
     ObservacoesOperacao: payload.manual_fulfillment_required === "true"
-      ? "Venda com item de fornecedor/parceiro. Cliente pagou frete separado no checkout. Comprar no fornecedor, acompanhar rastreio e atualizar o pedido."
+      ? "Venda com item de envio direto. Cliente pagou frete separado no checkout. Comprar no canal de origem, acompanhar rastreio e atualizar o pedido."
       : "",
     DecisaoEtiqueta: "",
     CodigoRastreio: payload.tracking_code || payload.codigo_rastreio || payload.CodigoRastreio || "",
@@ -1227,9 +1456,12 @@ function normalizeOrder_(payload) {
     EmailClienteConfirmacaoEnviado: "",
     EmailVendedorVendaEnviado: "",
     EmailClienteDespachoEnviado: "",
+    EmailVendedorDespachoEnviado: "",
     EmailClienteEntregaEnviado: "",
+    EmailVendedorEntregaEnviado: "",
     ReembolsoManual: "",
-    AtualizadoEm: new Date()
+    AtualizadoEm: new Date(),
+    EmailClientePagamentoPendenteEnviado: ""
   };
 }
 
@@ -1321,8 +1553,22 @@ function registerManualSale_(payload) {
   const purchasePrice = parseMoneyNumber_(payload.purchase_price || payload.purchasePrice || payload.base_cost || payload.baseCost || 0);
   const additionalCosts = parseMoneyNumber_(payload.additional_costs || payload.additionalCosts || 0);
   const salePrice = parseMoneyNumber_(payload.sale_price || payload.salePrice || payload.price || 0);
+  const channel = String(payload.channel || payload.sale_channel || payload.saleChannel || "Painel MobilyTech").trim();
+  const notes = String(payload.notes || payload.observations || payload.observacoes || "").trim();
   if (!title || !salePrice) {
     throw new Error("Informe produto e valor de venda para registrar a venda.");
+  }
+  let github = { ok: false, skipped: true, message: "Produto nao informado para desativar no site." };
+  if (productId && String(payload.deactivate_product || payload.deactivateProduct || "true") !== "false") {
+    github = markSoldProductOnGithub_(productId, {
+      saleDate,
+      salePrice,
+      purchasePrice,
+      additionalCosts,
+      configuration,
+      channel,
+      notes
+    });
   }
   const row = Math.max(sheet.getLastRow() + 1, 2);
   sheet.getRange(row, 1, 1, SALES_HEADERS.length).setValues([[
@@ -1336,25 +1582,39 @@ function registerManualSale_(payload) {
     `=G${row}-F${row}`,
     `=IF(G${row}>0,(G${row}-F${row})/G${row},"")`
   ]]);
-
-  let github = { ok: false, skipped: true, message: "Produto nao informado para desativar no site." };
-  if (productId && String(payload.deactivate_product || payload.deactivateProduct || "true") !== "false") {
-    github = markSoldProductOnGithub_(productId, {
-      saleDate,
-      salePrice,
-      purchasePrice,
-      additionalCosts,
-      configuration,
-      channel: payload.channel || payload.sale_channel || "Painel MobilyTech",
-      notes: payload.notes || ""
-    });
-  }
+  const siteStatus = github.ok
+    ? "Produto desativado automaticamente no site"
+    : github.skipped
+      ? "Registro salvo sem baixa automatica"
+      : `Baixa pendente: ${github.message || "configure GitHub no Apps Script"}`;
+  appendManualSaleMetadata_(row, {
+    saleDate,
+    channel,
+    productId,
+    siteStatus,
+    notes
+  });
   return {
     sheet: MOBILYTECH.SALES_SHEET,
     row,
     productId,
+    channel,
+    siteStatus,
     github
   };
+}
+
+function appendManualSaleMetadata_(saleRow, metadata) {
+  const sheet = ensureSheet_(spreadsheet_(), MOBILYTECH.SALES_METADATA_SHEET, SALES_METADATA_HEADERS);
+  sheet.appendRow([
+    saleRow,
+    metadata.saleDate || "",
+    metadata.channel || "",
+    metadata.productId || "",
+    metadata.siteStatus || "",
+    metadata.notes || "",
+    new Date()
+  ]);
 }
 
 function markSoldProductOnGithub_(productId, sale) {
@@ -1756,21 +2016,21 @@ function emailShell_({ preheader, title, intro, blocks = [], ctaLabel, ctaUrl })
     <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light">
   </head>
-  <body style="margin:0;padding:0;background-color:#02070d!important;color:#f5fbff!important">
-  <div style="display:none;max-height:0;overflow:hidden;color:#02070d">${escapeHtml_(preheader || "")}</div>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#02070d" style="background-color:#02070d!important;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#f5fbff!important">
-    <tr><td align="center" bgcolor="#02070d" style="padding:28px 14px;background-color:#02070d!important;color:#f5fbff!important">
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#061b2a" style="max-width:680px;border:1px solid #136064;border-radius:18px;background-color:#061b2a!important;color:#f5fbff!important;overflow:hidden">
-        <tr><td align="center" bgcolor="#082235" style="padding:30px 26px 18px;background-color:#082235!important;color:#f5fbff!important">
-          <img src="${MOBILYTECH.LOGO_URL}" width="96" alt="MobilyTech BR" style="display:block;border-radius:999px;margin:0 auto 16px">
-          <div style="color:#22f0c4!important;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase">MobilyTech BR</div>
-          <h1 style="margin:10px 0 0;color:#ffffff!important;font-size:32px;line-height:1.08">${escapeHtml_(title)}</h1>
-          <p style="margin:14px auto 0;max-width:540px;color:#d7eaf5!important;font-size:16px;line-height:1.55;font-weight:700">${escapeHtml_(intro)}</p>
+  <body style="margin:0;padding:0;background-color:#f4f8fc!important;color:#061120!important">
+  <div style="display:none;max-height:0;overflow:hidden;color:#f4f8fc">${escapeHtml_(preheader || "")}</div>
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f4f8fc" style="background-color:#f4f8fc!important;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;color:#061120!important">
+    <tr><td align="center" bgcolor="#f4f8fc" style="padding:28px 14px;background-color:#f4f8fc!important;color:#061120!important">
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="max-width:680px;border:1px solid #d9e6f0;border-radius:20px;background-color:#ffffff!important;color:#061120!important;overflow:hidden;box-shadow:0 18px 46px rgba(13,39,64,.10)">
+        <tr><td align="center" bgcolor="#eef8ff" style="padding:30px 26px 22px;background-color:#eef8ff!important;color:#061120!important;border-bottom:1px solid #dcebf5">
+          <img src="${MOBILYTECH.LOGO_URL}" width="92" alt="MobilyTech BR" style="display:block;border-radius:999px;margin:0 auto 16px">
+          <div style="color:#008fbb!important;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase">MobilyTech BR</div>
+          <h1 style="margin:10px 0 0;color:#061120!important;font-size:32px;line-height:1.08">${escapeHtml_(title)}</h1>
+          <p style="margin:14px auto 0;max-width:540px;color:#354556!important;font-size:16px;line-height:1.55;font-weight:700">${escapeHtml_(intro)}</p>
         </td></tr>
-        <tr><td bgcolor="#061b2a" style="padding:10px 26px 28px;background-color:#061b2a!important;color:#f5fbff!important">${blocksHtml}${cta}</td></tr>
-        <tr><td bgcolor="#04111d" style="padding:18px 26px;border-top:1px solid #16435a;background-color:#04111d!important;color:#a9bfcc!important;font-size:12px;line-height:1.5;text-align:center">
+        <tr><td bgcolor="#ffffff" style="padding:10px 26px 28px;background-color:#ffffff!important;color:#061120!important">${blocksHtml}${cta}</td></tr>
+        <tr><td bgcolor="#f8fbfe" style="padding:18px 26px;border-top:1px solid #e2edf5;background-color:#f8fbfe!important;color:#657383!important;font-size:12px;line-height:1.5;text-align:center">
           MobilyTech BR - PCs e Hardware<br>
-          Envio para todo o Brasil | Site oficial | OLX | Facebook Marketplace | Mercado Livre
+          Envio para todo o Brasil | Retirada local | Site oficial | OLX | Facebook Marketplace | Mercado Livre
         </td></tr>
       </table>
     </td></tr>
@@ -1782,34 +2042,34 @@ function emailShell_({ preheader, title, intro, blocks = [], ctaLabel, ctaUrl })
 function detailBlock_(title, rows) {
   const rowsHtml = rows
     .filter(([, value]) => value !== undefined && value !== null && String(value) !== "")
-    .map(([label, value]) => `<tr><td style="padding:7px 0;color:#9fc1d1!important;font-size:12px;font-weight:800;text-transform:uppercase">${escapeHtml_(label)}</td><td style="padding:7px 0;color:#f5fbff!important;font-size:14px;font-weight:800;text-align:right">${escapeHtml_(value)}</td></tr>`)
+    .map(([label, value]) => `<tr><td style="padding:8px 0;color:#6a7787!important;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.04em">${escapeHtml_(label)}</td><td style="padding:8px 0;color:#061120!important;font-size:14px;font-weight:900;text-align:right">${escapeHtml_(value)}</td></tr>`)
     .join("");
-  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="color:#f5fbff!important">${rowsHtml}</table></div>`;
+  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="color:#061120!important">${rowsHtml}</table></div>`;
 }
 
 function textBlock_(title, text) {
-  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><p style="margin:0;color:#d7eaf5!important;font-size:14px;line-height:1.6;font-weight:700">${escapeHtml_(text)}</p></div>`;
+  return `<div style="${cardStyle_()}"><h2 style="${blockTitleStyle_()}">${escapeHtml_(title)}</h2><p style="margin:0;color:#354556!important;font-size:14px;line-height:1.6;font-weight:700">${escapeHtml_(text)}</p></div>`;
 }
 
 function buttonStyle_(variant) {
   if (variant === "secondary") {
-    return "display:inline-block;margin:6px 6px;padding:13px 18px;border:1px solid #2b7696;border-radius:10px;color:#dff7ff!important;background-color:#0b2134!important;text-decoration:none;font-weight:900";
+    return "display:inline-block;margin:6px 6px;padding:13px 18px;border:1px solid #a9c5d8;border-radius:12px;color:#102033!important;background-color:#ffffff!important;text-decoration:none;font-weight:900";
   }
-  return "display:inline-block;margin:6px 6px;padding:13px 18px;border-radius:10px;color:#021018!important;background-color:#22f0c4!important;text-decoration:none;font-weight:900";
+  return "display:inline-block;margin:6px 6px;padding:13px 20px;border-radius:12px;color:#021018!important;background-color:#24d8c8!important;text-decoration:none;font-weight:900";
 }
 
 function cardStyle_() {
-  return "margin:14px 0 0;padding:18px;border:1px solid #16435a;border-radius:14px;background-color:#082235!important;color:#f5fbff!important";
+  return "margin:14px 0 0;padding:18px;border:1px solid #dfeaf2;border-radius:16px;background-color:#ffffff!important;color:#061120!important";
 }
 
 function blockTitleStyle_() {
-  return "margin:0 0 12px;color:#22f0c4!important;font-size:13px;letter-spacing:.08em;text-transform:uppercase";
+  return "margin:0 0 12px;color:#008fbb!important;font-size:13px;letter-spacing:.08em;text-transform:uppercase";
 }
 
 function deliverySummary_(order) {
   if (order.ModoEntrega === "pickup") return "Retirada local - Vila Suzana, Sao Paulo, SP";
-  if (order.ModoEntrega === "supplier_shipping") return ["Entrega parceira", order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
-  if (order.ModoEntrega === "mixed_shipping") return ["Envio misto", order.Transportadora, order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
+  if (order.ModoEntrega === "supplier_shipping") return ["Envio direto com rastreio", order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
+  if (order.ModoEntrega === "mixed_shipping") return ["Envio misto: Melhor Envio + envio direto", order.Transportadora, order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
   return [order.Transportadora, order.ServicoFrete, order.Cep ? `CEP ${order.Cep}` : ""].filter(Boolean).join(" - ");
 }
 
@@ -1831,7 +2091,7 @@ function spreadsheet_() {
 }
 
 function ordersSheet_() {
-  return spreadsheet_().getSheetByName(MOBILYTECH.ORDERS_SHEET);
+  return ensureSheet_(spreadsheet_(), MOBILYTECH.ORDERS_SHEET, ORDER_HEADERS);
 }
 
 function ensureSheet_(ss, name, headers) {
@@ -1992,16 +2252,55 @@ function escapeHtml_(value) {
     .replace(/"/g, "&quot;");
 }
 
-function sendTestConfirmationEmail() {
-  sendCustomerConfirmation_({
+function sampleTransactionalOrder_() {
+  return {
+    PedidoID: "TESTE-2026-0001",
     ClienteNome: "Julian",
     ClienteEmail: MOBILYTECH.SELLER_EMAIL,
     Produto: "PC Gamer MobilyTech BR",
     Opcionais: "SSD 240GB",
-    ValorPago: "950",
+    ValorPago: "950,00",
     ModoEntrega: "shipping",
     Transportadora: "Correios",
     ServicoFrete: "SEDEX",
-    Cep: "05641-090"
+    PrecoFrete: "39,90",
+    Cep: "05641-090",
+    Endereco: "Vila Suzana, Sao Paulo, SP",
+    ClienteTelefone: "+55 (11) 95480-1967",
+    Plataforma: "Site MobilyTech BR",
+    CodigoRastreio: "AA123456789BR",
+    LinkRastreio: "https://rastreamento.correios.com.br/app/index.php",
+    LinkConfirmarEtiqueta: MOBILYTECH.SITE_URL,
+    FornecedorItens: "Case SSD M.2 NVMe USB-C 10Gbps | Canal de origem: Mercado Livre | Origem: Brasil | Frete cobrado do cliente: R$ 29.90",
+    ObservacoesOperacao: "Teste de envio direto: comprar no canal de origem, acompanhar rastreio e atualizar o pedido."
+  };
+}
+
+function sampleTransactionalSettings_() {
+  return {
+    sellerEmail: MOBILYTECH.SELLER_EMAIL
+  };
+}
+
+function sendTestConfirmationEmail() {
+  sendCustomerConfirmation_(sampleTransactionalOrder_(), {
+    to: MOBILYTECH.SELLER_EMAIL,
+    subjectPrefix: "[TESTE CLIENTE] "
   });
+}
+
+function sendTestTransactionalEmails() {
+  const order = sampleTransactionalOrder_();
+  const settings = sampleTransactionalSettings_();
+  sendCustomerPaymentPending_({ ...order, Status: "PENDENTE" }, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE CLIENTE] " });
+  sendCustomerConfirmation_(order, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE CLIENTE] " });
+  sendCustomerPaymentApproved_(order, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE CLIENTE] " });
+  sendCustomerTracking_(order, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE CLIENTE] " });
+  sendCustomerPickup_({ ...order, ModoEntrega: "pickup" }, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE CLIENTE] " });
+  sendCustomerDelivered_(order, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE CLIENTE] " });
+  sendSellerSaleAlert_(order, settings, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE VENDEDOR] " });
+  sendSellerManualFulfillmentAlert_(order, settings, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE VENDEDOR] " });
+  sendSellerTrackingAlert_(order, settings, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE VENDEDOR] " });
+  sendSellerDeliveredAlert_(order, settings, { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE VENDEDOR] " });
+  sendSellerOperationIssueAlert_(order, settings, "Teste de erro/bloqueio de pagamento ou frete.", { to: MOBILYTECH.SELLER_EMAIL, subjectPrefix: "[TESTE VENDEDOR] " });
 }

@@ -1,17 +1,19 @@
 # MobilyTech BR - estado atual do projeto
 
-Atualizado em: 2026-06-12
+Atualizado em: 2026-06-16
 
 Este arquivo e a fonte compacta de verdade para continuar o projeto em uma conversa nova sem carregar todo o historico antigo. Antes de mexer no site, leia este arquivo, depois confira os arquivos reais do repo.
+
+Nota de continuidade 2026-06-16: o handoff oficial mais recente e `docs/HANDOFF_MOBILYTECHBR_2026-06-16.md`. A direcao visual atual aprovada para continuidade e a fase 2 clara inspirada em iBUYPOWER/KaBuM, gerada por `scripts/build_phase2_ibuy_style.py`. As referencias antigas de tema dark abaixo sao historicas do site original e nao devem substituir a fase 2 clara sem pedido explicito do usuario.
 
 ## Identidade e URLs
 
 - Nome correto do negocio: MobilyTech BR.
-- Titulo usado no site original: MobilyTech | PCs e Hardware.
-- Site original funcional e referencia visual: https://mobilytechbr.vercel.app
-- Dominio Wix atual verificado por HTTP em 2026-06-12: https://www.mobilytech.com.br
-- O site Vercel respondeu 200 com titulo "MobilyTech | PCs e Hardware".
-- O dominio Wix respondeu 200 com titulo "Inicio | MobilyTech BR", mas a migracao visual/funcional ainda deve ser tratada como incompleta ate revisao final.
+- Titulo atual da fase 2: MobilyTech BR | Loja gamer.
+- Site Vercel funcional e referencia visual atual: https://mobilytechbr.vercel.app
+- Dominio oficial desejado para cliente: https://www.mobilytech.com.br
+- Site Wix premium/canonico: MobilyTech BR, site ID 85e985c5-2904-452f-85e2-a98f6d3b1cac.
+- O dominio oficial continua dependente da ponte Wix/Vercel ou de configuracao segura de dominio/headless antes de ser tratado como substituto completo do Vercel.
 
 ## Fonte tecnica atual
 
@@ -82,14 +84,14 @@ Este arquivo e a fonte compacta de verdade para continuar o projeto em uma conve
 
 ## Identidade visual
 
-- Estilo: dark tech, neon, glassmorphism, grid discreto, cards com bordas azul/verde, brilho controlado.
-- Fonte principal do site original: Nunito.
-- Paleta principal observada:
+- Direcao atual: fase 2 clara inspirada em iBUYPOWER/KaBuM, com visual de loja gamer brasileira, catalogo claro, destaque para ofertas, produtos e servicos.
+- Fonte/visual devem seguir o que `scripts/build_phase2_ibuy_style.py` gera atualmente, validado no Vercel/local.
+- Historico do site original dark, mantido aqui apenas como referencia antiga:
   - Fundo escuro: `#03070d`, `#06111d`, `#08131f`, `#0a1723`.
   - Cards/bordas: `#15324a`, azul/verde neon.
   - Texto: `#f7fbff`, `#aec6d4`.
   - Destaques: `#22f0c4`, `#04b7ff`, `#ffc928`.
-- O usuario rejeita visual generico de template. Para Wix, a prioridade e parecer uma loja dark tech da MobilyTech BR, mesmo que nao seja 100% pixel-perfect.
+- O usuario rejeita visual generico de template. Para Wix/headless, a prioridade e preservar a fase 2 clara atual com identidade MobilyTech BR e paridade funcional com o Vercel.
 - Nao adicionar frases explicativas no site so porque apareceram em conversa. Texto novo so quando o usuario pedir explicitamente para escrever no site.
 
 ## Produtos ativos no site original
@@ -183,4 +185,3 @@ Prioridade 4: manter ou recriar as automacoes:
 Comece dizendo:
 
 "Leia `MOBILYTECH_STATE.md` no repo `C:\Users\MF\Documents\GitHub\mobilytechbr` antes de mexer. O site Vercel e a referencia funcional/visual. O Wix e uma migracao em andamento. Nao reescreva o projeto nem perca as automacoes."
-

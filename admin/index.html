@@ -246,6 +246,31 @@
         border-bottom: 1px solid var(--line);
       }
       .editor-toolbar p { margin: 4px 0 0; color: var(--muted); font-weight: 800; }
+      .margin-tools {
+        padding: 18px 22px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(130px, 1fr));
+        gap: 12px;
+        border-bottom: 1px solid var(--line);
+        background: #f7fbff;
+      }
+      .margin-tools label {
+        display: grid;
+        gap: 6px;
+        color: var(--muted);
+        font-size: .76rem;
+        font-weight: 900;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+      }
+      .margin-tools input {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px 14px;
+        font: inherit;
+        font-weight: 900;
+        background: #fff;
+      }
       .table-wrap { overflow-x: auto; }
       .finds-table {
         width: 100%;
@@ -441,6 +466,7 @@
         .section-head h2 { font-size: 28px; }
         .btn { width: 100%; min-height: 46px; }
         .editor-toolbar { align-items: flex-start; flex-direction: column; }
+        .margin-tools { grid-template-columns: 1fr; }
         .finds-table { min-width: 980px; }
         footer { flex-direction: column; align-items: flex-start; }
       }
@@ -590,6 +616,18 @@
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
+            </div>
+            <div class="margin-tools" aria-label="Margens padrao de MobilyTech Finds">
+              <label>Margem padrao (%)
+                <input id="defaultFindMargin" inputmode="decimal" value="25">
+              </label>
+              <label>Margem manual minima (%)
+                <input id="manualFindMargin" inputmode="decimal" value="35">
+              </label>
+              <label>Frete padrao cliente (R$)
+                <input id="defaultFindShipping" inputmode="decimal" value="29,90">
+              </label>
+              <button class="btn btn-red" type="button" id="applyFindMargins">Aplicar aos vendidos</button>
             </div>
             <div class="table-wrap">
               <table class="finds-table" aria-label="Editor local de MobilyTech Finds">
@@ -819,6 +857,12 @@
           if (Number.isFinite(item.salePrice) && Number.isFinite(item.supplierCost) && item.salePrice > 0) {
             item.marginPercent = `${(((item.salePrice - item.supplierCost) / item.salePrice) * 100).toFixed(1)}%`;
           }
+        } else if (field === "marginPercent") {
+          const percent = parsePercent(value);
+          item.marginPercent = Number.isFinite(percent) ? `${percent.toFixed(1)}%` : String(value || "");
+          if (Number.isFinite(percent) && Number.isFinite(Number(item.supplierCost)) && Number(item.supplierCost) > 0 && percent < 99) {
+            item.salePrice = Math.ceil((Number(item.supplierCost) / (1 - percent / 100)) * 100) / 100;
+          }
         } else if (field.startsWith("link:")) {
           upsertAffiliateLink(item, field.split(":")[1], value);
         } else item[field] = value;
@@ -856,7 +900,7 @@
           shippingCustomerPrice: 0,
           supplierRegion: "BR",
           customerPaysShipping: true,
-          marginPercent: "",
+          marginPercent: "35.0%",
           productImage: "",
           whySell: "Descreva em uma frase por que este produto combina com setups MobilyTech.",
           publicPartnerNote: "Produto selecionado para complementar setups MobilyTech.",
@@ -876,6 +920,57 @@
       function moneyInput(value) {
         const number = Number(value || 0);
         return Number.isFinite(number) && number > 0 ? number.toFixed(2).replace(".", ",") : "";
+      }
+
+      function parsePercent(value) {
+        if (value === null || value === undefined || value === "") return NaN;
+        const number = Number(String(value).replace("%", "").replace(",", "."));
+        return Number.isFinite(number) ? number : NaN;
+      }
+
+      function pricingDefaults() {
+        const defaults = findsState?.defaults || {};
+        return {
+          defaultMargin: parsePercent($("#defaultFindMargin")?.value) || Number(defaults.dropshippingDefaultMarginPercent || 25),
+          manualMargin: parsePercent($("#manualFindMargin")?.value) || Number(defaults.manualSupplierMinimumMarginPercent || 35),
+          shipping: moneyNumber($("#defaultFindShipping")?.value) || 0
+        };
+      }
+
+      function hydrateMarginControls() {
+        const defaults = findsState?.defaults || {};
+        if ($("#defaultFindMargin")) $("#defaultFindMargin").value = String(defaults.dropshippingDefaultMarginPercent || 25).replace(".", ",");
+        if ($("#manualFindMargin")) $("#manualFindMargin").value = String(defaults.manualSupplierMinimumMarginPercent || 35).replace(".", ",");
+        if ($("#defaultFindShipping")) $("#defaultFindShipping").value = moneyInput(defaults.defaultDropshippingShippingPrice || 29.9) || "29,90";
+      }
+
+      function applyFindMarginDefaults() {
+        if (!findsState) return;
+        const defaults = pricingDefaults();
+        findsState.defaults = {
+          ...(findsState.defaults || {}),
+          dropshippingDefaultMarginPercent: defaults.defaultMargin,
+          manualSupplierMinimumMarginPercent: defaults.manualMargin,
+          defaultDropshippingShippingPrice: defaults.shipping,
+          customerPaysDropshippingShipping: true
+        };
+        (findsState.finalists || []).forEach((item) => {
+          const isSoldByMobily = item.publicGroup === "vendidos" || item.storeCheckout === true || item.purchaseMode === "manual-dropshipping";
+          if (!isSoldByMobily) return;
+          const cost = Number(item.supplierCost || item.costPrice || 0);
+          const percent = item.purchaseMode === "manual-dropshipping" || item.manualFulfillment ? defaults.manualMargin : defaults.defaultMargin;
+          item.marginPercent = `${percent.toFixed(1)}%`;
+          if (Number.isFinite(cost) && cost > 0 && percent < 99) item.salePrice = Math.ceil((cost / (1 - percent / 100)) * 100) / 100;
+          item.customerPaysShipping = true;
+          item.shippingCustomerPrice = moneyNumber(item.shippingCustomerPrice ?? item.shipping?.customerPrice) || defaults.shipping;
+          item.shipping = item.shipping && typeof item.shipping === "object" ? item.shipping : {};
+          item.shipping.mode = "supplier-fixed";
+          item.shipping.originMode = "supplier";
+          item.shipping.customerPays = true;
+          item.shipping.customerPrice = item.shippingCustomerPrice;
+          item.shipping.deliveryTime = item.shipping.deliveryTime || (item.supplierRegion === "INTL" ? 18 : 7);
+        });
+        renderFindsEditor(findsState.finalists || []);
       }
 
       function specsText(product) {
@@ -973,7 +1068,8 @@
         if (!sale || !cost) return "-";
         const profit = sale - cost;
         const percent = sale > 0 ? (profit / sale) * 100 : 0;
-        return `R$ ${moneyInput(profit)} / ${percent.toFixed(1)}%`;
+        const freight = shipping > 0 ? ` | frete cliente R$ ${moneyInput(shipping)}` : "";
+        return `lucro R$ ${moneyInput(profit)} / ${percent.toFixed(1)}%${freight}`;
       }
 
       function renderFindsEditor(finds) {
@@ -1041,6 +1137,7 @@
         $("#activeSwaps").textContent = countActive(Array.isArray(swaps) ? swaps : []);
         $("#activeFinds").textContent = countActive(finds);
         $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
+        hydrateMarginControls();
         renderFindsEditor(finds);
         renderSaleProducts(productList);
         syncSaleProductFields();
@@ -1051,6 +1148,7 @@
         downloadJson("phase2-finalists-revisado-mobilytech.json", findsState);
       });
       $("#addFindItem")?.addEventListener("click", addFindItem);
+      $("#applyFindMargins")?.addEventListener("click", applyFindMarginDefaults);
 
       $("#saleDate") && ($("#saleDate").value = new Date().toISOString().slice(0, 10));
       $("#adminWriteToken") && ($("#adminWriteToken").value = localStorage.getItem("mobilytechAdminWriteToken") || "");

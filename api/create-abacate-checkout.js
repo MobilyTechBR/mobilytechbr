@@ -125,6 +125,41 @@ function paymentMethods() {
   return methods.length ? [...new Set(methods)] : ["PIX", "CARD"];
 }
 
+function formBody(fields) {
+  const params = new URLSearchParams();
+  Object.entries(fields).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && String(value) !== "") {
+      params.set(key, String(value));
+    }
+  });
+  return params;
+}
+
+async function notifyPendingOrder(fields) {
+  const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT || "";
+  if (!endpoint) return { sent: false, skipped: true };
+
+  const controller = new AbortController();
+  const timeoutMs = Math.max(500, Number(process.env.ORDER_NOTIFICATION_TIMEOUT_MS || 2500));
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formBody(fields).toString(),
+      signal: controller.signal
+    });
+    return { sent: response.ok, status: response.status };
+  } catch (error) {
+    return { sent: false, error: error.name === "AbortError" ? "timeout" : (error.message || "pending notification failed") };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function loadProducts() {
   const products = JSON.parse(await fs.readFile(PRODUCTS_FILE, "utf8"));
   return Array.isArray(products) ? products : [];
@@ -234,9 +269,13 @@ function normalizeCheckoutItems(products, globalAddons, globalSwaps, payload) {
       throw error;
     }
 
+    const rawQuantity = Number(item?.quantity || item?.qty || 1);
+    const quantity = Number.isFinite(rawQuantity) ? Math.max(1, Math.floor(rawQuantity)) : 1;
+
     return {
       product,
       unitPrice,
+      quantity,
       addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons),
       swaps: normalizeSelectedSwaps(product, item.selectedSwaps, globalSwaps)
     };
@@ -280,7 +319,7 @@ function totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion = {
   const productsTotal = checkoutItems.reduce((sum, item) => {
     const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
     const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
-    return sum + item.unitPrice + addonsTotal + swapsTotal;
+    return sum + ((item.unitPrice + addonsTotal + swapsTotal) * item.quantity);
   }, 0);
   return Math.max(0, productsTotal - Number(promotion.discount || 0)) + (normalizedShipping ? normalizedShipping.price : 0);
 }
@@ -354,13 +393,15 @@ function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdju
         name: item.product.title || "PC MobilyTech BR",
         description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription, discountDescription].filter(Boolean).join(" | ") || item.product.title || "PC MobilyTech BR",
         price: productPrice,
+        quantity: item.quantity,
         imageUrl: productImage
       },
       ...item.addons.map((addon) => ({
         externalId: `mobilytech-${runId}-addon-${slug(item.product.id)}-${slug(addon.category)}-${slug(addon.label)}-${toCents(addon.price)}`,
         name: `${addon.categoryLabel}: ${addon.label}`,
         description: `${item.product.title} - ${addon.categoryLabel}: ${addon.label}`,
-        price: addon.price
+        price: addon.price,
+        quantity: item.quantity
       }))
     ];
   });
@@ -413,7 +454,7 @@ module.exports = async function createAbacateCheckout(request, response) {
     const [products, globalAddons, globalSwaps] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps()]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
     validateUniquePhysicalCheckoutItems(checkoutItems);
-    const checkoutProducts = checkoutItems.map((item) => item.product);
+    const checkoutProducts = checkoutItems.map((item) => ({ ...item.product, quantity: item.quantity }));
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
     const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
@@ -436,7 +477,7 @@ module.exports = async function createAbacateCheckout(request, response) {
     const externalId = `mobilytech-checkout-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     const checkoutPayload = {
       externalId,
-      items: productIds.map((productId) => ({ id: productId, quantity: 1 })),
+      items: lines.map((line, index) => ({ id: productIds[index], quantity: line.quantity || 1 })),
       methods: paymentMethods(),
       card: {
         maxInstallments: Number(process.env.ABACATE_PAY_MAX_INSTALLMENTS || 12)
@@ -445,8 +486,10 @@ module.exports = async function createAbacateCheckout(request, response) {
       completionUrl: `${origin}/pagamento-sucesso.html`,
       metadata: {
         checkoutType: checkoutItems.length > 1 ? "cart" : "single_product",
+        orderReference: externalId,
         productId: checkoutItems[0].product.id,
         productIds: checkoutItems.map((item) => item.product.id).join("; "),
+        productQuantities: checkoutItems.map((item) => `${item.product.id}:${item.quantity}`).join("; "),
         productTitles: checkoutItems.map((item) => item.product.title).join("; "),
         selectedAddons: checkoutItems.flatMap((item) => item.addons.map((addon) => `${item.product.id}:${addon.category}:${addon.label}`)).join("; "),
         selectedSwaps: checkoutItems.flatMap((item) => item.swaps.map((swap) => `${item.product.id}:${swap.target}:${swap.label}`)).join("; "),
@@ -487,13 +530,61 @@ module.exports = async function createAbacateCheckout(request, response) {
       return;
     }
 
+    const pendingCustomer = normalizedShipping?.customer || {};
+    const pendingNotification = await notifyPendingOrder({
+      _subject: "Pedido recebido - pagamento pendente - MobilyTechBR",
+      order_status: "PENDENTE",
+      platform: "Abacate Pay",
+      email: pendingCustomer.email || "mobilytechbr@gmail.com",
+      mensagem: [
+        "Pedido recebido no checkout Abacate Pay.",
+        "",
+        `Pedido: ${externalId}`,
+        `Checkout Abacate Pay: ${checkout.id || ""}`,
+        `Produto: ${checkoutPayload.metadata.productTitles}`,
+        `Valor pendente: R$ ${toMoney(finalCheckoutTotal).toFixed(2)}`,
+        "",
+        "O cliente deve receber confirmacao automatica quando o pagamento for aprovado."
+      ].join("\n"),
+      pagamento: externalId,
+      payment_id: externalId,
+      provider_checkout_id: checkout.id || "",
+      produto: checkoutPayload.metadata.productTitles,
+      product_ids: checkoutPayload.metadata.productIds,
+      product_title: checkoutPayload.metadata.productTitles,
+      selected_swaps: checkoutPayload.metadata.selectedSwaps,
+      selected_addons: checkoutPayload.metadata.selectedAddons,
+      amount_paid: String(toMoney(finalCheckoutTotal)),
+      customer_name: pendingCustomer.name || "",
+      customer_email: pendingCustomer.email || "",
+      customer_phone: pendingCustomer.phone || "",
+      delivery_mode: manualFulfillmentRequired ? (normalizedShipping?.provider === "mixed" ? "mixed_shipping" : "supplier_shipping") : (normalizedShipping ? "shipping" : "pickup"),
+      shipping_requested: normalizedShipping ? "true" : "false",
+      shipping_provider: checkoutPayload.metadata.shippingProvider,
+      shipping_service_id: checkoutPayload.metadata.shippingServiceId,
+      shipping_service_name: checkoutPayload.metadata.shippingServiceName,
+      shipping_carrier: checkoutPayload.metadata.shippingCarrier,
+      shipping_price: checkoutPayload.metadata.shippingPrice,
+      shipping_postal_code: checkoutPayload.metadata.shippingPostalCode,
+      shipping_customer: checkoutPayload.metadata.shippingCustomer,
+      shipping_physical_service_id: checkoutPayload.metadata.shippingPhysicalServiceId,
+      shipping_physical_carrier: checkoutPayload.metadata.shippingPhysicalCarrier,
+      shipping_physical_service_name: checkoutPayload.metadata.shippingPhysicalServiceName,
+      shipping_physical_price: checkoutPayload.metadata.shippingPhysicalPrice,
+      shipping_supplier_price: checkoutPayload.metadata.shippingSupplierPrice,
+      manual_fulfillment_required: checkoutPayload.metadata.manualFulfillmentRequired,
+      manual_fulfillment_product_ids: checkoutPayload.metadata.manualFulfillmentProductIds,
+      manual_fulfillment_items: checkoutPayload.metadata.manualFulfillmentItems
+    });
+
     sendJson(response, 200, {
       id: checkout.id,
       checkout_url: checkoutUrl,
       external_id: externalId,
       amount_brl: finalCheckoutTotal,
       base_amount_brl: baseCheckoutTotal,
-      fee_adjustment_brl: abacateFeeAdjustment
+      fee_adjustment_brl: abacateFeeAdjustment,
+      pending_notification: pendingNotification
     });
   } catch (error) {
     sendJson(response, error.statusCode || 500, {

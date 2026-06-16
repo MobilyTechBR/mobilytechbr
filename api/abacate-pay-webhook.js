@@ -88,6 +88,7 @@ async function notifyOrder(request, body) {
   const metadata = parseMetadata(body);
   const shippingCustomer = parseCustomer(metadata);
   const paymentId = String(readPath(body, ["data.id", "id", "data.billing.id", "billing.id", "data.checkout.id", "checkout.id"]) || metadata.externalId || "");
+  const orderReference = metadata.orderReference || paymentId;
   const status = String(readPath(body, ["data.status", "status", "data.billing.status", "billing.status", "data.checkout.status", "checkout.status"]) || "approved");
   const amountPaid = readPath(body, ["data.amount", "amount", "data.totalAmount", "totalAmount", "data.billing.amount", "billing.amount"]) || "";
   const shippingRequested = metadata.shippingRequested === "true";
@@ -123,7 +124,8 @@ async function notifyOrder(request, body) {
   const lines = [
     "Novo pedido pago no Abacate Pay.",
     "",
-    `Pagamento: ${paymentId || "Nao informado"}`,
+    `Pedido: ${orderReference || "Nao informado"}`,
+    `Pagamento Abacate Pay: ${paymentId || "Nao informado"}`,
     `Produto: ${metadata.productTitles || ""}`,
     `Trocas: ${metadata.selectedSwaps || "Nenhuma"}`,
     `Opcionais: ${metadata.selectedAddons || "Nenhum"}`,
@@ -142,10 +144,10 @@ async function notifyOrder(request, body) {
     "",
     manualFulfillmentRequired
       ? [
-        "ACAO MANUAL NECESSARIA: pedido com item enviado por fornecedor parceiro.",
+        "ACAO MANUAL NECESSARIA: pedido com item de envio direto MobilyTech Finds.",
         "Nao compre etiqueta Melhor Envio para estes itens.",
         manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
-        "Use o link/fornecedor acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
+        "Use o link/canal de origem acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
       ].join("\n")
       : (shippingRequested
         ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
@@ -158,8 +160,9 @@ async function notifyOrder(request, body) {
     platform: "Abacate Pay",
     email: shippingCustomer.email || "mobilytechbr@gmail.com",
     mensagem: lines.join("\n"),
-    pagamento: paymentId,
-    payment_id: paymentId,
+    pagamento: orderReference,
+    payment_id: orderReference,
+    provider_payment_id: paymentId,
     produto: metadata.productTitles || "",
     product_ids: metadata.productIds || "",
     product_title: metadata.productTitles || "",

@@ -128,6 +128,9 @@ def public_finds_payload(finalists, products=None):
         if product.get("active") is False or product.get("category") != "dropshipping":
             continue
         finalist = finalists_by_product_id.get(product.get("id"), {})
+        finalist_mode = finalist.get("purchaseMode")
+        if finalist_mode == "affiliate" or finalist.get("publicGroup") == "recomendacoes":
+            continue
         source_notes = product.get("sourceNotes") or {}
         specs_data = product.get("specs") or {}
         clean_item = {
@@ -137,17 +140,17 @@ def public_finds_payload(finalists, products=None):
             "niche": finalist.get("niche") or specs_data.get("category") or "Setup e tecnologia",
             "whySell": finalist.get("whySell")
             or product.get("description")
-            or "Produto selecionado para complementar seu setup com compra pelo site e atendimento MobilyTech.",
+            or "Produto selecionado para complementar seu setup com atendimento MobilyTech.",
             "confidence": finalist.get("confidence") or product.get("badge") or "Curadoria MobilyTech",
             "platform": product.get("supplierPlatform") or finalist.get("platform") or "MobilyTech BR",
             "currentPrice": source_notes.get("currentPrice") or finalist.get("currentPrice") or "",
-            "productImage": product.get("image") or finalist.get("productImage") or finalist.get("selectedCreative"),
-            "selectedCreative": finalist.get("selectedCreative") or product.get("image"),
-            "salePrice": product.get("price") or finalist.get("salePrice"),
-            "shipping": product.get("shipping") or finalist.get("shipping"),
-            "shippingCustomerPrice": (product.get("shipping") or {}).get("customerPrice")
-            or finalist.get("shippingCustomerPrice")
-            or (finalist.get("shipping") or {}).get("customerPrice"),
+            "productImage": finalist.get("productImage") or product.get("image") or finalist.get("selectedCreative"),
+            "selectedCreative": finalist.get("selectedCreative") or finalist.get("productImage") or product.get("image"),
+            "salePrice": finalist.get("salePrice") or product.get("price"),
+            "shipping": finalist.get("shipping") or product.get("shipping"),
+            "shippingCustomerPrice": finalist.get("shippingCustomerPrice")
+            or (finalist.get("shipping") or {}).get("customerPrice")
+            or (product.get("shipping") or {}).get("customerPrice"),
             "marketplace": {
                 "name": "MobilyTech BR",
                 "logo": "assets/mobilytech-logo.png",
@@ -156,7 +159,7 @@ def public_finds_payload(finalists, products=None):
             },
             "affiliateReady": True,
             "affiliateButton": "Adicionar ao carrinho",
-            "publicPartnerNote": "Produto selecionado para complementar setups MobilyTech, com compra pelo site e atendimento humano.",
+            "publicPartnerNote": "Produto selecionado para complementar setups MobilyTech com atendimento humano.",
             "storeCheckout": True,
             "publicGroup": "vendidos",
         }
@@ -361,7 +364,7 @@ def home_main(products, finalists, prefix: str) -> str:
       <section class="trust-row" aria-label="Diferenciais MobilyTech">
         <article><span>&#128737;</span><strong>Pecas revisadas</strong><small>e testadas antes da venda</small></article>
         <article><span>&#9989;</span><strong>Garantia real</strong><small>14 dias para defeitos</small></article>
-        <article><span>&#128666;</span><strong>Envio para o Brasil</strong><small>frete calculado no checkout</small></article>
+        <article><span>&#128666;</span><strong>Envio para todo o Brasil</strong><small>frete calculado no checkout</small></article>
         <article><span>&#128172;</span><strong>Suporte humano</strong><small>pre e pos-compra</small></article>
       </section>
       <section class="section-head" id="ofertas">
@@ -684,7 +687,7 @@ def cart_drawer(prefix: str) -> str:
       <div class="drawer-total"><span>Total</span><strong id="cartTotal">R$ 0,00</strong></div>
       <div class="coupon-box">
         <label>Cupom promocional<input id="couponCode" autocomplete="off" placeholder="Ex.: MOBMEN"></label>
-        <small id="couponFeedback">Cupons valem para produtos elegiveis; frete e envio parceiro ficam separados.</small>
+        <small id="couponFeedback">Cupons valem para produtos elegiveis; frete e envio direto ficam separados.</small>
       </div>
       <details class="shipping-box">
         <summary>Calcular frete</summary>
@@ -763,7 +766,7 @@ def css() -> str:
     .account-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(13,23,38,.08);padding:28px;min-width:0}
     .account-card-main{background:linear-gradient(135deg,#111 0%,#1c2633 55%,#154f78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.login-preview{display:grid;gap:10px;margin-top:16px}.login-preview button{height:48px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#2d3440;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer}.login-preview span{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#f0f4f8;color:#111}
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
-    .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);transition:.25s transform;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:linear-gradient(90deg,#fff159,#ffe066 48%,#42c7f4);color:#1d2730}.checkout-abacate{background:linear-gradient(90deg,#d7ff5c,#1ce2a8 46%,#0b8f69);color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:linear-gradient(90deg,#fff159,#ffe066 48%,#42c7f4);color:#1d2730}.checkout-abacate{background:linear-gradient(90deg,#d7ff5c,#1ce2a8 46%,#0b8f69);color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
     @media (max-width:1100px){
       .nav-shell{grid-template-columns:auto 1fr auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/4;order:3;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.icon-action{display:none}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid{grid-template-columns:1fr}
@@ -832,11 +835,11 @@ def css() -> str:
       .find-media img{max-height:118px;max-width:84%}
       .find-card{padding:14px;border-radius:16px;min-height:352px}
       .find-card h3{font-size:13.5px;line-height:1.25;min-height:34px}
-      .find-card p{font-size:12px;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+      .find-card p{font-size:12px;line-height:1.35;overflow-wrap:anywhere}
       .find-price{font-size:16px}
       .find-meta{font-size:10px}
-      .market-btn{min-height:38px;font-size:10px;width:100%;padding:0 8px}
-      .market-btn img{height:23px;max-width:58px}
+      .market-btn{min-height:40px;font-size:10px;width:100%;padding:0 8px}
+      .market-btn img{height:28px;max-width:72px}
       .reviews-head{display:flex;text-align:center;align-items:center}
       .reviews-head div{justify-self:auto;text-align:center}
       .reviews-grid{grid-template-columns:1fr}
@@ -1072,7 +1075,8 @@ def js(products, finalists, addons, swaps) -> str:
       const extras = isConfigurablePc(product)
         ? [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].reduce((sum, option) => sum + Number(option.price || 0), 0)
         : 0;
-      return Number(product.price || 0) + extras;
+      const quantity = Math.max(1, Number(item.quantity || 1));
+      return (Number(product.price || 0) + extras) * quantity;
     }}
     function cartProducts() {{ return cart.map((item) => productById(item.productId)).filter(Boolean); }}
     function isSupplierProduct(product) {{
@@ -1125,7 +1129,7 @@ def js(products, finalists, addons, swaps) -> str:
       if (!feedback) return;
       const typed = ($("#couponCode")?.value || "").trim();
       if (!typed) {{
-        feedback.textContent = "Cupons valem para produtos elegiveis; frete e envio parceiro ficam separados.";
+        feedback.textContent = "Cupons valem para produtos elegiveis; frete e envio direto ficam separados.";
         return;
       }}
       const promo = activePromotion();
@@ -1145,7 +1149,7 @@ def js(products, finalists, addons, swaps) -> str:
       const node = $(target);
       if (!node) return;
       const search = norm($("#siteSearch")?.value || "");
-let products = DATA.products.filter((item) => item.active !== false && !["finds", "affiliate"].includes(item.category));
+let products = DATA.products.filter((item) => item.active !== false && !["finds", "affiliate", "dropshipping"].includes(item.category));
       if (filter === "pc") products = products.filter((item) => item.category === "pc");
       if (filter === "hardware") products = products.filter((item) => item.category !== "pc");
       if (target === "#homePcGrid") products = products.filter((item) => item.category === "pc");
@@ -1228,8 +1232,14 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     }}
     function addBaseProduct(productId) {{
       if (!canAddCartProduct(productId)) return;
+      const product = productById(productId);
+      const existing = cart.find((item) => String(item.productId) === String(productId));
       selectedShipping = null;
-      cart.push({{ productId, selectedAddons: [], selectedSwaps: [] }});
+      if (existing && isSupplierProduct(product)) {{
+        existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
+      }} else {{
+        cart.push({{ productId, selectedAddons: [], selectedSwaps: [], quantity: 1 }});
+      }}
       saveCart();
       openCart();
       showToast("Produto adicionado ao carrinho.");
@@ -1252,7 +1262,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         price: Number(input.dataset.price || 0)
       }}));
       selectedShipping = null;
-      cart.push({{ productId, selectedAddons, selectedSwaps }});
+      cart.push({{ productId, selectedAddons, selectedSwaps, quantity: 1 }});
       saveCart();
       $("#productModal")?.close();
       openCart();
@@ -1308,7 +1318,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       return true;
     }}
     function renderCart() {{
-      const count = cart.length;
+      const count = cart.reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
       $("#cartCount") && ($("#cartCount").textContent = String(count));
       const discount = couponDiscount();
       const shippingPrice = selectedShipping?.price || 0;
@@ -1325,9 +1335,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         const product = productById(item.productId);
         if (!product) return "";
         const options = [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].map((o) => o.label).join(" + ");
+        const quantity = Math.max(1, Number(item.quantity || 1));
+        const quantityLabel = quantity > 1 ? `Qtd. ${{quantity}}` : "";
         return `<article class="drawer-item">
           <img src="${{asset(product.cutout || product.image)}}" alt="">
-          <div><h3>${{product.title}}</h3><small>${{options || "Sem opcionais"}}</small><strong>${{money(productTotal(item))}}</strong></div>
+          <div><h3>${{product.title}}</h3><small>${{[options || "Sem opcionais", quantityLabel].filter(Boolean).join(" - ")}}</small><strong>${{money(productTotal(item))}}</strong></div>
           <button class="close-drawer" type="button" data-remove="${{index}}" aria-label="Remover">&times;</button>
         </article>`;
       }}).join("");
@@ -1350,11 +1362,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         return;
       }}
       if (state.supplier && !state.physical) {{
-        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para MobilyTech Finds</strong><small>O produto sai do fornecedor parceiro. Informe o CEP e selecione o frete do fornecedor; retirada local nao se aplica.</small></span></div>';
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para MobilyTech Finds</strong><small>Informe o CEP e selecione o envio direto com rastreio; retirada local nao se aplica.</small></span></div>';
         return;
       }}
       if (state.supplier && state.physical) {{
-        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos usam Melhor Envio ou retirada; MobilyTech Finds usa frete do fornecedor parceiro no mesmo calculo.</small></span></div>';
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos usam Melhor Envio ou retirada; MobilyTech Finds usa envio direto no mesmo calculo.</small></span></div>';
         return;
       }}
       node.innerHTML = `<button class="shipping-option ${{selectedShipping ? "" : "is-selected"}}" type="button" id="localPickupOption">

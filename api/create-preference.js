@@ -260,9 +260,13 @@ function normalizeCheckoutItems(products, globalAddons, globalSwaps, payload) {
       throw error;
     }
 
+    const rawQuantity = Number(item?.quantity || item?.qty || 1);
+    const quantity = Number.isFinite(rawQuantity) ? Math.max(1, Math.floor(rawQuantity)) : 1;
+
     return {
       product,
       unitPrice,
+      quantity,
       addons: normalizeSelectedAddons(product, item.selectedAddons, globalAddons),
       swaps: normalizeSelectedSwaps(product, item.selectedSwaps, globalSwaps)
     };
@@ -287,6 +291,41 @@ function splitPhone(value = "") {
     };
   }
   return digits ? { number: digits } : undefined;
+}
+
+function formBody(fields) {
+  const params = new URLSearchParams();
+  Object.entries(fields).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && String(value) !== "") {
+      params.set(key, String(value));
+    }
+  });
+  return params;
+}
+
+async function notifyPendingOrder(fields) {
+  const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT || "";
+  if (!endpoint) return { sent: false, skipped: true };
+
+  const controller = new AbortController();
+  const timeoutMs = Math.max(500, Number(process.env.ORDER_NOTIFICATION_TIMEOUT_MS || 2500));
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formBody(fields).toString(),
+      signal: controller.signal
+    });
+    return { sent: response.ok, status: response.status };
+  } catch (error) {
+    return { sent: false, error: error.name === "AbortError" ? "timeout" : (error.message || "pending notification failed") };
+  } finally {
+    clearTimeout(timeout);
+  }
 }
 
 async function normalizeShipping(products, shipping) {
@@ -327,7 +366,7 @@ module.exports = async function createPreference(request, response) {
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
     validateUniquePhysicalCheckoutItems(checkoutItems);
-    const checkoutProducts = checkoutItems.map((item) => item.product);
+    const checkoutProducts = checkoutItems.map((item) => ({ ...item.product, quantity: item.quantity }));
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
     const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
@@ -335,9 +374,10 @@ module.exports = async function createPreference(request, response) {
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
     const origin = requestOrigin(request);
-    const checkoutReference = checkoutItems.length === 1
+    const checkoutReferenceBase = checkoutItems.length === 1
       ? checkoutItems[0].product.id
-      : `cart-${Date.now()}`;
+      : "cart";
+    const checkoutReference = `${checkoutReferenceBase}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
     const allAddons = checkoutItems.flatMap((item) => item.addons.map((addon) => ({
       ...addon,
       productId: item.product.id,
@@ -356,7 +396,7 @@ module.exports = async function createPreference(request, response) {
     const productsSubtotal = checkoutItems.reduce((sum, item) => {
       const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
       const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
-      return sum + item.unitPrice + addonsTotal + swapsTotal;
+      return sum + ((item.unitPrice + addonsTotal + swapsTotal) * item.quantity);
     }, 0);
     const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
     const baseCheckoutTotal = Math.max(0, productsSubtotal - promotion.discount) + (normalizedShipping ? normalizedShipping.price : 0);
@@ -383,14 +423,14 @@ module.exports = async function createPreference(request, response) {
               title: item.product.title,
               description: [item.product.tags?.filter(Boolean).join(" | "), swapDescription, addonDescription, discountDescription].filter(Boolean).join(" | ") || item.product.title,
               picture_url: absoluteUrl(origin, item.product.image || item.product.cutout),
-              quantity: 1,
+              quantity: item.quantity,
               currency_id: "BRL",
               unit_price: productUnitPrice
             },
             ...item.addons.map((addon) => ({
               id: `${item.product.id}-${addon.category}-${addon.index}`,
               title: `${item.product.title} - ${addon.categoryLabel}: ${addon.label}`,
-              quantity: 1,
+              quantity: item.quantity,
               currency_id: "BRL",
               unit_price: addon.price
             }))
@@ -431,8 +471,10 @@ module.exports = async function createPreference(request, response) {
       external_reference: checkoutReference,
       metadata: {
         checkout_type: checkoutItems.length > 1 ? "cart" : "single_product",
+        order_reference: checkoutReference,
         product_id: checkoutItems[0].product.id,
         product_ids: checkoutItems.map((item) => item.product.id).join("; "),
+        product_quantities: checkoutItems.map((item) => `${item.product.id}:${item.quantity}`).join("; "),
         product_title: checkoutItems.map((item) => item.product.title).join("; "),
         selected_addons: allAddons.map((addon) => `${addon.productId}:${addon.category}:${addon.label}`).join("; "),
         selected_swaps: allSwaps.map((swap) => `${swap.productId}:${swap.target}:${swap.label}`).join("; "),
@@ -489,9 +531,56 @@ module.exports = async function createPreference(request, response) {
       ? data.sandbox_init_point || data.init_point
       : data.init_point || data.sandbox_init_point;
 
+    const pendingNotification = await notifyPendingOrder({
+      _subject: "Pedido recebido - pagamento pendente - MobilyTechBR",
+      order_status: "PENDENTE",
+      platform: "Mercado Pago",
+      email: customer.email || "mobilytechbr@gmail.com",
+      mensagem: [
+        "Pedido recebido no checkout Mercado Pago.",
+        "",
+        `Pedido: ${checkoutReference}`,
+        `Checkout Mercado Pago: ${data.id || ""}`,
+        `Produto: ${preference.metadata.product_title}`,
+        `Valor pendente: R$ ${toMoney(baseCheckoutTotal + mercadoFeeAdjustment).toFixed(2)}`,
+        "",
+        "O cliente deve receber confirmacao automatica quando o pagamento for aprovado."
+      ].join("\n"),
+      pagamento: checkoutReference,
+      payment_id: checkoutReference,
+      provider_checkout_id: data.id || "",
+      produto: preference.metadata.product_title,
+      product_ids: preference.metadata.product_ids,
+      product_title: preference.metadata.product_title,
+      selected_swaps: preference.metadata.selected_swaps,
+      selected_addons: preference.metadata.selected_addons,
+      amount_paid: String(toMoney(baseCheckoutTotal + mercadoFeeAdjustment)),
+      customer_name: customer.name || "",
+      customer_email: customer.email || "",
+      customer_phone: customer.phone || "",
+      delivery_mode: manualFulfillmentRequired ? (normalizedShipping?.provider === "mixed" ? "mixed_shipping" : "supplier_shipping") : (normalizedShipping ? "shipping" : "pickup"),
+      shipping_requested: normalizedShipping ? "true" : "false",
+      shipping_provider: preference.metadata.shipping_provider,
+      shipping_service_id: preference.metadata.shipping_service_id,
+      shipping_service_name: preference.metadata.shipping_service_name,
+      shipping_carrier: preference.metadata.shipping_carrier,
+      shipping_price: preference.metadata.shipping_price,
+      shipping_postal_code: preference.metadata.shipping_postal_code,
+      shipping_customer: preference.metadata.shipping_customer,
+      shipping_physical_service_id: preference.metadata.shipping_physical_service_id,
+      shipping_physical_carrier: preference.metadata.shipping_physical_carrier,
+      shipping_physical_service_name: preference.metadata.shipping_physical_service_name,
+      shipping_physical_price: preference.metadata.shipping_physical_price,
+      shipping_supplier_price: preference.metadata.shipping_supplier_price,
+      manual_fulfillment_required: preference.metadata.manual_fulfillment_required,
+      manual_fulfillment_product_ids: preference.metadata.manual_fulfillment_product_ids,
+      manual_fulfillment_items: preference.metadata.manual_fulfillment_items
+    });
+
     sendJson(response, 200, {
       id: data.id,
-      checkout_url: checkoutUrl
+      checkout_url: checkoutUrl,
+      pending_notification: pendingNotification
     });
   } catch (error) {
     sendJson(response, error.statusCode || 500, { error: error.message || "Erro ao criar checkout." });

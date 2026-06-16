@@ -9,6 +9,8 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Depois de compactacao automatica, retomar pelo plano ativo, por este ledger e pelo estado real dos arquivos, nao pela ultima frase isolada antes da compactacao.
 - Nao reabrir itens ja resolvidos apenas porque apareceram perto da linha de compactacao.
 - Se houver duvida, verificar o arquivo, a pagina ou o conector atual antes de responder como se o tema ainda estivesse aberto.
+- Autonomia do agente: em 2026-06-16 o usuario autorizou fazer automaticamente tudo que for necessario e seguro, usando APIs, plugins, Browser, Computer Use, Opera GX/Chrome ou painel logado quando for mais eficiente. So agrupar e pedir intervencao do usuario quando for realmente impossivel concluir sem acao humana. Nunca expor tokens, senhas, chaves, secrets ou credenciais em chat, repo, docs, prints ou logs.
+- Status por e-mail: em 2026-06-16 o usuario pediu que cada etapa concluida do plano seja avisada por e-mail curto, com nome da etapa, pequeno resumo e proximo passo. Se uma etapa travar e precisar de intervencao humana, enviar e-mail com o bloqueio e a acao exata. Antes de desistir de API/ponte/plugin, pesquisar e tentar recuperar/contornar por conta propria, especialmente Computer Use.
 
 ## Estado em andamento
 
@@ -25,3 +27,54 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Registro manual de venda no painel e somente para vendas fora do site: OLX, Facebook Marketplace e atendimento direto. Esse registro existe para controle financeiro/planilha, porque essas plataformas ja fazem sua propria mediacao com o cliente.
 - Venda feita pelo checkout do site deve seguir fluxo automatico: confirmar pagamento, disparar e-mails/status do pedido e baixar estoque dos produtos fisicos vendidos.
 - Produtos fisicos da MobilyTech BR (PCs, SSDs, fontes e pecas em estoque local) tem estoque unitario por padrao e nao podem ser adicionados ao carrinho mais de uma vez nem com quantidade maior que 1. Produtos de dropshipping/fornecedor podem aceitar quantidade maior.
+- Apps Wix conectados/logados pelo usuario em 2026-06-15: Modalyst, Dropi e AI Product Images aparecem no painel. Avaliar se ajudam no backend de dropshipping e tratamento de imagem, mas nao substituir foto real do produto por imagem inventada se isso reduzir fidelidade. AI Product Images so deve ser usado se melhorar recorte/luz sem cortar, distorcer ou esconder detalhe do produto; validar visualmente e por crocheck.
+- Ao fechar a etapa atual: rodar verificacao funcional completa (botoes, links, busca, carrinho, cupom, frete, checkout, painel e formularios), depois crocheck visual com ChatGPT para todas as secoes desktop/mobile, corrigir bloqueadores, enviar e-mail resumido com link/status e listar intervencoes do usuario com links exatos se ainda houver bloqueio.
+- Em 2026-06-16 o usuario pediu explicitamente para parar a implementacao e gerar handoff mesmo com pendencias abertas, porque a compactacao/contexto estava atrapalhando a continuidade. Handoff criado em `docs/HANDOFF_MOBILYTECHBR_2026-06-16.md`, com copias em `C:\Users\MF\Documents\BACKUPSSITECODEX\HANDOFF_MOBILYTECHBR_2026-06-16.md` e `C:\Users\MF\Documents\New project\HANDOFF_MOBILYTECHBR_2026-06-16.md`. A proxima conversa deve continuar a partir dele; nao tratar a geracao do handoff como conclusao do projeto.
+- Depois de tudo concluido e do e-mail final enviado, se for desligar o PC, agendar desligamento com temporizador de 10 minutos para permitir cancelamento/intervencao do usuario antes do desligamento efetivo. Nao desligar imediatamente.
+- Complemento de e-mails transacionais: revisar/criar modelos bonitos e responsivos para cliente e vendedor, com logo MobilyTech BR, paleta branca/azul clara atual, cards com cantos arredondados e texto descontraido para cliente. Vendedor recebe dados operacionais completos; cliente recebe somente informacoes necessarias. Assuntos de teste devem explicitar CLIENTE ou VENDEDOR. Enviar rascunhos/testes para o e-mail MobilyTech e usar crocheck com ChatGPT para escrita e visual antes de considerar os modelos finais.
+
+## Atualizacao 2026-06-16 - retomada apos handoff
+
+- Foram lidos, nesta ordem, `docs/HANDOFF_MOBILYTECHBR_2026-06-16.md`, este ledger, `MOBILYTECH_STATE.md`, `docs/wix-hybrid-premium-status-2026-06-15.md` e `docs/phase2-final-qa-2026-06-15.md`.
+- Antes das alteracoes, foi criado backup datado: `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_backup_pre_changes_2026-06-16_122553.zip`. Tambem existe copia em `C:\Users\MF\Documents\GitHub\mobilytechbr\backups\MobilyTechBR_backup_pre_changes_2026-06-16_122553.zip`.
+- Corrigido `scripts\build_phase2_ibuy_style.py`: o template JS `Qtd. ${quantity}` foi escapado dentro da f-string Python como `Qtd. ${{quantity}}`.
+- O gerador `scripts\build_phase2_ibuy_style.py` rodou com sucesso e regenerou `index.html`, `fase2-hibrida.html` e paginas em `fase2/`.
+- `node --check` passou usando Node local do Codex para libs/APIs existentes. A pasta `api/` tem 11 arquivos `.js`, abaixo do limite Hobby de 12 Serverless Functions.
+- Teste Node de frete/quantidade confirmou: item fornecedor quantidade 3 com frete unitario 12 totaliza frete 36; item fisico quantidade 2 bloqueia com `PHYSICAL_PRODUCT_SINGLE_QUANTITY`.
+- QA local em `http://127.0.0.1:4173/?qa=2026-06-16-local` passou para: home desktop, busca por `PNY`, item fisico sem duplicar no carrinho, `MobilyTech Finds` permitindo `Qtd. 2`, cupom `MOBMEN` em PC com desconto de R$ 48, retirada local em produto fisico e frete direto fornecedor via `api/shipping-quote.js` com quantidade 2 retornando R$ 59,80.
+- Auditoria Browser desktop das paginas `Home`, `Ofertas`, `MobilyTech Finds`, `Limpeza`, `Montagem`, `Avaliacoes`, `Minha conta` e `Contato`: sem overflow horizontal, sem imagens quebradas, sem termos publicos proibidos e sem logs de erro/warn.
+- Auditoria mobile 390x844 da home: sem overflow horizontal real, sem imagens quebradas e sem logs de erro/warn.
+- Painel `admin/index.html` carregou localmente sem overflow horizontal, sem imagens quebradas e sem logs de erro/warn.
+- Nao foi publicado/pushado nada nesta retomada. Git e Node continuam fora do PATH do PowerShell; foi usado runtime local do Codex para Node/Python.
+- Pendente real: crocheck visual final com ChatGPT/Computer Use quando a ferramenta estiver disponivel, publicacao apos validacao final, revisao/implementacao restante de e-mails transacionais, login seguro/headless, Apps Script/Planilha OLX e ponte dominio/Wix conforme regras do handoff.
+
+## Atualizacao 2026-06-16 - salvaguarda Apps Script/Planilha OLX
+
+- O usuario reforcou que a Planilha OLX ja tem Apps Script para relatorio mensal/organizacao; portanto, qualquer nova automacao deve evitar conflito com o codigo existente.
+- Verificacao em modo somente leitura no Apps Script mostrou o projeto `MobilyTech Relatorio Mensal` apontando para a planilha `1Wc_ctkvNJh-64Yg30EHGBCjylL92s2BDtXbNhug0VsQ`, com `SALES_SHEET = 'Vendas_PCs'`, `SUMMARY_SHEET = 'Resumo_Mensal'`, relatorio mensal e automacao de ordenacao.
+- A automacao de ordenacao trata `Vendas_PCs` como tabela `A:I` e usa colunas auxiliares `AA:AB`; por isso, nao adicionar colunas extras em `Vendas_PCs`.
+- O projeto vivo `Pos Venda MobilyTechBR` foi visto como legado/outro contexto: ele apontava para outra planilha e nao deve ser sobrescrito automaticamente sem plano de migracao e autorizacao.
+- Nenhum Apps Script vivo nem planilha Google foi editado nesta etapa. As mudancas foram apenas locais em `docs/google-apps-script/mobilytech-pos-venda.gs` e `docs/google-apps-script/README-pos-venda.md`.
+- Decisao tecnica local: `registerManualSale_` continua escrevendo somente as 9 colunas financeiras originais em `Vendas_PCs`; metadados extras (`Canal`, `ProdutoID`, `Status no Site`, observacoes e timestamp) vao para a aba separada `Vendas_PCs_Metadata`.
+- `docs/google-apps-script/mobilytech-pos-venda.gs` compilou localmente via parser Node (`vm.Script`) sem erro. `api/register-sale.js` passou `node --check` e, sem `ADMIN_WRITE_TOKEN`, retorna 501 controlado com `needsConfig: true`.
+- Antes de publicar/colar Apps Script em ambiente vivo: manter o projeto mensal intacto e preferir Web App separado para pos-venda/ponte; se for preciso mexer no Apps Script vivo, fazer backup e pedir confirmacao com link/acao exata.
+
+## Atualizacao 2026-06-16 - e-mails de pagamento pendente
+
+- O template local do Apps Script agora cobre tambem `PENDENTE`/`PENDING`/`AGUARDANDO_PAGAMENTO`: envia e-mail ao cliente informando pedido recebido e pagamento pendente, com controle `EmailClientePagamentoPendenteEnviado` na aba `Pedidos`.
+- `ordersSheet_()` passou a garantir os headers de `Pedidos` via `ensureSheet_()`, para reduzir risco se o Web App for atualizado e alguem esquecer de rodar `setupMobilyTechPostSale()` antes do trigger.
+- `sendTestTransactionalEmails()` inclui agora o teste `[TESTE CLIENTE] Pedido recebido, pagamento pendente`.
+- `api/create-preference.js` e `api/create-abacate-checkout.js` nao criam novas Vercel Functions; ambos tentam avisar `ORDER_NOTIFICATION_ENDPOINT` em modo best-effort depois de criar o checkout, com `order_status=PENDENTE`. Sem `ORDER_NOTIFICATION_ENDPOINT`, o checkout continua normal e o aviso fica marcado como `skipped`.
+- Para evitar duplicidade entre pedido pendente e aprovado, Mercado Pago passou a gravar uma `order_reference` unica nos metadados e Abacate Pay usa `orderReference`/`externalId`. Os webhooks aprovados usam essa referencia como `payment_id` interno e preservam o ID real do provedor em `provider_payment_id`.
+- `node --check` passou para `api/create-preference.js`, `api/create-abacate-checkout.js`, `api/mercado-pago-webhook.js` e `api/abacate-pay-webhook.js`. O Apps Script local compilou via `vm.Script`. A pasta `api/` segue com 11 arquivos `.js`.
+- Pendente antes de considerar isso vivo: publicar/atualizar Web App Apps Script separado com seguranca, configurar `ORDER_NOTIFICATION_ENDPOINT` na Vercel e enviar e-mails de teste reais para `mobilytechbr@gmail.com`.
+
+## Atualizacao 2026-06-16 - Wix/dominio/login
+
+- Verificacao ao vivo: Vercel direto `https://mobilytechbr.vercel.app/?qa=2026-06-16-status` respondeu 200 com fase 2 (`MobilyTech BR | Loja gamer`, `MOBMEN`, `MobilyTech Finds`).
+- Dominio oficial `https://www.mobilytech.com.br/?qa=2026-06-16-status` respondeu 200 como pagina Wix (`Inicio | MobilyTech BR`) com iframe/ponte para `mobilytechbr.vercel.app`; o HTML externo nao contem diretamente os textos da fase 2.
+- Subrota direta `https://www.mobilytech.com.br/fase2/ofertas.html?qa=2026-06-16-status` ainda retorna 404. Workaround por query `?mtbPath=%2Ffase2%2Fofertas.html` ainda responde 200 e contem a ponte.
+- Favicon do dominio oficial ainda e o padrao Wix `https://static.parastorage.com/client/pfavico.ico`; trocar para a logo MobilyTech BR segue pendente por painel/editor Wix ou API especifica confirmada.
+- Conector Wix confirmou site canonico `85e985c5-2904-452f-85e2-a98f6d3b1cac`: Premium, Published, custom domain, Velo enabled, Members Area e Stores V3.
+- Conector Vercel confirmou projeto `mobilytechbr` (`prj_ljqtPnKqvLMRUio4bMAWMtNaGeWz`) e que `www.mobilytech.com.br` ainda nao esta anexado ao Vercel. Dominios Vercel atuais: `mobilytechbr.vercel.app`, `mobilytechbr-mobily-tech-s-projects.vercel.app`, `mobilytechbr-git-main-mobily-tech-s-projects.vercel.app`.
+- Login real/headless continua bloqueado por armazenamento seguro de segredo OAuth/env vars. Nao criar Wix Headless OAuth App nem botao social real ate haver caminho confirmado para salvar segredo sem expor credenciais.
