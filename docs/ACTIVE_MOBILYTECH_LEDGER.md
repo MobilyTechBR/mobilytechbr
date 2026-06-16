@@ -210,3 +210,10 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - `Resumo_Mensal` existe e contem totais mensais formatados de custo, faturamento, lucro e margem; portanto nao se deve sobrescrever o projeto Apps Script mensal nem colar o script de pos-venda por cima dele.
 - Busca Drive por MIME `application/vnd.google-apps.script` nao retornou projetos Apps Script; o conector atual nao permite auditar o codigo vivo do Apps Script. Sem acesso ao codigo vivo, qualquer publicacao deve continuar pela regra segura: backup/compare primeiro ou Web App separado.
 - Producao indica `googleConfigured:false` e `microsoftConfigured:false` em `/api/account?action=session`; logo o teste real de login, painel admin e historico de pedidos esta bloqueado ate configurar OAuth/segredos em Vercel/provedores.
+
+## Atualizacao 2026-06-16 - QA local do painel privado / miniatura de venda
+
+- QA Browser local do painel em rota espelhada `/admin` salvo em `docs/qa/admin-sale-preview-2026-06-16-route/`.
+- O seletor `Produto vendido` carregou 9 opcoes, selecionou `Fonte 750W 80 Plus Bronze NVINET - Lacrada - R$ 355,00` e exibiu a miniatura correspondente.
+- Preview validado: `previewHidden:false`, titulo correto, specs `NVINET / NT750`, imagem `../assets/generated/fonte-750w-nvinet-80plus-bronze-cutout.png` renderizada com `naturalWidth:1400` e `naturalHeight:1400`.
+- Sem overflow horizontal, sem imagens quebradas e sem logs warn/error na rota correta `/admin`.

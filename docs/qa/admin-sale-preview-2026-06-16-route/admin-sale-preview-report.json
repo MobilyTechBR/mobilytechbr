@@ -1,0 +1,44 @@
+{
+  "optionData": [
+    {
+      "text": "Selecione um produto ativo...",
+      "value": ""
+    },
+    {
+      "text": "Fonte 750W 80 Plus Bronze NVINET - Lacrada - R$ 355,00",
+      "value": "fonte-750w-nvinet-80plus-bronze"
+    },
+    {
+      "text": "PC GAMER i5 3º / 8GB RAM / GTX 550 Ti + SSD 128GB - R$ 1000,00",
+      "value": "pcgameri53330gtx550ti"
+    },
+    {
+      "text": "PC GAMER INTEL I5 / 8GB RAM / GT 610 / SSD 120GB - R$ 800,00",
+      "value": "pc-gamer-i5-gt610"
+    },
+    {
+      "text": "PC GAMER RYZEN 5 3600X - R$ 4500,00",
+      "value": "pcryzen-5-3600"
+    }
+  ],
+  "saleProductCount": 1,
+  "activeProducts": "8",
+  "brokenImageExamples": [],
+  "brokenImages": 0,
+  "clientWidth": 1350,
+  "optionCount": 9,
+  "overflowX": false,
+  "previewHidden": false,
+  "previewImage": "../assets/generated/fonte-750w-nvinet-80plus-bronze-cutout.png",
+  "previewImageRendered": {
+    "complete": true,
+    "naturalHeight": 1400,
+    "naturalWidth": 1400
+  },
+  "previewSpecs": "NVINET / NT750",
+  "previewTitle": "Fonte 750W 80 Plus Bronze NVINET - Lacrada",
+  "scrollWidth": 1350,
+  "selectedText": "Fonte 750W 80 Plus Bronze NVINET - Lacrada - R$ 355,00",
+  "logs": [],
+  "logNote": "Logs from the earlier /private/admin direct-file smoke were filtered out; /admin route QA had no warn/error entries."
+}
