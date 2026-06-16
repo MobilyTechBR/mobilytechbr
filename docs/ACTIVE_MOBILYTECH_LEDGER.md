@@ -197,3 +197,7 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - `vercel.json` agora reescreve os endpoints legados de conta para `api/account.js?action=...`, e `/admin` tambem passa pela mesma funcao protegida.
 - O frontend gerado passou a consultar diretamente `/api/account?action=session` e `/api/account?action=customer-orders`; links de login/logout tambem apontam para a rota unificada.
 - QA local sem segredos: sintaxe Node de `api/account.js` e `lib/account-handlers.js` passou; mocks confirmaram sessao 200, pedido sem login 401 e `/admin` sem sessao 401 com tela protegida.
+- Commit final apos rebase sobre o commit automatico `f31e1a3` de recortes: `1f4d3c0` (`Consolidate account routes for Vercel`), enviado para `origin/main`.
+- QA HTTP em producao `https://www.mobilytech.com.br` com `qa=1f4d3c0`: home 200 contendo `/api/account?action=session`; `/api/account?action=session` 200; endpoint legado `/api/auth-session` 200; `/admin` 401 com tela `Painel MobilyTech BR protegido`; `/private/admin/index.html` 404; `/api/register-sale` preservado com 405 em GET.
+- QA HTTP no alias `https://mobilytechbr.vercel.app`: `/api/account?action=session` retornou 200 com JSON de sessao deslogada.
+- QA Browser em producao salvo em `docs/qa/production-account-routes-2026-06-16-1f4d3c0/`: home, Achados, Minha Conta desktop e Achados mobile sem imagens quebradas, sem overflow horizontal, sem logs de erro/warn, e links de conta apontando para `/api/account`.
