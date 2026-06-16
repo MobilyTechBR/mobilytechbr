@@ -542,7 +542,8 @@ Este bloco registra o que ja foi concluido depois da criacao deste handoff, para
 - `https://mobilytech.com.br/` permanece no Wix como redirect 301 para `https://www.mobilytech.com.br/`. Durante propagacao, navegadores que cachearam DNS antigo podem mostrar 404 Wix em subrotas; resolvers externos e HTTP direto ja validaram o `www` na Vercel.
 - Crocheck ChatGPT em modo `muito alto`: primeiro bloqueou por subrota 404; depois da correcao DNS aprovou publicacao real, nota 9,1/10, sem blockers.
 - Evidencias atuais: `docs/qa/production-final-2026-06-16-env-redeploy/qa-results.json` e `docs/qa/production-final-2026-06-16-env-redeploy/official-domain-byte-compare.json`.
-- Pendencias restantes: configurar `ADMIN_WRITE_TOKEN` em canal seguro se necessario, rodar testes reais de e-mails transacionais, concluir login/headless com segredo OAuth seguro, decidir favicon/home raiz Wix se desejado, e investigar crash/fechamento do Codex por ultimo.
+- Investigacao de crash/fechamento: Crashpad do Codex tem dumps em `C:\Users\MF\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\LocalCache\Roaming\Codex\web\Codex\Crashpad\reports`; Windows Event Viewer mostrou `APPCRASH` do Opera GX `132.0.5905.43` em `opera_browser.dll` com excecao `0xc0000005` e historico de watchdog/GPU. Mitigacao: nao usar Browser interno para Google OAuth/Apps Script, evitar Opera headless, preferir conectores/shell/HTTP para QA e Opera normal apenas quando login humano for necessario.
+- Pendencias restantes: configurar `ADMIN_WRITE_TOKEN` em canal seguro se necessario, rodar testes reais de e-mails transacionais, concluir login/headless com segredo OAuth seguro, e decidir favicon/home raiz Wix se desejado.
 
 ## Checklist final para a proxima IA
 

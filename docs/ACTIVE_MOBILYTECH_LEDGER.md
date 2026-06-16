@@ -95,3 +95,11 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Crocheck follow-up com ChatGPT confirmou: blocker de rota direta resolvido, publicacao real aprovada, nota final 9,1/10, sem blockers restantes. Recomendou apenas smoke test operacional final como validacao nao bloqueante.
 - E-mails de etapa enviados ao usuario: levantamento/preparacao, publicacao/QA Vercel, autorizacao Apps Script, Apps Script/endpoints Vercel e dominio oficial `www` na Vercel.
 - Pendencias reais restantes: configurar `ADMIN_WRITE_TOKEN` somente por canal seguro, rodar testes reais dos e-mails transacionais, concluir login/headless se houver armazenamento seguro de OAuth secret, decidir se o favicon/home raiz Wix devem migrar depois, e investigar o crash/fechamento do Codex por ultimo conforme pedido do usuario.
+
+## Atualizacao 2026-06-16 - investigacao Codex/Opera
+
+- Investigacao local por ultimo conforme pedido do usuario: pasta Crashpad do Codex contem dumps em `C:\Users\MF\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\LocalCache\Roaming\Codex\web\Codex\Crashpad\reports`, com arquivos de 2026-06-16 13:32 e 13:42. Sem simbolos/debugger, nao foi possivel determinar stack exata a partir dos `.dmp`.
+- Windows Event Viewer nas ultimas horas nao mostrou `Application Error` direto para Codex, mas mostrou `APPCRASH` do Opera GX `132.0.5905.43` em `opera_browser.dll`, excecao `0xc0000005`, e historico de `LiveKernelEvent`/watchdog de GPU. A tentativa de Opera headless para screenshot tambem travou/crashou e foi encerrada por filtro de perfil temporario, sem fechar o Opera normal.
+- Mitigacao operacional adotada: nao usar Browser interno para Google OAuth/Apps Script; preferir Opera normal via painel quando houver login humano, conectores oficiais quando existirem, e shell/HTTP para QA de dominio. Evitar Opera headless neste ambiente.
+- Para evitar perda de continuidade se o Codex/WebView fechar de novo: manter `docs/HANDOFF_MOBILYTECHBR_2026-06-16.md`, este ledger e `MOBILYTECH_STATE.md` atualizados; enviar e-mails de etapa; criar/atualizar handoff sempre que a fila longa ficar vulneravel a compactacao ou crash.
+- Nao foi aplicada mudanca de sistema/driver/GPU nem limpeza destrutiva de Crashpad, para preservar evidencia e evitar risco fora do escopo do site.
