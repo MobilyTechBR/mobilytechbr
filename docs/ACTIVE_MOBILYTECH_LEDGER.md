@@ -119,3 +119,16 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Usuario informou que configurou `ADMIN_WRITE_TOKEN` na Vercel e executou redeploy. Validacao segura em producao com token propositalmente errado retornou 401, nao 501; isso confirma que a env var esta ativa sem registrar venda.
 - Para permitir validacao completa sem poluir a planilha, `api/register-sale.js` ganhou `dryRun: true` ou `mode: "auth-check"` depois da validacao do token. O modo retorna `authenticated: true` sem chamar o Apps Script/upstream.
 - Teste local do endpoint passou: token correto + `dryRun` retorna 200; token errado retorna 401. Proximo passo apos publicar este commit: testar `https://www.mobilytech.com.br/api/register-sale` com o token real em `dryRun`, sem imprimir segredo.
+
+## Atualizacao 2026-06-16 - deploy final 99106c0 validado
+
+- Commit `99106c0` (`Finalize admin token and seller emails`) foi enviado para `origin/main` e a Vercel criou o deploy de producao `dpl_BHy7ttr5FocwThk5wHazzgzwQ32M`, estado `READY`, URL `mobilytechbr-7padblzj9-mobily-tech-s-projects.vercel.app`.
+- QA HTTP em `https://www.mobilytech.com.br` com `qa=99106c0`: home, `/fase2/ofertas.html`, `/fase2/minha-conta.html`, `/favicon.ico`, `/favicon.png` e `/apple-touch-icon.png` retornaram 200 via `Server: Vercel`.
+- `ADMIN_WRITE_TOKEN` em producao: token errado retornou 401; token correto descriptografado localmente e usado somente em `dryRun` retornou 200 com `authenticated:true` e `dryRun:true`. Nenhuma venda real foi registrada nesse teste.
+- Apps Script: fonte local `docs/google-apps-script/mobilytech-pos-venda.gs` esta atualizada e testada por previews/e-mails. Qualquer publicacao no Apps Script vivo deve preservar a codificacao mensal ja existente na planilha; preferir projeto/Web App separado ou backup/compare antes de colar codigo.
+
+## Atualizacao 2026-06-16 - fechamento investigacao Codex/Opera
+
+- Checagem final dos ultimos logs mostrou `APPCRASH` do Opera GX `132.0.5905.43` em `opera_browser.dll`, excecao `0xc0000005`, as 13:50:02, alem de historico Windows `LiveKernelEvent`/watchdog GPU. O Event Viewer nao mostrou APPCRASH textual do Codex nas ultimas horas.
+- Crashpad do Codex tem dumps recentes em `C:\Users\MF\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\LocalCache\Roaming\Codex\web\Codex\Crashpad\reports`, com arquivos as 13:32 e 13:42. A sessao atual do Codex continuou rodando depois disso.
+- Mitigacao aplicada no fluxo: evitar Opera GX/Browser interno para OAuth/Apps Script e tarefas longas; usar conectores oficiais, Vercel/Gmail/Drive quando disponiveis, shell/HTTP para QA e Opera normal apenas quando login humano for indispensavel. Nao foi feita alteracao destrutiva de driver, perfil do navegador ou cache do Codex.
