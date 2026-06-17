@@ -1166,7 +1166,6 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     ];
     let currentSearchResults = [];
     let accountSession = {{ authenticated:false, user:null, admin:false, providers:{{}} }};
-    const HIDDEN_PLACEHOLDER_ORDER_IDS = new Set(["pedido-1781658045002", "pedido-1781657995494"]);
     function currentReturnTo() {{
       return window.location.pathname + window.location.search + window.location.hash;
     }}
@@ -1232,6 +1231,20 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         carrier: order.Transportadora || order.shipping_carrier || ""
       }};
     }}
+    function isPlaceholderOrder(order) {{
+      const id = String(order.id || "").trim().toLowerCase();
+      const product = String(order.product || "").trim().toLowerCase();
+      const amount = String(order.amount || "").trim().toLowerCase();
+      const delivery = String(order.delivery || "").trim().toLowerCase();
+      const tracking = String(order.tracking || order.carrier || "").trim().toLowerCase();
+      const status = String(order.status || "").trim().toLowerCase();
+      return /^pedido-\\d{{12,}}$/.test(id)
+        && product === "pedido mobilytech br"
+        && (!amount || amount.includes("consulta"))
+        && (!delivery || delivery.includes("pickup") || delivery.includes("retirada"))
+        && (!tracking || tracking.includes("ainda") || tracking.includes("indispon"))
+        && (!status || status.includes("pago") || status.includes("aprov"));
+    }}
     function renderOrders(orders, meta={{}}) {{
       const panel = $("#ordersPanel");
       if (!panel) return;
@@ -1240,7 +1253,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         return;
       }}
       const visibleOrders = Array.isArray(orders)
-        ? orders.map(normalizeOrder).filter((order) => !HIDDEN_PLACEHOLDER_ORDER_IDS.has(String(order.id || "").trim()))
+        ? orders.map(normalizeOrder).filter((order) => !isPlaceholderOrder(order))
         : [];
       if (!visibleOrders.length) {{
         const note = meta.configured === false
