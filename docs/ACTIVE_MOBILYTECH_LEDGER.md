@@ -271,3 +271,11 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - QA controlado salvo em `docs/qa/supplier-fulfillment-control-2026-06-16/qa.json`: 51 produtos de fornecedor ativos, 50 `INTL` e 1 `BR`, sem falhas de campos obrigatorios.
 - A amostra validada contem produto, ID, quantidade, canal de origem, origem, link operacional, backup, custo estimado, frete cobrado do cliente, prazo, base de frete, reputacao, risco e instrucao.
 - Isso valida P16/P17 sem compra real. O unico teste restante para essa area e uma venda/pedido controlado futuro, quando for desejado disparar fluxo real de checkout/e-mail.
+
+## Atualizacao 2026-06-16 - publicacao do painel site-content seguro
+
+- Commit `3768d2a` adicionou a rota como nova funcao `api/update-site-content.js`, mas o deploy `dpl_Gf35m4NdGAtrXUfs8qRQ9hbY2uQ5` falhou na etapa de deploy outputs. A causa provavel foi exceder o pacote estavel de 12 funcoes Node na Vercel.
+- Correcao: commit `848b979` consolidou `/api/update-site-content` em `api/account.js?action=update-site-content`, preservando a URL chamada pelo painel e voltando a `lambdaRuntimeStats: {"nodejs":12}`.
+- Deploy production `dpl_7cc7YG3CYrMrXNFiorUgUmjV4t7c` ficou `READY`.
+- QA HTTP production salvo em `docs/qa/production-site-content-writer-2026-06-16-848b979/qa.json`: home oficial 200, Achados 200, Minha Conta 200, `/admin` 401 sem login, `/private/admin/index.html` 404, `/api/update-site-content` em GET 405, POST sem auth 401, `/api/auth-session` 200 e alias `mobilytechbr.vercel.app` 200.
+- Logs runtime Vercel em producao, janela de 30 minutos, sem `error`/`fatal`.

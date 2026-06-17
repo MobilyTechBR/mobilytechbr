@@ -1,0 +1,103 @@
+{
+  "generatedAt": "2026-06-17T02:48:07.339Z",
+  "localDate": "2026-06-16",
+  "commit": "848b9794af84e3c4f3ac6e6d641c8a02a5bb4779",
+  "deployment": {
+    "id": "dpl_7cc7YG3CYrMrXNFiorUgUmjV4t7c",
+    "url": "mobilytechbr-fqtap889n-mobily-tech-s-projects.vercel.app",
+    "target": "production",
+    "state": "READY",
+    "lambdaRuntimeStats": {
+      "nodejs": 12
+    }
+  },
+  "previousFailedDeployment": {
+    "id": "dpl_Gf35m4NdGAtrXUfs8qRQ9hbY2uQ5",
+    "commit": "3768d2ad4bd0c9c42fc846cbab37484babc98665",
+    "state": "ERROR",
+    "cause": "Adding api/update-site-content.js raised the Vercel Node function count above the stable 12-function package. The route was consolidated into api/account.js?action=update-site-content."
+  },
+  "checks": [
+    {
+      "name": "home oficial",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/?qa=848b979",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "finds oficial",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/fase2/achados.html?qa=848b979",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "minha conta oficial",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/fase2/minha-conta.html?qa=848b979",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "admin protegido",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/admin?qa=848b979",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "name": "private admin bloqueado",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/private/admin/index.html?qa=848b979",
+      "status": 404,
+      "expected": 404,
+      "pass": true
+    },
+    {
+      "name": "api update get bloqueado",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/api/update-site-content?qa=848b979",
+      "status": 405,
+      "expected": 405,
+      "pass": true
+    },
+    {
+      "name": "api update post sem auth",
+      "method": "POST",
+      "url": "https://www.mobilytech.com.br/api/update-site-content?qa=848b979",
+      "status": 401,
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "name": "auth session",
+      "method": "GET",
+      "url": "https://www.mobilytech.com.br/api/auth-session?qa=848b979",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "vercel alias home",
+      "method": "GET",
+      "url": "https://mobilytechbr.vercel.app/?qa=848b979",
+      "status": 200,
+      "expected": 200,
+      "pass": true
+    }
+  ],
+  "runtimeLogs": {
+    "projectId": "prj_ljqtPnKqvLMRUio4bMAWMtNaGeWz",
+    "team": "mobily-tech-s-projects",
+    "environment": "production",
+    "levels": ["error", "fatal"],
+    "since": "30m",
+    "result": "No logs found for the specified criteria."
+  },
+  "passed": true
+}
