@@ -296,3 +296,6 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Crocheck externo no ChatGPT, conversa `Analise visual MobilyTech BR`, inicialmente bloqueou apenas o gate do admin por logo quebrado/truncado. O painel foi corrigido para usar `/assets/mobilytech-logo.png`, caixa fixa e fallback `MT`.
 - Validacao local do logo do admin salva em `docs/qa/final-adjustments-2026-06-17/admin-logo-fix-qa.json`: `naturalWidth=1024`, `broken=false`, caixa `56x56`; screenshot salvo em `desktop-admin-gate-after-logo-fix.png`.
 - Revalidacao no ChatGPT apos o ajuste retornou `APROVADO`, bloqueadores restantes `nenhum`. Registro salvo em `docs/qa/final-adjustments-2026-06-17/crocheck-chatgpt-final-2026-06-17.md`.
+- Publicacao Git/Vercel: commits `1b4016f` e `83a643a` enviados para `main`. Deploy de producao `dpl_5EvrhNowrtd36DaXpmdGyeDhd2qv` ficou `READY` com alias `https://www.mobilytech.com.br`.
+- Smoke oficial salvo em `docs/qa/final-adjustments-2026-06-17/production-smoke-83a643a.json`: 36 checks passaram, 0 falhas. Validou paginas publicas 200, admin protegido, `/private/admin/index.html` 404, asset do logo 200, endpoint de sessao 200, ausencia de Microsoft/Abacate/Painel interno/IDs literais de pedido fake, e `Ver oferta` correto no Finds.
+- Logs runtime Vercel, producao, janela de 30 minutos, sem `error` ou `fatal`.

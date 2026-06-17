@@ -1,0 +1,167 @@
+{
+  "generatedAt": "2026-06-17T20:35:38.982Z",
+  "deployment": {
+    "id": "dpl_5EvrhNowrtd36DaXpmdGyeDhd2qv",
+    "commit": "83a643ac930fc2fab5b5c00f45ac8fe8a628e82c",
+    "domain": "https://www.mobilytech.com.br"
+  },
+  "ok": true,
+  "checks": [
+    {
+      "name": "/ status 200",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "/ hides Microsoft login",
+      "pass": true
+    },
+    {
+      "name": "/ hides Abacate Pay",
+      "pass": true
+    },
+    {
+      "name": "/ hides public admin panel link text",
+      "pass": true
+    },
+    {
+      "name": "/ hides literal fake order ids",
+      "pass": true
+    },
+    {
+      "name": "/ uses placeholder-order pattern filter",
+      "pass": true
+    },
+    {
+      "name": "/fase2/minha-conta.html status 200",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "/fase2/minha-conta.html hides Microsoft login",
+      "pass": true
+    },
+    {
+      "name": "/fase2/minha-conta.html hides Abacate Pay",
+      "pass": true
+    },
+    {
+      "name": "/fase2/minha-conta.html hides public admin panel link text",
+      "pass": true
+    },
+    {
+      "name": "/fase2/minha-conta.html hides literal fake order ids",
+      "pass": true
+    },
+    {
+      "name": "/fase2/minha-conta.html uses placeholder-order pattern filter",
+      "pass": true
+    },
+    {
+      "name": "/fase2/achados.html status 200",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "/fase2/achados.html hides Microsoft login",
+      "pass": true
+    },
+    {
+      "name": "/fase2/achados.html hides Abacate Pay",
+      "pass": true
+    },
+    {
+      "name": "/fase2/achados.html hides public admin panel link text",
+      "pass": true
+    },
+    {
+      "name": "/fase2/achados.html hides literal fake order ids",
+      "pass": true
+    },
+    {
+      "name": "/fase2/achados.html uses placeholder-order pattern filter",
+      "pass": true
+    },
+    {
+      "name": "/fase2/ofertas.html status 200",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "/fase2/ofertas.html hides Microsoft login",
+      "pass": true
+    },
+    {
+      "name": "/fase2/ofertas.html hides Abacate Pay",
+      "pass": true
+    },
+    {
+      "name": "/fase2/ofertas.html hides public admin panel link text",
+      "pass": true
+    },
+    {
+      "name": "/fase2/ofertas.html hides literal fake order ids",
+      "pass": true
+    },
+    {
+      "name": "/fase2/ofertas.html uses placeholder-order pattern filter",
+      "pass": true
+    },
+    {
+      "name": "/fase2/contato.html status 200",
+      "pass": true,
+      "status": 200
+    },
+    {
+      "name": "/fase2/contato.html hides Microsoft login",
+      "pass": true
+    },
+    {
+      "name": "/fase2/contato.html hides Abacate Pay",
+      "pass": true
+    },
+    {
+      "name": "/fase2/contato.html hides public admin panel link text",
+      "pass": true
+    },
+    {
+      "name": "/fase2/contato.html hides literal fake order ids",
+      "pass": true
+    },
+    {
+      "name": "/fase2/contato.html uses placeholder-order pattern filter",
+      "pass": true
+    },
+    {
+      "name": "Finds does not use old Mercado Livre button copy",
+      "pass": true
+    },
+    {
+      "name": "Finds shows generic Ver oferta copy",
+      "pass": true
+    },
+    {
+      "name": "/admin protected without session",
+      "pass": true,
+      "status": 401,
+      "location": null
+    },
+    {
+      "name": "/private/admin/index.html blocked",
+      "pass": true,
+      "status": 404
+    },
+    {
+      "name": "admin logo asset reachable",
+      "pass": true,
+      "status": 200,
+      "contentType": "image/png"
+    },
+    {
+      "name": "account session endpoint reachable",
+      "pass": true,
+      "status": 200
+    }
+  ],
+  "failed": []
+}

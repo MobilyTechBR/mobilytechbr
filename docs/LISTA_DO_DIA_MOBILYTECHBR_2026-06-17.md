@@ -81,3 +81,5 @@
 - Crocheck ChatGPT apontou um unico bloqueador: logo quebrado/truncado no gate do admin.
 - Gate do admin corrigido para usar `/assets/mobilytech-logo.png`, caixa fixa e fallback `MT`; validacao local salva em `docs/qa/final-adjustments-2026-06-17/admin-logo-fix-qa.json`.
 - Revalidacao ChatGPT retornou `APROVADO`, sem bloqueadores restantes. Registro salvo em `docs/qa/final-adjustments-2026-06-17/crocheck-chatgpt-final-2026-06-17.md`.
+- Publicado em producao via Git/Vercel: deploy `dpl_5EvrhNowrtd36DaXpmdGyeDhd2qv` ficou `READY` no dominio oficial `https://www.mobilytech.com.br`.
+- Smoke oficial salvo em `docs/qa/final-adjustments-2026-06-17/production-smoke-83a643a.json`: 36 checks, 0 falhas; logs runtime sem `error`/`fatal` na janela recente.
