@@ -246,3 +246,11 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - `Modalyst`: painel mostrou Hobby plan com `My Products 18`, `Sync List 17` e apenas `7 products left`; usar no maximo como aprendizado/teste, nao como escala de catalogo.
 - `Zonify`: App Market mostra trial de 3 dias e planos pagos; rejeitado por nao atender plano gratuito permanente.
 - `DSers`: App Market mostra plano gratuito robusto (ate 3 stores e 3000 produtos); melhor candidato se a operacao dropshipping for migrar para Wix Stores, sempre com produtos de teste e validacao de frete/fornecedor Brasil.
+
+## Atualizacao 2026-06-16/17 - ajuste final MobilyTech Finds antes do deploy
+
+- QA production preliminar detectou residuo do texto antigo `Ver oferta no Mercado Livre` dentro do JSON embutido em `fase2/achados.html`, mesmo com o botao visivel ja renderizando `Ver oferta`.
+- Correcao aplicada na fonte `data/phase2-finalists.json`: 8 ocorrencias antigas foram trocadas por `Ver oferta`; `scripts/build_phase2_hybrid.py` tambem foi ajustado para nao reintroduzir o rotulo antigo em regeneracoes legadas.
+- Site regenerado por `scripts/build_phase2_ibuy_style.py`.
+- QA local salvo em `docs/qa/final-production-2026-06-17-26f5d35/local-post-finds-fix-qa.json` passou: paginas publicas existem, `fase2/montagem.html` e o caminho correto, nao ha `monte-seu-pc.html`, nao ha `Ver oferta no Mercado Livre`, 166 assets sem quebrados/zero byte, login/conta presentes, cupom nao aparece como texto visivel e Mercado Pago/Abacate Pay seguem com cores solidas.
+- Pendente: publicar esta ultima correcao, aguardar Vercel `READY` e rodar smoke production com a mesma matriz.

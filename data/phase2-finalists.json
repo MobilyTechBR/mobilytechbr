@@ -269,12 +269,12 @@
           "name": "Mercado Livre",
           "url": "https://meli.la/1WRhUoF",
           "logo": "assets/mercado-livre-logo.svg",
-          "button": "Ver oferta no Mercado Livre",
+          "button": "Ver oferta",
           "class": "market-ml"
         }
       ],
       "affiliateReady": true,
-      "affiliateButton": "Ver oferta no Mercado Livre",
+      "affiliateButton": "Ver oferta",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
       "publicPartnerNote": "Produto recomendado pela curadoria MobilyTech para complementar seu setup, com compra concluida diretamente no marketplace parceiro.",
       "productImage": "./assets/phase2-affiliates/fone-kz-castor.jpg",
@@ -785,12 +785,12 @@
           "name": "Mercado Livre",
           "url": "https://meli.la/2tNDMiC",
           "logo": "assets/mercado-livre-logo.svg",
-          "button": "Ver oferta no Mercado Livre",
+          "button": "Ver oferta",
           "class": "market-ml"
         }
       ],
       "affiliateReady": true,
-      "affiliateButton": "Ver oferta no Mercado Livre",
+      "affiliateButton": "Ver oferta",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
       "publicPartnerNote": "Produto recomendado pela curadoria MobilyTech para complementar seu setup, com compra concluida diretamente no marketplace parceiro.",
       "productImage": "./assets/phase2-affiliates/keycaps-pbt.jpg",
@@ -877,12 +877,12 @@
           "name": "Mercado Livre",
           "url": "https://meli.la/2zS3ZBX",
           "logo": "assets/mercado-livre-logo.svg",
-          "button": "Ver oferta no Mercado Livre",
+          "button": "Ver oferta",
           "class": "market-ml"
         }
       ],
       "affiliateReady": true,
-      "affiliateButton": "Ver oferta no Mercado Livre",
+      "affiliateButton": "Ver oferta",
       "affiliateStatus": "Curadoria MobilyTech em marketplace confiavel.",
       "publicPartnerNote": "Produto recomendado pela curadoria MobilyTech para complementar seu setup, com compra concluida diretamente no marketplace parceiro.",
       "productImage": "./assets/phase2-affiliates/teclado-mecanico-abnt2.jpg",
@@ -969,12 +969,12 @@
           "name": "Mercado Livre",
           "url": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
           "logo": "assets/mercado-livre-logo.svg",
-          "button": "Ver oferta no Mercado Livre",
+          "button": "Ver oferta",
           "class": "market-ml"
         }
       ],
       "affiliateReady": true,
-      "affiliateButton": "Ver oferta no Mercado Livre",
+      "affiliateButton": "Ver oferta",
       "affiliateStatus": "Oferta selecionada para conferir no Mercado Livre.",
       "publicPartnerNote": "Produto recomendado pela curadoria MobilyTech para complementar seu setup, com compra concluida diretamente no marketplace parceiro.",
       "productImage": "./assets/phase2-affiliates/bias-light-led.jpg",

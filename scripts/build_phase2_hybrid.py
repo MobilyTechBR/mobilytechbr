@@ -377,7 +377,7 @@ for item in FINALISTS:
     item["marketplace"] = MARKETPLACES["mercado-livre"]
     item["affiliateUrl"] = affiliate_url or item["sourceUrl"]
     item["affiliateReady"] = bool(affiliate_url)
-    item["affiliateButton"] = "Compre pelo Mercado Livre" if affiliate_url else "Ver oferta no Mercado Livre"
+    item["affiliateButton"] = "Compre pelo Mercado Livre" if affiliate_url else "Ver oferta"
     item["affiliateStatus"] = (
         "Curadoria MobilyTech em marketplace confiavel."
         if affiliate_url

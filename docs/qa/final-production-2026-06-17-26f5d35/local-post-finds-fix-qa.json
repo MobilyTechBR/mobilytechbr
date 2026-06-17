@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-06-17T02:11:58.161Z",
+  "scope": "local files after MobilyTech Finds label fix",
+  "pages": [
+    {
+      "file": "index.html",
+      "exists": true,
+      "bytes": 286484
+    },
+    {
+      "file": "fase2/index.html",
+      "exists": true,
+      "bytes": 286546
+    },
+    {
+      "file": "fase2/ofertas.html",
+      "exists": true,
+      "bytes": 281188
+    },
+    {
+      "file": "fase2/achados.html",
+      "exists": true,
+      "bytes": 281467
+    },
+    {
+      "file": "fase2/minha-conta.html",
+      "exists": true,
+      "bytes": 285248
+    },
+    {
+      "file": "fase2/limpeza.html",
+      "exists": true,
+      "bytes": 281827
+    },
+    {
+      "file": "fase2/montagem.html",
+      "exists": true,
+      "bytes": 281892
+    },
+    {
+      "file": "fase2/avaliacoes.html",
+      "exists": true,
+      "bytes": 282492
+    },
+    {
+      "file": "fase2/contato.html",
+      "exists": true,
+      "bytes": 281495
+    },
+    {
+      "file": "fase2-hibrida.html",
+      "exists": true,
+      "bytes": 286484
+    }
+  ],
+  "routeExpectations": {
+    "adminIsProtectedRuntimeRoute": true,
+    "localAdminStaticFileRequired": false,
+    "montagePublicPage": "fase2/montagem.html"
+  },
+  "assets": {
+    "checked": 166,
+    "broken": [],
+    "zeroByte": []
+  },
+  "counts": {
+    "products": 59,
+    "activeProducts": 59,
+    "supplierProducts": 51,
+    "marketButtonVerOferta": 104,
+    "affiliateButtonVerOferta": 54,
+    "siteContentTopKeys": 3
+  },
+  "textChecks": {
+    "allPublicPagesExist": true,
+    "montagemPageExists": true,
+    "noOldMonteSeuPcPath": true,
+    "noVerboseMercadoLivreOffer": true,
+    "achadosUsesGenericOffer": true,
+    "mercadoLivreLogoReferenced": true,
+    "profileMenuCodePresent": true,
+    "googleLoginPresent": true,
+    "customerAccountTextPresent": true,
+    "couponPlaceholderDoesNotExposeMobmen": true,
+    "visibleUiDoesNotExposeMobmen": true,
+    "mercadoPagoSolidYellowReference": true,
+    "abacatePayGreenReference": true
+  },
+  "notes": [
+    "The coupon code still exists in runtime promotion logic so a customer who already knows it can type it manually.",
+    "The UI/placeholder/static visible text does not expose the coupon code."
+  ]
+}
