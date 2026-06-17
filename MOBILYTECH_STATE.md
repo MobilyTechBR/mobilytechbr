@@ -6,6 +6,8 @@ Este arquivo e a fonte compacta de verdade para continuar o projeto em uma conve
 
 Nota de continuidade 2026-06-16: o handoff oficial mais recente e `docs/HANDOFF_MOBILYTECHBR_2026-06-16.md`. A direcao visual atual aprovada para continuidade e a fase 2 clara inspirada em iBUYPOWER/KaBuM, gerada por `scripts/build_phase2_ibuy_style.py`. As referencias antigas de tema dark abaixo sao historicas do site original e nao devem substituir a fase 2 clara sem pedido explicito do usuario.
 
+Nota de continuidade 2026-06-16/17: a correcao final do MobilyTech Finds foi publicada nos commits `83a70d7` e `eb743c7`. O deploy Vercel final `dpl_Gr7md1zmFFoSSP2CSYpZWRSDLFtn` ficou `READY`; o smoke production em `docs/qa/final-production-2026-06-17-26f5d35/production-post-finds-fix-qa.json` passou, incluindo ausencia de `Ver oferta no Mercado Livre`, rota correta `fase2/montagem.html`, painel `/admin` protegido e APIs com codigos esperados.
+
 ## Identidade e URLs
 
 - Nome correto do negocio: MobilyTech BR.

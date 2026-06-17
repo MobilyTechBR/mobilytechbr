@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-06-17T02:22:40.298Z",
+  "base": "https://www.mobilytech.com.br",
+  "commit": "eb743c7",
+  "deployment": "dpl_Gr7md1zmFFoSSP2CSYpZWRSDLFtn",
+  "deploymentUrl": "mobilytechbr-q241o377k-mobily-tech-s-projects.vercel.app",
+  "pages": [
+    {
+      "path": "/",
+      "url": "https://www.mobilytech.com.br/?qa=eb743c7&t=1781662891600",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 285148,
+      "error": null
+    },
+    {
+      "path": "/fase2/ofertas.html",
+      "url": "https://www.mobilytech.com.br/fase2/ofertas.html?qa=eb743c7&t=1781662892197",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 279955,
+      "error": null
+    },
+    {
+      "path": "/fase2/achados.html",
+      "url": "https://www.mobilytech.com.br/fase2/achados.html?qa=eb743c7&t=1781662892547",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 280231,
+      "error": null
+    },
+    {
+      "path": "/fase2/minha-conta.html",
+      "url": "https://www.mobilytech.com.br/fase2/minha-conta.html?qa=eb743c7&t=1781662892821",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 283963,
+      "error": null
+    },
+    {
+      "path": "/fase2/limpeza.html",
+      "url": "https://www.mobilytech.com.br/fase2/limpeza.html?qa=eb743c7&t=1781662893523",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 280587,
+      "error": null
+    },
+    {
+      "path": "/fase2/montagem.html",
+      "url": "https://www.mobilytech.com.br/fase2/montagem.html?qa=eb743c7&t=1781662893986",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 280652,
+      "error": null
+    },
+    {
+      "path": "/fase2/avaliacoes.html",
+      "url": "https://www.mobilytech.com.br/fase2/avaliacoes.html?qa=eb743c7&t=1781662894759",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 281223,
+      "error": null
+    },
+    {
+      "path": "/fase2/contato.html",
+      "url": "https://www.mobilytech.com.br/fase2/contato.html?qa=eb743c7&t=1781662895183",
+      "status": 200,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 280268,
+      "error": null
+    },
+    {
+      "path": "/admin",
+      "url": "https://www.mobilytech.com.br/admin?qa=eb743c7&t=1781662895412",
+      "status": 401,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 1305,
+      "error": null
+    },
+    {
+      "path": "/private/admin/index.html",
+      "url": "https://www.mobilytech.com.br/private/admin/index.html?qa=eb743c7&t=1781662895808",
+      "status": 404,
+      "server": "Vercel",
+      "type": "text/html; charset=utf-8",
+      "bytes": 63659,
+      "error": null
+    },
+    {
+      "path": "/api/account?action=session",
+      "url": "https://www.mobilytech.com.br/api/account?action=session&qa=eb743c7&t=1781662896487",
+      "status": 200,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 125,
+      "error": null
+    },
+    {
+      "path": "/api/customer-orders",
+      "url": "https://www.mobilytech.com.br/api/customer-orders?qa=eb743c7&t=1781662896798",
+      "status": 401,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 60,
+      "error": null
+    },
+    {
+      "path": "/api/create-preference",
+      "url": "https://www.mobilytech.com.br/api/create-preference?qa=eb743c7&t=1781662897100",
+      "status": 405,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 33,
+      "error": null
+    },
+    {
+      "path": "/api/create-abacate-checkout",
+      "url": "https://www.mobilytech.com.br/api/create-abacate-checkout?qa=eb743c7&t=1781662897469",
+      "status": 405,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 33,
+      "error": null
+    },
+    {
+      "path": "/api/mercado-pago-webhook",
+      "url": "https://www.mobilytech.com.br/api/mercado-pago-webhook?qa=eb743c7&t=1781662897826",
+      "status": 405,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 33,
+      "error": null
+    },
+    {
+      "path": "/api/abacate-pay-webhook",
+      "url": "https://www.mobilytech.com.br/api/abacate-pay-webhook?qa=eb743c7&t=1781662898198",
+      "status": 405,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 33,
+      "error": null
+    },
+    {
+      "path": "/data/products.json",
+      "url": "https://www.mobilytech.com.br/data/products.json?qa=eb743c7&t=1781662898570",
+      "status": 200,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 164383,
+      "error": null
+    },
+    {
+      "path": "/data/phase2-finalists.json",
+      "url": "https://www.mobilytech.com.br/data/phase2-finalists.json?qa=eb743c7&t=1781662898903",
+      "status": 200,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 333150,
+      "error": null
+    },
+    {
+      "path": "/data/site-content.json",
+      "url": "https://www.mobilytech.com.br/data/site-content.json?qa=eb743c7&t=1781662899308",
+      "status": 200,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 1999,
+      "error": null
+    },
+    {
+      "path": "/data/addons.json",
+      "url": "https://www.mobilytech.com.br/data/addons.json?qa=eb743c7&t=1781662899482",
+      "status": 200,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 405,
+      "error": null
+    },
+    {
+      "path": "/data/swaps.json",
+      "url": "https://www.mobilytech.com.br/data/swaps.json?qa=eb743c7&t=1781662899664",
+      "status": 200,
+      "server": "Vercel",
+      "type": "application/json; charset=utf-8",
+      "bytes": 1169,
+      "error": null
+    }
+  ],
+  "expectedStatuses": {
+    "publicPages200": true,
+    "admin401": true,
+    "privateAdmin404": true,
+    "accountSession200": true,
+    "customerOrdersNoSession401": true,
+    "checkoutsGet405": true,
+    "webhooksGet405": true,
+    "dataJson200": true
+  },
+  "assets": {
+    "checked": 167,
+    "broken": [],
+    "zeroByte": []
+  },
+  "counts": {
+    "products": 59,
+    "activeProducts": 59,
+    "supplierProducts": 51,
+    "marketButtonVerOferta": 104,
+    "affiliateButtonVerOferta": 54,
+    "siteContentTopKeys": 3
+  },
+  "textChecks": {
+    "noOldMonteSeuPcPath": true,
+    "noVerboseMercadoLivreOffer": true,
+    "achadosUsesGenericOffer": true,
+    "mercadoLivreLogoReferenced": true,
+    "googleLoginPresent": true,
+    "customerAccountTextPresent": true,
+    "profileMenuCodePresent": true,
+    "couponPlaceholderDoesNotExposeMobmen": true,
+    "visibleUiDoesNotExposeMobmen": true,
+    "mercadoPagoSolidYellowReference": true,
+    "abacatePayGreenReference": true
+  }
+}

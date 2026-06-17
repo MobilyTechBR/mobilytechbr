@@ -253,4 +253,7 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Correcao aplicada na fonte `data/phase2-finalists.json`: 8 ocorrencias antigas foram trocadas por `Ver oferta`; `scripts/build_phase2_hybrid.py` tambem foi ajustado para nao reintroduzir o rotulo antigo em regeneracoes legadas.
 - Site regenerado por `scripts/build_phase2_ibuy_style.py`.
 - QA local salvo em `docs/qa/final-production-2026-06-17-26f5d35/local-post-finds-fix-qa.json` passou: paginas publicas existem, `fase2/montagem.html` e o caminho correto, nao ha `monte-seu-pc.html`, nao ha `Ver oferta no Mercado Livre`, 166 assets sem quebrados/zero byte, login/conta presentes, cupom nao aparece como texto visivel e Mercado Pago/Abacate Pay seguem com cores solidas.
-- Pendente: publicar esta ultima correcao, aguardar Vercel `READY` e rodar smoke production com a mesma matriz.
+- Publicacao: commit `83a70d7` publicou a correcao principal do Finds; commit `eb743c7` limpou tambem o HTML privado usado no corpo do 404 de `/private/admin/index.html`, removendo a ultima ocorrencia antiga em respostas verificadas.
+- Deploy final `dpl_Gr7md1zmFFoSSP2CSYpZWRSDLFtn` ficou `READY` em producao.
+- Smoke production salvo em `docs/qa/final-production-2026-06-17-26f5d35/production-post-finds-fix-qa.json` passou: paginas publicas 200, `/admin` 401, `/private/admin/index.html` 404, APIs de conta/pedidos/checkouts/webhooks com codigos esperados, data JSONs 200, 167 assets sem quebrados/zero byte, `Ver oferta no Mercado Livre` ausente, `Ver oferta` e logo Mercado Livre presentes, cupom nao exposto na UI, Mercado Pago amarelo solido e Abacate Pay verde solido.
+- Logs runtime Vercel do deploy final, janela de 30 minutos, sem `error`/`fatal`.
