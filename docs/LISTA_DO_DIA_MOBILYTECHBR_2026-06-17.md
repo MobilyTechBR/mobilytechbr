@@ -72,3 +72,5 @@
 - Aba `Pedidos` da Planilha OLX teve removidas somente as linhas falsas `pedido-1781657995494` e `pedido-1781658045002`; `Vendas_PCs` e `Resumo_Mensal` nao foram alteradas.
 - Checkout direto dos itens de fornecedor foi bloqueado quando nao houver frete exato validado fornecedor-cliente.
 - Suporte tecnico CJ adicionado em `lib/cj-dropshipping.js`: o sistema so aceita frete CJ se houver token CJ, SKU/VID CJ e taxa USD-BRL configurada; sem isso, segue bloqueado.
+
+- Regra adicional salva em 2026-06-17: se Computer Use falhar em tarefas MobilyTech BR, tentar recuperar/reiniciar/corrigir antes de concluir bloqueio; antes do relatorio final, retentar e avisar por e-mail se voltou ou nao.
