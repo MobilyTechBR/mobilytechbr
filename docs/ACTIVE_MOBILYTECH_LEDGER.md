@@ -262,7 +262,7 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 
 - Antes de editar, foi criado backup em `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_pre_site_content_writer_2026-06-16_233140.zip`.
 - `private/admin/index.html` ganhou botao `Salvar no site` para o editor de textos, destaque e artes do site, mantendo o botao de baixar `site-content.json` como fallback.
-- Nova rota `api/update-site-content.js` exige sessao admin ou `ADMIN_WRITE_TOKEN`, valida o JSON e so tenta gravar `data/site-content.json` no GitHub se existir `GITHUB_CONTENT_WRITE_TOKEN`/token equivalente como segredo de servidor. O token nunca vai para o navegador.
+- A rota `/api/update-site-content` agora fica consolidada em `api/account.js?action=update-site-content`, exige sessao admin ou `ADMIN_WRITE_TOKEN`, valida o JSON e so tenta gravar `data/site-content.json` no GitHub se existir `GITHUB_CONTENT_WRITE_TOKEN`/token equivalente como segredo de servidor. O token nunca vai para o navegador.
 - QA isolado da rota passou: `GET` retorna 405, POST sem admin retorna 401, payload invalido retorna 400 e ausencia de token GitHub retorna 501 seguro com mensagem de fallback. A publicacao real da escrita direta ainda depende de configurar um token GitHub fino em ambiente seguro; sem isso, o painel continua exportando JSON revisado.
 
 ## Atualizacao 2026-06-16 - QA controlado de fornecedor/dropshipping
