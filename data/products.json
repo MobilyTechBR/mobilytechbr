@@ -1,7 +1,90 @@
 [
   {
-    "id": "pc-gamer-i5-gt610",
+    "id": "pc-i7-3770-16gb-gtx550ti-ssd240",
     "active": true,
+    "category": "pc",
+    "title": "PC GAMER i7-3770 / 16GB RAM / GTX 550 Ti + SSD 240GB",
+    "price": 1180,
+    "badge": "NOVO NA OLX",
+    "shipping": {
+      "weightKg": 7
+    },
+    "image": "./assets/olx-2026-06-17/pc-i7-3770-16gb-gtx550ti-ssd240.jpg",
+    "cutout": "./assets/generated/pc-i7-3770-16gb-gtx550ti-ssd240-cutout.png",
+    "photo": "square",
+    "specs": {
+      "processor": "Xeon E3-1230 V2 (i7-3770 equiv.)",
+      "memory": "16GB DDR3 1600MHz",
+      "gpu": "GTX 550 Ti 1GB GDDR5",
+      "powerSupply": "FXSE 500W PFC ativo",
+      "storage": "SSD Kingston 240GB"
+    },
+    "links": {
+      "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-i7-3770-16gb-ram-gtx-550-ti-ssd-240gb--pc-novo-1511047471"
+    },
+    "featured": true
+  },
+  {
+    "id": "pc-i7-3770-8gb-gtx550ti-ssd120",
+    "active": true,
+    "category": "pc",
+    "title": "PC GAMER i7-3770 / 8GB RAM / GTX 550 Ti + SSD 120GB",
+    "price": 1000,
+    "old": 1050,
+    "badge": "NOVO NA OLX",
+    "shipping": {
+      "weightKg": 7
+    },
+    "image": "./assets/olx-2026-06-17/pc-i7-3770-8gb-gtx550ti-ssd120.jpg",
+    "cutout": "./assets/generated/pc-i7-3770-8gb-gtx550ti-ssd120-cutout.png",
+    "gallery": [
+      {
+        "image": "./assets/olx-2026-06-17/pc-i7-3770-8gb-gtx550ti-ssd120-gallery-1.jpg",
+        "cutout": "./assets/generated/pc-i7-3770-8gb-gtx550ti-ssd120-gallery-1-cutout.png"
+      }
+    ],
+    "photo": "square",
+    "specs": {
+      "processor": "Xeon E3-1230 V2 (i7-3770 equiv.)",
+      "memory": "8GB DDR3 1600MHz",
+      "gpu": "GTX 550 Ti 1GB GDDR5",
+      "powerSupply": "ATX 500W bivolt",
+      "storage": "SSD SATA 120GB"
+    },
+    "links": {
+      "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-i7-3770-8gb-ram-gtx-550-ti-ssd--pc-novo-1510522243"
+    },
+    "featured": true
+  },
+  {
+    "id": "pc-i7-3770-16gb-gtx750ti-ssd256",
+    "active": true,
+    "category": "pc",
+    "title": "PC GAMER i7-3770 / 16GB RAM / GTX 750 Ti + SSD 256GB",
+    "price": 1250,
+    "old": 1500,
+    "badge": "NOVO NA OLX",
+    "shipping": {
+      "weightKg": 7
+    },
+    "image": "./assets/olx-2026-06-17/pc-i7-3770-16gb-gtx750ti-ssd256.jpg",
+    "cutout": "./assets/generated/pc-i7-3770-16gb-gtx750ti-ssd256-cutout.png",
+    "photo": "square",
+    "specs": {
+      "processor": "Xeon E3-1230 V2 (i7-3770 equiv.)",
+      "memory": "16GB DDR3 Dual Channel 1600MHz",
+      "gpu": "GTX 750 Ti 2GB GDDR5",
+      "powerSupply": "EVNet 750W 80 Plus Bronze PFC ativo",
+      "storage": "SSD Crucial 240GB"
+    },
+    "links": {
+      "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-i7-3770-16gb-ram-gtx-750-ti-ssd-256gb-pc-novo-1509870597"
+    },
+    "featured": true
+  },
+  {
+    "id": "pc-gamer-i5-gt610",
+    "active": false,
     "category": "pc",
     "title": "PC GAMER INTEL I5 / 8GB RAM / GT 610 / SSD 120GB",
     "price": 800,
@@ -34,7 +117,7 @@
       "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-intel-i5-3-8gb-ram-gt-610-fonte-750w-80plus-ssd-120gb-pc-novo-1507876354",
       "facebook": "https://www.facebook.com/share/17zY7NvcBB/"
     },
-    "featured": true
+    "featured": false
   },
   {
     "id": "ssd-240gb-pny-sata3",
@@ -197,7 +280,7 @@
   },
   {
     "id": "pcryzen-5-3600",
-    "active": true,
+    "active": false,
     "category": "pc",
     "title": "PC GAMER RYZEN 5 3600X",
     "price": 4500,
@@ -212,11 +295,11 @@
       "powerSupply": "700W EVGA 80 Plus White",
       "storage": "SSD 480GB"
     },
-    "featured": true
+    "featured": false
   },
   {
     "id": "pcgameri53330gtx550ti",
-    "active": true,
+    "active": false,
     "category": "pc",
     "title": "PC GAMER i5 3º / 8GB RAM / GTX 550 Ti + SSD 128GB",
     "price": 1000,
@@ -253,7 +336,7 @@
         }
       ]
     },
-    "featured": true
+    "featured": false
   },
   {
     "id": "find-case-ssd-nvme",

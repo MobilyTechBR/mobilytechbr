@@ -11,6 +11,20 @@ OUTPUT_DIR = ROOT / "assets" / "generated"
 MAX_EDGE = 2200
 TRIM_PADDING_RATIO = 0.045
 TRIM_MIN_PADDING = 16
+HEIF_SUPPORT_REGISTERED = False
+
+
+def register_heif_support():
+    global HEIF_SUPPORT_REGISTERED
+    if HEIF_SUPPORT_REGISTERED:
+        return
+    try:
+        from pillow_heif import register_heif_opener
+
+        register_heif_opener()
+        HEIF_SUPPORT_REGISTERED = True
+    except Exception:
+        HEIF_SUPPORT_REGISTERED = False
 
 
 def slugify(value):
@@ -190,6 +204,7 @@ def generate_cutouts(jobs):
     from PIL import Image
     from rembg import new_session, remove
 
+    register_heif_support()
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     session = new_session()
 

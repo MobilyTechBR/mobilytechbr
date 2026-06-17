@@ -3,7 +3,12 @@ media:
   output: ./assets
   categories:
     - image
+  extensions: [png, jpg, jpeg, webp, gif, svg, heic, heif]
   rename: safe
+
+settings:
+  content:
+    merge: true
 
 content:
   - name: automationSettings
@@ -179,12 +184,22 @@ content:
         type: string
         list: true
         description: "Opcional. Exemplo: NVINET 750W."
-  - name: products
-    label: Anuncios e produtos
+  - &productEditor
+    name: pcProducts
+    label: Anuncios de PCs
     type: file
     path: data/products.json
     format: json
     list: true
+    view:
+      fields: [category, title, price, active]
+      primary: title
+      sort: [category, title, price]
+      search: [id, title, category, badge, specs.processor, specs.gpu, specs.storage]
+      default:
+        search: "pc"
+        sort: title
+        order: asc
     fields:
       - name: id
         label: ID interno
@@ -204,11 +219,21 @@ content:
         default: pc
         options:
           values:
-            - pc
-            - ssd
-            - fonte
-            - hardware
-        description: "Use pc para computadores completos, ssd para armazenamento, fonte para fontes de alimentacao e hardware para outros itens."
+            - name: pc
+              label: PC completo
+            - name: ssd
+              label: SSD / armazenamento
+            - name: fonte
+              label: Fonte de alimentacao
+            - name: hardware
+              label: Hardware / peca avulsa
+            - name: dropshipping
+              label: Dropshipping e afiliados
+            - name: affiliate
+              label: Afiliado / recomendacao
+            - name: finds
+              label: MobilyTech Finds publico
+        description: "Classificacao operacional. PCs usam pc; hardware local usa ssd, fonte ou hardware; itens de fornecedor usam dropshipping/affiliate/finds."
       - name: title
         label: Titulo
         type: string
@@ -437,3 +462,27 @@ content:
         label: Destaque interno
         type: boolean
         default: false
+  - <<: *productEditor
+    name: hardwareProducts
+    label: Anuncios de hardware
+    view:
+      fields: [category, title, price, active]
+      primary: title
+      sort: [category, title, price]
+      search: [id, title, category, badge, specs.brand, specs.model, specs.storage, specs.wattage]
+      default:
+        search: "ssd"
+        sort: title
+        order: asc
+  - <<: *productEditor
+    name: dropshippingAffiliateProducts
+    label: Dropshipping e afiliados
+    view:
+      fields: [category, title, price, active]
+      primary: title
+      sort: [category, title, price]
+      search: [id, title, category, badge, supplierPlatform, fulfillmentMode, sourceTable]
+      default:
+        search: "dropshipping"
+        sort: title
+        order: asc

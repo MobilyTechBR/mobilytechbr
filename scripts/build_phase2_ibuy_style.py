@@ -861,7 +861,7 @@ def css() -> str:
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap;min-width:0}.brand img{width:44px;height:44px;object-fit:contain;flex:0 0 auto}.brand span{overflow:hidden;text-overflow:ellipsis}
     .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
-    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:9px;font-weight:1000}.google-login:before{content:"G";width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid #dfe5ef;color:#4285f4;display:grid;place-items:center;font-weight:1000}.microsoft-login:before{content:"";width:22px;height:22px;background:linear-gradient(90deg,#f25022 0 49%,transparent 49% 51%,#7fba00 51%);box-shadow:0 11px 0 #00a4ef,12px 11px 0 #ffb900}.microsoft-login:after{content:"";width:0}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
+    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45;transform-origin:top right;animation:account-popover-in .16s ease-out both}.account-popover.is-closing{animation:account-popover-out .12s ease-in both}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}@keyframes account-popover-in{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes account-popover-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:9px;font-weight:1000}.google-login:before{content:"G";width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid #dfe5ef;color:#4285f4;display:grid;place-items:center;font-weight:1000}.microsoft-login:before{content:"";width:22px;height:22px;background:linear-gradient(90deg,#f25022 0 49%,transparent 49% 51%,#7fba00 51%);box-shadow:0 11px 0 #00a4ef,12px 11px 0 #ffb900}.microsoft-login:after{content:"";width:0}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
     main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}
     .hero-slider:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 84%,rgba(255,255,255,.26),transparent 26%),radial-gradient(circle at 82% 20%,rgba(255,255,255,.25),transparent 20%);pointer-events:none}
     .hero-copy{position:relative;z-index:2;max-width:620px}.hero-copy h1{font-size:48px;line-height:1.02;margin:0 0 18px;font-weight:1000;letter-spacing:0}.hero-copy p{font-size:21px;font-weight:800;margin:0 0 26px;max-width:620px}
@@ -888,8 +888,9 @@ def css() -> str:
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
 .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
     .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.account-popover,.account-popover.is-closing{animation:none}.btn,.service-panel-image,.cart-drawer,.toast,.account-action span{transition:none}}
     @media (max-width:1100px){
-      .nav-shell{grid-template-columns:auto 1fr auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/4;order:3;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.account-menu-wrap{display:none}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid,.account-layout{grid-template-columns:1fr}
+      .nav-shell{grid-template-columns:auto 1fr auto auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/5;order:4;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.account-menu-wrap{display:flex;justify-self:end}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid,.account-layout{grid-template-columns:1fr}
     }
     @media (max-width:680px){
       body{font-size:14px}
@@ -1032,7 +1033,13 @@ def js(products, finalists, addons, swaps) -> str:
     const money = (value) => new Intl.NumberFormat("pt-BR", {{ style:"currency", currency:"BRL" }}).format(Number(value || 0));
     const norm = (value) => String(value || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
     const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}}[char]));
-    const productById = (id) => DATA.products.find((item) => item.id === id);
+    const productById = (id) => DATA.products.find((item) => item.id === id && item.active !== false);
+    function sanitizeCart() {{
+      const before = cart.length;
+      cart = cart.filter((item) => productById(item.productId));
+      if (before !== cart.length) localStorage.setItem(cartKey, JSON.stringify(cart));
+    }}
+    sanitizeCart();
     const ROUTES = {{
       home: assetBase + "index.html",
       ofertas: assetBase + "fase2/ofertas.html",
@@ -1766,20 +1773,45 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const text = `Ola, quero ajuda para acompanhar meu pedido MobilyTech BR. Pedido: ${{order}}. E-mail: ${{email}}.`;
       window.open(`https://wa.me/5511954801967?text=${{encodeURIComponent(text)}}`, "_blank");
     }}
+    function openAccountPopover() {{
+      const popover = $("#accountPopover");
+      const button = $("#accountMenuButton");
+      if (!popover || !button) return;
+      popover.classList.remove("is-closing");
+      popover.hidden = false;
+      button.setAttribute("aria-expanded", "true");
+    }}
+    function closeAccountPopover(immediate=false) {{
+      const popover = $("#accountPopover");
+      const button = $("#accountMenuButton");
+      if (!popover || popover.hidden) {{
+        button?.setAttribute("aria-expanded", "false");
+        return;
+      }}
+      button?.setAttribute("aria-expanded", "false");
+      if (immediate || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {{
+        popover.classList.remove("is-closing");
+        popover.hidden = true;
+        return;
+      }}
+      popover.classList.add("is-closing");
+      window.setTimeout(() => {{
+        popover.hidden = true;
+        popover.classList.remove("is-closing");
+      }}, 130);
+    }}
     document.addEventListener("click", (event) => {{
       const accountButton = event.target.closest("#accountMenuButton");
       const accountWrap = event.target.closest(".account-menu-wrap");
       if (accountButton) {{
         const popover = $("#accountPopover");
         const open = popover?.hidden === false;
-        if (popover) popover.hidden = open;
-        accountButton.setAttribute("aria-expanded", open ? "false" : "true");
+        if (open) closeAccountPopover();
+        else openAccountPopover();
         return;
       }}
       if (!accountWrap) {{
-        const popover = $("#accountPopover");
-        if (popover) popover.hidden = true;
-        $("#accountMenuButton")?.setAttribute("aria-expanded", "false");
+        closeAccountPopover();
       }}
       const searchResult = event.target.closest("[data-search-index]");
       if (searchResult) {{
@@ -1844,9 +1876,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     }});
     document.addEventListener("keydown", (event) => {{
       if (event.key !== "Escape") return;
-      const popover = $("#accountPopover");
-      if (popover) popover.hidden = true;
-      $("#accountMenuButton")?.setAttribute("aria-expanded", "false");
+      closeAccountPopover();
     }});
     $$(".filter-chip").forEach((button) => button.addEventListener("click", () => {{
       $$(".filter-chip").forEach((item) => item.classList.remove("active"));

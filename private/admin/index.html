@@ -351,6 +351,70 @@
         font-weight: 900;
       }
       .content-grid textarea { min-height: 78px; resize: vertical; text-transform: none; letter-spacing: 0; }
+      .content-image-field {
+        display: grid;
+        gap: 10px;
+      }
+      .content-image-field.wide { grid-column: 1 / -1; }
+      .media-control {
+        border: 1px solid #d8dde7;
+        border-radius: 14px;
+        background: #fff;
+        padding: 12px;
+        display: grid;
+        gap: 10px;
+      }
+      .media-upload-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+        align-items: center;
+      }
+      .content-grid .media-upload-row input[type="file"] {
+        min-width: 0;
+        padding: 9px;
+        font-size: 12px;
+      }
+      .media-preview {
+        min-height: 116px;
+        border: 1px dashed #cfd8e3;
+        border-radius: 12px;
+        background: #f8fafc;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        color: #59616d;
+        font-size: 12px;
+        font-weight: 1000;
+        text-align: center;
+        padding: 10px;
+      }
+      .media-preview img {
+        width: 100%;
+        max-height: 180px;
+        object-fit: contain;
+        display: block;
+      }
+      .media-hint {
+        margin: 0;
+        color: #6b7280;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: none;
+        line-height: 1.35;
+      }
+      .media-status {
+        margin: 0;
+        min-height: 18px;
+        color: #19435a;
+        font-size: 11px;
+        font-weight: 1000;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+      .media-status.is-error { color: #9b1515; }
+      .media-status.is-ok { color: #047d74; }
       .editor-note {
         padding: 14px 22px 18px;
         color: #6d5108;
@@ -514,8 +578,7 @@
         .mobile-copy { display: inline; }
         html, body { width: 100%; max-width: 100vw; overflow-x: hidden; }
         .topbar, .shell, .hero, main, section, article, footer { max-width: 100vw; overflow-x: hidden; }
-        .topbar-inner, .shell { padding-left: 14px; padding-right: 14px; }
-        .topbar-inner, .shell { width: calc(100% - 92px); margin-left: 0; margin-right: auto; }
+        .topbar-inner, .shell { padding-left: 14px; padding-right: 14px; width: 100%; margin-left: 0; margin-right: 0; }
         .topbar-inner { align-items: flex-start; flex-direction: column; overflow-wrap: anywhere; font-size: 11.5px; line-height: 1.35; }
         .topbar-inner > * { width: 100%; flex: 0 0 auto; }
         .topbar-inner > *, .hero h1, .hero p, .hero-card p, .section-head p, .card p, .card span, .status-pill {
@@ -535,6 +598,13 @@
         .hero-card { padding: 20px; }
         .hero-card strong { font-size: 25px; }
         .hero-card p { font-size: 11.5px; overflow-wrap: anywhere; }
+        .content-fieldset { padding: 14px; border-radius: 14px; }
+        .content-grid { grid-template-columns: 1fr; }
+        .content-grid .wide,
+        .content-image-field,
+        .content-image-field.wide { grid-column: 1 / -1; width: 100%; }
+        .media-upload-row { grid-template-columns: 1fr; }
+        .media-preview { min-height: 96px; }
         .stats { grid-template-columns: 1fr; gap: 10px; }
         .stat-card { min-height: 116px; padding: 16px; }
         .stat-card strong { font-size: 30px; }
@@ -883,6 +953,9 @@
       let productsState = [];
       let siteContentState = null;
       let lastSalePayload = null;
+      const MEDIA_ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif,image/heic-sequence,image/heif-sequence";
+      const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
+      const mediaPreviewUrls = new Map();
 
       function escapeHtml(value = "") {
         return String(value)
@@ -1045,6 +1118,127 @@
         return `<label class="${className}">${label}<input data-content-path="${escapeHtml(path)}" value="${escapeHtml(value)}"></label>`;
       }
 
+      function adminPreviewSrc(value) {
+        const raw = String(value || "").trim();
+        if (!raw) return "";
+        if (/^(https?:|data:|blob:|\/)/i.test(raw)) return raw;
+        return raw.replace(/^\.\//, "../").replace(/^assets\//, "../assets/");
+      }
+
+      function isHeicPath(value) {
+        return /\.(heic|heif)$/i.test(String(value || "").split("?")[0]);
+      }
+
+      function mediaPreviewHtml(value) {
+        const src = adminPreviewSrc(value);
+        if (!src) return `<span>Nenhuma imagem selecionada.</span>`;
+        if (isHeicPath(value)) return `<span>HEIC/HEIF salvo. Alguns navegadores nao mostram preview, mas o arquivo fica aceito.</span>`;
+        return `<img src="${escapeHtml(src)}" alt="">`;
+      }
+
+      function contentImageInput(path, label, className = "") {
+        const value = getPathValue(siteContentState, path) || "";
+        const fieldClass = ["content-image-field", className].filter(Boolean).join(" ");
+        return `
+          <div class="${fieldClass}" data-image-field="${escapeHtml(path)}">
+            <label>${label}<input data-content-path="${escapeHtml(path)}" value="${escapeHtml(value)}" placeholder="./assets/nome-da-imagem.png"></label>
+            <div class="media-control">
+              <div class="media-preview" data-content-preview="${escapeHtml(path)}">${mediaPreviewHtml(value)}</div>
+              <div class="media-upload-row">
+                <input type="file" accept="${MEDIA_ACCEPT}" data-content-upload-path="${escapeHtml(path)}">
+                <button class="btn btn-dark" type="button" data-content-upload-trigger="${escapeHtml(path)}">Enviar imagem</button>
+              </div>
+              <p class="media-hint">JPG, PNG, WebP, GIF, HEIC ou HEIF ate 8 MB. O envio usa sua sessao segura do painel.</p>
+              <p class="media-status" data-content-upload-status="${escapeHtml(path)}"></p>
+            </div>
+          </div>
+        `;
+      }
+
+      function nodeByDataset(selector, datasetName, value) {
+        return Array.from(document.querySelectorAll(selector)).find((node) => node.dataset?.[datasetName] === value);
+      }
+
+      function setMediaStatus(path, message, type = "info") {
+        const node = nodeByDataset("[data-content-upload-status]", "contentUploadStatus", path);
+        if (!node) return;
+        node.textContent = message || "";
+        node.classList.toggle("is-ok", type === "ok");
+        node.classList.toggle("is-error", type === "error");
+      }
+
+      function setMediaPreview(path, value, file) {
+        const preview = nodeByDataset("[data-content-preview]", "contentPreview", path);
+        if (!preview) return;
+        const previousUrl = mediaPreviewUrls.get(path);
+        if (previousUrl) URL.revokeObjectURL(previousUrl);
+        mediaPreviewUrls.delete(path);
+        if (file && !isHeicPath(file.name || value)) {
+          const objectUrl = URL.createObjectURL(file);
+          mediaPreviewUrls.set(path, objectUrl);
+          preview.innerHTML = `<img src="${escapeHtml(objectUrl)}" alt="">`;
+          return;
+        }
+        preview.innerHTML = mediaPreviewHtml(value);
+      }
+
+      function readFileAsBase64(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || "").split(",")[1] || "");
+          reader.onerror = () => reject(reader.error || new Error("Nao foi possivel ler o arquivo."));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function uploadContentImage(path) {
+        const input = nodeByDataset("[data-content-upload-path]", "contentUploadPath", path);
+        const file = input?.files?.[0];
+        if (!file) {
+          setMediaStatus(path, "Escolha uma imagem primeiro.", "error");
+          return;
+        }
+        if (file.size > MEDIA_MAX_BYTES) {
+          setMediaStatus(path, "Imagem muito grande. Use ate 8 MB.", "error");
+          return;
+        }
+        try {
+          const token = $("#adminWriteToken")?.value || "";
+          setMediaStatus(path, "Enviando imagem...", "info");
+          const dataBase64 = await readFileAsBase64(file);
+          const response = await fetch("../api/upload-media", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Token": token
+            },
+            body: JSON.stringify({
+              filename: file.name,
+              mimeType: file.type,
+              dataBase64
+            })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false) {
+            setMediaStatus(path, result.error || "Nao foi possivel enviar a imagem.", "error");
+            return;
+          }
+          const publicPath = result.publicPath || (result.path ? `./${result.path}` : "");
+          if (!publicPath) {
+            setMediaStatus(path, "Imagem enviada, mas sem caminho publico retornado.", "error");
+            return;
+          }
+          setPathValue(siteContentState, path, publicPath);
+          const textInput = nodeByDataset("[data-content-path]", "contentPath", path);
+          if (textInput) textInput.value = publicPath;
+          setMediaPreview(path, publicPath, file);
+          const shortSha = result.commitSha ? ` Commit ${String(result.commitSha).slice(0, 7)}.` : "";
+          setMediaStatus(path, `${result.message || "Imagem enviada."}${shortSha}`, "ok");
+        } catch (error) {
+          setMediaStatus(path, error.message || "Erro ao enviar imagem.", "error");
+        }
+      }
+
       function productOptions(selectedId) {
         const ownProducts = productsState
           .filter((item) => item && item.active !== false && !["affiliate", "dropshipping"].includes(item.category))
@@ -1079,7 +1273,7 @@
             <h3>${label}</h3>
             <div class="content-grid">
               ${contentInput(`pages.${key}.title`, "Titulo")}
-              ${contentInput(`pages.${key}.image`, "Imagem/arte")}
+              ${contentImageInput(`pages.${key}.image`, "Imagem/arte")}
               ${contentInput(`pages.${key}.intro`, "Texto", "textarea", "wide")}
             </div>
           </div>
@@ -1104,11 +1298,11 @@
           <div class="content-fieldset">
             <h3>Artes dos servicos</h3>
             <div class="content-grid">
-              ${contentInput("servicePanels.build.image", "Imagem Monte seu PC")}
+              ${contentImageInput("servicePanels.build.image", "Imagem Monte seu PC")}
               ${contentInput("servicePanels.build.label", "Texto acessivel Monte seu PC")}
-              ${contentInput("servicePanels.clean.image", "Imagem Limpeza")}
+              ${contentImageInput("servicePanels.clean.image", "Imagem Limpeza")}
               ${contentInput("servicePanels.clean.label", "Texto acessivel Limpeza")}
-              ${contentInput("servicePanels.cleanFormImage", "Imagem do formulario de limpeza", "input", "wide")}
+              ${contentImageInput("servicePanels.cleanFormImage", "Imagem do formulario de limpeza", "wide")}
             </div>
           </div>
           ${pageFields}
@@ -1414,11 +1608,25 @@
         const path = event.target?.dataset?.contentPath;
         if (!path) return;
         setPathValue(siteContentState, path, event.target.value || "");
+        if (nodeByDataset("[data-content-preview]", "contentPreview", path)) setMediaPreview(path, event.target.value || "");
+      });
+      $("#siteContentEditor")?.addEventListener("click", (event) => {
+        const uploadPath = event.target?.dataset?.contentUploadTrigger;
+        if (!uploadPath) return;
+        uploadContentImage(uploadPath);
       });
       $("#siteContentEditor")?.addEventListener("change", (event) => {
+        const uploadPath = event.target?.dataset?.contentUploadPath;
+        if (uploadPath) {
+          const file = event.target.files?.[0];
+          setMediaPreview(uploadPath, file?.name || "", file);
+          setMediaStatus(uploadPath, file ? "Arquivo selecionado. Clique em Enviar imagem." : "", "info");
+          return;
+        }
         const path = event.target?.dataset?.contentPath;
         if (!path) return;
         setPathValue(siteContentState, path, event.target.value || "");
+        if (nodeByDataset("[data-content-preview]", "contentPreview", path)) setMediaPreview(path, event.target.value || "");
       });
       $("#addFindItem")?.addEventListener("click", addFindItem);
       $("#applyFindMargins")?.addEventListener("click", applyFindMarginDefaults);
