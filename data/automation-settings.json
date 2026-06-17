@@ -37,6 +37,20 @@
       "Amazon",
       "AliExpress"
     ],
-    "preferredOperation": "wix-or-automated-supplier-first-manual-fallback"
+    "preferredOperation": "wix-or-automated-supplier-first-manual-fallback",
+    "checkoutRequiresExactSupplierFreight": true,
+    "defaultFixedFreightDisabledAt": "2026-06-17",
+    "checkoutPolicy": "affiliate-first-until-cj-or-ml-exact-freight",
+    "cjdropshipping": {
+      "enabled": true,
+      "accountStatus": "user-created-account-configuration-in-progress",
+      "freePlanUse": "source-and-map-products-before-checkout",
+      "directCheckoutRule": "only-enable-after-cj-sku-and-exact-logistics-quote-are-validated"
+    },
+    "mercadoLivre": {
+      "enabledForExactFreightCandidates": true,
+      "quoteRule": "use item_id plus customer CEP via Mercado Livre shipping_options before checkout",
+      "fallback": "affiliate-link-only-when-item-id-or-freight-is-not-validated"
+    }
   }
 }

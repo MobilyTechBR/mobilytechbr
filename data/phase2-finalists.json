@@ -34,13 +34,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 119,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "ML local tende a ser mais rapido.",
       "sellerReputation": "+5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech",
@@ -105,15 +107,15 @@
         }
       ],
       "selectedCreative": "./assets/phase2-creatives/case-ssd-nvme-03.jpg",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-case-ssd-nvme",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 70,
       "salePrice": 129,
       "marginPercent": "45.7%",
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -125,7 +127,22 @@
       "sourceRowId": "D01",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
       "backupUrl": "https://cjdropshipping.com/search?keyword=nvme%20ssd%20enclosure",
-      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-case-ssd-nvme-usb-c-10gbps-orico.html?SearchText=case%20ssd%20nvme%20usb%20c%2010gbps%20orico. Backup: https://cjdropshipping.com/search?keyword=nvme%20ssd%20enclosure. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
+      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-case-ssd-nvme-usb-c-10gbps-orico.html?SearchText=case%20ssd%20nvme%20usb%20c%2010gbps%20orico. Backup: https://cjdropshipping.com/search?keyword=nvme%20ssd%20enclosure. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://meli.la/1DNJP2s",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ]
     },
     {
       "id": "case-ssd-sata",
@@ -140,13 +157,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 69,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Depende do vendedor; produto local facilita entrega rapida",
       "sellerReputation": "+10 mil vendidos, 4.8/5 com 906 opinioes; vendedor MercadoLider em oferta vista",
@@ -211,15 +230,15 @@
         }
       ],
       "selectedCreative": "./assets/phase2-creatives/case-ssd-sata-03.jpg",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-case-ssd-sata",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 25,
       "salePrice": 59,
       "marginPercent": "57.6%",
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -231,7 +250,22 @@
       "sourceRowId": "D02",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
       "backupUrl": "https://cjdropshipping.com/search?keyword=2.5%20ssd%20enclosure",
-      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-case-ssd-sata-2-5-usb-3-0.html?SearchText=case%20ssd%20sata%202.5%20usb%203.0. Backup: https://cjdropshipping.com/search?keyword=2.5%20ssd%20enclosure. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
+      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-case-ssd-sata-2-5-usb-3-0.html?SearchText=case%20ssd%20sata%202.5%20usb%203.0. Backup: https://cjdropshipping.com/search?keyword=2.5%20ssd%20enclosure. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://meli.la/27TQAft",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ]
     },
     {
       "id": "fone-kz-castor",
@@ -338,13 +372,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 69,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Varia por vendedor; kits nacionais tendem a chegar antes",
       "sellerReputation": "Oferta vista de loja Tapcamp com +100 mil vendas",
@@ -409,15 +445,15 @@
         }
       ],
       "selectedCreative": "./assets/phase2-creatives/kit-limpeza-esd-03.jpg",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-kit-limpeza-esd",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 35,
       "salePrice": 79,
       "marginPercent": "55.7%",
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -429,7 +465,22 @@
       "sourceRowId": "D20",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
       "backupUrl": "https://cjdropshipping.com/search?keyword=electronics%20cleaning%20kit",
-      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-kit-limpeza-pc-teclado-antiestatico.html?SearchText=kit%20limpeza%20pc%20teclado%20antiestatico. Backup: https://cjdropshipping.com/search?keyword=electronics%20cleaning%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
+      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-kit-limpeza-pc-teclado-antiestatico.html?SearchText=kit%20limpeza%20pc%20teclado%20antiestatico. Backup: https://cjdropshipping.com/search?keyword=electronics%20cleaning%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://meli.la/2qJ8vr9",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ]
     },
     {
       "id": "mini-aspirador-teclado",
@@ -444,13 +495,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 99,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Produto local com vendedor grande tende a ser operacionalmente simples",
       "sellerReputation": "Loja oficial Costa Atacado, MercadoLider Platinum, +100 mil vendas",
@@ -515,15 +568,15 @@
         }
       ],
       "selectedCreative": "./assets/phase2-creatives/mini-aspirador-teclado-02.jpg",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-mini-aspirador-teclado",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 25,
       "salePrice": 59,
       "marginPercent": "57.6%",
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -535,13 +588,28 @@
       "sourceRowId": "D19",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
       "backupUrl": "https://cjdropshipping.com/search?keyword=keyboard%20vacuum%20cleaner",
-      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-mini-aspirador-teclado-usb-recarregavel.html?SearchText=mini%20aspirador%20teclado%20usb%20recarregavel. Backup: https://cjdropshipping.com/search?keyword=keyboard%20vacuum%20cleaner. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
+      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-mini-aspirador-teclado-usb-recarregavel.html?SearchText=mini%20aspirador%20teclado%20usb%20recarregavel. Backup: https://cjdropshipping.com/search?keyword=keyboard%20vacuum%20cleaner. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://produto.mercadolivre.com.br/MLB-3409651937-mini-aspirador-de-po-usb-computador-teclado-house-tools-_JM",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ]
     },
     {
       "id": "hub-usb-c",
       "title": "Hub USB-C 4 portas para notebook e celular",
       "niche": "Conectividade",
-      "platform": "Mercado Livre / Amazon",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539",
       "currentPrice": "R$19,27 em oferta Chrome Technology vista em busca",
       "shipping": {
@@ -550,13 +618,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 79,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Boa opcao para afiliado por marketplaces locais",
       "sellerReputation": "Loja oficial Chrome Technology em oferta vista",
@@ -621,15 +691,15 @@
         }
       ],
       "selectedCreative": "./assets/phase2-creatives/hub-usb-c-03.jpg",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-hub-usb-c",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 30,
       "salePrice": 69,
       "marginPercent": "56.5%",
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -641,13 +711,28 @@
       "sourceRowId": "D04",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20hub%204%20port",
-      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-hub-usb-c-4-portas-usb-3-0.html?SearchText=hub%20usb%20c%204%20portas%20usb%203.0. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20hub%204%20port. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
+      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-hub-usb-c-4-portas-usb-3-0.html?SearchText=hub%20usb%20c%204%20portas%20usb%203.0. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20hub%204%20port. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://meli.la/2GBaCfz",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ]
     },
     {
       "id": "suporte-gpu-antisag",
       "title": "Suporte anti-sag para placa de video",
       "niche": "PC gamer e estetica",
-      "platform": "Mercado Livre / AliExpress",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362",
       "currentPrice": "Ofertas vistas de R$19,90 a R$134,99 conforme marca/RGB",
       "shipping": {
@@ -656,13 +741,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 89,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
-        "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "region": "BR",
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Melhor testar fornecedor nacional ou afiliado antes",
       "sellerReputation": "Algumas ofertas tem poucas avaliacoes; precisa escolha cuidadosa",
@@ -727,16 +814,16 @@
         }
       ],
       "selectedCreative": "./assets/phase2-creatives/suporte-gpu-antisag-03.jpg",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-suporte-gpu-antisag",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 45,
       "salePrice": 89,
       "marginPercent": "49.4%",
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "supplierRegion": "INTL",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
         "defaultPercent": 25,
@@ -747,7 +834,22 @@
       "sourceRowId": "D25",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
       "backupUrl": "https://cjdropshipping.com/search?keyword=gpu%20support%20bracket",
-      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-gpu-support-bracket-rgb.html?SearchText=gpu%20support%20bracket%20rgb. Backup: https://cjdropshipping.com/search?keyword=gpu%20support%20bracket. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
+      "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-gpu-support-bracket-rgb.html?SearchText=gpu%20support%20bracket%20rgb. Backup: https://cjdropshipping.com/search?keyword=gpu%20support%20bracket. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://meli.la/1ycmCJ9",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ]
     },
     {
       "id": "keycaps-pbt",
@@ -1029,7 +1131,7 @@
       "id": "adaptador-bluetooth-usb-5",
       "title": "Adaptador Bluetooth USB 5.0 para PC",
       "niche": "Conectividade e setup",
-      "platform": "Mercado Livre / Amazon",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://lista.mercadolivre.com.br/adaptador-bluetooth-usb-5.0-pc",
       "currentPrice": "Ofertas geralmente entre R$20 e R$35; validar vendedor ativo antes de campanha",
       "shipping": {
@@ -1038,13 +1140,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 49,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Marketplaces nacionais tendem a entregar rapido; AliExpress podem variar",
       "sellerReputation": "Buscar vendedor com alta reputacao e bom volume de vendas antes de escalar",
@@ -1057,9 +1161,9 @@
       "margin": "Margem bruta alvo acima de 40% antes de taxas",
       "confidence": "Media-alta",
       "risk": "Compatibilidade com Windows e qualidade do chip precisam estar claras para reduzir suporte.",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-adaptador-bluetooth-usb-5",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 25,
       "salePrice": 59,
       "marginPercent": "57.6%",
@@ -1100,8 +1204,8 @@
       "selectedCreative": "./assets/phase2-creatives/adaptador-bluetooth-usb-5-03.svg",
       "selectedCreativeVariant": 3,
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -1119,13 +1223,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=adaptador%20bluetooth%20usb&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-adaptador-bluetooth-5-3-usb-pc.html?SearchText=adaptador%20bluetooth%205.3%20usb%20pc",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20bluetooth%205.3%20adapter"
-      }
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://lista.mercadolivre.com.br/adaptador-bluetooth-usb-5.0-pc",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://lista.mercadolivre.com.br/adaptador-bluetooth-usb-5.0-pc"
     },
     {
       "id": "mousepad-gamer-rgb-xl",
       "title": "Mousepad gamer RGB XL",
       "niche": "Setup gamer e estetica",
-      "platform": "Mercado Livre / AliExpress",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://lista.mercadolivre.com.br/mousepad-gamer-rgb-grande",
       "currentPrice": "Ofertas variam por tamanho; validar SKU entre R$45 e R$70",
       "shipping": {
@@ -1134,13 +1254,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 129,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
-        "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "region": "BR",
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Fornecedor nacional reduz risco de prazo e devolucao",
       "sellerReputation": "Escolher anuncio com muitas avaliacoes e fotos reais de compradores",
@@ -1153,9 +1275,9 @@
       "margin": "Margem bruta alvo de 25% a 40% antes de taxas",
       "confidence": "Media",
       "risk": "Tamanho e qualidade do LED variam muito; especificar dimensoes com clareza.",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-mousepad-gamer-rgb-xl",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 60,
       "salePrice": 99,
       "marginPercent": "39.4%",
@@ -1196,9 +1318,9 @@
       "selectedCreative": "./assets/phase2-creatives/mousepad-gamer-rgb-xl-03.svg",
       "selectedCreativeVariant": 3,
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "supplierRegion": "INTL",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
         "defaultPercent": 25,
@@ -1215,13 +1337,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=mousepad%20rgb&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-mousepad-gamer-rgb-grande.html?SearchText=mousepad%20gamer%20rgb%20grande",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=rgb%20gaming%20mouse%20pad"
-      }
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://lista.mercadolivre.com.br/mousepad-gamer-rgb-grande",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://lista.mercadolivre.com.br/mousepad-gamer-rgb-grande"
     },
     {
       "id": "cabo-displayport-14-2m",
       "title": "Cabo DisplayPort 1.4 2m",
       "niche": "Video e monitores",
-      "platform": "Mercado Livre / Amazon",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://lista.mercadolivre.com.br/cabo-displayport-1.4-2m",
       "currentPrice": "Ofertas vistas em faixas variadas; buscar cabo 1.4 com boa avaliacao",
       "shipping": {
@@ -1230,13 +1368,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 69,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Marketplaces locais costumam entregar rapido para capitais",
       "sellerReputation": "Priorizar anuncios com especificacao 1.4, 4K/144Hz e boas avaliacoes",
@@ -1249,9 +1389,9 @@
       "margin": "Margem bruta alvo de 20% a 35% antes de taxas",
       "confidence": "Media-alta",
       "risk": "Evitar promessa de resolucao/Hz sem confirmar especificacao real do cabo.",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-cabo-displayport-14-2m",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 68,
       "salePrice": 99,
       "marginPercent": "31.3%",
@@ -1292,8 +1432,8 @@
       "selectedCreative": "./assets/phase2-creatives/cabo-displayport-14-2m-03.svg",
       "selectedCreativeVariant": 3,
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -1311,13 +1451,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=cabo%20displayport%201.4&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-cabo-displayport-1-4-8k.html?SearchText=cabo%20displayport%201.4%208k",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=displayport%201.4%20cable"
-      }
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://lista.mercadolivre.com.br/cabo-displayport-1.4-2m",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://lista.mercadolivre.com.br/cabo-displayport-1.4-2m"
     },
     {
       "id": "adaptador-wifi-dual-band-usb",
       "title": "Adaptador Wi-Fi USB dual band",
       "niche": "Conectividade e rede",
-      "platform": "Mercado Livre / AliExpress",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://lista.mercadolivre.com.br/adaptador-wifi-usb-dual-band",
       "currentPrice": "Ofertas comuns entre R$25 e R$45; validar chipset e antena",
       "shipping": {
@@ -1326,13 +1482,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 59,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
-        "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "region": "BR",
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Fornecedor nacional ajuda muito no suporte e garantia",
       "sellerReputation": "Escolher vendedor com bom historico em informatica/conectividade",
@@ -1345,9 +1503,9 @@
       "margin": "Margem bruta alvo acima de 35% antes de taxas",
       "confidence": "Alta",
       "risk": "Drivers e compatibilidade podem gerar duvida; deixar instrucoes simples.",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-adaptador-wifi-dual-band-usb",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 35,
       "salePrice": 79,
       "marginPercent": "55.7%",
@@ -1388,9 +1546,9 @@
       "selectedCreative": "./assets/phase2-creatives/adaptador-wifi-dual-band-usb-03.svg",
       "selectedCreativeVariant": 3,
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "supplierRegion": "INTL",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
         "defaultPercent": 25,
@@ -1407,13 +1565,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=adaptador%20wifi%20usb&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-adaptador-wifi-usb-dual-band-5ghz.html?SearchText=adaptador%20wifi%20usb%20dual%20band%205ghz",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20wifi%20dual%20band%20adapter"
-      }
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://lista.mercadolivre.com.br/adaptador-wifi-usb-dual-band",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://lista.mercadolivre.com.br/adaptador-wifi-usb-dual-band"
     },
     {
       "id": "suporte-notebook-aluminio",
       "title": "Suporte de notebook em aluminio",
       "niche": "Ergonomia e setup",
-      "platform": "Mercado Livre / Amazon",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://www.mercadolivre.com.br/suporte-notebook-aluminio-dobravel-it-blue-le-066-ajustavel-portatil/p/MLB43880044",
       "currentPrice": "Referencia vista em torno de R$31 em anuncio Mercado Livre, variando por modelo",
       "shipping": {
@@ -1422,13 +1596,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 99,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "delivery": "Fornecedor nacional recomendado para reduzir prazo e trocas",
       "sellerReputation": "Referencia consultada mostrou loja oficial, vendas e avaliacoes do produto; validar antes de campanha",
@@ -1441,9 +1617,9 @@
       "margin": "Margem bruta alvo acima de 40% antes de taxas",
       "confidence": "Media-alta",
       "risk": "Modelos fragilizados podem gerar reclamacao; validar material e dimensoes.",
-      "purchaseMode": "manual-dropshipping",
+      "purchaseMode": "affiliate",
       "productId": "find-suporte-notebook-aluminio",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "supplierCost": 40,
       "salePrice": 89,
       "marginPercent": "55.1%",
@@ -1484,8 +1660,8 @@
       "selectedCreative": "./assets/phase2-creatives/suporte-notebook-aluminio-03.svg",
       "selectedCreativeVariant": 3,
       "shippingCustomerPrice": 29.9,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
       "supplierRegion": "BR",
       "customerPaysShipping": true,
       "marginPolicy": {
@@ -1503,7 +1679,23 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=suporte%20notebook%20vertical&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-suporte-vertical-notebook-aluminio.html?SearchText=suporte%20vertical%20notebook%20aluminio",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=vertical%20laptop%20stand"
-      }
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://www.mercadolivre.com.br/suporte-notebook-aluminio-dobravel-it-blue-le-066-ajustavel-portatil/p/MLB43880044",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://www.mercadolivre.com.br/suporte-notebook-aluminio-dobravel-it-blue-le-066-ajustavel-portatil/p/MLB43880044"
     },
     {
       "id": "dock-station-usb-c-8-em-1-com-hdmi",
@@ -1515,14 +1707,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-dock-station-usb-c-8-em-1-com-hdmi",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D03",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers ou Modalyst",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-hub-usb-c-8-em-1-hdmi-4k.html?SearchText=hub%20usb%20c%208%20em%201%20hdmi%204k",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20hub%20hdmi",
       "currentPrice": "Custo alvo R$ 58.00; preco sugerido R$ 149.00.",
@@ -1542,13 +1734,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 149,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-hub-usb-c-8-em-1-hdmi-4k.html?SearchText=hub%20usb%20c%208%20em%201%20hdmi%204k. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20hub%20hdmi. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1557,6 +1751,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=hub%20usb%20c%20hdmi&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-hub-usb-c-8-em-1-hdmi-4k.html?SearchText=hub%20usb%20c%208%20em%201%20hdmi%204k",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20c%20hub%20hdmi"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-hub-usb-c-8-em-1-hdmi-4k.html?SearchText=hub%20usb%20c%208%20em%201%20hdmi%204k",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-hub-usb-c-8-em-1-hdmi-4k.html?SearchText=hub%20usb%20c%208%20em%201%20hdmi%204k",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1569,14 +1786,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-adaptador-usb-c-para-hdmi-4k",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D05",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-adaptador-usb-c-hdmi-4k.html?SearchText=adaptador%20usb%20c%20hdmi%204k",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20hdmi%20adapter",
       "currentPrice": "Custo alvo R$ 28.00; preco sugerido R$ 89.00.",
@@ -1596,13 +1813,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 89,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-adaptador-usb-c-hdmi-4k.html?SearchText=adaptador%20usb%20c%20hdmi%204k. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20hdmi%20adapter. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1611,6 +1830,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=adaptador%20usb%20c%20hdmi&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-adaptador-usb-c-hdmi-4k.html?SearchText=adaptador%20usb%20c%20hdmi%204k",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20c%20hdmi%20adapter"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-adaptador-usb-c-hdmi-4k.html?SearchText=adaptador%20usb%20c%20hdmi%204k",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-adaptador-usb-c-hdmi-4k.html?SearchText=adaptador%20usb%20c%20hdmi%204k",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1623,14 +1865,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-leitor-sd-microsd-usb-c-usb-a",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D06",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-leitor-cartao-sd-micro-sd-usb-c-usb-a.html?SearchText=leitor%20cartao%20sd%20micro%20sd%20usb%20c%20usb%20a",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20card%20reader",
       "currentPrice": "Custo alvo R$ 18.00; preco sugerido R$ 59.00.",
@@ -1650,13 +1892,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 59,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-leitor-cartao-sd-micro-sd-usb-c-usb-a.html?SearchText=leitor%20cartao%20sd%20micro%20sd%20usb%20c%20usb%20a. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20card%20reader. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1665,6 +1909,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=leitor%20cartao%20sd%20usb%20c&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-leitor-cartao-sd-micro-sd-usb-c-usb-a.html?SearchText=leitor%20cartao%20sd%20micro%20sd%20usb%20c%20usb%20a",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20c%20card%20reader"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-leitor-cartao-sd-micro-sd-usb-c-usb-a.html?SearchText=leitor%20cartao%20sd%20micro%20sd%20usb%20c%20usb%20a",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-leitor-cartao-sd-micro-sd-usb-c-usb-a.html?SearchText=leitor%20cartao%20sd%20micro%20sd%20usb%20c%20usb%20a",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1677,14 +1944,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-mini-switch-hdmi-3x1-4k",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D07",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-switch-hdmi-3x1-4k.html?SearchText=switch%20hdmi%203x1%204k",
       "backupUrl": "https://cjdropshipping.com/search?keyword=hdmi%20switch%203x1",
       "currentPrice": "Custo alvo R$ 25.00; preco sugerido R$ 79.00.",
@@ -1704,13 +1971,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 79,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-switch-hdmi-3x1-4k.html?SearchText=switch%20hdmi%203x1%204k. Backup: https://cjdropshipping.com/search?keyword=hdmi%20switch%203x1. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1719,6 +1988,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=switch%20hdmi%204k&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-switch-hdmi-3x1-4k.html?SearchText=switch%20hdmi%203x1%204k",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=hdmi%20switch%203x1"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-switch-hdmi-3x1-4k.html?SearchText=switch%20hdmi%203x1%204k",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-switch-hdmi-3x1-4k.html?SearchText=switch%20hdmi%203x1%204k",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1731,14 +2023,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-cabo-usb-c-100w-nylon-2m",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D08",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-cabo-usb-c-100w-nylon-2m-e-marker.html?SearchText=cabo%20usb%20c%20100w%20nylon%202m%20e-marker",
       "backupUrl": "https://cjdropshipping.com/search?keyword=100w%20usb%20c%20cable",
       "currentPrice": "Custo alvo R$ 16.00; preco sugerido R$ 59.00.",
@@ -1758,13 +2050,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 59,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-cabo-usb-c-100w-nylon-2m-e-marker.html?SearchText=cabo%20usb%20c%20100w%20nylon%202m%20e-marker. Backup: https://cjdropshipping.com/search?keyword=100w%20usb%20c%20cable. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1773,6 +2067,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=cabo%20usb%20c%20100w&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-cabo-usb-c-100w-nylon-2m-e-marker.html?SearchText=cabo%20usb%20c%20100w%20nylon%202m%20e-marker",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=100w%20usb%20c%20cable"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-cabo-usb-c-100w-nylon-2m-e-marker.html?SearchText=cabo%20usb%20c%20100w%20nylon%202m%20e-marker",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-cabo-usb-c-100w-nylon-2m-e-marker.html?SearchText=cabo%20usb%20c%20100w%20nylon%202m%20e-marker",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1785,14 +2102,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-suporte-headset-rgb-com-usb",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D11",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-suporte-headset-rgb-usb.html?SearchText=suporte%20headset%20rgb%20usb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=rgb%20headset%20stand",
       "currentPrice": "Custo alvo R$ 38.00; preco sugerido R$ 119.00.",
@@ -1812,13 +2129,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 119,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-suporte-headset-rgb-usb.html?SearchText=suporte%20headset%20rgb%20usb. Backup: https://cjdropshipping.com/search?keyword=rgb%20headset%20stand. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1827,6 +2146,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=suporte%20headset%20rgb&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-suporte-headset-rgb-usb.html?SearchText=suporte%20headset%20rgb%20usb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=rgb%20headset%20stand"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-suporte-headset-rgb-usb.html?SearchText=suporte%20headset%20rgb%20usb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-suporte-headset-rgb-usb.html?SearchText=suporte%20headset%20rgb%20usb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1839,14 +2181,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-mouse-bungee-rgb",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D12",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-mouse-bungee-rgb.html?SearchText=mouse%20bungee%20rgb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=rgb%20mouse%20bungee",
       "currentPrice": "Custo alvo R$ 22.00; preco sugerido R$ 79.00.",
@@ -1866,13 +2208,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 79,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-mouse-bungee-rgb.html?SearchText=mouse%20bungee%20rgb. Backup: https://cjdropshipping.com/search?keyword=rgb%20mouse%20bungee. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1881,6 +2225,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=mouse%20bungee&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-mouse-bungee-rgb.html?SearchText=mouse%20bungee%20rgb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=rgb%20mouse%20bungee"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-mouse-bungee-rgb.html?SearchText=mouse%20bungee%20rgb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-mouse-bungee-rgb.html?SearchText=mouse%20bungee%20rgb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1893,14 +2260,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-fita-led-rgb-usb-com-controle",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D14",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-fita-led-rgb-usb-controle.html?SearchText=fita%20led%20rgb%20usb%20controle",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20rgb%20led%20strip",
       "currentPrice": "Custo alvo R$ 18.00; preco sugerido R$ 59.00.",
@@ -1920,13 +2287,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 59,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-fita-led-rgb-usb-controle.html?SearchText=fita%20led%20rgb%20usb%20controle. Backup: https://cjdropshipping.com/search?keyword=usb%20rgb%20led%20strip. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1935,6 +2304,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=fita%20led%20rgb&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-fita-led-rgb-usb-controle.html?SearchText=fita%20led%20rgb%20usb%20controle",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20rgb%20led%20strip"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-fita-led-rgb-usb-controle.html?SearchText=fita%20led%20rgb%20usb%20controle",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-fita-led-rgb-usb-controle.html?SearchText=fita%20led%20rgb%20usb%20controle",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -1947,14 +2339,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-bias-light-led",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D15",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "Mercado Livre / AliExpress",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
       "backupUrl": "https://cjdropshipping.com/search?keyword=tv%20backlight%20led%20usb",
       "currentPrice": "Custo alvo R$ 24.00; preco sugerido R$ 79.00.",
@@ -1974,13 +2366,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 79,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-bias-lighting-led-monitor-tv-usb.html?SearchText=bias%20lighting%20led%20monitor%20tv%20usb. Backup: https://cjdropshipping.com/search?keyword=tv%20backlight%20led%20usb. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -1989,6 +2383,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=led%20monitor%20tv&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-bias-lighting-led-monitor-tv-usb.html?SearchText=bias%20lighting%20led%20monitor%20tv%20usb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=tv%20backlight%20led%20usb"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ml"
       }
     },
     {
@@ -2001,14 +2418,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-luminaria-monitor-light-bar",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D16",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/Modalyst",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-monitor-light-bar-usb-led.html?SearchText=monitor%20light%20bar%20usb%20led",
       "backupUrl": "https://cjdropshipping.com/search?keyword=monitor%20light%20bar",
       "currentPrice": "Custo alvo R$ 55.00; preco sugerido R$ 159.00.",
@@ -2028,13 +2445,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 159,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-monitor-light-bar-usb-led.html?SearchText=monitor%20light%20bar%20usb%20led. Backup: https://cjdropshipping.com/search?keyword=monitor%20light%20bar. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2043,6 +2462,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=monitor%20light%20bar&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-monitor-light-bar-usb-led.html?SearchText=monitor%20light%20bar%20usb%20led",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=monitor%20light%20bar"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-monitor-light-bar-usb-led.html?SearchText=monitor%20light%20bar%20usb%20led",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-monitor-light-bar-usb-led.html?SearchText=monitor%20light%20bar%20usb%20led",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2055,14 +2497,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-projetor-galaxy-star-projector-usb",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D17",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/Zendrop",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-galaxy-star-projector-usb.html?SearchText=galaxy%20star%20projector%20usb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=galaxy%20projector",
       "currentPrice": "Custo alvo R$ 55.00; preco sugerido R$ 179.00.",
@@ -2082,13 +2524,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 179,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-galaxy-star-projector-usb.html?SearchText=galaxy%20star%20projector%20usb. Backup: https://cjdropshipping.com/search?keyword=galaxy%20projector. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2097,6 +2541,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=galaxy%20projector&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-galaxy-star-projector-usb.html?SearchText=galaxy%20star%20projector%20usb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=galaxy%20projector"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-galaxy-star-projector-usb.html?SearchText=galaxy%20star%20projector%20usb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-galaxy-star-projector-usb.html?SearchText=galaxy%20star%20projector%20usb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2109,14 +2576,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-relogio-digital-led-de-mesa",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D18",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-relogio-digital-led-mesa-usb.html?SearchText=relogio%20digital%20led%20mesa%20usb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=led%20digital%20desk%20clock",
       "currentPrice": "Custo alvo R$ 28.00; preco sugerido R$ 89.00.",
@@ -2136,13 +2603,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 89,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-relogio-digital-led-mesa-usb.html?SearchText=relogio%20digital%20led%20mesa%20usb. Backup: https://cjdropshipping.com/search?keyword=led%20digital%20desk%20clock. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2151,6 +2620,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=relogio%20led%20mesa&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-relogio-digital-led-mesa-usb.html?SearchText=relogio%20digital%20led%20mesa%20usb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=led%20digital%20desk%20clock"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-relogio-digital-led-mesa-usb.html?SearchText=relogio%20digital%20led%20mesa%20usb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-relogio-digital-led-mesa-usb.html?SearchText=relogio%20digital%20led%20mesa%20usb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2163,14 +2655,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-mini-soprador-eletrico-air-duster",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D21",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-electric-air-duster-pc-cleaning.html?SearchText=electric%20air%20duster%20pc%20cleaning",
       "backupUrl": "https://cjdropshipping.com/search?keyword=electric%20air%20duster",
       "currentPrice": "Custo alvo R$ 85.00; preco sugerido R$ 229.00.",
@@ -2190,13 +2682,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 229,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-electric-air-duster-pc-cleaning.html?SearchText=electric%20air%20duster%20pc%20cleaning. Backup: https://cjdropshipping.com/search?keyword=electric%20air%20duster. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2205,6 +2699,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=air%20duster%20eletrico&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-electric-air-duster-pc-cleaning.html?SearchText=electric%20air%20duster%20pc%20cleaning",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=electric%20air%20duster"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-electric-air-duster-pc-cleaning.html?SearchText=electric%20air%20duster%20pc%20cleaning",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-electric-air-duster-pc-cleaning.html?SearchText=electric%20air%20duster%20pc%20cleaning",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2217,14 +2734,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-kit-pincel-antiestatico-soprador-manual",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D22",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-pincel-antiestatico-limpeza-pc-soprador-manual.html?SearchText=pincel%20antiestatico%20limpeza%20pc%20soprador%20manual",
       "backupUrl": "https://cjdropshipping.com/search?keyword=anti%20static%20brush%20pc%20cleaning",
       "currentPrice": "Custo alvo R$ 18.00; preco sugerido R$ 59.00.",
@@ -2244,13 +2761,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 59,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-pincel-antiestatico-limpeza-pc-soprador-manual.html?SearchText=pincel%20antiestatico%20limpeza%20pc%20soprador%20manual. Backup: https://cjdropshipping.com/search?keyword=anti%20static%20brush%20pc%20cleaning. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2259,6 +2778,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=pincel%20antiestatico%20pc&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-pincel-antiestatico-limpeza-pc-soprador-manual.html?SearchText=pincel%20antiestatico%20limpeza%20pc%20soprador%20manual",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=anti%20static%20brush%20pc%20cleaning"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-pincel-antiestatico-limpeza-pc-soprador-manual.html?SearchText=pincel%20antiestatico%20limpeza%20pc%20soprador%20manual",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-pincel-antiestatico-limpeza-pc-soprador-manual.html?SearchText=pincel%20antiestatico%20limpeza%20pc%20soprador%20manual",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2271,14 +2813,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-kit-pasta-termica-espatula-lenco",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D23",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-thermal-paste-kit-spatula-wipes.html?SearchText=thermal%20paste%20kit%20spatula%20wipes",
       "backupUrl": "https://cjdropshipping.com/search?keyword=thermal%20paste%20kit",
       "currentPrice": "Custo alvo R$ 14.00; preco sugerido R$ 49.00.",
@@ -2298,13 +2840,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 49,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-thermal-paste-kit-spatula-wipes.html?SearchText=thermal%20paste%20kit%20spatula%20wipes. Backup: https://cjdropshipping.com/search?keyword=thermal%20paste%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2313,6 +2857,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=pasta%20termica%20pc&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-thermal-paste-kit-spatula-wipes.html?SearchText=thermal%20paste%20kit%20spatula%20wipes",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=thermal%20paste%20kit"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-thermal-paste-kit-spatula-wipes.html?SearchText=thermal%20paste%20kit%20spatula%20wipes",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-thermal-paste-kit-spatula-wipes.html?SearchText=thermal%20paste%20kit%20spatula%20wipes",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2325,14 +2892,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-thermal-pads-kit-notebook-gpu",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D24",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-thermal-pad-kit-gpu-notebook.html?SearchText=thermal%20pad%20kit%20gpu%20notebook",
       "backupUrl": "https://cjdropshipping.com/search?keyword=thermal%20pad%20kit",
       "currentPrice": "Custo alvo R$ 18.00; preco sugerido R$ 69.00.",
@@ -2352,13 +2919,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 69,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-thermal-pad-kit-gpu-notebook.html?SearchText=thermal%20pad%20kit%20gpu%20notebook. Backup: https://cjdropshipping.com/search?keyword=thermal%20pad%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2367,6 +2936,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=thermal%20pad%20gpu&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-thermal-pad-kit-gpu-notebook.html?SearchText=thermal%20pad%20kit%20gpu%20notebook",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=thermal%20pad%20kit"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-thermal-pad-kit-gpu-notebook.html?SearchText=thermal%20pad%20kit%20gpu%20notebook",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-thermal-pad-kit-gpu-notebook.html?SearchText=thermal%20pad%20kit%20gpu%20notebook",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2379,14 +2971,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-kit-parafusos-espacadores-para-montagem-pc",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D26",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-pc-case-screws-standoffs-kit.html?SearchText=pc%20case%20screws%20standoffs%20kit",
       "backupUrl": "https://cjdropshipping.com/search?keyword=pc%20screws%20standoffs%20kit",
       "currentPrice": "Custo alvo R$ 12.00; preco sugerido R$ 39.00.",
@@ -2406,13 +2998,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 39,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-pc-case-screws-standoffs-kit.html?SearchText=pc%20case%20screws%20standoffs%20kit. Backup: https://cjdropshipping.com/search?keyword=pc%20screws%20standoffs%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2421,6 +3015,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=kit%20parafusos%20pc&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-pc-case-screws-standoffs-kit.html?SearchText=pc%20case%20screws%20standoffs%20kit",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=pc%20screws%20standoffs%20kit"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-pc-case-screws-standoffs-kit.html?SearchText=pc%20case%20screws%20standoffs%20kit",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-pc-case-screws-standoffs-kit.html?SearchText=pc%20case%20screws%20standoffs%20kit",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2433,14 +3050,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-extensor-cabo-sleeved-psu-kit",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D27",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-psu-cable-extension-sleeved-kit.html?SearchText=psu%20cable%20extension%20sleeved%20kit",
       "backupUrl": "https://cjdropshipping.com/search?keyword=sleeved%20psu%20cable%20extension",
       "currentPrice": "Custo alvo R$ 58.00; preco sugerido R$ 169.00.",
@@ -2460,13 +3077,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 169,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-psu-cable-extension-sleeved-kit.html?SearchText=psu%20cable%20extension%20sleeved%20kit. Backup: https://cjdropshipping.com/search?keyword=sleeved%20psu%20cable%20extension. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2475,6 +3094,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=cabo%20sleeved%20pc&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-psu-cable-extension-sleeved-kit.html?SearchText=psu%20cable%20extension%20sleeved%20kit",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=sleeved%20psu%20cable%20extension"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-psu-cable-extension-sleeved-kit.html?SearchText=psu%20cable%20extension%20sleeved%20kit",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-psu-cable-extension-sleeved-kit.html?SearchText=psu%20cable%20extension%20sleeved%20kit",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2487,14 +3129,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-controladora-fan-argb-pwm-hub",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D28",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-argb-pwm-fan-hub-controller-pc.html?SearchText=argb%20pwm%20fan%20hub%20controller%20pc",
       "backupUrl": "https://cjdropshipping.com/search?keyword=argb%20fan%20hub",
       "currentPrice": "Custo alvo R$ 28.00; preco sugerido R$ 89.00.",
@@ -2514,13 +3156,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 89,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-argb-pwm-fan-hub-controller-pc.html?SearchText=argb%20pwm%20fan%20hub%20controller%20pc. Backup: https://cjdropshipping.com/search?keyword=argb%20fan%20hub. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2529,6 +3173,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=controladora%20argb&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-argb-pwm-fan-hub-controller-pc.html?SearchText=argb%20pwm%20fan%20hub%20controller%20pc",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=argb%20fan%20hub"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-argb-pwm-fan-hub-controller-pc.html?SearchText=argb%20pwm%20fan%20hub%20controller%20pc",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-argb-pwm-fan-hub-controller-pc.html?SearchText=argb%20pwm%20fan%20hub%20controller%20pc",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2541,14 +3208,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-kit-3-fans-rgb-argb-120mm",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D29",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-kit-3-fans-argb-120mm-pc.html?SearchText=kit%203%20fans%20argb%20120mm%20pc",
       "backupUrl": "https://cjdropshipping.com/search?keyword=120mm%20argb%20fan%20kit",
       "currentPrice": "Custo alvo R$ 75.00; preco sugerido R$ 199.00.",
@@ -2568,13 +3235,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 199,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-kit-3-fans-argb-120mm-pc.html?SearchText=kit%203%20fans%20argb%20120mm%20pc. Backup: https://cjdropshipping.com/search?keyword=120mm%20argb%20fan%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2583,6 +3252,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=fan%20rgb%20120mm&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-kit-3-fans-argb-120mm-pc.html?SearchText=kit%203%20fans%20argb%20120mm%20pc",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=120mm%20argb%20fan%20kit"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-kit-3-fans-argb-120mm-pc.html?SearchText=kit%203%20fans%20argb%20120mm%20pc",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-kit-3-fans-argb-120mm-pc.html?SearchText=kit%203%20fans%20argb%20120mm%20pc",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2595,14 +3287,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-filtro-magnetico-de-poeira-para-gabinete",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D30",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-filtro-magnetico-poeira-gabinete-pc-120mm.html?SearchText=filtro%20magnetico%20poeira%20gabinete%20pc%20120mm",
       "backupUrl": "https://cjdropshipping.com/search?keyword=pc%20dust%20filter%20magnetic",
       "currentPrice": "Custo alvo R$ 10.00; preco sugerido R$ 39.00.",
@@ -2622,13 +3314,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 39,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-filtro-magnetico-poeira-gabinete-pc-120mm.html?SearchText=filtro%20magnetico%20poeira%20gabinete%20pc%20120mm. Backup: https://cjdropshipping.com/search?keyword=pc%20dust%20filter%20magnetic. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2637,6 +3331,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=filtro%20poeira%20pc&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-filtro-magnetico-poeira-gabinete-pc-120mm.html?SearchText=filtro%20magnetico%20poeira%20gabinete%20pc%20120mm",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=pc%20dust%20filter%20magnetic"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-filtro-magnetico-poeira-gabinete-pc-120mm.html?SearchText=filtro%20magnetico%20poeira%20gabinete%20pc%20120mm",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-filtro-magnetico-poeira-gabinete-pc-120mm.html?SearchText=filtro%20magnetico%20poeira%20gabinete%20pc%20120mm",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2649,14 +3366,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-placa-de-captura-hdmi-usb-1080p",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D33",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-placa-captura-hdmi-usb-1080p.html?SearchText=placa%20captura%20hdmi%20usb%201080p",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20hdmi%20capture%20card",
       "currentPrice": "Custo alvo R$ 28.00; preco sugerido R$ 89.00.",
@@ -2676,13 +3393,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 89,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-placa-captura-hdmi-usb-1080p.html?SearchText=placa%20captura%20hdmi%20usb%201080p. Backup: https://cjdropshipping.com/search?keyword=usb%20hdmi%20capture%20card. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2691,6 +3410,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=placa%20captura%20hdmi&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-placa-captura-hdmi-usb-1080p.html?SearchText=placa%20captura%20hdmi%20usb%201080p",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20hdmi%20capture%20card"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-placa-captura-hdmi-usb-1080p.html?SearchText=placa%20captura%20hdmi%20usb%201080p",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-placa-captura-hdmi-usb-1080p.html?SearchText=placa%20captura%20hdmi%20usb%201080p",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2703,14 +3445,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-microfone-lapela-usb-c",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D34",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-microfone-lapela-usb-c-wireless.html?SearchText=microfone%20lapela%20usb%20c%20wireless",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20lavalier%20microphone",
       "currentPrice": "Custo alvo R$ 45.00; preco sugerido R$ 139.00.",
@@ -2730,13 +3472,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 139,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-microfone-lapela-usb-c-wireless.html?SearchText=microfone%20lapela%20usb%20c%20wireless. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20lavalier%20microphone. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2745,6 +3489,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=microfone%20lapela%20usb%20c&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-microfone-lapela-usb-c-wireless.html?SearchText=microfone%20lapela%20usb%20c%20wireless",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20c%20lavalier%20microphone"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-microfone-lapela-usb-c-wireless.html?SearchText=microfone%20lapela%20usb%20c%20wireless",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-microfone-lapela-usb-c-wireless.html?SearchText=microfone%20lapela%20usb%20c%20wireless",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2757,14 +3524,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-microfone-condensador-usb-compacto",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D35",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-microfone-condensador-usb-compacto-pc.html?SearchText=microfone%20condensador%20usb%20compacto%20pc",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20condenser%20microphone",
       "currentPrice": "Custo alvo R$ 65.00; preco sugerido R$ 199.00.",
@@ -2784,13 +3551,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 199,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-microfone-condensador-usb-compacto-pc.html?SearchText=microfone%20condensador%20usb%20compacto%20pc. Backup: https://cjdropshipping.com/search?keyword=usb%20condenser%20microphone. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2799,6 +3568,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=microfone%20usb%20pc&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-microfone-condensador-usb-compacto-pc.html?SearchText=microfone%20condensador%20usb%20compacto%20pc",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20condenser%20microphone"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-microfone-condensador-usb-compacto-pc.html?SearchText=microfone%20condensador%20usb%20compacto%20pc",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-microfone-condensador-usb-compacto-pc.html?SearchText=microfone%20condensador%20usb%20compacto%20pc",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2811,14 +3603,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-webcam-1080p-com-tampa-privacidade",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D36",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-webcam-1080p-privacy-cover-usb.html?SearchText=webcam%201080p%20privacy%20cover%20usb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=1080p%20webcam%20privacy%20cover",
       "currentPrice": "Custo alvo R$ 45.00; preco sugerido R$ 139.00.",
@@ -2838,13 +3630,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 139,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-webcam-1080p-privacy-cover-usb.html?SearchText=webcam%201080p%20privacy%20cover%20usb. Backup: https://cjdropshipping.com/search?keyword=1080p%20webcam%20privacy%20cover. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2853,6 +3647,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=webcam%201080p&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-webcam-1080p-privacy-cover-usb.html?SearchText=webcam%201080p%20privacy%20cover%20usb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=1080p%20webcam%20privacy%20cover"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-webcam-1080p-privacy-cover-usb.html?SearchText=webcam%201080p%20privacy%20cover%20usb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-webcam-1080p-privacy-cover-usb.html?SearchText=webcam%201080p%20privacy%20cover%20usb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2865,14 +3682,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-ring-light-clip-para-monitor",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D37",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-ring-light-clip-monitor-usb.html?SearchText=ring%20light%20clip%20monitor%20usb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=clip%20ring%20light%20monitor",
       "currentPrice": "Custo alvo R$ 22.00; preco sugerido R$ 69.00.",
@@ -2892,13 +3709,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 69,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-ring-light-clip-monitor-usb.html?SearchText=ring%20light%20clip%20monitor%20usb. Backup: https://cjdropshipping.com/search?keyword=clip%20ring%20light%20monitor. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2907,6 +3726,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=ring%20light%20monitor&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-ring-light-clip-monitor-usb.html?SearchText=ring%20light%20clip%20monitor%20usb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=clip%20ring%20light%20monitor"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-ring-light-clip-monitor-usb.html?SearchText=ring%20light%20clip%20monitor%20usb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-ring-light-clip-monitor-usb.html?SearchText=ring%20light%20clip%20monitor%20usb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2919,14 +3761,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-suporte-articulado-de-celular-para-mesa",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D38",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-suporte-celular-articulado-mesa.html?SearchText=suporte%20celular%20articulado%20mesa",
       "backupUrl": "https://cjdropshipping.com/search?keyword=desk%20phone%20holder%20adjustable",
       "currentPrice": "Custo alvo R$ 18.00; preco sugerido R$ 59.00.",
@@ -2946,13 +3788,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 59,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-suporte-celular-articulado-mesa.html?SearchText=suporte%20celular%20articulado%20mesa. Backup: https://cjdropshipping.com/search?keyword=desk%20phone%20holder%20adjustable. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -2961,6 +3805,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=suporte%20celular%20mesa&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-suporte-celular-articulado-mesa.html?SearchText=suporte%20celular%20articulado%20mesa",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=desk%20phone%20holder%20adjustable"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-suporte-celular-articulado-mesa.html?SearchText=suporte%20celular%20articulado%20mesa",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-suporte-celular-articulado-mesa.html?SearchText=suporte%20celular%20articulado%20mesa",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -2973,14 +3840,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-base-carregamento-sem-fio-3-em-1",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D39",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/Zendrop",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-carregador-sem-fio-3-em-1-dobravel.html?SearchText=carregador%20sem%20fio%203%20em%201%20dobravel",
       "backupUrl": "https://cjdropshipping.com/search?keyword=3%20in%201%20wireless%20charger",
       "currentPrice": "Custo alvo R$ 48.00; preco sugerido R$ 149.00.",
@@ -3000,13 +3867,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 149,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-carregador-sem-fio-3-em-1-dobravel.html?SearchText=carregador%20sem%20fio%203%20em%201%20dobravel. Backup: https://cjdropshipping.com/search?keyword=3%20in%201%20wireless%20charger. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3015,6 +3884,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=carregador%20sem%20fio%203%20em%201&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-carregador-sem-fio-3-em-1-dobravel.html?SearchText=carregador%20sem%20fio%203%20em%201%20dobravel",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=3%20in%201%20wireless%20charger"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-carregador-sem-fio-3-em-1-dobravel.html?SearchText=carregador%20sem%20fio%203%20em%201%20dobravel",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-carregador-sem-fio-3-em-1-dobravel.html?SearchText=carregador%20sem%20fio%203%20em%201%20dobravel",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3027,14 +3919,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-carregador-gan-65w",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D40",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-carregador-gan-65w-usb-c.html?SearchText=carregador%20gan%2065w%20usb%20c",
       "backupUrl": "https://cjdropshipping.com/search?keyword=65w%20gan%20charger",
       "currentPrice": "Custo alvo R$ 55.00; preco sugerido R$ 159.00.",
@@ -3054,13 +3946,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 159,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-carregador-gan-65w-usb-c.html?SearchText=carregador%20gan%2065w%20usb%20c. Backup: https://cjdropshipping.com/search?keyword=65w%20gan%20charger. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3069,6 +3963,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=carregador%20gan%2065w&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-carregador-gan-65w-usb-c.html?SearchText=carregador%20gan%2065w%20usb%20c",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=65w%20gan%20charger"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-carregador-gan-65w-usb-c.html?SearchText=carregador%20gan%2065w%20usb%20c",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-carregador-gan-65w-usb-c.html?SearchText=carregador%20gan%2065w%20usb%20c",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3081,14 +3998,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-power-bank-magnetico-compacto",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D41",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-power-bank-magnetico-magsafe-compacto.html?SearchText=power%20bank%20magnetico%20magsafe%20compacto",
       "backupUrl": "https://cjdropshipping.com/search?keyword=magnetic%20power%20bank",
       "currentPrice": "Custo alvo R$ 55.00; preco sugerido R$ 159.00.",
@@ -3108,13 +4025,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 159,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-power-bank-magnetico-magsafe-compacto.html?SearchText=power%20bank%20magnetico%20magsafe%20compacto. Backup: https://cjdropshipping.com/search?keyword=magnetic%20power%20bank. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3123,6 +4042,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=power%20bank%20magnetico&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-power-bank-magnetico-magsafe-compacto.html?SearchText=power%20bank%20magnetico%20magsafe%20compacto",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=magnetic%20power%20bank"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-power-bank-magnetico-magsafe-compacto.html?SearchText=power%20bank%20magnetico%20magsafe%20compacto",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-power-bank-magnetico-magsafe-compacto.html?SearchText=power%20bank%20magnetico%20magsafe%20compacto",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3135,14 +4077,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-teclado-mecanico-60-rgb-generico",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D42",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-teclado-mecanico-60-rgb.html?SearchText=teclado%20mecanico%2060%25%20rgb",
       "backupUrl": "https://cjdropshipping.com/search?keyword=60%20mechanical%20keyboard",
       "currentPrice": "Custo alvo R$ 75.00; preco sugerido R$ 219.00.",
@@ -3162,13 +4104,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 219,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-teclado-mecanico-60-rgb.html?SearchText=teclado%20mecanico%2060%25%20rgb. Backup: https://cjdropshipping.com/search?keyword=60%20mechanical%20keyboard. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3177,6 +4121,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=teclado%20mecanico%2060%25&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-teclado-mecanico-60-rgb.html?SearchText=teclado%20mecanico%2060%25%20rgb",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=60%20mechanical%20keyboard"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-teclado-mecanico-60-rgb.html?SearchText=teclado%20mecanico%2060%25%20rgb",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-teclado-mecanico-60-rgb.html?SearchText=teclado%20mecanico%2060%25%20rgb",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3189,14 +4156,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-keycaps-pbt",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D43",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "Mercado Livre / AliExpress",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
       "backupUrl": "https://cjdropshipping.com/search?keyword=pbt%20keycaps%20set",
       "currentPrice": "Custo alvo R$ 45.00; preco sugerido R$ 139.00.",
@@ -3216,13 +4183,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 139,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-keycaps-pbt-kit-teclado-mecanico.html?SearchText=keycaps%20pbt%20kit%20teclado%20mecanico. Backup: https://cjdropshipping.com/search?keyword=pbt%20keycaps%20set. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3231,6 +4200,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=keycaps%20pbt&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-keycaps-pbt-kit-teclado-mecanico.html?SearchText=keycaps%20pbt%20kit%20teclado%20mecanico",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=pbt%20keycaps%20set"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ml"
       }
     },
     {
@@ -3243,14 +4235,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-kit-keycap-puller-switch-puller-pincel",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D44",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-keycap-puller-switch-puller-brush-kit.html?SearchText=keycap%20puller%20switch%20puller%20brush%20kit",
       "backupUrl": "https://cjdropshipping.com/search?keyword=keycap%20puller%20kit",
       "currentPrice": "Custo alvo R$ 12.00; preco sugerido R$ 49.00.",
@@ -3270,13 +4262,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 49,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-keycap-puller-switch-puller-brush-kit.html?SearchText=keycap%20puller%20switch%20puller%20brush%20kit. Backup: https://cjdropshipping.com/search?keyword=keycap%20puller%20kit. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3285,6 +4279,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=keycap%20puller&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-keycap-puller-switch-puller-brush-kit.html?SearchText=keycap%20puller%20switch%20puller%20brush%20kit",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=keycap%20puller%20kit"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-keycap-puller-switch-puller-brush-kit.html?SearchText=keycap%20puller%20switch%20puller%20brush%20kit",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-keycap-puller-switch-puller-brush-kit.html?SearchText=keycap%20puller%20switch%20puller%20brush%20kit",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3297,14 +4314,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-fone-kz-castor",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D45",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "Mercado Livre / AliExpress",
+      "platform": "Mercado Livre",
       "sourceUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
       "backupUrl": "https://cjdropshipping.com/search?keyword=iem%20earphones%20gaming",
       "currentPrice": "Custo alvo R$ 38.00; preco sugerido R$ 119.00.",
@@ -3324,13 +4341,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 119,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 7,
         "originMode": "supplier",
         "customerPays": true,
         "region": "BR",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-fone-iem-kz-castor-edx-pro.html?SearchText=fone%20iem%20kz%20castor%20edx%20pro. Backup: https://cjdropshipping.com/search?keyword=iem%20earphones%20gaming. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3339,6 +4358,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=fone%20kz&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-fone-iem-kz-castor-edx-pro.html?SearchText=fone%20iem%20kz%20castor%20edx%20pro",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=iem%20earphones%20gaming"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "Mercado Livre",
+          "platform": "Mercado Livre",
+          "url": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
+          "logo": "assets/mercado-livre-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ml"
+        }
+      ],
+      "affiliateUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
+      "marketplace": {
+        "name": "Mercado Livre",
+        "logo": "assets/mercado-livre-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ml"
       }
     },
     {
@@ -3351,14 +4393,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-adaptador-dac-usb-c-para-p2",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D46",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-dac-usb-c-p2-adaptador-hifi.html?SearchText=dac%20usb%20c%20p2%20adaptador%20hifi",
       "backupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20dac%20adapter",
       "currentPrice": "Custo alvo R$ 18.00; preco sugerido R$ 69.00.",
@@ -3378,13 +4420,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 69,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-dac-usb-c-p2-adaptador-hifi.html?SearchText=dac%20usb%20c%20p2%20adaptador%20hifi. Backup: https://cjdropshipping.com/search?keyword=usb%20c%20dac%20adapter. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3393,6 +4437,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=dac%20usb%20c%20p2&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-dac-usb-c-p2-adaptador-hifi.html?SearchText=dac%20usb%20c%20p2%20adaptador%20hifi",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=usb%20c%20dac%20adapter"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-dac-usb-c-p2-adaptador-hifi.html?SearchText=dac%20usb%20c%20p2%20adaptador%20hifi",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-dac-usb-c-p2-adaptador-hifi.html?SearchText=dac%20usb%20c%20p2%20adaptador%20hifi",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3405,14 +4472,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-controle-bluetooth-para-celular-pc",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D47",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-controle-bluetooth-celular-pc-telescopico.html?SearchText=controle%20bluetooth%20celular%20pc%20telescopico",
       "backupUrl": "https://cjdropshipping.com/search?keyword=bluetooth%20mobile%20game%20controller",
       "currentPrice": "Custo alvo R$ 65.00; preco sugerido R$ 189.00.",
@@ -3432,13 +4499,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 189,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-controle-bluetooth-celular-pc-telescopico.html?SearchText=controle%20bluetooth%20celular%20pc%20telescopico. Backup: https://cjdropshipping.com/search?keyword=bluetooth%20mobile%20game%20controller. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3447,6 +4516,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=controle%20bluetooth%20celular&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-controle-bluetooth-celular-pc-telescopico.html?SearchText=controle%20bluetooth%20celular%20pc%20telescopico",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=bluetooth%20mobile%20game%20controller"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-controle-bluetooth-celular-pc-telescopico.html?SearchText=controle%20bluetooth%20celular%20pc%20telescopico",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-controle-bluetooth-celular-pc-telescopico.html?SearchText=controle%20bluetooth%20celular%20pc%20telescopico",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3459,14 +4551,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-suporte-duplo-controle-headset",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D48",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-suporte-controle-headset-mesa-gamer.html?SearchText=suporte%20controle%20headset%20mesa%20gamer",
       "backupUrl": "https://cjdropshipping.com/search?keyword=controller%20headset%20stand",
       "currentPrice": "Custo alvo R$ 24.00; preco sugerido R$ 79.00.",
@@ -3486,13 +4578,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 79,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-suporte-controle-headset-mesa-gamer.html?SearchText=suporte%20controle%20headset%20mesa%20gamer. Backup: https://cjdropshipping.com/search?keyword=controller%20headset%20stand. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3501,6 +4595,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=suporte%20controle%20headset&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-suporte-controle-headset-mesa-gamer.html?SearchText=suporte%20controle%20headset%20mesa%20gamer",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=controller%20headset%20stand"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-suporte-controle-headset-mesa-gamer.html?SearchText=suporte%20controle%20headset%20mesa%20gamer",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-suporte-controle-headset-mesa-gamer.html?SearchText=suporte%20controle%20headset%20mesa%20gamer",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3513,14 +4630,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-smart-tag-rastreador-bluetooth",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D49",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-rastreador-bluetooth-smart-tag.html?SearchText=rastreador%20bluetooth%20smart%20tag",
       "backupUrl": "https://cjdropshipping.com/search?keyword=bluetooth%20smart%20tag%20tracker",
       "currentPrice": "Custo alvo R$ 22.00; preco sugerido R$ 79.00.",
@@ -3540,13 +4657,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 79,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-rastreador-bluetooth-smart-tag.html?SearchText=rastreador%20bluetooth%20smart%20tag. Backup: https://cjdropshipping.com/search?keyword=bluetooth%20smart%20tag%20tracker. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3555,6 +4674,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=smart%20tag%20bluetooth&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-rastreador-bluetooth-smart-tag.html?SearchText=rastreador%20bluetooth%20smart%20tag",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=bluetooth%20smart%20tag%20tracker"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-rastreador-bluetooth-smart-tag.html?SearchText=rastreador%20bluetooth%20smart%20tag",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-rastreador-bluetooth-smart-tag.html?SearchText=rastreador%20bluetooth%20smart%20tag",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -3567,14 +4709,14 @@
       ],
       "publicPartnerNote": "Produto vendido pela MobilyTech com compra manual no fornecedor e acompanhamento humano.",
       "active": true,
-      "publicGroup": "vendidos",
-      "storeCheckout": true,
-      "purchaseMode": "manual-dropshipping",
+      "publicGroup": "recomendacoes",
+      "storeCheckout": false,
+      "purchaseMode": "affiliate",
       "productId": "find-mini-impressora-termica-portatil-bluetooth",
-      "manualFulfillment": true,
+      "manualFulfillment": false,
       "sourceRowId": "D50",
       "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-      "platform": "AliExpress/DSers/CJ",
+      "platform": "CJdropshipping / AliExpress",
       "sourceUrl": "https://pt.aliexpress.com/w/wholesale-mini-impressora-termica-bluetooth-portatil.html?SearchText=mini%20impressora%20termica%20bluetooth%20portatil",
       "backupUrl": "https://cjdropshipping.com/search?keyword=mini%20thermal%20printer%20bluetooth",
       "currentPrice": "Custo alvo R$ 55.00; preco sugerido R$ 169.00.",
@@ -3594,13 +4736,15 @@
         "widthCm": 18,
         "lengthCm": 24,
         "insuranceValue": 169,
-        "mode": "supplier-fixed",
-        "customerPrice": 29.9,
+        "mode": "supplier-quote-required",
         "deliveryTime": 18,
         "originMode": "supplier",
         "customerPays": true,
         "region": "INTL",
-        "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+        "freightBasis": "Carrinho direto pausado ate frete exato fornecedor-cliente.",
+        "previousFixedCustomerPrice": 29.9,
+        "exactRequired": true,
+        "liveQuoteReady": false
       },
       "shippingCustomerPrice": 29.9,
       "supplierInstructions": "Fornecedor/base: https://pt.aliexpress.com/w/wholesale-mini-impressora-termica-bluetooth-portatil.html?SearchText=mini%20impressora%20termica%20bluetooth%20portatil. Backup: https://cjdropshipping.com/search?keyword=mini%20thermal%20printer%20bluetooth. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra.",
@@ -3609,6 +4753,29 @@
         "metaAdsLibrary": "https://www.facebook.com/ads/library/?active_status=all&ad_type=all&country=BR&q=mini%20impressora%20termica&search_type=keyword_unordered",
         "supplierSearch": "https://pt.aliexpress.com/w/wholesale-mini-impressora-termica-bluetooth-portatil.html?SearchText=mini%20impressora%20termica%20bluetooth%20portatil",
         "supplierBackup": "https://cjdropshipping.com/search?keyword=mini%20thermal%20printer%20bluetooth"
+      },
+      "previousPurchaseMode": "manual-dropshipping",
+      "affiliateReady": true,
+      "returnToDropshippingWhenSafe": true,
+      "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+      "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+      "checkoutPausedReason": "Frete fixo removido; so voltar ao carrinho com SKU CJ, item ML cotavel ou fornecedor validado com frete exato para o CEP do cliente.",
+      "affiliateLinks": [
+        {
+          "name": "AliExpress",
+          "platform": "AliExpress",
+          "url": "https://pt.aliexpress.com/w/wholesale-mini-impressora-termica-bluetooth-portatil.html?SearchText=mini%20impressora%20termica%20bluetooth%20portatil",
+          "logo": "assets/aliexpress-logo.svg",
+          "button": "Ver oferta",
+          "class": "market-ali"
+        }
+      ],
+      "affiliateUrl": "https://pt.aliexpress.com/w/wholesale-mini-impressora-termica-bluetooth-portatil.html?SearchText=mini%20impressora%20termica%20bluetooth%20portatil",
+      "marketplace": {
+        "name": "AliExpress",
+        "logo": "assets/aliexpress-logo.svg",
+        "button": "Ver oferta",
+        "class": "market-ali"
       }
     },
     {
@@ -5190,7 +6357,7 @@
       },
       "delivery": "Preco baixo; checar loja oficial e prazo",
       "operationModel": "Afiliado/recomendacao externa; checkout fora da MobilyTech.",
-      "whySell": "Produto viral e barato; bom para teste de criativo.",
+      "whySell": "Produto popular e acessivel; bom para complementar setups de entrada.",
       "comparison": "Shopee pode ganhar em preco; ML/Amazon ganham em prazo.",
       "commissionPercent": 0.06,
       "commissionValue": 3.3,

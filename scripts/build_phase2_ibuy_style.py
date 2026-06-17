@@ -151,17 +151,12 @@ PUBLIC_FIND_FIELDS = {
     "affiliateLinks",
     "affiliateUrl",
     "affiliateReady",
-    "affiliateButton",
     "publicPartnerNote",
     "confidence",
-    "currentPrice",
-    "platform",
     "productImage",
     "selectedCreative",
     "productId",
     "salePrice",
-    "shipping",
-    "shippingCustomerPrice",
 }
 
 PUBLIC_PRODUCT_FIELDS = {
@@ -186,6 +181,42 @@ PUBLIC_PRODUCT_FIELDS = {
 
 
 def public_finds_payload(finalists, products=None):
+    def clean_marketplace(value):
+        if not isinstance(value, dict):
+            return {}
+        clean_value = {
+            key: value.get(key)
+            for key in ("name", "logo", "button", "class")
+            if value.get(key)
+        }
+        clean_value["button"] = "Ver oferta"
+        return clean_value
+
+    def clean_affiliate_links(value):
+        links = value if isinstance(value, list) else []
+        public_links = []
+        for link in links:
+            if not isinstance(link, dict) or not link.get("url"):
+                continue
+            public_links.append(
+                {
+                    key: link.get(key)
+                    for key in ("name", "platform", "url", "logo", "button", "class")
+                    if link.get(key)
+                }
+            )
+            public_links[-1]["button"] = "Ver oferta"
+        return public_links
+
+    def clean_public_find(item):
+        clean_item = {key: item.get(key) for key in PUBLIC_FIND_FIELDS if key in item}
+        clean_item["marketplace"] = clean_marketplace(clean_item.get("marketplace"))
+        clean_item["affiliateLinks"] = clean_affiliate_links(clean_item.get("affiliateLinks"))
+        clean_item["publicPartnerNote"] = (
+            "Compra feita diretamente no marketplace parceiro; pagamentos e dados sensiveis ficam no provedor externo."
+        )
+        return clean_item
+
     items = finalists.get("finalists", []) if isinstance(finalists, dict) else []
     product_items = products or []
     finalists_by_product_id = {}
@@ -201,7 +232,6 @@ def public_finds_payload(finalists, products=None):
         finalist_mode = finalist.get("purchaseMode")
         if finalist_mode == "affiliate" or finalist.get("publicGroup") == "recomendacoes":
             continue
-        source_notes = product.get("sourceNotes") or {}
         specs_data = product.get("specs") or {}
         clean_item = {
             "id": product.get("id"),
@@ -212,15 +242,9 @@ def public_finds_payload(finalists, products=None):
             or product.get("description")
             or "Produto selecionado para complementar seu setup com atendimento MobilyTech.",
             "confidence": finalist.get("confidence") or product.get("badge") or "Curadoria MobilyTech",
-            "platform": product.get("supplierPlatform") or finalist.get("platform") or "MobilyTech BR",
-            "currentPrice": source_notes.get("currentPrice") or finalist.get("currentPrice") or "",
             "productImage": finalist.get("productImage") or product.get("image") or finalist.get("selectedCreative"),
             "selectedCreative": finalist.get("selectedCreative") or finalist.get("productImage") or product.get("image"),
             "salePrice": finalist.get("salePrice") or product.get("price"),
-            "shipping": finalist.get("shipping") or product.get("shipping"),
-            "shippingCustomerPrice": finalist.get("shippingCustomerPrice")
-            or (finalist.get("shipping") or {}).get("customerPrice")
-            or (product.get("shipping") or {}).get("customerPrice"),
             "marketplace": {
                 "name": "MobilyTech BR",
                 "logo": "assets/mobilytech-logo.png",
@@ -237,7 +261,7 @@ def public_finds_payload(finalists, products=None):
     for item in items:
         if item.get("purchaseMode") == "manual-dropshipping" or bool(item.get("manualFulfillment")):
             continue
-        clean_item = {key: item.get(key) for key in PUBLIC_FIND_FIELDS if key in item}
+        clean_item = clean_public_find(item)
         clean_item["storeCheckout"] = item.get("purchaseMode") == "manual-dropshipping" or bool(item.get("manualFulfillment"))
         clean_item["publicGroup"] = "vendidos" if clean_item["storeCheckout"] else "recomendacoes"
         if clean_item["storeCheckout"]:
@@ -253,9 +277,11 @@ def public_finds_payload(finalists, products=None):
 def public_products_payload(products):
     public_items = []
     for item in products:
+        if item.get("active") is False:
+            continue
+        if item.get("category") in {"dropshipping", "affiliate"}:
+            continue
         clean_item = {key: item.get(key) for key in PUBLIC_PRODUCT_FIELDS if key in item}
-        if clean_item.get("category") in {"dropshipping", "affiliate"}:
-            clean_item["category"] = "finds"
         public_items.append(clean_item)
     return public_items
 
@@ -329,8 +355,8 @@ def header(prefix: str, active: str = "home") -> str:
             <strong id="accountMenuTitle">Entre para ver seus pedidos</strong>
             <small id="accountMenuStatus">Acesse com Google para acompanhar compras e dados de entrega.</small>
             <div class="account-popover-actions" id="accountGuestActions">
-              <a class="account-login google-login" id="accountGoogleLogin" href="/api/account?action=google-start">Entrar com Google</a>
-              <a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/account?action=microsoft-start">Entrar com Microsoft</a>
+              <a class="account-login google-login" id="accountGoogleLogin" href="/api/account?action=google-start"><img src="{prefix}assets/brand-officials/google-icon.svg" alt="" aria-hidden="true"><span>Entrar com Google</span></a>
+              <a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/account?action=microsoft-start"><img src="{prefix}assets/brand-officials/microsoft-icon.svg" alt="" aria-hidden="true"><span>Entrar com Microsoft</span></a>
             </div>
             <nav class="account-popover-links" aria-label="Atalhos da conta">
               <a href="{links["conta"]}#minha-conta">Central Minha Conta</a>
@@ -338,7 +364,6 @@ def header(prefix: str, active: str = "home") -> str:
               <a href="{links["conta"]}#enderecos">Enderecos</a>
               <a href="{links["conta"]}#retirada">Retirada local</a>
               <a href="{links["contato"]}">Suporte</a>
-              <a id="accountAdminLink" href="{prefix}admin" hidden>Painel interno</a>
               <a id="accountLogout" href="/api/account?action=logout&returnTo=/" hidden>Sair</a>
             </nav>
           </div>
@@ -431,6 +456,8 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
     panels = content["servicePanels"]
     pcs, hardware = product_seed(products)
     configured_product = product_by_id(products, home.get("featuredProductId"))
+    if configured_product and configured_product.get("active") is False:
+        configured_product = None
     hero_product = configured_product or (pcs[0] if pcs else (products[0] if products else {}))
     hero_image = hero_product.get("cutout") or hero_product.get("image") or "./assets/mobilytech-logo.png"
     hero_specs = hero_product.get("specs", {})
@@ -545,7 +572,7 @@ def finds_page(prefix: str, page: dict) -> str:
       </section>
       <section class="section-head">
         <div>
-          <p class="section-kicker">Vendidos pela MobilyTech</p>
+          <p class="section-kicker">Curadoria MobilyTech</p>
           <h2>Produtos selecionados para completar seu setup</h2>
         </div>
       </section>
@@ -721,8 +748,8 @@ def conta_page(prefix: str, page: dict) -> str:
               </div>
             </div>
             <div class="account-login-options" id="accountPageGuestActions">
-              <a class="account-login google-login" href="/api/account?action=google-start">Entrar com Google</a>
-              <a class="account-login microsoft-login" href="/api/account?action=microsoft-start">Entrar com Microsoft</a>
+              <a class="account-login google-login" href="/api/account?action=google-start"><img src="{prefix}assets/brand-officials/google-icon.svg" alt="" aria-hidden="true"><span>Entrar com Google</span></a>
+              <a class="account-login microsoft-login" href="/api/account?action=microsoft-start"><img src="{prefix}assets/brand-officials/microsoft-icon.svg" alt="" aria-hidden="true"><span>Entrar com Microsoft</span></a>
             </div>
           </article>
           <article class="account-card" id="meus-pedidos">
@@ -861,7 +888,7 @@ def css() -> str:
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap;min-width:0}.brand img{width:44px;height:44px;object-fit:contain;flex:0 0 auto}.brand span{overflow:hidden;text-overflow:ellipsis}
     .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
-    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45;transform-origin:top right;animation:account-popover-in .16s ease-out both}.account-popover.is-closing{animation:account-popover-out .12s ease-in both}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}@keyframes account-popover-in{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes account-popover-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:44px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:9px;font-weight:1000}.google-login:before{content:"G";width:24px;height:24px;border-radius:50%;background:#fff;border:1px solid #dfe5ef;color:#4285f4;display:grid;place-items:center;font-weight:1000}.microsoft-login:before{content:"";width:22px;height:22px;background:linear-gradient(90deg,#f25022 0 49%,transparent 49% 51%,#7fba00 51%);box-shadow:0 11px 0 #00a4ef,12px 11px 0 #ffb900}.microsoft-login:after{content:"";width:0}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
+    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45;transform-origin:top right;animation:account-popover-in .16s ease-out both}.account-popover.is-closing{animation:account-popover-out .12s ease-in both}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}@keyframes account-popover-in{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes account-popover-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:44px;border-radius:999px;border:1px solid #dfe5ef;background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:1000;padding:0 18px;box-shadow:0 2px 0 rgba(16,24,40,.02);white-space:nowrap}.account-login img{width:26px;height:26px;object-fit:contain;flex:0 0 auto}.account-login span{line-height:1}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
     main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}
     .hero-slider:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 84%,rgba(255,255,255,.26),transparent 26%),radial-gradient(circle at 82% 20%,rgba(255,255,255,.25),transparent 20%);pointer-events:none}
     .hero-copy{position:relative;z-index:2;max-width:620px}.hero-copy h1{font-size:48px;line-height:1.02;margin:0 0 18px;font-weight:1000;letter-spacing:0}.hero-copy p{font-size:21px;font-weight:800;margin:0 0 26px;max-width:620px}
@@ -980,7 +1007,7 @@ def css() -> str:
       .account-card h2{font-size:21px}
       .account-card h2,.account-card p,.account-card small,.order-timeline strong{overflow-wrap:anywhere;word-break:break-word}
       .account-actions{display:grid;gap:10px}
-      .account-login-options,.secure-note-list{grid-template-columns:1fr;display:grid}
+      .account-login-options,.secure-note-list{grid-template-columns:1fr;display:grid}.account-login{width:100%}
       .order-card dl{grid-template-columns:1fr}
       .order-timeline li{grid-template-columns:34px 1fr;padding:11px}
       .order-timeline b{width:34px;height:34px}
@@ -1091,13 +1118,11 @@ def js(products, finalists, addons, swaps) -> str:
       const status = $("#accountMenuStatus");
       const guest = $("#accountGuestActions");
       const logout = $("#accountLogout");
-      const admin = $("#accountAdminLink");
       if (greeting) greeting.textContent = logged ? `Ola, ${{user.name || user.email || "cliente"}}` : "Conta MobilyTech";
       if (title) title.textContent = logged ? "Central Minha Conta" : "Entre para ver seus pedidos";
       if (status) status.textContent = logged ? String(user.email || "") : "Acesse com Google para acompanhar compras e dados de entrega.";
       if (guest) guest.hidden = logged;
       if (logout) logout.hidden = !logged;
-      if (admin) admin.hidden = !(logged && accountSession.admin);
     }}
     function renderAccountPage() {{
       const panel = $("#accountPagePanel");
@@ -1466,7 +1491,10 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (group) items = items.filter((item) => (item.publicGroup || "vendidos") === group);
       if (search) items = items.filter((item) => norm([item.title, item.whySell, item.niche, item.platform, item.marketplace?.name].join(" ")).includes(search));
       items = items.slice(0, limit);
-      node.innerHTML = items.map(findCard).join("") || '<p class="empty">Nenhum achado encontrado.</p>';
+      const emptyCopy = group === "vendidos"
+        ? "Estamos atualizando esta selecao. Veja as ofertas recomendadas abaixo."
+        : "Nenhum achado encontrado.";
+      node.innerHTML = items.map(findCard).join("") || `<p class="empty">${{emptyCopy}}</p>`;
     }}
     function findProductId(item) {{
       return item.productId || (item.id ? `find-${{item.id}}` : "");

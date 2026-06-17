@@ -5,7 +5,7 @@
     "category": "pc",
     "title": "PC GAMER i7-3770 / 16GB RAM / GTX 550 Ti + SSD 240GB",
     "price": 1180,
-    "badge": "NOVO NA OLX",
+    "badge": "Novidade!",
     "shipping": {
       "weightKg": 7
     },
@@ -31,7 +31,7 @@
     "title": "PC GAMER i7-3770 / 8GB RAM / GTX 550 Ti + SSD 120GB",
     "price": 1000,
     "old": 1050,
-    "badge": "NOVO NA OLX",
+    "badge": "Novidade!",
     "shipping": {
       "weightKg": 7
     },
@@ -58,12 +58,12 @@
   },
   {
     "id": "pc-i7-3770-16gb-gtx750ti-ssd256",
-    "active": true,
+    "active": false,
     "category": "pc",
     "title": "PC GAMER i7-3770 / 16GB RAM / GTX 750 Ti + SSD 256GB",
     "price": 1250,
     "old": 1500,
-    "badge": "NOVO NA OLX",
+    "badge": "Vendido",
     "shipping": {
       "weightKg": 7
     },
@@ -80,7 +80,9 @@
     "links": {
       "olx": "https://sp.olx.com.br/sao-paulo-e-regiao/informatica/computadores-e-desktops/pc-gamer-i7-3770-16gb-ram-gtx-750-ti-ssd-256gb-pc-novo-1509870597"
     },
-    "featured": true
+    "featured": false,
+    "soldAt": "2026-06-17",
+    "status": "sold"
   },
   {
     "id": "pc-gamer-i5-gt610",
@@ -370,13 +372,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 119,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -400,7 +404,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=nvme%20ssd%20enclosure",
     "sourceRowId": "D01",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-case-ssd-sata",
@@ -434,13 +444,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 69,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -464,7 +476,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=2.5%20ssd%20enclosure",
     "sourceRowId": "D02",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-fone-kz-castor",
@@ -475,7 +493,7 @@
     "costPrice": 115,
     "marginPercent": "32.0%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / AliExpress",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/fone-kz-castor-audio-monitor-de-palco-alta-fidelidade-cor-cinza-sem-microfone/p/MLB28114243",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/fone-kz-castor.jpg",
@@ -498,13 +516,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 119,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -528,7 +548,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=iem%20earphones%20gaming",
     "sourceRowId": "D45",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-kit-limpeza-esd",
@@ -562,13 +588,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 69,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -592,7 +620,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=electronics%20cleaning%20kit",
     "sourceRowId": "D20",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-mini-aspirador-teclado",
@@ -626,13 +660,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 99,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -656,7 +692,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=keyboard%20vacuum%20cleaner",
     "sourceRowId": "D19",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-hub-usb-c",
@@ -667,7 +709,7 @@
     "costPrice": 30,
     "marginPercent": "56.5%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Amazon",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/hub-usb-type-c-5-gbps-extensor-adaptador-4-portas-usb-30-computador-pc-notebook-celular-smartphone-tablet-chrome-technology/p/MLB54987539",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/hub-usb-c.jpg",
@@ -689,13 +731,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 79,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -719,7 +763,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20hub%204%20port",
     "sourceRowId": "D04",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-suporte-gpu-antisag",
@@ -730,7 +780,7 @@
     "costPrice": 45,
     "marginPercent": "49.4%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / AliExpress",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/suporte-de-gpu-anti-sag-com-im-e-almofada-de-borracha/p/MLB2028023362",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/suporte-gpu-antisag.jpg",
@@ -753,13 +803,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 89,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -783,7 +835,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=gpu%20support%20bracket",
     "sourceRowId": "D25",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-keycaps-pbt",
@@ -794,7 +852,7 @@
     "costPrice": 70,
     "marginPercent": "45.7%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / AliExpress",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/keycaps-para-teclados-mecnicos/p/MLB2046713672",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/keycaps-pbt.jpg",
@@ -817,13 +875,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 139,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -847,7 +907,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=pbt%20keycaps%20set",
     "sourceRowId": "D43",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-teclado-mecanico-abnt2",
@@ -858,7 +924,7 @@
     "costPrice": 130,
     "marginPercent": "27.4%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Amazon",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/teclado-mecanico-abnt2.jpg",
@@ -879,13 +945,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 179,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
       "region": "BR",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -897,7 +965,13 @@
       "supplierInstruction": "Fornecedor/base: https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221. Confirmar reputacao, estoque, prazo e frete do fornecedor para o CEP do cliente antes da compra."
     },
     "cutout": "./assets/generated/find-teclado-mecanico-abnt2-cutout.png",
-    "manualFulfillment": true
+    "manualFulfillment": true,
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-bias-light-led",
@@ -908,7 +982,7 @@
     "costPrice": 35,
     "marginPercent": "49.3%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / AliExpress",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/5v-5050-tv-backlight-bias-lighting-usb-flexible-led-lig-1721/p/MLB2042722735",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/bias-light-led.jpg",
@@ -931,13 +1005,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 79,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -961,7 +1037,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=tv%20backlight%20led%20usb",
     "sourceRowId": "D15",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-adaptador-bluetooth-usb-5",
@@ -972,7 +1054,7 @@
     "costPrice": 25,
     "marginPercent": "57.6%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Amazon",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://lista.mercadolivre.com.br/adaptador-bluetooth-usb-5.0-pc",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/adaptador-bluetooth-usb-5.jpg",
@@ -995,13 +1077,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 49,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1025,7 +1109,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20bluetooth%205.3%20adapter",
     "sourceRowId": "D31",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-mousepad-gamer-rgb-xl",
@@ -1036,7 +1126,7 @@
     "costPrice": 60,
     "marginPercent": "39.4%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / AliExpress",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://lista.mercadolivre.com.br/mousepad-gamer-rgb-grande",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/mousepad-gamer-rgb-xl.webp",
@@ -1059,13 +1149,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 129,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1089,7 +1181,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=rgb%20gaming%20mouse%20pad",
     "sourceRowId": "D13",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-cabo-displayport-14-2m",
@@ -1100,7 +1198,7 @@
     "costPrice": 68,
     "marginPercent": "31.3%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Amazon",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://lista.mercadolivre.com.br/cabo-displayport-1.4-2m",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/cabo-displayport-14-2m.jpg",
@@ -1123,13 +1221,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 69,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1153,7 +1253,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=displayport%201.4%20cable",
     "sourceRowId": "D09",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-adaptador-wifi-dual-band-usb",
@@ -1164,7 +1270,7 @@
     "costPrice": 35,
     "marginPercent": "55.7%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / AliExpress",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://lista.mercadolivre.com.br/adaptador-wifi-usb-dual-band",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/adaptador-wifi-dual-band-usb.jpg",
@@ -1187,13 +1293,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 59,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1217,7 +1325,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20wifi%20dual%20band%20adapter",
     "sourceRowId": "D32",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-suporte-notebook-aluminio",
@@ -1228,7 +1342,7 @@
     "costPrice": 40,
     "marginPercent": "55.1%",
     "fulfillmentMode": "manual-dropshipping",
-    "supplierPlatform": "Mercado Livre / Amazon",
+    "supplierPlatform": "Mercado Livre",
     "supplierUrl": "https://www.mercadolivre.com.br/suporte-notebook-aluminio-dobravel-it-blue-le-066-ajustavel-portatil/p/MLB43880044",
     "badge": "MobilyTech Finds",
     "image": "./assets/phase2-affiliates/suporte-notebook-aluminio.jpg",
@@ -1251,13 +1365,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 99,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 7,
       "originMode": "supplier",
       "customerPays": true,
-      "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "region": "BR",
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1281,7 +1397,13 @@
     "manualFulfillment": true,
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=vertical%20laptop%20stand",
     "sourceRowId": "D10",
-    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13"
+    "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "mercado-livre-exact-freight-api",
+    "supplierRegion": "BR"
   },
   {
     "id": "find-dock-station-usb-c-8-em-1-com-hdmi",
@@ -1293,7 +1415,7 @@
     "marginPercent": "61.1%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers ou Modalyst",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-hub-usb-c-8-em-1-hdmi-4k.html?SearchText=hub%20usb%20c%208%20em%201%20hdmi%204k",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20hub%20hdmi",
     "badge": "Finds B",
@@ -1318,13 +1440,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 149,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1344,7 +1468,13 @@
     },
     "sourceRowId": "D03",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-dock-station-usb-c-8-em-1-com-hdmi-cutout.png"
+    "cutout": "./assets/generated/find-dock-station-usb-c-8-em-1-com-hdmi-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-adaptador-usb-c-para-hdmi-4k",
@@ -1356,7 +1486,7 @@
     "marginPercent": "68.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-adaptador-usb-c-hdmi-4k.html?SearchText=adaptador%20usb%20c%20hdmi%204k",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20hdmi%20adapter",
     "badge": "Finds B",
@@ -1381,13 +1511,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 89,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1407,7 +1539,13 @@
     },
     "sourceRowId": "D05",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-adaptador-usb-c-para-hdmi-4k-cutout.png"
+    "cutout": "./assets/generated/find-adaptador-usb-c-para-hdmi-4k-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-leitor-sd-microsd-usb-c-usb-a",
@@ -1419,7 +1557,7 @@
     "marginPercent": "69.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-leitor-cartao-sd-micro-sd-usb-c-usb-a.html?SearchText=leitor%20cartao%20sd%20micro%20sd%20usb%20c%20usb%20a",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20card%20reader",
     "badge": "Finds B",
@@ -1444,13 +1582,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 59,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1470,7 +1610,13 @@
     },
     "sourceRowId": "D06",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-leitor-sd-microsd-usb-c-usb-a-cutout.png"
+    "cutout": "./assets/generated/find-leitor-sd-microsd-usb-c-usb-a-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-mini-switch-hdmi-3x1-4k",
@@ -1482,7 +1628,7 @@
     "marginPercent": "68.4%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-switch-hdmi-3x1-4k.html?SearchText=switch%20hdmi%203x1%204k",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=hdmi%20switch%203x1",
     "badge": "Finds C",
@@ -1507,13 +1653,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 79,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1533,7 +1681,13 @@
     },
     "sourceRowId": "D07",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-mini-switch-hdmi-3x1-4k-cutout.png"
+    "cutout": "./assets/generated/find-mini-switch-hdmi-3x1-4k-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-cabo-usb-c-100w-nylon-2m",
@@ -1545,7 +1699,7 @@
     "marginPercent": "72.9%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-cabo-usb-c-100w-nylon-2m-e-marker.html?SearchText=cabo%20usb%20c%20100w%20nylon%202m%20e-marker",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=100w%20usb%20c%20cable",
     "badge": "Finds B",
@@ -1570,13 +1724,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 59,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1596,7 +1752,13 @@
     },
     "sourceRowId": "D08",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-cabo-usb-c-100w-nylon-2m-cutout.png"
+    "cutout": "./assets/generated/find-cabo-usb-c-100w-nylon-2m-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-suporte-headset-rgb-com-usb",
@@ -1608,7 +1770,7 @@
     "marginPercent": "68.1%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-suporte-headset-rgb-usb.html?SearchText=suporte%20headset%20rgb%20usb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=rgb%20headset%20stand",
     "badge": "Finds C",
@@ -1633,13 +1795,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 119,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1659,7 +1823,13 @@
     },
     "sourceRowId": "D11",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-suporte-headset-rgb-com-usb-cutout.png"
+    "cutout": "./assets/generated/find-suporte-headset-rgb-com-usb-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-mouse-bungee-rgb",
@@ -1671,7 +1841,7 @@
     "marginPercent": "72.2%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-mouse-bungee-rgb.html?SearchText=mouse%20bungee%20rgb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=rgb%20mouse%20bungee",
     "badge": "Finds B",
@@ -1696,13 +1866,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 79,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1722,7 +1894,13 @@
     },
     "sourceRowId": "D12",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-mouse-bungee-rgb-cutout.png"
+    "cutout": "./assets/generated/find-mouse-bungee-rgb-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-fita-led-rgb-usb-com-controle",
@@ -1734,7 +1912,7 @@
     "marginPercent": "69.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-fita-led-rgb-usb-controle.html?SearchText=fita%20led%20rgb%20usb%20controle",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20rgb%20led%20strip",
     "badge": "Finds B",
@@ -1759,13 +1937,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 59,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1785,7 +1965,13 @@
     },
     "sourceRowId": "D14",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-fita-led-rgb-usb-com-controle-cutout.png"
+    "cutout": "./assets/generated/find-fita-led-rgb-usb-com-controle-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-luminaria-monitor-light-bar",
@@ -1797,7 +1983,7 @@
     "marginPercent": "65.4%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/Modalyst",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-monitor-light-bar-usb-led.html?SearchText=monitor%20light%20bar%20usb%20led",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=monitor%20light%20bar",
     "badge": "Finds B",
@@ -1822,13 +2008,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 159,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1848,7 +2036,13 @@
     },
     "sourceRowId": "D16",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-luminaria-monitor-light-bar-cutout.png"
+    "cutout": "./assets/generated/find-luminaria-monitor-light-bar-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-projetor-galaxy-star-projector-usb",
@@ -1860,7 +2054,7 @@
     "marginPercent": "69.3%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/Zendrop",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-galaxy-star-projector-usb.html?SearchText=galaxy%20star%20projector%20usb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=galaxy%20projector",
     "badge": "Finds C",
@@ -1885,13 +2079,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 179,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1911,7 +2107,13 @@
     },
     "sourceRowId": "D17",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-projetor-galaxy-star-projector-usb-cutout.png"
+    "cutout": "./assets/generated/find-projetor-galaxy-star-projector-usb-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-relogio-digital-led-de-mesa",
@@ -1923,7 +2125,7 @@
     "marginPercent": "68.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-relogio-digital-led-mesa-usb.html?SearchText=relogio%20digital%20led%20mesa%20usb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=led%20digital%20desk%20clock",
     "badge": "Finds C",
@@ -1948,13 +2150,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 89,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -1974,7 +2178,13 @@
     },
     "sourceRowId": "D18",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-relogio-digital-led-de-mesa-cutout.png"
+    "cutout": "./assets/generated/find-relogio-digital-led-de-mesa-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-mini-soprador-eletrico-air-duster",
@@ -1986,7 +2196,7 @@
     "marginPercent": "62.9%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-electric-air-duster-pc-cleaning.html?SearchText=electric%20air%20duster%20pc%20cleaning",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=electric%20air%20duster",
     "badge": "Finds C",
@@ -2011,13 +2221,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 229,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2037,7 +2249,13 @@
     },
     "sourceRowId": "D21",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-mini-soprador-eletrico-air-duster-cutout.png"
+    "cutout": "./assets/generated/find-mini-soprador-eletrico-air-duster-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-kit-pincel-antiestatico-soprador-manual",
@@ -2049,7 +2267,7 @@
     "marginPercent": "69.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-pincel-antiestatico-limpeza-pc-soprador-manual.html?SearchText=pincel%20antiestatico%20limpeza%20pc%20soprador%20manual",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=anti%20static%20brush%20pc%20cleaning",
     "badge": "Finds A",
@@ -2074,13 +2292,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 59,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2100,7 +2320,13 @@
     },
     "sourceRowId": "D22",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-kit-pincel-antiestatico-soprador-manual-cutout.png"
+    "cutout": "./assets/generated/find-kit-pincel-antiestatico-soprador-manual-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-kit-pasta-termica-espatula-lenco",
@@ -2112,7 +2338,7 @@
     "marginPercent": "71.4%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-thermal-paste-kit-spatula-wipes.html?SearchText=thermal%20paste%20kit%20spatula%20wipes",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=thermal%20paste%20kit",
     "badge": "Finds A",
@@ -2137,13 +2363,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 49,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2163,7 +2391,13 @@
     },
     "sourceRowId": "D23",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-kit-pasta-termica-espatula-lenco-cutout.png"
+    "cutout": "./assets/generated/find-kit-pasta-termica-espatula-lenco-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-thermal-pads-kit-notebook-gpu",
@@ -2175,7 +2409,7 @@
     "marginPercent": "73.9%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-thermal-pad-kit-gpu-notebook.html?SearchText=thermal%20pad%20kit%20gpu%20notebook",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=thermal%20pad%20kit",
     "badge": "Finds B",
@@ -2200,13 +2434,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 69,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2226,7 +2462,13 @@
     },
     "sourceRowId": "D24",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-thermal-pads-kit-notebook-gpu-cutout.png"
+    "cutout": "./assets/generated/find-thermal-pads-kit-notebook-gpu-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-kit-parafusos-espacadores-para-montagem-pc",
@@ -2238,7 +2480,7 @@
     "marginPercent": "69.2%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-pc-case-screws-standoffs-kit.html?SearchText=pc%20case%20screws%20standoffs%20kit",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=pc%20screws%20standoffs%20kit",
     "badge": "Finds B",
@@ -2263,13 +2505,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 39,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2289,7 +2533,13 @@
     },
     "sourceRowId": "D26",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-kit-parafusos-espacadores-para-montagem-pc-cutout.png"
+    "cutout": "./assets/generated/find-kit-parafusos-espacadores-para-montagem-pc-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-extensor-cabo-sleeved-psu-kit",
@@ -2301,7 +2551,7 @@
     "marginPercent": "65.7%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-psu-cable-extension-sleeved-kit.html?SearchText=psu%20cable%20extension%20sleeved%20kit",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=sleeved%20psu%20cable%20extension",
     "badge": "Finds B",
@@ -2326,13 +2576,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 169,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2352,7 +2604,13 @@
     },
     "sourceRowId": "D27",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-extensor-cabo-sleeved-psu-kit-cutout.png"
+    "cutout": "./assets/generated/find-extensor-cabo-sleeved-psu-kit-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-controladora-fan-argb-pwm-hub",
@@ -2364,7 +2622,7 @@
     "marginPercent": "68.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-argb-pwm-fan-hub-controller-pc.html?SearchText=argb%20pwm%20fan%20hub%20controller%20pc",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=argb%20fan%20hub",
     "badge": "Finds B",
@@ -2389,13 +2647,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 89,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2415,7 +2675,13 @@
     },
     "sourceRowId": "D28",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-controladora-fan-argb-pwm-hub-cutout.png"
+    "cutout": "./assets/generated/find-controladora-fan-argb-pwm-hub-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-kit-3-fans-rgb-argb-120mm",
@@ -2427,7 +2693,7 @@
     "marginPercent": "62.3%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-kit-3-fans-argb-120mm-pc.html?SearchText=kit%203%20fans%20argb%20120mm%20pc",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=120mm%20argb%20fan%20kit",
     "badge": "Finds C",
@@ -2452,13 +2718,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 199,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2478,7 +2746,13 @@
     },
     "sourceRowId": "D29",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-kit-3-fans-rgb-argb-120mm-cutout.png"
+    "cutout": "./assets/generated/find-kit-3-fans-rgb-argb-120mm-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-filtro-magnetico-de-poeira-para-gabinete",
@@ -2490,7 +2764,7 @@
     "marginPercent": "74.4%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-filtro-magnetico-poeira-gabinete-pc-120mm.html?SearchText=filtro%20magnetico%20poeira%20gabinete%20pc%20120mm",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=pc%20dust%20filter%20magnetic",
     "badge": "Finds A",
@@ -2515,13 +2789,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 39,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2541,7 +2817,13 @@
     },
     "sourceRowId": "D30",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-filtro-magnetico-de-poeira-para-gabinete-cutout.png"
+    "cutout": "./assets/generated/find-filtro-magnetico-de-poeira-para-gabinete-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-placa-de-captura-hdmi-usb-1080p",
@@ -2553,7 +2835,7 @@
     "marginPercent": "68.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-placa-captura-hdmi-usb-1080p.html?SearchText=placa%20captura%20hdmi%20usb%201080p",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20hdmi%20capture%20card",
     "badge": "Finds B",
@@ -2578,13 +2860,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 89,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2604,7 +2888,13 @@
     },
     "sourceRowId": "D33",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-placa-de-captura-hdmi-usb-1080p-cutout.png"
+    "cutout": "./assets/generated/find-placa-de-captura-hdmi-usb-1080p-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-microfone-lapela-usb-c",
@@ -2616,7 +2906,7 @@
     "marginPercent": "67.6%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-microfone-lapela-usb-c-wireless.html?SearchText=microfone%20lapela%20usb%20c%20wireless",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20lavalier%20microphone",
     "badge": "Finds C",
@@ -2641,13 +2931,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 139,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2667,7 +2959,13 @@
     },
     "sourceRowId": "D34",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-microfone-lapela-usb-c-cutout.png"
+    "cutout": "./assets/generated/find-microfone-lapela-usb-c-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-microfone-condensador-usb-compacto",
@@ -2679,7 +2977,7 @@
     "marginPercent": "67.3%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-microfone-condensador-usb-compacto-pc.html?SearchText=microfone%20condensador%20usb%20compacto%20pc",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20condenser%20microphone",
     "badge": "Finds C",
@@ -2704,13 +3002,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 199,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2730,7 +3030,13 @@
     },
     "sourceRowId": "D35",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-microfone-condensador-usb-compacto-cutout.png"
+    "cutout": "./assets/generated/find-microfone-condensador-usb-compacto-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-webcam-1080p-com-tampa-privacidade",
@@ -2742,7 +3048,7 @@
     "marginPercent": "67.6%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-webcam-1080p-privacy-cover-usb.html?SearchText=webcam%201080p%20privacy%20cover%20usb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=1080p%20webcam%20privacy%20cover",
     "badge": "Finds C",
@@ -2767,13 +3073,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 139,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2793,7 +3101,13 @@
     },
     "sourceRowId": "D36",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-webcam-1080p-com-tampa-privacidade-cutout.png"
+    "cutout": "./assets/generated/find-webcam-1080p-com-tampa-privacidade-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-ring-light-clip-para-monitor",
@@ -2805,7 +3119,7 @@
     "marginPercent": "68.1%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-ring-light-clip-monitor-usb.html?SearchText=ring%20light%20clip%20monitor%20usb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=clip%20ring%20light%20monitor",
     "badge": "Finds B",
@@ -2830,13 +3144,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 69,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2856,7 +3172,13 @@
     },
     "sourceRowId": "D37",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-ring-light-clip-para-monitor-cutout.png"
+    "cutout": "./assets/generated/find-ring-light-clip-para-monitor-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-suporte-articulado-de-celular-para-mesa",
@@ -2868,7 +3190,7 @@
     "marginPercent": "69.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-suporte-celular-articulado-mesa.html?SearchText=suporte%20celular%20articulado%20mesa",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=desk%20phone%20holder%20adjustable",
     "badge": "Finds B",
@@ -2893,13 +3215,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 59,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2919,7 +3243,13 @@
     },
     "sourceRowId": "D38",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-suporte-articulado-de-celular-para-mesa-cutout.png"
+    "cutout": "./assets/generated/find-suporte-articulado-de-celular-para-mesa-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-base-carregamento-sem-fio-3-em-1",
@@ -2931,7 +3261,7 @@
     "marginPercent": "67.8%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/Zendrop",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-carregador-sem-fio-3-em-1-dobravel.html?SearchText=carregador%20sem%20fio%203%20em%201%20dobravel",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=3%20in%201%20wireless%20charger",
     "badge": "Finds C",
@@ -2956,13 +3286,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 149,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -2982,7 +3314,13 @@
     },
     "sourceRowId": "D39",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-base-carregamento-sem-fio-3-em-1-cutout.png"
+    "cutout": "./assets/generated/find-base-carregamento-sem-fio-3-em-1-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-carregador-gan-65w",
@@ -2994,7 +3332,7 @@
     "marginPercent": "65.4%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-carregador-gan-65w-usb-c.html?SearchText=carregador%20gan%2065w%20usb%20c",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=65w%20gan%20charger",
     "badge": "Finds C",
@@ -3019,13 +3357,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 159,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3045,7 +3385,13 @@
     },
     "sourceRowId": "D40",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-carregador-gan-65w-cutout.png"
+    "cutout": "./assets/generated/find-carregador-gan-65w-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-power-bank-magnetico-compacto",
@@ -3057,7 +3403,7 @@
     "marginPercent": "65.4%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-power-bank-magnetico-magsafe-compacto.html?SearchText=power%20bank%20magnetico%20magsafe%20compacto",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=magnetic%20power%20bank",
     "badge": "Finds C",
@@ -3082,13 +3428,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 159,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3108,7 +3456,13 @@
     },
     "sourceRowId": "D41",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-power-bank-magnetico-compacto-cutout.png"
+    "cutout": "./assets/generated/find-power-bank-magnetico-compacto-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-teclado-mecanico-60-rgb-generico",
@@ -3120,7 +3474,7 @@
     "marginPercent": "65.8%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-teclado-mecanico-60-rgb.html?SearchText=teclado%20mecanico%2060%25%20rgb",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=60%20mechanical%20keyboard",
     "badge": "Finds C",
@@ -3145,13 +3499,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 219,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3171,7 +3527,13 @@
     },
     "sourceRowId": "D42",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-teclado-mecanico-60-rgb-generico-cutout.png"
+    "cutout": "./assets/generated/find-teclado-mecanico-60-rgb-generico-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-kit-keycap-puller-switch-puller-pincel",
@@ -3183,7 +3545,7 @@
     "marginPercent": "75.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-keycap-puller-switch-puller-brush-kit.html?SearchText=keycap%20puller%20switch%20puller%20brush%20kit",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=keycap%20puller%20kit",
     "badge": "Finds A",
@@ -3208,13 +3570,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 49,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3234,7 +3598,13 @@
     },
     "sourceRowId": "D44",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-kit-keycap-puller-switch-puller-pincel-cutout.png"
+    "cutout": "./assets/generated/find-kit-keycap-puller-switch-puller-pincel-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-adaptador-dac-usb-c-para-p2",
@@ -3246,7 +3616,7 @@
     "marginPercent": "73.9%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-dac-usb-c-p2-adaptador-hifi.html?SearchText=dac%20usb%20c%20p2%20adaptador%20hifi",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=usb%20c%20dac%20adapter",
     "badge": "Finds B",
@@ -3271,13 +3641,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 69,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3297,7 +3669,13 @@
     },
     "sourceRowId": "D46",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-adaptador-dac-usb-c-para-p2-cutout.png"
+    "cutout": "./assets/generated/find-adaptador-dac-usb-c-para-p2-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-controle-bluetooth-para-celular-pc",
@@ -3309,7 +3687,7 @@
     "marginPercent": "65.6%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-controle-bluetooth-celular-pc-telescopico.html?SearchText=controle%20bluetooth%20celular%20pc%20telescopico",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=bluetooth%20mobile%20game%20controller",
     "badge": "Finds C",
@@ -3334,13 +3712,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 189,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3360,7 +3740,13 @@
     },
     "sourceRowId": "D47",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-controle-bluetooth-para-celular-pc-cutout.png"
+    "cutout": "./assets/generated/find-controle-bluetooth-para-celular-pc-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-suporte-duplo-controle-headset",
@@ -3372,7 +3758,7 @@
     "marginPercent": "69.6%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-suporte-controle-headset-mesa-gamer.html?SearchText=suporte%20controle%20headset%20mesa%20gamer",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=controller%20headset%20stand",
     "badge": "Finds B",
@@ -3397,13 +3783,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 79,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3423,7 +3811,13 @@
     },
     "sourceRowId": "D48",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-suporte-duplo-controle-headset-cutout.png"
+    "cutout": "./assets/generated/find-suporte-duplo-controle-headset-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-smart-tag-rastreador-bluetooth",
@@ -3435,7 +3829,7 @@
     "marginPercent": "72.2%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-rastreador-bluetooth-smart-tag.html?SearchText=rastreador%20bluetooth%20smart%20tag",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=bluetooth%20smart%20tag%20tracker",
     "badge": "Finds C",
@@ -3460,13 +3854,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 79,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3486,7 +3882,13 @@
     },
     "sourceRowId": "D49",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-smart-tag-rastreador-bluetooth-cutout.png"
+    "cutout": "./assets/generated/find-smart-tag-rastreador-bluetooth-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   },
   {
     "id": "find-mini-impressora-termica-portatil-bluetooth",
@@ -3498,7 +3900,7 @@
     "marginPercent": "67.5%",
     "fulfillmentMode": "manual-dropshipping",
     "manualFulfillment": true,
-    "supplierPlatform": "AliExpress/DSers/CJ",
+    "supplierPlatform": "CJdropshipping / AliExpress",
     "supplierUrl": "https://pt.aliexpress.com/w/wholesale-mini-impressora-termica-bluetooth-portatil.html?SearchText=mini%20impressora%20termica%20bluetooth%20portatil",
     "supplierBackupUrl": "https://cjdropshipping.com/search?keyword=mini%20thermal%20printer%20bluetooth",
     "badge": "Finds C",
@@ -3523,13 +3925,15 @@
       "widthCm": 18,
       "lengthCm": 24,
       "insuranceValue": 169,
-      "mode": "supplier-fixed",
-      "customerPrice": 29.9,
+      "mode": "supplier-quote-required",
       "deliveryTime": 18,
       "originMode": "supplier",
       "customerPays": true,
       "region": "INTL",
-      "freightBasis": "Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech."
+      "freightBasis": "Checkout direto pausado: frete precisa vir exatamente da origem do fornecedor ate o CEP do cliente por CJdropshipping, Mercado Livre API ou fornecedor validado.",
+      "previousFixedCustomerPrice": 29.9,
+      "exactRequired": true,
+      "liveQuoteReady": false
     },
     "featured": false,
     "sourceNotes": {
@@ -3549,6 +3953,12 @@
     },
     "sourceRowId": "D50",
     "sourceTable": "MobilyTech_Fase1_Produtos_Dropshipping_Afiliados_2026-06-13",
-    "cutout": "./assets/generated/find-mini-impressora-termica-portatil-bluetooth-cutout.png"
+    "cutout": "./assets/generated/find-mini-impressora-termica-portatil-bluetooth-cutout.png",
+    "checkoutEnabled": false,
+    "requireExactSupplierFreight": true,
+    "returnToDropshippingWhenSafe": true,
+    "dropshippingCandidateStatus": "pausado-ate-cj-ou-frete-exato",
+    "preferredAutomationRoute": "cj-or-dsers-sourcing-required",
+    "supplierRegion": "INTL"
   }
 ]
