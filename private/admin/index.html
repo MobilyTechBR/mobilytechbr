@@ -683,7 +683,7 @@
             <div>
               <p class="section-kicker">Editor visual</p>
               <h2 id="content-editor-title">Textos, destaque e artes do site</h2>
-              <p>Edite o conteudo visual principal sem mexer no HTML. Baixe o JSON revisado e aplique em <code>data/site-content.json</code> antes de gerar o site.</p>
+              <p>Edite o conteudo visual principal sem mexer no HTML. Salve direto quando o token GitHub seguro estiver configurado na Vercel; se nao estiver, baixe o JSON revisado como fallback.</p>
             </div>
           </div>
           <div class="editor-panel">
@@ -692,8 +692,10 @@
                 <strong>Conteudo do site</strong>
                 <p>Hero principal, produto em destaque, banners de servico e textos das paginas fase 2.</p>
               </div>
+              <button class="btn btn-red" type="button" id="saveSiteContent">Salvar no site</button>
               <button class="btn btn-dark" type="button" id="exportSiteContent">Baixar site-content.json revisado</button>
             </div>
+            <div class="sale-status" id="siteContentStatus" aria-live="polite"></div>
             <div class="site-content-form" id="siteContentEditor">
               <p>Carregando conteudo visual...</p>
             </div>
@@ -1283,6 +1285,13 @@
         status.textContent = message;
       }
 
+      function setSiteContentStatus(message, type = "info") {
+        const status = $("#siteContentStatus");
+        if (!status) return;
+        status.className = `sale-status is-${type}`;
+        status.textContent = message;
+      }
+
       function findProfitSummary(item) {
         const sale = moneyNumber(item.salePrice);
         const cost = moneyNumber(item.supplierCost);
@@ -1376,6 +1385,30 @@
       $("#exportSiteContent")?.addEventListener("click", () => {
         if (!siteContentState) return;
         downloadJson("site-content-revisado-mobilytech.json", siteContentState);
+      });
+      $("#saveSiteContent")?.addEventListener("click", async () => {
+        if (!siteContentState) return;
+        try {
+          const token = $("#adminWriteToken")?.value || "";
+          setSiteContentStatus("Salvando site-content.json com acesso administrativo...", "info");
+          const response = await fetch("../api/update-site-content", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Token": token
+            },
+            body: JSON.stringify({ siteContent: siteContentState })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false) {
+            setSiteContentStatus(result.error || "Nao foi possivel salvar direto. Baixe o JSON revisado como fallback.", "error");
+            return;
+          }
+          const shortSha = result.commitSha ? ` Commit ${String(result.commitSha).slice(0, 7)}.` : "";
+          setSiteContentStatus(`${result.message || "Conteudo salvo."}${shortSha}`, "ok");
+        } catch (error) {
+          setSiteContentStatus(error.message || "Erro ao salvar. Baixe o JSON revisado como fallback.", "error");
+        }
       });
       $("#siteContentEditor")?.addEventListener("input", (event) => {
         const path = event.target?.dataset?.contentPath;

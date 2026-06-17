@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-06-17T02:38:21.830Z",
+  "source": "data/products.json + lib/fulfillment-shipping.js",
+  "supplierProducts": 51,
+  "byRegion": {
+    "INTL": 50,
+    "BR": 1
+  },
+  "failures": [],
+  "passed": true,
+  "sample": {
+    "quote": {
+      "id": "supplier-manual",
+      "name": "Envios diretos com rastreio",
+      "company": "Envio direto",
+      "price": 59.8,
+      "deliveryTime": 7,
+      "supplierItemCount": 2
+    },
+    "formattedFornecedorItens": [
+      "Produto: Teclado gamer mecanico RGB ABNT2 | ID: find-teclado-mecanico-abnt2 | Qtd: 1 | Canal de origem: Mercado Livre / Amazon | Origem: Brasil | Link: https://www.mercadolivre.com.br/teclado-mecnico-gamer-rgb-abnt2-106-teclas-switch-red-silencioso-anti-ghosting-full-size-com-fio-usb-para-pc-notebook-portugus-brasil/p/MLB65123221 | Custo estimado: R$ 130 | Frete cobrado do cliente: R$ 29.9 | Prazo estimado: 7 dia(s) | Frete estimado: nao | Base do frete: Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech. | Reputacao: Busca indica bom custo-beneficio, mas tambem relatos de durabilidade a checar | Risco/checagem: Garantia e suporte podem consumir ma",
+      "Produto: Case SSD M.2 NVMe USB-C 10Gbps | ID: find-case-ssd-nvme | Qtd: 1 | Canal de origem: AliExpress/DSers ou CJ | Origem: Internacional | Link: https://pt.aliexpress.com/w/wholesale-case-ssd-nvme-usb-c-10gbps-orico.html?SearchText=case%20ssd%20nvme%20usb%20c%2010gbps%20orico | Backup: https://cjdropshipping.com/search?keyword=nvme%20ssd%20enclosure | Custo estimado: R$ 70 | Frete cobrado do cliente: R$ 29.9 | Prazo estimado: 7 dia(s) | Frete estimado: nao | Base do frete: Frete deve considerar o CEP/origem do fornecedor ate o cliente final, nao a casa da MobilyTech. | Reputacao: +5 mil vendidos, 4.8/5 com 463 opinioes, 'Mais vendido' em gavetas para HDs na oferta Inv Tech | Risco/checage"
+    ]
+  }
+}

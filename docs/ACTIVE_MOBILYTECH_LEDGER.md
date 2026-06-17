@@ -257,3 +257,17 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Deploy final `dpl_Gr7md1zmFFoSSP2CSYpZWRSDLFtn` ficou `READY` em producao.
 - Smoke production salvo em `docs/qa/final-production-2026-06-17-26f5d35/production-post-finds-fix-qa.json` passou: paginas publicas 200, `/admin` 401, `/private/admin/index.html` 404, APIs de conta/pedidos/checkouts/webhooks com codigos esperados, data JSONs 200, 167 assets sem quebrados/zero byte, `Ver oferta no Mercado Livre` ausente, `Ver oferta` e logo Mercado Livre presentes, cupom nao exposto na UI, Mercado Pago amarelo solido e Abacate Pay verde solido.
 - Logs runtime Vercel do deploy final, janela de 30 minutos, sem `error`/`fatal`.
+
+## Atualizacao 2026-06-16 - painel site-content com escrita segura preparada
+
+- Antes de editar, foi criado backup em `C:\Users\MF\Documents\BACKUPSSITECODEX\MobilyTechBR_pre_site_content_writer_2026-06-16_233140.zip`.
+- `private/admin/index.html` ganhou botao `Salvar no site` para o editor de textos, destaque e artes do site, mantendo o botao de baixar `site-content.json` como fallback.
+- Nova rota `api/update-site-content.js` exige sessao admin ou `ADMIN_WRITE_TOKEN`, valida o JSON e so tenta gravar `data/site-content.json` no GitHub se existir `GITHUB_CONTENT_WRITE_TOKEN`/token equivalente como segredo de servidor. O token nunca vai para o navegador.
+- QA isolado da rota passou: `GET` retorna 405, POST sem admin retorna 401, payload invalido retorna 400 e ausencia de token GitHub retorna 501 seguro com mensagem de fallback. A publicacao real da escrita direta ainda depende de configurar um token GitHub fino em ambiente seguro; sem isso, o painel continua exportando JSON revisado.
+
+## Atualizacao 2026-06-16 - QA controlado de fornecedor/dropshipping
+
+- `lib/fulfillment-shipping.js` foi ajustado para, em itens internacionais, priorizar o link operacional `supplierSearchUrl` e a plataforma de origem da triagem (`AliExpress/DSers ou CJ`) em `FornecedorItens`, em vez de usar primeiro o link publico de curadoria.
+- QA controlado salvo em `docs/qa/supplier-fulfillment-control-2026-06-16/qa.json`: 51 produtos de fornecedor ativos, 50 `INTL` e 1 `BR`, sem falhas de campos obrigatorios.
+- A amostra validada contem produto, ID, quantidade, canal de origem, origem, link operacional, backup, custo estimado, frete cobrado do cliente, prazo, base de frete, reputacao, risco e instrucao.
+- Isso valida P16/P17 sem compra real. O unico teste restante para essa area e uma venda/pedido controlado futuro, quando for desejado disparar fluxo real de checkout/e-mail.

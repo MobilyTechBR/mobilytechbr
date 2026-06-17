@@ -87,6 +87,18 @@ Para os botoes de aprovar/desfazer realmente alterarem o site, configure nas **P
 
 Sem `GITHUB_TOKEN`, o script ainda envia os e-mails e registra a revisao na planilha, mas nao altera o site sozinho.
 
+## Editor visual do painel
+
+O painel interno tambem edita `data/site-content.json`, que controla textos, destaque e artes das paginas da fase 2.
+
+- O botao `Baixar site-content.json revisado` continua sendo o fallback seguro.
+- O botao `Salvar no site` chama `/api/update-site-content` e exige sessao admin ou `ADMIN_WRITE_TOKEN`.
+- Para gravar direto no GitHub, configure na Vercel uma variavel sensivel de servidor:
+
+`GITHUB_CONTENT_WRITE_TOKEN`
+
+Use um token fino do GitHub com acesso apenas ao repositorio `MobilyTechBR/mobilytechbr` e permissao de leitura/escrita em contents. Sem esse token, a rota retorna `needsConfig` e nao grava nada.
+
 ## Registro de venda pelo painel
 
 O painel interno pode registrar uma venda manual na aba `Vendas_PCs` e, se o GitHub estiver configurado no Apps Script, desativar o produto vendido em `data/products.json`.
