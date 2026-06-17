@@ -125,6 +125,11 @@ function paymentMethods() {
   return methods.length ? [...new Set(methods)] : ["PIX", "CARD"];
 }
 
+function isCheckoutTest(request, payload = {}) {
+  const header = String(request.headers["x-mobilytech-test-checkout"] || "").toLowerCase();
+  return header === "true" || header === "1" || payload.testMode === true || payload.qa === true;
+}
+
 function formBody(fields) {
   const params = new URLSearchParams();
   Object.entries(fields).forEach(([key, value]) => {
@@ -339,10 +344,11 @@ async function abacateRequest(apiKey, url, options = {}) {
       ? data.error
       : data.error?.message || data.message;
     const message = [401, 403].includes(apiResponse.status)
-      ? "Abacate Pay nao autorizou a chave configurada. Confira se ABACATE_PAY_API_KEY esta correta e com permissoes de Produtos e Checkout."
+      ? "Abacate Pay esta temporariamente indisponivel. Use Mercado Pago ou tente novamente mais tarde."
       : detail || "Abacate Pay recusou a operacao.";
     const error = new Error(message);
     error.statusCode = apiResponse.status || 500;
+    if ([401, 403].includes(apiResponse.status)) error.code = "ABACATE_AUTH_FAILED";
     error.details = data.error || data;
     throw error;
   }
@@ -450,6 +456,7 @@ module.exports = async function createAbacateCheckout(request, response) {
 
   try {
     const payload = await readJsonBody(request);
+    const testCheckout = isCheckoutTest(request, payload);
     const { shipping } = payload;
     const [products, globalAddons, globalSwaps] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps()]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
@@ -531,7 +538,7 @@ module.exports = async function createAbacateCheckout(request, response) {
     }
 
     const pendingCustomer = normalizedShipping?.customer || {};
-    const pendingNotification = await notifyPendingOrder({
+    const pendingNotification = testCheckout ? { sent: false, skipped: true, test: true } : await notifyPendingOrder({
       _subject: "Pedido recebido - pagamento pendente - MobilyTechBR",
       order_status: "PENDENTE",
       platform: "Abacate Pay",
@@ -587,9 +594,16 @@ module.exports = async function createAbacateCheckout(request, response) {
       pending_notification: pendingNotification
     });
   } catch (error) {
+    if (error.code === "ABACATE_AUTH_FAILED") {
+      console.error("Abacate Pay authorization failed", {
+        statusCode: error.statusCode,
+        details: error.details
+      });
+    }
     sendJson(response, error.statusCode || 500, {
       error: error.message || "Erro ao criar checkout Abacate Pay.",
-      details: error.details
+      ...(error.code ? { code: error.code } : {}),
+      ...(error.code === "ABACATE_AUTH_FAILED" ? {} : { details: error.details })
     });
   }
 };

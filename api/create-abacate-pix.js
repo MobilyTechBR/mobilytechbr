@@ -392,8 +392,13 @@ module.exports = async function createAbacatePix(request, response) {
     const qrCodeBase64 = pixData.brCodeBase64 || pixData.qrCodeBase64 || pixData.qrCode;
     if (!abacateResponse.ok || data.success === false || data.error || !copyCode) {
       if ([401, 403].includes(abacateResponse.status)) {
+        console.error("Abacate Pay Pix authorization failed", {
+          statusCode: abacateResponse.status,
+          details: data.error || data
+        });
         sendJson(response, 401, {
-          error: "Abacate Pay nao autorizou a chave configurada. Confira se ABACATE_PAY_API_KEY esta com o token correto, sem aspas, sem Bearer e com permissao de checkout transparente."
+          error: "Abacate Pay esta temporariamente indisponivel. Use Mercado Pago ou tente novamente mais tarde.",
+          code: "ABACATE_AUTH_FAILED"
         });
         return;
       }
