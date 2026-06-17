@@ -535,7 +535,7 @@ module.exports = async function createAbacateCheckout(request, response) {
       _subject: "Pedido recebido - pagamento pendente - MobilyTechBR",
       order_status: "PENDENTE",
       platform: "Abacate Pay",
-      email: pendingCustomer.email || "mobilytechbr@gmail.com",
+      email: pendingCustomer.email || "",
       mensagem: [
         "Pedido recebido no checkout Abacate Pay.",
         "",

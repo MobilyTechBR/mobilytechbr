@@ -158,7 +158,7 @@ async function notifyOrder(request, body) {
     _subject: "Pedido pago - MobilyTechBR",
     order_status: "PAGO",
     platform: "Abacate Pay",
-    email: shippingCustomer.email || "mobilytechbr@gmail.com",
+    email: shippingCustomer.email || "",
     mensagem: lines.join("\n"),
     pagamento: orderReference,
     payment_id: orderReference,

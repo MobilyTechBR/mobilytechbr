@@ -141,6 +141,7 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - `docs/google-apps-script/mobilytech-pos-venda.gs` ganhou a acao `lookup-customer-orders` antes do fallback de `upsertOrder_`, evitando que uma consulta de historico vire pedido novo por engano.
 - A consulta de pedidos e somente leitura, exige `CUSTOMER_ORDERS_TOKEN` nas propriedades do Apps Script, filtra por `ClienteEmail` e retorna apenas campos publicos da aba `Pedidos`; nao altera `Vendas_PCs`, nao toca `A:I`, nao chama GitHub e nao envia e-mails.
 - Testes locais passaram: sintaxe do Apps Script via `vm.Script`, consulta com token ausente/errado sem retorno de dados e consulta com token correto retornando apenas o pedido do e-mail correspondente. Publicacao no Apps Script vivo ainda exige backup/compare por causa da rotina mensal existente.
+- Validacao real em producao apos intervencao do usuario: Google OAuth foi configurado na Vercel, login real funcionou na pagina `Minha conta`, o Web App separado de pos-venda respondeu ativo, `CUSTOMER_ORDERS_TOKEN` foi salvo nas propriedades do Apps Script e em env vars sensiveis da Vercel, e a pagina `Minha conta` retornou `Nenhum pedido encontrado para este e-mail no momento`, confirmando Vercel -> Apps Script -> historico de pedidos conectado sem expor pedidos de outras contas.
 
 ## Atualizacao 2026-06-16 - MobilyTech Finds 50+50 e frete de fornecedor
 
@@ -224,3 +225,13 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Checagem local nao encontrou `gcloud`, `clasp`, `vercel` nem `npm` no PATH apos reboot; o conector Vercel disponivel nao expoe CRUD de env vars nem valores sensiveis.
 - E-mail `MobilyTech BR - intervencoes necessarias para destravar login e pedidos` enviado para `me` com a lista agrupada: Google OAuth, Microsoft opcional, `AUTH_SESSION_SECRET`, `CUSTOMER_ORDERS_ENDPOINT`, `CUSTOMER_ORDERS_TOKEN`, acesso/backup do Apps Script vivo e reautenticacao Wix quando for testar apps/imagens.
 - Enquanto isso nao for configurado, nao tentar criar pedido real nem colar Apps Script vivo: seguir apenas com validacoes locais/sem efeito colateral.
+
+## Atualizacao 2026-06-16 - protecao contra e-mails de validacao
+
+- Usuario avisou que recebeu e-mails de `Compra confirmada`/`voce vendeu no site` sem marcador de teste. Gmail mostrou quatro mensagens transacionais de validacao, sem produto/valor real de venda; foram tratadas como teste indesejado, nao como venda real.
+- Causa provavel corrigida em duas camadas: as APIs de Mercado Pago/Abacate Pay nao usam mais `mobilytechbr@gmail.com` como fallback de e-mail de cliente, e o Apps Script agora rejeita payload incompleto antes de gravar pedido ou disparar e-mails.
+- `docs/google-apps-script/mobilytech-pos-venda.gs` ganhou reconhecimento de `dry_run`/`dryRun`/`test_mode`/`validation_only`, validacao obrigatoria de venda real (`payment_id`, produto, valor e e-mail real do cliente) e filtro para nao reprocessar pedidos internos/teste na fila.
+- O Apps Script vivo de pos-venda foi atualizado em deploy existente para `Versao 3` sem sobrescrever o projeto `MobilyTech Relatorio Mensal` nem mexer nas colunas `A:I` de `Vendas_PCs`. A URL do Web App nao foi registrada no repo/chat.
+- Validacao viva: POST com `dry_run=true` retornou `dryRun:true` e `skipped:true`; POST incompleto retornou `ok:false` e erro controlado. Isso confirma que validacoes futuras nao gravam pedido nem enviam e-mails.
+- Testes locais passaram: `node --check` em `api/create-preference.js`, `api/create-abacate-checkout.js`, `api/mercado-pago-webhook.js`, `api/abacate-pay-webhook.js`; fonte Apps Script validada por parser JS local.
+- Pendente desta correcao: publicar as alteracoes das APIs Vercel e fazer QA production para garantir que novos checkouts/webhooks nao mandem payload sem e-mail real de cliente.

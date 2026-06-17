@@ -159,7 +159,7 @@ async function notifyOrder(request, payment) {
     _subject: "Pedido pago - MobilyTechBR",
     order_status: "PAGO",
     platform: "Mercado Pago",
-    email: customerEmail || "mobilytechbr@gmail.com",
+    email: customerEmail || "",
     mensagem: lines.join("\n"),
     pagamento: orderReference,
     payment_id: orderReference,

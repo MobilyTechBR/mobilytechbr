@@ -182,6 +182,26 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ ok: true, ...result }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+  if (isDryRunOrderPayload_(payload)) {
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        ok: true,
+        dryRun: true,
+        skipped: true,
+        message: "Validacao recebida sem gravar pedido, baixar estoque ou enviar e-mails."
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  const validation = validateRealOrderPayload_(payload);
+  if (!validation.ok) {
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        ok: false,
+        skipped: true,
+        error: validation.error
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   const row = upsertOrder_(payload);
   const stock = maybeMarkPaidOrderProductsSold_(payload);
   return ContentService
@@ -286,10 +306,48 @@ function orderSortValue_(order) {
   return isNaN(parsed) ? 0 : parsed;
 }
 
+function isDryRunOrderPayload_(payload) {
+  return ["dry_run", "dryRun", "test_mode", "testMode", "teste", "validation_only", "validationOnly"]
+    .some((key) => String(payload[key] || "").toLowerCase() === "true");
+}
+
+function validateRealOrderPayload_(payload) {
+  const action = String(payload.action || payload.event_type || payload.type || "");
+  const allowedAction = !action || [
+    "order-paid",
+    "order_paid",
+    "payment-approved",
+    "payment_approved",
+    "payment-confirmed",
+    "payment_confirmed",
+    "checkout-paid",
+    "checkout_paid",
+    "pix-paid",
+    "pix_paid"
+  ].indexOf(action) >= 0;
+  if (!allowedAction) {
+    return { ok: false, error: `Acao de pedido desconhecida: ${action}` };
+  }
+
+  const hasPaymentId = Boolean(String(payload.payment_id || payload.pagamento || payload.order_id || "").trim());
+  const hasProduct = Boolean(String(payload.product_title || payload.produto || payload.product_ids || payload.product_id || "").trim());
+  const hasAmount = Boolean(String(payload.amount_paid || payload.amount || payload.valor_pago || "").trim());
+  const shippingCustomer = parseJson_(payload.shipping_customer, {});
+  const hasCustomerEmail = Boolean(String(payload.customer_email || payload.customerEmail || shippingCustomer.email || "").trim());
+  if (!hasPaymentId || !hasProduct || !hasAmount || !hasCustomerEmail) {
+    return {
+      ok: false,
+      error: "Payload incompleto para venda real. Use dry_run=true em validacoes ou envie payment_id, produto, valor e e-mail real do cliente."
+    };
+  }
+  return { ok: true };
+}
+
 function processPostSaleQueue_(settings) {
   const sheet = ordersSheet_();
   const rows = readRows_(sheet);
   rows.forEach(({ row, values }) => {
+    if (isInternalTestOrder_(values)) return;
     const status = String(values.Status || "").toUpperCase();
     if (isPendingPaymentStatus_(status)) {
       if (!values.EmailClientePagamentoPendenteEnviado && values.ClienteEmail) {
@@ -331,6 +389,15 @@ function processPostSaleQueue_(settings) {
       }
     }
   });
+}
+
+function isInternalTestOrder_(order) {
+  const text = normalizeText_([
+    order.PedidoID,
+    order.Plataforma,
+    order.ObservacoesOperacao
+  ].join(" "));
+  return /\bteste\b|\btest\b|\bdry\s*run\b|\bvalidation\b/.test(text);
 }
 
 function sendCustomerConfirmation_(order, options) {
@@ -1523,7 +1590,7 @@ function normalizeOrder_(payload) {
   const shippingCustomer = parseJson_(payload.shipping_customer, {});
   const customer = {
     name: payload.customer_name || shippingCustomer.name || "",
-    email: payload.customer_email || payload.email || shippingCustomer.email || "",
+    email: payload.customer_email || shippingCustomer.email || payload.email || "",
     phone: payload.customer_phone || shippingCustomer.phone || ""
   };
   return {

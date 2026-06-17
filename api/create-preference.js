@@ -535,7 +535,7 @@ module.exports = async function createPreference(request, response) {
       _subject: "Pedido recebido - pagamento pendente - MobilyTechBR",
       order_status: "PENDENTE",
       platform: "Mercado Pago",
-      email: customer.email || "mobilytechbr@gmail.com",
+      email: customer.email || "",
       mensagem: [
         "Pedido recebido no checkout Mercado Pago.",
         "",
