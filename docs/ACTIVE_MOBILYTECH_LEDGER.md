@@ -236,3 +236,13 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Testes locais passaram: `node --check` em `api/create-preference.js`, `api/create-abacate-checkout.js`, `api/mercado-pago-webhook.js`, `api/abacate-pay-webhook.js`; fonte Apps Script validada por parser JS local.
 - Publicacao Vercel: commit `6f2d8e0` publicou a barreira contra e-mails de validacao. O smoke conservador encontrou `500` em `GET` dos webhooks por import incorreto de `fulfillment-shipping`; commit `e13e4eb` corrigiu os imports para `../lib/fulfillment-shipping`.
 - Deploy final `dpl_4Bjepjfw1w8fGqzsEimdYu4sr2Sa` (`e13e4eb`) ficou `READY`. Smoke HTTP no dominio oficial: home 200, `fase2/minha-conta.html` 200, `/api/account?action=session` 200 com Google configurado, `/admin` 401 protegido, checkouts em GET 405 e webhooks em GET 405. Logs Vercel da ultima janela nao mostraram novos 500.
+
+## Atualizacao 2026-06-16/17 - Wix apps e imagens
+
+- Conector Wix voltou a responder para o site canonico `85e985c5-2904-452f-85e2-a98f6d3b1cac`; API oficial de app instances retornou lista habilitada, mas sem nomes comerciais por `appDefId`.
+- Avaliacao atualizada em `docs/wix-paypal-apps-assessment-2026-06-16.md`, usando painel Wix logado e paginas oficiais do App Market.
+- `AI Product Images`: painel mostrou `20 creditos` no gratuito; App Market confirma plano gratuito. Decisao: nao serve para refazer todas as imagens atuais do Vercel em massa; testar apenas 1-2 imagens duplicadas/nao criticas se for necessario crocheck visual.
+- `Dropi`: App Market informa free plan, mas painel MobilyTech mostrou `Trial Profissional`; pela regra do usuario, nao usar operacionalmente enquanto nao estiver claro que caiu em plano gratuito permanente.
+- `Modalyst`: painel mostrou Hobby plan com `My Products 18`, `Sync List 17` e apenas `7 products left`; usar no maximo como aprendizado/teste, nao como escala de catalogo.
+- `Zonify`: App Market mostra trial de 3 dias e planos pagos; rejeitado por nao atender plano gratuito permanente.
+- `DSers`: App Market mostra plano gratuito robusto (ate 3 stores e 3000 produtos); melhor candidato se a operacao dropshipping for migrar para Wix Stores, sempre com produtos de teste e validacao de frete/fornecedor Brasil.
