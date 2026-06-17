@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Painel MobilyTech BR</title>
-    <link rel="icon" href="../assets/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" href="../assets/favicon.png">
-    <link rel="apple-touch-icon" href="../assets/favicon.png">
+    <link rel="icon" href="/assets/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900;1000&display=swap" rel="stylesheet">
@@ -504,6 +504,66 @@
         text-transform: none;
         line-height: 1.35;
       }
+      .media-size-card {
+        border: 1px solid #e5ebf3;
+        border-radius: 12px;
+        background: #f8fbff;
+        padding: 10px 11px;
+        display: grid;
+        gap: 7px;
+      }
+      .media-size-card strong,
+      .media-size-card span {
+        display: block;
+        overflow-wrap: anywhere;
+      }
+      .media-size-card strong {
+        color: #111827;
+        font-size: 12px;
+        line-height: 1.25;
+      }
+      .media-size-card span {
+        color: #5f6874;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0;
+        line-height: 1.35;
+        text-transform: none;
+      }
+      .media-details {
+        border-top: 1px solid #edf1f6;
+        padding-top: 8px;
+      }
+      .media-details summary {
+        cursor: pointer;
+        color: #0a6473;
+        font-size: 11px;
+        font-weight: 1000;
+        letter-spacing: 0;
+        list-style: none;
+        text-transform: none;
+      }
+      .media-details summary::-webkit-details-marker { display: none; }
+      .media-details summary:before {
+        content: "?";
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        margin-right: 7px;
+        display: inline-grid;
+        place-items: center;
+        background: #e7fbfa;
+        color: #047d74;
+        font-weight: 1000;
+      }
+      .media-details p {
+        margin: 8px 0 0;
+        color: #5f6874;
+        font-size: 11px;
+        font-weight: 900;
+        line-height: 1.4;
+        text-transform: none;
+      }
       .media-status {
         margin: 0;
         min-height: 18px;
@@ -515,6 +575,63 @@
       }
       .media-status.is-error { color: #9b1515; }
       .media-status.is-ok { color: #047d74; }
+      .hero-bg-panel {
+        grid-column: 1 / -1;
+        border: 1px solid #d8dde7;
+        border-radius: 14px;
+        background: #fff;
+        padding: 14px;
+        display: grid;
+        gap: 12px;
+      }
+      .hero-bg-panel > strong {
+        font-size: 13px;
+        color: #111;
+      }
+      .hero-bg-mode {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .hero-bg-mode label,
+      .hero-bg-swatch {
+        border: 1px solid #d8dde7;
+        border-radius: 12px;
+        background: #f8fafc;
+        color: #111;
+        font-size: 12px;
+        font-weight: 1000;
+        cursor: pointer;
+      }
+      .hero-bg-mode label {
+        min-height: 40px;
+        padding: 0 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .hero-bg-mode input,
+      .hero-bg-swatch input { accent-color: var(--red); }
+      .hero-bg-swatches {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .hero-bg-swatch {
+        min-height: 78px;
+        padding: 10px;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 8px;
+        align-items: center;
+      }
+      .hero-bg-swatch i {
+        grid-column: 1 / -1;
+        height: 30px;
+        border-radius: 10px;
+        border: 1px solid rgba(17, 24, 39, .16);
+      }
+      .hero-bg-swatch span { line-height: 1.2; }
       .editor-note {
         padding: 14px 22px 18px;
         color: #6d5108;
@@ -705,6 +822,8 @@
         .content-image-field.wide { grid-column: 1 / -1; width: 100%; }
         .media-upload-row { grid-template-columns: 1fr; }
         .media-preview { min-height: 96px; }
+        .hero-bg-swatches { grid-template-columns: 1fr; }
+        .hero-bg-mode label { width: 100%; }
         .stats { grid-template-columns: 1fr; gap: 10px; }
         .stat-card { min-height: 116px; padding: 16px; }
         .stat-card strong { font-size: 30px; }
@@ -852,8 +971,8 @@
               <h3>Adicionais e swaps</h3>
               <p>Use <code>data/addons.json</code> para extras globais e <code>data/swaps.json</code> para trocas de SSD, RAM, GPU e fonte.</p>
               <div class="card-actions">
-                <a class="btn btn-ghost" href="../data/addons.json">Ver adicionais</a>
-                <a class="btn btn-ghost" href="../data/swaps.json">Ver swaps</a>
+                <a class="btn btn-ghost" href="/data/addons.json">Ver adicionais</a>
+                <a class="btn btn-ghost" href="/data/swaps.json">Ver swaps</a>
               </div>
             </article>
             <article class="card">
@@ -879,7 +998,7 @@
               <div class="card-actions">
                 <a class="btn btn-red" href="https://www.mobilytech.com.br/">Abrir site oficial</a>
                 <a class="btn btn-ghost" href="../fase2/achados.html">Preview local</a>
-                <a class="btn btn-ghost" href="../data/phase2-finalists.json">Ver JSON</a>
+                <a class="btn btn-ghost" href="/data/phase2-finalists.json">Ver JSON</a>
               </div>
             </article>
           </div>
@@ -921,7 +1040,7 @@
             <div class="editor-toolbar">
               <div>
                 <strong>Campos rapidos</strong>
-                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete exato, margem, comissao interna e links Mercado Livre, Amazon ou AliExpress. Shopee fica pausado ate reativarmos afiliado valido.</p>
+                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete exato, margem, comissao interna e links Mercado Livre, Amazon ou AliExpress. Marque link pronto apenas depois de validar que o link abre o produto direto e contem rastreio de afiliado. Shopee fica pausado ate reativarmos afiliado valido.</p>
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
@@ -944,6 +1063,7 @@
                   <tr>
                     <th>Ativo</th>
                     <th>Grupo</th>
+                    <th>Link pronto</th>
                     <th>Produto</th>
                     <th>Fornecedor</th>
                     <th>Origem</th>
@@ -963,7 +1083,7 @@
                   </tr>
                 </thead>
                 <tbody id="findsEditorRows">
-                  <tr><td colspan="18">Carregando MobilyTech Finds...</td></tr>
+                  <tr><td colspan="19">Carregando MobilyTech Finds...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -995,7 +1115,7 @@
                     <option value="">Carregando produtos...</option>
                   </select>
                   <div class="sale-product-preview" id="saleProductPreview" hidden>
-                    <img id="saleProductPreviewImage" src="../assets/mobilytech-logo.png" alt="">
+                    <img id="saleProductPreviewImage" src="/assets/mobilytech-logo.png" alt="">
                     <div>
                       <strong id="saleProductPreviewTitle">Produto selecionado</strong>
                       <small id="saleProductPreviewSpecs">A miniatura aparece aqui para confirmar o PC/hardware antes de registrar.</small>
@@ -1094,6 +1214,56 @@
       const MEDIA_ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif,image/heic-sequence,image/heif-sequence";
       const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
       const mediaPreviewUrls = new Map();
+      const HERO_BACKGROUND_PRESETS = [
+        { id: "sky", label: "Azul MobilyTech", gradient: "linear-gradient(90deg, #1788e8 0%, #2f9cf2 43%, #89d2ff 100%)" },
+        { id: "cyan", label: "Ciano claro", gradient: "linear-gradient(90deg, #20ddd4 0%, #79ece8 48%, #f4ffff 100%)" },
+        { id: "graphite", label: "Grafite premium", gradient: "linear-gradient(90deg, #101827 0%, #1d3045 52%, #4d718e 100%)" },
+        { id: "white", label: "Branco loja", gradient: "linear-gradient(90deg, #f4f8fb 0%, #ffffff 52%, #e7fbff 100%)" },
+        { id: "red", label: "Vermelho gamer", gradient: "linear-gradient(90deg, #ff2b2b 0%, #ff5353 52%, #ffd9d9 100%)" },
+        { id: "green", label: "Verde suporte", gradient: "linear-gradient(90deg, #087f78 0%, #16c48f 52%, #d9fff4 100%)" }
+      ];
+      const IMAGE_GUIDANCE = {
+        "homeHero.backgroundImage": {
+          title: "Fundo do hero principal",
+          recommended: "Desktop: 1920 x 720 px (proporcao 8:3). Mobile: mantenha o assunto no centro; o site corta as laterais quando necessario.",
+          details: "Use imagem larga, sem texto pequeno nas bordas. O hero aceita cores predefinidas ou uma imagem enviada pelo painel."
+        },
+        "servicePanels.build.image": {
+          title: "Arte Monte seu PC",
+          recommended: "Atual: 794 x 517 px. Recomendado: 800 x 520 px ou mesma proporcao 1,54:1.",
+          details: "Arte horizontal usada no card de servico. Evite elementos importantes muito colados nas bordas."
+        },
+        "servicePanels.clean.image": {
+          title: "Arte Limpeza",
+          recommended: "Atual: 800 x 517 px. Recomendado: 800 x 520 px ou mesma proporcao 1,55:1.",
+          details: "Arte horizontal usada no card de servico. Mantem bom encaixe no desktop e no mobile."
+        },
+        "servicePanels.cleanFormImage": {
+          title: "Imagem do formulario de limpeza",
+          recommended: "Atual: 621 x 566 px. Recomendado: 900 x 820 px ou mesma proporcao 1,10:1.",
+          details: "Imagem quase quadrada ao lado do formulario. Prefira fundo limpo e objeto centralizado."
+        },
+        "pages.ofertas.image": {
+          title: "Hero da pagina Ofertas",
+          recommended: "Recomendado: 1000 x 760 px ou proporcao 4:3. Se ficar vazio, a pagina usa apenas texto.",
+          details: "Imagem lateral do topo da pagina de catalogo. Funciona melhor com PNG recortado ou produto centralizado."
+        },
+        "pages.achados.image": {
+          title: "Hero MobilyTech Finds",
+          recommended: "Atual: 964 x 1133 px. Recomendado: 900 x 1050 px ou mesma proporcao 0,85:1.",
+          details: "Imagem vertical/lateral do topo da pagina de afiliados. Deixe respiro ao redor do personagem/produto."
+        },
+        "pages.montagem.image": {
+          title: "Hero Monte seu PC",
+          recommended: "Atual: 794 x 517 px. Recomendado: 800 x 520 px ou proporcao 1,54:1.",
+          details: "Arte usada no topo da pagina de montagem. Tambem pode reaproveitar a arte do card."
+        },
+        "pages.limpeza.image": {
+          title: "Hero Limpeza",
+          recommended: "Atual: 800 x 517 px. Recomendado: 800 x 520 px ou proporcao 1,55:1.",
+          details: "Arte usada no topo da pagina de limpeza. Mantenha o produto/PC centralizado."
+        }
+      };
 
       function escapeHtml(value = "") {
         return String(value)
@@ -1123,7 +1293,7 @@
       function upsertAffiliateLink(item, name, url) {
         const cleanUrl = String(url || "").trim();
         const logos = {
-          "mercado": "assets/mercado-livre-logo.svg",
+          "mercado": "assets/mercado-livre-logo-official.png",
           "amazon": "assets/amazon-logo.svg",
           "shopee": "assets/shopee-logo.svg",
           "aliexpress": "assets/aliexpress-logo.svg"
@@ -1155,6 +1325,7 @@
         const item = findsState?.finalists?.[index];
         if (!item) return;
         if (field === "active") item.active = value === "true";
+        else if (field === "affiliateReady") item.affiliateReady = value === "true";
         else if (field === "publicGroup") {
           item.publicGroup = value === "vendidos" ? "vendidos" : "recomendacoes";
           if (item.publicGroup !== "vendidos") {
@@ -1247,6 +1418,7 @@
           customerPaysShipping: true,
           marginPercent: "35.0%",
           affiliateCommissionPercent: "",
+          affiliateReady: false,
           productImage: "",
           whySell: "Descreva em uma frase por que este produto combina com setups MobilyTech.",
           publicPartnerNote: "Produto selecionado para complementar setups MobilyTech.",
@@ -1289,7 +1461,7 @@
         const raw = String(value || "").trim();
         if (!raw) return "";
         if (/^(https?:|data:|blob:|\/)/i.test(raw)) return raw;
-        return raw.replace(/^\.\//, "../").replace(/^assets\//, "../assets/");
+        return `/${raw.replace(/^\.\//, "").replace(/^\/+/, "")}`;
       }
 
       function isHeicPath(value) {
@@ -1303,21 +1475,97 @@
         return `<img src="${escapeHtml(src)}" alt="">`;
       }
 
+      function imageGuidance(path) {
+        return IMAGE_GUIDANCE[path] || {
+          title: "Imagem do site",
+          recommended: "Use a mesma proporcao da imagem atual. O painel mostra a medida real assim que a imagem carrega.",
+          details: "Prefira imagens nítidas, sem texto pequeno nas bordas e com o assunto centralizado para funcionar no desktop e no celular."
+        };
+      }
+
+      function updateMediaMeasure(path, srcValue) {
+        const node = nodeByDataset("[data-image-measure]", "imageMeasure", path);
+        if (!node) return;
+        const src = adminPreviewSrc(srcValue);
+        if (!src) {
+          node.textContent = "Medida atual: nenhuma imagem selecionada.";
+          return;
+        }
+        if (isHeicPath(srcValue)) {
+          node.textContent = "Medida atual: HEIC/HEIF aceito, mas alguns navegadores nao informam preview/dimensao.";
+          return;
+        }
+        node.textContent = "Medida atual: carregando...";
+        const image = new Image();
+        image.onload = () => {
+          const width = image.naturalWidth || 0;
+          const height = image.naturalHeight || 0;
+          if (!width || !height) {
+            node.textContent = "Medida atual: nao foi possivel ler a dimensao.";
+            return;
+          }
+          const ratio = (width / height).toFixed(2).replace(".", ",");
+          node.textContent = `Medida atual: ${width} x ${height} px | proporcao ${ratio}:1.`;
+        };
+        image.onerror = () => {
+          node.textContent = "Medida atual: preview indisponivel. Confira se o caminho da imagem esta correto.";
+        };
+        image.src = src;
+      }
+
+      function hydrateMediaMeasures() {
+        document.querySelectorAll("[data-image-measure]").forEach((node) => {
+          updateMediaMeasure(node.dataset.imageMeasure, getPathValue(siteContentState, node.dataset.imageMeasure) || "");
+        });
+      }
+
       function contentImageInput(path, label, className = "") {
         const value = getPathValue(siteContentState, path) || "";
         const fieldClass = ["content-image-field", className].filter(Boolean).join(" ");
+        const guidance = imageGuidance(path);
         return `
           <div class="${fieldClass}" data-image-field="${escapeHtml(path)}">
             <label>${label}<input data-content-path="${escapeHtml(path)}" value="${escapeHtml(value)}" placeholder="./assets/nome-da-imagem.png"></label>
             <div class="media-control">
               <div class="media-preview" data-content-preview="${escapeHtml(path)}">${mediaPreviewHtml(value)}</div>
+              <div class="media-size-card">
+                <strong>${escapeHtml(guidance.recommended)}</strong>
+                <span data-image-measure="${escapeHtml(path)}">Medida atual: carregando...</span>
+              </div>
               <div class="media-upload-row">
                 <input type="file" accept="${MEDIA_ACCEPT}" data-content-upload-path="${escapeHtml(path)}">
                 <button class="btn btn-dark" type="button" data-content-upload-trigger="${escapeHtml(path)}">Enviar imagem</button>
               </div>
               <p class="media-hint">JPG, PNG, WebP, GIF, HEIC ou HEIF ate 8 MB. O envio usa sua sessao segura do painel.</p>
+              <details class="media-details">
+                <summary>${escapeHtml(guidance.title)}</summary>
+                <p>${escapeHtml(guidance.details)}</p>
+              </details>
               <p class="media-status" data-content-upload-status="${escapeHtml(path)}"></p>
             </div>
+          </div>
+        `;
+      }
+
+      function heroBackgroundControls() {
+        const mode = getPathValue(siteContentState, "homeHero.backgroundMode") || "preset";
+        const selectedPreset = getPathValue(siteContentState, "homeHero.backgroundPreset") || "sky";
+        const swatches = HERO_BACKGROUND_PRESETS.map((preset) => `
+          <label class="hero-bg-swatch">
+            <input type="radio" name="homeHeroBackgroundPreset" data-content-path="homeHero.backgroundPreset" value="${escapeHtml(preset.id)}" ${preset.id === selectedPreset ? "checked" : ""}>
+            <span>${escapeHtml(preset.label)}</span>
+            <i style="background:${escapeHtml(preset.gradient)}"></i>
+          </label>
+        `).join("");
+        return `
+          <div class="hero-bg-panel">
+            <strong>Fundo do hero principal</strong>
+            <div class="hero-bg-mode" aria-label="Modo do fundo do hero">
+              <label><input type="radio" name="homeHeroBackgroundMode" data-content-path="homeHero.backgroundMode" value="preset" ${mode !== "image" ? "checked" : ""}> Usar cor predefinida</label>
+              <label><input type="radio" name="homeHeroBackgroundMode" data-content-path="homeHero.backgroundMode" value="image" ${mode === "image" ? "checked" : ""}> Usar imagem enviada</label>
+            </div>
+            <div class="hero-bg-swatches">${swatches}</div>
+            ${contentImageInput("homeHero.backgroundImage", "Imagem de fundo do hero principal", "wide")}
           </div>
         `;
       }
@@ -1344,9 +1592,11 @@
           const objectUrl = URL.createObjectURL(file);
           mediaPreviewUrls.set(path, objectUrl);
           preview.innerHTML = `<img src="${escapeHtml(objectUrl)}" alt="">`;
+          updateMediaMeasure(path, objectUrl);
           return;
         }
         preview.innerHTML = mediaPreviewHtml(value);
+        updateMediaMeasure(path, value);
       }
 
       function readFileAsBase64(file) {
@@ -1373,7 +1623,7 @@
           const token = $("#adminWriteToken")?.value || "";
           setMediaStatus(path, "Enviando imagem...", "info");
           const dataBase64 = await readFileAsBase64(file);
-          const response = await fetch("../api/upload-media", {
+          const response = await fetch("/api/upload-media", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -1427,6 +1677,9 @@
         if (siteContentState.featureFlags.payments.mercadoPago !== false) siteContentState.featureFlags.payments.mercadoPago = true;
         siteContentState.featureFlags.payments.abacatePay = siteContentState.featureFlags.payments.abacatePay === true;
         siteContentState.homeHero = siteContentState.homeHero || {};
+        siteContentState.homeHero.backgroundMode = siteContentState.homeHero.backgroundMode || "preset";
+        siteContentState.homeHero.backgroundPreset = siteContentState.homeHero.backgroundPreset || "sky";
+        siteContentState.homeHero.backgroundImage = siteContentState.homeHero.backgroundImage || "";
         siteContentState.servicePanels = siteContentState.servicePanels || {};
         siteContentState.servicePanels.build = siteContentState.servicePanels.build || {};
         siteContentState.servicePanels.clean = siteContentState.servicePanels.clean || {};
@@ -1476,6 +1729,7 @@
                   ${productOptions(selectedProductId)}
                 </select>
               </label>
+              ${heroBackgroundControls()}
             </div>
           </div>
           <div class="content-fieldset">
@@ -1490,6 +1744,7 @@
           </div>
           ${pageFields}
         `;
+        hydrateMediaMeasures();
       }
 
       function moneyNumber(value) {
@@ -1591,7 +1846,7 @@
       }
 
       function productImage(product) {
-        return String(product?.cutout || product?.image || product?.photo || "../assets/mobilytech-logo.png").replace(/^\.\//, "../");
+        return adminPreviewSrc(product?.cutout || product?.image || product?.photo || "/assets/mobilytech-logo.png");
       }
 
       function renderSaleProductPreview(product) {
@@ -1683,17 +1938,31 @@
         return `lucro R$ ${moneyInput(profit)} / ${percent.toFixed(1)}%${freight}`;
       }
 
+      function commissionDisplay(value) {
+        if (value === undefined || value === null || value === "") return "";
+        const text = String(value).trim();
+        if (!text || text.includes("%")) return text;
+        const number = Number(text.replace(",", "."));
+        if (!Number.isFinite(number)) return text;
+        if (number > 0 && number <= 1) {
+          const percent = number * 100;
+          return `${Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(1)}%`;
+        }
+        return text;
+      }
+
       function renderFindsEditor(finds) {
         const tbody = $("#findsEditorRows");
         if (!tbody) return;
         if (!Array.isArray(finds) || !finds.length) {
-          tbody.innerHTML = '<tr><td colspan="18">Nenhum item em MobilyTech Finds.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="19">Nenhum item em MobilyTech Finds.</td></tr>';
           return;
         }
         tbody.innerHTML = finds.map((item, index) => `
           <tr>
             <td><select data-find="${index}" data-field="active" class="narrow"><option value="true"${item.active !== false ? " selected" : ""}>Sim</option><option value="false"${item.active === false ? " selected" : ""}>Nao</option></select></td>
             <td><select data-find="${index}" data-field="publicGroup"><option value="vendidos"${item.publicGroup === "vendidos" ? " selected" : ""}>Vendidos</option><option value="recomendacoes"${item.publicGroup !== "vendidos" ? " selected" : ""}>Recomenda</option></select></td>
+            <td><select data-find="${index}" data-field="affiliateReady" class="narrow"><option value="true"${item.affiliateReady !== false ? " selected" : ""}>Sim</option><option value="false"${item.affiliateReady === false ? " selected" : ""}>Nao</option></select></td>
             <td><textarea data-find="${index}" data-field="title">${escapeHtml(item.title || "")}</textarea></td>
             <td><input data-find="${index}" data-field="platform" value="${escapeHtml(item.platform || "")}"></td>
             <td><select data-find="${index}" data-field="supplierRegion" class="narrow"><option value="BR"${item.supplierRegion !== "INTL" ? " selected" : ""}>BR</option><option value="INTL"${item.supplierRegion === "INTL" ? " selected" : ""}>INTL</option></select></td>
@@ -1702,7 +1971,7 @@
             <td><input data-find="${index}" data-field="supplierCost" class="narrow" value="${escapeHtml(item.supplierCost ?? "")}"></td>
             <td><input data-find="${index}" data-field="shippingCustomerPrice" class="narrow" value="${escapeHtml(item.shippingCustomerPrice ?? item.shipping?.customerPrice ?? "")}"></td>
             <td><input data-find="${index}" data-field="marginPercent" class="narrow" value="${escapeHtml(item.marginPercent || "")}"></td>
-            <td><input data-find="${index}" data-field="affiliateCommissionPercent" class="narrow" placeholder="Ex: 5%" value="${escapeHtml(item.affiliateCommissionPercent || item.commissionPercent || "")}"></td>
+            <td><input data-find="${index}" data-field="affiliateCommissionPercent" class="narrow" placeholder="Ex: 5%" value="${escapeHtml(commissionDisplay(item.affiliateCommissionPercent || item.commissionPercent || ""))}"></td>
             <td><strong>${escapeHtml(findProfitSummary(item))}</strong></td>
             <td><select data-find="${index}" data-field="storeCheckout"><option value="true"${item.storeCheckout === true ? " selected" : ""}>Carrinho</option><option value="false"${item.storeCheckout !== true ? " selected" : ""}>Afiliado</option></select></td>
             <td><textarea data-find="${index}" data-field="whySell">${escapeHtml(item.whySell || "")}</textarea></td>
@@ -1771,7 +2040,7 @@
 
         let session = { authenticated: false, admin: false, user: null, providers: {} };
         try {
-          const response = await fetch("../api/account?action=session", { cache: "no-store" });
+          const response = await fetch("/api/account?action=session", { cache: "no-store" });
           const data = await response.json();
           if (response.ok && data) session = data;
         } catch (_error) {
@@ -1813,11 +2082,11 @@
 
       async function hydrateDashboard() {
         const [products, addons, swaps, finalists, siteContent] = await Promise.all([
-          readJson("../data/products.json", []),
-          readJson("../data/addons.json", []),
-          readJson("../data/swaps.json", []),
-          readJson("../data/phase2-finalists.json", { finalists: [] }),
-          readJson("../data/site-content.json", {})
+          readJson("/data/products.json", []),
+          readJson("/data/addons.json", []),
+          readJson("/data/swaps.json", []),
+          readJson("/data/phase2-finalists.json", { finalists: [] }),
+          readJson("/data/site-content.json", {})
         ]);
         const productList = Array.isArray(products) ? products : [];
         productsState = productList;
@@ -1853,7 +2122,7 @@
         try {
           const token = $("#adminWriteToken")?.value || "";
           setSiteContentStatus("Salvando site-content.json com acesso administrativo...", "info");
-          const response = await fetch("../api/update-site-content", {
+          const response = await fetch("/api/update-site-content", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -1935,7 +2204,7 @@
           const payload = buildSalePayload();
           const token = $("#adminWriteToken")?.value || "";
           setSaleStatus("Registrando venda na automacao...", "info");
-          const response = await fetch("../api/register-sale", {
+          const response = await fetch("/api/register-sale", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
