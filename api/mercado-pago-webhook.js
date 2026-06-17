@@ -4,7 +4,7 @@ const {
   formatFulfillmentItems,
   isManualShippingProvider,
   loadProductsFromDisk
-} = require("./fulfillment-shipping");
+} = require("../lib/fulfillment-shipping");
 
 const MERCADO_PAGO_PAYMENT_API = "https://api.mercadopago.com/v1/payments";
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";

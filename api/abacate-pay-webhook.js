@@ -4,7 +4,7 @@ const {
   formatFulfillmentItems,
   isManualShippingProvider,
   loadProductsFromDisk
-} = require("./fulfillment-shipping");
+} = require("../lib/fulfillment-shipping");
 
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";
 
