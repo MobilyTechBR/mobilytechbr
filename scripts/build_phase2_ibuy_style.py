@@ -51,6 +51,16 @@ REVIEWS = [
 ]
 
 DEFAULT_SITE_CONTENT = {
+    "featureFlags": {
+        "auth": {
+            "google": True,
+            "microsoft": False,
+        },
+        "payments": {
+            "mercadoPago": True,
+            "abacatePay": False,
+        },
+    },
     "homeHero": {
         "title": "PCs revisados para jogar, trabalhar e criar.",
         "subtitle": "Computadores testados por especialistas, upgrades sob medida e atendimento direto da MobilyTech BR.",
@@ -132,6 +142,14 @@ def merge_dict(default: dict, override: dict | None) -> dict:
         else:
             result[key] = value
     return result
+
+
+def feature_enabled(site_content: dict | None, group: str, key: str, default: bool = True) -> bool:
+    flags = site_content.get("featureFlags", {}) if isinstance(site_content, dict) else {}
+    section = flags.get(group, {}) if isinstance(flags, dict) else {}
+    if isinstance(section, dict) and key in section:
+        return bool(section.get(key))
+    return default
 
 
 def asset_path(prefix: str, path: str) -> str:
@@ -301,8 +319,27 @@ def page_links(prefix: str) -> dict[str, str]:
     }
 
 
-def header(prefix: str, active: str = "home") -> str:
+def header(prefix: str, active: str = "home", site_content: dict | None = None) -> str:
     links = page_links(prefix)
+    google_enabled = feature_enabled(site_content, "auth", "google", True)
+    microsoft_enabled = feature_enabled(site_content, "auth", "microsoft", False)
+    guest_actions = "\n".join(
+        item
+        for item in [
+            f'<a class="account-login google-login" id="accountGoogleLogin" href="/api/account?action=google-start"><img src="{prefix}assets/brand-officials/google-icon.svg" alt="" aria-hidden="true"><span>Entrar com Google</span></a>'
+            if google_enabled
+            else "",
+            f'<a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/account?action=microsoft-start"><img src="{prefix}assets/brand-officials/microsoft-icon.svg" alt="" aria-hidden="true"><span>Entrar com Microsoft</span></a>'
+            if microsoft_enabled
+            else "",
+        ]
+        if item
+    )
+    status_copy = (
+        "Acesse com Google para acompanhar compras e dados de entrega."
+        if google_enabled
+        else "Acompanhe compras e dados de entrega quando o login estiver disponivel."
+    )
     nav = [
         ("ofertas", "Ofertas", "ofertas"),
         ("ofertas", "PC Gamer", "ofertas"),
@@ -353,11 +390,8 @@ def header(prefix: str, active: str = "home") -> str:
           <div class="account-popover" id="accountPopover" hidden>
             <p class="account-popover-kicker" id="accountGreeting">Conta MobilyTech</p>
             <strong id="accountMenuTitle">Entre para ver seus pedidos</strong>
-            <small id="accountMenuStatus">Acesse com Google para acompanhar compras e dados de entrega.</small>
-            <div class="account-popover-actions" id="accountGuestActions">
-              <a class="account-login google-login" id="accountGoogleLogin" href="/api/account?action=google-start"><img src="{prefix}assets/brand-officials/google-icon.svg" alt="" aria-hidden="true"><span>Entrar com Google</span></a>
-              <a class="account-login microsoft-login" id="accountMicrosoftLogin" href="/api/account?action=microsoft-start"><img src="{prefix}assets/brand-officials/microsoft-icon.svg" alt="" aria-hidden="true"><span>Entrar com Microsoft</span></a>
-            </div>
+            <small id="accountMenuStatus">{status_copy}</small>
+            <div class="account-popover-actions" id="accountGuestActions">{guest_actions}</div>
             <nav class="account-popover-links" aria-label="Atalhos da conta">
               <a href="{links["conta"]}#minha-conta">Central Minha Conta</a>
               <a href="{links["conta"]}#meus-pedidos">Meus pedidos</a>
@@ -377,8 +411,24 @@ def header(prefix: str, active: str = "home") -> str:
     """
 
 
-def footer(prefix: str) -> str:
+def footer(prefix: str, site_content: dict | None = None) -> str:
     links = page_links(prefix)
+    mercado_enabled = feature_enabled(site_content, "payments", "mercadoPago", True)
+    abacate_enabled = feature_enabled(site_content, "payments", "abacatePay", False)
+    payment_names = []
+    if mercado_enabled:
+        payment_names.append("Mercado Pago")
+    if abacate_enabled:
+        payment_names.append("Abacate Pay")
+    payment_text = ", ".join(payment_names + ["Pix e demais opcoes disponiveis no checkout"])
+    payment_icons = "\n".join(
+        item
+        for item in [
+            f'<img src="{prefix}assets/mercado-pago-icon.png" alt="Mercado Pago">' if mercado_enabled else "",
+            f'<img src="{prefix}assets/abacate-pay-logo.svg" alt="Abacate Pay">' if abacate_enabled else "",
+        ]
+        if item
+    )
     brand_logos = "\n".join(
         f'<img class="brand-logo logo-{brand_id}" src="{prefix}assets/brand-officials/{brand_id}.svg" alt="{name}">'
         for brand_id, name in BRANDS
@@ -433,11 +483,8 @@ def footer(prefix: str) -> str:
       </div>
       <div class="payment-box">
         <h3>Pagamentos</h3>
-        <p>Mercado Pago, Abacate Pay, Pix e demais opcoes disponiveis no checkout.</p>
-        <div class="payment-icons">
-          <img src="{prefix}assets/mercado-pago-icon.png" alt="Mercado Pago">
-          <img src="{prefix}assets/abacate-pay-logo.svg" alt="Abacate Pay">
-        </div>
+        <p>{payment_text}.</p>
+        <div class="payment-icons">{payment_icons}</div>
       </div>
     </footer>
     <p class="copyright">&copy; 2026 MobilyTech BR. Vila Suzana, Sao Paulo, SP.</p>
@@ -725,7 +772,21 @@ def contato_page(prefix: str) -> str:
     """
 
 
-def conta_page(prefix: str, page: dict) -> str:
+def conta_page(prefix: str, page: dict, site_content: dict | None = None) -> str:
+    google_enabled = feature_enabled(site_content, "auth", "google", True)
+    microsoft_enabled = feature_enabled(site_content, "auth", "microsoft", False)
+    login_options = "\n".join(
+        item
+        for item in [
+            f'<a class="account-login google-login" href="/api/account?action=google-start"><img src="{prefix}assets/brand-officials/google-icon.svg" alt="" aria-hidden="true"><span>Entrar com Google</span></a>'
+            if google_enabled
+            else "",
+            f'<a class="account-login microsoft-login" href="/api/account?action=microsoft-start"><img src="{prefix}assets/brand-officials/microsoft-icon.svg" alt="" aria-hidden="true"><span>Entrar com Microsoft</span></a>'
+            if microsoft_enabled
+            else "",
+        ]
+        if item
+    )
     return f"""
     <main>
       <section class="page-hero page-hero-account">
@@ -747,10 +808,7 @@ def conta_page(prefix: str, page: dict) -> str:
                 <small>Use um login seguro para carregar seus pedidos quando eles estiverem disponiveis.</small>
               </div>
             </div>
-            <div class="account-login-options" id="accountPageGuestActions">
-              <a class="account-login google-login" href="/api/account?action=google-start"><img src="{prefix}assets/brand-officials/google-icon.svg" alt="" aria-hidden="true"><span>Entrar com Google</span></a>
-              <a class="account-login microsoft-login" href="/api/account?action=microsoft-start"><img src="{prefix}assets/brand-officials/microsoft-icon.svg" alt="" aria-hidden="true"><span>Entrar com Microsoft</span></a>
-            </div>
+            <div class="account-login-options" id="accountPageGuestActions">{login_options}</div>
           </article>
           <article class="account-card" id="meus-pedidos">
             <p class="section-kicker">Meus pedidos</p>
@@ -822,7 +880,21 @@ def cleaning_inline_form(prefix: str, service_panels: dict | None = None) -> str
     """
 
 
-def cart_drawer(prefix: str) -> str:
+def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
+    mercado_enabled = feature_enabled(site_content, "payments", "mercadoPago", True)
+    abacate_enabled = feature_enabled(site_content, "payments", "abacatePay", False)
+    checkout_buttons = "\n".join(
+        item
+        for item in [
+            f'<button class="btn checkout-pay checkout-mercado full" id="checkoutMercado" type="button"><img src="{prefix}assets/mercado-pago-logo.svg" alt="" aria-hidden="true">Pagar pelo Mercado Pago</button>'
+            if mercado_enabled
+            else "",
+            f'<button class="btn checkout-pay checkout-abacate full" id="checkoutAbacate" type="button"><img src="{prefix}assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Pagar pelo Abacate Pay</button>'
+            if abacate_enabled
+            else "",
+        ]
+        if item
+    )
     return f"""
     <div class="cart-backdrop" id="cartBackdrop" hidden></div>
     <aside class="cart-drawer" id="cartDrawer" aria-label="Carrinho" aria-hidden="true">
@@ -843,10 +915,7 @@ def cart_drawer(prefix: str) -> str:
         <button class="btn btn-dark full" id="quoteShipping" type="button">Calcular frete</button>
         <div id="shippingQuotes" class="shipping-quotes"></div>
       </details>
-      <div class="checkout-actions">
-        <button class="btn checkout-pay checkout-mercado full" id="checkoutMercado" type="button"><img src="{prefix}assets/mercado-pago-logo.svg" alt="" aria-hidden="true">Pagar pelo Mercado Pago</button>
-        <button class="btn checkout-pay checkout-abacate full" id="checkoutAbacate" type="button"><img src="{prefix}assets/abacate-pay-logo.svg" alt="" aria-hidden="true">Pagar pelo Abacate Pay</button>
-      </div>
+      <div class="checkout-actions">{checkout_buttons}</div>
       <p class="drawer-note">O pagamento usa as rotas seguras ja configuradas na MobilyTech BR. Frete automatico pelo Melhor Envio quando disponivel.</p>
     </aside>
     <dialog class="product-modal" id="productModal">
@@ -888,7 +957,7 @@ def css() -> str:
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;white-space:nowrap;min-width:0}.brand img{width:44px;height:44px;object-fit:contain;flex:0 0 auto}.brand span{overflow:hidden;text-overflow:ellipsis}
     .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link:hover,.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
-    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45;transform-origin:top right;animation:account-popover-in .16s ease-out both}.account-popover.is-closing{animation:account-popover-out .12s ease-in both}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}@keyframes account-popover-in{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes account-popover-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:44px;border-radius:999px;border:1px solid #dfe5ef;background:#fff;color:#111;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:1000;padding:0 18px;box-shadow:0 2px 0 rgba(16,24,40,.02);white-space:nowrap}.account-login img{width:26px;height:26px;object-fit:contain;flex:0 0 auto}.account-login span{line-height:1}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
+    .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45;transform-origin:top right;animation:account-popover-in .16s ease-out both}.account-popover.is-closing{animation:account-popover-out .12s ease-in both}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}@keyframes account-popover-in{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes account-popover-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:48px;border-radius:14px;border:1px solid #d9dee8;background:#fff;color:#111;display:inline-flex;align-items:center;justify-content:center;gap:14px;font-weight:1000;padding:0 22px;box-shadow:0 3px 10px rgba(16,24,40,.04);white-space:nowrap;line-height:1}.account-popover .account-login{min-height:40px;border-radius:999px;font-size:13px;padding:0 15px}.account-login img{width:28px;height:28px;object-fit:contain;flex:0 0 auto}.account-popover .account-login img{width:24px;height:24px}.account-login span{line-height:1}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
     main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}
     .hero-slider:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 84%,rgba(255,255,255,.26),transparent 26%),radial-gradient(circle at 82% 20%,rgba(255,255,255,.25),transparent 20%);pointer-events:none}
     .hero-copy{position:relative;z-index:2;max-width:620px}.hero-copy h1{font-size:48px;line-height:1.02;margin:0 0 18px;font-weight:1000;letter-spacing:0}.hero-copy p{font-size:21px;font-weight:800;margin:0 0 26px;max-width:620px}
@@ -901,7 +970,7 @@ def css() -> str:
     .product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}.catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hardware-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
     .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}.price{font-size:23px;font-weight:1000;line-height:1.08}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
-    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:21px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:0;background:#fff159;color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08)}.market-btn img{height:31px;width:auto;max-width:78px;object-fit:contain}.market-mobilytech{background:#19f5d0;color:#031014;box-shadow:0 10px 24px rgba(25,245,208,.18)}.market-ml{background:#fff159;color:#26220a}.market-amazon{background:#232f3e;color:#fff;border-top:4px solid #ff9900}.market-shopee{background:#ee4d2d;color:#fff}.market-ali{background:#ff4747;color:#fff}
+    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:21px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:1px solid rgba(9,11,16,.08);background:#fff159;color:#2b2b2b;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08);transition:.18s transform,.18s box-shadow,.18s filter}.market-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(0,0,0,.12);filter:saturate(1.04)}.market-btn img{height:25px;width:auto;max-width:76px;object-fit:contain}.market-mobilytech{background:#19f5d0;color:#031014;box-shadow:0 10px 24px rgba(25,245,208,.18)}.market-ml{background:#fff159;color:#27220a;border-color:#eadb2c}.market-amazon{background:#232f3e;color:#fff;border-color:#ff9900;box-shadow:inset 0 -3px 0 #ff9900,0 8px 20px rgba(35,47,62,.16)}.market-shopee{background:#ee4d2d;color:#fff;border-color:#d33f22}.market-ali{background:linear-gradient(180deg,#ff5a42,#f23838);color:#fff;border-color:#e62e2e}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
     .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{grid-template-columns:1.05fr .95fr;background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08);padding:22px 24px;align-items:center}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:12px}.clean-form-visual img{width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08);background:#fff}.clean-page-copy{display:flex;flex-direction:column;gap:16px}.clean-side-image{width:100%;max-height:340px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.inline-clean .lead-form{gap:10px;align-self:center}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.inline-clean .lead-form input{padding:11px 14px}.inline-clean .btn-red{min-height:48px}.lead-form textarea{min-height:110px;resize:vertical}
     .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,2vw,34px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line .brand-logo{height:34px;max-width:116px;width:auto;object-fit:contain;opacity:1;flex:0 0 auto;filter:invert(1) saturate(.2) brightness(.9)}.brand-line .logo-microsoft{filter:none;height:32px;max-width:112px}.brand-line .logo-intel{max-width:88px}.brand-line .logo-kingston,.brand-line .logo-crucial{max-width:120px}
@@ -1035,12 +1104,19 @@ def css() -> str:
     """
 
 
-def js(products, finalists, addons, swaps) -> str:
+def js(products, finalists, addons, swaps, site_content: dict | None = None) -> str:
+    abacate_enabled = feature_enabled(site_content, "payments", "abacatePay", False)
+    checkout_description = "Finalizar compra com frete e Mercado Pago."
+    checkout_terms = "carrinho checkout pagamento mercado pago frete correios melhor envio finalizar"
+    if abacate_enabled:
+        checkout_description = "Finalizar compra com frete, Mercado Pago ou Abacate Pay."
+        checkout_terms = "carrinho checkout pagamento mercado pago abacate pay frete correios melhor envio finalizar"
     payloads = {
         "products": public_products_payload(products),
         "finds": public_finds_payload(finalists, products),
         "addons": addons,
         "swaps": swaps,
+        "featureFlags": (site_content or {}).get("featureFlags", {}),
     }
     return f"""
     const DATA = {json.dumps(payloads, ensure_ascii=False)};
@@ -1086,10 +1162,11 @@ def js(products, finalists, addons, swaps) -> str:
       {{ type:"Prova", icon:"5", title:"Avaliacoes", description:"Prova social, OLX, Marketplace e historico de entregas.", href: ROUTES.avaliacoes, terms:"avaliacoes reviews prova social olx facebook marketplace estrelas reputacao" }},
       {{ type:"Conta", icon:"ID", title:"Minha conta e pedidos", description:"Acesso seguro, retirada e acompanhamento do pedido.", href: ROUTES.conta, terms:"minha conta pedido pedidos endereco rastreio retirada status acompanhamento suporte" }},
       {{ type:"Contato", icon:"WA", title:"Contato e suporte", description:"WhatsApp, e-mail, retirada e atendimento humano.", href: ROUTES.contato, terms:"contato suporte whatsapp email instagram retirada vila suzana" }},
-      {{ type:"Loja", icon:"C", title:"Carrinho e checkout", description:"Finalizar compra com frete, Mercado Pago ou Abacate Pay.", href: "#cart", terms:"carrinho checkout pagamento mercado pago abacate pay frete correios melhor envio finalizar" }}
+      {{ type:"Loja", icon:"C", title:"Carrinho e checkout", description:"{checkout_description}", href: "#cart", terms:"{checkout_terms}" }}
     ];
     let currentSearchResults = [];
     let accountSession = {{ authenticated:false, user:null, admin:false, providers:{{}} }};
+    const HIDDEN_PLACEHOLDER_ORDER_IDS = new Set(["pedido-1781658045002", "pedido-1781657995494"]);
     function currentReturnTo() {{
       return window.location.pathname + window.location.search + window.location.hash;
     }}
@@ -1102,10 +1179,11 @@ def js(products, finalists, addons, swaps) -> str:
       return parts.filter(Boolean).join("").slice(0, 2).toUpperCase() || "MT";
     }}
     function setLoginLinks() {{
+      const authFlags = DATA.featureFlags?.auth || {{}};
       $$(".google-login").forEach((link) => link.setAttribute("href", accountLoginHref("google")));
       $$(".microsoft-login").forEach((link) => {{
         link.setAttribute("href", accountLoginHref("microsoft"));
-        if (accountSession.providers && accountSession.providers.microsoftConfigured === false) link.hidden = true;
+        if (authFlags.microsoft === false || (accountSession.providers && accountSession.providers.microsoftConfigured === false)) link.hidden = true;
       }});
       $$("#accountLogout").forEach((link) => link.setAttribute("href", `/api/account?action=logout&returnTo=${{encodeURIComponent(currentReturnTo())}}`));
     }}
@@ -1161,15 +1239,17 @@ def js(products, finalists, addons, swaps) -> str:
         panel.innerHTML = '<p class="empty">Entre na sua conta para carregar pedidos vinculados ao seu e-mail.</p>';
         return;
       }}
-      if (!Array.isArray(orders) || !orders.length) {{
+      const visibleOrders = Array.isArray(orders)
+        ? orders.map(normalizeOrder).filter((order) => !HIDDEN_PLACEHOLDER_ORDER_IDS.has(String(order.id || "").trim()))
+        : [];
+      if (!visibleOrders.length) {{
         const note = meta.configured === false
           ? "Sua conta esta pronta. O historico automatico aparece aqui assim que o endpoint seguro de pedidos estiver conectado."
           : "Nenhum pedido encontrado para este e-mail no momento.";
         panel.innerHTML = `<p class="empty">${{escapeHtml(note)}}</p>`;
         return;
       }}
-      panel.innerHTML = orders.map((raw) => {{
-        const order = normalizeOrder(raw);
+      panel.innerHTML = visibleOrders.map((order) => {{
         return `<article class="order-card">
           <div class="order-card-head"><h3>${{escapeHtml(order.id)}}</h3><span class="order-status-pill">${{escapeHtml(order.status)}}</span></div>
           <dl>
@@ -1925,7 +2005,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     """
 
 
-def html_doc(title: str, main: str, prefix: str, active: str, products, finalists, addons, swaps) -> str:
+def html_doc(title: str, main: str, prefix: str, active: str, products, finalists, addons, swaps, site_content) -> str:
     document = f"""<!doctype html>
 <html lang="pt-BR">
   <head>
@@ -1940,11 +2020,11 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
     <style>{css()}</style>
   </head>
   <body data-asset-base="{prefix}">
-    {header(prefix, active)}
+    {header(prefix, active, site_content)}
     {main}
-    {footer(prefix)}
-    {cart_drawer(prefix)}
-    <script>{js(products, finalists, addons, swaps)}</script>
+    {footer(prefix, site_content)}
+    {cart_drawer(prefix, site_content)}
+    <script>{js(products, finalists, addons, swaps, site_content)}</script>
   </body>
 </html>
 """
@@ -2012,7 +2092,7 @@ def main():
         ),
         FASE2_DIR / "minha-conta.html": (
             "Minha conta e pedidos | MobilyTech BR",
-            conta_page("../", pages_content["conta"]),
+            conta_page("../", pages_content["conta"], site_content),
             "../",
             "conta",
         ),
@@ -2024,7 +2104,7 @@ def main():
         ),
     }
     for path, (title, content, prefix, active) in pages.items():
-        path.write_text(html_doc(title, content, prefix, active, products, finalists, addons, swaps), encoding="utf-8")
+        path.write_text(html_doc(title, content, prefix, active, products, finalists, addons, swaps, site_content), encoding="utf-8")
 
     report = ROOT / "docs" / "phase2-ibuy-style-report-2026-06-14.md"
     report.write_text(

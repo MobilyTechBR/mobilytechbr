@@ -1,4 +1,14 @@
 {
+  "featureFlags": {
+    "auth": {
+      "google": true,
+      "microsoft": false
+    },
+    "payments": {
+      "mercadoPago": true,
+      "abacatePay": false
+    }
+  },
   "homeHero": {
     "title": "PCs revisados para jogar, trabalhar e criar.",
     "subtitle": "Computadores testados por especialistas, upgrades sob medida e atendimento direto da MobilyTech BR.",

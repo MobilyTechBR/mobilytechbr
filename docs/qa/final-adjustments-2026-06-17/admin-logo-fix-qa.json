@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "result": {
+    "title": "Painel MobilyTech BR",
+    "imgSrc": "http://127.0.0.1:4177/assets/mobilytech-logo.png",
+    "imgComplete": true,
+    "naturalWidth": 1024,
+    "naturalHeight": 1024,
+    "broken": false,
+    "markBox": {
+      "width": 56,
+      "height": 56
+    },
+    "brandText": "MobilyTech BR"
+  }
+}

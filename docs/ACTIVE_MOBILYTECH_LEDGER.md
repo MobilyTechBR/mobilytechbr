@@ -279,3 +279,20 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Deploy production `dpl_7cc7YG3CYrMrXNFiorUgUmjV4t7c` ficou `READY`.
 - QA HTTP production salvo em `docs/qa/production-site-content-writer-2026-06-16-848b979/qa.json`: home oficial 200, Achados 200, Minha Conta 200, `/admin` 401 sem login, `/private/admin/index.html` 404, `/api/update-site-content` em GET 405, POST sem auth 401, `/api/auth-session` 200 e alias `mobilytechbr.vercel.app` 200.
 - Logs runtime Vercel em producao, janela de 30 minutos, sem `error`/`fatal`.
+
+## Atualizacao 2026-06-17 - flags publicas, afiliados Finds e regras de handoff
+
+- Novas regras operacionais foram registradas para o proximo handoff: tratar adendos como complemento, nao pedir autorizacao rotineira, executar reinicio/desligamento quando solicitado sem nova confirmacao, usar Chrome CDP primeiro, Opera GX como fallback web, Computer Use depois com tentativa de recuperacao, e pausar com seguranca se creditos visiveis ficarem baixos.
+- Dropshipping/CJ/DSers/frete exato foi movido para backlog pelo usuario em 2026-06-17; nao executar agora. Manter apenas como ideia futura ate haver fornecedor, frete fornecedor-cliente e automacao confiaveis.
+- `data/site-content.json` ganhou `featureFlags`: Google e Mercado Pago ativos; Microsoft e Abacate Pay pausados. `lib/account-handlers.js` preserva `featureFlags` ao salvar site-content pelo painel.
+- O gerador `scripts/build_phase2_ibuy_style.py` agora respeita `featureFlags` para esconder/mostrar login Google, login Microsoft, Mercado Pago e Abacate Pay. A UI publica regenerada nao contem `Entrar com Microsoft`, `Abacate Pay` nem `Painel interno`.
+- O historico da conta filtra os dois pedidos falsos de validacao `pedido-1781658045002` e `pedido-1781657995494`, para nao aparecerem ao cliente logado.
+- `private/admin/index.html` ganhou controles no editor visual para ligar/desligar Google, Microsoft, Mercado Pago e Abacate Pay, e ganhou campo/coluna interna de `Comissao interna` para MobilyTech Finds.
+- MobilyTech Finds ficou em modo conservador: apenas links diretos rastreaveis ficam publicos; links de busca generica ficam pausados. Shopee segue pausado sem codigo de afiliado ativo.
+- Via Chrome CDP logado no Mercado Livre, foram gerados 3 novos links `meli.la` pelo botao oficial `Compartilhar` do programa de afiliados; 3 produtos Mercado Livre continuaram pausados porque a pagina nao mostrou o botao de compartilhamento/afiliado. O total publico subiu para 11 itens prontos e 93 pausados.
+- Backups relevantes: `backups\phase2-finalists-before-affiliate-audit-*` e `backups\phase2-finalists-before-ml-affiliate-generation-20260617-170717.json`.
+- QA local salvo em `docs/qa/final-adjustments-2026-06-17/qa-report.json`: 22 checks passaram em desktop/mobile, sem erros reais de console; os 404 de `/api/account?action=session` sao esperados no servidor estatico local. Screenshots salvos na mesma pasta.
+- QA do painel salvo em `docs/qa/final-adjustments-2026-06-17/admin-dom-qa.json`: tela visual de login existe, controles de botoes renderizam no DOM, coluna de comissao interna existe e nao houve erro de script. A rota oficial `/admin` continua protegida por `api/account.js?action=admin`.
+- Crocheck externo no ChatGPT, conversa `Analise visual MobilyTech BR`, inicialmente bloqueou apenas o gate do admin por logo quebrado/truncado. O painel foi corrigido para usar `/assets/mobilytech-logo.png`, caixa fixa e fallback `MT`.
+- Validacao local do logo do admin salva em `docs/qa/final-adjustments-2026-06-17/admin-logo-fix-qa.json`: `naturalWidth=1024`, `broken=false`, caixa `56x56`; screenshot salvo em `desktop-admin-gate-after-logo-fix.png`.
+- Revalidacao no ChatGPT apos o ajuste retornou `APROVADO`, bloqueadores restantes `nenhum`. Registro salvo em `docs/qa/final-adjustments-2026-06-17/crocheck-chatgpt-final-2026-06-17.md`.

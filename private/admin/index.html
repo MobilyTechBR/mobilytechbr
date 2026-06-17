@@ -77,10 +77,24 @@
         align-items: center;
         gap: 14px;
         margin-bottom: 22px;
+        min-height: 58px;
         font-size: 22px;
         font-weight: 1000;
       }
-      .admin-gate-brand img { width: 56px; height: 56px; object-fit: contain; }
+      .admin-logo-mark {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        overflow: hidden;
+        background: #061827;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 1000;
+      }
+      .admin-logo-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
       .admin-gate h1 { margin: 0; font-size: clamp(32px, 6vw, 48px); line-height: 1; }
       .admin-gate p { color: var(--muted); font-size: 17px; font-weight: 850; line-height: 1.45; }
       .admin-gate-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
@@ -128,7 +142,20 @@
         font-weight: 1000;
         font-size: 21px;
       }
-      .brand img { width: 48px; height: 48px; object-fit: contain; }
+      .brand-logo-mark {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        overflow: hidden;
+        background: #061827;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 1000;
+      }
+      .brand-logo-mark img { width: 100%; height: 100%; object-fit: contain; display: block; }
       .status-pill {
         justify-self: start;
         border: 1px solid #cdf5f2;
@@ -407,6 +434,23 @@
         font-weight: 900;
       }
       .content-grid textarea { min-height: 78px; resize: vertical; text-transform: none; letter-spacing: 0; }
+      .content-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid #d8dde7;
+        border-radius: 12px;
+        background: #f8fafc;
+        padding: 13px 14px;
+        min-height: 52px;
+      }
+      .content-toggle input {
+        width: 22px;
+        height: 22px;
+        flex: 0 0 auto;
+        accent-color: var(--red);
+      }
       .content-image-field {
         display: grid;
         gap: 10px;
@@ -687,7 +731,10 @@
     <section class="admin-gate" id="adminGate" aria-labelledby="adminGateTitle">
       <div class="admin-gate-card">
         <div class="admin-gate-brand">
-          <img src="../assets/mobilytech-logo.png" alt="MobilyTech BR">
+          <span class="admin-logo-mark">
+            <img src="/assets/mobilytech-logo.png" alt="" aria-hidden="true" onerror="this.hidden=true; this.nextElementSibling.hidden=false">
+            <span hidden>MT</span>
+          </span>
           <span>MobilyTech BR</span>
         </div>
         <p class="section-kicker">Acesso seguro</p>
@@ -711,7 +758,10 @@
     <div class="shell" id="adminShell">
       <header class="header" aria-label="Cabecalho do painel">
         <a class="brand" href="../fase2-hibrida.html">
-          <img src="../assets/mobilytech-logo.png" alt="MobilyTech BR">
+          <span class="brand-logo-mark">
+            <img src="/assets/mobilytech-logo.png" alt="" aria-hidden="true" onerror="this.hidden=true; this.nextElementSibling.hidden=false">
+            <span hidden>MT</span>
+          </span>
           <span>MobilyTech BR</span>
         </a>
         <div class="status-pill" id="syncStatus">Carregando dados do catalogo...</div>
@@ -775,7 +825,7 @@
             <article class="card stat-card">
               <small>MobilyTech Finds</small>
               <strong id="activeFinds">--</strong>
-              <span>Curadoria e venda assistida</span>
+              <span>Prontos no site</span>
             </article>
           </div>
         </section>
@@ -825,7 +875,7 @@
             <article class="card">
               <small>Curadoria tech</small>
               <h3>MobilyTech Finds</h3>
-                <p>Edite fornecedor, preco de venda, custo, margem, origem nacional/internacional, frete exato e links em <code>data/phase2-finalists.json</code>. Venda por carrinho so deve ficar ativa quando houver fornecedor mapeado e frete real da origem ate o cliente. Links de associados ficam restritos a Mercado Livre, Amazon, Shopee e AliExpress.</p>
+                <p>Edite fornecedor, preco de venda, custo, margem, origem nacional/internacional, frete exato e links em <code>data/phase2-finalists.json</code>. Venda por carrinho so deve ficar ativa quando houver fornecedor mapeado e frete real da origem ate o cliente. Links de associados ativos ficam restritos a Mercado Livre, Amazon e AliExpress; Shopee permanece pausado ate haver afiliado valido.</p>
               <div class="card-actions">
                 <a class="btn btn-red" href="https://www.mobilytech.com.br/">Abrir site oficial</a>
                 <a class="btn btn-ghost" href="../fase2/achados.html">Preview local</a>
@@ -871,7 +921,7 @@
             <div class="editor-toolbar">
               <div>
                 <strong>Campos rapidos</strong>
-                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete exato, margem e links Mercado Livre, Amazon, Shopee ou AliExpress.</p>
+                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete exato, margem, comissao interna e links Mercado Livre, Amazon ou AliExpress. Shopee fica pausado ate reativarmos afiliado valido.</p>
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
@@ -902,6 +952,7 @@
                     <th>Custo</th>
                     <th>Frete exato</th>
                     <th>Margem</th>
+                    <th>Comissao interna</th>
                     <th>Lucro</th>
                     <th>Modo</th>
                     <th>Descricao</th>
@@ -912,7 +963,7 @@
                   </tr>
                 </thead>
                 <tbody id="findsEditorRows">
-                  <tr><td colspan="16">Carregando MobilyTech Finds...</td></tr>
+                  <tr><td colspan="18">Carregando MobilyTech Finds...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1079,9 +1130,9 @@
         };
         const labels = {
           "mercado": "Ver oferta",
-          "amazon": "Ver oferta na Amazon",
-          "shopee": "Ver oferta na Shopee",
-          "aliexpress": "Ver oferta no AliExpress"
+          "amazon": "Ver oferta",
+          "shopee": "Ver oferta",
+          "aliexpress": "Ver oferta"
         };
         item.affiliateLinks = Array.isArray(item.affiliateLinks) ? item.affiliateLinks : [];
         const idx = item.affiliateLinks.findIndex((link) => String(link.name || link.platform || "").toLowerCase().includes(name));
@@ -1195,6 +1246,7 @@
           supplierRegion: "BR",
           customerPaysShipping: true,
           marginPercent: "35.0%",
+          affiliateCommissionPercent: "",
           productImage: "",
           whySell: "Descreva em uma frase por que este produto combina com setups MobilyTech.",
           publicPartnerNote: "Produto selecionado para complementar setups MobilyTech.",
@@ -1226,6 +1278,11 @@
           return `<label class="${className}">${label}<textarea data-content-path="${escapeHtml(path)}">${escapeHtml(value)}</textarea></label>`;
         }
         return `<label class="${className}">${label}<input data-content-path="${escapeHtml(path)}" value="${escapeHtml(value)}"></label>`;
+      }
+
+      function contentCheckbox(path, label, hint = "") {
+        const checked = getPathValue(siteContentState, path) !== false;
+        return `<label class="content-toggle"><span><strong>${label}</strong>${hint ? `<small>${hint}</small>` : ""}</span><input type="checkbox" data-content-path="${escapeHtml(path)}" ${checked ? "checked" : ""}></label>`;
       }
 
       function adminPreviewSrc(value) {
@@ -1362,6 +1419,13 @@
         const editor = $("#siteContentEditor");
         if (!editor) return;
         siteContentState = siteContentState && typeof siteContentState === "object" ? siteContentState : {};
+        siteContentState.featureFlags = siteContentState.featureFlags || {};
+        siteContentState.featureFlags.auth = siteContentState.featureFlags.auth || {};
+        siteContentState.featureFlags.payments = siteContentState.featureFlags.payments || {};
+        if (siteContentState.featureFlags.auth.google !== false) siteContentState.featureFlags.auth.google = true;
+        siteContentState.featureFlags.auth.microsoft = siteContentState.featureFlags.auth.microsoft === true;
+        if (siteContentState.featureFlags.payments.mercadoPago !== false) siteContentState.featureFlags.payments.mercadoPago = true;
+        siteContentState.featureFlags.payments.abacatePay = siteContentState.featureFlags.payments.abacatePay === true;
         siteContentState.homeHero = siteContentState.homeHero || {};
         siteContentState.servicePanels = siteContentState.servicePanels || {};
         siteContentState.servicePanels.build = siteContentState.servicePanels.build || {};
@@ -1389,6 +1453,15 @@
           </div>
         `).join("");
         editor.innerHTML = `
+          <div class="content-fieldset">
+            <h3>Controles de botoes</h3>
+            <div class="content-grid">
+              ${contentCheckbox("featureFlags.auth.google", "Login Google", "Ativo no site para clientes.")}
+              ${contentCheckbox("featureFlags.auth.microsoft", "Login Microsoft", "Pausado ate configurarmos OAuth Microsoft.")}
+              ${contentCheckbox("featureFlags.payments.mercadoPago", "Mercado Pago", "Checkout principal ativo.")}
+              ${contentCheckbox("featureFlags.payments.abacatePay", "Abacate Pay", "Pausado enquanto corrigimos a chave/API.")}
+            </div>
+          </div>
           <div class="content-fieldset">
             <h3>Hero principal</h3>
             <div class="content-grid">
@@ -1614,7 +1687,7 @@
         const tbody = $("#findsEditorRows");
         if (!tbody) return;
         if (!Array.isArray(finds) || !finds.length) {
-          tbody.innerHTML = '<tr><td colspan="17">Nenhum item em MobilyTech Finds.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="18">Nenhum item em MobilyTech Finds.</td></tr>';
           return;
         }
         tbody.innerHTML = finds.map((item, index) => `
@@ -1629,6 +1702,7 @@
             <td><input data-find="${index}" data-field="supplierCost" class="narrow" value="${escapeHtml(item.supplierCost ?? "")}"></td>
             <td><input data-find="${index}" data-field="shippingCustomerPrice" class="narrow" value="${escapeHtml(item.shippingCustomerPrice ?? item.shipping?.customerPrice ?? "")}"></td>
             <td><input data-find="${index}" data-field="marginPercent" class="narrow" value="${escapeHtml(item.marginPercent || "")}"></td>
+            <td><input data-find="${index}" data-field="affiliateCommissionPercent" class="narrow" placeholder="Ex: 5%" value="${escapeHtml(item.affiliateCommissionPercent || item.commissionPercent || "")}"></td>
             <td><strong>${escapeHtml(findProfitSummary(item))}</strong></td>
             <td><select data-find="${index}" data-field="storeCheckout"><option value="true"${item.storeCheckout === true ? " selected" : ""}>Carrinho</option><option value="false"${item.storeCheckout !== true ? " selected" : ""}>Afiliado</option></select></td>
             <td><textarea data-find="${index}" data-field="whySell">${escapeHtml(item.whySell || "")}</textarea></td>
@@ -1757,7 +1831,7 @@
         $("#activePcs").textContent = countActive(pcs);
         $("#activeAddons").textContent = countActive(Array.isArray(addons) ? addons : []);
         $("#activeSwaps").textContent = countActive(Array.isArray(swaps) ? swaps : []);
-        $("#activeFinds").textContent = countActive(finds);
+        $("#activeFinds").textContent = countActive(finds.filter((item) => item.affiliateReady !== false));
         $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
         hydrateMarginControls();
         renderSiteContentEditor();
@@ -1801,7 +1875,8 @@
       $("#siteContentEditor")?.addEventListener("input", (event) => {
         const path = event.target?.dataset?.contentPath;
         if (!path) return;
-        setPathValue(siteContentState, path, event.target.value || "");
+        const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
+        setPathValue(siteContentState, path, nextValue);
         if (nodeByDataset("[data-content-preview]", "contentPreview", path)) setMediaPreview(path, event.target.value || "");
       });
       $("#siteContentEditor")?.addEventListener("click", (event) => {
@@ -1819,7 +1894,8 @@
         }
         const path = event.target?.dataset?.contentPath;
         if (!path) return;
-        setPathValue(siteContentState, path, event.target.value || "");
+        const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
+        setPathValue(siteContentState, path, nextValue);
         if (nodeByDataset("[data-content-preview]", "contentPreview", path)) setMediaPreview(path, event.target.value || "");
       });
       $("#addFindItem")?.addEventListener("click", addFindItem);

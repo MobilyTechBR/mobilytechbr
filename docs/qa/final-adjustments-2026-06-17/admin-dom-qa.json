@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "checks": [
+    {
+      "name": "admin visual login gate exists",
+      "pass": true
+    },
+    {
+      "name": "admin DOM has button controls fieldset",
+      "pass": true
+    },
+    {
+      "name": "admin DOM has Google toggle",
+      "pass": true
+    },
+    {
+      "name": "admin DOM has Microsoft toggle",
+      "pass": true
+    },
+    {
+      "name": "admin DOM has Mercado Pago toggle",
+      "pass": true
+    },
+    {
+      "name": "admin DOM has Abacate Pay toggle",
+      "pass": true
+    },
+    {
+      "name": "admin DOM has internal commission column/inputs",
+      "pass": true
+    },
+    {
+      "name": "admin script no page errors",
+      "pass": true,
+      "errors": []
+    }
+  ],
+  "note": "Painel interno fica oculto no teste estatico sem sessao admin; controles foram validados no DOM renderizado apos hydrateDashboard."
+}

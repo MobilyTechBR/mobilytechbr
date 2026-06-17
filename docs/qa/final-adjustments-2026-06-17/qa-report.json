@@ -1,0 +1,247 @@
+{
+  "startedAt": "2026-06-17T20:09:48.372Z",
+  "note": "404 local de /api/account?action=session ignorado porque o servidor estatico local nao executa a API Vercel.",
+  "pages": [
+    {
+      "label": "desktop",
+      "viewport": {
+        "width": 1365,
+        "height": 768
+      },
+      "screenshots": [
+        "desktop-home-profile.png",
+        "desktop-cart.png",
+        "desktop-account.png",
+        "desktop-finds.png"
+      ]
+    },
+    {
+      "label": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "screenshots": [
+        "mobile-home-profile.png",
+        "mobile-cart.png",
+        "mobile-account.png",
+        "mobile-finds.png"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "desktop: public body hides Microsoft login text",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "desktop: public body hides Abacate Pay text",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "desktop: public body hides Painel interno",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "desktop: profile popover hides internal panel",
+      "pass": true,
+      "details": {
+        "popText": "CONTA MOBILYTECH\n\nEntre para ver seus pedidos\nAcesse com Google para acompanhar compras e dados de entrega.\nEntrar com Google\nCentral Minha Conta\nMeus pedidos\nEnderecos\nRetirada local\nSuporte"
+      }
+    },
+    {
+      "name": "desktop: profile popover hides Microsoft button",
+      "pass": true,
+      "details": {
+        "popText": "CONTA MOBILYTECH\n\nEntre para ver seus pedidos\nAcesse com Google para acompanhar compras e dados de entrega.\nEntrar com Google\nCentral Minha Conta\nMeus pedidos\nEnderecos\nRetirada local\nSuporte"
+      }
+    },
+    {
+      "name": "desktop: cart keeps Mercado Pago",
+      "pass": true,
+      "details": {
+        "cartText": "LOJA ONLINE\nCarrinho\n×\nPC GAMER i7-3770 / 16GB RAM / GTX 550 Ti + SSD 240GB\nSem opcionais\nR$ 1.180,00\n×\nTotal\nR$ 1.180,00\nCupom promocional\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nPagar pelo Mercado Pago\n\nO pagamento usa as rotas seguras ja configur"
+      }
+    },
+    {
+      "name": "desktop: cart hides Abacate checkout",
+      "pass": true,
+      "details": {
+        "cartText": "LOJA ONLINE\nCarrinho\n×\nPC GAMER i7-3770 / 16GB RAM / GTX 550 Ti + SSD 240GB\nSem opcionais\nR$ 1.180,00\n×\nTotal\nR$ 1.180,00\nCupom promocional\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nPagar pelo Mercado Pago\n\nO pagamento usa as rotas seguras ja configur"
+      }
+    },
+    {
+      "name": "desktop: account page hides Microsoft",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "desktop: account page has Google login",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "desktop: Finds shows only affiliate-ready public cards",
+      "pass": true,
+      "details": {
+        "finds": 11,
+        "marketTexts": [
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta"
+        ]
+      }
+    },
+    {
+      "name": "desktop: Finds uses Ver oferta labels",
+      "pass": true,
+      "details": {
+        "marketTexts": [
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta"
+        ]
+      }
+    },
+    {
+      "name": "mobile: public body hides Microsoft login text",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "mobile: public body hides Abacate Pay text",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "mobile: public body hides Painel interno",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "mobile: profile popover hides internal panel",
+      "pass": true,
+      "details": {
+        "popText": "CONTA MOBILYTECH\n\nEntre para ver seus pedidos\nAcesse com Google para acompanhar compras e dados de entrega.\nEntrar com Google\nCentral Minha Conta\nMeus pedidos\nEnderecos\nRetirada local\nSuporte"
+      }
+    },
+    {
+      "name": "mobile: profile popover hides Microsoft button",
+      "pass": true,
+      "details": {
+        "popText": "CONTA MOBILYTECH\n\nEntre para ver seus pedidos\nAcesse com Google para acompanhar compras e dados de entrega.\nEntrar com Google\nCentral Minha Conta\nMeus pedidos\nEnderecos\nRetirada local\nSuporte"
+      }
+    },
+    {
+      "name": "mobile: cart keeps Mercado Pago",
+      "pass": true,
+      "details": {
+        "cartText": "LOJA ONLINE\nCarrinho\n×\nPC GAMER i7-3770 / 16GB RAM / GTX 550 Ti + SSD 240GB\nSem opcionais\nR$ 1.180,00\n×\nTotal\nR$ 1.180,00\nCupom promocional\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nPagar pelo Mercado Pago\n\nO pagamento usa as rotas seguras ja configur"
+      }
+    },
+    {
+      "name": "mobile: cart hides Abacate checkout",
+      "pass": true,
+      "details": {
+        "cartText": "LOJA ONLINE\nCarrinho\n×\nPC GAMER i7-3770 / 16GB RAM / GTX 550 Ti + SSD 240GB\nSem opcionais\nR$ 1.180,00\n×\nTotal\nR$ 1.180,00\nCupom promocional\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nPagar pelo Mercado Pago\n\nO pagamento usa as rotas seguras ja configur"
+      }
+    },
+    {
+      "name": "mobile: account page hides Microsoft",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "mobile: account page has Google login",
+      "pass": true,
+      "details": {}
+    },
+    {
+      "name": "mobile: Finds shows only affiliate-ready public cards",
+      "pass": true,
+      "details": {
+        "finds": 11,
+        "marketTexts": [
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta"
+        ]
+      }
+    },
+    {
+      "name": "mobile: Finds uses Ver oferta labels",
+      "pass": true,
+      "details": {
+        "marketTexts": [
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta",
+          "Ver oferta"
+        ]
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "expectedLocalApi404": [
+    {
+      "page": "desktop",
+      "url": "http://127.0.0.1:4177/api/account?action=session"
+    },
+    {
+      "page": "desktop",
+      "url": "http://127.0.0.1:4177/api/account?action=session"
+    },
+    {
+      "page": "desktop",
+      "url": "http://127.0.0.1:4177/api/account?action=session"
+    },
+    {
+      "page": "mobile",
+      "url": "http://127.0.0.1:4177/api/account?action=session"
+    },
+    {
+      "page": "mobile",
+      "url": "http://127.0.0.1:4177/api/account?action=session"
+    },
+    {
+      "page": "mobile",
+      "url": "http://127.0.0.1:4177/api/account?action=session"
+    }
+  ],
+  "finishedAt": "2026-06-17T20:09:59.046Z",
+  "ok": true
+}
