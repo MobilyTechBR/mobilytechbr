@@ -11,7 +11,9 @@ Estas pendencias sao para executar agora/proxima retomada. Nao mover para backlo
 - Evidencias: `docs/qa/affiliate-buttons-2026-06-18/qa.json` e screenshots na mesma pasta.
 - IA local foi usada apenas como apoio/checklist; o Codex revisou, corrigiu e validou manualmente o resultado.
 - Crocheck externo na conversa fixada do ChatGPT ficou bloqueado nesta retomada porque a ferramenta direta de Chrome/Computer Use nao ficou disponivel para o agente. Validacao substituta: Chrome/Playwright + screenshots + inspeção visual do Codex.
-- Proxima etapa desta mesma retomada: publicar via Git/Vercel e validar `https://www.mobilytech.com.br`.
+- Publicacao concluida via Git/Vercel no commit `4ffb6a5`; dominio oficial validado em `https://www.mobilytech.com.br`.
+- Smoke oficial: home 200, MobilyTech Finds 200, Minha Conta 200 e `/admin` 401 protegido.
+- QA oficial desktop/mobile em `https://www.mobilytech.com.br/fase2/achados.html`: 66 cards, 66 botoes, 24 Mercado Livre, 29 AliExpress, 13 Amazon, 0 links vazios, 0 links de busca generica, 0 logos/divisores faltando e 0 botoes fora de 46px.
 
 ## MobilyTech Finds - afiliados e botoes
 

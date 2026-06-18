@@ -354,4 +354,6 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - QA local desktop/mobile salvo em `docs/qa/affiliate-buttons-2026-06-18/qa.json`: 66 cards, 66 botoes, 0 links vazios, 0 logos faltando, 0 separadores faltando e 0 botoes fora da altura esperada.
 - Screenshots de evidencia salvos em `docs/qa/affiliate-buttons-2026-06-18/`.
 - Crocheck externo no ChatGPT, conversa `Analise Visual MobilyTech BR`, nao foi executado nesta retomada porque nao houve ferramenta direta disponivel de Chrome/Computer Use para o agente. Validacao substituta: Playwright com Chrome local + inspeção visual manual pelo Codex.
-- Proxima etapa imediata: publicar o pacote no Git/Vercel e validar no dominio oficial `https://www.mobilytech.com.br`.
+- Publicacao Git/Vercel concluida no commit `4ffb6a5`, enviado para `main`.
+- Smoke oficial: `https://www.mobilytech.com.br/` 200, `https://www.mobilytech.com.br/fase2/achados.html` 200, `https://www.mobilytech.com.br/fase2/minha-conta.html` 200 e `https://www.mobilytech.com.br/admin` 401 protegido.
+- QA oficial desktop/mobile em `https://www.mobilytech.com.br/fase2/achados.html`: 66 cards, 66 botoes, 24 Mercado Livre, 29 AliExpress, 13 Amazon, 0 links vazios, 0 links de busca generica, 0 logos/divisores faltando e 0 botoes fora de 46px.
