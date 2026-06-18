@@ -309,3 +309,49 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Tentativas de gerar novos links pelo Chrome/Opera nesta retomada abriram login/verificacao do Mercado Livre para `mobilytechbr@gmail.com`; por seguranca, nao avancar por senha/codigo sozinho.
 - `data/phase2-finalists.json` foi atualizado em modo conservador: 24 itens Mercado Livre diretos ficaram ativos e itens antigos de busca/sem rastreio ficaram pausados (`affiliateReady:false`) para nao publicar link sem comissao.
 - Meta de 65 produtos fica bloqueada ate reconectar/verificar Mercado Livre ou configurar API/credenciais oficiais. Nao preencher a diferenca com links de busca.
+
+## Atualizacao 2026-06-18 - nova ordem para botoes e lote AliExpress
+
+- Usuario enviou tres referencias visuais para botoes `Ver oferta` por marketplace: AliExpress vermelho, Amazon preto/laranja e Mercado Livre amarelo. Manter o tamanho original do botao no site, padronizar tamanho do texto entre plataformas e validar desktop/mobile por crocheck rigoroso com ChatGPT antes de considerar pronto.
+- O botao Mercado Livre deve seguir o mesmo estilo/forca visual do checkout Mercado Pago ja aprovado, mas com texto `Ver oferta` e logo oficial/sem fundo; Amazon e AliExpress devem seguir a mesma logica de formato, com cores/logos da marca correspondente.
+- Amazon: usuario confirmou StoreID/tag `mobilytechbr-20` e forneceu exemplo de link completo com `tag=mobilytechbr-20`. Caminho pragmatico atual: quando nao houver API, gerar link rastreavel por ASIN + tag e/ou usar SiteStripe manual; validar que o link final contem o tag correto.
+- AliExpress: usuario baixou template `C:\Users\MF\Downloads\batch_link_generate.csv`; a estrutura esperada e apenas uma coluna `URL`. Verificacao local em `data/phase2-finalists.json`, `data/products.json`, `data/finds-source-phase1-2026-06-13.json` e backups nao encontrou nenhuma URL real de produto AliExpress, apenas URLs de busca `pt.aliexpress.com/w/wholesale...SearchText=...`.
+- Regra para o lote AliExpress: nao alimentar o gerador em lote com URL de busca generica. O CSV so deve conter paginas reais de produto AliExpress, uma por linha, para evitar publicar links sem produto exato/comissao confiavel.
+- Teste real do gerador em lote AliExpress: usuario subiu `mobilytech_aliexpress_batch_UPLOAD_TESTE_80_BUSCAS_2026-06-18.csv` e recebeu `C:\Users\MF\Downloads\Sff22212171ab43deae7b84190ad9c1b0L.csv`. Validacao local: 79 linhas, 79 `Tracking URL` no formato `https://s.click.aliexpress.com/e/_...`, 79 `Tracking ID=default`, 0 erros, 0 duplicados. Relatorio salvo em `docs/qa/aliexpress-batch-links-2026-06-18.json`. Observacao: lote funciona, mas ainda aponta para buscas/categorias; para cards de produto ideais, substituir por URLs reais de produto antes de publicar.
+
+## Atualizacao 2026-06-18 - pendencias ativas apos validacao do usuario
+
+- Usuario verificou o site oficial e informou que a versao final ainda nao foi publicada: os novos anuncios/links de Amazon e AliExpress ainda nao aparecem em `https://www.mobilytech.com.br`.
+- Usuario rejeitou o visual atual dos botoes: logos e botoes nao estao 100% iguais as referencias enviadas. Refazer Mercado Livre, Amazon e AliExpress com equivalencia visual maxima as imagens de referencia, mantendo todos os botoes com o mesmo tamanho/proporcao.
+- Crocheck visual externo com ChatGPT na conversa fixada `Analise Visual MobilyTech BR` ainda esta pendente e deve ser feito antes de considerar os botoes aprovados.
+- Estas pendencias sao ativas para a proxima execucao imediata, nao backlog futuro. Lista detalhada salva em `docs/PENDENCIAS_ATIVAS_MOBILYTECH_2026-06-18.md`.
+- Usuario vai enviar um handoff de outra conversa sobre uma IA gratuita/local para auxiliar o Codex em tarefas repetitivas; analisar quando chegar e decidir o melhor uso pratico.
+
+## Atualizacao 2026-06-18 - metodo IA local + Codex
+
+- Handoff de IA local recebido em `C:\Users\MF\Documents\Codex\2026-06-18\oi-eu-tava-vendo-aqui-alguma\outputs\handoff-ia-local-para-codex-mobilytech.md`.
+- Ferramentas locais confirmadas pelo handoff: Ollama `0.30.6`, modelo `qwen2.5-coder:7b`, Python `3.12.10`, Git `2.54.0.windows.1` e Aider `0.86.2`.
+- Scripts confirmados no disco: `ask-local-model.cmd`, `start-local-aider.cmd` e `local-ai-setup-guide.md` na pasta `outputs` do handoff.
+- Metodo salvo em `docs/METODO_IA_LOCAL_CODEX_MOBILYTECH.md`.
+- Regra operacional: IA local pode preparar rascunhos, explicacoes, checklists e pequenas sugestoes; Codex continua revisando, testando e executando qualquer coisa de producao, afiliados, pagamento, credenciais, Vercel, Wix, GitHub ou dominio oficial.
+- Para a pendencia ativa dos botoes/publicacao, a IA local pode ajudar no checklist visual e prompts de crocheck, mas o ChatGPT/crocheck externo e a validacao final no dominio oficial continuam obrigatorios.
+
+## Atualizacao 2026-06-18 - regra obrigatoria de qualidade para IA local
+
+- Usuario autorizou usar a IA local no maximo possivel para tarefas leves/repetitivas, desde que nao entre em areas sensiveis e nao demore de forma desproporcional.
+- Regra obrigatoria para qualquer uso da IA local: todo resultado gerado por ela precisa de cheque final do Codex.
+- Esse cheque deve confirmar que a qualidade esta no minimo quase perfeita e comparavel ao padrao que o Codex entregaria diretamente.
+- Se o resultado estiver fraco, incompleto, confuso ou abaixo do padrao visual/funcional/textual/tecnico esperado, o Codex deve corrigir, refazer ou descartar antes de mostrar/publicar/commitar.
+- Esta regra deve entrar no proximo handoff e ser aplicada toda vez que a IA local for usada.
+
+## Atualizacao 2026-06-18 - botoes afiliados + primeiro uso real da IA local
+
+- Primeiro teste real da IA local no fluxo MobilyTech executado com cautela: Ollama/qwen2.5-coder foi usado apenas como apoio para checklist/revisao leve; a saida direta foi considerada generica e o Codex fez o cheque final obrigatorio.
+- Conclusao operacional: a IA local ajuda a economizar credito em checklist, prompts e segunda opiniao simples, mas ainda nao substitui Codex/Playwright/ChatGPT em QA visual ou decisoes de producao.
+- `scripts/build_phase2_ibuy_style.py` foi ajustado para renderizar botoes `Ver oferta` com estrutura uniforme: marca a esquerda, divisor interno, texto centralizado, altura fixa de 46px, fonte 15.5px e estilos por marketplace.
+- Novos assets de marca para botoes: `assets/affiliate-mercado-livre-mark.svg`, `assets/affiliate-amazon-mark.svg` e `assets/affiliate-aliexpress-mark.svg`.
+- MobilyTech Finds local ficou com 66 produtos afiliados ativos: 24 Mercado Livre, 29 AliExpress e 13 Amazon; todos com link de oferta preenchido.
+- QA local desktop/mobile salvo em `docs/qa/affiliate-buttons-2026-06-18/qa.json`: 66 cards, 66 botoes, 0 links vazios, 0 logos faltando, 0 separadores faltando e 0 botoes fora da altura esperada.
+- Screenshots de evidencia salvos em `docs/qa/affiliate-buttons-2026-06-18/`.
+- Crocheck externo no ChatGPT, conversa `Analise Visual MobilyTech BR`, nao foi executado nesta retomada porque nao houve ferramenta direta disponivel de Chrome/Computer Use para o agente. Validacao substituta: Playwright com Chrome local + inspeção visual manual pelo Codex.
+- Proxima etapa imediata: publicar o pacote no Git/Vercel e validar no dominio oficial `https://www.mobilytech.com.br`.

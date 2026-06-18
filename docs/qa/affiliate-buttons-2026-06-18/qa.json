@@ -1,0 +1,91 @@
+{
+  "desktop": {
+    "cards": 66,
+    "buttons": 66,
+    "amazon": 13,
+    "ali": 29,
+    "ml": 24,
+    "firstByMarket": [
+      {
+        "market": "ml",
+        "text": "Ver oferta",
+        "width": 305.5,
+        "height": 46,
+        "fontSize": "15.5px",
+        "hasImg": true,
+        "hasSep": true,
+        "href": "https://meli.la/1DNJP2s"
+      },
+      {
+        "market": "ali",
+        "text": "Ver oferta",
+        "width": 305.5,
+        "height": 46,
+        "fontSize": "15.5px",
+        "hasImg": true,
+        "hasSep": true,
+        "href": "https://s.click.aliexpress.com/e/_c3yklQt3"
+      },
+      {
+        "market": "amazon",
+        "text": "Ver oferta",
+        "width": 305.5,
+        "height": 46,
+        "fontSize": "15.5px",
+        "hasImg": true,
+        "hasSep": true,
+        "href": "https://www.amazon.com.br/dp/B0BR3M8XHK?tag=mobilytechbr-20"
+      }
+    ],
+    "badText": 0,
+    "missingLogo": 0,
+    "missingSep": 0,
+    "non46Height": 0,
+    "emptyHref": 0
+  },
+  "mobile": {
+    "cards": 66,
+    "buttons": 66,
+    "amazon": 13,
+    "ali": 29,
+    "ml": 24,
+    "firstByMarket": [
+      {
+        "market": "ml",
+        "text": "Ver oferta",
+        "width": 316,
+        "height": 46,
+        "fontSize": "15.5px",
+        "hasImg": true,
+        "hasSep": true,
+        "href": "https://meli.la/1DNJP2s"
+      },
+      {
+        "market": "ali",
+        "text": "Ver oferta",
+        "width": 316,
+        "height": 46,
+        "fontSize": "15.5px",
+        "hasImg": true,
+        "hasSep": true,
+        "href": "https://s.click.aliexpress.com/e/_c3yklQt3"
+      },
+      {
+        "market": "amazon",
+        "text": "Ver oferta",
+        "width": 316,
+        "height": 46,
+        "fontSize": "15.5px",
+        "hasImg": true,
+        "hasSep": true,
+        "href": "https://www.amazon.com.br/dp/B0BR3M8XHK?tag=mobilytechbr-20"
+      }
+    ],
+    "badText": 0,
+    "missingLogo": 0,
+    "missingSep": 0,
+    "non46Height": 0,
+    "emptyHref": 0
+  },
+  "checkedAt": "2026-06-18T21:20:19.783Z"
+}

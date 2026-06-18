@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 84 52" role="img" aria-label="Mercado Livre">
+  <ellipse cx="42" cy="26" rx="37" ry="21" fill="#ffe45c" stroke="#233f99" stroke-width="4"/>
+  <path d="M22 25l10-9c3-3 8-3 12 0l4 4" fill="none" stroke="#233f99" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M62 25l-10-9c-3-3-8-3-12 0l-4 4" fill="none" stroke="#233f99" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M31 25l8 8c3 3 8 3 11 0l4-4M38 20l13 13" fill="none" stroke="#233f99" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
