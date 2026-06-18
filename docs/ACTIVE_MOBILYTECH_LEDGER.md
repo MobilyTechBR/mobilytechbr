@@ -299,3 +299,13 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Publicacao Git/Vercel: commits `1b4016f` e `83a643a` enviados para `main`. Deploy de producao `dpl_5EvrhNowrtd36DaXpmdGyeDhd2qv` ficou `READY` com alias `https://www.mobilytech.com.br`.
 - Smoke oficial salvo em `docs/qa/final-adjustments-2026-06-17/production-smoke-83a643a.json`: 36 checks passaram, 0 falhas. Validou paginas publicas 200, admin protegido, `/private/admin/index.html` 404, asset do logo 200, endpoint de sessao 200, ausencia de Microsoft/Abacate/Painel interno/IDs literais de pedido fake, e `Ver oferta` correto no Finds.
 - Logs runtime Vercel, producao, janela de 30 minutos, sem `error` ou `fatal`.
+
+## Atualizacao 2026-06-18 - lote manual seguro de afiliados Finds
+
+- Usuario confirmou que Amazon/AliExpress/Mercado Livre por API deve ficar no backlog; a execucao atual deve usar o metodo manual de gerar links pela pagina do produto quando a conta estiver logada.
+- Backlog consolidado em `docs/MOBILYTECH_BACKLOG_2026-06-17.md`: APIs de afiliados, meta futura de 65 produtos rastreaveis, dropshipping/CJ/DSers/frete exato, Abacate Pay, Microsoft login e chat IA.
+- Evidencia recuperada do Link Builder do Mercado Livre em `docs/qa/ml-linkbuilder-batch0-fail-snapshot-2026-06-17.txt`: 24 de 25 links foram gerados corretamente; 1 URL foi rejeitada pelo programa.
+- Mapeamento seguro salvo em `docs/qa/ml-affiliate-links-mapped-2026-06-17.json`; o lote contem 24 links `https://meli.la/...` gerados pelo Link Builder oficial.
+- Tentativas de gerar novos links pelo Chrome/Opera nesta retomada abriram login/verificacao do Mercado Livre para `mobilytechbr@gmail.com`; por seguranca, nao avancar por senha/codigo sozinho.
+- `data/phase2-finalists.json` foi atualizado em modo conservador: 24 itens Mercado Livre diretos ficaram ativos e itens antigos de busca/sem rastreio ficaram pausados (`affiliateReady:false`) para nao publicar link sem comissao.
+- Meta de 65 produtos fica bloqueada ate reconectar/verificar Mercado Livre ou configurar API/credenciais oficiais. Nao preencher a diferenca com links de busca.

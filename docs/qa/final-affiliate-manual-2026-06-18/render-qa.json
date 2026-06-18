@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-06-18T02:26:17.064Z",
+  "flowUnderTest": "http://127.0.0.1:4178/fase2/achados.html -> MobilyTech Finds renders affiliate cards -> offer buttons use direct tracked meli.la links",
+  "browserPath": {
+    "primary": "Browser plugin",
+    "result": "DOM, console and mobile metrics passed; Browser screenshot command timed out on Page.captureScreenshot",
+    "screenshotFallback": "Chrome headless installed locally"
+  },
+  "checks": {
+    "pageIdentity": "PASS - MobilyTech Finds | MobilyTech BR",
+    "notBlank": "PASS - body text length 6713 in Browser DOM check",
+    "frameworkOverlay": "PASS - none detected",
+    "consoleHealth": "PASS - no error/warn logs detected in Browser DOM checks",
+    "staticAffiliateLinks": {
+      "generatedAt": "2026-06-18T02:21:56.082Z",
+      "activeCount": 24,
+      "vendidosCount": 12,
+      "recomendacoesCount": 12,
+      "directLinkCount": 24,
+      "uniqueDirectLinkCount": 24,
+      "uniqueMeliCount": 24,
+      "badSearchNeedlesInPublicHtml": [],
+      "targetRequestedByUser": 65
+    },
+    "interactionProof": "PASS - first 12 visible offer buttons read from DOM; all are direct meli.la links with class market-ml"
+  },
+  "desktop": {
+    "viewport": "1440x1200",
+    "screenshot": "docs/qa/final-affiliate-manual-2026-06-18/achados-desktop.png",
+    "observations": [
+      "12 selected product cards render in the first grid",
+      "Mercado Livre buttons use yellow same-hue gradient and official logo asset",
+      "No empty-state message in the main grid"
+    ]
+  },
+  "mobile": {
+    "viewport": "390x1200",
+    "screenshot": "docs/qa/final-affiliate-manual-2026-06-18/achados-mobile.png",
+    "metrics": {
+      "selectedCards": 12,
+      "recommendedCards": 12,
+      "offerButtons": 24,
+      "overflowX": -15,
+      "logs": []
+    },
+    "observations": [
+      "Cards render in one column",
+      "No horizontal overflow detected by DOM metric",
+      "CTA remains visible inside card"
+    ]
+  },
+  "remainingBlocker": "Target was 65 products across marketplaces, but only 24 Mercado Livre direct affiliate links could be safely recovered before Mercado Livre Link Builder asked for login/verification again. Amazon/AliExpress/Mercado Livre API key implementation is saved to backlog.",
+  "chatgptCrosscheck": {
+    "attemptedAt": "2026-06-18T02:29:37.163Z",
+    "targetConversation": "Analise visual MobilyTech BR",
+    "result": "blocked",
+    "reason": "Chrome tab was reachable, but ChatGPT file upload did not open a file chooser and the Chrome automation connection reset while waiting. Local DOM/console/screenshot QA completed instead."
+  }
+}
