@@ -173,11 +173,12 @@ PUBLIC_FIND_FIELDS = {
     "affiliateUrl",
     "affiliateReady",
     "publicPartnerNote",
-    "confidence",
     "productImage",
     "selectedCreative",
     "productId",
     "salePrice",
+    "shippingOrigin",
+    "shippingScope",
 }
 
 PUBLIC_PRODUCT_FIELDS = {
@@ -239,6 +240,9 @@ def public_finds_payload(finalists, products=None):
         clean_item["publicPartnerNote"] = (
             "Compra feita diretamente no marketplace parceiro; pagamentos e dados sensiveis ficam no provedor externo."
         )
+        marketplace_name = str((clean_item.get("marketplace") or {}).get("name") or item.get("platform") or "")
+        if not clean_item.get("shippingScope"):
+            clean_item["shippingScope"] = "internacional" if "ali" in marketplace_name.lower() else "nacional"
         if not clean_item.get("salePrice"):
             fallback_price = (
                 price_by_image.get(clean_item.get("productImage"))
@@ -293,6 +297,7 @@ def public_finds_payload(finalists, products=None):
             "affiliateReady": True,
             "affiliateButton": "Adicionar ao carrinho",
             "publicPartnerNote": "Produto selecionado para complementar setups MobilyTech com atendimento humano.",
+            "shippingScope": "nacional",
             "storeCheckout": True,
             "publicGroup": "vendidos",
         }
@@ -657,6 +662,16 @@ def finds_page(prefix: str, page: dict) -> str:
         <aside class="finds-filters" aria-label="Filtros do MobilyTech Finds">
           <label class="finds-search-label" for="findsSearch">Buscar nesta pagina</label>
           <input id="findsSearch" data-finds-control type="search" placeholder="Buscar SSD, teclado, hub, fonte...">
+          <label class="finds-search-label" for="findsStore">Loja</label>
+          <select id="findsStore" data-finds-control>
+            <option value="all">Todas as lojas</option>
+          </select>
+          <label class="finds-search-label" for="findsShipping">Envio</label>
+          <select id="findsShipping" data-finds-control>
+            <option value="all">Nacional e internacional</option>
+            <option value="nacional">Envio nacional</option>
+            <option value="internacional">Envio internacional</option>
+          </select>
           <div class="finds-filter-block">
             <div class="finds-filter-head">
               <strong>Preco</strong>
@@ -996,8 +1011,8 @@ def css() -> str:
       font-family:'Nunito',Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
     }
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:#fff;color:var(--ink);font-size:16px;line-height:1.45}
+    html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden}
+    body{margin:0;background:#fff;color:var(--ink);font-size:16px;line-height:1.45;max-width:100%;overflow-x:hidden}
     a{color:inherit;text-decoration:none}
     button,input,textarea{font:inherit}
     img{max-width:100%;display:block}
@@ -1100,7 +1115,7 @@ def css() -> str:
       .finds-preview{grid-template-columns:1fr;max-width:360px;margin-inline:auto}
       .finds-layout{grid-template-columns:1fr;gap:14px}
       .finds-filters{position:static;top:auto}
-      .finds-layout .finds-grid,.finds-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:100%;margin-inline:auto}
+      .finds-layout .finds-grid,.finds-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:100%;margin-inline:auto}
       .find-card{min-height:278px;padding:8px;border-radius:12px;gap:6px}
       .find-media{height:84px;border-radius:10px;padding:6px}
       .find-media img{max-width:94%;max-height:72px}
@@ -1113,12 +1128,12 @@ def css() -> str:
       .finds-band{padding:20px;gap:16px}
       .finds-text h2{font-size:30px;line-height:1.05}
       .finds-text p{font-size:13.5px;line-height:1.45}
-      .find-media{height:138px;padding:10px}
-      .find-media img{max-height:118px;max-width:84%}
-      .find-card{padding:8px;border-radius:16px;min-height:352px}
-      .find-card h3{font-size:13.5px;line-height:1.25;min-height:34px}
-      .find-card p{font-size:12px;line-height:1.35;overflow-wrap:anywhere}
-      .find-price{font-size:16px}
+      .find-media{height:116px;padding:8px}
+      .find-media img{max-height:96px;max-width:90%}
+      .find-card{padding:9px;border-radius:14px;min-height:320px}
+      .find-card h3{font-size:12.6px;line-height:1.2;min-height:45px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+      .find-card p{font-size:10.8px;line-height:1.28;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .find-price{font-size:14px;line-height:1.05;min-height:17px}
       .market-btn{height:58px;min-height:58px;font-size:20px;width:100%;padding:0 18px;grid-template-columns:104px 1px minmax(0,1fr);gap:15px}
       .market-brand img{max-height:43px;max-width:92px}
       .market-ml .market-brand{width:50px;height:30px;flex:0 0 50px}
@@ -1170,7 +1185,7 @@ def css() -> str:
       .shipping-contact-card h2,.shipping-contact-card p{max-width:calc(100% - 52px)}
     }
     @media (max-width:360px){
-      .finds-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .finds-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .find-card{max-width:none;margin-inline:0}
     }
     """
@@ -1389,6 +1404,12 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     }}
     async function loadAccountSession() {{
       setLoginLinks();
+      if (["localhost", "127.0.0.1"].includes(location.hostname)) {{
+        accountSession = {{ authenticated:false, user:null, admin:false, providers:{{ googleConfigured:true, microsoftConfigured:false }} }};
+        renderAccountMenu();
+        renderAccountPage();
+        return;
+      }}
       try {{
         const response = await fetch("/api/account?action=session", {{ cache:"no-store" }});
         const data = await response.json();
@@ -1790,8 +1811,35 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const input = $(`#${{id}}`);
       if (input) input.value = String(Math.round(value));
     }}
+    function findMarketName(item) {{
+      const links = Array.isArray(item.affiliateLinks) ? item.affiliateLinks.filter((link) => link && link.url) : [];
+      const firstLink = links[0] || {{}};
+      return item.marketplace?.name || firstLink.name || firstLink.platform || item.platform || "Marketplace";
+    }}
+    function findStoreKey(item) {{
+      return norm(findMarketName(item)).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "marketplace";
+    }}
+    function findShippingScope(item) {{
+      const raw = norm([item.shippingScope, item.shippingOrigin, item.shipFrom, item.origin].join(" "));
+      if (raw.includes("intern")) return "internacional";
+      if (raw.includes("nacion") || raw.includes("brasil") || raw.includes("local")) return "nacional";
+      const market = norm(findMarketName(item));
+      if (market.includes("aliexpress") || market.includes("ali express")) return "internacional";
+      return "nacional";
+    }}
+    function syncFindStoreOptions(items) {{
+      const select = $("#findsStore");
+      if (!select || select.dataset.ready === "1") return;
+      const stores = [...new Map(items.map((item) => [findStoreKey(item), findMarketName(item)])).entries()]
+        .sort((a, b) => a[1].localeCompare(b[1], "pt-BR"));
+      select.innerHTML = '<option value="all">Todas as lojas</option>' + stores
+        .map(([key, label]) => `<option value="${{escapeHtml(key)}}">${{escapeHtml(label)}}</option>`)
+        .join("");
+      select.dataset.ready = "1";
+    }}
     function setupFindsControls(items) {{
       if (findsControlsReady || !$("#findsGrid")) return;
+      syncFindStoreOptions(items);
       const prices = items.map(findNumericPrice).filter((price) => price > 0);
       const maxPrice = Math.max(100, Math.ceil((Math.max(...prices, 100) + 50) / 50) * 50);
       ["findsMinRange", "findsMaxRange"].forEach((id) => {{
@@ -1824,11 +1872,15 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const min = findsNumber("findsMinPrice", 0);
       const max = findsNumber("findsMaxPrice", Infinity);
       const sort = $("#findsSort")?.value || "relevance";
+      const store = $("#findsStore")?.value || "all";
+      const shipping = $("#findsShipping")?.value || "all";
       let filtered = items.filter((item) => {{
         const price = findNumericPrice(item);
         if (price > 0 && (price < min || price > max)) return false;
+        if (store !== "all" && findStoreKey(item) !== store) return false;
+        if (shipping !== "all" && findShippingScope(item) !== shipping) return false;
         if (!search) return true;
-        return norm([item.title, item.whySell, item.niche, item.platform, item.marketplace?.name].join(" ")).includes(search);
+        return norm([item.title, item.whySell, item.niche, item.platform, findMarketName(item), findShippingScope(item)].join(" ")).includes(search);
       }});
       if (sort === "price-asc") filtered.sort((a, b) => findNumericPrice(a) - findNumericPrice(b));
       if (sort === "price-desc") filtered.sort((a, b) => findNumericPrice(b) - findNumericPrice(a));
@@ -1908,7 +1960,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const action = isManual
         ? `<div class="market-actions"><button class="market-btn market-mobilytech" type="button" data-add="${{findProductId(item)}}"><span class="cart-icon" aria-hidden="true">&#128722;</span>Adicionar ao carrinho</button></div>`
         : `<div class="market-actions">${{affiliateLinks.length ? affiliateLinks.map(linkButton).join("") : (() => {{ const art = marketButtonArt(market.name || ""); return art ? `<a class="market-btn market-art-btn ${{market.class || marketClass(market.name || "")}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener" aria-label="${{buttonLabel}} ${{market.name || "Marketplace"}}"><img class="market-button-art" src="${{asset(art)}}" alt="${{buttonLabel}} ${{market.name || "Marketplace"}}"></a>` : `<a class="market-btn ${{market.class || ""}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener"><span class="market-brand"><img src="${{logo}}" alt="" aria-hidden="true"></span><span class="market-sep" aria-hidden="true"></span><span class="market-label">${{buttonLabel}}</span></a>`; }})()}}</div>`;
-      return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}">
+      return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}" data-store="${{escapeHtml(findMarketName(item))}}" data-shipping="${{findShippingScope(item)}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
         <h3>${{item.title}}</h3>
         <p>${{item.whySell || item.publicPartnerNote || ""}}</p>
@@ -2258,7 +2310,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     $$("#buildForm").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "build"); }}));
     $$("#cleanForm, #cleanFormInline").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "clean"); }}));
     $("#orderLookupForm")?.addEventListener("submit", (e) => {{ e.preventDefault(); submitOrderLookup(e.currentTarget); }});
-    $("[data-finds-control]") && $$("#findsSearch, #findsMinPrice, #findsMaxPrice, #findsMinRange, #findsMaxRange, #findsSort").forEach((input) => {{
+    $("[data-finds-control]") && $$("#findsSearch, #findsStore, #findsShipping, #findsMinPrice, #findsMaxPrice, #findsMinRange, #findsMaxRange, #findsSort").forEach((input) => {{
       input.addEventListener("input", (event) => {{
         syncFindPriceControls(event.currentTarget.id);
         renderFinds("#findsGrid");
@@ -2272,6 +2324,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       findsControlsReady = false;
       setupFindsControls(dedupeFinds(DATA.finds.filter((item) => item.affiliateReady !== false && bestFindUrl(item))));
       $("#findsSearch") && ($("#findsSearch").value = "");
+      $("#findsStore") && ($("#findsStore").value = "all");
+      $("#findsShipping") && ($("#findsShipping").value = "all");
       $("#findsSort") && ($("#findsSort").value = "relevance");
       renderFinds("#findsGrid");
     }});
@@ -2324,7 +2378,7 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{clean_text(title)}</title>
     <meta name="description" content="MobilyTech BR - PCs revisados, hardware, limpeza e MobilyTech Finds.">
-    <link rel="icon" href="{prefix}assets/favicon.png">
+    <link rel="icon" href="data:,">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900;1000&display=swap" rel="stylesheet">
