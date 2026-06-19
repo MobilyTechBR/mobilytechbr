@@ -93,7 +93,7 @@ DEFAULT_SITE_CONTENT = {
         },
         "achados": {
             "title": "MobilyTech Finds",
-            "intro": "Complemente seu setup com acessorios, upgrades e gadgets selecionados pela curadoria MobilyTech.",
+            "intro": "Achados de hardware, perifericos e setup com links diretos para marketplaces parceiros.",
             "image": "./assets/mobilytech-character-cutout.png",
         },
         "montagem": {
@@ -178,7 +178,6 @@ PUBLIC_FIND_FIELDS = {
     "selectedCreative",
     "productId",
     "salePrice",
-    "currentPrice",
 }
 
 PUBLIC_PRODUCT_FIELDS = {
@@ -240,9 +239,24 @@ def public_finds_payload(finalists, products=None):
         clean_item["publicPartnerNote"] = (
             "Compra feita diretamente no marketplace parceiro; pagamentos e dados sensiveis ficam no provedor externo."
         )
+        if not clean_item.get("salePrice"):
+            fallback_price = (
+                price_by_image.get(clean_item.get("productImage"))
+                or price_by_image.get(clean_item.get("selectedCreative"))
+            )
+            if fallback_price:
+                clean_item["salePrice"] = fallback_price
         return clean_item
 
     items = finalists.get("finalists", []) if isinstance(finalists, dict) else []
+    price_by_image = {}
+    for source_item in items:
+        price = source_item.get("salePrice")
+        if not price:
+            continue
+        for image_key in (source_item.get("productImage"), source_item.get("selectedCreative")):
+            if image_key and image_key not in price_by_image:
+                price_by_image[image_key] = price
     product_items = products or []
     finalists_by_product_id = {}
     for item in items:
@@ -348,12 +362,12 @@ def header(prefix: str, active: str = "home", site_content: dict | None = None) 
         else "Acompanhe compras e dados de entrega quando o login estiver disponivel."
     )
     nav = [
-        ("ofertas", "Ofertas", "ofertas"),
         ("ofertas", "PC Gamer", "ofertas"),
+        ("achados", "MobilyTech Finds", "achados"),
+        ("ofertas", "Ofertas", "ofertas"),
         ("montagem", "Monte seu PC", "montagem"),
         ("ofertas", "Hardware", "ofertas"),
         ("limpeza", "Limpeza", "limpeza"),
-        ("achados", "MobilyTech Finds", "achados"),
         ("avaliacoes", "Avaliacoes", "avaliacoes"),
         ("contato", "Suporte", "contato"),
     ]
@@ -582,7 +596,7 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
       <div class="product-grid hardware-grid" id="homeHardwareGrid" data-limit="5"></div>
       <section class="finds-band" id="finds">
         <div class="finds-text">
-          <p class="section-kicker">Curadoria MobilyTech</p>
+          <p class="section-kicker">MobilyTech Finds</p>
           <h2>MobilyTech Finds</h2>
           <p>Produtos escolhidos para completar setup, manutencao e upgrades. Recomendacoes externas usam Mercado Livre, Amazon, Shopee ou AliExpress.</p>
           <a class="btn btn-dark" href="{links["achados"]}">Ver selecionados</a>
@@ -624,7 +638,6 @@ def products_page(page: dict, prefix: str) -> str:
 
 
 def finds_page(prefix: str, page: dict) -> str:
-    image = page.get("image") or "./assets/mobilytech-character-cutout.png"
     return f"""
     <main>
       <section class="page-hero page-hero-finds">
@@ -632,23 +645,15 @@ def finds_page(prefix: str, page: dict) -> str:
           <h1>{clean_text(page.get("title"))}</h1>
           <p>{clean_text(page.get("intro"))}</p>
         </div>
-        <img src="{asset_path(prefix, image)}" alt="MobilyTech Finds">
       </section>
-      <section class="section-head">
-        <div>
-          <p class="section-kicker">Curadoria MobilyTech</p>
-          <h2>Produtos selecionados para completar seu setup</h2>
-        </div>
-      </section>
-      <div class="finds-grid" id="findsGrid" data-group="vendidos"></div>
-      <section class="section-head finds-section-head">
+      <section class="section-head finds-section-head finds-primary-head">
         <div>
           <p class="section-kicker">MobilyTech recomenda</p>
           <h2>Boas compras nos marketplaces parceiros</h2>
           <p>Itens que fazem sentido para setup, manutencao e uso diario, com compra feita diretamente no Mercado Livre, Amazon, Shopee ou AliExpress.</p>
         </div>
       </section>
-      <div class="finds-grid finds-grid-recommendations" id="findsRecommendedGrid" data-group="recomendacoes"></div>
+      <div class="finds-grid finds-grid-recommendations" id="findsGrid"></div>
     </main>
     """
 
@@ -988,12 +993,12 @@ def css() -> str:
     .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}.price{font-size:23px;font-weight:1000;line-height:1.08}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
     .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:18px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px;min-height:24px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:1px solid rgba(9,11,16,.88);background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#2b2500;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.72);transition:.18s transform,.18s box-shadow,.18s filter}.market-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);filter:saturate(1.04)}.market-btn img{height:25px;width:auto;max-width:82px;object-fit:contain}.market-mobilytech{background:#19f5d0;color:#031014;box-shadow:0 10px 24px rgba(25,245,208,.18)}.market-ml{background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#27220a;border-color:#d6bd00}.market-amazon{background:linear-gradient(180deg,#2d4056 0%,#232f3e 54%,#111820 100%);color:#fff;border-color:#ff9900;box-shadow:inset 0 -3px 0 #ff9900,0 8px 20px rgba(35,47,62,.16)}.market-shopee{background:linear-gradient(180deg,#ff714f,#ee4d2d);color:#fff;border-color:#d83a1c}.market-ali{background:linear-gradient(180deg,#ff7655 0%,#ff4e32 55%,#e63222 100%);color:#fff;border-color:#d73524}
-    .market-btn{position:relative;isolation:isolate;height:58px;min-height:58px;width:100%;display:grid;grid-template-columns:104px 1px minmax(0,1fr);align-items:center;gap:15px;padding:0 18px;border-radius:999px;font-size:20px;line-height:1;letter-spacing:0;text-align:center;overflow:hidden}.market-btn:before,.market-btn:after{content:"";position:absolute;pointer-events:none;z-index:0}.market-brand,.market-sep,.market-label{position:relative;z-index:1}.market-brand{height:100%;display:flex;align-items:center;justify-content:center;min-width:0}.market-brand img{display:block;height:auto;max-height:43px;max-width:92px;width:auto;object-fit:contain}.market-sep{width:1px;height:34px;border-radius:999px;background:rgba(255,255,255,.42);box-shadow:1px 0 0 rgba(0,0,0,.16)}.market-label{display:flex;align-items:center;justify-content:center;min-width:0;font-size:20px;font-weight:1000;line-height:1;white-space:nowrap}.market-ml{display:flex;align-items:center;justify-content:center;gap:13px;background:linear-gradient(180deg,#fffef4 0%,#fff36a 34%,#fff159 66%,#f0d719 100%);border:2px solid #e3c900;color:#221f08;box-shadow:0 12px 22px rgba(231,202,0,.22),inset 0 1px 0 rgba(255,255,255,.98),inset 0 -3px 0 rgba(185,159,0,.2)}.market-ml .market-brand{width:50px;height:30px;flex:0 0 50px}.market-ml .market-brand img{width:50px;height:30px;max-height:none;max-width:none}.market-ml .market-sep{display:none}.market-ml .market-label{font-size:20px;color:#24200a}.market-amazon{background:linear-gradient(180deg,#343434 0%,#171717 52%,#050505 100%);border:2px solid #f4a11e;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -3px 0 rgba(246,162,26,.38)}.market-amazon:after{right:18px;bottom:7px;width:105px;height:32px;border-bottom:8px solid rgba(255,153,0,.18);border-radius:0 0 90px 90px;transform:rotate(-7deg)}.market-amazon .market-brand img{filter:none;max-height:46px;max-width:78px}.market-amazon .market-sep{background:rgba(255,255,255,.22);box-shadow:1px 0 0 rgba(246,162,26,.2)}.market-amazon .market-label{font-size:20px}.market-ali{background:linear-gradient(180deg,#ff3a1b 0%,#ee1205 54%,#c90000 100%);border:2px solid #ff9d1a;color:#fff;box-shadow:0 12px 24px rgba(224,21,8,.26),inset 0 1px 0 rgba(255,255,255,.26),inset 0 -3px 0 rgba(115,0,0,.18)}.market-ali:after{right:18px;top:13px;width:42px;height:42px;background:radial-gradient(circle at 50% 50%,rgba(255,114,40,.28) 0 24%,transparent 26%),linear-gradient(45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%),linear-gradient(-45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%);opacity:.9}.market-ali .market-brand img{filter:none;max-height:50px;max-width:86px}.market-ali .market-sep{background:rgba(255,211,109,.48);box-shadow:1px 0 0 rgba(93,0,0,.18)}.market-ali .market-label{font-size:20px}.market-art-btn{height:46px;min-height:46px;padding:0;border:0;background:transparent!important;box-shadow:none!important;display:block;overflow:visible;transition:.18s transform,.18s filter}.market-art-btn:before,.market-art-btn:after{display:none}.market-art-btn:hover{transform:translateY(-1px);box-shadow:none!important;filter:saturate(1.03) brightness(1.01)}.market-button-art{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill;display:block}
+    .market-btn{position:relative;isolation:isolate;height:58px;min-height:58px;width:100%;display:grid;grid-template-columns:104px 1px minmax(0,1fr);align-items:center;gap:15px;padding:0 18px;border-radius:999px;font-size:20px;line-height:1;letter-spacing:0;text-align:center;overflow:hidden}.market-btn:before,.market-btn:after{content:"";position:absolute;pointer-events:none;z-index:0}.market-brand,.market-sep,.market-label{position:relative;z-index:1}.market-brand{height:100%;display:flex;align-items:center;justify-content:center;min-width:0}.market-brand img{display:block;height:auto;max-height:43px;max-width:92px;width:auto;object-fit:contain}.market-sep{width:1px;height:34px;border-radius:999px;background:rgba(255,255,255,.42);box-shadow:1px 0 0 rgba(0,0,0,.16)}.market-label{display:flex;align-items:center;justify-content:center;min-width:0;font-size:20px;font-weight:1000;line-height:1;white-space:nowrap}.market-ml{display:flex;align-items:center;justify-content:center;gap:13px;background:linear-gradient(180deg,#fffef4 0%,#fff36a 34%,#fff159 66%,#f0d719 100%);border:2px solid #e3c900;color:#221f08;box-shadow:0 12px 22px rgba(231,202,0,.22),inset 0 1px 0 rgba(255,255,255,.98),inset 0 -3px 0 rgba(185,159,0,.2)}.market-ml .market-brand{width:50px;height:30px;flex:0 0 50px}.market-ml .market-brand img{width:50px;height:30px;max-height:none;max-width:none}.market-ml .market-sep{display:none}.market-ml .market-label{font-size:20px;color:#24200a}.market-amazon{background:linear-gradient(180deg,#343434 0%,#171717 52%,#050505 100%);border:2px solid #f4a11e;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -3px 0 rgba(246,162,26,.38)}.market-amazon:after{right:18px;bottom:7px;width:105px;height:32px;border-bottom:8px solid rgba(255,153,0,.18);border-radius:0 0 90px 90px;transform:rotate(-7deg)}.market-amazon .market-brand img{filter:none;max-height:46px;max-width:78px}.market-amazon .market-sep{background:rgba(255,255,255,.22);box-shadow:1px 0 0 rgba(246,162,26,.2)}.market-amazon .market-label{font-size:20px}.market-ali{background:linear-gradient(180deg,#ff3a1b 0%,#ee1205 54%,#c90000 100%);border:2px solid #ff9d1a;color:#fff;box-shadow:0 12px 24px rgba(224,21,8,.26),inset 0 1px 0 rgba(255,255,255,.26),inset 0 -3px 0 rgba(115,0,0,.18)}.market-ali:after{right:18px;top:13px;width:42px;height:42px;background:radial-gradient(circle at 50% 50%,rgba(255,114,40,.28) 0 24%,transparent 26%),linear-gradient(45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%),linear-gradient(-45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%);opacity:.9}.market-ali .market-brand img{filter:none;max-height:50px;max-width:86px}.market-ali .market-sep{background:rgba(255,211,109,.48);box-shadow:1px 0 0 rgba(93,0,0,.18)}.market-ali .market-label{font-size:20px}.market-art-btn{aspect-ratio:3/1;height:auto;min-height:0;padding:0;border:0;background:transparent!important;box-shadow:none!important;display:block;overflow:visible;transition:.18s transform,.18s filter}.market-art-btn:before,.market-art-btn:after{display:none}.market-art-btn:hover{transform:translateY(-1px);box-shadow:none!important;filter:saturate(1.03) brightness(1.01)}.market-button-art{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill;display:block}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
     .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{grid-template-columns:1.05fr .95fr;background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08);padding:22px 24px;align-items:center}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:12px}.clean-form-visual img{width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08);background:#fff}.clean-page-copy{display:flex;flex-direction:column;gap:16px}.clean-side-image{width:100%;max-height:340px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.inline-clean .lead-form{gap:10px;align-self:center}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.inline-clean .lead-form input{padding:11px 14px}.inline-clean .btn-red{min-height:48px}.lead-form textarea{min-height:110px;resize:vertical}
     .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,2vw,34px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line .brand-logo{height:34px;max-width:116px;width:auto;object-fit:contain;opacity:1;flex:0 0 auto;filter:invert(1) saturate(.2) brightness(.9)}.brand-line .logo-microsoft{filter:none;height:32px;max-width:112px}.brand-line .logo-intel{max-width:88px}.brand-line .logo-kingston,.brand-line .logo-crucial{max-width:120px}
     .footer{max-width:1540px;margin:20px auto 0;padding:36px 22px;display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:34px;border-top:1px solid var(--line)}.footer h3{font-size:17px;margin:0 0 14px}.footer a{display:block;margin:8px 0;color:#303742;font-weight:800}.footer-brand img{width:52px}.footer-brand strong{display:block;font-size:19px;margin-top:10px}.footer-brand p,.payment-box p{color:#626a76;font-weight:800}.socials{display:flex;gap:12px}.socials img{width:24px;height:24px;object-fit:contain}.payment-icons{display:flex;gap:12px;align-items:center}.payment-icons img{height:26px;width:auto}.copyright{max-width:1540px;margin:0 auto;padding:0 22px 28px;color:#6b7280;font-weight:800}
-    .page-hero{min-height:320px;border-radius:0 0 18px 18px;margin-bottom:32px;padding:54px 64px;display:grid;grid-template-columns:1fr 480px;align-items:center;overflow:hidden;background:linear-gradient(90deg,#f5f6f8,#ffffff);position:relative}.page-hero h1{font-size:48px;line-height:1.02;margin:0 0 14px}.page-hero p{font-size:20px;color:#4b5563;font-weight:800;max-width:700px}.page-hero img{justify-self:end;max-height:300px;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}.page-hero-products{background:linear-gradient(90deg,#f4f4f4,#fff 48%,#e8f5ff)}.page-hero-finds{background:linear-gradient(90deg,#fff7df,#fff 45%,#e7fbff)}.page-hero-build{background:linear-gradient(90deg,#fbe6e6,#fff 46%,#f1f1f1)}.page-hero-clean{background:linear-gradient(90deg,#effbe7,#fff 46%,#e8f5ff)}.page-hero-reviews,.page-hero-contact{grid-template-columns:1fr;background:#f7f8fb}
+    .page-hero{min-height:320px;border-radius:0 0 18px 18px;margin-bottom:32px;padding:54px 64px;display:grid;grid-template-columns:1fr 480px;align-items:center;overflow:hidden;background:linear-gradient(90deg,#f5f6f8,#ffffff);position:relative}.page-hero h1{font-size:48px;line-height:1.02;margin:0 0 14px}.page-hero p{font-size:20px;color:#4b5563;font-weight:800;max-width:700px}.page-hero img{justify-self:end;max-height:300px;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.18))}.page-hero-products{background:linear-gradient(90deg,#f4f4f4,#fff 48%,#e8f5ff)}.page-hero-finds{grid-template-columns:1fr;justify-items:center;text-align:center;min-height:280px;background:linear-gradient(180deg,#fff7df,#fff 52%,#e7fbff)}.page-hero-finds h1{font-size:clamp(52px,7vw,86px);font-weight:1000;letter-spacing:0}.page-hero-finds p{font-size:clamp(17px,2vw,22px);margin-left:auto;margin-right:auto}.finds-primary-head{justify-content:center;text-align:center;border-top:0;padding-top:0;margin-top:10px}.finds-primary-head div{max-width:920px;margin:0 auto}.finds-primary-head h2{font-size:clamp(34px,4vw,54px);font-weight:1000;line-height:1.02}.finds-primary-head p{margin-left:auto;margin-right:auto}.page-hero-build{background:linear-gradient(90deg,#fbe6e6,#fff 46%,#f1f1f1)}.page-hero-clean{background:linear-gradient(90deg,#effbe7,#fff 46%,#e8f5ff)}.page-hero-reviews,.page-hero-contact{grid-template-columns:1fr;background:#f7f8fb}
     .filter-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}.filter-chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:11px 22px;font-weight:1000;cursor:pointer}.filter-chip.active{background:#111;color:#fff}.contact-grid article{background:#fff;border-radius:16px;padding:26px;box-shadow:0 8px 24px rgba(0,0,0,.07)}.contact-grid h2{margin:0 0 8px}.shipping-contact-card{position:relative;overflow:hidden}.shipping-contact-card img{position:absolute;right:18px;top:18px;width:58px;height:58px;object-fit:contain;opacity:.92;filter:drop-shadow(0 8px 14px rgba(0,0,0,.12))}.shipping-contact-card h2,.shipping-contact-card p{max-width:calc(100% - 70px)}
     .page-hero-account{grid-template-columns:1fr;background:linear-gradient(90deg,#e9fbfa,#fff 45%,#e8f5ff)}
     .account-layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(360px,.72fr);gap:24px;margin:44px 0;align-items:start}.account-primary,.account-side{display:grid;gap:20px}
@@ -1082,7 +1087,7 @@ def css() -> str:
       .market-label,.market-ali .market-label,.market-ml .market-label{font-size:20px}
       .market-amazon .market-label{font-size:20px}
       .market-sep{height:34px}
-      .market-art-btn{height:46px;min-height:46px;padding:0;display:block}
+      .market-art-btn{aspect-ratio:3/1;height:auto;min-height:0;padding:0;display:block}
       .reviews-head{display:flex;text-align:center;align-items:center}
       .reviews-head div{justify-self:auto;text-align:center}
       .reviews-grid{grid-template-columns:1fr}
@@ -1601,6 +1606,94 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         </div>
       </article>`;
     }}
+    function findVisualKey(item) {{
+      const imageKey = norm(String(item.productImage || item.selectedCreative || "").replace(/\.(webp|png|jpe?g|svg)(\?.*)?$/i, ""));
+      const typeRules = [
+        ["case-ssd", "case-ssd"],
+        ["fone-kz", "fone-kz"],
+        ["kit-limpeza", "kit-limpeza"],
+        ["mini-aspirador", "mini-aspirador"],
+        ["hub-usb-c", "hub-usb-c"],
+        ["suporte-gpu", "suporte-gpu"],
+        ["cabo-displayport", "cabo-video"],
+        ["mousepad", "mousepad"],
+        ["suporte-notebook", "suporte-monitor"],
+        ["teclado-mecanico", "teclado-mecanico"],
+        ["adaptador-bluetooth", "controle-bluetooth"],
+        ["keycaps", "keycaps"],
+        ["bias-light", "fita-led"]
+      ];
+      for (const [needle, key] of typeRules) {{
+        if (imageKey.includes(needle)) return `type:${{key}}`;
+      }}
+      if (imageKey) return `image:${{imageKey}}`;
+      return `title:${{norm(item.title || "").replace(/\b(cor|preto|branco|usb|tipo|type|com|sem|para|de|do|da|the|and)\b/g, " ").replace(/\s+/g, " ").trim().slice(0, 64)}}`;
+    }}
+    function findPlatformName(item) {{
+      return item.marketplace?.name || item.platform || item.affiliateLinks?.[0]?.platform || "";
+    }}
+    function findImageTitleScore(item) {{
+      const imageKey = norm(String(item.productImage || item.selectedCreative || ""));
+      const title = norm(`${{item.title || ""}} ${{item.niche || ""}} ${{item.whySell || ""}}`);
+      if (!imageKey) return 1;
+      if (imageKey.includes("case-ssd")) return (/(case|gaveta|gabinete)/.test(title) && /(ssd|nvme|m2|m\\.2)/.test(title)) ? 3 : 0;
+      if (imageKey.includes("fone-kz")) return /(fone|kz|castor|edx|ouvido)/.test(title) ? 3 : 0;
+      if (imageKey.includes("kit-limpeza")) return /(kit|limpeza|pincel|escova|pasta|termica|thermal|antiestatico|filtro)/.test(title) ? 3 : 0;
+      if (imageKey.includes("mini-aspirador")) return /(aspirador|soprador|duster)/.test(title) ? 3 : 0;
+      if (imageKey.includes("hub-usb-c")) return (title.includes("hub") || title.includes("leitor sd") || title.includes("microsd")) ? 3 : 0;
+      if (imageKey.includes("suporte-gpu")) return (title.includes("suporte") && /(gpu|placa|video)/.test(title)) ? 3 : 0;
+      if (imageKey.includes("cabo-displayport")) return /(cabo|displayport)/.test(title) ? 3 : 0;
+      if (imageKey.includes("mousepad")) return title.includes("mousepad") ? 3 : 0;
+      if (imageKey.includes("suporte-notebook")) return (title.includes("suporte") && /(monitor|notebook|f80|aluminio)/.test(title)) ? 3 : 0;
+      if (imageKey.includes("teclado-mecanico")) return title.includes("teclado") ? 3 : 0;
+      if (imageKey.includes("adaptador-bluetooth")) return (title.includes("adaptador") && title.includes("bluetooth")) ? 3 : 0;
+      if (imageKey.includes("keycaps")) return /(keycap|keycaps|tecla)/.test(title) ? 3 : 0;
+      if (imageKey.includes("bias-light")) return /(fita|led|bias|backlight)/.test(title) ? 3 : 0;
+      return 1;
+    }}
+    function platformRank(name="") {{
+      const value = norm(name);
+      if (value.includes("mercado")) return 0;
+      if (value.includes("amazon")) return 1;
+      if (value.includes("aliexpress") || value.includes("ali express")) return 2;
+      if (value.includes("shopee")) return 3;
+      return 4;
+    }}
+    function chooseFindRepresentative(entries, platformCounts) {{
+      const scored = entries.map((entry) => ({{ ...entry, imageScore: findImageTitleScore(entry.item) }}));
+      const hasVisualMatch = scored.some((entry) => entry.imageScore > 0);
+      if (!hasVisualMatch) return null;
+      entries = scored.filter((entry) => entry.imageScore > 0);
+      entries.sort((a, b) => {{
+        if (a.imageScore !== b.imageScore) return b.imageScore - a.imageScore;
+        const platformA = findPlatformName(a.item);
+        const platformB = findPlatformName(b.item);
+        const countA = platformCounts[platformA] || 0;
+        const countB = platformCounts[platformB] || 0;
+        if (countA !== countB) return countA - countB;
+        const rankA = platformRank(platformA);
+        const rankB = platformRank(platformB);
+        if (rankA !== rankB) return rankA - rankB;
+        const priceA = a.item.salePrice ? 0 : 1;
+        const priceB = b.item.salePrice ? 0 : 1;
+        if (priceA !== priceB) return priceA - priceB;
+        return a.index - b.index;
+      }});
+      const chosen = entries[0].item;
+      const platform = findPlatformName(chosen);
+      platformCounts[platform] = (platformCounts[platform] || 0) + 1;
+      return chosen;
+    }}
+    function dedupeFinds(items) {{
+      const groups = new Map();
+      items.forEach((item, index) => {{
+        const key = findVisualKey(item);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push({{ item, index }});
+      }});
+      const platformCounts = {{}};
+      return Array.from(groups.values()).map((entries) => chooseFindRepresentative(entries, platformCounts)).filter(Boolean);
+    }}
     function renderFinds(target="#findsGrid", limit=999) {{
       const node = $(target);
       if (!node) return;
@@ -1609,6 +1702,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       let items = DATA.finds.filter((item) => item.affiliateReady !== false);
       if (group) items = items.filter((item) => (item.publicGroup || "vendidos") === group);
       if (search) items = items.filter((item) => norm([item.title, item.whySell, item.niche, item.platform, item.marketplace?.name].join(" ")).includes(search));
+      items = dedupeFinds(items);
       items = items.slice(0, limit);
       const emptyCopy = group === "vendidos"
         ? "Estamos atualizando esta selecao. Veja as ofertas recomendadas abaixo."
@@ -1666,7 +1760,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         : `<div class="market-actions">${{affiliateLinks.length ? affiliateLinks.map(linkButton).join("") : (() => {{ const art = marketButtonArt(market.name || ""); return art ? `<a class="market-btn market-art-btn ${{market.class || marketClass(market.name || "")}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener" aria-label="${{buttonLabel}} ${{market.name || "Marketplace"}}"><img class="market-button-art" src="${{asset(art)}}" alt="${{buttonLabel}} ${{market.name || "Marketplace"}}"></a>` : `<a class="market-btn ${{market.class || ""}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener"><span class="market-brand"><img src="${{logo}}" alt="" aria-hidden="true"></span><span class="market-sep" aria-hidden="true"></span><span class="market-label">${{buttonLabel}}</span></a>`; }})()}}</div>`;
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
-        <span class="find-meta">${{item.confidence || "Curadoria MobilyTech"}}</span>
+        <span class="find-meta">${{item.confidence || "Link direto validado"}}</span>
         <h3>${{item.title}}</h3>
         <p>${{item.whySell || item.publicPartnerNote || ""}}</p>
         <div class="find-price">${{price}}</div>
@@ -2180,3 +2274,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

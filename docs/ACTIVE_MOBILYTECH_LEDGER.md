@@ -11,8 +11,17 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Se houver duvida, verificar o arquivo, a pagina ou o conector atual antes de responder como se o tema ainda estivesse aberto.
 - Autonomia do agente: em 2026-06-16 o usuario autorizou fazer automaticamente tudo que for necessario e seguro, usando APIs, plugins, Browser, Computer Use, Opera GX/Chrome ou painel logado quando for mais eficiente. So agrupar e pedir intervencao do usuario quando for realmente impossivel concluir sem acao humana. Nunca expor tokens, senhas, chaves, secrets ou credenciais em chat, repo, docs, prints ou logs.
 - Status por e-mail: em 2026-06-16 o usuario pediu que cada etapa concluida do plano seja avisada por e-mail curto, com nome da etapa, pequeno resumo e proximo passo. Se uma etapa travar e precisar de intervencao humana, enviar e-mail com o bloqueio e a acao exata. Antes de desistir de API/ponte/plugin, pesquisar e tentar recuperar/contornar por conta propria, especialmente Computer Use.
+- Regra Ollama/local AI para proximos handoffs: usar Ollama visual para crocheck visual gratuito quando ChatGPT web/API nao estiver disponivel ou quando for mais pratico; usar Ollama de texto/codigo/escrita para apoio em revisoes, checklists, prompts, redacao e primeira passada de codigo. Sempre usar prompts rigorosos. Codex continua como auditor final de codigo, seguranca, producao, links, checkout, env vars e publicacao; para visual, Ollama pode fazer a vistoria final gratuita, mas Codex deve conferir a coerencia contra as evidencias e o pedido do usuario.
 
 ## Estado em andamento
+
+- Atualizacao 2026-06-18/19 - trava contra repeticao apos compactacao:
+  - O usuario identificou corretamente que, apos compactacoes automaticas, a tarefa dos botoes `Ver oferta` foi retomada mais de uma vez como se ainda estivesse no mesmo ponto inicial.
+  - Regra de retomada para este item: antes de responder ou editar, verificar primeiro `docs/PENDENCIAS_ATIVAS_MOBILYTECH_2026-06-18.md` e os arquivos de QA em `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18`.
+  - Nao refazer a etapa dos botoes do zero por causa da ultima mensagem isolada. Consolidar sempre: `ja feito`, `bloqueado por QA`, `pendente real` e `proximo passo`.
+  - Estado atual dos botoes: existem rodadas `v2`, `final` e `final-ratio3`. A ultima captura e `finds-buttons-row-final-ratio3.png`; o crocheck `ollama-buttons-row-final-ratio3.json` bloqueou com score 7/10 por proporcao/alinhamento interno inconsistente.
+  - Pendente real agora: ajustar somente o que o crocheck bloqueou ou trocar a estrategia visual, depois validar de novo. Nao repetir a mesma correcao ja aplicada.
+  - Nova exigencia do usuario para links afiliados: validar que o card do produto A abre o anuncio do produto A na loja, e nao produto aleatorio/pagina de busca/produto parecido errado. Essa validacao e parte do aceite antes de publicar.
 
 - Verificado em 2026-06-15: `https://mobilytechbr.vercel.app` responde com a fase 2 correta (`MobilyTech BR | Loja gamer`, `MOBMEN` e `MobilyTech Finds`). Runtime Vercel sem erros recentes apos commit `15cbd7c`.
 - Verificado em 2026-06-15: `https://www.mobilytech.com.br` ainda serve o site Wix antigo/generico (`Inicio | MobilyTech BR`, contem `NovoTec`, nao contem `MOBMEN`). DNS de `www.mobilytech.com.br` ainda aponta para `wixdns.net`.
@@ -357,3 +366,54 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Publicacao Git/Vercel concluida no commit `4ffb6a5`, enviado para `main`.
 - Smoke oficial: `https://www.mobilytech.com.br/` 200, `https://www.mobilytech.com.br/fase2/achados.html` 200, `https://www.mobilytech.com.br/fase2/minha-conta.html` 200 e `https://www.mobilytech.com.br/admin` 401 protegido.
 - QA oficial desktop/mobile em `https://www.mobilytech.com.br/fase2/achados.html`: 66 cards, 66 botoes, 24 Mercado Livre, 29 AliExpress, 13 Amazon, 0 links vazios, 0 links de busca generica, 0 logos/divisores faltando e 0 botoes fora de 46px.
+
+## Atualizacao 2026-06-18 - regra obrigatoria para validacao visual externa
+
+- Usuario rejeitou a validacao visual feita apenas pelo Codex/DOM/Playwright/screenshots: os botoes `Ver oferta` publicados ficaram muito diferentes das referencias enviadas.
+- Nova regra obrigatoria para este projeto e para o proximo handoff: qualquer alteracao visual relevante precisa de crocheck externo antes de publicar.
+- Ordem preferida para crocheck visual: ChatGPT na conversa fixada `Analise Visual MobilyTech BR`; se indisponivel, tentar Chrome/Computer Use; se ainda falhar, tentar outra IA/API visual confiavel.
+- Se nenhuma validacao visual externa estiver disponivel, o Codex deve parar antes de publicar e chamar o usuario. Nao substituir por julgamento proprio do Codex.
+- Playwright/DOM/browser local continuam permitidos para QA funcional, responsividade e coleta de evidencias, mas nao podem ser o unico criterio de aprovacao visual.
+- Pendencia ativa imediata: refazer os botoes `Ver oferta` de Mercado Livre, Amazon e AliExpress para ficarem o mais proximos possivel das imagens de referencia, com tamanho/proporcao iguais entre plataformas, e aprovar via crocheck externo antes de novo deploy.
+
+## Atualizacao 2026-06-18 - pipeline OpenAI/Ollama para crocheck visual
+
+- Usuario aprovou usar OpenAI API com visao como caminho favorito para crocheck visual e tambem pediu uma IA local via Ollama para analise de imagens.
+- Script criado: `scripts/visual_crocheck.py`, com provedores `openai`, `ollama` e `both`, comparando imagem de referencia x screenshot atual e gerando JSON de aprovacao/bloqueio.
+- Documento criado: `docs/METODO_CROCHECK_VISUAL_IA_2026-06-18.md`.
+- Estado local: `OPENAI_API_KEY` ainda nao esta configurada no ambiente; Ollama esta rodando com `qwen2.5-coder:7b` e agora tambem com `qwen2.5vl:7b`.
+- Modelo local de visao instalado: `qwen2.5vl:7b`; se ficar pesado, usar `qwen2.5vl:3b`. Alternativa: `llama3.2-vision:11b`.
+- Regra de uso: OpenAI/ChatGPT e o gate visual principal; Ollama local entra como pre-check/fallback gratuito, sempre com revisao final do Codex.
+- Teste real salvo em `docs/qa/visual-crocheck-pipeline-2026-06-18/ollama-ali-button-test.json`: o modelo local rodou, retornou `score 9`, e o gate bloqueou por ficar abaixo do limite `9.4`.
+
+## Atualizacao 2026-06-18 - comparativo OpenAI API vs Ollama visual
+
+- Pedido do usuario: testar primeiro OpenAI API/ChatGPT e depois Ollama local para decidir melhor gate/fallback visual.
+- OpenAI API nao rodou porque `OPENAI_API_KEY` esta ausente no ambiente e nao foi encontrada `.env` local com a chave. Evidencia salva em `docs/qa/visual-ai-comparison-2026-06-18/openai-ali-config-test.json`.
+- Ollama `qwen2.5vl:7b` rodou nos tres botoes. Prompt normal foi permissivo demais e retornou `score 9` para todos, ainda bloqueado pelo threshold `9.4`.
+- Ollama com prompt estrito foi mais util: bloqueou os tres com `score 8.5`, apontando diferencas de tamanho, sombra, contorno, divisor e alinhamento de logo/texto.
+- Resumo salvo em `docs/qa/visual-ai-comparison-2026-06-18/comparison-summary.md`.
+- Decisao tecnica provisoria: OpenAI/ChatGPT continua favorito para gate final quando a chave estiver configurada; Ollama fica como fallback/pre-check com prompt estrito, nao como aprovador final sozinho para visual critico.
+
+## Atualizacao 2026-06-18 - OPENAI_API_KEY configurada, quota pendente
+
+- Usuario criou/copiu a chave da OpenAI e o Codex salvou como variavel de usuario `OPENAI_API_KEY` no Windows sem imprimir o valor.
+- A area de transferencia foi sobrescrita depois da configuracao para reduzir risco de vazamento.
+- Teste real OpenAI salvo em `docs/qa/visual-ai-comparison-2026-06-18/openai-ali-real.json`.
+- Resultado: API respondeu HTTP 429 `insufficient_quota`, indicando falta de saldo/credito/billing ativo no projeto/conta da chave.
+- Proximo passo para testar OpenAI de verdade: ativar billing/adicionar credito no painel OpenAI Platform e rerodar o crocheck.
+
+## Atualizacao autoritativa desta retomada - 2026-06-18/19
+
+- Regra nova para proximo handoff: usar Ollama local quando ajudar, com `qwen2.5vl:7b` para crocheck visual e `qwen2.5-coder:7b` para apoio em codigo/texto/checklists; Codex continua sendo auditor final de codigo, seguranca, links, publicacao, Vercel/Wix/Git e qualquer decisao de producao.
+- Nao repetir a correcao dos botoes `Ver oferta` sem nova evidencia. A comparacao justa dos botoes renderizados no site contra a referencia empilhada foi aprovada pelo Ollama visual:
+  - candidato: `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\candidate-buttons-collage-ratio3.png`
+  - crocheck: `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\ollama-buttons-collage-ratio3.json`
+  - resultado: score 9/10, aprovado, sem bloqueios.
+- Build local passou; warnings restantes sao `SyntaxWarning` antigos de regex no script, sem quebra de geracao.
+- QA local pos-build:
+  - desktop: 11 cards, 0 duplicados por imagem/titulo, sem `Curadoria MobilyTech`, sem preco generico de Mercado Livre e sem overflow.
+  - mobile 390px: 11 cards visiveis, botoes ratio 3:1 e sem overflow.
+- QA de links salvo em `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\link-consistency-http-2026-06-18.json`: 8 `ok`, 3 AliExpress `structural-ok`.
+- AliExpress: nao tentar contornar o bloqueio de navegacao direta do Browser; os shortlinks foram validados estruturalmente por virem do lote oficial e apontarem para paginas reais `/item/...`.
+- Proximo passo real: publicar/deployar e validar no dominio oficial `https://www.mobilytech.com.br/fase2/achados.html`.

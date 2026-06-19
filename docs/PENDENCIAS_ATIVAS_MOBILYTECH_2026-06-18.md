@@ -2,6 +2,52 @@
 
 Estas pendencias sao para executar agora/proxima retomada. Nao mover para backlog futuro.
 
+## Regra atual de QA com Ollama
+
+- Usar Ollama visual como crocheck visual gratuito e rigoroso para esta etapa dos botoes/MobilyTech Finds.
+- Usar Ollama de texto/codigo/escrita como apoio em revisoes de codigo, textos, prompts e checklists quando ajudar a economizar tempo/credito.
+- Codex deve revisar tudo que o Ollama produzir antes de aceitar, publicar ou reportar como pronto.
+- Se o Ollama bloquear, nao repetir a mesma solucao; corrigir o motivo especifico do bloqueio ou trocar a estrategia.
+
+## Estado consolidado anti-repeticao - 2026-06-18/19
+
+- Nao reiniciar esta tarefa pela ultima mensagem isolada do chat apos compactacao.
+- A correcao dos botoes `Ver oferta` ja foi tentada em mais de uma rodada; arquivos de evidencia:
+  - `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\finds-buttons-row-v2.png`
+  - `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\finds-buttons-row-final.png`
+  - `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\finds-buttons-row-final-ratio3.png`
+- Ultimo crocheck visual existente:
+  - `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\ollama-buttons-row-final-ratio3.json`
+  - Resultado: bloqueado, score 7/10.
+  - Motivo: proporcao/alinhamento interno inconsistente entre botoes.
+- Portanto, o proximo passo nao e "refazer botoes outra vez" genericamente. O proximo passo e:
+  1. partir da versao `final-ratio3`;
+  2. corrigir somente proporcao/alinhamento interno ou escolher uma nova estrategia visual;
+  3. rodar crocheck de novo;
+  4. so depois validar links e publicar.
+- Complemento novo do usuario: validar produto A -> anuncio A. Cada card deve abrir o produto correspondente na loja, sem cair em produto aleatorio, produto parecido errado, pagina de busca ou landing que esconda incompatibilidade.
+
+## Status corrigido 2026-06-18 18:35 BRT
+
+- Os botoes `Ver oferta` publicados anteriormente estao rejeitados visualmente pelo usuario.
+- A validacao substituta por Chrome/Playwright + inspecao visual do Codex nao deve ser repetida para mudancas visuais relevantes.
+- Crocheck externo na conversa fixada do ChatGPT `Analise Visual MobilyTech BR` e obrigatorio antes de considerar os botoes aprovados.
+- Se ChatGPT/Chrome/Computer Use/outra IA visual nao estiver disponivel, o Codex deve parar antes de publicar e chamar o usuario.
+- Playwright/DOM/browser local continuam permitidos para QA funcional, responsividade e coleta de evidencias, mas nao como aprovacao visual final.
+- Pendencia ativa imediata: refazer Mercado Livre, Amazon e AliExpress para ficarem o mais proximos possivel das referencias enviadas, com todos os botoes no mesmo tamanho/proporcao.
+
+## Metodo visual aprovado para a proxima tentativa
+
+- Novo script disponivel: `scripts/visual_crocheck.py`.
+- Novo documento de metodo: `docs/METODO_CROCHECK_VISUAL_IA_2026-06-18.md`.
+- Usar OpenAI Vision como gate principal quando `OPENAI_API_KEY` estiver configurada.
+- Usar Ollama local como pre-check/fallback gratuito com `qwen2.5vl:7b`, ja instalado.
+- Estado atual: `OPENAI_API_KEY` configurada como variavel de usuario no Windows, mas sem quota/billing ativo; Ollama local rodando com `qwen2.5-coder:7b` e `qwen2.5vl:7b`.
+- Teste local salvo em `docs/qa/visual-crocheck-pipeline-2026-06-18/ollama-ali-button-test.json`; o gate bloqueou corretamente porque o score ficou abaixo de `9.4`.
+- Antes de nova publicacao visual, gerar JSON de crocheck externo/local de visao e guardar em `docs/qa/...`.
+- Comparativo adicional salvo em `docs/qa/visual-ai-comparison-2026-06-18/comparison-summary.md`: OpenAI API bloqueada por HTTP 429 `insufficient_quota`; Ollama funciona, mas so deve ser fallback/pre-check com prompt estrito.
+- Atualizacao: `OPENAI_API_KEY` agora esta configurada no Windows, mas o teste real retornou HTTP 429 `insufficient_quota`. Precisa ativar saldo/billing no painel OpenAI antes de usar como gate final.
+
 ## Status 2026-06-18 18:21 BRT
 
 - Botoes `Ver oferta` refeitos na fonte do site para Mercado Livre, AliExpress e Amazon.
@@ -43,3 +89,22 @@ Estas pendencias sao para executar agora/proxima retomada. Nao mover para backlo
 
 - O usuario vai enviar um handoff de outra conversa do ChatGPT sobre a ideia de usar uma IA gratuita/local para ajudar o Codex em tarefas repetitivas.
 - Quando esse handoff chegar, analisar a proposta e decidir qual seria o melhor uso pratico dessa IA dentro do fluxo MobilyTech.
+
+## Atualizacao autoritativa desta retomada - 2026-06-18/19
+
+- Nao repetir a correcao visual dos botoes `Ver oferta` sem novo bloqueio real.
+- O comparativo visual anterior que reprovou `finds-buttons-row-final-ratio3.png` misturava uma linha horizontal de botoes com uma referencia empilhada; ele foi considerado injusto para esta decisao.
+- Novo comparativo justo criado com os botoes renderizados pelo site no mesmo formato de referencia empilhada:
+  - candidato: `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\candidate-buttons-collage-ratio3.png`
+  - referencia: `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\reference-buttons-collage.png`
+  - resultado Ollama visual: `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\ollama-buttons-collage-ratio3.json`
+  - score: 9/10, aprovado, sem bloqueios.
+- Validacao pos-build local:
+  - desktop: 11 cards, 0 duplicados por titulo/imagem, 0 `Curadoria MobilyTech`, 0 preco generico de Mercado Livre, 0 overflow horizontal.
+  - mobile 390px: 11 cards visiveis, botoes com ratio 3:1, 0 overflow horizontal.
+- Validacao de links:
+  - `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\link-consistency-http-2026-06-18.json`
+  - 8 links `ok`.
+  - 3 links AliExpress `structural-ok`: shortlinks oficiais do lote e URLs fonte `/item/...`; abertura ao vivo bloqueada pela politica do navegador, portanto nao tentar contornar por outro browser sem pedir ao usuario.
+- Ollama codigo/texto (`qwen2.5-coder:7b`) revisou o estado final e aprovou publicacao sem bloqueios, mantendo apenas o risco documentado dos AliExpress `structural-ok`.
+- Proximo passo real: publicar/deployar esta versao e validar no dominio oficial `https://www.mobilytech.com.br/fase2/achados.html`.
