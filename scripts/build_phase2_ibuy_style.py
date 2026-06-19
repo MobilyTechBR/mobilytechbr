@@ -603,7 +603,7 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
         <div class="finds-text">
           <p class="section-kicker">MobilyTech Finds</p>
           <h2>MobilyTech Finds</h2>
-          <p>Produtos escolhidos para completar setup, manutencao e upgrades. Recomendacoes externas usam Mercado Livre, Amazon, Shopee ou AliExpress.</p>
+          <p>Produtos escolhidos para completar setup, manutencao e upgrades. Recomendacoes externas usam Mercado Livre, Amazon ou AliExpress.</p>
           <a class="btn btn-dark" href="{links["achados"]}">Ver selecionados</a>
         </div>
         <div class="finds-preview" id="homeFindsGrid" data-limit="3"></div>
@@ -655,7 +655,7 @@ def finds_page(prefix: str, page: dict) -> str:
         <div>
           <p class="section-kicker">MobilyTech recomenda</p>
           <h2><span aria-hidden="true">&#9989;</span> Boas compras nos marketplaces parceiros</h2>
-          <p>Itens que fazem sentido para setup, manutencao e uso diario, com compra feita diretamente no Mercado Livre, Amazon, Shopee ou AliExpress.</p>
+          <p>Itens que fazem sentido para setup, manutencao e uso diario, com compra feita diretamente no Mercado Livre, Amazon ou AliExpress.</p>
         </div>
       </section>
       <section class="finds-layout" aria-label="Filtros e achados MobilyTech">
