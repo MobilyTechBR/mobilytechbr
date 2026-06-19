@@ -667,39 +667,45 @@ def finds_page(prefix: str, page: dict) -> str:
       </section>
       <section class="finds-layout" aria-label="Filtros e achados MobilyTech">
         <aside class="finds-filters" aria-label="Filtros do MobilyTech Finds">
-          <label class="finds-search-label" for="findsSearch">Buscar nesta pagina</label>
-          <input id="findsSearch" data-finds-control type="search" placeholder="Buscar SSD, teclado, hub, fonte...">
-          <label class="finds-search-label" for="findsStore">Loja</label>
-          <select id="findsStore" data-finds-control>
-            <option value="all">Todas as lojas</option>
-          </select>
-          <label class="finds-search-label" for="findsShipping">Envio</label>
-          <select id="findsShipping" data-finds-control>
-            <option value="all">Nacional e internacional</option>
-            <option value="nacional">Envio nacional</option>
-            <option value="internacional">Envio internacional</option>
-          </select>
-          <div class="finds-filter-block">
-            <div class="finds-filter-head">
-              <strong>Preco</strong>
-              <button id="findsReset" type="button">Limpar</button>
+          <form class="finds-filter-form" id="findsFilterForm" role="search">
+            <label class="finds-search-label" for="findsSearch">Buscar nesta pagina</label>
+            <div class="finds-search-control">
+              <input id="findsSearch" data-finds-control type="search" enterkeyhint="search" autocomplete="off" placeholder="Buscar SSD, teclado, hub, fonte...">
+              <button class="finds-search-apply" id="findsSearchApply" type="submit" aria-label="Aplicar busca">&#8594;</button>
             </div>
-            <div class="finds-price-inputs">
-              <label>Minimo<input id="findsMinPrice" data-finds-control inputmode="numeric" type="number" min="0" step="10"></label>
-              <label>Maximo<input id="findsMaxPrice" data-finds-control inputmode="numeric" type="number" min="0" step="10"></label>
+            <label class="finds-search-label" for="findsStore">Loja</label>
+            <select id="findsStore" data-finds-control>
+              <option value="all">Todas as lojas</option>
+            </select>
+            <label class="finds-search-label" for="findsShipping">Envio</label>
+            <select id="findsShipping" data-finds-control>
+              <option value="all">Nacional e internacional</option>
+              <option value="nacional">Envio nacional</option>
+              <option value="internacional">Envio internacional</option>
+            </select>
+            <div class="finds-filter-block">
+              <div class="finds-filter-head">
+                <strong>Preco</strong>
+                <button id="findsReset" type="button">Limpar</button>
+              </div>
+              <div class="finds-price-inputs">
+                <label>Minimo<input id="findsMinPrice" data-finds-control inputmode="numeric" type="number" min="0" step="10"></label>
+                <label>Maximo<input id="findsMaxPrice" data-finds-control inputmode="numeric" type="number" min="0" step="10"></label>
+              </div>
+              <div class="finds-range-wrap" aria-label="Faixa de preco">
+                <input id="findsMinRange" data-finds-control type="range" min="0" max="5000" step="10" value="0">
+                <input id="findsMaxRange" data-finds-control type="range" min="0" max="5000" step="10" value="5000">
+              </div>
             </div>
-            <div class="finds-range-wrap" aria-label="Faixa de preco">
-              <input id="findsMinRange" data-finds-control type="range" min="0" max="5000" step="10" value="0">
-              <input id="findsMaxRange" data-finds-control type="range" min="0" max="5000" step="10" value="5000">
-            </div>
-          </div>
-          <label class="finds-search-label" for="findsSort">Ordenar</label>
-          <select id="findsSort" data-finds-control>
-            <option value="relevance">Relevancia</option>
-            <option value="price-asc">Menor preco</option>
-            <option value="price-desc">Maior preco</option>
-          </select>
-          <p class="finds-count" id="findsCount">Carregando achados...</p>
+            <label class="finds-search-label" for="findsSort">Ordenar</label>
+            <select id="findsSort" data-finds-control>
+              <option value="relevance">Relevancia</option>
+              <option value="price-asc">Menor preco</option>
+              <option value="price-desc">Maior preco</option>
+            </select>
+            <button class="finds-apply" id="findsApply" type="submit">Aplicar filtros</button>
+            <p class="finds-count" id="findsCount">Carregando achados...</p>
+          </form>
         </aside>
         <div class="finds-grid finds-grid-recommendations" id="findsGrid"></div>
       </section>
@@ -1046,7 +1052,7 @@ def css() -> str:
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
     .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:398px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:84%;max-height:140px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:18px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 4px;min-height:24px}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:1px solid rgba(9,11,16,.88);background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#2b2500;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.72);transition:.18s transform,.18s box-shadow,.18s filter}.market-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);filter:saturate(1.04)}.market-btn img{height:25px;width:auto;max-width:82px;object-fit:contain}.market-mobilytech{background:#19f5d0;color:#031014;box-shadow:0 10px 24px rgba(25,245,208,.18)}.market-ml{background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#27220a;border-color:#d6bd00}.market-amazon{background:linear-gradient(180deg,#2d4056 0%,#232f3e 54%,#111820 100%);color:#fff;border-color:#ff9900;box-shadow:inset 0 -3px 0 #ff9900,0 8px 20px rgba(35,47,62,.16)}.market-shopee{background:linear-gradient(180deg,#ff714f,#ee4d2d);color:#fff;border-color:#d83a1c}.market-ali{background:linear-gradient(180deg,#ff7655 0%,#ff4e32 55%,#e63222 100%);color:#fff;border-color:#d73524}
     .market-btn{position:relative;isolation:isolate;height:58px;min-height:58px;width:100%;display:grid;grid-template-columns:104px 1px minmax(0,1fr);align-items:center;gap:15px;padding:0 18px;border-radius:999px;font-size:20px;line-height:1;letter-spacing:0;text-align:center;overflow:hidden}.market-btn:before,.market-btn:after{content:"";position:absolute;pointer-events:none;z-index:0}.market-brand,.market-sep,.market-label{position:relative;z-index:1}.market-brand{height:100%;display:flex;align-items:center;justify-content:center;min-width:0}.market-brand img{display:block;height:auto;max-height:43px;max-width:92px;width:auto;object-fit:contain}.market-sep{width:1px;height:34px;border-radius:999px;background:rgba(255,255,255,.42);box-shadow:1px 0 0 rgba(0,0,0,.16)}.market-label{display:flex;align-items:center;justify-content:center;min-width:0;font-size:20px;font-weight:1000;line-height:1;white-space:nowrap}.market-ml{display:flex;align-items:center;justify-content:center;gap:13px;background:linear-gradient(180deg,#fffef4 0%,#fff36a 34%,#fff159 66%,#f0d719 100%);border:2px solid #e3c900;color:#221f08;box-shadow:0 12px 22px rgba(231,202,0,.22),inset 0 1px 0 rgba(255,255,255,.98),inset 0 -3px 0 rgba(185,159,0,.2)}.market-ml .market-brand{width:50px;height:30px;flex:0 0 50px}.market-ml .market-brand img{width:50px;height:30px;max-height:none;max-width:none}.market-ml .market-sep{display:none}.market-ml .market-label{font-size:20px;color:#24200a}.market-amazon{background:linear-gradient(180deg,#343434 0%,#171717 52%,#050505 100%);border:2px solid #f4a11e;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -3px 0 rgba(246,162,26,.38)}.market-amazon:after{right:18px;bottom:7px;width:105px;height:32px;border-bottom:8px solid rgba(255,153,0,.18);border-radius:0 0 90px 90px;transform:rotate(-7deg)}.market-amazon .market-brand img{filter:none;max-height:46px;max-width:78px}.market-amazon .market-sep{background:rgba(255,255,255,.22);box-shadow:1px 0 0 rgba(246,162,26,.2)}.market-amazon .market-label{font-size:20px}.market-ali{background:linear-gradient(180deg,#ff3a1b 0%,#ee1205 54%,#c90000 100%);border:2px solid #ff9d1a;color:#fff;box-shadow:0 12px 24px rgba(224,21,8,.26),inset 0 1px 0 rgba(255,255,255,.26),inset 0 -3px 0 rgba(115,0,0,.18)}.market-ali:after{right:18px;top:13px;width:42px;height:42px;background:radial-gradient(circle at 50% 50%,rgba(255,114,40,.28) 0 24%,transparent 26%),linear-gradient(45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%),linear-gradient(-45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%);opacity:.9}.market-ali .market-brand img{filter:none;max-height:50px;max-width:86px}.market-ali .market-sep{background:rgba(255,211,109,.48);box-shadow:1px 0 0 rgba(93,0,0,.18)}.market-ali .market-label{font-size:20px}.market-art-btn{aspect-ratio:3/1;height:auto;min-height:0;padding:0;border:0;background:transparent!important;box-shadow:none!important;display:block;overflow:visible;transition:.18s transform,.18s filter}.market-art-btn:before,.market-art-btn:after{display:none}.market-art-btn:hover{transform:translateY(-1px);box-shadow:none!important;filter:saturate(1.03) brightness(1.01)}.market-button-art{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill;display:block}
-    .finds-primary-head{text-align:center}.finds-primary-head h2{font-size:36px;line-height:1.06}.finds-primary-head h2 span{display:inline-block;margin-right:8px}.finds-primary-head p{max-width:780px;margin-left:auto;margin-right:auto}.finds-layout{display:grid;grid-template-columns:minmax(230px,280px) 1fr;align-items:start;gap:22px;margin-top:22px}.finds-filters{position:sticky;top:92px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px;box-shadow:0 8px 24px rgba(9,16,28,.07);display:grid;gap:12px}.finds-search-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:1000;color:#465366}.finds-filters input,.finds-filters select{width:100%;border:1px solid #d9dee8;border-radius:11px;background:#fbfcfe;padding:11px 12px;font:inherit;font-size:14px;font-weight:850;color:#131923}.finds-filter-block{border-top:1px solid #eef1f5;border-bottom:1px solid #eef1f5;padding:13px 0;display:grid;gap:11px}.finds-filter-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.finds-filter-head strong{font-size:18px}.finds-filter-head button{border:0;background:#eef5ff;color:#075cab;border-radius:999px;padding:7px 10px;font-weight:1000;cursor:pointer}.finds-price-inputs{display:grid;grid-template-columns:1fr 1fr;gap:9px}.finds-price-inputs label{display:grid;gap:5px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:1000;color:#657081}.finds-range-wrap{position:relative;min-height:28px;display:grid;align-items:center}.finds-range-wrap input[type=range]{grid-area:1/1;width:100%;padding:0;background:transparent;accent-color:#111;pointer-events:none}.finds-range-wrap input[type=range]::-webkit-slider-thumb{pointer-events:auto}.finds-range-wrap input[type=range]::-moz-range-thumb{pointer-events:auto}.finds-count{margin:0;color:#59616d;font-size:13px;font-weight:900;line-height:1.35}.finds-layout .finds-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.account-logged-actions .account-logout-link{background:#111;color:#fff;border-color:#111}
+    .finds-primary-head{text-align:center}.finds-primary-head h2{font-size:36px;line-height:1.06}.finds-primary-head h2 span{display:inline-block;margin-right:8px}.finds-primary-head p{max-width:780px;margin-left:auto;margin-right:auto}.finds-layout{display:grid;grid-template-columns:minmax(230px,280px) 1fr;align-items:start;gap:22px;margin-top:22px}.finds-filters{position:sticky;top:92px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px;box-shadow:0 8px 24px rgba(9,16,28,.07);display:grid;gap:12px}.finds-filter-form{display:grid;gap:12px;margin:0}.finds-search-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:1000;color:#465366}.finds-search-control{position:relative;display:flex;align-items:center}.finds-search-apply{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px;background:#111;color:#fff;font-size:20px;font-weight:1000;display:grid;place-items:center;cursor:pointer;line-height:1}.finds-filters input,.finds-filters select{width:100%;border:1px solid #d9dee8;border-radius:11px;background:#fbfcfe;padding:11px 12px;font:inherit;font-size:14px;font-weight:850;color:#131923}.finds-filters .finds-search-control input{padding-right:52px}.finds-filter-block{border-top:1px solid #eef1f5;border-bottom:1px solid #eef1f5;padding:13px 0;display:grid;gap:11px}.finds-filter-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.finds-filter-head strong{font-size:18px}.finds-filter-head button{border:0;background:#eef5ff;color:#075cab;border-radius:999px;padding:7px 10px;font-weight:1000;cursor:pointer}.finds-price-inputs{display:grid;grid-template-columns:1fr 1fr;gap:9px}.finds-price-inputs label{display:grid;gap:5px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:1000;color:#657081}.finds-range-wrap{position:relative;min-height:28px;display:grid;align-items:center}.finds-range-wrap input[type=range]{grid-area:1/1;width:100%;padding:0;background:transparent;accent-color:#111;pointer-events:none}.finds-range-wrap input[type=range]::-webkit-slider-thumb{pointer-events:auto}.finds-range-wrap input[type=range]::-moz-range-thumb{pointer-events:auto}.finds-apply{border:0;border-radius:999px;background:#111;color:#fff;min-height:42px;font-weight:1000;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,.12)}.finds-count{margin:0;color:#59616d;font-size:13px;font-weight:900;line-height:1.35}.finds-layout .finds-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.account-logged-actions .account-logout-link{background:#111;color:#fff;border-color:#111}
     .reviews-head{display:grid;grid-template-columns:1fr auto;align-items:end;text-align:center}.reviews-head div{text-align:center;justify-self:center;max-width:820px;width:100%}.reviews-head .section-kicker,.reviews-head h2,.reviews-head p{text-align:center;margin-left:auto;margin-right:auto}.reviews-grid{display:grid;grid-template-columns:1.1fr repeat(4,1fr);gap:16px;margin-bottom:42px}.score-card,.review-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:26px;text-align:center}.score-card strong{font-size:56px}.stars{color:#ffc400;letter-spacing:.04em;font-size:22px}.review-card p{font-weight:800;color:#424a56}.review-card small{display:block;color:#6b7280;font-weight:900}
     .inline-clean,.split-form,.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb}.inline-clean{grid-template-columns:1.05fr .95fr;background:#f5f6f8;box-shadow:0 16px 42px rgba(16,24,40,.08);padding:22px 24px;align-items:center}.clean-form-visual{display:flex;flex-direction:column;justify-content:center;gap:12px}.clean-form-visual img{width:100%;height:auto;max-height:330px;object-fit:contain;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08);background:#fff}.clean-page-copy{display:flex;flex-direction:column;gap:16px}.clean-side-image{width:100%;max-height:340px;object-fit:cover;border-radius:18px;box-shadow:0 14px 38px rgba(16,24,40,.08)}.lead-form{display:grid;gap:14px}.inline-clean .lead-form{gap:10px;align-self:center}.lead-form label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;font-weight:1000;color:#5b6470}.lead-form input,.lead-form textarea{width:100%;margin-top:7px;border:1px solid #d8dde7;border-radius:12px;background:#fff;padding:14px 16px;color:#111;font-weight:800;outline:0}.inline-clean .lead-form input{padding:11px 14px}.inline-clean .btn-red{min-height:48px}.lead-form textarea{min-height:110px;resize:vertical}
     .about-strip,.powered-row{max-width:1540px;margin:44px auto 0;padding:32px 22px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:28px}.powered-row{display:block}.about-strip h2,.powered-row h2{margin:0 0 8px;font-size:28px}.about-strip p{max-width:980px;color:#5f6874;font-weight:800}.brand-line{display:flex;align-items:center;justify-content:space-between;gap:clamp(16px,2vw,34px);flex-wrap:nowrap;overflow-x:auto;padding:18px 0 6px;scrollbar-width:none;min-width:0;width:100%}.brand-line::-webkit-scrollbar{display:none}.brand-line .brand-logo{height:34px;max-width:116px;width:auto;object-fit:contain;opacity:1;flex:0 0 auto;filter:invert(1) saturate(.2) brightness(.9)}.brand-line .logo-microsoft{filter:none;height:32px;max-width:112px}.brand-line .logo-intel{max-width:88px}.brand-line .logo-kingston,.brand-line .logo-crucial{max-width:120px}
@@ -2352,15 +2358,26 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     $$("#buildForm").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "build"); }}));
     $$("#cleanForm, #cleanFormInline").forEach((form) => form.addEventListener("submit", (e) => {{ e.preventDefault(); submitLead(form, "clean"); }}));
     $("#orderLookupForm")?.addEventListener("submit", (e) => {{ e.preventDefault(); submitOrderLookup(e.currentTarget); }});
+    let findsFilterFrame = 0;
+    function applyFindsFiltersNow(changedId="") {{
+      syncFindPriceControls(changedId);
+      renderFinds("#findsGrid");
+    }}
+    function queueFindsFilters(event) {{
+      const changedId = event?.currentTarget?.id || "";
+      if (findsFilterFrame) cancelAnimationFrame(findsFilterFrame);
+      findsFilterFrame = requestAnimationFrame(() => {{
+        findsFilterFrame = 0;
+        applyFindsFiltersNow(changedId);
+      }});
+    }}
+    $("#findsFilterForm")?.addEventListener("submit", (event) => {{
+      event.preventDefault();
+      applyFindsFiltersNow(document.activeElement?.id || "");
+      $("#findsSearch")?.blur();
+    }});
     $("[data-finds-control]") && $$("#findsSearch, #findsStore, #findsShipping, #findsMinPrice, #findsMaxPrice, #findsMinRange, #findsMaxRange, #findsSort").forEach((input) => {{
-      input.addEventListener("input", (event) => {{
-        syncFindPriceControls(event.currentTarget.id);
-        renderFinds("#findsGrid");
-      }});
-      input.addEventListener("change", (event) => {{
-        syncFindPriceControls(event.currentTarget.id);
-        renderFinds("#findsGrid");
-      }});
+      ["input", "change", "search", "keyup", "compositionend"].forEach((type) => input.addEventListener(type, queueFindsFilters));
     }});
     $("#findsReset")?.addEventListener("click", () => {{
       findsControlsReady = false;
