@@ -1100,14 +1100,22 @@ def css() -> str:
       .finds-preview{grid-template-columns:1fr;max-width:360px;margin-inline:auto}
       .finds-layout{grid-template-columns:1fr;gap:14px}
       .finds-filters{position:static;top:auto}
-      .finds-layout .finds-grid,.finds-grid{grid-template-columns:1fr;gap:12px;max-width:360px;margin-inline:auto}
+      .finds-layout .finds-grid,.finds-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:100%;margin-inline:auto}
+      .find-card{min-height:278px;padding:8px;border-radius:12px;gap:6px}
+      .find-media{height:84px;border-radius:10px;padding:6px}
+      .find-media img{max-width:94%;max-height:72px}
+      .find-card h3{font-size:10.8px;line-height:1.16;min-height:38px;overflow-wrap:anywhere}
+      .find-card p{font-size:9.4px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .find-price{font-size:13px;line-height:1.05;min-height:16px;margin:0}
+      .market-actions{gap:5px}
+      .market-art-btn{aspect-ratio:3/1}
       .finds-primary-head h2{font-size:28px;line-height:1.08}
       .finds-band{padding:20px;gap:16px}
       .finds-text h2{font-size:30px;line-height:1.05}
       .finds-text p{font-size:13.5px;line-height:1.45}
       .find-media{height:138px;padding:10px}
       .find-media img{max-height:118px;max-width:84%}
-      .find-card{padding:14px;border-radius:16px;min-height:352px}
+      .find-card{padding:8px;border-radius:16px;min-height:352px}
       .find-card h3{font-size:13.5px;line-height:1.25;min-height:34px}
       .find-card p{font-size:12px;line-height:1.35;overflow-wrap:anywhere}
       .find-price{font-size:16px}
@@ -1162,8 +1170,8 @@ def css() -> str:
       .shipping-contact-card h2,.shipping-contact-card p{max-width:calc(100% - 52px)}
     }
     @media (max-width:360px){
-      .finds-grid{grid-template-columns:1fr}
-      .find-card{max-width:340px;margin-inline:auto}
+      .finds-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .find-card{max-width:none;margin-inline:0}
     }
     """
 
@@ -1258,7 +1266,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     function renderAccountMenu() {{
       setLoginLinks();
       const user = accountSession.user || {{}};
-      const logged = Boolean(accountSession.authenticated);
+      const logged = Boolean(accountSession.authenticated || user.email || user.name);
       const greeting = $("#accountGreeting");
       const title = $("#accountMenuTitle");
       const status = $("#accountMenuStatus");
@@ -1280,7 +1288,8 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       const loggedActions = $("#accountPageLoggedActions");
       if (!panel) return;
       const user = accountSession.user || {{}};
-      if (!accountSession.authenticated) {{
+      const logged = Boolean(accountSession.authenticated || user.email || user.name);
+      if (!logged) {{
         panel.innerHTML = `<div class="account-avatar" aria-hidden="true">MT</div><div><strong>Voce ainda nao entrou.</strong><small>Use um login seguro para carregar seus pedidos quando eles estiverem disponiveis.</small></div>`;
         if (guest) {{
           guest.hidden = false;
@@ -1668,7 +1677,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       </article>`;
     }}
     function findVisualKey(item) {{
-      const imageKey = norm(String(item.productImage || item.selectedCreative || "").replace(/\.(webp|png|jpe?g|svg)(\?.*)?$/i, ""));
+      const imageKey = norm(String(item.productImage || item.selectedCreative || "").replace(/\\.(webp|png|jpe?g|svg)(\\?.*)?$/i, ""));
       const typeRules = [
         ["case-ssd", "case-ssd"],
         ["fone-kz", "fone-kz"],
@@ -1688,7 +1697,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         if (imageKey.includes(needle)) return `type:${{key}}`;
       }}
       if (imageKey) return `image:${{imageKey}}`;
-      return `title:${{norm(item.title || "").replace(/\b(cor|preto|branco|usb|tipo|type|com|sem|para|de|do|da|the|and)\b/g, " ").replace(/\s+/g, " ").trim().slice(0, 64)}}`;
+      return `title:${{norm(item.title || "").replace(/\\b(cor|preto|branco|usb|tipo|type|com|sem|para|de|do|da|the|and)\\b/g, " ").replace(/\\s+/g, " ").trim().slice(0, 64)}}`;
     }}
     function findPlatformName(item) {{
       return item.marketplace?.name || item.platform || item.affiliateLinks?.[0]?.platform || "";
@@ -1753,24 +1762,21 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const direct = Number(item.salePrice);
       if (Number.isFinite(direct) && direct > 0) return direct;
       const text = String(item.currentPrice || "");
-      const match = text.match(/(\d{{1,3}}(?:\.\d{{3}})*|\d+)(?:,(\d{{2}}))?/);
+      const match = text.match(/(\\d{{1,3}}(?:\\.\\d{{3}})*|\\d+)(?:,(\\d{{2}}))?/);
       if (!match) return 0;
-      return Number(`${{match[1].replace(/\./g, "")}}.${{match[2] || "00"}}`);
+      return Number(`${{match[1].replace(/\\./g, "")}}.${{match[2] || "00"}}`);
     }}
     function dedupeFinds(items) {{
       const seenUrls = new Set();
-      const seenImages = new Set();
       const seenVisuals = new Set();
       return items.filter((item) => {{
         const urlKey = norm(bestFindUrl(item));
         const imageKey = norm(String(item.productImage || item.selectedCreative || "").split("?")[0]);
-        const titleKey = norm(String(item.title || "").replace(/\b(kit|novo|original|premium|gamer)\b/g, "").slice(0, 80));
+        const titleKey = norm(String(item.title || "").replace(/\\b(kit|novo|original|premium|gamer)\\b/g, "").slice(0, 80));
         const visualKey = [imageKey, titleKey].filter(Boolean).join("|");
         if (urlKey && seenUrls.has(urlKey)) return false;
-        if (imageKey && seenImages.has(imageKey)) return false;
         if (visualKey && seenVisuals.has(visualKey)) return false;
         if (urlKey) seenUrls.add(urlKey);
-        if (imageKey) seenImages.add(imageKey);
         if (visualKey) seenVisuals.add(visualKey);
         return true;
       }});
