@@ -10,7 +10,7 @@
     },
     "catalog": {
       "physicalProducts": false,
-      "dropshippingProducts": false
+      "dropshippingProducts": true
     }
   },
   "homeHero": {
@@ -50,7 +50,7 @@
     },
     "produtos": {
       "title": "Nossos Produtos",
-      "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site, checkout seguro e frete calculado da origem do fornecedor ate o seu CEP.",
+      "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site. Confira preco, origem, frete, prazo estimado e total antes do pagamento.",
       "image": "./assets/mobilytech-character-cutout.png"
     },
     "montagem": {

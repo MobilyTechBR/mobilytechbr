@@ -11,68 +11,70 @@ DATA = ROOT / "data"
 FASE2_DIR = ROOT / "fase2"
 
 GENERATED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-CHECKOUT_POLICY_VERSION = "2026-06-20-dropshipping-transparency"
+CHECKOUT_POLICY_VERSION = "2026-06-20-client-legal-checkout"
 
 LEGAL_PAGES = {
     "termos": {
         "title": "Termos de Compra",
         "kicker": "Compra direta MobilyTech BR",
-        "intro": "Regras basicas para pedidos feitos no site da MobilyTech BR, incluindo produtos proprios, servicos e produtos enviados por fornecedor parceiro.",
+        "intro": "Aqui voce encontra as principais condicoes para comprar pelo site da MobilyTech BR antes de finalizar o pagamento.",
         "sections": [
-            ("Identificacao da loja", "MobilyTech BR, CNPJ 66.834.883/0001-43, atendimento por WhatsApp e e-mail oficiais, com atuacao pela internet e ponto de referencia em Vila Suzana, Sao Paulo, SP."),
-            ("Quem vende", "Quando a compra e feita no site, a MobilyTech BR atua como vendedora perante o cliente. Fornecedores e parceiros logisticos podem ajudar no cumprimento do pedido, mas o atendimento ao cliente continua com a MobilyTech BR."),
-            ("Pedido e pagamento", "O pedido so avanca depois da confirmacao do pagamento e da validacao dos dados de entrega. Em produtos de fornecedor, custo, estoque, variante e frete podem ser rechecados antes da confirmacao operacional."),
-            ("Produtos de fornecedor", "Alguns itens podem ser enviados diretamente por fornecedor parceiro, inclusive do exterior. A pagina do produto e o checkout devem informar preco do produto, frete, prazo estimado e origem nacional ou internacional antes do pagamento."),
-            ("Limites dos termos", "Nenhuma regra do site afasta direitos obrigatorios do consumidor. Os termos servem para explicar o fluxo, registrar aceite e reduzir duvidas operacionais sem excluir responsabilidades legais da loja."),
-            ("Atendimento", "Divergencias, atrasos, defeitos ou duvidas devem ser tratados pelo WhatsApp ou e-mail oficial da MobilyTech BR."),
+            ("Identificacao da loja", "A loja e a MobilyTech BR, CNPJ 66.834.883/0001-43, com atendimento pelo WhatsApp +55 (11) 95480-1967 e pelo e-mail mobilytechbr@gmail.com. A atuacao principal e pela internet, com referencia em Vila Suzana, Sao Paulo, SP."),
+            ("Quem atende sua compra", "Quando voce compra direto pelo site, o atendimento de venda e pos-venda e feito pela MobilyTech BR. Fornecedores, transportadoras e meios de pagamento podem participar da entrega ou do pagamento; fale com a MobilyTech BR sempre que precisar de ajuda sobre o pedido."),
+            ("Antes de pagar", "Confira o produto, quantidade, preco, frete, prazo estimado, origem de envio e dados informados antes de seguir para o pagamento. Se notar qualquer erro, ajuste o carrinho ou fale com a loja antes de concluir."),
+            ("Produtos enviados por fornecedor", "Alguns produtos podem sair diretamente de fornecedor parceiro, inclusive do exterior. Quando isso acontecer, o aviso de origem, frete e prazo aparece na pagina do produto, no carrinho e antes do pagamento."),
+            ("Pagamento e confirmacao", "O pagamento e processado por checkout seguro de parceiro autorizado, como Mercado Pago. O pedido e confirmado apos aprovacao do pagamento e verificacao das informacoes necessarias para entrega."),
+            ("Se algo der errado", "Em caso de atraso, divergencia, defeito, extravio ou duvida, entre em contato pelos canais oficiais. A MobilyTech BR acompanha o caso e orienta a solucao aplicavel, sem afastar os direitos previstos na legislacao de consumo."),
         ],
     },
     "privacidade": {
         "title": "Politica de Privacidade",
         "kicker": "LGPD e dados pessoais",
-        "intro": "Resumo de como a MobilyTech BR usa dados pessoais necessarios para atendimento, pedidos, pagamento, entrega e suporte.",
+        "intro": "Veja como seus dados pessoais sao usados para atendimento, pedido, pagamento, entrega, seguranca e suporte.",
         "sections": [
-            ("Dados coletados", "Podemos usar nome, e-mail, telefone, CPF ou documento, endereco, dados do pedido, pagamento, entrega e mensagens de suporte."),
-            ("Finalidade", "Os dados sao usados para criar pedidos, calcular frete, processar pagamento, acompanhar entrega, prestar suporte e cumprir obrigacoes legais e fiscais."),
-            ("Terceiros", "Servicos como Vercel, Wix, Google/Gmail, Mercado Pago, Abacate Pay, Melhor Envio e fornecedores logisticos podem processar dados somente quando necessario para o fluxo contratado."),
-            ("Cookies e registros", "O site pode usar cookies tecnicos, registros de sessao, logs de seguranca e dados de aceite para manter carrinho, conta, prevencao a fraude, checkout e comprovacao de consentimento."),
-            ("Compartilhamento internacional", "Quando um produto for enviado por fornecedor internacional, dados minimos de entrega podem ser compartilhados com o fornecedor e transportadores para cumprir o pedido."),
-            ("Seguranca", "Tokens, chaves e dados sensiveis devem ficar em ambientes seguros. O cliente pode pedir orientacao sobre seus dados pelos canais oficiais."),
+            ("Dados que podemos usar", "Podemos tratar nome, e-mail, telefone, documento, endereco, CEP, itens do pedido, mensagens de atendimento, informacoes de entrega e registros de aceite no checkout."),
+            ("Para que usamos", "Usamos esses dados para responder voce, calcular frete, criar pedido, processar pagamento, acompanhar entrega, prevenir fraude, cumprir obrigacoes legais e prestar suporte pos-venda."),
+            ("Pagamento", "Dados sensiveis de cartao e carteira digital sao tratados pelo provedor de pagamento. A MobilyTech BR nao precisa armazenar numero completo de cartao para concluir sua compra."),
+            ("Compartilhamento necessario", "Podemos compartilhar dados minimos com meios de pagamento, transportadoras, fornecedores logisticos, ferramentas de hospedagem e atendimento quando isso for necessario para executar o pedido ou responder sua solicitacao."),
+            ("Envio internacional", "Se um produto for enviado por fornecedor internacional, dados de entrega podem ser enviados ao fornecedor e aos operadores logisticos para preparar e transportar o pedido."),
+            ("Seus direitos", "Voce pode solicitar orientacao sobre acesso, correcao, eliminacao ou informacoes de compartilhamento de dados pelos canais oficiais da MobilyTech BR."),
         ],
     },
     "trocas": {
         "title": "Trocas, Devolucoes e Reembolso",
         "kicker": "Suporte pos-venda",
-        "intro": "Politica operacional para arrependimento, defeito, divergencia de produto, troca e reembolso.",
+        "intro": "Entenda como pedir ajuda depois da compra em casos de arrependimento, defeito, divergencia, atraso ou nao entrega.",
         "sections": [
-            ("Arrependimento", "Em compras online, solicitacoes de arrependimento devem ser feitas pelo canal oficial dentro do prazo legal de 7 dias, com produto, embalagem e acessorios preservados quando houver envio fisico."),
-            ("Defeito ou divergencia", "Se houver defeito, produto incorreto ou divergencia entre anuncio e entrega, a MobilyTech BR avalia o caso e orienta reparo, troca, devolucao ou reembolso conforme o problema."),
-            ("Produtos de fornecedor", "Quando o item vier de fornecedor parceiro, a MobilyTech BR conduz o atendimento ao cliente e pode acionar a politica do fornecedor em paralelo."),
-            ("Produto nao entregue", "Extravio, atraso relevante ou entrega divergente devem ser comunicados pelo cliente para abertura de analise, rastreio, disputa com fornecedor/transportadora e solucao conforme o caso."),
-            ("Reembolso", "O prazo e o meio de reembolso dependem do metodo de pagamento e da analise do caso, sem reduzir direitos obrigatorios do consumidor."),
+            ("Arrependimento em compra online", "Voce pode solicitar desistenca da compra feita pela internet dentro do prazo legal de 7 dias, contado do recebimento do produto ou da contratacao do servico. Use WhatsApp ou e-mail oficial para registrar o pedido."),
+            ("Como devolver", "Quando houver produto fisico, mantenha item, acessorios e embalagem em boas condicoes sempre que possivel. A MobilyTech BR informa o procedimento de envio, coleta ou analise conforme o caso."),
+            ("Defeito ou produto divergente", "Se o produto chegar com defeito, dano, item errado ou informacao diferente do anuncio, fale com a MobilyTech BR e envie fotos, videos e numero do pedido para acelerar a analise."),
+            ("Produto nao entregue ou atrasado", "Se o rastreio parar, houver atraso relevante ou indicacao de extravio, a MobilyTech BR acompanha o pedido com fornecedor ou transportadora e informa a alternativa aplicavel."),
+            ("Reembolso", "Quando o reembolso for devido, ele segue o mesmo meio de pagamento sempre que possivel. O prazo pode depender do provedor de pagamento, do banco e da etapa de analise do pedido."),
         ],
     },
     "entrega": {
         "title": "Entrega e Prazos",
         "kicker": "Frete e rastreio",
-        "intro": "Como a MobilyTech BR trata retirada, envio nacional e envio por fornecedor parceiro.",
+        "intro": "Veja como funcionam retirada local, envio nacional, envio por fornecedor parceiro, rastreio e prazo estimado.",
         "sections": [
-            ("Retirada local", "Quando disponivel para produto proprio ou servico, a retirada local deve ser combinada pelos canais oficiais apos confirmacao do pagamento."),
-            ("Frete nacional", "Produtos fisicos proprios podem usar transportadoras ou Correios por integracoes como Melhor Envio quando configurado."),
-            ("Fornecedor parceiro", "Produtos de fornecedor devem usar frete calculado pela origem real do fornecedor ate o CEP do cliente, sem frete generico quando houver risco operacional."),
-            ("Envio internacional", "Produtos enviados do exterior podem passar por etapas de transporte internacional, fiscalizacao e desembaraco. Essas informacoes devem aparecer antes do pagamento quando a venda direta estiver habilitada."),
-            ("Prazos", "Prazos sao estimativas e podem variar por transportadora, fornecedor, alfandega, eventos logisticos e dados incompletos do cliente."),
+            ("Retirada local", "A retirada local pode estar disponivel para servicos ou produtos proprios. Quando aparecer como opcao, combine dia e horario pelos canais oficiais apos a confirmacao do pedido."),
+            ("Frete no carrinho", "Antes de pagar, informe o CEP e confira o valor do frete, o prazo estimado e a modalidade de envio. O carrinho mostra produto e frete separados no total da compra."),
+            ("Envio nacional", "Produtos no Brasil podem ser enviados por transportadora, Correios ou parceiro logistico conforme disponibilidade para o CEP informado."),
+            ("Envio por fornecedor parceiro", "Alguns itens podem sair diretamente do fornecedor para o seu endereco. Nesses casos, o carrinho informa a origem, o prazo estimado e o frete antes do pagamento."),
+            ("Envio internacional", "Produtos enviados do exterior podem passar por transporte internacional, fiscalizacao e desembaraco. Prazos sao estimados e podem variar por operador logistico, alfandega, endereco ou eventos externos."),
+            ("Rastreio e atendimento", "Quando houver codigo de rastreio, ele sera informado nos canais de atendimento ou na area do cliente assim que estiver disponivel."),
         ],
     },
     "garantia": {
         "title": "Garantia",
         "kicker": "Cobertura e suporte",
-        "intro": "Resumo da garantia operacional para produtos, servicos e itens enviados por fornecedores.",
+        "intro": "A garantia depende do tipo de produto ou servico comprado. Leia a cobertura junto das informacoes do anuncio e do atendimento.",
         "sections": [
-            ("Produtos proprios", "PCs e pecas revisadas seguem a garantia informada no anuncio, proposta ou atendimento antes da compra."),
-            ("Servicos", "Montagem, limpeza e manutencao seguem o escopo combinado com o cliente e o relatorio ou comprovante enviado."),
-            ("Produtos de fornecedor", "Itens enviados por fornecedor parceiro podem seguir a garantia do fornecedor, sem reduzir direitos aplicaveis do consumidor perante a MobilyTech BR."),
-            ("Exclusoes", "Mau uso, dano fisico, instalacao indevida, alteracao nao autorizada e problemas externos ao produto podem exigir analise antes de qualquer cobertura."),
+            ("Produtos proprios", "PCs, pecas e equipamentos proprios seguem a garantia informada no anuncio, proposta ou atendimento antes da compra. Se a cobertura especifica nao estiver clara, pergunte antes de pagar."),
+            ("Servicos", "Montagem, limpeza e manutencao seguem o escopo combinado com voce, incluindo o que foi solicitado, aprovado e registrado no atendimento."),
+            ("Produtos de fornecedor", "Itens enviados por fornecedor parceiro podem ter cobertura e procedimento definidos pelo fornecedor, com atendimento inicial pela MobilyTech BR."),
+            ("O que pode ser analisado", "Em caso de defeito, dano no transporte, produto diferente do anuncio, mau funcionamento ou ausencia de item, envie fotos, videos e numero do pedido."),
+            ("O que pode ficar fora", "Mau uso, dano fisico causado apos o recebimento, instalacao inadequada, alteracao nao autorizada, queda, liquido ou incompatibilidade nao informada antes da compra podem exigir analise especifica."),
         ],
     },
 }
@@ -167,7 +169,7 @@ DEFAULT_SITE_CONTENT = {
         },
         "produtos": {
             "title": "Nossos Produtos",
-            "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site, checkout seguro e frete calculado da origem do fornecedor ate o seu CEP.",
+            "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site. Confira preco, origem, frete, prazo estimado e total antes do pagamento.",
             "image": "./assets/mobilytech-character-cutout.png",
         },
         "montagem": {
@@ -230,7 +232,10 @@ def feature_enabled(site_content: dict | None, group: str, key: str, default: bo
 
 
 def asset_path(prefix: str, path: str) -> str:
-    return f"{prefix}{str(path or '').replace('./', '')}"
+    value = str(path or "")
+    if value.startswith(("http://", "https://", "data:")):
+        return value
+    return f"{prefix}{value.replace('./', '')}"
 
 
 def product_by_id(products, product_id):
@@ -682,7 +687,7 @@ def footer(prefix: str, site_content: dict | None = None) -> str:
     <section class="about-strip">
       <div>
         <h2>Sobre a MobilyTech BR</h2>
-        <p>A MobilyTech BR trabalha com PCs usados revisados, hardware selecionado, limpeza e montagem sob orcamento. O foco e entregar computador pronto para uso, atendimento claro e garantia explicada antes da compra.</p>
+        <p>A MobilyTech BR trabalha com produtos selecionados, PCs revisados quando disponiveis, limpeza e montagem sob orcamento. O foco e deixar preco, frete, prazo, garantia e atendimento claros antes da compra.</p>
       </div>
       <a class="outline-dark" href="{links["contato"]}">Falar com a loja</a>
     </section>
@@ -756,10 +761,21 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
         or (configured_product.get("category") != "dropshipping" and not physical_enabled)
     ):
         configured_product = None
-    hero_product = configured_product or (dropshipping_products[0] if dropshipping_products else (pcs[0] if physical_enabled and pcs else {}))
+    hero_product = configured_product or (pcs[0] if physical_enabled and pcs else {})
     hero_image = hero_product.get("cutout") or hero_product.get("image") or "./assets/mobilytech-logo.png"
     hero_specs = hero_product.get("specs", {})
-    if hero_product:
+    if hero_product and hero_product.get("category") == "dropshipping":
+        origin_note = hero_product.get("publicOriginNote") or "Origem e prazo informados antes do pagamento."
+        hero_deal_html = f"""
+        <aside class="hero-deal-card">
+          <span>{clean_text(home.get("featuredKicker"))}</span>
+          <h2>{clean_text(hero_product.get("title", "Produto MobilyTech"))}</h2>
+          <p>{clean_text(origin_note)}</p>
+          <strong>{money(hero_product.get("price"))}</strong>
+          <button class="small-link" type="button" data-detail="{clean_text(hero_product.get("id", ""))}">Ver detalhes</button>
+        </aside>
+        """
+    elif hero_product:
         hero_deal_html = f"""
         <aside class="hero-deal-card">
           <span>{clean_text(home.get("featuredKicker"))}</span>
@@ -767,6 +783,15 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
           <p>{clean_text(hero_specs.get("memory", "PC revisado"))} &middot; {clean_text(hero_specs.get("storage", "SSD"))}</p>
           <strong>{money(hero_product.get("price"))}</strong>
           <button class="small-link" type="button" data-detail="{clean_text(hero_product.get("id", ""))}">Ver detalhes</button>
+        </aside>
+        """
+    elif dropshipping_enabled:
+        hero_deal_html = f"""
+        <aside class="hero-deal-card">
+          <span>Compra direta</span>
+          <h2>Nossos Produtos no ar</h2>
+          <p>Confira produto, origem, frete, prazo estimado e total antes do pagamento.</p>
+          <a class="small-link" href="{links["produtos"]}">Ver Nossos Produtos</a>
         </aside>
         """
     else:
@@ -838,12 +863,12 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
             <a class="btn btn-white" href="{links["montagem"]}">{clean_text(home.get("secondaryLabel"))}</a>
           </div>
         </div>
-        <img class="hero-pc" src="{prefix}{hero_image.replace("./", "")}" alt="{clean_text(hero_product.get("title", "PC MobilyTech"))}">
+        <img class="hero-pc" src="{asset_path(prefix, hero_image)}" alt="{clean_text(hero_product.get("title", "PC MobilyTech"))}">
         {hero_deal_html}
       </section>
       <section class="trust-row" aria-label="Diferenciais MobilyTech">
         <article><span>&#128737;</span><strong>Pecas revisadas</strong><small>e testadas antes da venda</small></article>
-        <article><span>&#9989;</span><strong>Garantia real</strong><small>14 dias para defeitos</small></article>
+        <article><span>&#9989;</span><strong>Garantia clara</strong><small>cobertura informada antes da compra</small></article>
         <article><span>&#128666;</span><strong>Envio para todo o Brasil</strong><small>frete calculado no checkout</small></article>
         <article><span>&#128172;</span><strong>Suporte humano</strong><small>pre e pos-compra</small></article>
       </section>
@@ -999,8 +1024,8 @@ def nossos_produtos_page(prefix: str, page: dict, site_content: dict | None = No
         <div>
           <p class="section-kicker">Compra direta MobilyTech BR</p>
           <h2>Nossos Produtos</h2>
-          <p>Produtos selecionados para setup, escritorio, manutencao e upgrades. O cliente ve prazo e origem nacional/internacional; os dados do fornecedor ficam apenas no painel.</p>
-          <p class="public-compliance-note">Preco exibido e do produto. Frete, prazo e origem sao calculados por CEP antes do pagamento. Itens de fornecedor parceiro podem ser enviados do exterior e seguem atendimento MobilyTech BR.</p>
+          <p>Produtos selecionados para setup, escritorio, manutencao e upgrades. Voce pode filtrar por nicho, preco e tipo de envio antes de adicionar ao carrinho.</p>
+          <p class="public-compliance-note">O preco exibido e do produto. Frete, prazo estimado, origem de envio e total aparecem no carrinho antes do pagamento. Alguns itens podem ser enviados diretamente por fornecedor parceiro, inclusive do exterior, com atendimento da MobilyTech BR.</p>
         </div>
       </section>
       <section class="finds-layout" aria-label="Filtros de Nossos Produtos">
@@ -1181,7 +1206,7 @@ def contato_page(prefix: str) -> str:
         <article><h2>E-mail</h2><p>mobilytechbr@gmail.com</p><a class="btn btn-dark" href="mailto:mobilytechbr@gmail.com">Enviar e-mail</a></article>
         <article><h2>Retirada local</h2><p>Vila Suzana, Sao Paulo, SP.</p><p>Retirada combinada apos confirmacao do pedido.</p></article>
         <article class="shipping-contact-card"><img src="../assets/brazil-flag-glass.png" alt="" aria-hidden="true"><h2>Envio para todo o Brasil</h2><p>Envio por transportadora ou Correios, conforme disponibilidade do Melhor Envio, com opcao de rastreio.</p></article>
-        <article><h2>Garantia</h2><p>Garantia de 14 dias para defeitos preexistentes comprovados, com avaliacao tecnica e suporte direto.</p></article>
+        <article><h2>Garantia</h2><p>A cobertura varia conforme produto ou servico e fica informada no anuncio, proposta ou atendimento antes da compra.</p></article>
       </section>
     </main>
     """
@@ -1333,6 +1358,7 @@ def cleaning_inline_form(prefix: str, service_panels: dict | None = None) -> str
 
 
 def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
+    links = page_links(prefix)
     mercado_enabled = feature_enabled(site_content, "payments", "mercadoPago", True)
     abacate_enabled = feature_enabled(site_content, "payments", "abacatePay", False)
     checkout_buttons = "\n".join(
@@ -1367,16 +1393,17 @@ def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
         <button class="btn btn-dark full" id="quoteShipping" type="button">Calcular frete</button>
         <div id="shippingQuotes" class="shipping-quotes"></div>
       </details>
+      <div class="checkout-review" id="checkoutReview" hidden></div>
       <label class="policy-check">
         <input id="checkoutPoliciesAccepted" type="checkbox">
-        <span>Li e aceito os <a href="{prefix}fase2/termos.html" target="_blank" rel="noopener">Termos de Compra</a> e a <a href="{prefix}fase2/privacidade.html" target="_blank" rel="noopener">Politica de Privacidade</a>.</span>
+        <span>Li e aceito os <a href="{links["termos"]}" target="_blank" rel="noopener">Termos de Compra</a>, a <a href="{links["privacidade"]}" target="_blank" rel="noopener">Politica de Privacidade</a>, a <a href="{links["entrega"]}" target="_blank" rel="noopener">Politica de Entrega</a>, a <a href="{links["trocas"]}" target="_blank" rel="noopener">Politica de Trocas e Reembolso</a> e a <a href="{links["garantia"]}" target="_blank" rel="noopener">Politica de Garantia</a>.</span>
       </label>
       <label class="policy-check supplier-policy-check" id="supplierDisclosureCheck" hidden>
         <input id="supplierDisclosureAccepted" type="checkbox">
-        <span>Estou ciente de que este pedido pode ser enviado diretamente por fornecedor parceiro, inclusive do exterior, com frete, prazo e origem informados antes do pagamento.</span>
+        <span>Estou ciente de que este pedido pode ser enviado diretamente por fornecedor parceiro, inclusive do exterior, e conferi origem, frete e prazo estimado antes do pagamento.</span>
       </label>
       <div class="checkout-actions">{checkout_buttons}</div>
-      <p class="drawer-note">O pagamento usa rotas seguras. Frete e prazo precisam aparecer antes de concluir o pagamento; produtos de fornecedor parceiro nao usam retirada local.</p>
+      <p class="drawer-note">Antes de pagar, confira o resumo do pedido. O pagamento e feito em ambiente seguro do provedor escolhido.</p>
     </aside>
     <dialog class="product-modal" id="productModal">
       <form method="dialog">
@@ -1444,7 +1471,7 @@ def css() -> str:
     .account-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(13,23,38,.08);padding:28px;min-width:0}
     .account-card-main{background:linear-gradient(135deg,#0b2034 0%,#123f5f 58%,#0b6b78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.account-session{margin:18px 0 0;border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:14px;display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center}.account-avatar{width:54px;height:54px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-weight:1000;overflow:hidden}.account-avatar img{width:100%;height:100%;object-fit:cover}.account-session strong{display:block;font-size:18px}.account-session small{display:block;color:#657081;font-weight:850;line-height:1.35}.account-login-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.orders-panel{display:grid;gap:12px;margin-top:16px}.order-card{border:1px solid var(--line);border-radius:16px;background:#fbfcfd;padding:15px;display:grid;gap:8px}.order-card-head{display:flex;justify-content:space-between;gap:12px;align-items:start}.order-card h3{margin:0;font-size:18px}.order-status-pill{border-radius:999px;background:#e9fbfa;color:#087f78;padding:6px 10px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}.order-card dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}.order-card dt{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#687182;font-weight:1000}.order-card dd{margin:2px 0 0;font-weight:950;color:#18202b}.secure-note-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}.secure-note-list span{border:1px solid #e4eef8;background:#f8fbff;border-radius:12px;padding:12px;font-size:12px;font-weight:1000;color:#23445f;text-align:center}.whatsapp-btn{background:#18c56f;color:#04140b;box-shadow:0 10px 24px rgba(24,197,111,.18)}.whatsapp-btn img{width:22px;height:22px;object-fit:contain}
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
-.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.policy-check{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fafc;color:#3c4450;font-size:12.5px;font-weight:900;line-height:1.35}.policy-check input{width:18px;height:18px;margin:0;accent-color:var(--red)}.policy-check a{color:#111;text-decoration:underline;text-underline-offset:2px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-review{border:1px solid #dceafe;background:#f6faff;border-radius:14px;padding:13px;display:grid;gap:9px;color:#24384d}.checkout-review[hidden]{display:none}.checkout-review h3{margin:0;font-size:16px;line-height:1.15}.checkout-review p{margin:0;color:#536174;font-size:12.5px;font-weight:850;line-height:1.35}.checkout-review dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0}.checkout-review dt{color:#5f6b7a;font-size:12px;font-weight:1000}.checkout-review dd{margin:0;text-align:right;font-size:12.5px;font-weight:1000;color:#101318}.checkout-review a{text-decoration:underline;text-underline-offset:2px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.policy-check{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fafc;color:#3c4450;font-size:12.5px;font-weight:900;line-height:1.35}.policy-check input{width:18px;height:18px;margin:0;accent-color:var(--red)}.policy-check a{color:#111;text-decoration:underline;text-underline-offset:2px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .page-hero-legal,.unavailable-page{background:#f8fafc;border:1px solid var(--line)}.legal-layout{max-width:1120px;margin:34px auto;padding:0 24px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px}.legal-note,.legal-card{border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.legal-note{position:sticky;top:120px;align-self:start;display:grid;gap:8px;padding:18px;font-size:13px;font-weight:900;color:#59616d}.legal-note strong{font-size:18px;color:#111}.legal-note a{color:#111}.legal-grid{display:grid;gap:14px}.legal-card{padding:20px}.legal-card h2{font-size:22px;margin:0 0 8px}.legal-card p{margin:0;color:#59616d;font-weight:800;line-height:1.55}
     .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
     @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.account-popover,.account-popover.is-closing{animation:none}.btn,.service-panel-image,.cart-drawer,.toast,.account-action span{transition:none}}
@@ -2142,6 +2169,51 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     }}
     function checkoutSubtotal() {{ return cart.reduce((sum, item) => sum + productTotal(item), 0); }}
     function checkoutTotal() {{ return Math.max(0, checkoutSubtotal() - couponDiscount()) + (selectedShipping?.price || 0); }}
+    function cartOriginSummary() {{
+      const products = cartProducts();
+      if (!products.length) return "";
+      const supplier = products.some(isSupplierProduct);
+      const international = products.some((product) => {{
+        const text = norm([product.publicOriginNote, product.shipping?.region, product.supplierRegion, product.shipping?.originCountry].join(" "));
+        return text.includes("intern") || text.includes("exterior") || text.includes("china") || text.includes("cn");
+      }});
+      if (supplier && international) return "Envio direto internacional.";
+      if (supplier) return "Envio direto por fornecedor.";
+      return "Envio ou retirada conforme opcao escolhida.";
+    }}
+    function renderCheckoutReview() {{
+      const node = $("#checkoutReview");
+      if (!node) return;
+      if (!cart.length) {{
+        node.hidden = true;
+        node.innerHTML = "";
+        return;
+      }}
+      const state = cartFulfillmentState();
+      const subtotal = checkoutSubtotal();
+      const discount = couponDiscount();
+      const freight = selectedShipping?.price || 0;
+      const total = checkoutTotal();
+      const deliveryLabel = selectedShipping
+        ? `${{selectedShipping.carrier || selectedShipping.company || "Entrega"}} - ${{selectedShipping.serviceName || selectedShipping.name || "servico"}}`
+        : (state.supplier ? "Calcule o frete antes de pagar" : "Retirada local ou entrega a calcular");
+      const timeLabel = selectedShipping?.deliveryTime
+        ? `${{selectedShipping.deliveryTime}} dia(s) uteis estimados`
+        : (state.supplier ? "Apos calcular o frete" : "Conforme forma de entrega");
+      node.hidden = false;
+      node.innerHTML = `<h3>Revise antes de pagar</h3>
+        <p>Vendedora: MobilyTech BR - CNPJ 66.834.883/0001-43. Confira os dados e corrija qualquer erro antes de seguir para o pagamento.</p>
+        <dl>
+          <dt>Produtos</dt><dd>${{money(subtotal)}}</dd>
+          ${{discount > 0 ? `<dt>Desconto</dt><dd>-${{money(discount)}}</dd>` : ""}}
+          <dt>Frete</dt><dd>${{freight ? money(freight) : (state.supplier ? "A calcular" : "R$ 0,00")}}</dd>
+          <dt>Total</dt><dd>${{money(total)}}</dd>
+          <dt>Entrega</dt><dd>${{escapeHtml(deliveryLabel)}}</dd>
+          <dt>Prazo</dt><dd>${{escapeHtml(timeLabel)}}</dd>
+          <dt>Origem</dt><dd>${{escapeHtml(cartOriginSummary())}}</dd>
+        </dl>
+        <p>Politicas: <a href="${{ROUTES.termos}}" target="_blank" rel="noopener">termos</a>, <a href="${{ROUTES.entrega}}" target="_blank" rel="noopener">entrega</a>, <a href="${{ROUTES.trocas}}" target="_blank" rel="noopener">trocas</a>, <a href="${{ROUTES.garantia}}" target="_blank" rel="noopener">garantia</a> e <a href="${{ROUTES.privacidade}}" target="_blank" rel="noopener">privacidade</a>.</p>`;
+    }}
     function syncCouponFeedback() {{
       const feedback = $("#couponFeedback");
       if (!feedback) return;
@@ -2607,6 +2679,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         const supplierDisclosure = $("#supplierDisclosureCheck");
         if (supplierDisclosure) supplierDisclosure.hidden = true;
         renderDeliveryChoice();
+        renderCheckoutReview();
         syncCouponFeedback();
         return;
       }}
@@ -2634,6 +2707,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (supplierDisclosure) {{
         supplierDisclosure.hidden = !cartFulfillmentState().supplier;
       }}
+      renderCheckoutReview();
       syncCouponFeedback();
     }}
     function renderDeliveryChoice() {{
