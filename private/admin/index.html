@@ -434,16 +434,67 @@
         font-weight: 900;
       }
       .content-grid textarea { min-height: 78px; resize: vertical; text-transform: none; letter-spacing: 0; }
+      .featured-slot-list {
+        grid-column: 1 / -1;
+        display: grid;
+        gap: 10px;
+      }
+      .featured-slot {
+        display: grid;
+        grid-template-columns: 96px minmax(0, 1fr);
+        gap: 10px;
+        align-items: center;
+        border: 1px solid #d8dde7;
+        border-radius: 12px;
+        background: #fff;
+        padding: 10px;
+      }
+      .featured-slot span {
+        border-radius: 10px;
+        background: #eef6ff;
+        color: #0f5485;
+        padding: 9px 10px;
+        font-size: 11px;
+        font-weight: 1000;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        text-align: center;
+      }
+      .featured-slot select {
+        min-height: 44px;
+      }
       .content-toggle {
         display: flex !important;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
-        gap: 12px;
+        gap: 16px;
         border: 1px solid #d8dde7;
         border-radius: 12px;
         background: #f8fafc;
-        padding: 13px 14px;
-        min-height: 52px;
+        padding: 14px 15px;
+        min-height: 68px;
+      }
+      .content-toggle-copy {
+        display: grid;
+        gap: 6px;
+        min-width: 0;
+      }
+      .content-toggle-copy strong {
+        display: block;
+        color: #111827;
+        font-size: 12px;
+        line-height: 1.15;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .content-toggle-copy small {
+        display: block;
+        color: #647184;
+        font-size: 11.5px;
+        line-height: 1.35;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-transform: none;
       }
       .content-toggle input {
         width: 22px;
@@ -1510,7 +1561,7 @@
 
       function contentCheckbox(path, label, hint = "") {
         const checked = getPathValue(siteContentState, path) !== false;
-        return `<label class="content-toggle"><span><strong>${label}</strong>${hint ? `<small>${hint}</small>` : ""}</span><input type="checkbox" data-content-path="${escapeHtml(path)}" ${checked ? "checked" : ""}></label>`;
+        return `<label class="content-toggle"><span class="content-toggle-copy"><strong>${label}</strong>${hint ? `<small>${hint}</small>` : ""}</span><input type="checkbox" data-content-path="${escapeHtml(path)}" ${checked ? "checked" : ""}></label>`;
       }
 
       function adminPreviewSrc(value) {
@@ -1721,6 +1772,76 @@
         )).join("");
       }
 
+      function homeFeaturedConfig() {
+        siteContentState.homeFeaturedProducts = siteContentState.homeFeaturedProducts && typeof siteContentState.homeFeaturedProducts === "object"
+          ? siteContentState.homeFeaturedProducts
+          : {};
+        ["finds", "dropshipping"].forEach((key) => {
+          siteContentState.homeFeaturedProducts[key] = Array.isArray(siteContentState.homeFeaturedProducts[key])
+            ? siteContentState.homeFeaturedProducts[key].map((id) => String(id || "")).filter(Boolean)
+            : [];
+        });
+        return siteContentState.homeFeaturedProducts;
+      }
+
+      function findPublicId(item = {}) {
+        return item.productId || (item.id ? `find-${item.id}` : "");
+      }
+
+      function findHasPublicOffer(item = {}) {
+        if (item.affiliateReady === false) return false;
+        if (item.purchaseMode === "manual-dropshipping" || item.manualFulfillment) return false;
+        const links = Array.isArray(item.affiliateLinks) ? item.affiliateLinks : [];
+        return links.some((link) => link && link.url) || Boolean(item.affiliateUrl);
+      }
+
+      function featuredOptionLabel(item = {}, type = "finds") {
+        const title = item.title || item.id || "Produto";
+        const price = moneyInput(type === "dropshipping" ? item.price : item.salePrice);
+        const detail = type === "dropshipping"
+          ? [item.niche || item.specs?.niche || item.priceBand, price ? `R$ ${price}` : ""].filter(Boolean).join(" | ")
+          : [item.platform || item.marketplace?.name || "Marketplace", price ? `R$ ${price}` : ""].filter(Boolean).join(" | ");
+        return detail ? `${title} - ${detail}` : title;
+      }
+
+      function featuredSelectOptions(type, selectedId) {
+        const selected = String(selectedId || "");
+        const source = type === "dropshipping"
+          ? productsState
+              .filter((item) => item && item.category === "dropshipping" && item.active !== false && item.checkoutEnabled === true)
+              .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "pt-BR"))
+          : (findsState?.finalists || [])
+              .filter(findHasPublicOffer)
+              .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "pt-BR"));
+        return source.map((item) => {
+          const id = type === "dropshipping" ? item.id : findPublicId(item);
+          return `<option value="${escapeHtml(id)}" ${String(id) === selected ? "selected" : ""}>${escapeHtml(featuredOptionLabel(item, type))}</option>`;
+        }).join("");
+      }
+
+      function featuredProductSlots(type, title, hint, count) {
+        const config = homeFeaturedConfig();
+        const values = config[type] || [];
+        const slots = Array.from({ length: count }, (_, index) => `
+          <label class="featured-slot">
+            <span>${index + 1} destaque</span>
+            <select data-content-path="homeFeaturedProducts.${type}.${index}">
+              <option value="">Automatico</option>
+              ${featuredSelectOptions(type, values[index] || "")}
+            </select>
+          </label>
+        `).join("");
+        return `
+          <div class="content-fieldset">
+            <h3>${escapeHtml(title)}</h3>
+            <p class="editor-note">${escapeHtml(hint)}</p>
+            <div class="content-grid">
+              <div class="featured-slot-list">${slots}</div>
+            </div>
+          </div>
+        `;
+      }
+
       function renderSiteContentEditor() {
         const editor = $("#siteContentEditor");
         if (!editor) return;
@@ -1739,6 +1860,7 @@
         siteContentState.homeHero.backgroundMode = siteContentState.homeHero.backgroundMode || "preset";
         siteContentState.homeHero.backgroundPreset = siteContentState.homeHero.backgroundPreset || "sky";
         siteContentState.homeHero.backgroundImage = siteContentState.homeHero.backgroundImage || "";
+        homeFeaturedConfig();
         siteContentState.servicePanels = siteContentState.servicePanels || {};
         siteContentState.servicePanels.build = siteContentState.servicePanels.build || {};
         siteContentState.servicePanels.clean = siteContentState.servicePanels.clean || {};
@@ -1794,6 +1916,8 @@
               ${heroBackgroundControls()}
             </div>
           </div>
+          ${featuredProductSlots("dropshipping", "Destaques da home - Nossos Produtos", "Escolha os 6 produtos de compra direta que aparecem na secao principal. Se deixar algum slot automatico, o site preenche com os proximos produtos validos.", 6)}
+          ${featuredProductSlots("finds", "Destaques da home - MobilyTech Finds", "Escolha os 3 achados de marketplace que aparecem na pagina principal. O checkout externo continua no marketplace parceiro.", 3)}
           <div class="content-fieldset">
             <h3>Artes dos servicos</h3>
             <div class="content-grid">

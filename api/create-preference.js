@@ -12,6 +12,7 @@ const {
   validateUniquePhysicalCheckoutItems
 } = require("../lib/fulfillment-shipping");
 const { discountForCheckoutItems } = require("../lib/promotions");
+const { estimateImportTaxes } = require("../lib/import-taxes");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
 const { assertPolicyAcceptance, assertSupplierDisclosure, requestClientIp } = require("../lib/checkout-policies");
@@ -424,7 +425,8 @@ module.exports = async function createPreference(request, response) {
       return sum + ((item.unitPrice + addonsTotal + swapsTotal) * item.quantity);
     }, 0);
     const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
-    const baseCheckoutTotal = Math.max(0, productsSubtotal - promotion.discount) + (normalizedShipping ? normalizedShipping.price : 0);
+    const importTaxes = estimateImportTaxes(checkoutItems, normalizedShipping);
+    const baseCheckoutTotal = Math.max(0, productsSubtotal - promotion.discount) + (normalizedShipping ? normalizedShipping.price : 0) + Number(importTaxes.total || 0);
     const mercadoFeeAdjustment = mercadoPagoGrossUp(baseCheckoutTotal).fee;
     let remainingCouponDiscount = promotion.discount;
     const preference = {
@@ -467,6 +469,13 @@ module.exports = async function createPreference(request, response) {
           quantity: 1,
           currency_id: "BRL",
           unit_price: normalizedShipping.price
+        }] : []),
+        ...(importTaxes.total > 0 ? [{
+          id: `${checkoutReference}-import-taxes-estimate`,
+          title: "Tributos de importacao estimados",
+          quantity: 1,
+          currency_id: "BRL",
+          unit_price: importTaxes.total
         }] : []),
         ...(mercadoFeeAdjustment > 0 ? [{
           id: `${checkoutReference}-mercado-pago-processing-adjustment`,
@@ -522,6 +531,11 @@ module.exports = async function createPreference(request, response) {
         coupon_label: promotion.label || "",
         coupon_percent: promotion.percent ? String(promotion.percent) : "",
         coupon_discount: promotion.discount ? String(promotion.discount) : "",
+        import_tax_regime: importTaxes.regime || "",
+        import_tax_customs_value: importTaxes.customsValue ? String(importTaxes.customsValue) : "",
+        import_tax_import_duty: importTaxes.importDuty ? String(importTaxes.importDuty) : "",
+        import_tax_icms: importTaxes.icms ? String(importTaxes.icms) : "",
+        import_tax_total: importTaxes.total ? String(importTaxes.total) : "",
         products_subtotal: String(productsSubtotal),
         mercado_pago_fee_adjustment: String(mercadoFeeAdjustment),
         shipping_postal_code: normalizedShipping?.postalCode || "",

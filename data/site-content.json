@@ -10,7 +10,7 @@
     },
     "catalog": {
       "physicalProducts": false,
-      "dropshippingProducts": true
+      "dropshippingProducts": false
     }
   },
   "homeHero": {
@@ -23,6 +23,21 @@
     "backgroundMode": "preset",
     "backgroundPreset": "sky",
     "backgroundImage": ""
+  },
+  "homeFeaturedProducts": {
+    "finds": [
+      "find-aff-amazon-auto-b0bxfbn121-placa-m-e-gigabyte-a520m-k-v2-am4-2xddr4-hdmi-d-sub-m-2-usb-3-2",
+      "find-aff-amazon-auto-b08dqb2gdn-placa-m-e-asus-para-amd-am4-prime-a520m-k-2xddr4-matx-90mb1500-m0eay0",
+      "find-aff-amazon-auto-b08ckgw1d4-placa-m-e-asus-tuf-gaming-a520m-plus-ii-am4-4xddr4-hdmi-displayport-d"
+    ],
+    "dropshipping": [
+      "cj-the-new-x99-s-real-chip-computer-motherboard-p-47375104",
+      "cj-x99-computer-motherboard-ddr4-server-x99-compu-40547584",
+      "cj-memory-stick-full-model-ddr4-ddr3-desktop-comp-03559680",
+      "cj-cabo-ou-adaptador-de-video-para-notebook-e-pc-17fb626d",
+      "cj-riser-card-009s-plus-pci-e-pcie-pci-express-x1-27228672",
+      "cj-luminous-punk-keyboard-usb-wired-computer-gami-78979328"
+    ]
   },
   "servicePanels": {
     "build": {

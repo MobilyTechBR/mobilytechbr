@@ -14,6 +14,7 @@ const {
 } = require("../lib/fulfillment-shipping");
 const { abacateCheckoutGrossUp } = require("../lib/payment-fees");
 const { discountForCheckoutItems } = require("../lib/promotions");
+const { estimateImportTaxes } = require("../lib/import-taxes");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
 const { assertPolicyAcceptance, assertSupplierDisclosure, requestClientIp } = require("../lib/checkout-policies");
@@ -322,13 +323,13 @@ async function normalizeShipping(products, shipping) {
   });
 }
 
-function totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion = {}) {
+function totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion = {}, importTaxes = {}) {
   const productsTotal = checkoutItems.reduce((sum, item) => {
     const addonsTotal = item.addons.reduce((addonSum, addon) => addonSum + addon.price, 0);
     const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
     return sum + ((item.unitPrice + addonsTotal + swapsTotal) * item.quantity);
   }, 0);
-  return Math.max(0, productsTotal - Number(promotion.discount || 0)) + (normalizedShipping ? normalizedShipping.price : 0);
+  return Math.max(0, productsTotal - Number(promotion.discount || 0)) + (normalizedShipping ? normalizedShipping.price : 0) + Number(importTaxes.total || 0);
 }
 
 async function abacateRequest(apiKey, url, options = {}) {
@@ -380,7 +381,7 @@ async function ensureAbacateProduct(apiKey, line) {
   return product.id;
 }
 
-function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment = 0, promotion = {}) {
+function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment = 0, promotion = {}, importTaxes = {}) {
   const runId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   let remainingCouponDiscount = Number(promotion.discount || 0);
   const lines = checkoutItems.flatMap((item) => {
@@ -420,6 +421,15 @@ function checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdju
       name: `Frete ${normalizedShipping.carrier} ${normalizedShipping.serviceName}`,
       description: `Entrega para CEP ${normalizedShipping.postalCode}`,
       price: normalizedShipping.price
+    });
+  }
+
+  if (importTaxes.total > 0) {
+    lines.push({
+      externalId: `mobilytech-${runId}-import-taxes-estimate-${toCents(importTaxes.total)}`,
+      name: "Tributos de importacao estimados",
+      description: "Estimativa conservadora de Imposto de Importacao e ICMS para envio internacional.",
+      price: importTaxes.total
     });
   }
 
@@ -475,11 +485,12 @@ module.exports = async function createAbacateCheckout(request, response) {
       : [];
     const origin = requestOrigin(request);
     const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
-    const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion);
+    const importTaxes = estimateImportTaxes(checkoutItems, normalizedShipping);
+    const baseCheckoutTotal = totalFromCheckoutItems(checkoutItems, normalizedShipping, promotion, importTaxes);
     const abacateFeeInfo = abacateCheckoutGrossUp(baseCheckoutTotal);
     const abacateFeeAdjustment = abacateFeeInfo.fee;
     const finalCheckoutTotal = abacateFeeInfo.gross;
-    const lines = checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment, promotion);
+    const lines = checkoutLines(checkoutItems, normalizedShipping, origin, abacateFeeAdjustment, promotion, importTaxes);
 
     const productIds = [];
     for (const line of lines) {
@@ -523,6 +534,11 @@ module.exports = async function createAbacateCheckout(request, response) {
         couponLabel: promotion.label || "",
         couponPercent: promotion.percent ? String(promotion.percent) : "",
         couponDiscount: promotion.discount ? String(promotion.discount) : "",
+        importTaxRegime: importTaxes.regime || "",
+        importTaxCustomsValue: importTaxes.customsValue ? String(importTaxes.customsValue) : "",
+        importTaxImportDuty: importTaxes.importDuty ? String(importTaxes.importDuty) : "",
+        importTaxIcms: importTaxes.icms ? String(importTaxes.icms) : "",
+        importTaxTotal: importTaxes.total ? String(importTaxes.total) : "",
         abacateFeeAdjustment: String(abacateFeeAdjustment),
         baseTotal: String(baseCheckoutTotal),
         finalTotal: String(finalCheckoutTotal),
