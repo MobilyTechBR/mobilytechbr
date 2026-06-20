@@ -13,6 +13,8 @@ const {
 } = require("../lib/fulfillment-shipping");
 const { abacatePixGrossUp } = require("../lib/payment-fees");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
+const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
+const { assertPolicyAcceptance, assertSupplierDisclosure, requestClientIp } = require("../lib/checkout-policies");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -310,18 +312,22 @@ module.exports = async function createAbacatePix(request, response) {
 
   try {
     const payload = await readJsonBody(request);
+    const policyAcceptance = assertPolicyAcceptance(payload);
     const { shipping } = payload;
-    const [products, globalAddons, globalSwaps] = await Promise.all([
+    const [products, globalAddons, globalSwaps, siteContent] = await Promise.all([
       loadProducts(),
       loadGlobalAddons(),
-      loadGlobalSwaps()
+      loadGlobalSwaps(),
+      loadSiteContent()
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
+    assertCatalogAvailabilityForProducts(checkoutItems.map((item) => item.product), siteContent);
     validateUniquePhysicalCheckoutItems(checkoutItems);
     const checkoutProducts = checkoutItems.map((item) => ({ ...item.product, quantity: item.quantity }));
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
     const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
+    assertSupplierDisclosure(payload, manualFulfillmentRequired);
     const manualFulfillmentItems = manualFulfillmentRequired
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
@@ -372,7 +378,13 @@ module.exports = async function createAbacatePix(request, response) {
           baseTotal: String(total),
           finalTotal: String(finalTotal),
           shippingPostalCode: normalizedShipping?.postalCode || "",
-          shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : ""
+          shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : "",
+          policyTermsAccepted: "true",
+          policyPrivacyAccepted: "true",
+          policySupplierDisclosureAccepted: policyAcceptance.supplierDisclosure ? "true" : "false",
+          policyVersion: policyAcceptance.version,
+          policyAcceptedAt: policyAcceptance.acceptedAt,
+          policyAcceptanceIp: requestClientIp(request)
         }
       }
     };

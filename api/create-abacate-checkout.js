@@ -15,6 +15,8 @@ const {
 const { abacateCheckoutGrossUp } = require("../lib/payment-fees");
 const { discountForCheckoutItems } = require("../lib/promotions");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
+const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
+const { assertPolicyAcceptance, assertSupplierDisclosure, requestClientIp } = require("../lib/checkout-policies");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -457,14 +459,17 @@ module.exports = async function createAbacateCheckout(request, response) {
   try {
     const payload = await readJsonBody(request);
     const testCheckout = isCheckoutTest(request, payload);
+    const policyAcceptance = assertPolicyAcceptance(payload);
     const { shipping } = payload;
-    const [products, globalAddons, globalSwaps] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps()]);
+    const [products, globalAddons, globalSwaps, siteContent] = await Promise.all([loadProducts(), loadGlobalAddons(), loadGlobalSwaps(), loadSiteContent()]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
+    assertCatalogAvailabilityForProducts(checkoutItems.map((item) => item.product), siteContent);
     validateUniquePhysicalCheckoutItems(checkoutItems);
     const checkoutProducts = checkoutItems.map((item) => ({ ...item.product, quantity: item.quantity }));
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
     const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
+    assertSupplierDisclosure(payload, manualFulfillmentRequired);
     const manualFulfillmentItems = manualFulfillmentRequired
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
@@ -522,7 +527,13 @@ module.exports = async function createAbacateCheckout(request, response) {
         baseTotal: String(baseCheckoutTotal),
         finalTotal: String(finalCheckoutTotal),
         shippingPostalCode: normalizedShipping?.postalCode || "",
-        shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : ""
+        shippingCustomer: normalizedShipping ? JSON.stringify(normalizedShipping.customer || {}) : "",
+        policyTermsAccepted: "true",
+        policyPrivacyAccepted: "true",
+        policySupplierDisclosureAccepted: policyAcceptance.supplierDisclosure ? "true" : "false",
+        policyVersion: policyAcceptance.version,
+        policyAcceptedAt: policyAcceptance.acceptedAt,
+        policyAcceptanceIp: requestClientIp(request)
       }
     };
 
@@ -581,7 +592,11 @@ module.exports = async function createAbacateCheckout(request, response) {
       shipping_supplier_price: checkoutPayload.metadata.shippingSupplierPrice,
       manual_fulfillment_required: checkoutPayload.metadata.manualFulfillmentRequired,
       manual_fulfillment_product_ids: checkoutPayload.metadata.manualFulfillmentProductIds,
-      manual_fulfillment_items: checkoutPayload.metadata.manualFulfillmentItems
+      manual_fulfillment_items: checkoutPayload.metadata.manualFulfillmentItems,
+      policy_terms_accepted: checkoutPayload.metadata.policyTermsAccepted,
+      policy_privacy_accepted: checkoutPayload.metadata.policyPrivacyAccepted,
+      policy_version: checkoutPayload.metadata.policyVersion,
+      policy_accepted_at: checkoutPayload.metadata.policyAcceptedAt
     });
 
     sendJson(response, 200, {

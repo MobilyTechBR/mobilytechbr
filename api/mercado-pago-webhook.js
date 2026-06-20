@@ -5,6 +5,7 @@ const {
   isManualShippingProvider,
   loadProductsFromDisk
 } = require("../lib/fulfillment-shipping");
+const { createCjSemiAutomaticOrders } = require("../lib/cj-dropshipping");
 
 const MERCADO_PAGO_PAYMENT_API = "https://api.mercadopago.com/v1/payments";
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";
@@ -60,6 +61,73 @@ function productIdsFromMetadata(metadata) {
     .filter(Boolean);
 }
 
+function parseJsonField(value, fallback) {
+  if (!value) return fallback;
+  try {
+    const parsed = JSON.parse(value);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function formatCjPreparation(result) {
+  if (!result) return "";
+  if (result.status === "not-needed") return "";
+  if (result.status === "payload-only") {
+    return [
+      "Pedido CJ preparado em modo payload-only; nenhum pedido foi criado automaticamente.",
+      `Pedidos preparados: ${(result.payloads || []).map((item) => item.orderNumber).join(", ") || "nenhum"}`,
+      "Revise/ative a criacao semi-automatica quando as credenciais e testes estiverem OK."
+    ].join("\n");
+  }
+  if (result.status === "created-unpaid") {
+    const orders = result.orders || [];
+    return [
+      "Pedido CJ semi-automatico criado sem pagamento automatico.",
+      ...orders.map((order) => [
+        `CJ orderNumber: ${order.orderNumber || "nao informado"}`,
+        `CJ orderId: ${order.orderId || "nao informado"}`,
+        `Status CJ: ${order.orderStatus || "criado/pendente"}`,
+        order.cjPayUrl ? `Link de pagamento CJ: ${order.cjPayUrl}` : "",
+        order.logisticsMiss ? `Logistica faltante: ${order.logisticsMiss}` : "",
+        (order.interceptOrderReasons || []).length
+          ? `Interceptacoes CJ: ${JSON.stringify(order.interceptOrderReasons)}`
+          : ""
+      ].filter(Boolean).join(" | "))
+    ].join("\n");
+  }
+  if (result.status === "error") {
+    return [
+      "Pedido CJ NAO foi criado automaticamente.",
+      `Motivo: ${result.error || "erro desconhecido"}`,
+      "Use os dados de envio direto abaixo para fazer a revisao manual e nao confirme compra se custo/frete mudarem."
+    ].join("\n");
+  }
+  return "";
+}
+
+async function prepareCjOrdersIfNeeded(orderReference, metadata, shippingCustomer, supplierItems) {
+  const hasCjItems = (supplierItems || []).some((item) => item?.cj?.vid || item?.cj?.sku);
+  if (!hasCjItems) return { status: "not-needed" };
+  try {
+    return await createCjSemiAutomaticOrders({
+      orderReference,
+      customer: shippingCustomer,
+      supplierItems,
+      sandbox: String(process.env.CJ_ORDER_SANDBOX || "").toLowerCase() === "true"
+    });
+  } catch (error) {
+    return {
+      status: "error",
+      created: false,
+      error: error.message || "Erro ao preparar pedido CJ.",
+      code: error.code || "",
+      details: error.details
+    };
+  }
+}
+
 async function fetchPayment(paymentId) {
   const accessToken = process.env.MERCADO_PAGO_ACCESS_TOKEN;
   if (!accessToken) {
@@ -95,10 +163,16 @@ async function notifyOrder(request, payment) {
   const shippingCustomer = metadata.shipping_customer ? JSON.parse(metadata.shipping_customer) : {};
   const manualFulfillmentRequired = metadata.manual_fulfillment_required === "true" || isManualShippingProvider(metadata.shipping_provider);
   let manualFulfillmentItems = metadata.manual_fulfillment_items || "";
+  let manualFulfillmentItemsJson = parseJsonField(metadata.manual_fulfillment_items_json, []);
   if (manualFulfillmentRequired && !manualFulfillmentItems) {
     const products = await loadProductsFromDisk().catch(() => []);
-    manualFulfillmentItems = formatFulfillmentItems(fulfillmentItemsForIds(products, productIdsFromMetadata(metadata)));
+    manualFulfillmentItemsJson = fulfillmentItemsForIds(products, productIdsFromMetadata(metadata));
+    manualFulfillmentItems = formatFulfillmentItems(manualFulfillmentItemsJson);
   }
+  const cjPreparation = manualFulfillmentRequired
+    ? await prepareCjOrdersIfNeeded(orderReference, metadata, shippingCustomer, manualFulfillmentItemsJson)
+    : { status: "not-needed" };
+  const cjPreparationText = formatCjPreparation(cjPreparation);
   const origin = requestOrigin(request);
   const canAutoConfirmLabel = shippingRequested && !manualFulfillmentRequired && metadata.shipping_provider !== "mixed";
   const confirmationToken = canAutoConfirmLabel ? signPayload({
@@ -145,10 +219,12 @@ async function notifyOrder(request, payment) {
     "",
     manualFulfillmentRequired
       ? [
-        "ACAO MANUAL NECESSARIA: pedido com item de envio direto MobilyTech Finds.",
+        "ACAO SEMI-AUTOMATICA CJ / ENVIO DIRETO.",
+        cjPreparationText,
         "Nao compre etiqueta Melhor Envio para estes itens.",
+        "Revise custo, frete e produto antes de confirmar/pagar o pedido no fornecedor.",
         manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
-        "Use o link/canal de origem acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
+        "Depois de confirmar/pagar no fornecedor, acompanhe o rastreio e atualize o cliente."
       ].join("\n")
       : (shippingRequested
         ? (confirmationUrl ? `Confirmar compra da etiqueta: ${confirmationUrl}` : "Confirmacao de etiqueta indisponivel: configure ORDER_CONFIRMATION_SECRET.")
@@ -190,6 +266,13 @@ async function notifyOrder(request, payment) {
     manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
     manual_fulfillment_product_ids: metadata.manual_fulfillment_product_ids || "",
     manual_fulfillment_items: manualFulfillmentItems || "",
+    manual_fulfillment_items_json: metadata.manual_fulfillment_items_json || "",
+    cj_order_status: cjPreparation.status || "",
+    cj_order_created: cjPreparation.created ? "true" : "false",
+    cj_order_ids: (cjPreparation.orders || []).map((order) => order.orderId).filter(Boolean).join("; "),
+    cj_order_numbers: (cjPreparation.orders || cjPreparation.payloads || []).map((order) => order.orderNumber).filter(Boolean).join("; "),
+    cj_pay_urls: (cjPreparation.orders || []).map((order) => order.cjPayUrl).filter(Boolean).join("; "),
+    cj_order_message: cjPreparationText || "",
     confirmar_etiqueta: confirmationUrl,
     label_confirmation_url: confirmationUrl
   });

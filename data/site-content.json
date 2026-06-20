@@ -7,15 +7,19 @@
     "payments": {
       "mercadoPago": true,
       "abacatePay": false
+    },
+    "catalog": {
+      "physicalProducts": false,
+      "dropshippingProducts": false
     }
   },
   "homeHero": {
-    "title": "PCs revisados para jogar, trabalhar e criar.",
-    "subtitle": "Computadores testados por especialistas, upgrades sob medida e atendimento direto da MobilyTech BR.",
-    "primaryLabel": "Ver catalogo de PCs",
+    "title": "Tecnologia para setup, trabalho e upgrades.",
+    "subtitle": "Produtos selecionados, montagem sob orcamento, limpeza de PC e atendimento direto da MobilyTech BR.",
+    "primaryLabel": "Ver Nossos Produtos",
     "secondaryLabel": "Monte seu PC",
-    "featuredProductId": "pc-i7-3770-16gb-gtx550ti-ssd240",
-    "featuredKicker": "Em destaque na OLX",
+    "featuredProductId": "",
+    "featuredKicker": "Curadoria MobilyTech",
     "backgroundMode": "preset",
     "backgroundPreset": "sky",
     "backgroundImage": ""
@@ -42,6 +46,11 @@
     "achados": {
       "title": "MobilyTech Finds",
       "intro": "Achados de hardware, perifericos e setup com links diretos para marketplaces parceiros.",
+      "image": "./assets/mobilytech-character-cutout.png"
+    },
+    "produtos": {
+      "title": "Nossos Produtos",
+      "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site, checkout seguro e frete calculado da origem do fornecedor ate o seu CEP.",
       "image": "./assets/mobilytech-character-cutout.png"
     },
     "montagem": {

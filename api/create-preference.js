@@ -13,6 +13,8 @@ const {
 } = require("../lib/fulfillment-shipping");
 const { discountForCheckoutItems } = require("../lib/promotions");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
+const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
+const { assertPolicyAcceptance, assertSupplierDisclosure, requestClientIp } = require("../lib/checkout-policies");
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
   peripherals: "Kit perifericos"
@@ -303,6 +305,25 @@ function formBody(fields) {
   return params;
 }
 
+function compactJson(value, maxLength = 2800) {
+  const text = JSON.stringify(value || []);
+  if (text.length <= maxLength) return text;
+  return JSON.stringify((Array.isArray(value) ? value : []).map((item) => ({
+    productId: item.productId,
+    title: item.title,
+    quantity: item.quantity,
+    supplierPlatform: item.supplierPlatform,
+    supplierUrl: item.supplierUrl,
+    salePrice: item.salePrice,
+    costPrice: item.costPrice,
+    costUsd: item.cj?.costUsd,
+    customerShippingPrice: item.customerShippingPrice,
+    freightServiceName: item.freightServiceName,
+    region: item.region,
+    cj: item.cj
+  })));
+}
+
 async function notifyPendingOrder(fields) {
   const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT || "";
   if (!endpoint) return { sent: false, skipped: true };
@@ -359,17 +380,21 @@ module.exports = async function createPreference(request, response) {
   try {
     const payload = await readJsonBody(request);
     const { shipping } = payload;
-    const [products, globalAddons, globalSwaps] = await Promise.all([
+    const policyAcceptance = assertPolicyAcceptance(payload);
+    const [products, globalAddons, globalSwaps, siteContent] = await Promise.all([
       loadProducts(),
       loadGlobalAddons(),
-      loadGlobalSwaps()
+      loadGlobalSwaps(),
+      loadSiteContent()
     ]);
     const checkoutItems = normalizeCheckoutItems(products, globalAddons, globalSwaps, payload);
+    assertCatalogAvailabilityForProducts(checkoutItems.map((item) => item.product), siteContent);
     validateUniquePhysicalCheckoutItems(checkoutItems);
     const checkoutProducts = checkoutItems.map((item) => ({ ...item.product, quantity: item.quantity }));
     const normalizedShipping = await normalizeShipping(checkoutProducts, shipping);
     const fulfillmentSplit = splitFulfillmentProducts(checkoutProducts);
     const manualFulfillmentRequired = Boolean(fulfillmentSplit.supplier.length);
+    assertSupplierDisclosure(payload, manualFulfillmentRequired);
     const manualFulfillmentItems = manualFulfillmentRequired
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
@@ -492,6 +517,7 @@ module.exports = async function createPreference(request, response) {
         manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
         manual_fulfillment_product_ids: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
         manual_fulfillment_items: formatFulfillmentItems(manualFulfillmentItems),
+        manual_fulfillment_items_json: manualFulfillmentRequired ? compactJson(manualFulfillmentItems) : "",
         coupon_code: promotion.code || "",
         coupon_label: promotion.label || "",
         coupon_percent: promotion.percent ? String(promotion.percent) : "",
@@ -499,7 +525,13 @@ module.exports = async function createPreference(request, response) {
         products_subtotal: String(productsSubtotal),
         mercado_pago_fee_adjustment: String(mercadoFeeAdjustment),
         shipping_postal_code: normalizedShipping?.postalCode || "",
-        shipping_customer: normalizedShipping ? JSON.stringify(customer) : ""
+        shipping_customer: normalizedShipping ? JSON.stringify(customer) : "",
+        policy_terms_accepted: "true",
+        policy_privacy_accepted: "true",
+        policy_supplier_disclosure_accepted: policyAcceptance.supplierDisclosure ? "true" : "false",
+        policy_version: policyAcceptance.version,
+        policy_accepted_at: policyAcceptance.acceptedAt,
+        policy_acceptance_ip: requestClientIp(request)
       },
       statement_descriptor: "MOBILYTECHBR"
     };
@@ -574,7 +606,8 @@ module.exports = async function createPreference(request, response) {
       shipping_supplier_price: preference.metadata.shipping_supplier_price,
       manual_fulfillment_required: preference.metadata.manual_fulfillment_required,
       manual_fulfillment_product_ids: preference.metadata.manual_fulfillment_product_ids,
-      manual_fulfillment_items: preference.metadata.manual_fulfillment_items
+      manual_fulfillment_items: preference.metadata.manual_fulfillment_items,
+      manual_fulfillment_items_json: preference.metadata.manual_fulfillment_items_json
     });
 
     sendJson(response, 200, {

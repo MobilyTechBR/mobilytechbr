@@ -8,6 +8,7 @@ const {
   onlyDigits,
   validateUniquePhysicalCheckoutItems
 } = require("../lib/fulfillment-shipping");
+const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
 const DEFAULT_MELHOR_ENVIO_SERVICE_IDS = [
   1, 2, 17, // Correios: PAC, SEDEX, Mini Envios
   3, 4, 27, // Jadlog
@@ -267,7 +268,7 @@ module.exports = async function shippingQuote(request, response) {
 
   try {
     const { productId, cartItems, postalCode } = await readJsonBody(request);
-    const products = await loadProducts();
+    const [products, siteContent] = await Promise.all([loadProducts(), loadSiteContent()]);
     const hasCart = Array.isArray(cartItems) && cartItems.length > 0;
     const cartProducts = productsFromCartItems(products, cartItems);
     if (hasCart && cartProducts.length !== cartItems.length) {
@@ -284,6 +285,7 @@ module.exports = async function shippingQuote(request, response) {
       sendJson(response, 404, { error: "Produto nao encontrado ou inativo." });
       return;
     }
+    assertCatalogAvailabilityForProducts(productsForShipping, siteContent);
 
     const result = await buildShippingQuotes(productsForShipping, postalCode, {
       quoteMelhorEnvio,

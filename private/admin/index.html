@@ -1091,6 +1091,57 @@
           </div>
         </section>
 
+        <section aria-labelledby="dropshipping-products-title">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Nossos Produtos</p>
+              <h2 id="dropshipping-products-title">Auditoria de dropshipping</h2>
+              <p>Lista interna para conferir preco, custo, frete exato e link de referencia do fornecedor antes de liberar qualquer produto para venda direta.</p>
+            </div>
+          </div>
+          <div class="editor-panel">
+            <div class="editor-toolbar">
+              <div>
+                <strong>Regra de seguranca</strong>
+                <p>O botao global <strong>Nossos Produtos</strong> fica no editor visual acima. Quando desligado, a secao some do site gerado e o backend bloqueia checkout/frete de dropshipping.</p>
+              </div>
+              <button class="btn btn-dark" type="button" id="exportDropshippingProducts">Baixar products.json revisado</button>
+            </div>
+            <div class="margin-tools" aria-label="Margens do dropshipping">
+              <label>Margem em massa (% sobre custo)
+                <input id="dropshippingBulkMargin" inputmode="decimal" value="38">
+              </label>
+              <button class="btn btn-red" type="button" id="applyDropshippingMargin">Aplicar aos produtos CJ</button>
+              <button class="btn btn-ghost" type="button" id="disableAllDropshippingCheckout">Pausar checkout dos produtos</button>
+            </div>
+            <div class="sale-status is-info" id="dropshippingStatus">Revise os produtos CJ antes de publicar. Produtos incompletos ficam bloqueados.</div>
+            <div class="table-wrap">
+              <table class="finds-table" aria-label="Auditoria de produtos de dropshipping">
+                <thead>
+                  <tr>
+                    <th>Status</th>
+                    <th>Ativo</th>
+                    <th>Checkout</th>
+                    <th>Produto</th>
+                    <th>Nicho</th>
+                    <th>Faixa</th>
+                    <th>Preco site</th>
+                    <th>Custo</th>
+                    <th>Margem</th>
+                    <th>Frete</th>
+                    <th>Origem</th>
+                    <th>Link de referencia</th>
+                  </tr>
+                </thead>
+                <tbody id="dropshippingProductsRows">
+                  <tr><td colspan="12">Carregando produtos...</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="editor-note">O link de referencia fica apenas no painel e nos e-mails internos de pedido; ele nao aparece para o cliente no site publico. Frete de fornecedor continua sendo calculado no checkout, nao embutido como frete fixo.</div>
+          </div>
+        </section>
+
         <section aria-labelledby="sale-register-title">
           <div class="section-head">
             <div>
@@ -1252,6 +1303,11 @@
           title: "Hero MobilyTech Finds",
           recommended: "Atual: 964 x 1133 px. Recomendado: 900 x 1050 px ou mesma proporcao 0,85:1.",
           details: "Imagem vertical/lateral do topo da pagina de afiliados. Deixe respiro ao redor do personagem/produto."
+        },
+        "pages.produtos.image": {
+          title: "Hero Nossos Produtos",
+          recommended: "Recomendado: 900 x 1050 px ou mesma proporcao 0,85:1.",
+          details: "Use imagem/arte de produto ou personagem centralizado. Evite texto pequeno dentro da imagem."
         },
         "pages.montagem.image": {
           title: "Hero Monte seu PC",
@@ -1672,10 +1728,13 @@
         siteContentState.featureFlags = siteContentState.featureFlags || {};
         siteContentState.featureFlags.auth = siteContentState.featureFlags.auth || {};
         siteContentState.featureFlags.payments = siteContentState.featureFlags.payments || {};
+        siteContentState.featureFlags.catalog = siteContentState.featureFlags.catalog || {};
         if (siteContentState.featureFlags.auth.google !== false) siteContentState.featureFlags.auth.google = true;
         siteContentState.featureFlags.auth.microsoft = siteContentState.featureFlags.auth.microsoft === true;
         if (siteContentState.featureFlags.payments.mercadoPago !== false) siteContentState.featureFlags.payments.mercadoPago = true;
         siteContentState.featureFlags.payments.abacatePay = siteContentState.featureFlags.payments.abacatePay === true;
+        siteContentState.featureFlags.catalog.physicalProducts = siteContentState.featureFlags.catalog.physicalProducts === true;
+        if (siteContentState.featureFlags.catalog.dropshippingProducts !== false) siteContentState.featureFlags.catalog.dropshippingProducts = true;
         siteContentState.homeHero = siteContentState.homeHero || {};
         siteContentState.homeHero.backgroundMode = siteContentState.homeHero.backgroundMode || "preset";
         siteContentState.homeHero.backgroundPreset = siteContentState.homeHero.backgroundPreset || "sky";
@@ -1684,12 +1743,13 @@
         siteContentState.servicePanels.build = siteContentState.servicePanels.build || {};
         siteContentState.servicePanels.clean = siteContentState.servicePanels.clean || {};
         siteContentState.pages = siteContentState.pages || {};
-        ["ofertas", "achados", "montagem", "limpeza", "conta"].forEach((key) => {
+        ["ofertas", "produtos", "achados", "montagem", "limpeza", "conta"].forEach((key) => {
           siteContentState.pages[key] = siteContentState.pages[key] || {};
         });
         const selectedProductId = siteContentState.homeHero.featuredProductId || "";
         const pageNames = {
           ofertas: "Ofertas",
+          produtos: "Nossos Produtos",
           achados: "MobilyTech Finds",
           montagem: "Monte seu PC",
           limpeza: "Limpeza",
@@ -1713,6 +1773,8 @@
               ${contentCheckbox("featureFlags.auth.microsoft", "Login Microsoft", "Pausado ate configurarmos OAuth Microsoft.")}
               ${contentCheckbox("featureFlags.payments.mercadoPago", "Mercado Pago", "Checkout principal ativo.")}
               ${contentCheckbox("featureFlags.payments.abacatePay", "Abacate Pay", "Pausado enquanto corrigimos a chave/API.")}
+              ${contentCheckbox("featureFlags.catalog.physicalProducts", "Produtos fisicos proprios", "Reativa PCs, SSDs e fonte que estao fisicamente com voce.")}
+              ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Nossos Produtos", "Liga/desliga a secao inteira de dropshipping e trava o checkout quando desligado.")}
             </div>
           </div>
           <div class="content-fieldset">
@@ -1927,6 +1989,13 @@
         status.textContent = message;
       }
 
+      function setDropshippingStatus(message, type = "info") {
+        const status = $("#dropshippingStatus");
+        if (!status) return;
+        status.className = `sale-status is-${type}`;
+        status.textContent = message;
+      }
+
       function findProfitSummary(item) {
         const sale = moneyNumber(item.salePrice);
         const cost = moneyNumber(item.supplierCost);
@@ -1949,6 +2018,124 @@
           return `${Number.isInteger(percent) ? percent.toFixed(0) : percent.toFixed(1)}%`;
         }
         return text;
+      }
+
+      function supplierReferenceUrl(product) {
+        return product?.supplierReferenceUrl
+          || product?.supplierUrl
+          || product?.sourceUrl
+          || product?.supplierSearchUrl
+          || product?.sourceNotes?.supplierSearchUrl
+          || "";
+      }
+
+      function dropshippingAudit(product) {
+        const shipping = product.shipping || {};
+        const checks = [];
+        if (product.checkoutEnabled !== true) checks.push("checkout pausado");
+        if (!moneyNumber(product.price)) checks.push("sem preco");
+        if (!moneyNumber(product.costPrice || product.supplierCost)) checks.push("sem custo");
+        if (!supplierReferenceUrl(product)) checks.push("sem link");
+        if (shipping.exactRequired !== true && product.requireExactSupplierFreight !== true) checks.push("frete nao obrigatorio");
+        if (shipping.liveQuoteReady !== true && !product.cj?.vid && !product.cjVariantId) checks.push("sem cotacao/SKU");
+        return checks;
+      }
+
+      function marginMarkupPercent(product) {
+        const price = moneyNumber(product.price);
+        const cost = moneyNumber(product.costPrice || product.supplierCost);
+        if (!price || !cost) return parsePercent(product.marginPercent || product.targetMarginPercent) || 0;
+        return ((price - cost) / cost) * 100;
+      }
+
+      function priceFromCostMargin(cost, percent) {
+        if (!cost || !Number.isFinite(percent)) return 0;
+        const raw = cost * (1 + percent / 100);
+        return raw < 20 ? Math.ceil(raw * 10) / 10 : Math.ceil(raw / 5) * 5 - 0.1;
+      }
+
+      function updateDropshippingProduct(id, field, value) {
+        const item = productsState.find((product) => String(product.id) === String(id));
+        if (!item) return;
+        if (field === "active" || field === "checkoutEnabled") {
+          item[field] = value === "true";
+        } else if (field === "price" || field === "costPrice") {
+          item[field] = moneyNumber(value);
+        } else if (field === "targetMarginPercent") {
+          const percent = parsePercent(value);
+          if (Number.isFinite(percent)) {
+            item.targetMarginPercent = Math.round(percent * 10) / 10;
+            item.marginPercent = `${item.targetMarginPercent.toFixed(1)}%`;
+            const cost = moneyNumber(item.costPrice || item.supplierCost);
+            const nextPrice = priceFromCostMargin(cost, item.targetMarginPercent);
+            if (nextPrice) item.price = Math.round(nextPrice * 100) / 100;
+          }
+        } else if (field === "niche") {
+          item.niche = value || "Acessorios";
+          item.specs = item.specs && typeof item.specs === "object" ? item.specs : {};
+          item.specs.niche = item.niche;
+        }
+        setDropshippingStatus("Alteracao local aplicada. Baixe o products.json revisado para salvar no repositorio.", "ok");
+        renderDropshippingProducts(productsState);
+      }
+
+      function applyDropshippingMargin(percent) {
+        if (!Number.isFinite(percent)) throw new Error("Informe uma margem valida.");
+        productsState.forEach((item) => {
+          if (!item || item.category !== "dropshipping") return;
+          const cost = moneyNumber(item.costPrice || item.supplierCost);
+          if (!cost) return;
+          item.targetMarginPercent = Math.round(percent * 10) / 10;
+          item.marginPercent = `${item.targetMarginPercent.toFixed(1)}%`;
+          item.price = Math.round(priceFromCostMargin(cost, item.targetMarginPercent) * 100) / 100;
+        });
+        renderDropshippingProducts(productsState);
+      }
+
+      function renderDropshippingProducts(products = []) {
+        const tbody = $("#dropshippingProductsRows");
+        if (!tbody) return;
+        const items = products.filter((item) => item && item.category === "dropshipping");
+        if (!items.length) {
+          tbody.innerHTML = '<tr><td colspan="12">Nenhum produto de dropshipping cadastrado.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = items.map((item) => {
+          const audit = dropshippingAudit(item);
+          const reference = supplierReferenceUrl(item);
+          const cost = moneyNumber(item.costPrice || item.supplierCost);
+          const price = moneyNumber(item.price);
+          const margin = marginMarkupPercent(item);
+          const status = audit.length ? `Bloqueado: ${audit.join(", ")}` : "Liberado para checkout";
+          const shipping = item.shipping || {};
+          const reviewFlags = Array.isArray(item.reviewFlags) ? item.reviewFlags : [];
+          const statusWarning = reviewFlags.includes("high-freight-vs-product-price")
+            ? "Atencao: frete de teste acima do preco do produto."
+            : "";
+          const freight = shipping.liveQuoteReady === true
+            ? `Cotacao ativa${shipping.sampleQuoteMinBrl ? `: R$ ${moneyInput(shipping.sampleQuoteMinBrl)}` : ""}`
+            : (shipping.exactRequired === true || item.requireExactSupplierFreight === true)
+              ? "Exato obrigatorio"
+              : "Revisar";
+          const freightNote = item.publicShippingNote || "";
+          return `<tr>
+            <td><strong>${escapeHtml(status)}</strong>${statusWarning ? `<br><small>${escapeHtml(statusWarning)}</small>` : ""}</td>
+            <td><select data-drop-id="${escapeHtml(item.id)}" data-drop-field="active" class="narrow"><option value="true"${item.active !== false ? " selected" : ""}>Sim</option><option value="false"${item.active === false ? " selected" : ""}>Nao</option></select></td>
+            <td><select data-drop-id="${escapeHtml(item.id)}" data-drop-field="checkoutEnabled" class="narrow"><option value="true"${item.checkoutEnabled === true ? " selected" : ""}>Sim</option><option value="false"${item.checkoutEnabled !== true ? " selected" : ""}>Nao</option></select></td>
+            <td><textarea readonly>${escapeHtml(item.title || item.id || "")}</textarea></td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="niche" value="${escapeHtml(item.niche || item.specs?.niche || item.badge || "")}"></td>
+            <td>${escapeHtml(item.priceBand || item.specs?.priceBand || "-")}</td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="price" class="narrow" value="${escapeHtml(price ? moneyInput(price) : "")}"></td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="costPrice" class="narrow" value="${escapeHtml(cost ? moneyInput(cost) : "")}"></td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="targetMarginPercent" class="narrow" value="${escapeHtml(Number.isFinite(margin) && margin ? margin.toFixed(1).replace(".", ",") : "")}"></td>
+            <td>${escapeHtml(freight)}${freightNote ? `<br><small>${escapeHtml(freightNote)}</small>` : ""}</td>
+            <td>${escapeHtml(item.supplierPlatform || item.marketplace?.name || item.sourceNotes?.phase1SourcePlatform || "")}</td>
+            <td class="link-cell">${reference ? `<a href="${escapeHtml(reference)}" target="_blank" rel="noreferrer">${escapeHtml(reference)}</a>` : "-"}</td>
+          </tr>`;
+        }).join("");
+        tbody.querySelectorAll("[data-drop-id]").forEach((field) => {
+          field.addEventListener("change", () => updateDropshippingProduct(field.dataset.dropId, field.dataset.dropField, field.value));
+        });
       }
 
       function renderFindsEditor(finds) {
@@ -2105,6 +2292,7 @@
         hydrateMarginControls();
         renderSiteContentEditor();
         renderFindsEditor(finds);
+        renderDropshippingProducts(productList);
         renderSaleProducts(productList);
         syncSaleProductFields();
       }
@@ -2116,6 +2304,26 @@
       $("#exportSiteContent")?.addEventListener("click", () => {
         if (!siteContentState) return;
         downloadJson("site-content-revisado-mobilytech.json", siteContentState);
+      });
+      $("#exportDropshippingProducts")?.addEventListener("click", () => {
+        downloadJson("products-dropshipping-revisado-mobilytech.json", productsState);
+        setDropshippingStatus("products.json revisado baixado com os ajustes locais de dropshipping.", "ok");
+      });
+      $("#applyDropshippingMargin")?.addEventListener("click", () => {
+        try {
+          const percent = parsePercent($("#dropshippingBulkMargin")?.value);
+          applyDropshippingMargin(percent);
+          setDropshippingStatus(`Margem de ${percent.toFixed(1).replace(".", ",")}% aplicada aos produtos CJ.`, "ok");
+        } catch (error) {
+          setDropshippingStatus(error.message || "Nao foi possivel aplicar margem.", "error");
+        }
+      });
+      $("#disableAllDropshippingCheckout")?.addEventListener("click", () => {
+        productsState.forEach((item) => {
+          if (item && item.category === "dropshipping") item.checkoutEnabled = false;
+        });
+        renderDropshippingProducts(productsState);
+        setDropshippingStatus("Checkout de todos os produtos de dropshipping foi pausado localmente.", "ok");
       });
       $("#saveSiteContent")?.addEventListener("click", async () => {
         if (!siteContentState) return;
