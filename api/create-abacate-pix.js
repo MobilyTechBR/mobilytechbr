@@ -276,6 +276,25 @@ function toCents(value) {
   return Math.round(Number(value || 0) * 100);
 }
 
+function compactJson(value, maxLength = 2800) {
+  const text = JSON.stringify(value || []);
+  if (text.length <= maxLength) return text;
+  return JSON.stringify((Array.isArray(value) ? value : []).map((item) => ({
+    productId: item.productId,
+    title: item.title,
+    quantity: item.quantity,
+    supplierPlatform: item.supplierPlatform,
+    supplierUrl: item.supplierUrl,
+    salePrice: item.salePrice,
+    costPrice: item.costPrice,
+    customerShippingPrice: item.customerShippingPrice,
+    freightServiceName: item.freightServiceName,
+    region: item.region,
+    cj: item.cj,
+    dropify: item.dropify
+  })));
+}
+
 function buildDescription(checkoutItems) {
   if (checkoutItems.length === 1) {
     return String(checkoutItems[0].product.title || "Pedido MobilyTech BR").slice(0, 37);
@@ -376,6 +395,7 @@ module.exports = async function createAbacatePix(request, response) {
           manualFulfillmentRequired: manualFulfillmentRequired ? "true" : "false",
           manualFulfillmentProductIds: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
           manualFulfillmentItems: formatFulfillmentItems(manualFulfillmentItems),
+          manualFulfillmentItemsJson: manualFulfillmentRequired ? compactJson(manualFulfillmentItems) : "",
           abacateFeeAdjustment: String(abacateFee),
           baseTotal: String(total),
           finalTotal: String(finalTotal),

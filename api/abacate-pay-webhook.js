@@ -5,6 +5,7 @@ const {
   isManualShippingProvider,
   loadProductsFromDisk
 } = require("../lib/fulfillment-shipping");
+const { createDropifySemiAutomaticOrder } = require("../lib/dropify");
 
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";
 
@@ -81,6 +82,62 @@ function productIdsFromMetadata(metadata) {
     .filter(Boolean);
 }
 
+function parseJsonField(value, fallback) {
+  if (!value) return fallback;
+  try {
+    const parsed = JSON.parse(value);
+    return parsed ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function formatDropifyPreparation(result) {
+  if (!result) return "";
+  if (result.status === "not-needed") return "";
+  if (result.status === "payload-only") {
+    return [
+      "Pedido Dropify preparado em modo payload-only; nenhum pedido foi criado automaticamente.",
+      "Ative DROPIFY_CREATE_ORDER_ENABLED=true somente depois de testar credenciais, frete e fluxo de liberacao no painel."
+    ].join("\n");
+  }
+  if (result.status === "created-review-required") {
+    return [
+      "Pedido Dropify criado para revisao no painel.",
+      `Dropify orderId: ${result.orderId || "nao informado"}`,
+      "Revise o pedido, escolha/libere o frete e confirme o pagamento manualmente no fornecedor."
+    ].join("\n");
+  }
+  if (result.status === "error") {
+    return [
+      "Pedido Dropify NAO foi criado automaticamente.",
+      `Motivo: ${result.error || "erro desconhecido"}`,
+      "Use os dados de envio direto abaixo para fazer a revisao manual."
+    ].join("\n");
+  }
+  return "";
+}
+
+async function prepareDropifyOrderIfNeeded(orderReference, shippingCustomer, supplierItems) {
+  const hasDropifyItems = (supplierItems || []).some((item) => item?.dropify?.sku);
+  if (!hasDropifyItems) return { status: "not-needed" };
+  try {
+    return await createDropifySemiAutomaticOrder({
+      orderReference,
+      customer: shippingCustomer,
+      supplierItems
+    });
+  } catch (error) {
+    return {
+      status: "error",
+      created: false,
+      error: error.message || "Erro ao preparar pedido Dropify.",
+      code: error.code || "",
+      details: error.details
+    };
+  }
+}
+
 async function notifyOrder(request, body) {
   const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT || DEFAULT_ORDER_ENDPOINT;
   if (!endpoint) return { sent: false };
@@ -94,10 +151,16 @@ async function notifyOrder(request, body) {
   const shippingRequested = metadata.shippingRequested === "true";
   const manualFulfillmentRequired = metadata.manualFulfillmentRequired === "true" || isManualShippingProvider(metadata.shippingProvider);
   let manualFulfillmentItems = metadata.manualFulfillmentItems || "";
+  let manualFulfillmentItemsJson = parseJsonField(metadata.manualFulfillmentItemsJson, []);
   if (manualFulfillmentRequired && !manualFulfillmentItems) {
     const products = await loadProductsFromDisk().catch(() => []);
-    manualFulfillmentItems = formatFulfillmentItems(fulfillmentItemsForIds(products, productIdsFromMetadata(metadata)));
+    manualFulfillmentItemsJson = fulfillmentItemsForIds(products, productIdsFromMetadata(metadata));
+    manualFulfillmentItems = formatFulfillmentItems(manualFulfillmentItemsJson);
   }
+  const dropifyPreparation = manualFulfillmentRequired
+    ? await prepareDropifyOrderIfNeeded(orderReference, shippingCustomer, manualFulfillmentItemsJson)
+    : { status: "not-needed" };
+  const dropifyPreparationText = formatDropifyPreparation(dropifyPreparation);
   const origin = requestOrigin(request);
   const canAutoConfirmLabel = shippingRequested && !manualFulfillmentRequired && metadata.shippingProvider !== "mixed";
   const confirmationToken = canAutoConfirmLabel ? signPayload({
@@ -145,6 +208,7 @@ async function notifyOrder(request, body) {
     manualFulfillmentRequired
       ? [
         "ACAO MANUAL NECESSARIA: pedido com item de envio direto MobilyTech Finds.",
+        dropifyPreparationText,
         "Nao compre etiqueta Melhor Envio para estes itens.",
         manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
         "Use o link/canal de origem acima, compre em nome do cliente, acompanhe o rastreio e atualize o pedido."
@@ -189,6 +253,11 @@ async function notifyOrder(request, body) {
     manual_fulfillment_required: manualFulfillmentRequired ? "true" : "false",
     manual_fulfillment_product_ids: metadata.manualFulfillmentProductIds || "",
     manual_fulfillment_items: manualFulfillmentItems || "",
+    manual_fulfillment_items_json: metadata.manualFulfillmentItemsJson || "",
+    dropify_order_status: dropifyPreparation.status || "",
+    dropify_order_created: dropifyPreparation.created ? "true" : "false",
+    dropify_order_id: dropifyPreparation.orderId || "",
+    dropify_order_message: dropifyPreparationText || "",
     confirmar_etiqueta: confirmationUrl,
     label_confirmation_url: confirmationUrl
   });

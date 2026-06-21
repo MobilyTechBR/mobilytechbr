@@ -144,6 +144,25 @@ function formBody(fields) {
   return params;
 }
 
+function compactJson(value, maxLength = 2800) {
+  const text = JSON.stringify(value || []);
+  if (text.length <= maxLength) return text;
+  return JSON.stringify((Array.isArray(value) ? value : []).map((item) => ({
+    productId: item.productId,
+    title: item.title,
+    quantity: item.quantity,
+    supplierPlatform: item.supplierPlatform,
+    supplierUrl: item.supplierUrl,
+    salePrice: item.salePrice,
+    costPrice: item.costPrice,
+    customerShippingPrice: item.customerShippingPrice,
+    freightServiceName: item.freightServiceName,
+    region: item.region,
+    cj: item.cj,
+    dropify: item.dropify
+  })));
+}
+
 async function notifyPendingOrder(fields) {
   const endpoint = process.env.ORDER_NOTIFICATION_ENDPOINT || "";
   if (!endpoint) return { sent: false, skipped: true };
@@ -532,6 +551,7 @@ module.exports = async function createAbacateCheckout(request, response) {
         manualFulfillmentRequired: manualFulfillmentRequired ? "true" : "false",
         manualFulfillmentProductIds: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
         manualFulfillmentItems: formatFulfillmentItems(manualFulfillmentItems),
+        manualFulfillmentItemsJson: manualFulfillmentRequired ? compactJson(manualFulfillmentItems) : "",
         couponCode: promotion.code || "",
         couponLabel: promotion.label || "",
         couponPercent: promotion.percent ? String(promotion.percent) : "",
@@ -611,6 +631,7 @@ module.exports = async function createAbacateCheckout(request, response) {
       manual_fulfillment_required: checkoutPayload.metadata.manualFulfillmentRequired,
       manual_fulfillment_product_ids: checkoutPayload.metadata.manualFulfillmentProductIds,
       manual_fulfillment_items: checkoutPayload.metadata.manualFulfillmentItems,
+      manual_fulfillment_items_json: checkoutPayload.metadata.manualFulfillmentItemsJson,
       policy_terms_accepted: checkoutPayload.metadata.policyTermsAccepted,
       policy_privacy_accepted: checkoutPayload.metadata.policyPrivacyAccepted,
       policy_version: checkoutPayload.metadata.policyVersion,

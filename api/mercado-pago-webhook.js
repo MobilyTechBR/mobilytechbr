@@ -6,6 +6,7 @@ const {
   loadProductsFromDisk
 } = require("../lib/fulfillment-shipping");
 const { createCjSemiAutomaticOrders } = require("../lib/cj-dropshipping");
+const { createDropifySemiAutomaticOrder } = require("../lib/dropify");
 
 const MERCADO_PAGO_PAYMENT_API = "https://api.mercadopago.com/v1/payments";
 const DEFAULT_ORDER_ENDPOINT = "https://formspree.io/f/mnjrqypq";
@@ -107,6 +108,32 @@ function formatCjPreparation(result) {
   return "";
 }
 
+function formatDropifyPreparation(result) {
+  if (!result) return "";
+  if (result.status === "not-needed") return "";
+  if (result.status === "payload-only") {
+    return [
+      "Pedido Dropify preparado em modo payload-only; nenhum pedido foi criado automaticamente.",
+      "Ative DROPIFY_CREATE_ORDER_ENABLED=true somente depois de testar credenciais, frete e fluxo de liberacao no painel."
+    ].join("\n");
+  }
+  if (result.status === "created-review-required") {
+    return [
+      "Pedido Dropify criado para revisao no painel.",
+      `Dropify orderId: ${result.orderId || "nao informado"}`,
+      "Revise o pedido, escolha/libere o frete e confirme o pagamento manualmente no fornecedor."
+    ].join("\n");
+  }
+  if (result.status === "error") {
+    return [
+      "Pedido Dropify NAO foi criado automaticamente.",
+      `Motivo: ${result.error || "erro desconhecido"}`,
+      "Use os dados de envio direto abaixo para fazer a revisao manual."
+    ].join("\n");
+  }
+  return "";
+}
+
 async function prepareCjOrdersIfNeeded(orderReference, metadata, shippingCustomer, supplierItems) {
   const hasCjItems = (supplierItems || []).some((item) => item?.cj?.vid || item?.cj?.sku);
   if (!hasCjItems) return { status: "not-needed" };
@@ -122,6 +149,26 @@ async function prepareCjOrdersIfNeeded(orderReference, metadata, shippingCustome
       status: "error",
       created: false,
       error: error.message || "Erro ao preparar pedido CJ.",
+      code: error.code || "",
+      details: error.details
+    };
+  }
+}
+
+async function prepareDropifyOrderIfNeeded(orderReference, metadata, shippingCustomer, supplierItems) {
+  const hasDropifyItems = (supplierItems || []).some((item) => item?.dropify?.sku);
+  if (!hasDropifyItems) return { status: "not-needed" };
+  try {
+    return await createDropifySemiAutomaticOrder({
+      orderReference,
+      customer: shippingCustomer,
+      supplierItems
+    });
+  } catch (error) {
+    return {
+      status: "error",
+      created: false,
+      error: error.message || "Erro ao preparar pedido Dropify.",
       code: error.code || "",
       details: error.details
     };
@@ -172,7 +219,11 @@ async function notifyOrder(request, payment) {
   const cjPreparation = manualFulfillmentRequired
     ? await prepareCjOrdersIfNeeded(orderReference, metadata, shippingCustomer, manualFulfillmentItemsJson)
     : { status: "not-needed" };
+  const dropifyPreparation = manualFulfillmentRequired
+    ? await prepareDropifyOrderIfNeeded(orderReference, metadata, shippingCustomer, manualFulfillmentItemsJson)
+    : { status: "not-needed" };
   const cjPreparationText = formatCjPreparation(cjPreparation);
+  const dropifyPreparationText = formatDropifyPreparation(dropifyPreparation);
   const origin = requestOrigin(request);
   const canAutoConfirmLabel = shippingRequested && !manualFulfillmentRequired && metadata.shipping_provider !== "mixed";
   const confirmationToken = canAutoConfirmLabel ? signPayload({
@@ -221,6 +272,7 @@ async function notifyOrder(request, payment) {
       ? [
         "ACAO SEMI-AUTOMATICA CJ / ENVIO DIRETO.",
         cjPreparationText,
+        dropifyPreparationText,
         "Nao compre etiqueta Melhor Envio para estes itens.",
         "Revise custo, frete e produto antes de confirmar/pagar o pedido no fornecedor.",
         manualFulfillmentItems || "Itens de fornecedor nao detalhados nos metadados.",
@@ -273,6 +325,10 @@ async function notifyOrder(request, payment) {
     cj_order_numbers: (cjPreparation.orders || cjPreparation.payloads || []).map((order) => order.orderNumber).filter(Boolean).join("; "),
     cj_pay_urls: (cjPreparation.orders || []).map((order) => order.cjPayUrl).filter(Boolean).join("; "),
     cj_order_message: cjPreparationText || "",
+    dropify_order_status: dropifyPreparation.status || "",
+    dropify_order_created: dropifyPreparation.created ? "true" : "false",
+    dropify_order_id: dropifyPreparation.orderId || "",
+    dropify_order_message: dropifyPreparationText || "",
     confirmar_etiqueta: confirmationUrl,
     label_confirmation_url: confirmationUrl
   });
