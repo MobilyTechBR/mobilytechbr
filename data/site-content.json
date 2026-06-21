@@ -9,7 +9,7 @@
       "abacatePay": false
     },
     "catalog": {
-      "physicalProducts": false,
+      "physicalProducts": true,
       "dropshippingProducts": true
     }
   },
