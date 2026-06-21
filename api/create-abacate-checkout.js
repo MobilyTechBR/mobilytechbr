@@ -18,6 +18,7 @@ const { estimateImportTaxes } = require("../lib/import-taxes");
 const { loadGlobalSwaps, normalizeSelectedSwaps } = require("../lib/product-swaps");
 const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
 const { assertPolicyAcceptance, assertSupplierDisclosure, requestClientIp } = require("../lib/checkout-policies");
+const { productWithSelectedVariant } = require("../lib/product-variants");
 
 const ADDON_CATEGORIES = {
   storage: "Armazenamento",
@@ -263,12 +264,13 @@ function normalizeCheckoutItems(products, globalAddons, globalSwaps, payload) {
 
   return requestedItems.map((item) => {
     const productId = String(item?.productId || "");
-    const product = products.find((entry) => entry.id === productId && entry.active !== false);
-    if (!product) {
+    const baseProduct = products.find((entry) => entry.id === productId && entry.active !== false);
+    if (!baseProduct) {
       const error = new Error("Produto nao encontrado ou inativo.");
       error.statusCode = 404;
       throw error;
     }
+    const product = productWithSelectedVariant(baseProduct, item);
 
     const unitPrice = parsePriceBRL(product.price);
     if (!Number.isFinite(unitPrice) || unitPrice <= 0) {

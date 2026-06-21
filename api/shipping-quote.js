@@ -9,6 +9,7 @@ const {
   validateUniquePhysicalCheckoutItems
 } = require("../lib/fulfillment-shipping");
 const { assertCatalogAvailabilityForProducts, loadSiteContent } = require("../lib/catalog-flags");
+const { productWithSelectedVariant } = require("../lib/product-variants");
 const DEFAULT_MELHOR_ENVIO_SERVICE_IDS = [
   1, 2, 17, // Correios: PAC, SEDEX, Mini Envios
   3, 4, 27, // Jadlog
@@ -173,7 +174,7 @@ function productsFromCartItems(products, cartItems) {
     if (!product) return null;
     const rawQuantity = Number(cartItem?.quantity || cartItem?.qty || 1);
     const quantity = Number.isFinite(rawQuantity) ? Math.max(1, Math.floor(rawQuantity)) : 1;
-    return { ...product, quantity };
+    return { ...productWithSelectedVariant(product, cartItem), quantity };
   }).filter(Boolean);
 }
 
@@ -305,6 +306,7 @@ module.exports = async function shippingQuote(request, response) {
   } catch (error) {
     sendJson(response, error.statusCode || 500, {
       error: error.message || "Erro ao calcular frete.",
+      code: error.code,
       details: error.details
     });
   }

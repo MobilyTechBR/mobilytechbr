@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python3 scripts/build_phase2_ibuy_style.py || python scripts/build_phase2_ibuy_style.py",
+  "outputDirectory": ".",
   "routes": [
     {
       "src": "/api/auth-session/?",

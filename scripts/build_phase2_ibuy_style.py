@@ -276,6 +276,11 @@ PUBLIC_FIND_FIELDS = {
     "publicOriginNote",
     "shippingOrigin",
     "shippingScope",
+    "addOnOnly",
+    "comboRecommended",
+    "freightRiskLevel",
+    "freightRatio",
+    "addOnMinSubtotalBrl",
 }
 
 PUBLIC_PRODUCT_FIELDS = {
@@ -299,6 +304,7 @@ PUBLIC_PRODUCT_FIELDS = {
     "reviewFlags",
     "featured",
     "swaps",
+    "variants",
 }
 
 
@@ -407,6 +413,11 @@ def public_finds_payload(finalists, products=None, site_content: dict | None = N
                 "publicShippingNote": product.get("publicShippingNote") or "Frete recalculado pelo CEP antes do pagamento.",
                 "publicOriginNote": product.get("publicOriginNote") or ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro."),
                 "shippingScope": scope,
+                "addOnOnly": bool(shipping.get("addOnOnly")),
+                "comboRecommended": bool(shipping.get("comboRecommended")),
+                "freightRiskLevel": shipping.get("freightRiskLevel") or "",
+                "freightRatio": shipping.get("freightRatio"),
+                "addOnMinSubtotalBrl": shipping.get("addOnMinSubtotalBrl"),
                 "storeCheckout": True,
                 "publicGroup": "vendidos",
             }
@@ -521,6 +532,11 @@ def public_dropshipping_payload(products, site_content: dict | None = None):
                 "publicShippingNote": product.get("publicShippingNote") or "Frete recalculado pelo CEP antes do pagamento.",
                 "publicOriginNote": product.get("publicOriginNote") or ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro."),
                 "shippingScope": scope,
+                "addOnOnly": bool(shipping.get("addOnOnly")),
+                "comboRecommended": bool(shipping.get("comboRecommended")),
+                "freightRiskLevel": shipping.get("freightRiskLevel") or "",
+                "freightRatio": shipping.get("freightRatio"),
+                "addOnMinSubtotalBrl": shipping.get("addOnMinSubtotalBrl"),
                 "storeCheckout": True,
                 "publicGroup": "produtos",
             }
@@ -1494,11 +1510,11 @@ def css() -> str:
 .cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-review{border:1px solid #dceafe;background:#f6faff;border-radius:14px;padding:13px;display:grid;gap:9px;color:#24384d}.checkout-review[hidden]{display:none}.checkout-review h3{margin:0;font-size:16px;line-height:1.15}.checkout-review p{margin:0;color:#536174;font-size:12.5px;font-weight:850;line-height:1.35}.checkout-review dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0}.checkout-review dt{color:#5f6b7a;font-size:12px;font-weight:1000}.checkout-review dd{margin:0;text-align:right;font-size:12.5px;font-weight:1000;color:#101318}.checkout-review a{text-decoration:underline;text-underline-offset:2px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.policy-check{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fafc;color:#3c4450;font-size:12.5px;font-weight:900;line-height:1.35}.policy-check input{width:18px;height:18px;margin:0;accent-color:var(--red)}.policy-check a{color:#111;text-decoration:underline;text-underline-offset:2px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .drawer-item{grid-template-columns:76px minmax(0,1fr) 38px;align-items:start;min-height:102px}.drawer-item>div{min-width:0}.drawer-item strong{display:block;margin-top:5px;font-size:15px;line-height:1.1;white-space:nowrap}.drawer-adjustment{grid-template-columns:minmax(0,1fr) auto;min-height:0;align-items:center}.drawer-adjustment>div:first-child:empty{display:none}.drawer-adjustment strong{margin:0;text-align:right}.drawer-total{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;font-size:22px;line-height:1.05}.drawer-total strong{white-space:nowrap;text-align:right}.coupon-control{display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:8px;align-items:center}.coupon-box .coupon-control input{height:48px;padding:0 13px}.coupon-apply{height:48px;border:0;border-radius:12px;background:#111;color:#fff;font-size:25px;font-weight:1000;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,.13)}.coupon-apply:hover{filter:brightness(1.08)}.checkout-review dl{grid-template-columns:minmax(0,1fr) minmax(92px,auto)}.checkout-review dd{overflow-wrap:anywhere}
 .cart-drawer>*{flex-shrink:0}.drawer-items{flex:0 0 auto;align-content:start}.drawer-item.drawer-adjustment{grid-template-columns:minmax(0,1fr) auto;min-height:74px}.drawer-item.drawer-adjustment>div:first-child{display:none}.drawer-item.drawer-adjustment h3{font-size:13px;margin:0}.drawer-item.drawer-adjustment small{margin:4px 0 0}.drawer-item.drawer-adjustment strong{align-self:center;margin:0;text-align:right}
-.drawer-item{overflow:hidden}.drawer-item>div{display:grid;gap:3px;align-content:start}.drawer-item h3,.drawer-item small,.drawer-item strong{min-width:0}.drawer-item small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item .close-drawer{align-self:start;line-height:1}
+.drawer-item{overflow:hidden}.drawer-item>div{display:grid;gap:3px;align-content:start}.drawer-item h3,.drawer-item small,.drawer-item strong{min-width:0}.drawer-item small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item .close-drawer{align-self:start;line-height:1}.drawer-item-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px;min-width:0}.drawer-item-foot strong{margin:0;text-align:right}.drawer-qty{display:inline-grid;grid-template-columns:28px 34px 28px;align-items:center;justify-self:start;border:1px solid #d8e0ea;border-radius:999px;overflow:hidden;background:#f8fafc;min-height:28px}.drawer-qty button{width:28px;height:28px;border:0;background:#fff;color:#111;font-size:17px;font-weight:1000;line-height:1;cursor:pointer}.drawer-qty button:disabled{color:#aab2bf;cursor:not-allowed}.drawer-qty span{min-width:34px;text-align:center;font-size:12px;font-weight:1000;color:#111}
 .market-mobilytech{aspect-ratio:7.1008/1;height:auto;min-height:0;display:block;grid-template-columns:none;padding:0;border:0;border-radius:0;overflow:visible;background:transparent url("/assets/add-to-cart-button-ref.png") center/100% 100% no-repeat!important;box-shadow:none;text-shadow:none;color:transparent}.market-mobilytech:before,.market-mobilytech:after{display:none}.market-mobilytech .market-cart-glyph,.market-mobilytech .market-sep,.market-mobilytech .market-label{opacity:0}
 .drops-band{padding:46px 34px;background-color:#f8fbff}.drops-band .find-card{padding:12px;gap:7px;min-height:0}.drops-band .find-media{height:156px}.drops-band .find-media img{max-height:132px}.drops-band .find-card h3{min-height:34px}.drops-band .find-card p{font-size:11.7px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.drops-band .find-disclosure{padding:7px 9px;gap:2px}.drops-band .find-disclosure span{font-size:10.8px}.drops-band .find-disclosure small{font-size:9.8px;line-height:1.18}.drops-band .find-price{font-size:20px;min-height:21px}.drops-band .market-actions{margin-top:0}
 .page-hero-legal,.unavailable-page{background:#f8fafc;border:1px solid var(--line)}.legal-layout{max-width:1120px;margin:34px auto;padding:0 24px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:18px}.legal-note,.legal-card{border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.legal-note{position:sticky;top:120px;align-self:start;display:grid;gap:8px;padding:18px;font-size:13px;font-weight:900;color:#59616d}.legal-note strong{font-size:18px;color:#111}.legal-note a{color:#111}.legal-grid{display:grid;gap:14px}.legal-card{padding:20px}.legal-card h2{font-size:22px;margin:0 0 8px}.legal-card p{margin:0;color:#59616d;font-weight:800;line-height:1.55}
-    .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}
+    .product-modal{border:0;border-radius:18px;padding:0;max-width:920px;width:calc(100vw - 40px);box-shadow:0 28px 90px rgba(0,0,0,.28)}.product-modal::backdrop{background:rgba(0,0,0,.45)}#modalBody{padding:28px}.modal-grid{display:grid;grid-template-columns:330px 1fr;gap:28px}.modal-grid img{height:300px;width:100%;object-fit:contain;background:#f6f7fb;border-radius:16px}.modal-grid h2{font-size:28px;margin:0 0 8px}.spec-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:16px 0}.spec-list span{background:#f4f6f8;border-radius:10px;padding:10px;font-weight:900;color:#4b5563}.option-box{display:grid;gap:8px;margin:14px 0}.option-box label{display:flex;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}.variant-box{display:grid;gap:7px;margin:14px 0}.variant-box label{font-weight:1000}.variant-select{width:100%;min-height:46px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:0 12px;font-weight:900;color:#111}.variant-note{font-size:12px;color:#687182;font-weight:900;line-height:1.3;margin:0}
     @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.account-popover,.account-popover.is-closing{animation:none}.btn,.service-panel-image,.cart-drawer,.toast,.account-action span{transition:none}}
     @media (max-width:1100px){
       .nav-shell{grid-template-columns:auto 1fr auto auto;grid-auto-rows:auto;height:auto;padding:12px 18px}.main-nav{grid-column:1/5;order:4;justify-content:flex-start;overflow-x:auto;padding-bottom:6px}.search-zone{grid-column:1/3;order:2}.account-menu-wrap{display:flex;justify-self:end}.cart-mini{justify-self:end}.hero-slider{grid-template-columns:1fr;gap:22px;padding:38px 24px}.hero-pc{max-height:310px}.hero-deal-card{max-width:360px}.trust-row{grid-template-columns:repeat(2,1fr)}.trust-row article:nth-child(2){border-right:0}.product-grid,.catalog-grid,.hardware-grid{grid-template-columns:repeat(3,1fr)}.finds-band{grid-template-columns:1fr}.reviews-grid{grid-template-columns:repeat(2,1fr)}.score-card{grid-column:1/3}.footer{grid-template-columns:repeat(2,1fr)}.page-hero{grid-template-columns:1fr;padding:42px 28px}.page-hero img{justify-self:center}.ibp-panels,.split-form,.inline-clean,.contact-grid,.account-layout{grid-template-columns:1fr}
@@ -1635,13 +1651,17 @@ def css() -> str:
       .modal-grid{grid-template-columns:1fr}
       .modal-grid img{height:220px}
       .spec-list{grid-template-columns:1fr}
+      .variant-select{min-height:42px;font-size:12px}
       .cart-drawer{padding:18px;width:100vw}
       .drawer-items{max-height:min(43vh,340px);overflow:auto;overscroll-behavior:contain;padding-right:2px}
-      .drawer-item{grid-template-columns:58px minmax(0,1fr) 32px;gap:9px;min-height:74px;align-items:center}
+      .drawer-item{grid-template-columns:58px minmax(0,1fr) 32px;gap:9px;min-height:88px;align-items:center}
       .drawer-item img{width:58px;height:58px}
       .drawer-item h3{font-size:12.5px;line-height:1.16;-webkit-line-clamp:2;min-height:0}
       .drawer-item small{font-size:10.5px;line-height:1.18;-webkit-line-clamp:1;margin:1px 0 0}
       .drawer-item strong{font-size:13.5px;line-height:1.05;margin-top:2px;white-space:nowrap}
+      .drawer-qty{grid-template-columns:24px 28px 24px;min-height:24px}
+      .drawer-qty button{width:24px;height:24px;font-size:15px}
+      .drawer-qty span{min-width:28px;font-size:11px}
       .drawer-total{font-size:20px}
       .coupon-control{grid-template-columns:minmax(0,1fr) 42px}
       .coupon-box .coupon-control input,.coupon-apply{height:44px}
@@ -1776,11 +1796,14 @@ def css() -> str:
       .drawer-head h2{font-size:25px}
       .close-drawer{width:34px;height:34px;font-size:24px}
       .drawer-items{max-height:min(42vh,330px);gap:7px}
-      .drawer-item{grid-template-columns:52px minmax(0,1fr) 30px;gap:8px;min-height:72px;padding:8px;border-radius:12px;align-items:center}
+      .drawer-item{grid-template-columns:52px minmax(0,1fr) 30px;gap:8px;min-height:84px;padding:8px;border-radius:12px;align-items:center}
       .drawer-item img{width:52px;height:52px;border-radius:8px}
       .drawer-item h3{font-size:11.5px;line-height:1.15;-webkit-line-clamp:2}
       .drawer-item small{font-size:9.6px;line-height:1.16;-webkit-line-clamp:1;margin-top:0}
       .drawer-item strong{font-size:12px;line-height:1.05;white-space:nowrap}
+      .drawer-qty{grid-template-columns:23px 26px 23px;min-height:23px}
+      .drawer-qty button{width:23px;height:23px;font-size:14px}
+      .drawer-qty span{min-width:26px;font-size:10.5px}
       .drawer-total{font-size:18px;padding-top:10px}
       .coupon-box,.shipping-box,.checkout-review,.policy-check{padding:10px;border-radius:12px}
       .coupon-box label,.shipping-box label{font-size:12px;margin-bottom:7px}
@@ -2125,7 +2148,13 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     }}
     function specs(product) {{
       const s = product.specs || {{}};
-      return [s.processor, s.memory, s.gpu, s.storage, s.brand, s.capacity, s.interface].filter(Boolean).slice(0,4);
+      const brand = isSupplierProduct(product) && norm(s.brand).includes("cj") ? "Fornecedor parceiro" : s.brand;
+      return [s.processor, s.memory, s.gpu, s.storage, brand, s.capacity, s.interface].filter(Boolean).slice(0,4);
+    }}
+    function productBaseTitle(product) {{
+      const title = String(product?.title || "Produto");
+      if (!hasProductVariants(product)) return title;
+      return title.replace(/\\s+-\\s+[^-]{{2,80}}$/u, "").trim() || title;
     }}
     function currentSearch() {{ return ($("#siteSearch")?.value || "").trim(); }}
     function anchorId(prefix, value) {{
@@ -2261,6 +2290,57 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     }}
     function productType(product) {{ return product.category === "pc" ? "pc" : "hardware"; }}
     function isConfigurablePc(product) {{ return product?.category === "pc"; }}
+    function productVariants(product) {{
+      return Array.isArray(product?.variants) ? product.variants.filter((variant) => variant && variant.active !== false) : [];
+    }}
+    function variantId(variant) {{
+      return String(variant?.id || variant?.variantId || variant?.vid || variant?.cj?.vid || variant?.sku || variant?.cj?.sku || "");
+    }}
+    function hasProductVariants(product) {{ return productVariants(product).length > 0; }}
+    function selectedVariantForItem(product, item={{}}) {{
+      const variants = productVariants(product);
+      if (!variants.length) return null;
+      const selected = item.selectedVariant || {{}};
+      const selectedId = String(item.selectedVariantId || selected.id || selected.variantId || selected.vid || selected?.cj?.vid || selected.sku || selected?.cj?.sku || "");
+      return variants.find((variant) => variantId(variant) === selectedId)
+        || variants.find((variant) => variant.default === true)
+        || variants.find((variant) => String(variant?.cj?.vid || variant?.vid || "") === String(product?.cj?.vid || ""))
+        || variants[0];
+    }}
+    function variantLabel(variant) {{
+      return variant?.label || variant?.optionSummary || variant?.variantKey || variant?.name || "Variacao selecionada";
+    }}
+    function variantPrice(product, variant) {{
+      if (!variant) return Number(product?.price || 0);
+      const direct = Number(variant.price);
+      if (Number.isFinite(direct) && direct > 0) return direct;
+      const delta = Number(variant.priceDelta);
+      return Number(product?.price || 0) + (Number.isFinite(delta) ? delta : 0);
+    }}
+    function variantSummary(product, variant) {{
+      if (!variant) return null;
+      return {{
+        id: variantId(variant),
+        label: variantLabel(variant),
+        price: variantPrice(product, variant),
+        priceDelta: variantPrice(product, variant) - Number(product?.price || 0),
+        costPrice: variant.costPrice || variant.supplierCost || product?.costPrice,
+        costUsd: variant.costUsd || product?.costUsd,
+        image: variant.image || variant.variantImage || "",
+        sku: variant.sku || variant?.cj?.sku || "",
+        vid: variant.vid || variant?.cj?.vid || "",
+        cj: {{
+          ...(variant.cj || {{}}),
+          vid: variant.vid || variant?.cj?.vid || "",
+          sku: variant.sku || variant?.cj?.sku || "",
+          variantKey: variant.variantKey || variant?.cj?.variantKey || "",
+          variantNameEn: variant.variantNameEn || variant?.cj?.variantNameEn || ""
+        }}
+      }};
+    }}
+    function productUnitPrice(product, item={{}}) {{
+      return variantPrice(product, selectedVariantForItem(product, item));
+    }}
     function productTotal(item) {{
       const product = productById(item.productId);
       if (!product) return 0;
@@ -2268,7 +2348,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         ? [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].reduce((sum, option) => sum + Number(option.price || 0), 0)
         : 0;
       const quantity = Math.max(1, Number(item.quantity || 1));
-      return (Number(product.price || 0) + extras) * quantity;
+      return (productUnitPrice(product, item) + extras) * quantity;
     }}
     function cartProducts() {{ return cart.map((item) => productById(item.productId)).filter(Boolean); }}
     function isSupplierProduct(product) {{
@@ -2382,6 +2462,15 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       </label>`;
       renderCart();
     }}
+    function customerFreightTitle(company="", service="", provider="") {{
+      const cleanCompany = String(company || "").trim();
+      const cleanService = String(service || "").trim();
+      const hiddenCompany = /dropshipping/i.test(cleanCompany) || /cj-dropshipping/i.test(String(provider || ""));
+      if (hiddenCompany && cleanService) return cleanService;
+      if (!cleanCompany) return cleanService || "Envio com rastreio";
+      if (!cleanService || cleanService === cleanCompany) return cleanCompany;
+      return `${{cleanCompany}} - ${{cleanService}}`;
+    }}
     function activePromotion() {{
       const code = norm(activeCouponCode).replace(/\\s+/g, "").toUpperCase();
       return LOCAL_PROMOTIONS.find((promo) => promo.code === code) || null;
@@ -2454,7 +2543,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         : (state.supplier ? "Apos calcular o frete" : "Conforme forma de entrega");
       node.hidden = false;
       node.innerHTML = `<h3>Revise antes de pagar</h3>
-        <p>Vendedora: MobilyTech BR - CNPJ 66.834.883/0001-43. Confira os dados e corrija qualquer erro antes de seguir para o pagamento.</p>
+        <p>MobilyTech BR - CNPJ 66.834.883/0001-43. Revise valores, frete e prazo antes de pagar.</p>
         <dl>
           <dt>Produtos</dt><dd>${{money(subtotal)}}</dd>
           ${{discount > 0 ? `<dt>Desconto</dt><dd>-${{money(discount)}}</dd>` : ""}}
@@ -2465,7 +2554,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
           <dt>Prazo</dt><dd>${{escapeHtml(timeLabel)}}</dd>
           <dt>Origem</dt><dd>${{escapeHtml(cartOriginSummary())}}</dd>
         </dl>
-        <p>Politicas: <a href="${{ROUTES.termos}}" target="_blank" rel="noopener">termos</a>, <a href="${{ROUTES.entrega}}" target="_blank" rel="noopener">entrega</a>, <a href="${{ROUTES.trocas}}" target="_blank" rel="noopener">trocas</a>, <a href="${{ROUTES.garantia}}" target="_blank" rel="noopener">garantia</a> e <a href="${{ROUTES.privacidade}}" target="_blank" rel="noopener">privacidade</a>. Tributos internacionais sao estimados para evitar cobranca surpresa.</p>`;
+        <p><a href="${{ROUTES.termos}}" target="_blank" rel="noopener">Termos</a>, <a href="${{ROUTES.entrega}}" target="_blank" rel="noopener">entrega</a>, <a href="${{ROUTES.trocas}}" target="_blank" rel="noopener">trocas</a>, <a href="${{ROUTES.garantia}}" target="_blank" rel="noopener">garantia</a> e <a href="${{ROUTES.privacidade}}" target="_blank" rel="noopener">privacidade</a> ficam disponiveis antes do pagamento.</p>`;
     }}
     function syncCouponFeedback() {{
       const feedback = $("#couponFeedback");
@@ -2864,7 +2953,15 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (value.includes("mercado")) return "assets/affiliate-button-mercado-livre.png";
       return "";
     }}
-    function compactSupplierFreightNote(note="", scope="") {{
+    function compactSupplierFreightNote(note="", scope="", item={{}}) {{
+      const minSubtotal = Number(item.addOnMinSubtotalBrl || 99);
+      if (item.addOnOnly) {{
+        return `Melhor em combo. Calcule com carrinho a partir de ${{money(minSubtotal)}}.`;
+      }}
+      if (item.comboRecommended || item.freightRiskLevel === "combo-recommended") {{
+        const amount = String(note || "").match(/R\\$\\s*[\\d.,]+/);
+        return amount ? `Melhor em combo. Frete SP: ${{amount[0]}}.` : "Melhor em combo para diluir o frete.";
+      }}
       const amount = String(note || "").match(/R\\$\\s*[\\d.,]+/);
       if (scope === "internacional") {{
         return amount ? `Frete SP: ${{amount[0]}}. Total e tributos no carrinho.` : "Frete, total e tributos aparecem no carrinho.";
@@ -2882,11 +2979,16 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const scope = findShippingScope(item);
       const originNote = isManual ? (scope === "internacional" ? "Fornecedor parceiro internacional." : "Fornecedor parceiro nacional.") : "";
       const freightNote = isManual ? (item.publicShippingNote || "Frete recalculado pelo CEP antes do pagamento.") : "";
-      const compactFreightNote = isManual ? compactSupplierFreightNote(freightNote, scope) : "";
+      const compactFreightNote = isManual ? compactSupplierFreightNote(freightNote, scope, item) : "";
       const disclosure = isManual
         ? `<div class="find-disclosure"><span>${{escapeHtml(originNote)}}</span><small>${{escapeHtml(compactFreightNote)}}</small></div>`
         : "";
       const affiliateLinks = Array.isArray(item.affiliateLinks) ? item.affiliateLinks.filter((link) => link && link.url) : [];
+      const manualProductId = findProductId(item);
+      const manualProduct = isManual ? productById(manualProductId) : null;
+      const manualButtonAttr = manualProduct && hasProductVariants(manualProduct)
+        ? `data-detail="${{manualProductId}}"`
+        : `data-add="${{manualProductId}}"`;
       const linkButton = (link) => {{
         const name = link.name || link.platform || market.name || "Marketplace";
         const className = link.class || marketClass(name);
@@ -2900,7 +3002,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         return `<a class="market-btn ${{className}}" href="${{link.url}}" target="_blank" rel="noopener"><span class="market-brand"><img src="${{linkLogo}}" alt="" aria-hidden="true"></span><span class="market-sep" aria-hidden="true"></span><span class="market-label">${{label}}</span></a>`;
       }};
       const action = isManual
-        ? `<div class="market-actions"><button class="market-btn market-mobilytech" type="button" data-add="${{findProductId(item)}}"><span class="market-cart-glyph" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 6h15l-1.4 8.1H8.2L6 6Z"></path><path d="M6 6 5.2 3H2.5"></path><circle cx="9.3" cy="19.3" r="1.6"></circle><circle cx="17.4" cy="19.3" r="1.6"></circle></svg></span><span class="market-sep" aria-hidden="true"></span><span class="market-label">Adicionar ao carrinho</span></button></div>`
+        ? `<div class="market-actions"><button class="market-btn market-mobilytech" type="button" ${{manualButtonAttr}}><span class="market-cart-glyph" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M6 6h15l-1.4 8.1H8.2L6 6Z"></path><path d="M6 6 5.2 3H2.5"></path><circle cx="9.3" cy="19.3" r="1.6"></circle><circle cx="17.4" cy="19.3" r="1.6"></circle></svg></span><span class="market-sep" aria-hidden="true"></span><span class="market-label">Adicionar ao carrinho</span></button></div>`
         : `<div class="market-actions">${{affiliateLinks.length ? affiliateLinks.map(linkButton).join("") : (() => {{ const art = marketButtonArt(market.name || ""); return art ? `<a class="market-btn market-art-btn ${{market.class || marketClass(market.name || "")}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener" aria-label="${{buttonLabel}} ${{market.name || "Marketplace"}}"><img class="market-button-art" src="${{asset(art)}}" alt="${{buttonLabel}} ${{market.name || "Marketplace"}}"></a>` : `<a class="market-btn ${{market.class || ""}}" href="${{item.affiliateUrl || "#achados"}}" target="_blank" rel="noopener"><span class="market-brand"><img src="${{logo}}" alt="" aria-hidden="true"></span><span class="market-sep" aria-hidden="true"></span><span class="market-label">${{buttonLabel}}</span></a>`; }})()}}</div>`;
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}" data-store="${{escapeHtml(findMarketName(item))}}" data-shipping="${{findShippingScope(item)}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
@@ -2914,7 +3016,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function addBaseProduct(productId) {{
       if (!canAddCartProduct(productId)) return;
       const product = productById(productId);
-      const existing = cart.find((item) => String(item.productId) === String(productId));
+      if (hasProductVariants(product)) {{
+        productDetail(productId);
+        return;
+      }}
+      const existing = cart.find((item) => String(item.productId) === String(productId) && !item.selectedVariantId);
       selectedShipping = null;
       if (existing && isSupplierProduct(product)) {{
         existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
@@ -2922,6 +3028,25 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         cart.push({{ productId, selectedAddons: [], selectedSwaps: [], quantity: 1 }});
       }}
       saveCart();
+      openCart();
+      showToast("Produto adicionado ao carrinho.");
+    }}
+    function addVariantProduct(productId) {{
+      if (!canAddCartProduct(productId)) return;
+      const product = productById(productId);
+      if (!product) return;
+      const selectedId = $("#productVariantSelect")?.value || "";
+      const variant = selectedVariantForItem(product, {{ selectedVariantId: selectedId }});
+      const summary = variantSummary(product, variant);
+      const existing = cart.find((item) => String(item.productId) === String(productId) && String(item.selectedVariantId || "") === String(summary?.id || ""));
+      selectedShipping = null;
+      if (existing && isSupplierProduct(product)) {{
+        existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
+      }} else {{
+        cart.push({{ productId, selectedVariantId: summary?.id || "", selectedVariant: summary, selectedAddons: [], selectedSwaps: [], quantity: 1 }});
+      }}
+      saveCart();
+      $("#productModal")?.close();
       openCart();
       showToast("Produto adicionado ao carrinho.");
     }}
@@ -2956,22 +3081,47 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const body = $("#modalBody");
       const specItems = specs(product).map((item) => `<span>${{item}}</span>`).join("");
       const isPc = isConfigurablePc(product);
+      const variants = productVariants(product);
+      const selectedVariant = selectedVariantForItem(product, {{}});
+      const variantHtml = variants.length
+        ? `<div class="variant-box">
+            <label for="productVariantSelect">Variacao</label>
+            <select class="variant-select" id="productVariantSelect" data-product-id="${{product.id}}">
+              ${{variants.map((variant) => {{
+                const id = variantId(variant);
+                const price = variantPrice(product, variant);
+                return `<option value="${{escapeHtml(id)}}"${{selectedVariant && id === variantId(selectedVariant) ? " selected" : ""}}>${{escapeHtml(variantLabel(variant))}} - ${{money(price)}}</option>`;
+              }}).join("")}}
+            </select>
+            <p class="variant-note">Escolha a variacao antes de adicionar. O frete sera recalculado pelo CEP.</p>
+          </div>`
+        : "";
       const swapGroups = isPc ? availableSwaps(product) : [];
       const swapHtml = swapGroups.map((group) => group.options.length ? `<div class="option-box"><strong>${{group.label}}</strong>${{group.options.map((option, index) => `<label><span><input type="checkbox" data-swap data-target="${{group.target}}" data-index="${{index}}" data-label="${{option.label}}" data-price="${{option.price}}"> ${{option.label}}</span><b>${{money(option.price)}}</b></label>`).join("")}}</div>` : "").join("");
       const addonHtml = isPc ? DATA.addons.filter((item) => item.active !== false).map((option, index) => `<label><span><input type="checkbox" data-addon data-category="${{option.category}}" data-index="${{index}}" data-label="${{option.label}}" data-price="${{option.price}}"> ${{option.label}}</span><b>+${{money(option.price)}}</b></label>`).join("") : "";
       const configHtml = isPc
         ? `${{swapHtml ? `<h3>Trocas disponiveis</h3>${{swapHtml}}` : ""}}${{addonHtml ? `<h3>Adicionais</h3><div class="option-box">${{addonHtml}}</div>` : ""}}<button class="btn btn-red full" type="button" data-add-config="${{product.id}}"><span aria-hidden="true">&#128722;</span> Adicionar configurado</button>`
-        : `<button class="btn btn-red full" type="button" data-add="${{product.id}}"><span aria-hidden="true">&#128722;</span> Adicionar ao carrinho</button>`;
+        : `${{variantHtml}}<button class="btn btn-red full" type="button" ${{variants.length ? `data-add-variant="${{product.id}}"` : `data-add="${{product.id}}"`}}><span aria-hidden="true">&#128722;</span> Adicionar ao carrinho</button>`;
       body.innerHTML = `<div class="modal-grid">
-        <img src="${{asset(product.cutout || product.image)}}" alt="${{product.title}}">
+        <img id="modalProductImage" src="${{asset(selectedVariant?.image || product.cutout || product.image)}}" alt="${{product.title}}">
         <div>
-          <h2>${{product.title}}</h2>
-          <p class="price">${{money(product.price)}}</p>
+          <h2>${{productBaseTitle(product)}}</h2>
+          <p class="price" id="modalVariantPrice">${{money(variantPrice(product, selectedVariant))}}</p>
           <div class="spec-list">${{specItems}}</div>
           ${{configHtml}}
         </div>
       </div>`;
       modal?.showModal();
+    }}
+    function updateVariantPreview() {{
+      const select = $("#productVariantSelect");
+      if (!select) return;
+      const product = productById(select.dataset.productId);
+      const variant = selectedVariantForItem(product, {{ selectedVariantId: select.value }});
+      const priceNode = $("#modalVariantPrice");
+      const imageNode = $("#modalProductImage");
+      if (priceNode) priceNode.textContent = money(variantPrice(product, variant));
+      if (imageNode) imageNode.src = asset(variant?.image || product?.cutout || product?.image);
     }}
     function availableSwaps(product) {{
       if (product.category !== "pc" && product.allowGlobalSwaps !== true) return [];
@@ -3019,12 +3169,22 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const cartRows = cart.map((item, index) => {{
         const product = productById(item.productId);
         if (!product) return "";
-        const options = [...(item.selectedAddons || []), ...(item.selectedSwaps || [])].map((o) => o.label).join(" + ");
+        const selectedVariant = selectedVariantForItem(product, item);
+        const variantText = selectedVariant ? variantLabel(selectedVariant) : "";
+        const options = [variantText, ...(item.selectedAddons || []).map((o) => o.label), ...(item.selectedSwaps || []).map((o) => o.label)].filter(Boolean).join(" + ");
         const quantity = Math.max(1, Number(item.quantity || 1));
-        const quantityLabel = quantity > 1 ? `Qtd. ${{quantity}}` : "";
+        const supplierItem = isSupplierProduct(product);
+        const quantityLabel = !supplierItem && quantity > 1 ? `Qtd. ${{quantity}}` : "";
+        const quantityControl = supplierItem
+          ? `<div class="drawer-qty" aria-label="Quantidade">
+              <button type="button" data-qty="${{index}}" data-delta="-1" aria-label="Diminuir quantidade"${{quantity <= 1 ? " disabled" : ""}}>-</button>
+              <span aria-live="polite">${{quantity}}</span>
+              <button type="button" data-qty="${{index}}" data-delta="1" aria-label="Aumentar quantidade">+</button>
+            </div>`
+          : "";
         return `<article class="drawer-item">
-          <img src="${{asset(product.cutout || product.image)}}" alt="">
-          <div><h3>${{product.title}}</h3><small>${{[options || "Sem opcionais", quantityLabel].filter(Boolean).join(" - ")}}</small><strong>${{money(productTotal(item))}}</strong></div>
+          <img src="${{asset(selectedVariant?.image || product.cutout || product.image)}}" alt="">
+          <div><h3>${{productBaseTitle(product)}}</h3><small>${{[options || "Sem opcionais", quantityLabel].filter(Boolean).join(" - ")}}</small><div class="drawer-item-foot">${{quantityControl}}<strong>${{money(productTotal(item))}}</strong></div></div>
           <button class="close-drawer" type="button" data-remove="${{index}}" aria-label="Remover">&times;</button>
         </article>`;
       }}).join("");
@@ -3045,6 +3205,17 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       }}
       renderCheckoutReview();
       syncCouponFeedback();
+    }}
+    function changeCartQuantity(index, delta) {{
+      const item = cart[index];
+      const product = productById(item?.productId);
+      if (!item || !product || !isSupplierProduct(product)) return;
+      const current = Math.max(1, Number(item.quantity || 1));
+      const next = Math.max(1, current + Number(delta || 0));
+      if (next === current) return;
+      item.quantity = next;
+      selectedShipping = null;
+      saveCart();
     }}
     function renderDeliveryChoice() {{
       const node = $("#deliveryChoice");
@@ -3095,18 +3266,33 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           body: JSON.stringify({{ cartItems: cart, postalCode }})
         }});
         const data = await response.json();
-        if (!response.ok || !Array.isArray(data.quotes)) throw new Error(data.error || "Frete indisponivel agora.");
+        if (!response.ok || !Array.isArray(data.quotes)) {{
+          const apiError = new Error(data.error || "Frete indisponivel agora.");
+          apiError.code = data.code || "";
+          apiError.status = response.status;
+          apiError.details = data.details;
+          throw apiError;
+        }}
         box.innerHTML = data.quotes.map((quote, index) => {{
           const company = typeof quote.company === "string"
             ? quote.company
             : (quote.company?.name || quote.company_name || "Transportadora");
           const service = quote.name || quote.service || quote.service_name || "Servico";
+          const title = customerFreightTitle(company, service, quote.provider);
           const rawTime = quote.deliveryTime || quote.delivery_time || "";
           const time = rawTime ? `${{rawTime}} dia(s) uteis` : "prazo sob consulta";
+          const economics = quote.shippingEconomics || {{}};
+          const extra = quote.includedShipping && quote.originalShippingPrice
+            ? `Frete real de ${{money(quote.originalShippingPrice)}} incluso no preco final.`
+            : economics.freightRiskLevel === "combo-recommended"
+              ? "Adicionar mais itens pode diluir o frete."
+              : economics.freightRiskLevel === "add-on-only"
+                ? "Item recomendado para combo."
+                : "";
           return `<label class="shipping-option">
             <span class="ship-main">
               <input type="radio" name="shipping" data-index="${{index}}">
-              <span class="ship-copy"><strong>${{company}} - ${{service}}</strong><small>${{time}}</small></span>
+              <span class="ship-copy"><strong>${{escapeHtml(title)}}</strong><small>${{time}}${{extra ? ` - ${{escapeHtml(extra)}}` : ""}}</small></span>
             </span>
             <strong class="ship-price">${{money(quote.price)}}</strong>
           </label>`;
@@ -3134,6 +3320,14 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           renderCart();
         }}
       }} catch(error) {{
+        if (state.supplier) {{
+          selectedShipping = null;
+          renderCart();
+          const message = error.message || "Nao conseguimos calcular o frete direto agora.";
+          box.innerHTML = `<div class="shipping-option is-muted"><span class="ship-copy"><strong>Revise o carrinho</strong><small>${{escapeHtml(message)}}</small></span></div>`;
+          showToast(error.code === "SUPPLIER_ADDON_CART_REQUIRED" ? "Adicione mais itens para diluir o frete." : "Frete direto indisponivel agora.");
+          return;
+        }}
         const fallback = fixedSupplierShippingQuote(postalCode);
         if (fallback) {{
           renderFixedSupplierShipping(box, fallback);
@@ -3243,7 +3437,9 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const add = event.target.closest("[data-add]");
       const detail = event.target.closest("[data-detail]");
       const addConfig = event.target.closest("[data-add-config]");
+      const addVariant = event.target.closest("[data-add-variant]");
       const remove = event.target.closest("[data-remove]");
+      const qty = event.target.closest("[data-qty]");
       const focusOrder = event.target.closest("[data-focus-order]");
       const supportLogin = event.target.closest("[data-support-login]");
       if (focusOrder) {{
@@ -3260,7 +3456,12 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (add) addBaseProduct(add.dataset.add);
       if (detail) productDetail(detail.dataset.detail);
       if (addConfig) addConfiguredProduct(addConfig.dataset.addConfig);
+      if (addVariant) addVariantProduct(addVariant.dataset.addVariant);
+      if (qty) {{ changeCartQuantity(Number(qty.dataset.qty), Number(qty.dataset.delta)); return; }}
       if (remove) {{ cart.splice(Number(remove.dataset.remove), 1); selectedShipping = null; saveCart(); }}
+    }});
+    document.addEventListener("change", (event) => {{
+      if (event.target.closest("#productVariantSelect")) updateVariantPreview();
     }});
     $("#cartButton")?.addEventListener("click", openCart);
     $("#closeCart")?.addEventListener("click", closeCart);
@@ -3373,7 +3574,9 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{clean_text(title)}</title>
     <meta name="description" content="MobilyTech BR - PCs revisados, hardware, limpeza e MobilyTech Finds.">
-    <link rel="icon" href="data:,">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900;1000&display=swap" rel="stylesheet">
