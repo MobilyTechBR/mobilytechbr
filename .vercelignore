@@ -5,7 +5,8 @@
 .github/
 backups/
 docs/
-scripts/
+scripts/*
+!scripts/build_phase2_ibuy_style.py
 
 *.docx
 *.xlsx
