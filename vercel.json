@@ -45,19 +45,23 @@
     },
     {
       "src": "/api/(.*)\\.js",
-      "status": 404
+      "status": 404,
+      "dest": "/404.html"
     },
     {
       "src": "/lib/(.*)",
-      "status": 404
+      "status": 404,
+      "dest": "/404.html"
     },
     {
       "src": "/scripts/(.*)",
-      "status": 404
+      "status": 404,
+      "dest": "/404.html"
     },
     {
       "src": "/private/(.*)",
-      "status": 404
+      "status": 404,
+      "dest": "/404.html"
     },
     {
       "handle": "filesystem"
