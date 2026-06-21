@@ -40,8 +40,8 @@ The freight key is separate and should be requested in the Dropify freight integ
 ## Files added or changed
 
 - `lib/dropify.js`: authentication, product lookup, freight quote and safe order payload creation.
-- `api/dropify-products.js`: admin-only product lookup/import helper.
-- `api/dropify-webhook.js`: webhook receiver with optional HMAC verification.
+- `lib/account-handlers.js`: consolidated `/api/dropify-products` and `/api/dropify-webhook` into the existing account function to keep the Vercel function count within the current project limit.
+- `vercel.json`: rewrites `/api/dropify-products` and `/api/dropify-webhook` to the consolidated account handler.
 - `lib/fulfillment-shipping.js`: supplier freight now prefers Dropify for Dropify items and CJ for CJ items.
 - `lib/product-variants.js`: variants can carry Dropify SKU data.
 - `api/mercado-pago-webhook.js`: paid orders can prepare Dropify payloads in payload-only mode.

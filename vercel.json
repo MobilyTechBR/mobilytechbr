@@ -40,6 +40,14 @@
       "dest": "/api/account?action=upload-media"
     },
     {
+      "src": "/api/dropify-products/?",
+      "dest": "/api/account?action=dropify-products"
+    },
+    {
+      "src": "/api/dropify-webhook/?",
+      "dest": "/api/account?action=dropify-webhook"
+    },
+    {
       "src": "/admin(?:/index\\.html)?/?",
       "dest": "/api/account?action=admin"
     },
