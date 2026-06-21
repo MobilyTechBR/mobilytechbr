@@ -3306,6 +3306,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
             serviceName: quote.name || quote.service || quote.service_name || "Servico",
             carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora")
           }};
+          box.querySelectorAll(".shipping-option").forEach((option) => option.classList.remove("is-selected"));
+          input.closest(".shipping-option")?.classList.add("is-selected");
           renderCart();
         }}));
         if (state.supplier && data.quotes.length === 1) {{
