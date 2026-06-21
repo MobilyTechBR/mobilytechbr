@@ -10,7 +10,7 @@
     },
     "catalog": {
       "physicalProducts": true,
-      "dropshippingProducts": true
+      "dropshippingProducts": false
     }
   },
   "homeHero": {
