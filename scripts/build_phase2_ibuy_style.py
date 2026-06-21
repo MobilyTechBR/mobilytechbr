@@ -12,6 +12,7 @@ FASE2_DIR = ROOT / "fase2"
 
 GENERATED_AT = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 CHECKOUT_POLICY_VERSION = "2026-06-20-client-legal-import-tax-checkout"
+FAVICON_VERSION = "20260621"
 
 LEGAL_PAGES = {
     "termos": {
@@ -3576,9 +3577,10 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{clean_text(title)}</title>
     <meta name="description" content="MobilyTech BR - PCs revisados, hardware, limpeza e MobilyTech Finds.">
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico?v={FAVICON_VERSION}" sizes="any">
+    <link rel="shortcut icon" href="/assets/favicon.ico?v={FAVICON_VERSION}">
+    <link rel="icon" type="image/png" href="/assets/favicon.png?v={FAVICON_VERSION}" sizes="256x256">
+    <link rel="apple-touch-icon" href="/assets/favicon.png?v={FAVICON_VERSION}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900;1000&display=swap" rel="stylesheet">
