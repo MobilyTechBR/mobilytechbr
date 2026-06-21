@@ -5,43 +5,55 @@
   "routes": [
     {
       "src": "/api/auth-session/?",
-      "dest": "/api/account.js?action=session"
+      "dest": "/api/account?action=session"
     },
     {
       "src": "/api/customer-orders/?",
-      "dest": "/api/account.js?action=customer-orders"
+      "dest": "/api/account?action=customer-orders"
     },
     {
       "src": "/api/auth-google-start/?",
-      "dest": "/api/account.js?action=google-start"
+      "dest": "/api/account?action=google-start"
     },
     {
       "src": "/api/auth-google-callback/?",
-      "dest": "/api/account.js?action=google-callback"
+      "dest": "/api/account?action=google-callback"
     },
     {
       "src": "/api/auth-microsoft-start/?",
-      "dest": "/api/account.js?action=microsoft-start"
+      "dest": "/api/account?action=microsoft-start"
     },
     {
       "src": "/api/auth-microsoft-callback/?",
-      "dest": "/api/account.js?action=microsoft-callback"
+      "dest": "/api/account?action=microsoft-callback"
     },
     {
       "src": "/api/auth-logout/?",
-      "dest": "/api/account.js?action=logout"
+      "dest": "/api/account?action=logout"
     },
     {
       "src": "/api/update-site-content/?",
-      "dest": "/api/account.js?action=update-site-content"
+      "dest": "/api/account?action=update-site-content"
     },
     {
       "src": "/api/upload-media/?",
-      "dest": "/api/account.js?action=upload-media"
+      "dest": "/api/account?action=upload-media"
     },
     {
       "src": "/admin(?:/index\\.html)?/?",
-      "dest": "/api/account.js?action=admin"
+      "dest": "/api/account?action=admin"
+    },
+    {
+      "src": "/api/(.*)\\.js",
+      "status": 404
+    },
+    {
+      "src": "/lib/(.*)",
+      "status": 404
+    },
+    {
+      "src": "/scripts/(.*)",
+      "status": 404
     },
     {
       "src": "/private/(.*)",
