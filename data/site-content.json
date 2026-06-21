@@ -9,8 +9,8 @@
       "abacatePay": false
     },
     "catalog": {
-      "physicalProducts": true,
-      "dropshippingProducts": true
+      "physicalProducts": false,
+      "dropshippingProducts": false
     }
   },
   "homeHero": {
