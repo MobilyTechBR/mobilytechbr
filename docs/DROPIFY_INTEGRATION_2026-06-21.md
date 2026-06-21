@@ -4,8 +4,9 @@
 
 - Dropify API support was added on the MobilyTech BR server side.
 - No secret was written to the repository.
-- The Dropify store was still showing `Aguardando aprovacao` when checked in the panel, so the `Token de integracao` tab was not available yet.
+- The Dropify store was approved by email on 2026-06-21, but the browser helper is still unavailable, so credentials were not retrieved from the panel yet.
 - Browser/Computer Use helpers are currently unavailable in Codex because the local node_repl transport is closed; Codex itself was not restarted or closed.
+- Public Postman docs confirm credentials are generated from `Configurar Lojas > Token de integracao` and API usage is limited to 180 requisicoes per minute.
 
 ## Vercel environment variables
 
@@ -76,4 +77,10 @@ $env:DROPIFY_IMPORT_PAGES='2'
 node scripts/import_dropify_catalog.js
 ```
 
-The import script does not activate products automatically. It writes inactive candidates for human/Codex review before anything becomes sellable.
+The import script does not activate products automatically. It writes inactive candidates for human/Codex review before anything becomes sellable. It now also writes:
+
+- `docs/qa/dropify-import-2026-06-21/dropify-candidates.json`
+- `docs/qa/dropify-import-2026-06-21/dropify-selected-75.json`
+- `docs/qa/dropify-import-2026-06-21/dropify-prelista.md`
+
+The selected list is sorted with extra weight for hardware, useful home/tool products, lower and medium price bands, stock, image availability, validated cost and measurements.
