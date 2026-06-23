@@ -51,6 +51,20 @@
       "enabledForExactFreightCandidates": true,
       "quoteRule": "use item_id plus customer CEP via Mercado Livre shipping_options before checkout",
       "fallback": "affiliate-link-only-when-item-id-or-freight-is-not-validated"
-    }
-  }
+    },
+    "enabled": false,
+    "accountStatus": "paused-archive-only",
+    "publicMode": "hidden",
+    "note": "CJ/CJDropshipping pausado em 2026-06-23. A vitrine p?blica agora usa produtos nacionais sob encomenda."
+  },
+  "madeToOrder": {
+    "enabled": true,
+    "label": "Produtos sob encomenda",
+    "defaultMarginPercent": 30,
+    "pricingRule": "pre?o p?blico = custo do fornecedor nacional + frete at? a MobilyTech + margem; cliente paga o envio final por CEP a partir da MobilyTech",
+    "preferredSupplier": "Mercado Livre/envio nacional",
+    "reviewBeforePurchase": true,
+    "lastCatalogUpdate": "2026-06-23"
+  },
+  "shippingOrigin": "mobilytech-preorder"
 }

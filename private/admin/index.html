@@ -1146,29 +1146,29 @@
         <section aria-labelledby="dropshipping-products-title">
           <div class="section-head">
             <div>
-              <p class="section-kicker">Nossos Produtos</p>
-              <h2 id="dropshipping-products-title">Auditoria de dropshipping</h2>
-              <p>Lista interna para conferir preco, custo, frete exato e link de referencia do fornecedor antes de liberar qualquer produto para venda direta.</p>
+              <p class="section-kicker">Produtos sob encomenda</p>
+              <h2 id="dropshipping-products-title">Auditoria de produtos sob encomenda</h2>
+              <p>Lista interna para conferir preco, custo, margem, origem nacional e link de referencia antes de liberar qualquer produto para venda direta.</p>
             </div>
           </div>
           <div class="editor-panel">
             <div class="editor-toolbar">
               <div>
                 <strong>Regra de seguranca</strong>
-                <p>O botao global <strong>Nossos Produtos</strong> fica no editor visual acima. Quando desligado, a secao some do site gerado e o backend bloqueia checkout/frete de dropshipping.</p>
+                <p>O botao global <strong>Produtos sob encomenda</strong> fica no editor visual acima. Quando desligado, a secao some do site gerado e o backend bloqueia checkout e frete dessa vitrine.</p>
               </div>
               <button class="btn btn-dark" type="button" id="exportDropshippingProducts">Baixar products.json revisado</button>
             </div>
-            <div class="margin-tools" aria-label="Margens do dropshipping">
+            <div class="margin-tools" aria-label="Margens dos produtos sob encomenda">
               <label>Margem em massa (% sobre custo)
                 <input id="dropshippingBulkMargin" inputmode="decimal" value="38">
               </label>
-              <button class="btn btn-red" type="button" id="applyDropshippingMargin">Aplicar aos produtos CJ</button>
+              <button class="btn btn-red" type="button" id="applyDropshippingMargin">Aplicar aos produtos sob encomenda</button>
               <button class="btn btn-ghost" type="button" id="disableAllDropshippingCheckout">Pausar checkout dos produtos</button>
             </div>
-            <div class="sale-status is-info" id="dropshippingStatus">Revise os produtos CJ antes de publicar. Produtos incompletos ficam bloqueados.</div>
+            <div class="sale-status is-info" id="dropshippingStatus">Revise os produtos sob encomenda antes de publicar. Produtos incompletos ficam bloqueados.</div>
             <div class="table-wrap">
-              <table class="finds-table" aria-label="Auditoria de produtos de dropshipping">
+              <table class="finds-table" aria-label="Auditoria de produtos sob encomenda">
                 <thead>
                   <tr>
                     <th>Status</th>
@@ -1190,7 +1190,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="editor-note">O link de referencia fica apenas no painel e nos e-mails internos de pedido; ele nao aparece para o cliente no site publico. Frete de fornecedor continua sendo calculado no checkout, nao embutido como frete fixo.</div>
+            <div class="editor-note">O link de referencia fica apenas no painel e nos e-mails internos de pedido; ele nao aparece para o cliente no site publico. O preco do produto considera compra nacional ate a MobilyTech BR; o cliente escolhe o envio final no carrinho.</div>
           </div>
         </section>
 
@@ -1357,7 +1357,7 @@
           details: "Imagem vertical/lateral do topo da pagina de afiliados. Deixe respiro ao redor do personagem/produto."
         },
         "pages.produtos.image": {
-          title: "Hero Nossos Produtos",
+          title: "Hero Produtos sob encomenda",
           recommended: "Recomendado: 900 x 1050 px ou mesma proporcao 0,85:1.",
           details: "Use imagem/arte de produto ou personagem centralizado. Evite texto pequeno dentro da imagem."
         },
@@ -1764,12 +1764,25 @@
         }
       }
 
+      function isMadeToOrderProduct(item = {}) {
+        const category = norm(item.category || "");
+        return Boolean(item.madeToOrder === true || ["sob-encomenda", "sob encomenda", "sob_encomenda", "encomenda"].includes(category));
+      }
+
+      function isDirectOrderProduct(item = {}) {
+        return Boolean(isMadeToOrderProduct(item) || norm(item.category || "") === "dropshipping");
+      }
+
+      function productTitle(item = {}) {
+        return item.title || item.name || item.id || "Produto";
+      }
+
       function productOptions(selectedId) {
         const ownProducts = productsState
-          .filter((item) => item && item.active !== false && !["affiliate", "dropshipping"].includes(item.category))
-          .sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")));
+          .filter((item) => item && item.active !== false && !["affiliate", "dropshipping", "sob-encomenda"].includes(item.category) && !isMadeToOrderProduct(item))
+          .sort((a, b) => String(productTitle(a)).localeCompare(String(productTitle(b))));
         return ownProducts.map((item) => (
-          `<option value="${escapeHtml(item.id)}" ${String(item.id) === String(selectedId) ? "selected" : ""}>${escapeHtml(item.title || item.id)}</option>`
+          `<option value="${escapeHtml(item.id)}" ${String(item.id) === String(selectedId) ? "selected" : ""}>${escapeHtml(productTitle(item))}</option>`
         )).join("");
       }
 
@@ -1797,7 +1810,7 @@
       }
 
       function featuredOptionLabel(item = {}, type = "finds") {
-        const title = item.title || item.id || "Produto";
+        const title = productTitle(item);
         const price = moneyInput(type === "dropshipping" ? item.price : item.salePrice);
         const detail = type === "dropshipping"
           ? [item.niche || item.specs?.niche || item.priceBand, price ? `R$ ${price}` : ""].filter(Boolean).join(" | ")
@@ -1809,11 +1822,11 @@
         const selected = String(selectedId || "");
         const source = type === "dropshipping"
           ? productsState
-              .filter((item) => item && item.category === "dropshipping" && item.active !== false && item.checkoutEnabled === true)
-              .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "pt-BR"))
+              .filter((item) => item && isDirectOrderProduct(item) && item.active !== false && item.checkoutEnabled === true)
+              .sort((a, b) => String(productTitle(a)).localeCompare(String(productTitle(b)), "pt-BR"))
           : (findsState?.finalists || [])
               .filter(findHasPublicOffer)
-              .sort((a, b) => String(a.title || "").localeCompare(String(b.title || ""), "pt-BR"));
+              .sort((a, b) => String(productTitle(a)).localeCompare(String(productTitle(b)), "pt-BR"));
         return source.map((item) => {
           const id = type === "dropshipping" ? item.id : findPublicId(item);
           return `<option value="${escapeHtml(id)}" ${String(id) === selected ? "selected" : ""}>${escapeHtml(featuredOptionLabel(item, type))}</option>`;
@@ -1872,7 +1885,7 @@
         const selectedProductId = siteContentState.homeHero.featuredProductId || "";
         const pageNames = {
           ofertas: "Ofertas",
-          produtos: "Nossos Produtos",
+          produtos: "Produtos sob encomenda",
           achados: "MobilyTech Finds",
           montagem: "Monte seu PC",
           limpeza: "Limpeza",
@@ -1897,7 +1910,7 @@
               ${contentCheckbox("featureFlags.payments.mercadoPago", "Mercado Pago", "Checkout principal ativo.")}
               ${contentCheckbox("featureFlags.payments.abacatePay", "Abacate Pay", "Pausado enquanto corrigimos a chave/API.")}
               ${contentCheckbox("featureFlags.catalog.physicalProducts", "Produtos fisicos proprios", "Reativa PCs, SSDs e fonte que estao fisicamente com voce.")}
-              ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Nossos Produtos", "Liga/desliga a secao inteira de dropshipping e trava o checkout quando desligado.")}
+              ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Produtos sob encomenda", "Liga/desliga a vitrine sob encomenda e trava o checkout quando desligado.")}
             </div>
           </div>
           <div class="content-fieldset">
@@ -1917,7 +1930,7 @@
               ${heroBackgroundControls()}
             </div>
           </div>
-          ${featuredProductSlots("dropshipping", "Destaques da home - Nossos Produtos", "Escolha os 6 produtos de compra direta que aparecem na secao principal. Se deixar algum slot automatico, o site preenche com os proximos produtos validos.", 6)}
+          ${featuredProductSlots("dropshipping", "Destaques da home - Produtos sob encomenda", "Escolha os 6 produtos sob encomenda que aparecem na secao principal. Se deixar algum slot automatico, o site preenche com os proximos produtos validos.", 6)}
           ${featuredProductSlots("finds", "Destaques da home - MobilyTech Finds", "Escolha os 3 achados de marketplace que aparecem na pagina principal. O checkout externo continua no marketplace parceiro.", 3)}
           <div class="content-fieldset">
             <h3>Artes dos servicos</h3>
@@ -2020,10 +2033,10 @@
         const select = $("#saleProduct");
         if (!select) return;
         const ownProducts = products
-          .filter((item) => item && item.active !== false && !["affiliate", "dropshipping"].includes(item.category))
-          .sort((a, b) => String(a.title || "").localeCompare(String(b.title || "")));
+          .filter((item) => item && item.active !== false && !["affiliate", "dropshipping", "sob-encomenda"].includes(item.category) && !isMadeToOrderProduct(item))
+          .sort((a, b) => String(productTitle(a)).localeCompare(String(productTitle(b))));
         select.innerHTML = '<option value="">Selecione um produto ativo...</option>' + ownProducts.map((item) => (
-          `<option value="${escapeHtml(item.id)}">${escapeHtml(item.title || item.id)} - R$ ${escapeHtml(moneyInput(item.price) || item.price || "")}</option>`
+          `<option value="${escapeHtml(item.id)}">${escapeHtml(productTitle(item))} - R$ ${escapeHtml(moneyInput(item.price) || item.price || "")}</option>`
         )).join("");
       }
 
@@ -2157,18 +2170,24 @@
       function dropshippingAudit(product) {
         const shipping = product.shipping || {};
         const checks = [];
+        const isMadeToOrder = isMadeToOrderProduct(product);
         if (product.checkoutEnabled !== true) checks.push("checkout pausado");
         if (!moneyNumber(product.price)) checks.push("sem preco");
-        if (!moneyNumber(product.costPrice || product.supplierCost)) checks.push("sem custo");
+        if (!moneyNumber(product.baseCost || product.costPrice || product.supplierCost)) checks.push("sem custo");
         if (!supplierReferenceUrl(product)) checks.push("sem link");
-        if (shipping.exactRequired !== true && product.requireExactSupplierFreight !== true) checks.push("frete nao obrigatorio");
-        if (shipping.liveQuoteReady !== true && !product.cj?.vid && !product.cjVariantId) checks.push("sem cotacao/SKU");
+        if (isMadeToOrder) {
+          if (!moneyNumber(product.weightKg)) checks.push("sem peso");
+          if (!moneyNumber(product.widthCm) || !moneyNumber(product.heightCm) || !moneyNumber(product.lengthCm)) checks.push("sem medidas");
+        } else {
+          if (shipping.exactRequired !== true && product.requireExactSupplierFreight !== true) checks.push("frete nao obrigatorio");
+          if (shipping.liveQuoteReady !== true && !product.cj?.vid && !product.cjVariantId) checks.push("sem cotacao/SKU");
+        }
         return checks;
       }
 
       function marginMarkupPercent(product) {
         const price = moneyNumber(product.price);
-        const cost = moneyNumber(product.costPrice || product.supplierCost);
+        const cost = moneyNumber(product.baseCost || product.costPrice || product.supplierCost);
         if (!price || !cost) return parsePercent(product.marginPercent || product.targetMarginPercent) || 0;
         return ((price - cost) / cost) * 100;
       }
@@ -2184,14 +2203,17 @@
         if (!item) return;
         if (field === "active" || field === "checkoutEnabled") {
           item[field] = value === "true";
-        } else if (field === "price" || field === "costPrice") {
+        } else if (field === "price" || field === "costPrice" || field === "supplierCost" || field === "baseCost") {
           item[field] = moneyNumber(value);
+          if (field === "supplierCost") {
+            item.baseCost = moneyNumber(item.supplierCost) + moneyNumber(item.inboundShippingCost);
+          }
         } else if (field === "targetMarginPercent") {
           const percent = parsePercent(value);
           if (Number.isFinite(percent)) {
             item.targetMarginPercent = Math.round(percent * 10) / 10;
             item.marginPercent = `${item.targetMarginPercent.toFixed(1)}%`;
-            const cost = moneyNumber(item.costPrice || item.supplierCost);
+            const cost = moneyNumber(item.baseCost || item.costPrice || item.supplierCost);
             const nextPrice = priceFromCostMargin(cost, item.targetMarginPercent);
             if (nextPrice) item.price = Math.round(nextPrice * 100) / 100;
           }
@@ -2207,8 +2229,8 @@
       function applyDropshippingMargin(percent) {
         if (!Number.isFinite(percent)) throw new Error("Informe uma margem valida.");
         productsState.forEach((item) => {
-          if (!item || item.category !== "dropshipping") return;
-          const cost = moneyNumber(item.costPrice || item.supplierCost);
+          if (!item || !isDirectOrderProduct(item)) return;
+          const cost = moneyNumber(item.baseCost || item.costPrice || item.supplierCost);
           if (!cost) return;
           item.targetMarginPercent = Math.round(percent * 10) / 10;
           item.marginPercent = `${item.targetMarginPercent.toFixed(1)}%`;
@@ -2220,15 +2242,15 @@
       function renderDropshippingProducts(products = []) {
         const tbody = $("#dropshippingProductsRows");
         if (!tbody) return;
-        const items = products.filter((item) => item && item.category === "dropshipping");
+        const items = products.filter((item) => item && isDirectOrderProduct(item));
         if (!items.length) {
-          tbody.innerHTML = '<tr><td colspan="12">Nenhum produto de dropshipping cadastrado.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="12">Nenhum produto sob encomenda cadastrado.</td></tr>';
           return;
         }
         tbody.innerHTML = items.map((item) => {
           const audit = dropshippingAudit(item);
           const reference = supplierReferenceUrl(item);
-          const cost = moneyNumber(item.costPrice || item.supplierCost);
+          const cost = moneyNumber(item.baseCost || item.costPrice || item.supplierCost);
           const price = moneyNumber(item.price);
           const margin = marginMarkupPercent(item);
           const status = audit.length ? `Bloqueado: ${audit.join(", ")}` : "Liberado para checkout";
@@ -2237,7 +2259,9 @@
           const statusWarning = reviewFlags.includes("high-freight-vs-product-price")
             ? "Atencao: frete de teste acima do preco do produto."
             : "";
-          const freight = shipping.liveQuoteReady === true
+          const freight = isMadeToOrderProduct(item)
+            ? `Envio final por CEP${moneyNumber(item.inboundShippingCost) ? ` | entrada R$ ${moneyInput(item.inboundShippingCost)}` : ""}`
+            : shipping.liveQuoteReady === true
             ? `Cotacao ativa${shipping.sampleQuoteMinBrl ? `: R$ ${moneyInput(shipping.sampleQuoteMinBrl)}` : ""}`
             : (shipping.exactRequired === true || item.requireExactSupplierFreight === true)
               ? "Exato obrigatorio"
@@ -2247,11 +2271,11 @@
             <td><strong>${escapeHtml(status)}</strong>${statusWarning ? `<br><small>${escapeHtml(statusWarning)}</small>` : ""}</td>
             <td><select data-drop-id="${escapeHtml(item.id)}" data-drop-field="active" class="narrow"><option value="true"${item.active !== false ? " selected" : ""}>Sim</option><option value="false"${item.active === false ? " selected" : ""}>Nao</option></select></td>
             <td><select data-drop-id="${escapeHtml(item.id)}" data-drop-field="checkoutEnabled" class="narrow"><option value="true"${item.checkoutEnabled === true ? " selected" : ""}>Sim</option><option value="false"${item.checkoutEnabled !== true ? " selected" : ""}>Nao</option></select></td>
-            <td><textarea readonly>${escapeHtml(item.title || item.id || "")}</textarea></td>
+            <td><textarea readonly>${escapeHtml(productTitle(item))}</textarea></td>
             <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="niche" value="${escapeHtml(item.niche || item.specs?.niche || item.badge || "")}"></td>
             <td>${escapeHtml(item.priceBand || item.specs?.priceBand || "-")}</td>
             <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="price" class="narrow" value="${escapeHtml(price ? moneyInput(price) : "")}"></td>
-            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="costPrice" class="narrow" value="${escapeHtml(cost ? moneyInput(cost) : "")}"></td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="supplierCost" class="narrow" value="${escapeHtml(cost ? moneyInput(cost) : "")}"></td>
             <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="targetMarginPercent" class="narrow" value="${escapeHtml(Number.isFinite(margin) && margin ? margin.toFixed(1).replace(".", ",") : "")}"></td>
             <td>${escapeHtml(freight)}${freightNote ? `<br><small>${escapeHtml(freightNote)}</small>` : ""}</td>
             <td>${escapeHtml(item.supplierPlatform || item.marketplace?.name || item.sourceNotes?.phase1SourcePlatform || "")}</td>
@@ -2402,7 +2426,7 @@
         ]);
         const productList = Array.isArray(products) ? products : [];
         productsState = productList;
-        const ownProducts = productList.filter((item) => item && !["affiliate", "dropshipping"].includes(item.category));
+        const ownProducts = productList.filter((item) => item && !["affiliate", "dropshipping", "sob-encomenda"].includes(item.category) && !isMadeToOrderProduct(item));
         const pcs = productList.filter((item) => item && item.category === "pc");
         const finds = Array.isArray(finalists?.finalists) ? finalists.finalists : [];
         findsState = finalists;
@@ -2431,24 +2455,24 @@
         downloadJson("site-content-revisado-mobilytech.json", siteContentState);
       });
       $("#exportDropshippingProducts")?.addEventListener("click", () => {
-        downloadJson("products-dropshipping-revisado-mobilytech.json", productsState);
-        setDropshippingStatus("products.json revisado baixado com os ajustes locais de dropshipping.", "ok");
+        downloadJson("products-sob-encomenda-revisado-mobilytech.json", productsState);
+        setDropshippingStatus("products.json revisado baixado com os ajustes locais de produtos sob encomenda.", "ok");
       });
       $("#applyDropshippingMargin")?.addEventListener("click", () => {
         try {
           const percent = parsePercent($("#dropshippingBulkMargin")?.value);
           applyDropshippingMargin(percent);
-          setDropshippingStatus(`Margem de ${percent.toFixed(1).replace(".", ",")}% aplicada aos produtos CJ.`, "ok");
+          setDropshippingStatus(`Margem de ${percent.toFixed(1).replace(".", ",")}% aplicada aos produtos sob encomenda.`, "ok");
         } catch (error) {
           setDropshippingStatus(error.message || "Nao foi possivel aplicar margem.", "error");
         }
       });
       $("#disableAllDropshippingCheckout")?.addEventListener("click", () => {
         productsState.forEach((item) => {
-          if (item && item.category === "dropshipping") item.checkoutEnabled = false;
+          if (item && isDirectOrderProduct(item)) item.checkoutEnabled = false;
         });
         renderDropshippingProducts(productsState);
-        setDropshippingStatus("Checkout de todos os produtos de dropshipping foi pausado localmente.", "ok");
+        setDropshippingStatus("Checkout de todos os produtos sob encomenda foi pausado localmente.", "ok");
       });
       $("#saveSiteContent")?.addEventListener("click", async () => {
         if (!siteContentState) return;

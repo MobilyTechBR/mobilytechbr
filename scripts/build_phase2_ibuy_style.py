@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import html
 import json
@@ -23,7 +23,7 @@ LEGAL_PAGES = {
             ("Identificacao da loja", "A loja e a MobilyTech BR, CNPJ 66.834.883/0001-43, com atendimento pelo WhatsApp +55 (11) 95480-1967 e pelo e-mail mobilytechbr@gmail.com. A atuacao principal e pela internet, com referencia em Vila Suzana, Sao Paulo, SP."),
             ("Quem atende sua compra", "Quando voce compra direto pelo site, o atendimento de venda e pos-venda e feito pela MobilyTech BR. Fornecedores, transportadoras e meios de pagamento podem participar da entrega ou do pagamento; fale com a MobilyTech BR sempre que precisar de ajuda sobre o pedido."),
             ("Antes de pagar", "Confira o produto, quantidade, preco, frete, prazo estimado, origem de envio e dados informados antes de seguir para o pagamento. Se notar qualquer erro, ajuste o carrinho ou fale com a loja antes de concluir."),
-            ("Produtos enviados por fornecedor", "Alguns produtos podem sair diretamente de fornecedor parceiro, inclusive do exterior. Quando isso acontecer, o aviso de origem, frete, prazo e tributos estimados aparece na pagina do produto, no carrinho e antes do pagamento."),
+            ("Produtos sob encomenda", "Alguns produtos podem ser comprados sob encomenda pela MobilyTech BR. Nesses casos, o preco do produto considera a compra nacional ate a loja, e o frete final ate voce aparece no carrinho antes do pagamento."),
             ("Pagamento e confirmacao", "O pagamento e processado por checkout seguro de parceiro autorizado, como Mercado Pago. O pedido e confirmado apos aprovacao do pagamento e verificacao das informacoes necessarias para entrega."),
             ("Se algo der errado", "Em caso de atraso, divergencia, defeito, extravio ou duvida, entre em contato pelos canais oficiais. A MobilyTech BR acompanha o caso e orienta a solucao aplicavel, sem afastar os direitos previstos na legislacao de consumo."),
         ],
@@ -37,7 +37,7 @@ LEGAL_PAGES = {
             ("Para que usamos", "Usamos esses dados para responder voce, calcular frete, criar pedido, processar pagamento, acompanhar entrega, prevenir fraude, cumprir obrigacoes legais e prestar suporte pos-venda."),
             ("Pagamento", "Dados sensiveis de cartao e carteira digital sao tratados pelo provedor de pagamento. A MobilyTech BR nao precisa armazenar numero completo de cartao para concluir sua compra."),
             ("Compartilhamento necessario", "Podemos compartilhar dados minimos com meios de pagamento, transportadoras, fornecedores logisticos, ferramentas de hospedagem e atendimento quando isso for necessario para executar o pedido ou responder sua solicitacao."),
-            ("Envio internacional", "Se um produto for enviado por fornecedor internacional, dados de entrega podem ser enviados ao fornecedor e aos operadores logisticos para preparar e transportar o pedido."),
+            ("Parceiros de entrega", "Quando necessario, dados minimos podem ser compartilhados com transportadoras, Correios e operadores logisticos para preparar e transportar o pedido."),
             ("Seus direitos", "Voce pode solicitar orientacao sobre acesso, correcao, eliminacao ou informacoes de compartilhamento de dados pelos canais oficiais da MobilyTech BR."),
         ],
     },
@@ -56,13 +56,13 @@ LEGAL_PAGES = {
     "entrega": {
         "title": "Entrega e Prazos",
         "kicker": "Frete e rastreio",
-        "intro": "Veja como funcionam retirada local, envio nacional, envio por fornecedor parceiro, rastreio e prazo estimado.",
+        "intro": "Veja como funcionam retirada local, envio nacional, produtos sob encomenda, rastreio e prazo estimado.",
         "sections": [
             ("Retirada local", "A retirada local pode estar disponivel para servicos ou produtos proprios. Quando aparecer como opcao, combine dia e horario pelos canais oficiais apos a confirmacao do pedido."),
             ("Frete no carrinho", "Antes de pagar, informe o CEP e confira o valor do frete, o prazo estimado e a modalidade de envio. O carrinho mostra produto e frete separados no total da compra."),
             ("Envio nacional", "Produtos no Brasil podem ser enviados por transportadora, Correios ou parceiro logistico conforme disponibilidade para o CEP informado."),
-            ("Envio por fornecedor parceiro", "Alguns itens podem sair diretamente do fornecedor para o seu endereco. Nesses casos, o carrinho informa origem, prazo estimado, frete e, quando aplicavel, tributos estimados antes do pagamento."),
-            ("Envio internacional", "Produtos enviados do exterior podem passar por transporte internacional, fiscalizacao e desembaraco. O site mostra uma estimativa conservadora de tributos internacionais antes do pagamento para evitar cobranca surpresa, mas prazos ainda podem variar por operador logistico, alfandega, endereco ou eventos externos."),
+            ("Produtos sob encomenda", "Produtos sob encomenda sao comprados pela MobilyTech BR antes do envio final. O valor do produto e o frete ate o cliente aparecem separados no carrinho antes do pagamento."),
+            ("Prazos de encomenda", "Produtos sob encomenda podem precisar de prazo adicional para compra, recebimento e conferencia pela MobilyTech BR antes do envio final ao cliente."),
             ("Rastreio e atendimento", "Quando houver codigo de rastreio, ele sera informado nos canais de atendimento ou na area do cliente assim que estiver disponivel."),
         ],
     },
@@ -73,7 +73,7 @@ LEGAL_PAGES = {
         "sections": [
             ("Produtos proprios", "PCs, pecas e equipamentos proprios seguem a garantia informada no anuncio, proposta ou atendimento antes da compra. Se a cobertura especifica nao estiver clara, pergunte antes de pagar."),
             ("Servicos", "Montagem, limpeza e manutencao seguem o escopo combinado com voce, incluindo o que foi solicitado, aprovado e registrado no atendimento."),
-            ("Produtos de fornecedor", "Itens enviados por fornecedor parceiro podem ter cobertura e procedimento definidos pelo fornecedor, com atendimento inicial pela MobilyTech BR e direitos de consumo preservados."),
+            ("Produtos sob encomenda", "Produtos sob encomenda seguem atendimento inicial pela MobilyTech BR. Quando houver garantia do fabricante ou marketplace de origem, a loja orienta o procedimento aplicavel sem afastar direitos de consumo."),
             ("O que pode ser analisado", "Em caso de defeito, dano no transporte, produto diferente do anuncio, mau funcionamento ou ausencia de item, envie fotos, videos e numero do pedido."),
             ("O que pode ficar fora", "Mau uso, dano fisico causado apos o recebimento, instalacao inadequada, alteracao nao autorizada, queda, liquido ou incompatibilidade nao informada antes da compra podem exigir analise especifica."),
         ],
@@ -151,12 +151,12 @@ DEFAULT_SITE_CONTENT = {
             "find-aff-amazon-auto-b08ckgw1d4-placa-m-e-asus-tuf-gaming-a520m-plus-ii-am4-4xddr4-hdmi-displayport-d",
         ],
         "dropshipping": [
-            "cj-the-new-x99-s-real-chip-computer-motherboard-p-47375104",
-            "cj-x99-computer-motherboard-ddr4-server-x99-compu-40547584",
-            "cj-memory-stick-full-model-ddr4-ddr3-desktop-comp-03559680",
-            "cj-cabo-ou-adaptador-de-video-para-notebook-e-pc-17fb626d",
-            "cj-riser-card-009s-plus-pci-e-pcie-pci-express-x1-27228672",
-            "cj-luminous-punk-keyboard-usb-wired-computer-gami-78979328",
+            "sob-ssd-kingston-a400-480gb",
+            "sob-ram-kingston-ddr4-8gb-notebook",
+            "sob-fonte-duex-500w-bronze",
+            "sob-roteador-tplink-archer-c6",
+            "sob-teclado-redragon-sindri-abnt2",
+            "sob-hub-usbc-ugreen-5em1",
         ],
     },
     "servicePanels": {
@@ -184,8 +184,8 @@ DEFAULT_SITE_CONTENT = {
             "image": "./assets/mobilytech-character-cutout.png",
         },
         "produtos": {
-            "title": "Nossos Produtos",
-            "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site. Confira preco, origem, frete, prazo estimado e total antes do pagamento.",
+            "title": "Produtos sob encomenda na MobilyTech BR",
+            "intro": "Produtos nacionais selecionados para setup, trabalho, upgrades e manutencao. O preco do produto ja considera a compra ate a MobilyTech BR; o envio final e calculado pelo CEP no carrinho.",
             "image": "./assets/mobilytech-character-cutout.png",
         },
         "montagem": {
@@ -306,6 +306,16 @@ PUBLIC_PRODUCT_FIELDS = {
     "featured",
     "swaps",
     "variants",
+    "allowQuantity",
+    "madeToOrder",
+    "supplierPlatform",
+    "supplierReferenceUrl",
+    "supplierCost",
+    "inboundShippingCost",
+    "baseCost",
+    "targetMarginPercent",
+    "marginPercent",
+    "sourceNotes",
 }
 
 
@@ -377,7 +387,7 @@ def public_finds_payload(finalists, products=None, site_content: dict | None = N
     public_items = []
     if dropshipping_catalog_enabled(site_content):
         for product in product_items:
-            if product.get("active") is False or product.get("category") != "dropshipping":
+            if product.get("active") is False or not is_direct_order_product(product):
                 continue
             finalist = finalists_by_product_id.get(product.get("id"), {})
             finalist_mode = finalist.get("purchaseMode")
@@ -385,10 +395,11 @@ def public_finds_payload(finalists, products=None, site_content: dict | None = N
                 continue
             specs_data = product.get("specs") or {}
             shipping = product.get("shipping") or {}
-            scope = "internacional"
+            scope = "nacional" if not is_legacy_dropshipping_product(product) else "internacional"
             raw_region = str(shipping.get("region") or product.get("supplierRegion") or "").lower()
             if any(value in raw_region for value in ("br", "brasil", "nacional", "local")):
                 scope = "nacional"
+            made_to_order = not is_legacy_dropshipping_product(product)
             clean_item = {
                 "id": product.get("id"),
                 "productId": product.get("id"),
@@ -411,8 +422,8 @@ def public_finds_payload(finalists, products=None, site_content: dict | None = N
                 "affiliateReady": True,
                 "affiliateButton": "Adicionar ao carrinho",
                 "publicPartnerNote": "Compra direta no site MobilyTech BR. Frete calculado antes do pagamento.",
-                "publicShippingNote": product.get("publicShippingNote") or "Frete recalculado pelo CEP antes do pagamento.",
-                "publicOriginNote": product.get("publicOriginNote") or ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro."),
+                "publicShippingNote": product.get("publicShippingNote") or ("Preco do produto ja considera compra nacional ate a MobilyTech; envio final por CEP no carrinho." if made_to_order else "Frete recalculado pelo CEP antes do pagamento."),
+                "publicOriginNote": product.get("publicOriginNote") or ("Produto nacional sob encomenda, com conferencia MobilyTech antes do envio final." if made_to_order else ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro.")),
                 "shippingScope": scope,
                 "addOnOnly": bool(shipping.get("addOnOnly")),
                 "comboRecommended": bool(shipping.get("comboRecommended")),
@@ -439,14 +450,28 @@ def public_finds_payload(finalists, products=None, site_content: dict | None = N
     return public_items
 
 
+def is_direct_order_product(product: dict | None) -> bool:
+    if not isinstance(product, dict):
+        return False
+    category = str(product.get("category") or "").strip().lower()
+    return category in {"dropshipping", "sob-encomenda", "sob_encomenda", "encomenda"} or bool(product.get("madeToOrder"))
+
+
+def is_legacy_dropshipping_product(product: dict | None) -> bool:
+    return str((product or {}).get("category") or "").strip().lower() == "dropshipping"
+
+
 def dropshipping_sellable(product):
-    if product.get("active") is False or product.get("category") != "dropshipping":
+    if product.get("active") is False or not is_direct_order_product(product):
         return False
     if product.get("checkoutEnabled") is not True:
         return False
-    if product.get("requireExactSupplierFreight") is not True:
-        return False
-    if not (product.get("supplierUrl") or product.get("sourceUrl") or product.get("supplierSearchUrl")):
+    if not (
+        product.get("supplierReferenceUrl")
+        or product.get("supplierUrl")
+        or product.get("sourceUrl")
+        or product.get("supplierSearchUrl")
+    ):
         return False
     try:
         price = float(product.get("price") or 0)
@@ -454,6 +479,10 @@ def dropshipping_sellable(product):
     except (TypeError, ValueError):
         return False
     if price <= 0 or cost <= 0:
+        return False
+    if not is_legacy_dropshipping_product(product):
+        return True
+    if product.get("requireExactSupplierFreight") is not True:
         return False
     shipping = product.get("shipping") or {}
     if shipping.get("exactRequired") is not True:
@@ -484,7 +513,7 @@ def public_products_payload(products, site_content: dict | None = None):
         category = item.get("category")
         if category == "affiliate":
             continue
-        if category == "dropshipping":
+        if is_direct_order_product(item):
             if not include_dropshipping or not dropshipping_sellable(item):
                 continue
         elif not include_physical:
@@ -503,10 +532,11 @@ def public_dropshipping_payload(products, site_content: dict | None = None):
             continue
         specs_data = product.get("specs") or {}
         shipping = product.get("shipping") or {}
-        scope = "internacional"
+        scope = "nacional" if not is_legacy_dropshipping_product(product) else "internacional"
         raw_region = str(shipping.get("region") or product.get("supplierRegion") or "").lower()
         if any(value in raw_region for value in ("br", "brasil", "nacional", "local")):
             scope = "nacional"
+        made_to_order = not is_legacy_dropshipping_product(product)
         public_items.append(
             {
                 "id": f"drop-{product.get('id')}",
@@ -530,8 +560,8 @@ def public_dropshipping_payload(products, site_content: dict | None = None):
                 "affiliateReady": True,
                 "affiliateButton": "Comprar",
                 "publicPartnerNote": "Compra direta no site MobilyTech BR. Frete calculado antes do pagamento.",
-                "publicShippingNote": product.get("publicShippingNote") or "Frete recalculado pelo CEP antes do pagamento.",
-                "publicOriginNote": product.get("publicOriginNote") or ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro."),
+                "publicShippingNote": product.get("publicShippingNote") or ("Preco do produto ja considera compra nacional ate a MobilyTech; envio final por CEP no carrinho." if made_to_order else "Frete recalculado pelo CEP antes do pagamento."),
+                "publicOriginNote": product.get("publicOriginNote") or ("Produto nacional sob encomenda, com conferencia MobilyTech antes do envio final." if made_to_order else ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro.")),
                 "shippingScope": scope,
                 "addOnOnly": bool(shipping.get("addOnOnly")),
                 "comboRecommended": bool(shipping.get("comboRecommended")),
@@ -599,7 +629,7 @@ def header(prefix: str, active: str = "home", site_content: dict | None = None) 
             ("contato", "Suporte", "contato"),
         ]
         if dropshipping_enabled:
-            nav.insert(1, ("produtos", "Nossos Produtos", "produtos"))
+            nav.insert(1, ("produtos", "Sob encomenda", "produtos"))
     else:
         nav = [
             ("home", "Inicio", "home"),
@@ -610,7 +640,7 @@ def header(prefix: str, active: str = "home", site_content: dict | None = None) 
             ("contato", "Suporte", "contato"),
         ]
         if dropshipping_enabled:
-            nav.insert(1, ("produtos", "Nossos Produtos", "produtos"))
+            nav.insert(1, ("produtos", "Sob encomenda", "produtos"))
     nav_parts = []
     default_nav_key = "pc-gamer" if active == "ofertas" else active
     for index, (href_key, label, active_key) in enumerate(nav):
@@ -706,7 +736,7 @@ def footer(prefix: str, site_content: dict | None = None) -> str:
     store_links = "\n".join(
         item
         for item in [
-            f'<a href="{links["produtos"]}">Nossos Produtos</a>' if dropshipping_enabled else "",
+            f'<a href="{links["produtos"]}">Produtos sob encomenda</a>' if dropshipping_enabled else "",
             f'<a href="{links["ofertas"]}">PC Gamer</a>' if physical_enabled else "",
             f'<a href="{links["ofertas"]}">Hardware</a>' if physical_enabled else "",
             f'<a href="{links["achados"]}">MobilyTech Finds</a>',
@@ -789,14 +819,14 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
     configured_product = product_by_id(products, home.get("featuredProductId"))
     if configured_product and (
         configured_product.get("active") is False
-        or (configured_product.get("category") == "dropshipping" and not dropshipping_sellable(configured_product))
-        or (configured_product.get("category") != "dropshipping" and not physical_enabled)
+        or (is_direct_order_product(configured_product) and not dropshipping_sellable(configured_product))
+        or (not is_direct_order_product(configured_product) and not physical_enabled)
     ):
         configured_product = None
     hero_product = configured_product or (pcs[0] if physical_enabled and pcs else {})
     hero_image = hero_product.get("cutout") or hero_product.get("image") or "./assets/mobilytech-logo.png"
     hero_specs = hero_product.get("specs", {})
-    if hero_product and hero_product.get("category") == "dropshipping":
+    if hero_product and is_direct_order_product(hero_product):
         origin_note = hero_product.get("publicOriginNote") or "Origem e prazo informados antes do pagamento."
         hero_deal_html = f"""
         <aside class="hero-deal-card">
@@ -821,9 +851,9 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
         hero_deal_html = f"""
         <aside class="hero-deal-card">
           <span>Compra direta</span>
-          <h2>Nossos Produtos no ar</h2>
-          <p>Confira produto, origem, frete, prazo estimado e total antes do pagamento.</p>
-          <a class="small-link" href="{links["produtos"]}">Ver Nossos Produtos</a>
+          <h2>Produtos sob encomenda no ar</h2>
+          <p>Confira produto, prazo, frete final e total antes do pagamento.</p>
+          <a class="small-link" href="{links["produtos"]}">Ver sob encomenda</a>
         </aside>
         """
     else:
@@ -845,14 +875,15 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
     if str(home.get("backgroundMode") or "preset") == "image" and hero_background_image:
         hero_classes.append("hero-bg-image")
         hero_style = f' style="--hero-bg-image:url({clean_text(asset_path(prefix, hero_background_image))})"'
-    primary_hero_link = links["ofertas"] if physical_enabled else (links["produtos"] if dropshipping_enabled else links["achados"])
+    primary_hero_link = links["produtos"] if dropshipping_enabled else (links["ofertas"] if physical_enabled else links["achados"])
     primary_hero_label = home.get("primaryLabel")
     if not physical_enabled and not dropshipping_enabled:
         primary_hero_label = "Ver MobilyTech Finds"
     build_panel = panels.get("build", {})
     clean_panel = panels.get("clean", {})
+    catalog_sections = ""
     if physical_enabled:
-        catalog_sections = f"""
+        catalog_sections += f"""
       <section class="section-head" id="ofertas">
         <div>
           <p class="section-kicker">Estoque atual</p>
@@ -870,20 +901,18 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
       </section>
       <div class="product-grid hardware-grid" id="homeHardwareGrid" data-limit="5"></div>
         """
-    elif dropshipping_enabled:
-        catalog_sections = f"""
+    if dropshipping_enabled:
+        catalog_sections += f"""
       <section class="finds-band drops-band" id="produtos">
         <div class="finds-text">
-          <p class="section-kicker">Nossos Produtos</p>
+          <p class="section-kicker">Produtos sob encomenda</p>
           <h2>Upgrade certeiro para setup, trabalho e manutenção</h2>
-          <p>Hardware, periféricos e acessórios escolhidos para resolver gargalos reais: memória, placas, adaptadores, teclado, mouse, limpeza e organização. Confira preço, frete, prazo, origem e tributos estimados antes de pagar.</p>
-          <a class="btn btn-dark" href="{links["produtos"]}">Ver todos os produtos</a>
+          <p>Hardware, perifericos e acessorios escolhidos para resolver gargalos reais: SSD, memoria, rede, teclado, mouse, limpeza e organizacao. O preco do produto ja considera a compra nacional ate a MobilyTech; o frete final e calculado pelo CEP no carrinho.</p>
+          <a class="btn btn-dark" href="{links["produtos"]}">Ver sob encomenda</a>
         </div>
         <div class="finds-preview drops-preview" id="homeDropshippingGrid" data-source="dropshipping" data-limit="6"></div>
       </section>
         """
-    else:
-        catalog_sections = ""
     return f"""
     <main>
       <section class="{' '.join(hero_classes)}" id="inicio"{hero_style}>
@@ -992,9 +1021,8 @@ def finds_page(prefix: str, page: dict) -> str:
             </select>
             <label class="finds-search-label" for="findsShipping">Envio</label>
             <select id="findsShipping" data-finds-control>
-              <option value="all">Nacional e internacional</option>
+              <option value="all">Todos</option>
               <option value="nacional">Envio nacional</option>
-              <option value="internacional">Envio internacional</option>
             </select>
             <div class="finds-filter-block">
               <div class="finds-filter-head">
@@ -1033,9 +1061,9 @@ def nossos_produtos_page(prefix: str, page: dict, site_content: dict | None = No
     <main>
       <section class="page-hero page-hero-finds page-hero-products-store unavailable-page">
         <div>
-          <p class="section-kicker">Nossos Produtos</p>
+          <p class="section-kicker">Produtos sob encomenda</p>
           <h1>Pagina temporariamente indisponivel</h1>
-          <p>A compra direta de produtos de fornecedor esta desligada no painel da MobilyTech BR. Enquanto isso, veja o MobilyTech Finds ou fale com a loja para atendimento humano.</p>
+          <p>A compra direta de produtos sob encomenda esta desligada no painel da MobilyTech BR. Enquanto isso, veja o MobilyTech Finds ou fale com a loja para atendimento humano.</p>
           <div class="hero-actions">
             <a class="btn btn-red" href="{links["achados"]}">Ver MobilyTech Finds</a>
             <a class="btn btn-white" href="{links["contato"]}">Falar com a loja</a>
@@ -1055,13 +1083,13 @@ def nossos_produtos_page(prefix: str, page: dict, site_content: dict | None = No
       <section class="section-head finds-section-head finds-primary-head">
         <div>
           <p class="section-kicker">Compra direta MobilyTech BR</p>
-          <h2>Nossos Produtos</h2>
-          <p>Produtos selecionados para setup, escritório, manutenção e upgrades. Você pode filtrar por nicho, preço e tipo de envio antes de adicionar ao carrinho.</p>
-          <p class="public-compliance-note">O preço exibido é do produto. Frete, prazo estimado, origem de envio e total aparecem no carrinho antes do pagamento. Alguns itens podem ser enviados diretamente por fornecedor parceiro, inclusive do exterior, com atendimento da MobilyTech BR.</p>
+          <h2>Produtos sob encomenda na MobilyTech BR</h2>
+          <p>Produtos selecionados para setup, escritorio, manutencao e upgrades. Voce pode filtrar por nicho, preco e tipo de envio antes de adicionar ao carrinho.</p>
+          <p class="public-compliance-note">O preco exibido ja considera a compra nacional do item ate a MobilyTech BR. O frete final ate voce, o prazo estimado e o total aparecem no carrinho antes do pagamento.</p>
         </div>
       </section>
-      <section class="finds-layout" aria-label="Filtros de Nossos Produtos">
-        <aside class="finds-filters" aria-label="Filtros de Nossos Produtos">
+      <section class="finds-layout" aria-label="Filtros de produtos sob encomenda">
+        <aside class="finds-filters" aria-label="Filtros de produtos sob encomenda">
           <form class="finds-filter-form" id="findsFilterForm" data-source="dropshipping" role="search">
             <label class="finds-search-label" for="findsSearch">Buscar nesta pagina</label>
             <div class="finds-search-control">
@@ -1074,9 +1102,8 @@ def nossos_produtos_page(prefix: str, page: dict, site_content: dict | None = No
             </select>
             <label class="finds-search-label" for="findsShipping">Envio</label>
             <select id="findsShipping" data-finds-control>
-              <option value="all">Nacional e internacional</option>
+              <option value="all">Todos</option>
               <option value="nacional">Envio nacional</option>
-              <option value="internacional">Envio internacional</option>
             </select>
             <div class="finds-filter-block">
               <div class="finds-filter-head">
@@ -1420,7 +1447,7 @@ def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
           <input id="couponCode" autocomplete="off" placeholder="Digite seu cupom">
           <button id="applyCoupon" class="coupon-apply" type="button" aria-label="Aplicar cupom">&#8250;</button>
         </div>
-        <small id="couponFeedback">Cupons valem para produtos elegiveis; frete e envio direto ficam separados.</small>
+        <small id="couponFeedback">Cupons valem para produtos elegiveis; frete final fica separado no resumo.</small>
       </div>
       <details class="shipping-box">
         <summary>Calcular frete</summary>
@@ -1432,11 +1459,11 @@ def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
       <div class="checkout-review" id="checkoutReview" hidden></div>
       <label class="policy-check">
         <input id="checkoutPoliciesAccepted" type="checkbox">
-        <span>Li e aceito os <a href="{links["termos"]}" target="_blank" rel="noopener">Termos de Compra</a>, a <a href="{links["privacidade"]}" target="_blank" rel="noopener">Politica de Privacidade</a>, a <a href="{links["entrega"]}" target="_blank" rel="noopener">Politica de Entrega</a>, a <a href="{links["trocas"]}" target="_blank" rel="noopener">Politica de Trocas e Reembolso</a> e a <a href="{links["garantia"]}" target="_blank" rel="noopener">Politica de Garantia</a>, incluindo os tributos estimados quando houver envio internacional.</span>
+        <span>Li e aceito os <a href="{links["termos"]}" target="_blank" rel="noopener">Termos de Compra</a>, a <a href="{links["privacidade"]}" target="_blank" rel="noopener">Politica de Privacidade</a>, a <a href="{links["entrega"]}" target="_blank" rel="noopener">Politica de Entrega</a>, a <a href="{links["trocas"]}" target="_blank" rel="noopener">Politica de Trocas e Reembolso</a> e a <a href="{links["garantia"]}" target="_blank" rel="noopener">Politica de Garantia</a>.</span>
       </label>
       <label class="policy-check supplier-policy-check" id="supplierDisclosureCheck" hidden>
         <input id="supplierDisclosureAccepted" type="checkbox">
-        <span>Estou ciente de que este pedido pode ser enviado diretamente por fornecedor parceiro, inclusive do exterior, e conferi origem, frete, tributos estimados e prazo antes do pagamento.</span>
+        <span>Estou ciente de que este pedido pode ter produto sob encomenda e conferi preco, frete final, prazo estimado e resumo antes do pagamento.</span>
       </label>
       <div class="checkout-actions">{checkout_buttons}</div>
       <p class="drawer-note">Antes de pagar, confira o resumo do pedido. O pagamento e feito em ambiente seguro do provedor escolhido.</p>
@@ -1493,7 +1520,7 @@ def css() -> str:
     .product-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;align-items:stretch}.catalog-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.hardware-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
     .product-card{background:#fff;border:1px solid #e6e8ee;border-radius:16px;box-shadow:0 10px 28px rgba(13,23,38,.08);overflow:visible;display:flex;flex-direction:column;min-height:418px}.product-media{height:220px;background:linear-gradient(180deg,#f5fbff,#fff);display:grid;place-items:center;padding:28px 18px 14px;position:relative;overflow:hidden;border-radius:16px 16px 0 0}.product-media img{width:auto;height:auto;max-width:86%;max-height:142px;object-fit:contain;filter:drop-shadow(0 15px 14px rgba(0,0,0,.16))}.product-card[data-kind="pc"] .product-media{height:236px;padding:30px 18px 12px}.product-card[data-kind="pc"] .product-media img{max-width:78%;max-height:174px;transform:none;filter:drop-shadow(0 0 0 #fff) drop-shadow(3px 5px 0 rgba(255,255,255,.92)) drop-shadow(0 16px 18px rgba(0,0,0,.22))}.product-card .badge{position:absolute;top:12px;left:12px;background:#dff9f7;color:#047d74;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:1000}.product-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}.product-card h3{font-size:17px;line-height:1.2;margin:0;font-weight:1000;overflow-wrap:anywhere}.spec-line{color:#58606c;font-weight:800;font-size:13.5px;min-height:40px;overflow-wrap:anywhere}.price-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;min-width:0}.price{font-size:23px;font-weight:1000;line-height:1.08}.old-price{text-decoration:line-through;color:#8b93a0;font-size:14px}.installment{color:#0d8f70;font-weight:1000;font-size:13px}.card-actions{display:grid;gap:9px;margin-top:auto}.ghost-btn{border:2px solid #111;border-radius:999px;background:#fff;color:#111;height:42px;font-weight:1000;cursor:pointer}.cart-btn{border:0;border-radius:999px;background:#111;color:#fff;height:42px;font-size:13px;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;white-space:normal;text-align:center;line-height:1.15}.cart-btn .cart-icon{font-size:15px;line-height:1;flex:0 0 auto}
     .ibp-panels{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:44px 0 20px}.service-panel{min-height:330px;border-radius:18px;overflow:hidden;position:relative;display:flex;align-items:center}.service-panel-image{min-height:0;aspect-ratio:1.535/1;box-shadow:0 20px 48px rgba(0,0,0,.12);transition:.2s transform,.2s box-shadow;background:#fff}.service-panel-image img{width:100%;height:100%;object-fit:cover;display:block}.service-panel-image:hover{transform:translateY(-2px);box-shadow:0 26px 58px rgba(0,0,0,.16)}.service-panel-image span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.outline-light,.outline-dark{display:inline-flex;align-items:center;justify-content:center;height:52px;border-radius:999px;padding:0 26px;font-weight:1000}.outline-light{border:2px solid #fff;color:#fff}.outline-dark{border:2px solid #111;color:#111;background:#fff}
-    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:452px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:auto;height:auto;max-width:90%;max-height:148px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:18px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 2px;min-height:24px}.find-disclosure{border:1px solid #dceafe;background:#f6faff;border-radius:12px;padding:9px 10px;display:grid;gap:3px;color:#23445f}.find-disclosure span{font-size:11.5px;font-weight:1000;line-height:1.2}.find-disclosure small{font-size:10.8px;font-weight:900;line-height:1.25;color:#596b83}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:1px solid rgba(9,11,16,.88);background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#2b2500;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.72);transition:.18s transform,.18s box-shadow,.18s filter}.market-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);filter:saturate(1.04)}.market-btn img{height:25px;width:auto;max-width:82px;object-fit:contain}.market-mobilytech{background:linear-gradient(180deg,#7bc4ff 0%,#3da3ff 48%,#1688f2 100%);color:#fff;border:3px solid #087ff1;box-shadow:0 14px 28px rgba(9,103,214,.28),0 8px 18px rgba(13,23,38,.12),inset 0 2px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,87,180,.18);text-shadow:0 1px 0 rgba(0,0,0,.12)}.market-mobilytech .market-cart-glyph svg{width:28px;height:28px;stroke:#fff;stroke-width:2.35;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 0 rgba(0,0,0,.08))}.market-ml{background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#27220a;border-color:#d6bd00}.market-amazon{background:linear-gradient(180deg,#2d4056 0%,#232f3e 54%,#111820 100%);color:#fff;border-color:#ff9900;box-shadow:inset 0 -3px 0 #ff9900,0 8px 20px rgba(35,47,62,.16)}.market-shopee{background:linear-gradient(180deg,#ff714f,#ee4d2d);color:#fff;border-color:#d83a1c}.market-ali{background:linear-gradient(180deg,#ff7655 0%,#ff4e32 55%,#e63222 100%);color:#fff;border-color:#d73524}
+    .finds-band{margin:44px 0;padding:34px;border-radius:18px;background:#f7f8fb;display:grid;grid-template-columns:330px 1fr;gap:26px;align-items:center}.finds-text h2{font-size:34px;margin:0 0 12px}.finds-text p{font-weight:800;color:#5f6874}.finds-preview,.finds-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}.finds-preview{grid-template-columns:repeat(3,1fr);gap:16px}.finds-section-head{padding-top:24px;border-top:1px solid var(--line);margin-top:32px}.finds-section-head h2{font-size:32px;margin:0 0 8px}.finds-section-head p{margin:0 0 20px;color:#5f6874;font-weight:850}.find-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.07);padding:14px;display:flex;flex-direction:column;gap:9px;min-height:452px}.find-media{height:176px;border-radius:14px;background:linear-gradient(180deg,#f5f8fc,#fff);display:grid;place-items:center;overflow:hidden;padding:12px}.find-media img{width:100%;height:100%;max-width:90%;max-height:148px;object-fit:contain;padding:0}.find-card h3{font-size:16px;line-height:1.22;margin:0;min-height:39px}.find-card p{font-size:12.5px;color:#59616d;font-weight:800;line-height:1.45;margin:0}.find-meta{font-size:12px;color:#0b7c72;font-weight:1000}.find-price{font-size:18px;font-weight:1000;text-align:center;color:#101318;margin:2px 0 2px;min-height:24px}.find-disclosure{border:1px solid #dceafe;background:#f6faff;border-radius:12px;padding:9px 10px;display:grid;gap:3px;color:#23445f}.find-disclosure span{font-size:11.5px;font-weight:1000;line-height:1.2}.find-disclosure small{font-size:10.8px;font-weight:900;line-height:1.25;color:#596b83}.market-actions{margin-top:auto;display:grid;gap:8px}.market-btn{min-height:42px;border-radius:999px;border:1px solid rgba(9,11,16,.88);background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#2b2500;font-weight:1000;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 13px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.72);transition:.18s transform,.18s box-shadow,.18s filter}.market-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.8);filter:saturate(1.04)}.market-btn img{height:25px;width:auto;max-width:82px;object-fit:contain}.market-mobilytech{background:linear-gradient(180deg,#7bc4ff 0%,#3da3ff 48%,#1688f2 100%);color:#fff;border:3px solid #087ff1;box-shadow:0 14px 28px rgba(9,103,214,.28),0 8px 18px rgba(13,23,38,.12),inset 0 2px 0 rgba(255,255,255,.35),inset 0 -4px 0 rgba(0,87,180,.18);text-shadow:0 1px 0 rgba(0,0,0,.12)}.market-mobilytech .market-cart-glyph svg{width:28px;height:28px;stroke:#fff;stroke-width:2.35;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 0 rgba(0,0,0,.08))}.market-ml{background:linear-gradient(180deg,#fff8a8 0%,#fff159 58%,#f4d92a 100%);color:#27220a;border-color:#d6bd00}.market-amazon{background:linear-gradient(180deg,#2d4056 0%,#232f3e 54%,#111820 100%);color:#fff;border-color:#ff9900;box-shadow:inset 0 -3px 0 #ff9900,0 8px 20px rgba(35,47,62,.16)}.market-shopee{background:linear-gradient(180deg,#ff714f,#ee4d2d);color:#fff;border-color:#d83a1c}.market-ali{background:linear-gradient(180deg,#ff7655 0%,#ff4e32 55%,#e63222 100%);color:#fff;border-color:#d73524}
     .market-btn{position:relative;isolation:isolate;height:58px;min-height:58px;width:100%;display:grid;grid-template-columns:104px 1px minmax(0,1fr);align-items:center;gap:15px;padding:0 18px;border-radius:999px;font-size:20px;line-height:1;letter-spacing:0;text-align:center;overflow:hidden}.market-btn:before,.market-btn:after{content:"";position:absolute;pointer-events:none;z-index:0}.market-brand,.market-sep,.market-label,.market-cart-glyph{position:relative;z-index:1}.market-brand{height:100%;display:flex;align-items:center;justify-content:center;min-width:0}.market-brand img{display:block;height:auto;max-height:43px;max-width:92px;width:auto;object-fit:contain}.market-sep{width:1px;height:34px;border-radius:999px;background:rgba(255,255,255,.42);box-shadow:1px 0 0 rgba(0,0,0,.16)}.market-label{display:flex;align-items:center;justify-content:center;min-width:0;font-size:20px;font-weight:1000;line-height:1;white-space:nowrap}.market-mobilytech{height:62px;min-height:62px;display:grid;grid-template-columns:52px 1px minmax(0,1fr);gap:16px;padding:0 22px;font-size:18px;line-height:1.05;white-space:normal;align-items:center}.market-mobilytech:before{left:8px;right:8px;top:7px;height:16px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.08));opacity:.9}.market-mobilytech .market-cart-glyph{display:grid;place-items:center}.market-mobilytech .market-sep{height:38px;background:rgba(255,255,255,.48);box-shadow:1px 0 0 rgba(0,86,176,.24)}.market-mobilytech .market-label{display:block;font-size:18px;color:#fff;text-align:center;white-space:normal;overflow-wrap:normal;word-break:normal;line-height:1.05}.market-ml{display:flex;align-items:center;justify-content:center;gap:13px;background:linear-gradient(180deg,#fffef4 0%,#fff36a 34%,#fff159 66%,#f0d719 100%);border:2px solid #e3c900;color:#221f08;box-shadow:0 12px 22px rgba(231,202,0,.22),inset 0 1px 0 rgba(255,255,255,.98),inset 0 -3px 0 rgba(185,159,0,.2)}.market-ml .market-brand{width:50px;height:30px;flex:0 0 50px}.market-ml .market-brand img{width:50px;height:30px;max-height:none;max-width:none}.market-ml .market-sep{display:none}.market-ml .market-label{font-size:20px;color:#24200a}.market-amazon{background:linear-gradient(180deg,#343434 0%,#171717 52%,#050505 100%);border:2px solid #f4a11e;color:#fff;box-shadow:0 12px 24px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -3px 0 rgba(246,162,26,.38)}.market-amazon:after{right:18px;bottom:7px;width:105px;height:32px;border-bottom:8px solid rgba(255,153,0,.18);border-radius:0 0 90px 90px;transform:rotate(-7deg)}.market-amazon .market-brand img{filter:none;max-height:46px;max-width:78px}.market-amazon .market-sep{background:rgba(255,255,255,.22);box-shadow:1px 0 0 rgba(246,162,26,.2)}.market-amazon .market-label{font-size:20px}.market-ali{background:linear-gradient(180deg,#ff3a1b 0%,#ee1205 54%,#c90000 100%);border:2px solid #ff9d1a;color:#fff;box-shadow:0 12px 24px rgba(224,21,8,.26),inset 0 1px 0 rgba(255,255,255,.26),inset 0 -3px 0 rgba(115,0,0,.18)}.market-ali:after{right:18px;top:13px;width:42px;height:42px;background:radial-gradient(circle at 50% 50%,rgba(255,114,40,.28) 0 24%,transparent 26%),linear-gradient(45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%),linear-gradient(-45deg,transparent 38%,rgba(255,114,40,.22) 40% 60%,transparent 62%);opacity:.9}.market-ali .market-brand img{filter:none;max-height:50px;max-width:86px}.market-ali .market-sep{background:rgba(255,211,109,.48);box-shadow:1px 0 0 rgba(93,0,0,.18)}.market-ali .market-label{font-size:20px}.market-art-btn{aspect-ratio:3/1;height:auto;min-height:0;padding:0;border:0;background:transparent!important;box-shadow:none!important;display:block;overflow:visible;transition:.18s transform,.18s filter}.market-art-btn:before,.market-art-btn:after{display:none}.market-art-btn:hover{transform:translateY(-1px);box-shadow:none!important;filter:saturate(1.03) brightness(1.01)}.market-button-art{width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:fill;display:block}
     .drops-band{position:relative;overflow:hidden;background:#f4f8ff url("/assets/nossos-produtos-band-bg.png") center/cover no-repeat;border:1px solid #e5edf8;border-radius:20px;box-shadow:0 24px 58px rgba(22,47,86,.10);grid-template-columns:minmax(270px,340px) minmax(0,1fr);gap:30px;padding:58px 34px}.drops-band .finds-text{align-self:center;justify-self:center;max-width:330px}.drops-band .finds-text h2{font-size:clamp(34px,3.4vw,46px);line-height:1.13;margin-bottom:18px}.drops-band .finds-text p{font-size:17px;line-height:1.47;color:#415067}.drops-band .btn-dark{min-height:52px;padding-inline:24px;box-shadow:0 14px 28px rgba(0,0,0,.18)}.drops-band .find-card{border-radius:16px;border-color:#dae4f2;box-shadow:0 14px 32px rgba(30,55,86,.10);min-height:446px}.drops-band .find-media{background:linear-gradient(180deg,#f8fbff 0%,#fff 76%)}.find-price{font-size:21px;line-height:1.05;letter-spacing:0;color:#050b15;text-align:center;text-shadow:0 1px 0 rgba(255,255,255,.7)}.finds-layout .find-price{font-size:22px}.market-mobilytech{height:54px;min-height:54px;grid-template-columns:46px 1px minmax(0,1fr);gap:12px;padding:0 16px;border-width:2.5px;box-shadow:0 10px 22px rgba(9,103,214,.24),0 6px 14px rgba(13,23,38,.10),inset 0 2px 0 rgba(255,255,255,.36),inset 0 -3px 0 rgba(0,87,180,.18)}.market-mobilytech:before{left:8px;right:8px;top:6px;height:13px}.market-mobilytech .market-cart-glyph svg{width:24px;height:24px}.market-mobilytech .market-sep{height:32px}.market-mobilytech .market-label{font-size:16px;line-height:1.05}
     .finds-primary-head{text-align:center}.finds-primary-head h2{font-size:36px;line-height:1.06}.finds-primary-head h2 span{display:inline-block;margin-right:8px}.finds-primary-head p{max-width:780px;margin-left:auto;margin-right:auto}.public-compliance-note{border:1px solid #dceafe;background:#f6faff;border-radius:14px;padding:12px 14px;color:#23445f;font-size:13px;font-weight:900;line-height:1.45}.finds-layout{display:grid;grid-template-columns:minmax(230px,280px) 1fr;align-items:start;gap:22px;margin-top:22px}.finds-filters{position:sticky;top:92px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px;box-shadow:0 8px 24px rgba(9,16,28,.07);display:grid;gap:12px}.finds-filter-form{display:grid;gap:12px;margin:0}.finds-search-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:1000;color:#465366}.finds-search-control{position:relative;display:flex;align-items:center}.finds-search-apply{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px;background:#111;color:#fff;font-size:20px;font-weight:1000;display:grid;place-items:center;cursor:pointer;line-height:1}.finds-filters input,.finds-filters select{width:100%;border:1px solid #d9dee8;border-radius:11px;background:#fbfcfe;padding:11px 12px;font:inherit;font-size:14px;font-weight:850;color:#131923}.finds-filters .finds-search-control input{padding-right:52px}.finds-filter-block{border-top:1px solid #eef1f5;border-bottom:1px solid #eef1f5;padding:13px 0;display:grid;gap:11px}.finds-filter-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.finds-filter-head strong{font-size:18px}.finds-filter-head button{border:0;background:#eef5ff;color:#075cab;border-radius:999px;padding:7px 10px;font-weight:1000;cursor:pointer}.finds-price-inputs{display:grid;grid-template-columns:1fr 1fr;gap:9px}.finds-price-inputs label{display:grid;gap:5px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:1000;color:#657081}.finds-range-wrap{position:relative;min-height:28px;display:grid;align-items:center}.finds-range-wrap input[type=range]{grid-area:1/1;width:100%;padding:0;background:transparent;accent-color:#111;pointer-events:none}.finds-range-wrap input[type=range]::-webkit-slider-thumb{pointer-events:auto}.finds-range-wrap input[type=range]::-moz-range-thumb{pointer-events:auto}.finds-apply{border:0;border-radius:999px;background:#111;color:#fff;min-height:42px;font-weight:1000;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,.12)}.finds-count{margin:0;color:#59616d;font-size:13px;font-weight:900;line-height:1.35}.finds-layout .finds-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.account-logged-actions .account-logout-link{background:#111;color:#fff;border-color:#111}
@@ -1853,7 +1880,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
             ]
         )
     if dropshipping_enabled:
-        search_entries.append({"type": "Loja", "icon": "MT", "title": "Nossos Produtos", "description": "Produtos para setup, escritorio e manutencao com compra direta no site.", "href": "ROUTES.produtos + \"#findsGrid\"", "terms": "nossos produtos dropshipping produtos mobilytech compra direta setup escritorio hardware manutencao"})
+        search_entries.append({"type": "Loja", "icon": "MT", "title": "Produtos sob encomenda", "description": "Produtos para setup, escritorio e manutencao com compra direta no site.", "href": "ROUTES.produtos + \"#findsGrid\"", "terms": "produtos sob encomenda mobilytech compra direta setup escritorio hardware manutencao"})
     search_entries.extend(
         [
             {"type": "Servico", "icon": "$", "title": "Monte seu PC", "description": "Orcamento personalizado para montagem sob demanda.", "href": "ROUTES.montagem", "terms": "montagem monte seu pc montar computador orcamento custom personalizado"},
@@ -2199,7 +2226,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         .slice(0, 4);
       const sectionResults = sections.map(({{ item }}) => item);
       const products = DATA.products
-.filter((item) => item.active !== false && !["finds", "affiliate"].includes(item.category))
+.filter((item) => item.active !== false && !["finds", "affiliate", "sob-encomenda", "dropshipping"].includes(item.category))
         .filter((item) => matchesSearch([item.title, item.badge, specs(item).join(" "), item.category].join(" "), q))
         .map((item) => ({{ item, score: searchScore(item.title, [item.badge, specs(item).join(" "), item.category].join(" "), q) }}))
         .sort((a, b) => b.score - a.score)
@@ -2356,6 +2383,13 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       const text = norm([product?.category, product?.purchaseMode, product?.fulfillmentMode, product?.shipping?.mode].join(" "));
       return Boolean(product?.manualFulfillment || text.includes("dropshipping") || text.includes("supplier") || text.includes("fornecedor"));
     }}
+    function isDirectOrderProduct(product) {{
+      const category = norm(product?.category || "");
+      return Boolean(product?.madeToOrder || category === "sob-encomenda" || category === "sob encomenda" || category === "encomenda" || category === "dropshipping");
+    }}
+    function allowsCartQuantity(product) {{
+      return Boolean(isSupplierProduct(product) || product?.allowQuantity === true || product?.madeToOrder === true || norm(product?.category || "") === "sob-encomenda");
+    }}
     function isInternationalSupplierProduct(product) {{
       if (!isSupplierProduct(product)) return false;
       const text = norm([product?.shipping?.region, product?.shipping?.originCountry, product?.shipping?.startCountryCode, product?.supplierRegion, product?.originRegion, product?.publicOriginNote, product?.source].join(" "));
@@ -2404,7 +2438,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     function canAddCartProduct(productId) {{
       const product = productById(productId);
       if (!product) return false;
-      if (!isSupplierProduct(product) && cartHasProduct(productId)) {{
+      if (!allowsCartQuantity(product) && cartHasProduct(productId)) {{
         showToast("Esse item fisico tem estoque unico e ja esta no carrinho.");
         openCart();
         return false;
@@ -2591,7 +2625,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       const node = $(target);
       if (!node) return;
       const search = norm($("#siteSearch")?.value || "");
-let products = DATA.products.filter((item) => item.active !== false && !["finds", "affiliate", "dropshipping"].includes(item.category));
+let products = DATA.products.filter((item) => item.active !== false && !["finds", "affiliate", "dropshipping", "sob-encomenda"].includes(item.category));
       if (filter === "pc") products = products.filter((item) => item.category === "pc");
       if (filter === "hardware") products = products.filter((item) => item.category !== "pc");
       if (target === "#homePcGrid") products = products.filter((item) => item.category === "pc");
@@ -2851,12 +2885,12 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       return [...selected, ...items.filter((item) => !selectedItems.has(item))];
     }}
     const HOME_DROPSHIPPING_PRIORITY = [
-      "cj-the-new-x99-s-real-chip-computer-motherboard-p-47375104",
-      "cj-x99-computer-motherboard-ddr4-server-x99-compu-40547584",
-      "cj-memory-stick-full-model-ddr4-ddr3-desktop-comp-03559680",
-      "cj-cabo-ou-adaptador-de-video-para-notebook-e-pc-17fb626d",
-      "cj-riser-card-009s-plus-pci-e-pcie-pci-express-x1-27228672",
-      "cj-luminous-punk-keyboard-usb-wired-computer-gami-78979328"
+      "sob-ssd-kingston-a400-480gb",
+      "sob-ram-kingston-ddr4-8gb-notebook",
+      "sob-fonte-duex-500w-bronze",
+      "sob-roteador-tplink-archer-c6",
+      "sob-teclado-redragon-sindri-abnt2",
+      "sob-hub-usbc-ugreen-5em1"
     ];
     function sortHomeDropshippingItems(items) {{
       const rank = new Map(HOME_DROPSHIPPING_PRIORITY.map((id, index) => [id, index]));
@@ -2924,7 +2958,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const emptyCopy = group === "vendidos"
         ? "Estamos atualizando esta selecao. Veja as ofertas recomendadas abaixo."
         : source === "dropshipping"
-          ? "Nenhum produto direto encontrado com esses filtros."
+          ? "Nenhum produto sob encomenda encontrado com esses filtros."
         : "Nenhum achado encontrado.";
       node.innerHTML = items.map(findCard).join("") || `<p class="empty">${{emptyCopy}}</p>`;
     }}
@@ -2978,7 +3012,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const price = numericPrice ? money(numericPrice) : (item.currentPrice || "");
       const buttonLabel = "Ver oferta";
       const scope = findShippingScope(item);
-      const originNote = isManual ? (scope === "internacional" ? "Fornecedor parceiro internacional." : "Fornecedor parceiro nacional.") : "";
+      const originNote = isManual ? (scope === "internacional" ? "Origem e prazo informados antes do pagamento." : "Produto nacional sob encomenda.") : "";
       const freightNote = isManual ? (item.publicShippingNote || "Frete recalculado pelo CEP antes do pagamento.") : "";
       const compactFreightNote = isManual ? compactSupplierFreightNote(freightNote, scope, item) : "";
       const disclosure = isManual
@@ -3008,7 +3042,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}" data-store="${{escapeHtml(findMarketName(item))}}" data-shipping="${{findShippingScope(item)}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
         <h3>${{item.title}}</h3>
-        <p>${{isManual ? "Compra direta com frete e total revisados antes do pagamento." : (item.whySell || item.publicPartnerNote || "")}}</p>
+        <p>${{isManual ? "Compra direta com preco do produto revisado e frete final por CEP." : (item.whySell || item.publicPartnerNote || "")}}</p>
         <div class="find-price">${{price}}</div>
         ${{disclosure}}
         ${{action}}
@@ -3023,7 +3057,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       }}
       const existing = cart.find((item) => String(item.productId) === String(productId) && !item.selectedVariantId);
       selectedShipping = null;
-      if (existing && isSupplierProduct(product)) {{
+      if (existing && allowsCartQuantity(product)) {{
         existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
       }} else {{
         cart.push({{ productId, selectedAddons: [], selectedSwaps: [], quantity: 1 }});
@@ -3041,7 +3075,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const summary = variantSummary(product, variant);
       const existing = cart.find((item) => String(item.productId) === String(productId) && String(item.selectedVariantId || "") === String(summary?.id || ""));
       selectedShipping = null;
-      if (existing && isSupplierProduct(product)) {{
+      if (existing && allowsCartQuantity(product)) {{
         existing.quantity = Math.max(1, Number(existing.quantity || 1)) + 1;
       }} else {{
         cart.push({{ productId, selectedVariantId: summary?.id || "", selectedVariant: summary, selectedAddons: [], selectedSwaps: [], quantity: 1 }});
@@ -3174,9 +3208,9 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         const variantText = selectedVariant ? variantLabel(selectedVariant) : "";
         const options = [variantText, ...(item.selectedAddons || []).map((o) => o.label), ...(item.selectedSwaps || []).map((o) => o.label)].filter(Boolean).join(" + ");
         const quantity = Math.max(1, Number(item.quantity || 1));
-        const supplierItem = isSupplierProduct(product);
-        const quantityLabel = !supplierItem && quantity > 1 ? `Qtd. ${{quantity}}` : "";
-        const quantityControl = supplierItem
+        const quantityEnabled = allowsCartQuantity(product);
+        const quantityLabel = !quantityEnabled && quantity > 1 ? `Qtd. ${{quantity}}` : "";
+        const quantityControl = quantityEnabled
           ? `<div class="drawer-qty" aria-label="Quantidade">
               <button type="button" data-qty="${{index}}" data-delta="-1" aria-label="Diminuir quantidade"${{quantity <= 1 ? " disabled" : ""}}>-</button>
               <span aria-live="polite">${{quantity}}</span>
@@ -3210,7 +3244,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function changeCartQuantity(index, delta) {{
       const item = cart[index];
       const product = productById(item?.productId);
-      if (!item || !product || !isSupplierProduct(product)) return;
+      if (!item || !product || !allowsCartQuantity(product)) return;
       const current = Math.max(1, Number(item.quantity || 1));
       const next = Math.max(1, current + Number(delta || 0));
       if (next === current) return;
@@ -3227,11 +3261,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         return;
       }}
       if (state.supplier && !state.physical) {{
-        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para Nossos Produtos</strong><small>Informe o CEP e selecione o envio direto com rastreio; retirada local nao se aplica.</small></span></div>';
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para produtos sob encomenda</strong><small>Informe o CEP e selecione uma entrega com rastreio antes do pagamento.</small></span></div>';
         return;
       }}
       if (state.supplier && state.physical) {{
-        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos usam Melhor Envio ou retirada; MobilyTech Finds usa envio direto no mesmo calculo.</small></span></div>';
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos e produtos sob encomenda usam frete final calculado pelo CEP.</small></span></div>';
         return;
       }}
       node.innerHTML = `<button class="shipping-option ${{selectedShipping ? "" : "is-selected"}}" type="button" id="localPickupOption">
@@ -3346,14 +3380,14 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (!cart.length) return showToast("Seu carrinho esta vazio.");
       const state = cartFulfillmentState();
       if (state.supplier && (!selectedShipping || !selectedShipping.serviceId)) {{
-        return showToast("Calcule e selecione o frete exato antes de finalizar Nossos Produtos.");
+        return showToast("Calcule e selecione o frete antes de finalizar produtos sob encomenda.");
       }}
       const acceptedPolicies = policyPayload();
       if (!acceptedPolicies.terms || !acceptedPolicies.privacy) {{
         return showToast("Aceite os Termos de Compra e a Politica de Privacidade.");
       }}
       if (state.supplier && !acceptedPolicies.supplierDisclosure) {{
-        return showToast("Confirme o aviso de envio direto por fornecedor parceiro.");
+        return showToast("Confirme o aviso de produto sob encomenda.");
       }}
       const original = button.innerHTML;
       button.innerHTML = "Abrindo checkout...";
@@ -3640,7 +3674,7 @@ def main():
             "achados",
         ),
         FASE2_DIR / "nossos-produtos.html": (
-            "Nossos Produtos | MobilyTech BR",
+            "Produtos sob encomenda | MobilyTech BR",
             nossos_produtos_page("../", pages_content["produtos"], site_content),
             "../",
             "produtos",

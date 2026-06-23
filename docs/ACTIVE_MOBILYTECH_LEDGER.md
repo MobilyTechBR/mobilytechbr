@@ -12,6 +12,7 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - Autonomia do agente: em 2026-06-16 o usuario autorizou fazer automaticamente tudo que for necessario e seguro, usando APIs, plugins, Browser, Computer Use, Opera GX/Chrome ou painel logado quando for mais eficiente. So agrupar e pedir intervencao do usuario quando for realmente impossivel concluir sem acao humana. Nunca expor tokens, senhas, chaves, secrets ou credenciais em chat, repo, docs, prints ou logs.
 - Status por e-mail: em 2026-06-16 o usuario pediu que cada etapa concluida do plano seja avisada por e-mail curto, com nome da etapa, pequeno resumo e proximo passo. Se uma etapa travar e precisar de intervencao humana, enviar e-mail com o bloqueio e a acao exata. Antes de desistir de API/ponte/plugin, pesquisar e tentar recuperar/contornar por conta propria, especialmente Computer Use.
 - Regra Ollama/local AI para proximos handoffs: usar Ollama visual para crocheck visual gratuito quando ChatGPT web/API nao estiver disponivel ou quando for mais pratico; usar Ollama de texto/codigo/escrita para apoio em revisoes, checklists, prompts, redacao e primeira passada de codigo. Sempre usar prompts rigorosos. Codex continua como auditor final de codigo, seguranca, producao, links, checkout, env vars e publicacao; para visual, Ollama pode fazer a vistoria final gratuita, mas Codex deve conferir a coerencia contra as evidencias e o pedido do usuario.
+- Regra obrigatoria adicionada em 2026-06-20: toda alteracao visual no site MobilyTech BR deve fazer crosscheck visual com IA do Ollama antes de publicar ou considerar pronto, exceto se o usuario pedir explicitamente para nao fazer. Para referencia enviada pelo usuario, comparar referencia contra screenshot real desktop/mobile; se o usuario pedir 9.9/10, nota menor bloqueia e exige iteracao.
 
 ## Estado em andamento
 
@@ -417,3 +418,25 @@ Este arquivo existe para evitar perda de sequencia quando o contexto for compact
 - QA de links salvo em `C:\Users\MF\AppData\Local\Temp\mobilytech-finds-qa-2026-06-18\link-consistency-http-2026-06-18.json`: 8 `ok`, 3 AliExpress `structural-ok`.
 - AliExpress: nao tentar contornar o bloqueio de navegacao direta do Browser; os shortlinks foram validados estruturalmente por virem do lote oficial e apontarem para paginas reais `/item/...`.
 - Proximo passo real: publicar/deployar e validar no dominio oficial `https://www.mobilytech.com.br/fase2/achados.html`.
+
+## Atualizacao 2026-06-22 - dropshipping volta para backlog futuro
+
+- Usuario pediu para colocar dropshipping na lista de futuras coisas para recolocar no site, antes de seguir para outra tarefa.
+- Decisao operacional: nao reativar dropshipping agora. Manter o modulo como backlog futuro ate haver modelo fiscal/operacional definido, fornecedor/plataforma confirmada por escrito, frete exato fornecedor-cliente, API ou fluxo semi-automatico confiavel, e clareza sobre emissao de nota fiscal/responsabilidade.
+- Backlog atualizado em `docs/MOBILYTECH_BACKLOG_2026-06-17.md` com essa decisao e com candidatos/criterios para reavaliacao futura: Dropify, Dogama, DSlite, C7 Drop, Agis e outros fornecedores nacionais.
+
+## Atualizacao 2026-06-22 - fallbacks Windows instalados
+
+- Power Automate Desktop instalado via winget: `Microsoft.PowerAutomateDesktop` versao `2.68.00237.26118`. Executavel principal: `C:\Program Files (x86)\Power Automate Desktop\PAD.Console.Host.exe`. Atalho: `C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Power Automate\Power Automate.lnk`.
+- AutoHotkey v2 instalado via winget: `AutoHotkey.AutoHotkey` versao `2.0.26`. Executavel principal: `C:\Users\MF\AppData\Local\Programs\AutoHotkey\v2\AutoHotkey64.exe`.
+- Smoke test criado em `tools\automation\ahk-smoke-test.ahk`; verificador combinado criado em `tools\automation\test-windows-automation-fallbacks.ps1`.
+- Verificacao concluida com sucesso: o verificador achou Power Automate Desktop, achou AutoHotkey e executou o smoke test AutoHotkey gravando `AutoHotkey v2 smoke OK`.
+- Observacao operacional: Power Automate Desktop esta instalado, mas fluxos reais ainda dependem de abrir o app e entrar/configurar a conta Microsoft quando for criar automacoes. AutoHotkey ja esta pronto para scripts locais v2.
+
+## Atualizacao 2026-06-23 - CJ pausado e nova frente sob encomenda
+
+- Usuario desistiu temporariamente de dropshipping/CJ por burocracia fiscal e operacional, mas quer manter renda extra ligada a loja.
+- Nova direcao publica: substituir a vitrine CJ por `Produtos sob encomenda na MobilyTech BR`.
+- Regra comercial: produto nacional/manual, preferencialmente Mercado Livre/envio nacional; preco de venda deve considerar custo do item + frete do fornecedor ate a MobilyTech + margem editavel. O frete da MobilyTech ate o cliente fica separado e deve continuar pelo Melhor Envio.
+- Nao chamar essa frente de dropshipping para o cliente. Usar linguagem de compra sob encomenda, disponibilidade, prazo e conferencia pela MobilyTech.
+- Mecanismo CJ preservado apenas como arquivo tecnico em `docs/CJ_DROPSHIPPING_ARCHIVE_2026-06-23.md`; nao reativar sem SKU, frete real por CEP, margem, impostos/NF-e e QA visual/funcional.

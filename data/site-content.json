@@ -10,13 +10,13 @@
     },
     "catalog": {
       "physicalProducts": true,
-      "dropshippingProducts": false
+      "dropshippingProducts": true
     }
   },
   "homeHero": {
     "title": "Tecnologia para setup, trabalho e upgrades.",
-    "subtitle": "Produtos selecionados, montagem sob orcamento, limpeza de PC e atendimento direto da MobilyTech BR.",
-    "primaryLabel": "Ver Nossos Produtos",
+    "subtitle": "Produtos selecionados, montagem sob orcamento, limpeza de PC e acessorios sob encomenda com atendimento direto da MobilyTech BR.",
+    "primaryLabel": "Ver produtos sob encomenda",
     "secondaryLabel": "Monte seu PC",
     "featuredProductId": "",
     "featuredKicker": "Curadoria MobilyTech",
@@ -31,12 +31,12 @@
       "find-aff-amazon-auto-b08ckgw1d4-placa-m-e-asus-tuf-gaming-a520m-plus-ii-am4-4xddr4-hdmi-displayport-d"
     ],
     "dropshipping": [
-      "cj-the-new-x99-s-real-chip-computer-motherboard-p-47375104",
-      "cj-x99-computer-motherboard-ddr4-server-x99-compu-40547584",
-      "cj-memory-stick-full-model-ddr4-ddr3-desktop-comp-03559680",
-      "cj-cabo-ou-adaptador-de-video-para-notebook-e-pc-17fb626d",
-      "cj-riser-card-009s-plus-pci-e-pcie-pci-express-x1-27228672",
-      "cj-luminous-punk-keyboard-usb-wired-computer-gami-78979328"
+      "sob-ssd-kingston-a400-480gb",
+      "sob-ram-kingston-ddr4-8gb-notebook",
+      "sob-fonte-duex-500w-bronze",
+      "sob-roteador-tplink-archer-c6",
+      "sob-teclado-redragon-sindri-abnt2",
+      "sob-hub-usbc-ugreen-5em1"
     ]
   },
   "servicePanels": {
@@ -64,8 +64,8 @@
       "image": "./assets/mobilytech-character-cutout.png"
     },
     "produtos": {
-      "title": "Nossos Produtos",
-      "intro": "Produtos selecionados pela MobilyTech BR com compra direta no site. Confira preco, origem, frete, prazo estimado e total antes do pagamento.",
+      "title": "Produtos sob encomenda na MobilyTech BR",
+      "intro": "Produtos nacionais selecionados para setup, trabalho, upgrades e manutencao. O preco do produto ja considera a compra ate a MobilyTech BR; o envio final e calculado pelo CEP no carrinho.",
       "image": "./assets/mobilytech-character-cutout.png"
     },
     "montagem": {

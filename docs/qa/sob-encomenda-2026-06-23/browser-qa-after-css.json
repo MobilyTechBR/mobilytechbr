@@ -1,0 +1,55 @@
+{
+  "mobileAfterCss": {
+    "cards": 17,
+    "firstTwoSameRow": true,
+    "hasLegacyText": false,
+    "imgs": [
+      {
+        "h": 96,
+        "ok": true,
+        "w": 141
+      },
+      {
+        "h": 96,
+        "ok": true,
+        "w": 141
+      },
+      {
+        "h": 96,
+        "ok": true,
+        "w": 141
+      },
+      {
+        "h": 96,
+        "ok": true,
+        "w": 141
+      },
+      {
+        "h": 96,
+        "ok": true,
+        "w": 141
+      },
+      {
+        "h": 96,
+        "ok": true,
+        "w": 141
+      }
+    ],
+    "overflowX": false,
+    "r0": {
+      "h": 299,
+      "right": 184,
+      "w": 180,
+      "x": 4,
+      "y": 135
+    },
+    "r1": {
+      "h": 299,
+      "right": 371,
+      "w": 180,
+      "x": 192,
+      "y": 135
+    }
+  },
+  "logsAfterCss": []
+}
