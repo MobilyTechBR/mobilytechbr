@@ -393,7 +393,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-ssd-kingston-a400-480gb-cutout.png"
   },
   {
     "id": "nossos-ssd-kingston-nv3-1tb",
@@ -448,7 +449,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-ssd-kingston-nv3-1tb-cutout.png"
   },
   {
     "id": "nossos-ram-kingston-fury-impact-8gb-notebook",
@@ -503,7 +505,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-ram-kingston-fury-impact-8gb-notebook-cutout.png"
   },
   {
     "id": "nossos-ram-kingston-fury-beast-8gb-desktop",
@@ -559,7 +562,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-ram-kingston-fury-beast-8gb-desktop-cutout.png"
   },
   {
     "id": "nossos-ram-kingston-fury-beast-16gb-desktop",
@@ -615,7 +619,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-ram-kingston-fury-beast-16gb-desktop-cutout.png"
   },
   {
     "id": "nossos-processador-ryzen-5-5500",
@@ -670,7 +675,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-processador-ryzen-5-5500-cutout.png"
   },
   {
     "id": "nossos-processador-intel-i3-12100f",
@@ -725,7 +731,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-processador-intel-i3-12100f-cutout.png"
   },
   {
     "id": "nossos-placa-mae-msi-a520m-a-pro",
@@ -780,7 +787,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-placa-mae-msi-a520m-a-pro-cutout.png"
   },
   {
     "id": "nossos-placa-mae-asus-prime-a520m-e",
@@ -836,7 +844,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-placa-mae-asus-prime-a520m-e-cutout.png"
   },
   {
     "id": "nossos-fonte-duex-500w-bronze",
@@ -891,7 +900,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-fonte-duex-500w-bronze-cutout.png"
   },
   {
     "id": "nossos-monitor-lg-24-full-hd-100hz",
@@ -947,7 +957,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-monitor-lg-24-full-hd-100hz-cutout.png"
   },
   {
     "id": "nossos-monitor-rise-24-180hz",
@@ -1003,7 +1014,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-monitor-rise-24-180hz-cutout.png"
   },
   {
     "id": "nossos-mouse-logitech-g203-preto",
@@ -1058,7 +1070,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-mouse-logitech-g203-preto-cutout.png"
   },
   {
     "id": "nossos-teclado-redragon-kumara-abnt2",
@@ -1113,7 +1126,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-teclado-redragon-kumara-abnt2-cutout.png"
   },
   {
     "id": "nossos-mousepad-rgb-80x30",
@@ -1168,7 +1182,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-mousepad-rgb-80x30-cutout.png"
   },
   {
     "id": "nossos-mousepad-exbom-70x35",
@@ -1223,7 +1238,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-mousepad-exbom-70x35-cutout.png"
   },
   {
     "id": "nossos-hub-usb-3-md9-4-portas",
@@ -1278,7 +1294,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-hub-usb-3-md9-4-portas-cutout.png"
   },
   {
     "id": "nossos-hub-usb-2-4-portas",
@@ -1333,7 +1350,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-hub-usb-2-4-portas-cutout.png"
   },
   {
     "id": "nossos-adaptador-wifi-usb-600mbps",
@@ -1388,7 +1406,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-adaptador-wifi-usb-600mbps-cutout.png"
   },
   {
     "id": "nossos-webcam-full-hd-1080p",
@@ -1443,7 +1462,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-webcam-full-hd-1080p-cutout.png"
   },
   {
     "id": "nossos-case-ssd-m2-nvme-usbc",
@@ -1498,7 +1518,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-case-ssd-m2-nvme-usbc-cutout.png"
   },
   {
     "id": "nossos-cabo-hdmi-pix-2m",
@@ -1553,7 +1574,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-cabo-hdmi-pix-2m-cutout.png"
   },
   {
     "id": "nossos-filtro-iclamper-energia-5",
@@ -1608,7 +1630,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-filtro-iclamper-energia-5-cutout.png"
   },
   {
     "id": "nossos-pasta-termica-implastec-50g",
@@ -1662,7 +1685,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-pasta-termica-implastec-50g-cutout.png"
   },
   {
     "id": "nossos-pasta-termica-ts-cold-4g",
@@ -1717,7 +1741,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-pasta-termica-ts-cold-4g-cutout.png"
   },
   {
     "id": "nossos-cooler-fan-rise-120mm-branco",
@@ -1772,7 +1797,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-cooler-fan-rise-120mm-branco-cutout.png"
   },
   {
     "id": "nossos-cooler-fan-rgb-120mm",
@@ -1827,7 +1853,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-cooler-fan-rgb-120mm-cutout.png"
   },
   {
     "id": "nossos-kit-3-fans-rgb-120mm",
@@ -1882,7 +1909,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-kit-3-fans-rgb-120mm-cutout.png"
   },
   {
     "id": "nossos-kit-limpa-telas-150ml-microfibra",
@@ -1937,7 +1965,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-kit-limpa-telas-150ml-microfibra-cutout.png"
   },
   {
     "id": "nossos-carregador-apple-usbc-20w",
@@ -1992,7 +2021,8 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-carregador-apple-usbc-20w-cutout.png"
   },
   {
     "id": "nossos-flanela-microfibra-notebook-13",
@@ -2047,6 +2077,7 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "cutout": "./assets/generated/nossos-flanela-microfibra-notebook-13-cutout.png"
   }
 ]
