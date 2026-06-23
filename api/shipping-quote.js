@@ -47,6 +47,10 @@ function normalizeBaseUrl(value) {
   return String(value || "").trim().replace(/\/+$/, "");
 }
 
+function runtimeRefreshEnabled() {
+  return String(process.env.MELHOR_ENVIO_ENABLE_RUNTIME_REFRESH || "").trim().toLowerCase() === "true";
+}
+
 function categoryMinimumWeight(product) {
   const category = normalizeText(product?.category || product?.type || product?.title || "");
   if (category.includes("ssd")) return 1;
@@ -193,6 +197,7 @@ function productsFromCartItems(products, cartItems) {
 }
 
 async function refreshMelhorEnvioToken() {
+  if (!runtimeRefreshEnabled()) return null;
   const refreshToken = String(process.env.MELHOR_ENVIO_REFRESH_TOKEN || "").trim();
   const clientId = String(process.env.MELHOR_ENVIO_CLIENT_ID || "").trim();
   const clientSecret = String(process.env.MELHOR_ENVIO_CLIENT_SECRET || "").trim();
