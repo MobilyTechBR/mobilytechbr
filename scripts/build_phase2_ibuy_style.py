@@ -539,6 +539,7 @@ def public_dropshipping_payload(products, site_content: dict | None = None):
         if any(value in raw_region for value in ("br", "brasil", "nacional", "local")):
             scope = "nacional"
         made_to_order = not is_legacy_dropshipping_product(product)
+        display_image = product.get("image") if made_to_order else (product.get("cutout") or product.get("image"))
         public_items.append(
             {
                 "id": f"drop-{product.get('id')}",
@@ -550,8 +551,8 @@ def public_dropshipping_payload(products, site_content: dict | None = None):
                 or specs_data.get("operation")
                 or "Selecionado pela MobilyTech BR com checkout seguro e acompanhamento humano.",
                 "confidence": product.get("badge") or "Selecionado MobilyTech",
-                "productImage": product.get("cutout") or product.get("image"),
-                "selectedCreative": product.get("cutout") or product.get("image"),
+                "productImage": display_image,
+                "selectedCreative": display_image,
                 "salePrice": product.get("price"),
                 "marketplace": {
                     "name": "MobilyTech BR",
