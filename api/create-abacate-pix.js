@@ -7,6 +7,8 @@ const ABACATE_PIX_API = "https://api.abacatepay.com/v2/transparents/create";
 const { quoteMelhorEnvio } = require("./shipping-quote");
 const {
   formatFulfillmentItems,
+  formatProcurementItems,
+  procurementItemsForProducts,
   resolveShippingSelection,
   splitFulfillmentProducts,
   validateUniquePhysicalCheckoutItems
@@ -72,7 +74,9 @@ function categoryMinimumWeight(product) {
 }
 
 function packageWeight(product, shipping) {
-  const explicitWeight = parsePriceBRL(shipping.weightKg);
+  const explicitWeight = parsePriceBRL(shipping.weightKg)
+    || parsePriceBRL(product?.weightKg)
+    || parsePriceBRL(product?.package?.weightKg);
   const minimumWeight = categoryMinimumWeight(product);
   if (minimumWeight) {
     return Math.max(Number.isFinite(explicitWeight) && explicitWeight > 0 ? explicitWeight : minimumWeight, minimumWeight);
@@ -81,6 +85,14 @@ function packageWeight(product, shipping) {
   return Number.isFinite(explicitWeight) && explicitWeight > 0
     ? explicitWeight
     : (Number.isFinite(defaultWeight) && defaultWeight > 0 ? defaultWeight : 0);
+}
+
+function packageMeasure(product, shipping, field, envName) {
+  return parsePriceBRL(shipping[field])
+    || parsePriceBRL(product?.[field])
+    || parsePriceBRL(product?.package?.[field])
+    || parsePriceBRL(process.env[envName])
+    || 0;
 }
 
 function onlyDigits(value) {
@@ -235,9 +247,9 @@ function aggregateShippingProduct(products) {
     const shipping = product.shipping || {};
     return {
       weight: packageWeight(product, shipping),
-      height: parsePriceBRL(shipping.heightCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_HEIGHT_CM) || 0,
-      width: parsePriceBRL(shipping.widthCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_WIDTH_CM) || 0,
-      length: parsePriceBRL(shipping.lengthCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_LENGTH_CM) || 0,
+      height: packageMeasure(product, shipping, "heightCm", "DEFAULT_PACKAGE_HEIGHT_CM"),
+      width: packageMeasure(product, shipping, "widthCm", "DEFAULT_PACKAGE_WIDTH_CM"),
+      length: packageMeasure(product, shipping, "lengthCm", "DEFAULT_PACKAGE_LENGTH_CM"),
       insuranceValue: parsePriceBRL(shipping.insuranceValue) || parsePriceBRL(product.price) || 1
     };
   });
@@ -286,7 +298,19 @@ function compactJson(value, maxLength = 2800) {
     supplierPlatform: item.supplierPlatform,
     supplierUrl: item.supplierUrl,
     salePrice: item.salePrice,
+    saleUnitPrice: item.saleUnitPrice,
+    saleTotal: item.saleTotal,
     costPrice: item.costPrice,
+    supplierUnitCost: item.supplierUnitCost,
+    supplierCostTotal: item.supplierCostTotal,
+    inboundShippingUnit: item.inboundShippingUnit,
+    inboundShippingTotal: item.inboundShippingTotal,
+    baseUnitCost: item.baseUnitCost,
+    baseCostTotal: item.baseCostTotal,
+    profit: item.profit,
+    marginPercent: item.marginPercent,
+    markupPercent: item.markupPercent,
+    configuredMarginPercent: item.configuredMarginPercent,
     customerShippingPrice: item.customerShippingPrice,
     freightServiceName: item.freightServiceName,
     region: item.region,
@@ -352,6 +376,8 @@ module.exports = async function createAbacatePix(request, response) {
     const manualFulfillmentItems = manualFulfillmentRequired
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
+    const procurementItems = procurementItemsForProducts(checkoutProducts);
+    const procurementItemsText = formatProcurementItems(procurementItems);
     const total = totalFromCheckoutItems(checkoutItems, normalizedShipping);
     const abacateFee = abacatePixGrossUp(total).fee;
     const finalTotal = total + abacateFee;
@@ -396,6 +422,8 @@ module.exports = async function createAbacatePix(request, response) {
           manualFulfillmentProductIds: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
           manualFulfillmentItems: formatFulfillmentItems(manualFulfillmentItems),
           manualFulfillmentItemsJson: manualFulfillmentRequired ? compactJson(manualFulfillmentItems) : "",
+          procurementItems: procurementItemsText,
+          procurementItemsJson: procurementItems.length ? compactJson(procurementItems) : "",
           abacateFeeAdjustment: String(abacateFee),
           baseTotal: String(total),
           finalTotal: String(finalTotal),

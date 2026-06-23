@@ -310,14 +310,6 @@ PUBLIC_PRODUCT_FIELDS = {
     "madeToOrder",
     "procurementBusinessDays",
     "handlingBusinessDays",
-    "supplierPlatform",
-    "supplierReferenceUrl",
-    "supplierCost",
-    "inboundShippingCost",
-    "baseCost",
-    "targetMarginPercent",
-    "marginPercent",
-    "sourceNotes",
 }
 
 

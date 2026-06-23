@@ -394,7 +394,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 34.9
+    }
   },
   {
     "id": "nossos-kb-630681-suporte-celular-articulado-mesa-haste-flexivel-universal-c",
@@ -449,7 +456,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 39.9
+    }
   },
   {
     "id": "nossos-kb-884876-suporte-para-headset-xtrike-me-com-apoio-para-celular-pret",
@@ -504,7 +518,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 44.9
+    }
   },
   {
     "id": "nossos-kb-367931-mini-tripe-flexivel-de-mesa-com-suporte-para-celular-preto",
@@ -560,7 +581,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 49.9
+    }
   },
   {
     "id": "nossos-kit-limpa-telas-150ml-microfibra",
@@ -615,7 +643,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.25,
+      "heightCm": 5,
+      "widthCm": 16,
+      "lengthCm": 8,
+      "insuranceValue": 59.9
+    }
   },
   {
     "id": "nossos-kb-676964-suporte-headset-gamer-rise-mode-aluminum-titan-preto-rm-sh",
@@ -671,7 +706,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 59.9
+    }
   },
   {
     "id": "nossos-kb-752416-mini-ventilador-portatil-bommax-rotacao-360-velocidade-aju",
@@ -726,7 +768,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 59.9
+    }
   },
   {
     "id": "nossos-kb-875354-cabo-hdmi-1-4-f3-2-metros-lu-1-dmi2-0",
@@ -782,7 +831,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 34.9
+    }
   },
   {
     "id": "nossos-kb-79073-organizador-de-cabos-md9-3-4-preto-1-5-metros-3331",
@@ -838,7 +894,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 34.9
+    }
   },
   {
     "id": "nossos-cabo-hdmi-pix-2m",
@@ -893,7 +956,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 15,
+      "lengthCm": 12,
+      "insuranceValue": 39.9
+    }
   },
   {
     "id": "nossos-kb-592191-hub-c3tech-usb-4x-usb-2-0-preto-hu-230bk",
@@ -949,7 +1019,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 49.9
+    }
   },
   {
     "id": "nossos-kb-94090-cabo-hdmi-2-0-4k-pix-2-metros-19-pinos-plug-90-graus-018-3",
@@ -1005,7 +1082,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 49.9
+    }
   },
   {
     "id": "nossos-kb-93891-cabo-de-rede-patch-cord-cat-6-md9-5m-azul-7515",
@@ -1061,7 +1145,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 49.9
+    }
   },
   {
     "id": "nossos-kb-130363-adaptador-usb-para-bluetooth-5-0-md9-preto-9208",
@@ -1117,7 +1208,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 54.9
+    }
   },
   {
     "id": "nossos-kb-192134-fone-de-ouvido-com-microfone-headset-p2-cabo-1-8m-c-volume",
@@ -1173,7 +1271,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 54.9
+    }
   },
   {
     "id": "nossos-kb-101169-cabo-de-rede-patch-cord-cat-6-plus-cable-10m-preto-pc-eth6",
@@ -1229,7 +1334,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 59.9
+    }
   },
   {
     "id": "nossos-kb-466686-teclado-numerico-ponto-do-nerd-usb-com-fio",
@@ -1284,7 +1396,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 59.9
+    }
   },
   {
     "id": "nossos-cooler-fan-rise-120mm-branco",
@@ -1339,7 +1458,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 13,
+      "lengthCm": 13,
+      "insuranceValue": 39.9
+    }
   },
   {
     "id": "nossos-cooler-fan-rgb-120mm",
@@ -1394,7 +1520,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.18,
+      "heightCm": 4,
+      "widthCm": 13,
+      "lengthCm": 13,
+      "insuranceValue": 54.9
+    }
   },
   {
     "id": "nossos-kb-212081-apoio-de-pulso-reflex-ergonomico-para-teclado-rosa",
@@ -1450,7 +1583,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-kb-995548-fita-de-led-usb-rgb-16-cores-5-metros-5v-com-controle-e-co",
@@ -1505,7 +1645,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-flanela-microfibra-notebook-13",
@@ -1560,7 +1707,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.05,
+      "heightCm": 2,
+      "widthCm": 14,
+      "lengthCm": 10,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-938579-suporte-organizador-de-mesa-so-da07m",
@@ -1616,7 +1770,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-174456-apoio-de-pulso-redragon-edicao-limitada-infernal-dragon-sh",
@@ -1671,7 +1832,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-kb-261203-ventilador-de-mesa-usb-uso-pessoal-com-rotacao-de-360-grau",
@@ -1726,7 +1894,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-filtro-iclamper-energia-5",
@@ -1781,7 +1956,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 5,
+      "widthCm": 28,
+      "lengthCm": 12,
+      "insuranceValue": 119.9
+    }
   },
   {
     "id": "nossos-kb-699495-apoio-de-pulso-ergonomico-para-teclado-pcyes-signature-edi",
@@ -1836,7 +2018,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 119.9
+    }
   },
   {
     "id": "nossos-kb-926995-suporte-braco-microfone-pedestal-articulado-celular-e-tabl",
@@ -1892,7 +2081,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-564218-mini-ventilador-de-mesa-bright-5w-usb-preto-vn001",
@@ -1948,7 +2144,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-977053-conjunto-organizador-de-escritorio-4-pecas",
@@ -2004,7 +2207,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.22,
+      "heightCm": 5,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-905107-suporte-de-mesa-articulado-para-monitor-de-17-a-32-ergofir",
@@ -2059,7 +2269,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 139.9
+    }
   },
   {
     "id": "nossos-kb-938423-luminaria-led-para-monitor-husky-spectra-100-dual-tone-5w",
@@ -2114,7 +2331,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 139.9
+    }
   },
   {
     "id": "nossos-hub-usb-2-4-portas",
@@ -2169,7 +2393,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.1,
+      "heightCm": 3,
+      "widthCm": 10,
+      "lengthCm": 7,
+      "insuranceValue": 64.9
+    }
   },
   {
     "id": "nossos-kb-100300-adaptador-usb-c-para-hdmi-multi-preto-wi373",
@@ -2225,7 +2456,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-kb-536037-teclado-numerico-usb-dynamic-20-teclas-cabo-1-8m-preto-dt9",
@@ -2281,7 +2519,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-kb-926723-cabo-preto-lightning-pd-1m-turbo-rapido-flexivel-compative",
@@ -2337,7 +2582,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-hub-usb-3-md9-4-portas",
@@ -2392,7 +2644,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.12,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 74.9
+    }
   },
   {
     "id": "nossos-kb-355662-cabo-celular-tablet-usb-c-macho-3-0-usb-ugreen-a-5gbps-2m",
@@ -2448,7 +2707,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 79.9
+    }
   },
   {
     "id": "nossos-kb-354009-cabo-hp-usb-c-para-usb-c-1-metro-preto-dhc-tc107-9yf08aa",
@@ -2504,7 +2770,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 79.9
+    }
   },
   {
     "id": "nossos-kb-593450-hub-rise-mode-04-usb-c-3-0-7-em-1-para-4x-usb-2-0-2x-usb-c",
@@ -2559,7 +2832,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 89.9
+    }
   },
   {
     "id": "nossos-kb-618524-hub-c3tech-usb-3-0-para-4x-usb-3-0-cinza-hu-340gy",
@@ -2615,7 +2895,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-103597-adaptador-usb-c-para-hdmi-usb-c-e-usb-a-md9-aluminio-7750",
@@ -2671,7 +2958,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-583455-adaptador-usb-3-0-tipo-c-leitor-de-cartao-micro-sd-sd-jc-l",
@@ -2727,7 +3021,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-628074-leitor-de-cartao-15-em-1-usb-2-0-preto-compact-flash-micro",
@@ -2782,7 +3083,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-740332-suporte-organizador-cabos-pcyes-com-trava-preto-sc-75b",
@@ -2838,7 +3146,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 99.9
+    }
   },
   {
     "id": "nossos-kb-362524-organizador-bracadeira-de-cabos-ugreen-pc-e-instrumentos-5",
@@ -2894,7 +3209,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-kb-405230-hub-bright-usb-plug-tipo-c-4-portas-usb-3-0-hb001",
@@ -2950,7 +3272,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 119.9
+    }
   },
   {
     "id": "nossos-kb-355673-cabo-celular-usb-c-ugreen-carregador-rapido-android-3m",
@@ -3006,7 +3335,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 119.9
+    }
   },
   {
     "id": "nossos-kb-534955-headset-gamer-rise-mode-moom-rainbow-driver-50mm-usb-e-p2",
@@ -3061,7 +3397,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-942943-caixa-organizadora-de-cabos-e-fios-octoo-orguibox-cinza-98",
@@ -3117,7 +3460,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-617188-kit-facil-rj45-rj45-qm99010-00-dutotec",
@@ -3173,7 +3523,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-602070-filtro-de-linha-dps-iclamper-5-conexoes-preto-23459",
@@ -3228,7 +3585,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.3,
+      "heightCm": 7,
+      "widthCm": 18,
+      "lengthCm": 12,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-kb-442699-hub-f3-adaptador-type-c-8-em-1-para-hdmi-type-c-usb-3-0-us",
@@ -3283,7 +3647,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 139.9
+    }
   },
   {
     "id": "nossos-kb-152530-cabo-hdmi-2-1-8k-ultra-hd-elg-speed-4k-144hz-2-metros-hs8k",
@@ -3339,7 +3710,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 139.9
+    }
   },
   {
     "id": "nossos-kb-519031-suporte-de-headset-gamer-kbm-gaming-shg200-rgb-3x-usb-com",
@@ -3394,7 +3772,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 139.9
+    }
   },
   {
     "id": "nossos-kb-695539-teclado-numerico-c3tech-usb-kn-12bk-preto",
@@ -3449,7 +3834,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-kb-881420-teclado-office-sem-fio-machenike-k120-preto-jj02gn00j",
@@ -3504,7 +3896,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-kb-677095-kit-teclado-e-mouse-aoc-wireless-set-2-4g-preto-km310-bk",
@@ -3559,7 +3958,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-kb-658654-microfone-lapela-duplo-sem-fio-2-4ghz-compativel-android-g",
@@ -3613,7 +4019,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 10,
+      "widthCm": 22,
+      "lengthCm": 18,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-mousepad-exbom-70x35",
@@ -3668,7 +4081,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.3,
+      "heightCm": 6,
+      "widthCm": 30,
+      "lengthCm": 6,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-kb-382461-mouse-pad-gamer-criarte-speed-extra-grande-80x40-cm-mapa-m",
@@ -3722,7 +4142,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 7,
+      "widthCm": 32,
+      "lengthCm": 7,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-mousepad-rgb-80x30",
@@ -3777,7 +4204,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 6,
+      "widthCm": 32,
+      "lengthCm": 6,
+      "insuranceValue": 119.9
+    }
   },
   {
     "id": "nossos-kb-468119-mousepad-cabletime-aluminio-minimalista-escritorio-246x202",
@@ -3832,7 +4266,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 7,
+      "widthCm": 32,
+      "lengthCm": 7,
+      "insuranceValue": 129.9
+    }
   },
   {
     "id": "nossos-pasta-termica-implastec-50g",
@@ -3886,7 +4327,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.08,
+      "heightCm": 5,
+      "widthCm": 8,
+      "lengthCm": 8,
+      "insuranceValue": 89.9
+    }
   },
   {
     "id": "nossos-pasta-termica-ts-cold-4g",
@@ -3941,7 +4389,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.06,
+      "heightCm": 3,
+      "widthCm": 8,
+      "lengthCm": 8,
+      "insuranceValue": 109.9
+    }
   },
   {
     "id": "nossos-adaptador-wifi-usb-600mbps",
@@ -3996,7 +4451,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.12,
+      "heightCm": 4,
+      "widthCm": 13,
+      "lengthCm": 8,
+      "insuranceValue": 69.9
+    }
   },
   {
     "id": "nossos-kb-884877-suporte-de-mesa-articulado-para-monitores-de-13-a-32-xtrik",
@@ -4051,7 +4513,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 169.9
+    }
   },
   {
     "id": "nossos-webcam-full-hd-1080p",
@@ -4106,7 +4575,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.2,
+      "heightCm": 6,
+      "widthCm": 12,
+      "lengthCm": 9,
+      "insuranceValue": 179.9
+    }
   },
   {
     "id": "nossos-kb-1020539-ventilador-portatil-de-mesa-mini-ar-condicionado-preto",
@@ -4162,7 +4638,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 179.9
+    }
   },
   {
     "id": "nossos-kb-885507-luminaria-led-luz-noturna-suave-decoracao-mesa",
@@ -4218,7 +4701,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 199.9
+    }
   },
   {
     "id": "nossos-kb-480097-suporte-de-mesa-articulado-para-monitor-de-17-a-32-north-b",
@@ -4273,7 +4763,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-592631-luminaria-pixar-articulada-escritorio-bancada-mesa-e27-luz",
@@ -4328,7 +4825,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-921425-mini-ventilador-climatizador-portatil-com-umidificador-usb",
@@ -4383,7 +4887,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 10,
+      "widthCm": 18,
+      "lengthCm": 14,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-727439-painel-organizador-fortrek-grid-space-gamer-branco",
@@ -4439,7 +4950,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.22,
+      "heightCm": 5,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-904345-mouse-gamer-sem-fio-attack-shark-x11-com-base-de-carregame",
@@ -4494,7 +5012,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 259.9
+    }
   },
   {
     "id": "nossos-kb-904346-mouse-gamer-sem-fio-attack-shark-x11-com-base-de-carregame",
@@ -4549,7 +5074,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 28,
+      "lengthCm": 22,
+      "insuranceValue": 259.9
+    }
   },
   {
     "id": "nossos-kb-883606-adaptador-usb-ugreen-usb-a-para-bluetooth-5-4-preto",
@@ -4605,7 +5137,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 169.9
+    }
   },
   {
     "id": "nossos-kb-593451-hub-rise-mode-06-pro-usb-c-3-0-11-em-1-para-hdmi-vga-carta",
@@ -4660,7 +5199,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 179.9
+    }
   },
   {
     "id": "nossos-kb-184111-suporte-oex-para-headset-gamer-com-mouse-bungee-e-hub-usb",
@@ -4715,7 +5261,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.14,
+      "heightCm": 4,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 179.9
+    }
   },
   {
     "id": "nossos-case-ssd-m2-nvme-usbc",
@@ -4770,7 +5323,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.18,
+      "heightCm": 3,
+      "widthCm": 13,
+      "lengthCm": 8,
+      "insuranceValue": 189.9
+    }
   },
   {
     "id": "nossos-kb-616087-filtro-de-linha-dps-iclamper-energia-8-8-tomadas-bivolt-pr",
@@ -4824,7 +5384,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.3,
+      "heightCm": 7,
+      "widthCm": 18,
+      "lengthCm": 12,
+      "insuranceValue": 199.9
+    }
   },
   {
     "id": "nossos-carregador-apple-usbc-20w",
@@ -4879,7 +5446,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.12,
+      "heightCm": 5,
+      "widthCm": 10,
+      "lengthCm": 8,
+      "insuranceValue": 219.9
+    }
   },
   {
     "id": "nossos-kb-469012-suporte-de-mesa-articulado-para-monitor-de-17-a-35-elg-com",
@@ -4934,7 +5508,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-102770-headset-gamer-havit-drivers-53mm-microfone-plugavel-3-5mm",
@@ -4989,7 +5570,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-474965-mouse-sem-fio-logitech-m240-bluetooth-clique-silencioso-de",
@@ -5043,7 +5631,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 159.9
+    }
   },
   {
     "id": "nossos-mouse-logitech-g203-preto",
@@ -5098,7 +5693,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.18,
+      "heightCm": 5,
+      "widthCm": 12,
+      "lengthCm": 8,
+      "insuranceValue": 169.9
+    }
   },
   {
     "id": "nossos-kb-610298-mouse-gamer-sem-fio-redragon-invader-pro-rgb-10000-dpi-8-b",
@@ -5152,7 +5754,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 179.9
+    }
   },
   {
     "id": "nossos-kb-618351-webcam-rise-mode-vision-double-mic-1080p-30-fps-2x-microfo",
@@ -5206,7 +5815,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 10,
+      "widthCm": 22,
+      "lengthCm": 18,
+      "insuranceValue": 199.9
+    }
   },
   {
     "id": "nossos-kb-947674-mouse-gamer-sem-fio-redragon-griffin-pro-rgb-4800-dpi-7-bo",
@@ -5260,7 +5876,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 219.9
+    }
   },
   {
     "id": "nossos-kb-415702-teclado-e-mouse-sem-fio-dell-km3322w-usb-abnt2-preto-580-b",
@@ -5315,7 +5938,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-900237-webcam-rapoo-c280-2k-com-autofoco-microfone-profissional-c",
@@ -5369,7 +5999,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 10,
+      "widthCm": 22,
+      "lengthCm": 18,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-teclado-redragon-kumara-abnt2",
@@ -5424,7 +6061,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.9,
+      "heightCm": 5,
+      "widthCm": 39,
+      "lengthCm": 18,
+      "insuranceValue": 249.9
+    }
   },
   {
     "id": "nossos-kb-597062-mouse-gamer-sem-fio-redragon-st4r-pro-26000-dpi-6-botoes-b",
@@ -5478,7 +6122,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 279.9
+    }
   },
   {
     "id": "nossos-kb-371591-mousepad-gamer-hyperx-pulsefire-mat-extra-grande-900x420mm",
@@ -5532,7 +6183,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 7,
+      "widthCm": 32,
+      "lengthCm": 7,
+      "insuranceValue": 219.9
+    }
   },
   {
     "id": "nossos-kb-117219-mousepad-gamer-razer-gigantus-v2-control-speed-grande-450x",
@@ -5586,7 +6244,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 7,
+      "widthCm": 32,
+      "lengthCm": 7,
+      "insuranceValue": 219.9
+    }
   },
   {
     "id": "nossos-kb-115349-mousepad-gamer-steelseries-qck-grande-450x400mm-63003",
@@ -5641,7 +6306,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 7,
+      "widthCm": 32,
+      "lengthCm": 7,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kit-3-fans-rgb-120mm",
@@ -5696,7 +6368,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 7,
+      "widthCm": 24,
+      "lengthCm": 18,
+      "insuranceValue": 159.9
+    }
   },
   {
     "id": "nossos-kb-687106-adaptador-wifi-dual-band-1200-mbps-usb-alta-velocidade-2-4",
@@ -5751,7 +6430,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 149.9
+    }
   },
   {
     "id": "nossos-kb-173198-adaptador-wireless-tp-link-archer-t2u-plus-ac600-usb-dual",
@@ -5806,7 +6492,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 199.9
+    }
   },
   {
     "id": "nossos-kb-101797-adaptador-wireless-tp-link-usb-3-0-ac1300-archer-t3u",
@@ -5861,7 +6554,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-503880-adaptador-tp-link-wifi-usb-archer-t3u-plus-ac1300",
@@ -5916,7 +6616,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-512747-leitor-de-cartao-memoria-ugreen-pra-usb-3-0-externo-portat",
@@ -5972,7 +6679,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.1,
+      "heightCm": 3,
+      "widthCm": 14,
+      "lengthCm": 8,
+      "insuranceValue": 159.9
+    }
   },
   {
     "id": "nossos-kb-904668-teclado-sem-fio-logitech-k250-compacto-teclado-numerico-bl",
@@ -6027,7 +6741,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.1,
+      "heightCm": 3,
+      "widthCm": 14,
+      "lengthCm": 8,
+      "insuranceValue": 219.9
+    }
   },
   {
     "id": "nossos-fonte-duex-500w-bronze",
@@ -6082,7 +6803,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 1.55,
+      "heightCm": 12,
+      "widthCm": 20,
+      "lengthCm": 25,
+      "insuranceValue": 239.9
+    }
   },
   {
     "id": "nossos-kb-461160-headset-gamer-hyperx-cloud-stinger-2-drivers-50mm-p3-preto",
@@ -6137,7 +6865,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.16,
+      "heightCm": 4,
+      "widthCm": 16,
+      "lengthCm": 12,
+      "insuranceValue": 299.9
+    }
   },
   {
     "id": "nossos-kb-97092-mouse-gamer-sem-fio-logitech-g305-lightspeed-12000-dpi-6-b",
@@ -6191,7 +6926,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.55,
+      "heightCm": 6,
+      "widthCm": 38,
+      "lengthCm": 16,
+      "insuranceValue": 299.9
+    }
   },
   {
     "id": "nossos-kb-496104-webcam-logitech-brio-100-full-hd-30-fps-microfone-usb-a-co",
@@ -6245,7 +6987,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 10,
+      "widthCm": 22,
+      "lengthCm": 18,
+      "insuranceValue": 379.9
+    }
   },
   {
     "id": "nossos-kb-103431-webcam-full-hd-logitech-c920s-com-microfone-embutido-prote",
@@ -6299,7 +7048,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 10,
+      "widthCm": 22,
+      "lengthCm": 18,
+      "insuranceValue": 499.9
+    }
   },
   {
     "id": "nossos-kb-538701-teclado-sem-fio-mecanico-gamer-husky-nomadic-rgb-switch-ga",
@@ -6353,7 +7109,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 20,
+      "lengthCm": 16,
+      "insuranceValue": 419.9
+    }
   },
   {
     "id": "nossos-placa-mae-msi-a520m-a-pro",
@@ -6408,7 +7171,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.85,
+      "heightCm": 6,
+      "widthCm": 26,
+      "lengthCm": 26,
+      "insuranceValue": 519.9
+    }
   },
   {
     "id": "nossos-kb-405113-microfone-lapela-sem-fio-boya-by-xm6-s2-duplo-preto",
@@ -6463,7 +7233,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.35,
+      "heightCm": 10,
+      "widthCm": 22,
+      "lengthCm": 18,
+      "insuranceValue": 849.9
+    }
   },
   {
     "id": "nossos-monitor-rise-24-180hz",
@@ -6519,7 +7296,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 4.2,
+      "heightCm": 13,
+      "widthCm": 61,
+      "lengthCm": 42,
+      "insuranceValue": 639.9
+    }
   },
   {
     "id": "nossos-monitor-lg-24-full-hd-100hz",
@@ -6575,7 +7359,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 4,
+      "heightCm": 13,
+      "widthCm": 61,
+      "lengthCm": 42,
+      "insuranceValue": 659.9
+    }
   },
   {
     "id": "nossos-ram-kingston-fury-impact-8gb-notebook",
@@ -6630,7 +7421,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.05,
+      "heightCm": 2,
+      "widthCm": 10,
+      "lengthCm": 7,
+      "insuranceValue": 559.9
+    }
   },
   {
     "id": "nossos-placa-mae-asus-prime-a520m-e",
@@ -6686,7 +7484,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.85,
+      "heightCm": 6,
+      "widthCm": 26,
+      "lengthCm": 26,
+      "insuranceValue": 559.9
+    }
   },
   {
     "id": "nossos-ssd-kingston-a400-480gb",
@@ -6741,7 +7546,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.08,
+      "heightCm": 1,
+      "widthCm": 10,
+      "lengthCm": 7,
+      "insuranceValue": 779.9
+    }
   },
   {
     "id": "nossos-ram-kingston-fury-beast-8gb-desktop",
@@ -6797,7 +7609,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.08,
+      "heightCm": 2,
+      "widthCm": 14,
+      "lengthCm": 6,
+      "insuranceValue": 799.9
+    }
   },
   {
     "id": "nossos-processador-ryzen-5-5500",
@@ -6852,7 +7671,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 13,
+      "lengthCm": 13,
+      "insuranceValue": 799.9
+    }
   },
   {
     "id": "nossos-processador-intel-i3-12100f",
@@ -6907,7 +7733,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.45,
+      "heightCm": 8,
+      "widthCm": 13,
+      "lengthCm": 13,
+      "insuranceValue": 879.9
+    }
   },
   {
     "id": "nossos-ram-kingston-fury-beast-16gb-desktop",
@@ -6963,7 +7796,14 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.08,
+      "heightCm": 2,
+      "widthCm": 14,
+      "lengthCm": 6,
+      "insuranceValue": 1159.9
+    }
   },
   {
     "id": "nossos-ssd-kingston-nv3-1tb",
@@ -7018,6 +7858,13 @@
     "condition": "novo",
     "currency": "BRL",
     "reviewBeforePurchase": true,
-    "updatedAt": "2026-06-23"
+    "updatedAt": "2026-06-23",
+    "shipping": {
+      "weightKg": 0.06,
+      "heightCm": 1,
+      "widthCm": 8,
+      "lengthCm": 3,
+      "insuranceValue": 1299.9
+    }
   }
 ]

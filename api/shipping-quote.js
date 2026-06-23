@@ -50,10 +50,19 @@ function categoryMinimumWeight(product) {
 }
 
 function packageWeight(product, shipping) {
-  const explicitWeight = parsePositiveNumber(shipping.weightKg);
+  const explicitWeight = parsePositiveNumber(shipping.weightKg)
+    || parsePositiveNumber(product?.weightKg)
+    || parsePositiveNumber(product?.package?.weightKg);
   const minimumWeight = categoryMinimumWeight(product);
   if (minimumWeight) return Math.max(explicitWeight || minimumWeight, minimumWeight);
   return explicitWeight || parsePositiveNumber(process.env.DEFAULT_PACKAGE_WEIGHT_KG);
+}
+
+function packageMeasure(product, shipping, field, envName) {
+  return parsePositiveNumber(shipping[field])
+    || parsePositiveNumber(product?.[field])
+    || parsePositiveNumber(product?.package?.[field])
+    || parsePositiveNumber(process.env[envName]);
 }
 
 function normalizeText(value = "") {
@@ -110,9 +119,9 @@ function productPackage(product) {
   const shipping = product.shipping || {};
   return {
     weight: packageWeight(product, shipping),
-    height: parsePositiveNumber(shipping.heightCm) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_HEIGHT_CM),
-    width: parsePositiveNumber(shipping.widthCm) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_WIDTH_CM),
-    length: parsePositiveNumber(shipping.lengthCm) || parsePositiveNumber(process.env.DEFAULT_PACKAGE_LENGTH_CM),
+    height: packageMeasure(product, shipping, "heightCm", "DEFAULT_PACKAGE_HEIGHT_CM"),
+    width: packageMeasure(product, shipping, "widthCm", "DEFAULT_PACKAGE_WIDTH_CM"),
+    length: packageMeasure(product, shipping, "lengthCm", "DEFAULT_PACKAGE_LENGTH_CM"),
     insuranceValue: parsePositiveNumber(shipping.insuranceValue) || parsePositiveNumber(product.price) || 1
   };
 }

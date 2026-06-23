@@ -8,6 +8,8 @@ const ABACATE_CHECKOUT_API = "https://api.abacatepay.com/v2/checkouts/create";
 const { quoteMelhorEnvio } = require("./shipping-quote");
 const {
   formatFulfillmentItems,
+  formatProcurementItems,
+  procurementItemsForProducts,
   resolveShippingSelection,
   splitFulfillmentProducts,
   validateUniquePhysicalCheckoutItems
@@ -66,7 +68,9 @@ function categoryMinimumWeight(product) {
 }
 
 function packageWeight(product, shipping) {
-  const explicitWeight = parsePriceBRL(shipping.weightKg);
+  const explicitWeight = parsePriceBRL(shipping.weightKg)
+    || parsePriceBRL(product?.weightKg)
+    || parsePriceBRL(product?.package?.weightKg);
   const minimumWeight = categoryMinimumWeight(product);
   if (minimumWeight) {
     return Math.max(Number.isFinite(explicitWeight) && explicitWeight > 0 ? explicitWeight : minimumWeight, minimumWeight);
@@ -75,6 +79,14 @@ function packageWeight(product, shipping) {
   return Number.isFinite(explicitWeight) && explicitWeight > 0
     ? explicitWeight
     : (Number.isFinite(defaultWeight) && defaultWeight > 0 ? defaultWeight : 0);
+}
+
+function packageMeasure(product, shipping, field, envName) {
+  return parsePriceBRL(shipping[field])
+    || parsePriceBRL(product?.[field])
+    || parsePriceBRL(product?.package?.[field])
+    || parsePriceBRL(process.env[envName])
+    || 0;
 }
 
 function toCents(value) {
@@ -154,7 +166,19 @@ function compactJson(value, maxLength = 2800) {
     supplierPlatform: item.supplierPlatform,
     supplierUrl: item.supplierUrl,
     salePrice: item.salePrice,
+    saleUnitPrice: item.saleUnitPrice,
+    saleTotal: item.saleTotal,
     costPrice: item.costPrice,
+    supplierUnitCost: item.supplierUnitCost,
+    supplierCostTotal: item.supplierCostTotal,
+    inboundShippingUnit: item.inboundShippingUnit,
+    inboundShippingTotal: item.inboundShippingTotal,
+    baseUnitCost: item.baseUnitCost,
+    baseCostTotal: item.baseCostTotal,
+    profit: item.profit,
+    marginPercent: item.marginPercent,
+    markupPercent: item.markupPercent,
+    configuredMarginPercent: item.configuredMarginPercent,
     customerShippingPrice: item.customerShippingPrice,
     freightServiceName: item.freightServiceName,
     region: item.region,
@@ -316,9 +340,9 @@ function aggregateShippingProduct(products) {
     const shipping = product.shipping || {};
     return {
       weight: packageWeight(product, shipping),
-      height: parsePriceBRL(shipping.heightCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_HEIGHT_CM) || 0,
-      width: parsePriceBRL(shipping.widthCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_WIDTH_CM) || 0,
-      length: parsePriceBRL(shipping.lengthCm) || parsePriceBRL(process.env.DEFAULT_PACKAGE_LENGTH_CM) || 0,
+      height: packageMeasure(product, shipping, "heightCm", "DEFAULT_PACKAGE_HEIGHT_CM"),
+      width: packageMeasure(product, shipping, "widthCm", "DEFAULT_PACKAGE_WIDTH_CM"),
+      length: packageMeasure(product, shipping, "lengthCm", "DEFAULT_PACKAGE_LENGTH_CM"),
       insuranceValue: parsePriceBRL(shipping.insuranceValue) || parsePriceBRL(product.price) || 1
     };
   });
@@ -504,6 +528,8 @@ module.exports = async function createAbacateCheckout(request, response) {
     const manualFulfillmentItems = manualFulfillmentRequired
       ? (normalizedShipping?.supplierItems || fulfillmentSplit.supplier.map((product) => ({ productId: product.id, title: product.title })))
       : [];
+    const procurementItems = procurementItemsForProducts(checkoutProducts);
+    const procurementItemsText = formatProcurementItems(procurementItems);
     const origin = requestOrigin(request);
     const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
     const importTaxes = estimateImportTaxes(checkoutItems, normalizedShipping);
@@ -552,6 +578,8 @@ module.exports = async function createAbacateCheckout(request, response) {
         manualFulfillmentProductIds: fulfillmentSplit.supplier.map((product) => product.id).join("; "),
         manualFulfillmentItems: formatFulfillmentItems(manualFulfillmentItems),
         manualFulfillmentItemsJson: manualFulfillmentRequired ? compactJson(manualFulfillmentItems) : "",
+        procurementItems: procurementItemsText,
+        procurementItemsJson: procurementItems.length ? compactJson(procurementItems) : "",
         couponCode: promotion.code || "",
         couponLabel: promotion.label || "",
         couponPercent: promotion.percent ? String(promotion.percent) : "",
@@ -599,6 +627,7 @@ module.exports = async function createAbacateCheckout(request, response) {
         `Checkout Abacate Pay: ${checkout.id || ""}`,
         `Produto: ${checkoutPayload.metadata.productTitles}`,
         `Valor pendente: R$ ${toMoney(finalCheckoutTotal).toFixed(2)}`,
+        ...(procurementItemsText ? ["", "Dados internos para compra/reposicao:", procurementItemsText] : []),
         "",
         "O cliente deve receber confirmacao automatica quando o pagamento for aprovado."
       ].join("\n"),
@@ -632,6 +661,8 @@ module.exports = async function createAbacateCheckout(request, response) {
       manual_fulfillment_product_ids: checkoutPayload.metadata.manualFulfillmentProductIds,
       manual_fulfillment_items: checkoutPayload.metadata.manualFulfillmentItems,
       manual_fulfillment_items_json: checkoutPayload.metadata.manualFulfillmentItemsJson,
+      procurement_items: checkoutPayload.metadata.procurementItems,
+      procurement_items_json: checkoutPayload.metadata.procurementItemsJson,
       policy_terms_accepted: checkoutPayload.metadata.policyTermsAccepted,
       policy_privacy_accepted: checkoutPayload.metadata.policyPrivacyAccepted,
       policy_version: checkoutPayload.metadata.policyVersion,

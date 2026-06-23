@@ -2,8 +2,10 @@ const crypto = require("crypto");
 const {
   fulfillmentItemsForIds,
   formatFulfillmentItems,
+  formatProcurementItems,
   isManualShippingProvider,
-  loadProductsFromDisk
+  loadProductsFromDisk,
+  procurementItemsForIds
 } = require("../lib/fulfillment-shipping");
 const { createCjSemiAutomaticOrders } = require("../lib/cj-dropshipping");
 const { createDropifySemiAutomaticOrder } = require("../lib/dropify");
@@ -60,6 +62,20 @@ function productIdsFromMetadata(metadata) {
     .split(";")
     .map((item) => String(item || "").trim())
     .filter(Boolean);
+}
+
+function productQuantitiesFromMetadata(metadata) {
+  return String(metadata.product_quantities || "")
+    .split(";")
+    .reduce((quantities, item) => {
+      const [id, quantity] = String(item || "").split(":");
+      const normalizedId = String(id || "").trim();
+      const parsed = Number(quantity);
+      if (normalizedId && Number.isFinite(parsed) && parsed > 0) {
+        quantities[normalizedId] = Math.max(1, Math.floor(parsed));
+      }
+      return quantities;
+    }, {});
 }
 
 function parseJsonField(value, fallback) {
@@ -211,10 +227,25 @@ async function notifyOrder(request, payment) {
   const manualFulfillmentRequired = metadata.manual_fulfillment_required === "true" || isManualShippingProvider(metadata.shipping_provider);
   let manualFulfillmentItems = metadata.manual_fulfillment_items || "";
   let manualFulfillmentItemsJson = parseJsonField(metadata.manual_fulfillment_items_json, []);
+  let productsCache = null;
+  const productsForMetadata = async () => {
+    if (!productsCache) productsCache = await loadProductsFromDisk().catch(() => []);
+    return productsCache;
+  };
   if (manualFulfillmentRequired && !manualFulfillmentItems) {
-    const products = await loadProductsFromDisk().catch(() => []);
+    const products = await productsForMetadata();
     manualFulfillmentItemsJson = fulfillmentItemsForIds(products, productIdsFromMetadata(metadata));
     manualFulfillmentItems = formatFulfillmentItems(manualFulfillmentItemsJson);
+  }
+  let procurementItems = metadata.procurement_items || "";
+  let procurementItemsJson = parseJsonField(metadata.procurement_items_json, []);
+  if (!procurementItems && Array.isArray(procurementItemsJson) && procurementItemsJson.length) {
+    procurementItems = formatProcurementItems(procurementItemsJson);
+  }
+  if (!procurementItems) {
+    const products = await productsForMetadata();
+    procurementItemsJson = procurementItemsForIds(products, productIdsFromMetadata(metadata), productQuantitiesFromMetadata(metadata));
+    procurementItems = formatProcurementItems(procurementItemsJson);
   }
   const cjPreparation = manualFulfillmentRequired
     ? await prepareCjOrdersIfNeeded(orderReference, metadata, shippingCustomer, manualFulfillmentItemsJson)
@@ -256,6 +287,11 @@ async function notifyOrder(request, payment) {
     `Trocas: ${metadata.selected_swaps || "Nenhuma"}`,
     `Opcionais: ${metadata.selected_addons || "Nenhum"}`,
     `Valor pago: R$ ${payment.transaction_amount}`,
+    ...(procurementItems ? [
+      "",
+      "Dados internos para compra/reposicao:",
+      procurementItems
+    ] : []),
     "",
     "Entrega:",
     `Tipo: ${shippingRequested ? "Frete" : "Retirada local"}`,
@@ -319,6 +355,8 @@ async function notifyOrder(request, payment) {
     manual_fulfillment_product_ids: metadata.manual_fulfillment_product_ids || "",
     manual_fulfillment_items: manualFulfillmentItems || "",
     manual_fulfillment_items_json: metadata.manual_fulfillment_items_json || "",
+    procurement_items: procurementItems || "",
+    procurement_items_json: metadata.procurement_items_json || (procurementItemsJson.length ? JSON.stringify(procurementItemsJson) : ""),
     cj_order_status: cjPreparation.status || "",
     cj_order_created: cjPreparation.created ? "true" : "false",
     cj_order_ids: (cjPreparation.orders || []).map((order) => order.orderId).filter(Boolean).join("; "),

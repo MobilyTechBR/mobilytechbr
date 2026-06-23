@@ -391,6 +391,39 @@
       .finds-table textarea { min-height: 68px; resize: vertical; }
       .finds-table .narrow { width: 86px; }
       .finds-table .link-cell { min-width: 210px; }
+      .status-mini {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #e9f8ef;
+        color: #0d6b32;
+        font-size: 11px;
+        font-weight: 1000;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+      .status-mini.is-blocked {
+        background: #fff1f1;
+        color: #a71010;
+        white-space: normal;
+      }
+      .source-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 8px;
+        padding: 6px 9px;
+        border-radius: 999px;
+        background: #eef6ff;
+        color: #075c9f;
+        font-size: 11px;
+        font-weight: 1000;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .source-chip:hover { background: #dceeff; }
       .site-content-form {
         padding: 22px;
         display: grid;
@@ -1163,15 +1196,17 @@
                     <th>Nicho</th>
                     <th>Faixa</th>
                     <th>Preco site</th>
-                    <th>Custo</th>
-                    <th>Margem</th>
-                    <th>Frete</th>
+                    <th>Custo produto</th>
+                    <th>Frete ate MT</th>
+                    <th>Custo total</th>
+                    <th>Lucro e margem</th>
+                    <th>Frete cliente</th>
                     <th>Origem</th>
                     <th>Link de referencia</th>
                   </tr>
                 </thead>
                 <tbody id="dropshippingProductsRows">
-                  <tr><td colspan="12">Carregando produtos...</td></tr>
+                  <tr><td colspan="14">Carregando produtos...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1941,6 +1976,7 @@
       }
 
       function moneyNumber(value) {
+        if (typeof value === "number") return Number.isFinite(value) ? value : 0;
         if (value === null || value === undefined || value === "") return 0;
         const normalized = String(value).replace(/[^\d,.-]/g, "").replace(/\./g, "").replace(",", ".");
         const number = Number(normalized);
@@ -2185,6 +2221,25 @@
         return ((price - cost) / cost) * 100;
       }
 
+      function directProductCosts(product) {
+        const supplierCost = moneyNumber(product.supplierCost || product.costPrice);
+        const inbound = moneyNumber(product.inboundShippingCost);
+        const baseCost = moneyNumber(product.baseCost) || moneyNumber(product.costPrice) || (supplierCost + inbound);
+        const price = moneyNumber(product.price);
+        const profit = price && baseCost ? price - baseCost : 0;
+        const marginOnSale = price ? (profit / price) * 100 : 0;
+        const markupOnCost = baseCost ? (profit / baseCost) * 100 : 0;
+        return {
+          supplierCost,
+          inbound,
+          baseCost,
+          price,
+          profit,
+          marginOnSale,
+          markupOnCost
+        };
+      }
+
       function priceFromCostMargin(cost, percent) {
         if (!cost || !Number.isFinite(percent)) return 0;
         const raw = cost * (1 + percent / 100);
@@ -2196,9 +2251,9 @@
         if (!item) return;
         if (field === "active" || field === "checkoutEnabled") {
           item[field] = value === "true";
-        } else if (field === "price" || field === "costPrice" || field === "supplierCost" || field === "baseCost") {
+        } else if (field === "price" || field === "costPrice" || field === "supplierCost" || field === "baseCost" || field === "inboundShippingCost") {
           item[field] = moneyNumber(value);
-          if (field === "supplierCost") {
+          if (field === "supplierCost" || field === "inboundShippingCost") {
             item.baseCost = moneyNumber(item.supplierCost) + moneyNumber(item.inboundShippingCost);
           }
         } else if (field === "targetMarginPercent") {
@@ -2206,7 +2261,7 @@
           if (Number.isFinite(percent)) {
             item.targetMarginPercent = Math.round(percent * 10) / 10;
             item.marginPercent = `${item.targetMarginPercent.toFixed(1)}%`;
-            const cost = moneyNumber(item.baseCost || item.costPrice || item.supplierCost);
+            const cost = directProductCosts(item).baseCost;
             const nextPrice = priceFromCostMargin(cost, item.targetMarginPercent);
             if (nextPrice) item.price = Math.round(nextPrice * 100) / 100;
           }
@@ -2223,7 +2278,7 @@
         if (!Number.isFinite(percent)) throw new Error("Informe uma margem valida.");
         productsState.forEach((item) => {
           if (!item || !isDirectOrderProduct(item)) return;
-          const cost = moneyNumber(item.baseCost || item.costPrice || item.supplierCost);
+          const cost = directProductCosts(item).baseCost;
           if (!cost) return;
           item.targetMarginPercent = Math.round(percent * 10) / 10;
           item.marginPercent = `${item.targetMarginPercent.toFixed(1)}%`;
@@ -2237,15 +2292,15 @@
         if (!tbody) return;
         const items = products.filter((item) => item && isDirectOrderProduct(item));
         if (!items.length) {
-          tbody.innerHTML = '<tr><td colspan="12">Nenhum item de Nossos produtos cadastrado.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="14">Nenhum item de Nossos produtos cadastrado.</td></tr>';
           return;
         }
         tbody.innerHTML = items.map((item) => {
           const audit = dropshippingAudit(item);
           const reference = supplierReferenceUrl(item);
-          const cost = moneyNumber(item.baseCost || item.costPrice || item.supplierCost);
-          const price = moneyNumber(item.price);
-          const margin = marginMarkupPercent(item);
+          const costs = directProductCosts(item);
+          const price = costs.price;
+          const margin = Number.isFinite(costs.markupOnCost) ? costs.markupOnCost : marginMarkupPercent(item);
           const status = audit.length ? `Bloqueado: ${audit.join(", ")}` : "Liberado para checkout";
           const shipping = item.shipping || {};
           const reviewFlags = Array.isArray(item.reviewFlags) ? item.reviewFlags : [];
@@ -2261,15 +2316,23 @@
               : "Revisar";
           const freightNote = item.publicShippingNote || "";
           return `<tr>
-            <td><strong>${escapeHtml(status)}</strong>${statusWarning ? `<br><small>${escapeHtml(statusWarning)}</small>` : ""}</td>
+            <td><span class="status-mini${audit.length ? " is-blocked" : ""}">${escapeHtml(status)}</span>${statusWarning ? `<br><small>${escapeHtml(statusWarning)}</small>` : ""}</td>
             <td><select data-drop-id="${escapeHtml(item.id)}" data-drop-field="active" class="narrow"><option value="true"${item.active !== false ? " selected" : ""}>Sim</option><option value="false"${item.active === false ? " selected" : ""}>Nao</option></select></td>
             <td><select data-drop-id="${escapeHtml(item.id)}" data-drop-field="checkoutEnabled" class="narrow"><option value="true"${item.checkoutEnabled === true ? " selected" : ""}>Sim</option><option value="false"${item.checkoutEnabled !== true ? " selected" : ""}>Nao</option></select></td>
-            <td><textarea readonly>${escapeHtml(productTitle(item))}</textarea></td>
+            <td>
+              <textarea readonly>${escapeHtml(productTitle(item))}</textarea>
+              ${reference ? `<a class="source-chip" href="${escapeHtml(reference)}" target="_blank" rel="noreferrer">Abrir fornecedor</a>` : ""}
+            </td>
             <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="niche" value="${escapeHtml(item.niche || item.specs?.niche || item.badge || "")}"></td>
             <td>${escapeHtml(item.priceBand || item.specs?.priceBand || "-")}</td>
             <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="price" class="narrow" value="${escapeHtml(price ? moneyInput(price) : "")}"></td>
-            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="supplierCost" class="narrow" value="${escapeHtml(cost ? moneyInput(cost) : "")}"></td>
-            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="targetMarginPercent" class="narrow" value="${escapeHtml(Number.isFinite(margin) && margin ? margin.toFixed(1).replace(".", ",") : "")}"></td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="supplierCost" class="narrow" value="${escapeHtml(costs.supplierCost ? moneyInput(costs.supplierCost) : "")}"></td>
+            <td><input data-drop-id="${escapeHtml(item.id)}" data-drop-field="inboundShippingCost" class="narrow" value="${escapeHtml(costs.inbound ? moneyInput(costs.inbound) : "")}"></td>
+            <td><strong>R$ ${escapeHtml(costs.baseCost ? moneyInput(costs.baseCost) : "0,00")}</strong></td>
+            <td>
+              <input data-drop-id="${escapeHtml(item.id)}" data-drop-field="targetMarginPercent" class="narrow" value="${escapeHtml(Number.isFinite(margin) && margin ? margin.toFixed(1).replace(".", ",") : "")}">
+              <small>Lucro R$ ${escapeHtml(moneyInput(costs.profit || 0))} | venda ${escapeHtml((costs.marginOnSale || 0).toFixed(1).replace(".", ","))}%</small>
+            </td>
             <td>${escapeHtml(freight)}${freightNote ? `<br><small>${escapeHtml(freightNote)}</small>` : ""}</td>
             <td>${escapeHtml(item.supplierPlatform || item.marketplace?.name || item.sourceNotes?.phase1SourcePlatform || "")}</td>
             <td class="link-cell">${reference ? `<a href="${escapeHtml(reference)}" target="_blank" rel="noreferrer">${escapeHtml(reference)}</a>` : "-"}</td>
