@@ -2178,7 +2178,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     }}
     function specs(product) {{
       const s = product.specs || {{}};
-      const brand = isSupplierProduct(product) && norm(s.brand).includes("cj") ? "Fornecedor parceiro" : s.brand;
+      const brand = isSupplierProduct(product) && norm(s.brand).includes("cj") ? "" : s.brand;
       return [s.processor, s.memory, s.gpu, s.storage, brand, s.capacity, s.interface].filter(Boolean).slice(0,4);
     }}
     function productBaseTitle(product) {{
