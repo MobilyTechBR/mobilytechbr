@@ -12,6 +12,7 @@ MAX_EDGE = 2200
 TRIM_PADDING_RATIO = 0.045
 TRIM_MIN_PADDING = 16
 HEIF_SUPPORT_REGISTERED = False
+CUTOUT_KEYS = ("cutout", "imageCutout", "cutoutImage")
 
 
 def register_heif_support():
@@ -55,9 +56,27 @@ def get_cutout_path(product):
     return local_path(product.get("cutout") or product.get("imageCutout") or product.get("cutoutImage"))
 
 
+def should_keep_original_image(item):
+    item_id = str(item.get("id") or item.get("productId") or "")
+    category = str(item.get("category") or "").lower()
+    return bool(item.get("madeToOrder")) or item_id.startswith("nossos-") or category == "sob-encomenda"
+
+
+def remove_cutout_fields(item):
+    changed = False
+    for key in CUTOUT_KEYS:
+        if key in item:
+            item.pop(key, None)
+            changed = True
+    return changed
+
+
 def append_cutout_job(jobs, item, output_slug, label):
     if not isinstance(item, dict):
         return False
+
+    if should_keep_original_image(item):
+        return remove_cutout_fields(item)
 
     image_path = get_image_path(item)
     if not image_path or not image_path.exists():
