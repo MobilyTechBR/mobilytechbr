@@ -390,7 +390,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "SSD Kingston A400 480GB SATA III"
+    "title": "SSD Kingston A400 480GB SATA III",
+    "cutout": "./assets/generated/sob-ssd-kingston-a400-480gb-cutout.png"
   },
   {
     "id": "sob-ram-kingston-ddr4-8gb-notebook",
@@ -442,7 +443,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Memoria RAM Kingston 8GB DDR4 para notebook"
+    "title": "Memoria RAM Kingston 8GB DDR4 para notebook",
+    "cutout": "./assets/generated/sob-ram-kingston-ddr4-8gb-notebook-cutout.png"
   },
   {
     "id": "sob-ram-crucial-ddr4-8gb-desktop",
@@ -494,7 +496,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Memoria RAM Crucial 8GB DDR4 3200MHz desktop"
+    "title": "Memoria RAM Crucial 8GB DDR4 3200MHz desktop",
+    "cutout": "./assets/generated/sob-ram-crucial-ddr4-8gb-desktop-cutout.png"
   },
   {
     "id": "sob-fonte-duex-500w-bronze",
@@ -546,7 +549,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Fonte Duex 500W 80 Plus Bronze"
+    "title": "Fonte Duex 500W 80 Plus Bronze",
+    "cutout": "./assets/generated/sob-fonte-duex-500w-bronze-cutout.png"
   },
   {
     "id": "sob-roteador-tplink-archer-c6",
@@ -598,7 +602,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Roteador TP-Link Archer C6 AC1200 Dual Band"
+    "title": "Roteador TP-Link Archer C6 AC1200 Dual Band",
+    "cutout": "./assets/generated/sob-roteador-tplink-archer-c6-cutout.png"
   },
   {
     "id": "sob-teclado-redragon-sindri-abnt2",
@@ -650,7 +655,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Teclado gamer Redragon Sindri ABNT2"
+    "title": "Teclado gamer Redragon Sindri ABNT2",
+    "cutout": "./assets/generated/sob-teclado-redragon-sindri-abnt2-cutout.png"
   },
   {
     "id": "sob-hub-usbc-ugreen-5em1",
@@ -702,7 +708,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Hub USB-C Ugreen 5 em 1 com HDMI"
+    "title": "Hub USB-C Ugreen 5 em 1 com HDMI",
+    "cutout": "./assets/generated/sob-hub-usbc-ugreen-5em1-cutout.png"
   },
   {
     "id": "sob-adaptador-wifi-usb-dualband",
@@ -754,7 +761,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Adaptador Wi-Fi USB Dual Band 600Mbps"
+    "title": "Adaptador Wi-Fi USB Dual Band 600Mbps",
+    "cutout": "./assets/generated/sob-adaptador-wifi-usb-dualband-cutout.png"
   },
   {
     "id": "sob-mouse-logitech-g203",
@@ -806,7 +814,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Mouse gamer Logitech G203 Lightsync"
+    "title": "Mouse gamer Logitech G203 Lightsync",
+    "cutout": "./assets/generated/sob-mouse-logitech-g203-cutout.png"
   },
   {
     "id": "sob-suporte-notebook-aluminio",
@@ -858,7 +867,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Suporte para notebook dobravel"
+    "title": "Suporte para notebook dobravel",
+    "cutout": "./assets/generated/sob-suporte-notebook-aluminio-cutout.png"
   },
   {
     "id": "sob-pasta-termica-gd900",
@@ -910,7 +920,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Pasta termica GD900 para manutencao"
+    "title": "Pasta termica GD900 para manutencao",
+    "cutout": "./assets/generated/sob-pasta-termica-gd900-cutout.png"
   },
   {
     "id": "sob-kit-limpeza-eletronicos",
@@ -962,7 +973,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Kit de limpeza para eletronicos e teclado"
+    "title": "Kit de limpeza para eletronicos e teclado",
+    "cutout": "./assets/generated/sob-kit-limpeza-eletronicos-cutout.png"
   },
   {
     "id": "sob-mini-aspirador-teclado-usb",
@@ -1014,7 +1026,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Mini aspirador USB para teclado"
+    "title": "Mini aspirador USB para teclado",
+    "cutout": "./assets/generated/sob-mini-aspirador-teclado-usb-cutout.png"
   },
   {
     "id": "sob-case-ssd-nvme-usb-c",
@@ -1066,7 +1079,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Case para SSD M.2 NVMe USB-C"
+    "title": "Case para SSD M.2 NVMe USB-C",
+    "cutout": "./assets/generated/sob-case-ssd-nvme-usb-c-cutout.png"
   },
   {
     "id": "sob-mousepad-rgb-80x30",
@@ -1118,7 +1132,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Mousepad gamer RGB 80x30 cm"
+    "title": "Mousepad gamer RGB 80x30 cm",
+    "cutout": "./assets/generated/sob-mousepad-rgb-80x30-cutout.png"
   },
   {
     "id": "sob-ssd-kingston-nv3-1tb-nvme",
@@ -1170,7 +1185,8 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "SSD Kingston NV3 1TB NVMe PCIe 4.0"
+    "title": "SSD Kingston NV3 1TB NVMe PCIe 4.0",
+    "cutout": "./assets/generated/sob-ssd-kingston-nv3-1tb-nvme-cutout.png"
   },
   {
     "id": "sob-monitor-24-fullhd-75hz",
@@ -1222,6 +1238,7 @@
     "currency": "BRL",
     "reviewBeforePurchase": true,
     "updatedAt": "2026-06-23",
-    "title": "Monitor 24 polegadas Full HD 75Hz"
+    "title": "Monitor 24 polegadas Full HD 75Hz",
+    "cutout": "./assets/generated/sob-monitor-24-fullhd-75hz-cutout.png"
   }
 ]
