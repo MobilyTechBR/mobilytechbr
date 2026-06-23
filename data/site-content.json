@@ -20,9 +20,9 @@
     "secondaryLabel": "Monte seu PC",
     "featuredProductId": "",
     "featuredKicker": "Curadoria MobilyTech",
-    "backgroundMode": "preset",
+    "backgroundMode": "image",
     "backgroundPreset": "sky",
-    "backgroundImage": ""
+    "backgroundImage": "./assets/uploads/imagem-2026-06-23-144753436-20260623174801-dea0c437.png"
   },
   "homeFeaturedProducts": {
     "finds": [
