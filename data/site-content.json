@@ -31,11 +31,12 @@
       "find-aff-amazon-auto-b08ckgw1d4-placa-m-e-asus-tuf-gaming-a520m-plus-ii-am4-4xddr4-hdmi-displayport-d"
     ],
     "dropshipping": [
+      "nossos-kb-592191-hub-c3tech-usb-4x-usb-2-0-preto-hu-230bk",
+      "nossos-kb-115754-mousepad-reliza-compact-com-apoio-de-pulso-preto-3769",
+      "nossos-kb-752416-mini-ventilador-portatil-bommax-rotacao-360-velocidade-aju",
+      "nossos-kb-630681-suporte-celular-articulado-mesa-haste-flexivel-universal-c",
       "nossos-ssd-kingston-a400-480gb",
-      "nossos-ram-kingston-fury-beast-8gb-desktop",
-      "nossos-mouse-logitech-g203-preto",
-      "nossos-teclado-redragon-kumara-abnt2",
-      "nossos-processador-ryzen-5-5500"
+      "nossos-mouse-logitech-g203-preto"
     ]
   },
   "servicePanels": {
@@ -64,7 +65,7 @@
     },
     "produtos": {
       "title": "Nossos produtos",
-      "intro": "Produtos nacionais selecionados para upgrades, setup, manutencao e escritorio. O carrinho mostra frete, prazo estimado total e valor final antes do pagamento.",
+      "intro": "Produtos selecionados para setup, escritorio, manutencao e upgrades. O carrinho mostra frete, prazo estimado total e valor final antes do pagamento.",
       "image": "./assets/mobilytech-character-cutout.png"
     },
     "montagem": {
