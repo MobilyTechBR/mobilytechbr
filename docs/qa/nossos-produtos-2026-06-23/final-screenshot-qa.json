@@ -1,0 +1,31 @@
+{
+  "desktop": {
+    "path": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\final-desktop-nossos-produtos.png",
+    "metrics": {
+      "cards": 31,
+      "forbidden": [],
+      "gridColumns": "322.656px 322.672px 322.656px",
+      "innerWidth": 1365
+    }
+  },
+  "mobile": {
+    "path": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\final-mobile-nossos-produtos.png",
+    "metrics": {
+      "cards": 31,
+      "forbidden": [],
+      "gridColumns": "179.5px 179.5px",
+      "innerWidth": 390
+    }
+  },
+  "mobileCart": {
+    "path": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\final-mobile-cart-after-add.png",
+    "metrics": {
+      "forbidden": [],
+      "hasCart": true,
+      "hasPrep": true,
+      "innerWidth": 390,
+      "preview": "‹\n\nOfertas MobilyTech BR: PCs revisados, upgrades e atendimento direto para fechar sua compra com seguranca.\n\n›\nMobilyTech BR\nPC Gamer\n|\nNossos produtos\n|\nMobilyTech Finds\n|\nHardware\n|\nMonte seu PC\n|\nLimpeza\n|\nAvaliacoes\n|\nSuporte\n🔍\n🛒\n4\nNossos produtos\n\nProdutos nacionais selecionados para upgrades, setup, manutencao e escritorio. O carrinho mostra frete, prazo estimado total e valor final antes do pagamento.\n\nCURADORIA MOBILYTECH BR\n\nNossos produtos na MobilyTech BR\n\nProdutos selecionados para setup, escritorio, manutencao e upgrades. Voce pode filtrar por nicho, preco e tipo de envio antes de adicionar ao carrinho.\n\nFrete, prazo total estimado e valor final aparecem no carrinho antes do pagamento. Alguns itens podem ter preparo adicional antes do despacho.\n\nBUSCAR NESTA PAGINA\n→\nNICHO\nTodos os nichos\nhardware\nsetup\nmanutencao\nacessorios\nescritorio\nperifericos\nrede\nENVIO\nTodos\nEnvio n",
+      "qty": "4"
+    }
+  }
+}

@@ -1084,31 +1084,20 @@
           <div class="section-head">
             <div>
               <p class="section-kicker">Editor local</p>
-              <h2 id="finds-editor-title">MobilyTech Finds, margem e links</h2>
-              <p>Revise produtos vendidos pela MobilyTech e recomendacoes de afiliados. O painel gera um JSON revisado para aplicar no repo sem expor credenciais e mantem download seguro como fallback.</p>
+              <h2 id="finds-editor-title">MobilyTech Finds, comissoes e links</h2>
+              <p>Revise recomendacoes de afiliados e links rastreados. O painel gera um JSON revisado para aplicar no repo sem expor credenciais e mantem download seguro como fallback.</p>
             </div>
           </div>
           <div class="editor-panel">
             <div class="editor-toolbar">
               <div>
                 <strong>Campos rapidos</strong>
-                <p>Edite titulo, grupo publico, fornecedor, origem, imagem, preco, custo, frete exato, margem, comissao interna e links Mercado Livre, Amazon ou AliExpress. Marque link pronto apenas depois de validar que o link abre o produto direto e contem rastreio de afiliado. Shopee fica pausado ate reativarmos afiliado valido.</p>
+                <p>Edite titulo, grupo publico, marketplace, origem, imagem, preco de referencia, comissao afiliada estimada e links Mercado Livre, Amazon ou AliExpress. Marque link pronto apenas depois de validar que o link abre o produto direto e contem rastreio de afiliado. Shopee fica pausado ate reativarmos afiliado valido.</p>
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
             </div>
-            <div class="margin-tools" aria-label="Margens padrao de MobilyTech Finds">
-              <label>Margem padrao (%)
-                <input id="defaultFindMargin" inputmode="decimal" value="25">
-              </label>
-              <label>Margem manual minima (%)
-                <input id="manualFindMargin" inputmode="decimal" value="35">
-              </label>
-              <label>Frete exato manual (R$)
-                <input id="defaultFindShipping" inputmode="decimal" value="">
-              </label>
-              <button class="btn btn-red" type="button" id="applyFindMargins">Aplicar aos vendidos seguros</button>
-            </div>
+            <div class="editor-note">MobilyTech Finds e uma area de afiliados: nao existe margem propria editavel aqui. A comissao vem do marketplace/programa de afiliados e deve ser preenchida quando o link rastreado informar esse percentual ou valor.</div>
             <div class="table-wrap">
               <table class="finds-table" aria-label="Editor local de MobilyTech Finds">
                 <thead>
@@ -1117,16 +1106,12 @@
                     <th>Grupo</th>
                     <th>Link pronto</th>
                     <th>Produto</th>
-                    <th>Fornecedor</th>
+                    <th>Marketplace</th>
                     <th>Origem</th>
                     <th>Imagem</th>
                     <th>Preco</th>
-                    <th>Custo</th>
-                    <th>Frete exato</th>
-                    <th>Margem</th>
-                    <th>Comissao interna</th>
-                    <th>Lucro</th>
-                    <th>Modo</th>
+                    <th>Comissao afiliada</th>
+                    <th>Ganho estimado</th>
                     <th>Descricao</th>
                     <th>Mercado Livre</th>
                     <th>Amazon</th>
@@ -1135,7 +1120,7 @@
                   </tr>
                 </thead>
                 <tbody id="findsEditorRows">
-                  <tr><td colspan="19">Carregando MobilyTech Finds...</td></tr>
+                  <tr><td colspan="15">Carregando MobilyTech Finds...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1146,8 +1131,8 @@
         <section aria-labelledby="dropshipping-products-title">
           <div class="section-head">
             <div>
-              <p class="section-kicker">Produtos sob encomenda</p>
-              <h2 id="dropshipping-products-title">Auditoria de produtos sob encomenda</h2>
+              <p class="section-kicker">Nossos produtos</p>
+              <h2 id="dropshipping-products-title">Auditoria de nossos produtos</h2>
               <p>Lista interna para conferir preco, custo, margem, origem nacional e link de referencia antes de liberar qualquer produto para venda direta.</p>
             </div>
           </div>
@@ -1155,20 +1140,20 @@
             <div class="editor-toolbar">
               <div>
                 <strong>Regra de seguranca</strong>
-                <p>O botao global <strong>Produtos sob encomenda</strong> fica no editor visual acima. Quando desligado, a secao some do site gerado e o backend bloqueia checkout e frete dessa vitrine.</p>
+                <p>O botao global <strong>Nossos produtos</strong> fica no editor visual acima. Quando desligado, a secao some do site gerado e o backend bloqueia checkout e frete dessa vitrine.</p>
               </div>
               <button class="btn btn-dark" type="button" id="exportDropshippingProducts">Baixar products.json revisado</button>
             </div>
-            <div class="margin-tools" aria-label="Margens dos produtos sob encomenda">
+            <div class="margin-tools" aria-label="Margens dos nossos produtos">
               <label>Margem em massa (% sobre custo)
                 <input id="dropshippingBulkMargin" inputmode="decimal" value="38">
               </label>
-              <button class="btn btn-red" type="button" id="applyDropshippingMargin">Aplicar aos produtos sob encomenda</button>
+              <button class="btn btn-red" type="button" id="applyDropshippingMargin">Aplicar aos nossos produtos</button>
               <button class="btn btn-ghost" type="button" id="disableAllDropshippingCheckout">Pausar checkout dos produtos</button>
             </div>
-            <div class="sale-status is-info" id="dropshippingStatus">Revise os produtos sob encomenda antes de publicar. Produtos incompletos ficam bloqueados.</div>
+            <div class="sale-status is-info" id="dropshippingStatus">Revise os nossos produtos antes de publicar. Produtos incompletos ficam bloqueados.</div>
             <div class="table-wrap">
-              <table class="finds-table" aria-label="Auditoria de produtos sob encomenda">
+              <table class="finds-table" aria-label="Auditoria de nossos produtos">
                 <thead>
                   <tr>
                     <th>Status</th>
@@ -1190,7 +1175,7 @@
                 </tbody>
               </table>
             </div>
-            <div class="editor-note">O link de referencia fica apenas no painel e nos e-mails internos de pedido; ele nao aparece para o cliente no site publico. O preco do produto considera compra nacional ate a MobilyTech BR; o cliente escolhe o envio final no carrinho.</div>
+            <div class="editor-note">O link de referencia fica apenas no painel e nos e-mails internos de pedido; ele nao aparece para o cliente no site publico. O cliente confere frete, prazo estimado total e valor final no carrinho antes do pagamento.</div>
           </div>
         </section>
 
@@ -1357,7 +1342,7 @@
           details: "Imagem vertical/lateral do topo da pagina de afiliados. Deixe respiro ao redor do personagem/produto."
         },
         "pages.produtos.image": {
-          title: "Hero Produtos sob encomenda",
+          title: "Hero Nossos produtos",
           recommended: "Recomendado: 900 x 1050 px ou mesma proporcao 0,85:1.",
           details: "Use imagem/arte de produto ou personagem centralizado. Evite texto pequeno dentro da imagem."
         },
@@ -1379,6 +1364,14 @@
           .replaceAll("<", "&lt;")
           .replaceAll(">", "&gt;")
           .replaceAll('"', "&quot;");
+      }
+
+      function norm(value = "") {
+        return String(value)
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+          .toLowerCase();
       }
 
       async function readJson(path, fallback) {
@@ -1885,7 +1878,7 @@
         const selectedProductId = siteContentState.homeHero.featuredProductId || "";
         const pageNames = {
           ofertas: "Ofertas",
-          produtos: "Produtos sob encomenda",
+          produtos: "Nossos produtos",
           achados: "MobilyTech Finds",
           montagem: "Monte seu PC",
           limpeza: "Limpeza",
@@ -1910,7 +1903,7 @@
               ${contentCheckbox("featureFlags.payments.mercadoPago", "Mercado Pago", "Checkout principal ativo.")}
               ${contentCheckbox("featureFlags.payments.abacatePay", "Abacate Pay", "Pausado enquanto corrigimos a chave/API.")}
               ${contentCheckbox("featureFlags.catalog.physicalProducts", "Produtos fisicos proprios", "Reativa PCs, SSDs e fonte que estao fisicamente com voce.")}
-              ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Produtos sob encomenda", "Liga/desliga a vitrine sob encomenda e trava o checkout quando desligado.")}
+              ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Nossos produtos", "Liga/desliga a vitrine Nossos produtos e trava o checkout quando desligado.")}
             </div>
           </div>
           <div class="content-fieldset">
@@ -1930,7 +1923,7 @@
               ${heroBackgroundControls()}
             </div>
           </div>
-          ${featuredProductSlots("dropshipping", "Destaques da home - Produtos sob encomenda", "Escolha os 6 produtos sob encomenda que aparecem na secao principal. Se deixar algum slot automatico, o site preenche com os proximos produtos validos.", 6)}
+          ${featuredProductSlots("dropshipping", "Destaques da home - Nossos produtos", "Escolha os 6 nossos produtos que aparecem na secao principal. Se deixar algum slot automatico, o site preenche com os proximos produtos validos.", 6)}
           ${featuredProductSlots("finds", "Destaques da home - MobilyTech Finds", "Escolha os 3 achados de marketplace que aparecem na pagina principal. O checkout externo continua no marketplace parceiro.", 3)}
           <div class="content-fieldset">
             <h3>Artes dos servicos</h3>
@@ -2136,13 +2129,13 @@
 
       function findProfitSummary(item) {
         const sale = moneyNumber(item.salePrice);
-        const cost = moneyNumber(item.supplierCost);
-        const shipping = moneyNumber(item.shippingCustomerPrice ?? item.shipping?.customerPrice);
-        if (!sale || !cost) return "-";
-        const profit = sale - cost;
-        const percent = sale > 0 ? (profit / sale) * 100 : 0;
-        const freight = shipping > 0 ? ` | frete cliente R$ ${moneyInput(shipping)}` : "";
-        return `lucro R$ ${moneyInput(profit)} / ${percent.toFixed(1)}%${freight}`;
+        const raw = item.affiliateCommissionPercent || item.commissionPercent || "";
+        const text = commissionDisplay(raw);
+        if (!sale || !text) return "preencha a comissao";
+        const number = Number(String(text).replace("%", "").replace(",", "."));
+        if (!Number.isFinite(number)) return text;
+        const estimated = sale * (number / 100);
+        return `estimado R$ ${moneyInput(estimated)} (${text})`;
       }
 
       function commissionDisplay(value) {
@@ -2244,7 +2237,7 @@
         if (!tbody) return;
         const items = products.filter((item) => item && isDirectOrderProduct(item));
         if (!items.length) {
-          tbody.innerHTML = '<tr><td colspan="12">Nenhum produto sob encomenda cadastrado.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="12">Nenhum item de Nossos produtos cadastrado.</td></tr>';
           return;
         }
         tbody.innerHTML = items.map((item) => {
@@ -2291,7 +2284,7 @@
         const tbody = $("#findsEditorRows");
         if (!tbody) return;
         if (!Array.isArray(finds) || !finds.length) {
-          tbody.innerHTML = '<tr><td colspan="19">Nenhum item em MobilyTech Finds.</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="15">Nenhum item em MobilyTech Finds.</td></tr>';
           return;
         }
         tbody.innerHTML = finds.map((item, index) => `
@@ -2304,12 +2297,8 @@
             <td><select data-find="${index}" data-field="supplierRegion" class="narrow"><option value="BR"${item.supplierRegion !== "INTL" ? " selected" : ""}>BR</option><option value="INTL"${item.supplierRegion === "INTL" ? " selected" : ""}>INTL</option></select></td>
             <td><textarea data-find="${index}" data-field="productImage">${escapeHtml(item.productImage || item.selectedCreative || "")}</textarea></td>
             <td><input data-find="${index}" data-field="salePrice" class="narrow" value="${escapeHtml(item.salePrice ?? "")}"></td>
-            <td><input data-find="${index}" data-field="supplierCost" class="narrow" value="${escapeHtml(item.supplierCost ?? "")}"></td>
-            <td><input data-find="${index}" data-field="shippingCustomerPrice" class="narrow" value="${escapeHtml(item.shippingCustomerPrice ?? item.shipping?.customerPrice ?? "")}"></td>
-            <td><input data-find="${index}" data-field="marginPercent" class="narrow" value="${escapeHtml(item.marginPercent || "")}"></td>
             <td><input data-find="${index}" data-field="affiliateCommissionPercent" class="narrow" placeholder="Ex: 5%" value="${escapeHtml(commissionDisplay(item.affiliateCommissionPercent || item.commissionPercent || ""))}"></td>
             <td><strong>${escapeHtml(findProfitSummary(item))}</strong></td>
-            <td><select data-find="${index}" data-field="storeCheckout"><option value="true"${item.storeCheckout === true ? " selected" : ""}>Carrinho</option><option value="false"${item.storeCheckout !== true ? " selected" : ""}>Afiliado</option></select></td>
             <td><textarea data-find="${index}" data-field="whySell">${escapeHtml(item.whySell || "")}</textarea></td>
             <td class="link-cell"><input data-find="${index}" data-field="link:mercado" value="${escapeHtml(getAffiliateLink(item, "mercado") || item.affiliateUrl || "")}"></td>
             <td class="link-cell"><input data-find="${index}" data-field="link:amazon" value="${escapeHtml(getAffiliateLink(item, "amazon"))}"></td>
@@ -2456,13 +2445,13 @@
       });
       $("#exportDropshippingProducts")?.addEventListener("click", () => {
         downloadJson("products-sob-encomenda-revisado-mobilytech.json", productsState);
-        setDropshippingStatus("products.json revisado baixado com os ajustes locais de produtos sob encomenda.", "ok");
+        setDropshippingStatus("products.json revisado baixado com os ajustes locais de nossos produtos.", "ok");
       });
       $("#applyDropshippingMargin")?.addEventListener("click", () => {
         try {
           const percent = parsePercent($("#dropshippingBulkMargin")?.value);
           applyDropshippingMargin(percent);
-          setDropshippingStatus(`Margem de ${percent.toFixed(1).replace(".", ",")}% aplicada aos produtos sob encomenda.`, "ok");
+          setDropshippingStatus(`Margem de ${percent.toFixed(1).replace(".", ",")}% aplicada aos nossos produtos.`, "ok");
         } catch (error) {
           setDropshippingStatus(error.message || "Nao foi possivel aplicar margem.", "error");
         }
@@ -2472,7 +2461,7 @@
           if (item && isDirectOrderProduct(item)) item.checkoutEnabled = false;
         });
         renderDropshippingProducts(productsState);
-        setDropshippingStatus("Checkout de todos os produtos sob encomenda foi pausado localmente.", "ok");
+        setDropshippingStatus("Checkout de todos os nossos produtos foi pausado localmente.", "ok");
       });
       $("#saveSiteContent")?.addEventListener("click", async () => {
         if (!siteContentState) return;

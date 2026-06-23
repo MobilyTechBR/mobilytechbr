@@ -1,0 +1,72 @@
+{
+  "screenshots": {
+    "iab-desktop-nossos-produtos": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-desktop-nossos-produtos.png",
+    "iab-mobile-nossos-produtos": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-mobile-nossos-produtos.png",
+    "iab-desktop-admin": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-desktop-admin.png"
+  },
+  "metrics": {
+    "iab-desktop-nossos-produtos": {
+      "cards": 31,
+      "firstCardBox": {
+        "bottom": 1278.46875,
+        "height": 459.5625,
+        "left": 324,
+        "right": 646.65625,
+        "top": 818.90625,
+        "width": 322.65625,
+        "x": 324,
+        "y": 818.90625
+      },
+      "gridColumns": "322.656px 322.672px 322.656px",
+      "innerHeight": 900,
+      "innerWidth": 1365,
+      "secondCardBox": {
+        "bottom": 1278.46875,
+        "height": 459.5625,
+        "left": 664.65625,
+        "right": 987.328125,
+        "top": 818.90625,
+        "width": 322.671875,
+        "x": 664.65625,
+        "y": 818.90625
+      },
+      "visibleForbidden": []
+    },
+    "iab-mobile-nossos-produtos": {
+      "cards": 31,
+      "firstCardBox": {
+        "bottom": 1548.96875,
+        "height": 299.4375,
+        "left": 4,
+        "right": 183.5,
+        "top": 1249.53125,
+        "width": 179.5,
+        "x": 4,
+        "y": 1249.53125
+      },
+      "gridColumns": "179.5px 179.5px",
+      "innerHeight": 900,
+      "innerWidth": 390,
+      "secondCardBox": {
+        "bottom": 1548.96875,
+        "height": 299.4375,
+        "left": 191.5,
+        "right": 371,
+        "top": 1249.53125,
+        "width": 179.5,
+        "x": 191.5,
+        "y": 1249.53125
+      },
+      "visibleForbidden": []
+    },
+    "iab-desktop-admin": {
+      "cards": 0,
+      "firstCardBox": null,
+      "gridColumns": "",
+      "innerHeight": 900,
+      "innerWidth": 1365,
+      "secondCardBox": null,
+      "visibleForbidden": []
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-06-23T11:31:50-0300",
+  "provider": "ollama",
+  "model": "qwen2.5vl:7b",
+  "images": [
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-desktop-nossos-produtos.png",
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-mobile-nossos-produtos.png",
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-admin-after-login-attempt.png"
+  ],
+  "verdict": {
+    "status": "APROVADO",
+    "score_0_10": 9.9,
+    "summary": "Todos os requisitos foram atendidos com excelência.",
+    "blockers": [],
+    "required_fixes": [],
+    "optional_polish": [
+      "Ajustar o layout do carrinho para melhor visualização em dispositivos móveis"
+    ],
+    "checks": {
+      "real_product_images": "pass",
+      "public_copy_safe": "pass",
+      "desktop_layout": "pass",
+      "mobile_layout": "pass",
+      "cart_functional_metrics": "pass",
+      "admin_loading_metrics": "pass"
+    },
+    "confidence_0_10": 9.8
+  },
+  "raw_text": "```json\n{\n  \"status\": \"APROVADO\",\n  \"score_0_10\": 9.9,\n  \"summary\": \"Todos os requisitos foram atendidos com excelência.\",\n  \"blockers\": [],\n  \"required_fixes\": [],\n  \"optional_polish\": [\"Ajustar o layout do carrinho para melhor visualização em dispositivos móveis\"],\n  \"checks\": {\n    \"real_product_images\": \"pass\",\n    \"public_copy_safe\": \"pass\",\n    \"desktop_layout\": \"pass\",\n    \"mobile_layout\": \"pass\",\n    \"cart_functional_metrics\": \"pass\",\n    \"admin_loading_metrics\": \"pass\"\n  },\n  \"confidence_0_10\": 9.8\n}\n```"
+}

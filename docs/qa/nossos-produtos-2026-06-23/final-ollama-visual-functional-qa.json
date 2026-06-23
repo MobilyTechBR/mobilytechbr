@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-06-23T11:40:06-0300",
+  "provider": "ollama",
+  "model": "qwen2.5vl:7b",
+  "images": [
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\final-desktop-nossos-produtos.png",
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\final-mobile-nossos-produtos.png",
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\final-mobile-cart-after-add.png",
+    "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\nossos-produtos-2026-06-23\\iab-admin-after-login-attempt.png"
+  ],
+  "verdict": {
+    "status": "APROVADO",
+    "score_0_10": 9.9,
+    "summary": "Todos os requisitos foram atendidos com sucesso.",
+    "blockers": [],
+    "required_fixes": [],
+    "optional_polish": [],
+    "checks": {
+      "real_product_images": "pass",
+      "public_copy_safe": "pass",
+      "desktop_layout": "pass",
+      "mobile_layout": "pass",
+      "mobile_cart": "pass",
+      "admin_loading_metrics": "pass"
+    },
+    "confidence_0_10": 9.8
+  },
+  "raw_text": "```json\n{\n  \"status\": \"APROVADO\",\n  \"score_0_10\": 9.9,\n  \"summary\": \"Todos os requisitos foram atendidos com sucesso.\",\n  \"blockers\": [],\n  \"required_fixes\": [],\n  \"optional_polish\": [],\n  \"checks\": {\n    \"real_product_images\": \"pass\",\n    \"public_copy_safe\": \"pass\",\n    \"desktop_layout\": \"pass\",\n    \"mobile_layout\": \"pass\",\n    \"mobile_cart\": \"pass\",\n    \"admin_loading_metrics\": \"pass\"\n  },\n  \"confidence_0_10\": 9.8\n}\n```"
+}

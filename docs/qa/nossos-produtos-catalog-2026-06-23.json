@@ -1,0 +1,88 @@
+{
+  "built": 31,
+  "failures": [
+    {
+      "id": "nossos-teclado-redragon-castor-65",
+      "url": "https://www.kabum.com.br/produto/475170/teclado-mecanico-gamer-redragon-castor-rgb-switch-blue-abnt2-preto-k631-rgb-pt-blue",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    },
+    {
+      "id": "nossos-hub-usbc-ugreen-5em1",
+      "url": "https://www.kabum.com.br/produto/913111/hub-ugreen-usb-c-5-em-1-para-hdmi-1x-usb-3-0-2x-usb-2-0-e-usb-c-pd-100w-cinza-ug-15495",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    },
+    {
+      "id": "nossos-roteador-tplink-archer-c6",
+      "url": "https://www.kabum.com.br/produto/111493/roteador-tp-link-archer-c6-ac1200-dual-band-gigabit-preto",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    },
+    {
+      "id": "nossos-suporte-notebook-kabum-essentials",
+      "url": "https://www.kabum.com.br/produto/480028/suporte-de-notebook-kabum-essentials-preto-dobravel-com-6-ajustes-de-altura-kesne100pt",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    },
+    {
+      "id": "nossos-headset-multi-ph073",
+      "url": "https://www.kabum.com.br/produto/35658/headset-gamer-multi-earpad-de-silicone-p2-preto-e-vermelho-ph073",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    },
+    {
+      "id": "nossos-headset-x5-1000-rgb",
+      "url": "https://www.kabum.com.br/produto/480126/headset-gamer-5-x5-1000-rgb-drivers-50mm-p2-e-usb-preto-015-0096",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    },
+    {
+      "id": "nossos-limpa-tela-cleanup-120ml",
+      "url": "https://www.kabum.com.br/produto/676514/limpa-tela-120ml-celular-smart-tv-grande-led-notebook-lente-camera-oculos-lupa-clean-up",
+      "error": "sem imagem"
+    },
+    {
+      "id": "nossos-kit-limpeza-teclado-fortrek-7em1",
+      "url": "https://www.kabum.com.br/produto/1029680/kit-limpeza-para-teclados-7-em-1-fortrek-ec7-86971",
+      "error": "Imagem muito pequena"
+    },
+    {
+      "id": "nossos-carregador-usbc-20w",
+      "url": "https://www.kabum.com.br/produto/932948/carregador-usb-c-20w-com-postagem-imediata",
+      "error": "Imagem muito pequena"
+    },
+    {
+      "id": "nossos-adaptador-som-usb-71",
+      "url": "https://www.kabum.com.br/produto/509250/adaptador-externo-de-placa-de-som-7-1-usb-canais-duplo",
+      "error": "produto sem estoque: https://schema.org/outofstock"
+    }
+  ],
+  "ids": [
+    "nossos-ssd-kingston-a400-480gb",
+    "nossos-ssd-kingston-nv3-1tb",
+    "nossos-ram-kingston-fury-impact-8gb-notebook",
+    "nossos-ram-kingston-fury-beast-8gb-desktop",
+    "nossos-ram-kingston-fury-beast-16gb-desktop",
+    "nossos-processador-ryzen-5-5500",
+    "nossos-processador-intel-i3-12100f",
+    "nossos-placa-mae-msi-a520m-a-pro",
+    "nossos-placa-mae-asus-prime-a520m-e",
+    "nossos-fonte-duex-500w-bronze",
+    "nossos-monitor-lg-24-full-hd-100hz",
+    "nossos-monitor-rise-24-180hz",
+    "nossos-mouse-logitech-g203-preto",
+    "nossos-teclado-redragon-kumara-abnt2",
+    "nossos-mousepad-rgb-80x30",
+    "nossos-mousepad-exbom-70x35",
+    "nossos-hub-usb-3-md9-4-portas",
+    "nossos-hub-usb-2-4-portas",
+    "nossos-adaptador-wifi-usb-600mbps",
+    "nossos-webcam-full-hd-1080p",
+    "nossos-case-ssd-m2-nvme-usbc",
+    "nossos-cabo-hdmi-pix-2m",
+    "nossos-filtro-iclamper-energia-5",
+    "nossos-pasta-termica-implastec-50g",
+    "nossos-pasta-termica-ts-cold-4g",
+    "nossos-cooler-fan-rise-120mm-branco",
+    "nossos-cooler-fan-rgb-120mm",
+    "nossos-kit-3-fans-rgb-120mm",
+    "nossos-kit-limpa-telas-150ml-microfibra",
+    "nossos-carregador-apple-usbc-20w",
+    "nossos-flanela-microfibra-notebook-13"
+  ]
+}

@@ -55,11 +55,11 @@
     "enabled": false,
     "accountStatus": "paused-archive-only",
     "publicMode": "hidden",
-    "note": "CJ/CJDropshipping pausado em 2026-06-23. A vitrine p?blica agora usa produtos nacionais sob encomenda."
+    "note": "CJ/CJDropshipping pausado em 2026-06-23. A vitrine p?blica agora usa Nossos produtos nacionais selecionados."
   },
   "madeToOrder": {
     "enabled": true,
-    "label": "Produtos sob encomenda",
+    "label": "Nossos produtos",
     "defaultMarginPercent": 30,
     "pricingRule": "pre?o p?blico = custo do fornecedor nacional + frete at? a MobilyTech + margem; cliente paga o envio final por CEP a partir da MobilyTech",
     "preferredSupplier": "Mercado Livre/envio nacional",

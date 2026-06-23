@@ -17,13 +17,13 @@ FAVICON_VERSION = "20260621"
 LEGAL_PAGES = {
     "termos": {
         "title": "Termos de Compra",
-        "kicker": "Compra direta MobilyTech BR",
+        "kicker": "Curadoria MobilyTech BR",
         "intro": "Aqui voce encontra as principais condicoes para comprar pelo site da MobilyTech BR antes de finalizar o pagamento.",
         "sections": [
             ("Identificacao da loja", "A loja e a MobilyTech BR, CNPJ 66.834.883/0001-43, com atendimento pelo WhatsApp +55 (11) 95480-1967 e pelo e-mail mobilytechbr@gmail.com. A atuacao principal e pela internet, com referencia em Vila Suzana, Sao Paulo, SP."),
             ("Quem atende sua compra", "Quando voce compra direto pelo site, o atendimento de venda e pos-venda e feito pela MobilyTech BR. Fornecedores, transportadoras e meios de pagamento podem participar da entrega ou do pagamento; fale com a MobilyTech BR sempre que precisar de ajuda sobre o pedido."),
             ("Antes de pagar", "Confira o produto, quantidade, preco, frete, prazo estimado, origem de envio e dados informados antes de seguir para o pagamento. Se notar qualquer erro, ajuste o carrinho ou fale com a loja antes de concluir."),
-            ("Produtos sob encomenda", "Alguns produtos podem ser comprados sob encomenda pela MobilyTech BR. Nesses casos, o preco do produto considera a compra nacional ate a loja, e o frete final ate voce aparece no carrinho antes do pagamento."),
+            ("Nossos produtos", "Alguns produtos selecionados podem ter prazo adicional de preparacao antes do envio. O carrinho mostra valor do produto, frete final, prazo estimado total e resumo antes do pagamento."),
             ("Pagamento e confirmacao", "O pagamento e processado por checkout seguro de parceiro autorizado, como Mercado Pago. O pedido e confirmado apos aprovacao do pagamento e verificacao das informacoes necessarias para entrega."),
             ("Se algo der errado", "Em caso de atraso, divergencia, defeito, extravio ou duvida, entre em contato pelos canais oficiais. A MobilyTech BR acompanha o caso e orienta a solucao aplicavel, sem afastar os direitos previstos na legislacao de consumo."),
         ],
@@ -56,13 +56,13 @@ LEGAL_PAGES = {
     "entrega": {
         "title": "Entrega e Prazos",
         "kicker": "Frete e rastreio",
-        "intro": "Veja como funcionam retirada local, envio nacional, produtos sob encomenda, rastreio e prazo estimado.",
+        "intro": "Veja como funcionam retirada local, envio nacional, nossos produtos, rastreio e prazo estimado.",
         "sections": [
             ("Retirada local", "A retirada local pode estar disponivel para servicos ou produtos proprios. Quando aparecer como opcao, combine dia e horario pelos canais oficiais apos a confirmacao do pedido."),
             ("Frete no carrinho", "Antes de pagar, informe o CEP e confira o valor do frete, o prazo estimado e a modalidade de envio. O carrinho mostra produto e frete separados no total da compra."),
             ("Envio nacional", "Produtos no Brasil podem ser enviados por transportadora, Correios ou parceiro logistico conforme disponibilidade para o CEP informado."),
-            ("Produtos sob encomenda", "Produtos sob encomenda sao comprados pela MobilyTech BR antes do envio final. O valor do produto e o frete ate o cliente aparecem separados no carrinho antes do pagamento."),
-            ("Prazos de encomenda", "Produtos sob encomenda podem precisar de prazo adicional para compra, recebimento e conferencia pela MobilyTech BR antes do envio final ao cliente."),
+            ("Nossos produtos", "Alguns itens selecionados podem ter prazo adicional de preparacao antes do despacho. O valor do produto e o frete ate o cliente aparecem separados no carrinho antes do pagamento."),
+            ("Prazo total estimado", "Quando houver preparacao adicional, o prazo mostrado no checkout considera a preparacao do item, ate 1 dia util para despacho e o prazo informado pela transportadora."),
             ("Rastreio e atendimento", "Quando houver codigo de rastreio, ele sera informado nos canais de atendimento ou na area do cliente assim que estiver disponivel."),
         ],
     },
@@ -73,7 +73,7 @@ LEGAL_PAGES = {
         "sections": [
             ("Produtos proprios", "PCs, pecas e equipamentos proprios seguem a garantia informada no anuncio, proposta ou atendimento antes da compra. Se a cobertura especifica nao estiver clara, pergunte antes de pagar."),
             ("Servicos", "Montagem, limpeza e manutencao seguem o escopo combinado com voce, incluindo o que foi solicitado, aprovado e registrado no atendimento."),
-            ("Produtos sob encomenda", "Produtos sob encomenda seguem atendimento inicial pela MobilyTech BR. Quando houver garantia do fabricante ou marketplace de origem, a loja orienta o procedimento aplicavel sem afastar direitos de consumo."),
+            ("Nossos produtos", "Nossos produtos seguem atendimento inicial pela MobilyTech BR. Quando houver garantia do fabricante ou marketplace de origem, a loja orienta o procedimento aplicavel sem afastar direitos de consumo."),
             ("O que pode ser analisado", "Em caso de defeito, dano no transporte, produto diferente do anuncio, mau funcionamento ou ausencia de item, envie fotos, videos e numero do pedido."),
             ("O que pode ficar fora", "Mau uso, dano fisico causado apos o recebimento, instalacao inadequada, alteracao nao autorizada, queda, liquido ou incompatibilidade nao informada antes da compra podem exigir analise especifica."),
         ],
@@ -184,8 +184,8 @@ DEFAULT_SITE_CONTENT = {
             "image": "./assets/mobilytech-character-cutout.png",
         },
         "produtos": {
-            "title": "Produtos sob encomenda na MobilyTech BR",
-            "intro": "Produtos nacionais selecionados para setup, trabalho, upgrades e manutencao. O preco do produto ja considera a compra ate a MobilyTech BR; o envio final e calculado pelo CEP no carrinho.",
+            "title": "Nossos produtos na MobilyTech BR",
+            "intro": "Produtos nacionais selecionados para setup, trabalho, upgrades e manutencao. O carrinho calcula o frete pelo CEP e mostra prazo estimado total antes do pagamento.",
             "image": "./assets/mobilytech-character-cutout.png",
         },
         "montagem": {
@@ -308,6 +308,8 @@ PUBLIC_PRODUCT_FIELDS = {
     "variants",
     "allowQuantity",
     "madeToOrder",
+    "procurementBusinessDays",
+    "handlingBusinessDays",
     "supplierPlatform",
     "supplierReferenceUrl",
     "supplierCost",
@@ -421,9 +423,9 @@ def public_finds_payload(finalists, products=None, site_content: dict | None = N
                 },
                 "affiliateReady": True,
                 "affiliateButton": "Adicionar ao carrinho",
-                "publicPartnerNote": "Compra direta no site MobilyTech BR. Frete calculado antes do pagamento.",
-                "publicShippingNote": product.get("publicShippingNote") or ("Preco do produto ja considera compra nacional ate a MobilyTech; envio final por CEP no carrinho." if made_to_order else "Frete recalculado pelo CEP antes do pagamento."),
-                "publicOriginNote": product.get("publicOriginNote") or ("Produto nacional sob encomenda, com conferencia MobilyTech antes do envio final." if made_to_order else ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro.")),
+                "publicPartnerNote": "Item selecionado para compra segura no site MobilyTech BR.",
+                "publicShippingNote": product.get("publicShippingNote") or ("Frete, prazo total estimado e valor final aparecem no carrinho antes do pagamento." if made_to_order else "Frete recalculado pelo CEP antes do pagamento."),
+                "publicOriginNote": product.get("publicOriginNote") or ("Disponibilidade e envio confirmados no carrinho." if made_to_order else ("Origem e prazo informados antes do pagamento." if scope == "internacional" else "Disponibilidade e envio confirmados no carrinho.")),
                 "shippingScope": scope,
                 "addOnOnly": bool(shipping.get("addOnOnly")),
                 "comboRecommended": bool(shipping.get("comboRecommended")),
@@ -559,9 +561,9 @@ def public_dropshipping_payload(products, site_content: dict | None = None):
                 },
                 "affiliateReady": True,
                 "affiliateButton": "Comprar",
-                "publicPartnerNote": "Compra direta no site MobilyTech BR. Frete calculado antes do pagamento.",
-                "publicShippingNote": product.get("publicShippingNote") or ("Preco do produto ja considera compra nacional ate a MobilyTech; envio final por CEP no carrinho." if made_to_order else "Frete recalculado pelo CEP antes do pagamento."),
-                "publicOriginNote": product.get("publicOriginNote") or ("Produto nacional sob encomenda, com conferencia MobilyTech antes do envio final." if made_to_order else ("Envio internacional por fornecedor parceiro." if scope == "internacional" else "Envio por fornecedor parceiro.")),
+                "publicPartnerNote": "Item selecionado para compra segura no site MobilyTech BR.",
+                "publicShippingNote": product.get("publicShippingNote") or ("Frete, prazo total estimado e valor final aparecem no carrinho antes do pagamento." if made_to_order else "Frete recalculado pelo CEP antes do pagamento."),
+                "publicOriginNote": product.get("publicOriginNote") or ("Disponibilidade e envio confirmados no carrinho." if made_to_order else ("Origem e prazo informados antes do pagamento." if scope == "internacional" else "Disponibilidade e envio confirmados no carrinho.")),
                 "shippingScope": scope,
                 "addOnOnly": bool(shipping.get("addOnOnly")),
                 "comboRecommended": bool(shipping.get("comboRecommended")),
@@ -629,7 +631,7 @@ def header(prefix: str, active: str = "home", site_content: dict | None = None) 
             ("contato", "Suporte", "contato"),
         ]
         if dropshipping_enabled:
-            nav.insert(1, ("produtos", "Sob encomenda", "produtos"))
+            nav.insert(1, ("produtos", "Nossos produtos", "produtos"))
     else:
         nav = [
             ("home", "Inicio", "home"),
@@ -640,7 +642,7 @@ def header(prefix: str, active: str = "home", site_content: dict | None = None) 
             ("contato", "Suporte", "contato"),
         ]
         if dropshipping_enabled:
-            nav.insert(1, ("produtos", "Sob encomenda", "produtos"))
+            nav.insert(1, ("produtos", "Nossos produtos", "produtos"))
     nav_parts = []
     default_nav_key = "pc-gamer" if active == "ofertas" else active
     for index, (href_key, label, active_key) in enumerate(nav):
@@ -736,7 +738,7 @@ def footer(prefix: str, site_content: dict | None = None) -> str:
     store_links = "\n".join(
         item
         for item in [
-            f'<a href="{links["produtos"]}">Produtos sob encomenda</a>' if dropshipping_enabled else "",
+            f'<a href="{links["produtos"]}">Nossos produtos</a>' if dropshipping_enabled else "",
             f'<a href="{links["ofertas"]}">PC Gamer</a>' if physical_enabled else "",
             f'<a href="{links["ofertas"]}">Hardware</a>' if physical_enabled else "",
             f'<a href="{links["achados"]}">MobilyTech Finds</a>',
@@ -851,9 +853,9 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
         hero_deal_html = f"""
         <aside class="hero-deal-card">
           <span>Compra direta</span>
-          <h2>Produtos sob encomenda no ar</h2>
+          <h2>Nossos produtos no ar</h2>
           <p>Confira produto, prazo, frete final e total antes do pagamento.</p>
-          <a class="small-link" href="{links["produtos"]}">Ver sob encomenda</a>
+          <a class="small-link" href="{links["produtos"]}">Ver nossos produtos</a>
         </aside>
         """
     else:
@@ -905,10 +907,10 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
         catalog_sections += f"""
       <section class="finds-band drops-band" id="produtos">
         <div class="finds-text">
-          <p class="section-kicker">Produtos sob encomenda</p>
+          <p class="section-kicker">Nossos produtos</p>
           <h2>Upgrade certeiro para setup, trabalho e manutenção</h2>
-          <p>Hardware, perifericos e acessorios escolhidos para resolver gargalos reais: SSD, memoria, rede, teclado, mouse, limpeza e organizacao. O preco do produto ja considera a compra nacional ate a MobilyTech; o frete final e calculado pelo CEP no carrinho.</p>
-          <a class="btn btn-dark" href="{links["produtos"]}">Ver sob encomenda</a>
+          <p>Hardware, perifericos e acessorios escolhidos para resolver gargalos reais: SSD, memoria, rede, teclado, mouse, limpeza e organizacao. O frete final e o prazo estimado total aparecem no carrinho antes do pagamento.</p>
+          <a class="btn btn-dark" href="{links["produtos"]}">Ver nossos produtos</a>
         </div>
         <div class="finds-preview drops-preview" id="homeDropshippingGrid" data-source="dropshipping" data-limit="6"></div>
       </section>
@@ -1061,9 +1063,9 @@ def nossos_produtos_page(prefix: str, page: dict, site_content: dict | None = No
     <main>
       <section class="page-hero page-hero-finds page-hero-products-store unavailable-page">
         <div>
-          <p class="section-kicker">Produtos sob encomenda</p>
+          <p class="section-kicker">Nossos produtos</p>
           <h1>Pagina temporariamente indisponivel</h1>
-          <p>A compra direta de produtos sob encomenda esta desligada no painel da MobilyTech BR. Enquanto isso, veja o MobilyTech Finds ou fale com a loja para atendimento humano.</p>
+          <p>A compra direta de nossos produtos esta desligada no painel da MobilyTech BR. Enquanto isso, veja o MobilyTech Finds ou fale com a loja para atendimento humano.</p>
           <div class="hero-actions">
             <a class="btn btn-red" href="{links["achados"]}">Ver MobilyTech Finds</a>
             <a class="btn btn-white" href="{links["contato"]}">Falar com a loja</a>
@@ -1082,14 +1084,14 @@ def nossos_produtos_page(prefix: str, page: dict, site_content: dict | None = No
       </section>
       <section class="section-head finds-section-head finds-primary-head">
         <div>
-          <p class="section-kicker">Compra direta MobilyTech BR</p>
-          <h2>Produtos sob encomenda na MobilyTech BR</h2>
+          <p class="section-kicker">Curadoria MobilyTech BR</p>
+          <h2>Nossos produtos na MobilyTech BR</h2>
           <p>Produtos selecionados para setup, escritorio, manutencao e upgrades. Voce pode filtrar por nicho, preco e tipo de envio antes de adicionar ao carrinho.</p>
-          <p class="public-compliance-note">O preco exibido ja considera a compra nacional do item ate a MobilyTech BR. O frete final ate voce, o prazo estimado e o total aparecem no carrinho antes do pagamento.</p>
+          <p class="public-compliance-note">Frete, prazo total estimado e valor final aparecem no carrinho antes do pagamento. Alguns itens podem ter preparo adicional antes do despacho.</p>
         </div>
       </section>
-      <section class="finds-layout" aria-label="Filtros de produtos sob encomenda">
-        <aside class="finds-filters" aria-label="Filtros de produtos sob encomenda">
+      <section class="finds-layout" aria-label="Filtros de nossos produtos">
+        <aside class="finds-filters" aria-label="Filtros de nossos produtos">
           <form class="finds-filter-form" id="findsFilterForm" data-source="dropshipping" role="search">
             <label class="finds-search-label" for="findsSearch">Buscar nesta pagina</label>
             <div class="finds-search-control">
@@ -1463,7 +1465,7 @@ def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
       </label>
       <label class="policy-check supplier-policy-check" id="supplierDisclosureCheck" hidden>
         <input id="supplierDisclosureAccepted" type="checkbox">
-        <span>Estou ciente de que este pedido pode ter produto sob encomenda e conferi preco, frete final, prazo estimado e resumo antes do pagamento.</span>
+        <span>Estou ciente de que este pedido pode ter item com preparo adicional e conferi preco, frete final, prazo total estimado e resumo antes do pagamento.</span>
       </label>
       <div class="checkout-actions">{checkout_buttons}</div>
       <p class="drawer-note">Antes de pagar, confira o resumo do pedido. O pagamento e feito em ambiente seguro do provedor escolhido.</p>
@@ -1880,7 +1882,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
             ]
         )
     if dropshipping_enabled:
-        search_entries.append({"type": "Loja", "icon": "MT", "title": "Produtos sob encomenda", "description": "Produtos para setup, escritorio e manutencao com compra direta no site.", "href": "ROUTES.produtos + \"#findsGrid\"", "terms": "produtos sob encomenda mobilytech compra direta setup escritorio hardware manutencao"})
+        search_entries.append({"type": "Loja", "icon": "MT", "title": "Nossos produtos", "description": "Produtos para setup, escritorio e manutencao com compra direta no site.", "href": "ROUTES.produtos + \"#findsGrid\"", "terms": "nossos produtos mobilytech compra direta setup escritorio hardware manutencao"})
     search_entries.extend(
         [
             {"type": "Servico", "icon": "$", "title": "Monte seu PC", "description": "Orcamento personalizado para montagem sob demanda.", "href": "ROUTES.montagem", "terms": "montagem monte seu pc montar computador orcamento custom personalizado"},
@@ -2460,6 +2462,30 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       const parsed = digits.map(Number).filter((value) => value > 0);
       return parsed.length ? Math.max(...parsed) : 18;
     }}
+    function supplierPrepDays(product) {{
+      if (!product || !isSupplierProduct(product)) return 0;
+      const procurement = Number(product.procurementBusinessDays || product.preparationBusinessDays || product.prepBusinessDays || 3);
+      const handling = Number(product.handlingBusinessDays || product.dispatchBusinessDays || 1);
+      return Math.max(0, procurement) + Math.max(0, handling);
+    }}
+    function cartSupplierPrepDays() {{
+      return cart.reduce((max, item) => {{
+        const product = productById(item.productId);
+        return product && isSupplierProduct(product) ? Math.max(max, supplierPrepDays(product)) : max;
+      }}, 0);
+    }}
+    function customerDeliveryDays(carrierDays=0) {{
+      const transport = Number(carrierDays || 0);
+      return Math.max(0, transport) + cartSupplierPrepDays();
+    }}
+    function deliveryTimeCopy(carrierDays=0) {{
+      const transport = Number(carrierDays || 0);
+      const prep = cartSupplierPrepDays();
+      if (prep > 0 && transport > 0) return `${{prep + transport}} dia(s) uteis estimados, incluindo preparo, despacho e transporte.`;
+      if (prep > 0) return `${{prep}} dia(s) uteis estimados para preparo antes do despacho.`;
+      if (transport > 0) return `${{transport}} dia(s) uteis estimados.`;
+      return "prazo sob consulta";
+    }}
     function fixedSupplierShippingQuote(postalCode="") {{
       const rows = cart.map((item) => ({{ item, product: productById(item.productId) }})).filter((row) => row.product && isSupplierProduct(row.product));
       if (!rows.length || rows.length !== cart.length) return null;
@@ -2469,18 +2495,22 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         const itemFreight = Number(shipping.customerPrice || shipping.sampleQuoteMinBrl || 0);
         return sum + itemFreight * quantity;
       }}, 0);
-      const deliveryTime = rows.reduce((max, row) => Math.max(max, supplierDeliveryDays(row.product)), 0) || 18;
+      const carrierTime = rows.reduce((max, row) => Math.max(max, supplierDeliveryDays(row.product)), 0) || 18;
+      const prepTime = rows.reduce((max, row) => Math.max(max, supplierPrepDays(row.product)), 0);
+      const deliveryTime = carrierTime + prepTime;
       const services = [...new Set(rows.map((row) => row.product.shipping?.sampleQuoteService).filter(Boolean))];
       return {{
         id: "supplier-fixed",
         serviceId: "supplier-fixed",
         price: Math.round(price * 100) / 100,
         postalCode,
-        company: "Fornecedor selecionado",
-        carrier: "Fornecedor selecionado",
-        name: services.length === 1 ? services[0] : "Envio direto do fornecedor",
-        serviceName: services.length === 1 ? services[0] : "Envio direto do fornecedor",
+        company: "Envio com rastreio",
+        carrier: "Envio com rastreio",
+        name: services.length === 1 ? services[0] : "Entrega calculada",
+        serviceName: services.length === 1 ? services[0] : "Entrega calculada",
         deliveryTime,
+        carrierDeliveryTime: carrierTime,
+        preparationTime: prepTime,
         mode: "supplier-fixed",
         originMode: "supplier"
       }};
@@ -2491,7 +2521,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       box.innerHTML = `<label class="shipping-option is-selected">
         <span class="ship-main">
           <input type="radio" name="shipping" checked>
-          <span class="ship-copy"><strong>Fornecedor selecionado - Envio direto</strong><small>${{quote.deliveryTime}} dia(s) uteis estimados. Frete calculado pela origem do fornecedor.</small></span>
+          <span class="ship-copy"><strong>Envio com rastreio</strong><small>${{quote.deliveryTime}} dia(s) uteis estimados, incluindo preparo, despacho e transporte.</small></span>
         </span>
         <strong class="ship-price">${{money(quote.price)}}</strong>
       </label>`;
@@ -2549,8 +2579,8 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         const text = norm([product.publicOriginNote, product.shipping?.region, product.supplierRegion, product.shipping?.originCountry].join(" "));
         return text.includes("intern") || text.includes("exterior") || text.includes("china") || text.includes("cn");
       }});
-      if (supplier && international) return "Envio direto internacional.";
-      if (supplier) return "Envio direto por fornecedor.";
+      if (supplier && international) return "Origem internacional informada antes do pagamento.";
+      if (supplier) return "Pedido com preparo e envio rastreado.";
       return "Envio ou retirada conforme opcao escolhida.";
     }}
     function renderCheckoutReview() {{
@@ -2574,7 +2604,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         ? `${{selectedShipping.carrier || selectedShipping.company || "Entrega"}} - ${{selectedShipping.serviceName || selectedShipping.name || "servico"}}`
         : (state.supplier ? "Calcule o frete antes de pagar" : "Retirada local ou entrega a calcular");
       const timeLabel = selectedShipping?.deliveryTime
-        ? `${{selectedShipping.deliveryTime}} dia(s) uteis estimados`
+        ? `${{selectedShipping.deliveryTime}} dia(s) uteis estimados${{selectedShipping.preparationTime ? ", incluindo preparo, despacho e transporte" : ""}}`
         : (state.supplier ? "Apos calcular o frete" : "Conforme forma de entrega");
       node.hidden = false;
       node.innerHTML = `<h3>Revise antes de pagar</h3>
@@ -2596,7 +2626,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       if (!feedback) return;
       const typed = ($("#couponCode")?.value || "").trim();
       if (!typed) {{
-        feedback.textContent = "Cupons valem para produtos elegiveis; frete e envio direto ficam separados.";
+        feedback.textContent = "Cupons valem para produtos elegiveis; frete e prazos ficam separados.";
         return;
       }}
       if (!couponAttempted) {{
@@ -2958,7 +2988,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const emptyCopy = group === "vendidos"
         ? "Estamos atualizando esta selecao. Veja as ofertas recomendadas abaixo."
         : source === "dropshipping"
-          ? "Nenhum produto sob encomenda encontrado com esses filtros."
+          ? "Nenhum produto encontrado com esses filtros."
         : "Nenhum achado encontrado.";
       node.innerHTML = items.map(findCard).join("") || `<p class="empty">${{emptyCopy}}</p>`;
     }}
@@ -3012,8 +3042,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const price = numericPrice ? money(numericPrice) : (item.currentPrice || "");
       const buttonLabel = "Ver oferta";
       const scope = findShippingScope(item);
-      const originNote = isManual ? (scope === "internacional" ? "Origem e prazo informados antes do pagamento." : "Produto nacional sob encomenda.") : "";
-      const freightNote = isManual ? (item.publicShippingNote || "Frete recalculado pelo CEP antes do pagamento.") : "";
+      const originNote = isManual ? (item.publicOriginNote || (scope === "internacional" ? "Origem e prazo informados antes do pagamento." : "Disponibilidade e envio confirmados no carrinho.")) : "";
+      const freightNote = isManual ? (item.publicShippingNote || "Frete e prazo aparecem no carrinho antes do pagamento.") : "";
       const compactFreightNote = isManual ? compactSupplierFreightNote(freightNote, scope, item) : "";
       const disclosure = isManual
         ? `<div class="find-disclosure"><span>${{escapeHtml(originNote)}}</span><small>${{escapeHtml(compactFreightNote)}}</small></div>`
@@ -3042,7 +3072,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       return `<article class="find-card" id="${{anchorId("find", item.title)}}" data-search="${{item.title}} ${{item.niche}}" data-store="${{escapeHtml(findMarketName(item))}}" data-shipping="${{findShippingScope(item)}}">
         <div class="find-media"><img src="${{image}}" alt="${{item.title}}"></div>
         <h3>${{item.title}}</h3>
-        <p>${{isManual ? "Compra direta com preco do produto revisado e frete final por CEP." : (item.whySell || item.publicPartnerNote || "")}}</p>
+        <p>${{isManual ? "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho." : (item.whySell || item.publicPartnerNote || "")}}</p>
         <div class="find-price">${{price}}</div>
         ${{disclosure}}
         ${{action}}
@@ -3261,11 +3291,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         return;
       }}
       if (state.supplier && !state.physical) {{
-        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para produtos sob encomenda</strong><small>Informe o CEP e selecione uma entrega com rastreio antes do pagamento.</small></span></div>';
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Envio obrigatorio para nossos produtos</strong><small>Informe o CEP e selecione uma entrega com rastreio antes do pagamento.</small></span></div>';
         return;
       }}
       if (state.supplier && state.physical) {{
-        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos e produtos sob encomenda usam frete final calculado pelo CEP.</small></span></div>';
+        node.innerHTML = '<div class="shipping-option is-muted"><span class="ship-copy"><strong>Carrinho misto</strong><small>Itens fisicos e nossos produtos usam frete final calculado pelo CEP.</small></span></div>';
         return;
       }}
       node.innerHTML = `<button class="shipping-option ${{selectedShipping ? "" : "is-selected"}}" type="button" id="localPickupOption">
@@ -3315,7 +3345,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           const service = quote.name || quote.service || quote.service_name || "Servico";
           const title = customerFreightTitle(company, service, quote.provider);
           const rawTime = quote.deliveryTime || quote.delivery_time || "";
-          const time = rawTime ? `${{rawTime}} dia(s) uteis` : "prazo sob consulta";
+          const time = state.supplier ? deliveryTimeCopy(rawTime) : (rawTime ? `${{rawTime}} dia(s) uteis` : "prazo sob consulta");
           const economics = quote.shippingEconomics || {{}};
           const extra = quote.includedShipping && quote.originalShippingPrice
             ? `Frete real de ${{money(quote.originalShippingPrice)}} incluso no preco final.`
@@ -3339,7 +3369,10 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
             postalCode: data.postalCode || postalCode,
             serviceId: quote.id,
             serviceName: quote.name || quote.service || quote.service_name || "Servico",
-            carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora")
+            carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora"),
+            carrierDeliveryTime: Number(quote.deliveryTime || quote.delivery_time || 0),
+            preparationTime: cartSupplierPrepDays(),
+            deliveryTime: state.supplier ? customerDeliveryDays(quote.deliveryTime || quote.delivery_time || 0) : (quote.deliveryTime || quote.delivery_time || 0)
           }};
           box.querySelectorAll(".shipping-option").forEach((option) => option.classList.remove("is-selected"));
           input.closest(".shipping-option")?.classList.add("is-selected");
@@ -3352,7 +3385,10 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
             postalCode: data.postalCode || postalCode,
             serviceId: quote.id,
             serviceName: quote.name || quote.service || quote.service_name || "Servico",
-            carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora")
+            carrier: typeof quote.company === "string" ? quote.company : (quote.company?.name || quote.company_name || "Transportadora"),
+            carrierDeliveryTime: Number(quote.deliveryTime || quote.delivery_time || 0),
+            preparationTime: cartSupplierPrepDays(),
+            deliveryTime: state.supplier ? customerDeliveryDays(quote.deliveryTime || quote.delivery_time || 0) : (quote.deliveryTime || quote.delivery_time || 0)
           }};
           renderCart();
         }}
@@ -3380,14 +3416,14 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (!cart.length) return showToast("Seu carrinho esta vazio.");
       const state = cartFulfillmentState();
       if (state.supplier && (!selectedShipping || !selectedShipping.serviceId)) {{
-        return showToast("Calcule e selecione o frete antes de finalizar produtos sob encomenda.");
+        return showToast("Calcule e selecione o frete antes de finalizar nossos produtos.");
       }}
       const acceptedPolicies = policyPayload();
       if (!acceptedPolicies.terms || !acceptedPolicies.privacy) {{
         return showToast("Aceite os Termos de Compra e a Politica de Privacidade.");
       }}
       if (state.supplier && !acceptedPolicies.supplierDisclosure) {{
-        return showToast("Confirme o aviso de produto sob encomenda.");
+        return showToast("Confirme o aviso de prazo e frete antes de finalizar.");
       }}
       const original = button.innerHTML;
       button.innerHTML = "Abrindo checkout...";
@@ -3674,7 +3710,7 @@ def main():
             "achados",
         ),
         FASE2_DIR / "nossos-produtos.html": (
-            "Produtos sob encomenda | MobilyTech BR",
+            "Nossos produtos | MobilyTech BR",
             nossos_produtos_page("../", pages_content["produtos"], site_content),
             "../",
             "produtos",

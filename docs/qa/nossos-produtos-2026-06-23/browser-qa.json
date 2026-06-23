@@ -1,0 +1,126 @@
+{
+  "timestamp": "2026-06-23T14:20:54.570Z",
+  "page": {
+    "buttons": 31,
+    "cards": 31,
+    "firstCards": [
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 779,90",
+        "title": "SSD Kingston A400 480GB SATA III"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 1.299,90",
+        "title": "SSD Kingston NV3 1TB M.2 NVMe PCIe 4.0"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 559,90",
+        "title": "Memoria Kingston Fury Impact 8GB DDR4 3200MHz notebook"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 799,90",
+        "title": "Memoria Kingston Fury Beast 8GB DDR4 3200MHz desktop"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 1.159,90",
+        "title": "Memoria Kingston Fury Beast 16GB DDR4 3200MHz desktop"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 799,90",
+        "title": "Processador AMD Ryzen 5 5500 AM4"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 879,90",
+        "title": "Processador Intel Core i3-12100F LGA 1700"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 519,90",
+        "title": "Placa-mae MSI A520M-A PRO AM4 DDR4"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 559,90",
+        "title": "Placa-mae ASUS Prime A520M-E AM4 DDR4"
+      },
+      {
+        "desc": "Produto selecionado pela MobilyTech BR. Frete e prazo total aparecem no carrinho.",
+        "disclosure": "Disponibilidade e envio confirmados no carrinho.\nFrete e total aparecem no carrinho.",
+        "price": "R$ 239,90",
+        "title": "Fonte Duex 500W 80 Plus Bronze"
+      }
+    ],
+    "gridColumns": "386px 386px 386px",
+    "hasNossosTitle": true,
+    "hasPrepCheckoutCopy": true,
+    "imageIssues": [],
+    "images": 31,
+    "title": "Nossos produtos | MobilyTech BR",
+    "visibleForbidden": [],
+    "screenshotError": "Timed out after 10000ms waiting for CDP command Page.captureScreenshot."
+  },
+  "cart": {
+    "clicked": true,
+    "quantityAfterPlus": "2",
+    "textHasPrep": true,
+    "errors": [],
+    "drawerOpen": true,
+    "overlapRiskText": "LOJA ONLINE\nCarrinho\n×\nSSD Kingston A400 480GB SATA III\nSem opcionais\n-\n2\n+\nR$ 1.559,80\n×\nTotal\nR$ 1.559,80\nCupom promocional\n›\nCupons valem para produtos elegiveis; frete e envio direto ficam separados.\nCalcular frete\nRevise antes de pagar\n\nMobilyTech BR - CNPJ 66.834.883/0001-43. Revise valores, frete e prazo antes de pagar.\n\nProdutos\nR$ 1.559,80\nFrete\nR$ 0,00\nTotal\nR$ 1.559,80\nEntrega\nRetirada local ou entrega a calcular\nPrazo\nConforme forma de entrega\nOrigem\nEnvio ou retirada conforme opcao escolhida.\n\nTermos, entrega, trocas, garantia e privacidade ficam disponiveis antes do pagamento.\n\nLi e aceito os Termos de Compra, a Politica de Privacidade, a Politica de Entrega, a Politica de Trocas e Reembolso e a Politica de Garantia.\nEstou ciente de que este pedido pode ter item com preparo a"
+  },
+  "admin": {
+    "bodyHasFindsCommission": false,
+    "bodyHasNossos": false,
+    "dropsRows": 31,
+    "findsRowsKnown": 353,
+    "hasNorm": false,
+    "loadingCount": 0,
+    "relevantIds": [
+      "activeProducts",
+      "activeFinds",
+      "finds-editor-title",
+      "addFindItem",
+      "exportFinds",
+      "findsEditorRows",
+      "dropshipping-products-title",
+      "exportDropshippingProducts",
+      "dropshippingBulkMargin",
+      "applyDropshippingMargin",
+      "disableAllDropshippingCheckout",
+      "dropshippingStatus",
+      "dropshippingProductsRows",
+      "sale-register-title",
+      "downloadSalePayload",
+      "saleRegisterForm",
+      "saleProduct",
+      "saleProductPreview",
+      "saleProductPreviewImage",
+      "saleProductPreviewTitle",
+      "saleProductPreviewSpecs",
+      "saleDate",
+      "salePriceMode",
+      "salePrice",
+      "saleChannel",
+      "deactivateAfterSale",
+      "downloadSoldProducts",
+      "saleStatus"
+    ],
+    "title": "Painel MobilyTech BR",
+    "visibleLoadingLines": [],
+    "screenshotError": "Timed out after 10000ms waiting for CDP command Page.captureScreenshot."
+  }
+}
