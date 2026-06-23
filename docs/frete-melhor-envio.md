@@ -25,6 +25,8 @@ Depois do deploy, abra:
 
 Ao autorizar no Melhor Envio, a pagina de callback mostrara o `access_token` e o `refresh_token`. Copie o `access_token` para `MELHOR_ENVIO_TOKEN` na Vercel. O token de acesso dura cerca de 30 dias; guarde o `refresh_token` em `MELHOR_ENVIO_REFRESH_TOKEN` para renovacoes futuras.
 
+Se `MELHOR_ENVIO_REFRESH_TOKEN`, `MELHOR_ENVIO_CLIENT_ID` e `MELHOR_ENVIO_CLIENT_SECRET` estiverem configurados, a rota de cotacao tenta renovar o token automaticamente quando o Melhor Envio responder `401 Unauthenticated`.
+
 ## Variaveis obrigatorias na Vercel
 
 Para habilitar o calculo de frete no site:

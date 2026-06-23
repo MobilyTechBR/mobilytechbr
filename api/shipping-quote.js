@@ -3,6 +3,7 @@ const path = require("path");
 
 const PRODUCTS_FILE = path.join(process.cwd(), "data", "products.json");
 const MELHOR_ENVIO_API = process.env.MELHOR_ENVIO_API_BASE || "https://www.melhorenvio.com.br/api/v2";
+const MELHOR_ENVIO_AUTH_BASE = process.env.MELHOR_ENVIO_AUTH_BASE || "https://www.melhorenvio.com.br";
 const {
   buildShippingQuotes,
   onlyDigits,
@@ -40,6 +41,10 @@ async function readJsonBody(request) {
 function parsePositiveNumber(value) {
   const number = Number(String(value || "").replace(",", "."));
   return Number.isFinite(number) && number > 0 ? number : null;
+}
+
+function normalizeBaseUrl(value) {
+  return String(value || "").trim().replace(/\/+$/, "");
 }
 
 function categoryMinimumWeight(product) {
@@ -187,10 +192,57 @@ function productsFromCartItems(products, cartItems) {
   }).filter(Boolean);
 }
 
+async function refreshMelhorEnvioToken() {
+  const refreshToken = String(process.env.MELHOR_ENVIO_REFRESH_TOKEN || "").trim();
+  const clientId = String(process.env.MELHOR_ENVIO_CLIENT_ID || "").trim();
+  const clientSecret = String(process.env.MELHOR_ENVIO_CLIENT_SECRET || "").trim();
+  if (!refreshToken || !clientId || !clientSecret) return null;
+
+  const tokenResponse = await fetch(`${normalizeBaseUrl(MELHOR_ENVIO_AUTH_BASE)}/oauth/token`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": process.env.MELHOR_ENVIO_USER_AGENT || "MobilyTechBR (mobilytechbr@gmail.com)"
+    },
+    body: JSON.stringify({
+      grant_type: "refresh_token",
+      client_id: Number(clientId) || clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken
+    })
+  });
+
+  const data = await tokenResponse.json().catch(() => ({}));
+  if (!tokenResponse.ok || !data.access_token) return null;
+  return String(data.access_token).trim();
+}
+
+async function melhorEnvioPost(pathname, body, token) {
+  const request = (accessToken) => fetch(`${MELHOR_ENVIO_API}${pathname}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "User-Agent": process.env.MELHOR_ENVIO_USER_AGENT || "MobilyTechBR (mobilytechbr@gmail.com)"
+    },
+    body: JSON.stringify(body)
+  });
+
+  const firstResponse = await request(token);
+  if (firstResponse.status !== 401) return firstResponse;
+
+  const refreshedToken = await refreshMelhorEnvioToken();
+  if (!refreshedToken) return firstResponse;
+  return request(refreshedToken);
+}
+
 async function quoteMelhorEnvio(product, destinationPostalCode) {
-  const token = process.env.MELHOR_ENVIO_TOKEN;
+  let token = String(process.env.MELHOR_ENVIO_TOKEN || "").trim();
   const fromPostalCode = onlyDigits(process.env.SHIP_FROM_POSTAL_CODE);
   const toPostalCode = onlyDigits(destinationPostalCode);
+  if (!token) token = await refreshMelhorEnvioToken();
   if (!token || !fromPostalCode) {
     const error = new Error("Frete automatico ainda nao configurado.");
     error.statusCode = 501;
@@ -229,16 +281,7 @@ async function quoteMelhorEnvio(product, destinationPostalCode) {
     }
   };
 
-  const apiResponse = await fetch(`${MELHOR_ENVIO_API}/me/shipment/calculate`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": process.env.MELHOR_ENVIO_USER_AGENT || "MobilyTechBR (mobilytechbr@gmail.com)"
-    },
-    body: JSON.stringify(body)
-  });
+  const apiResponse = await melhorEnvioPost("/me/shipment/calculate", body, token);
 
   const data = await apiResponse.json().catch(() => ({}));
   if (!apiResponse.ok) {
