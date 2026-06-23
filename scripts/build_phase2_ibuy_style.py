@@ -1463,6 +1463,7 @@ def cart_drawer(prefix: str, site_content: dict | None = None) -> str:
       <div class="checkout-actions">{checkout_buttons}</div>
       <p class="drawer-note">Antes de pagar, confira o resumo do pedido. O pagamento e feito em ambiente seguro do provedor escolhido.</p>
     </aside>
+    <section class="checkout-upsell" id="checkoutUpsell" aria-label="Oferta antes do pagamento" hidden></section>
     <dialog class="product-modal" id="productModal">
       <form method="dialog">
         <button class="close-drawer" aria-label="Fechar">&times;</button>
@@ -1530,7 +1531,8 @@ def css() -> str:
     .account-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(13,23,38,.08);padding:28px;min-width:0}
     .account-card-main{background:linear-gradient(135deg,#0b2034 0%,#123f5f 58%,#0b6b78 100%);color:#fff}.account-card h2{font-size:28px;line-height:1.08;margin:0 0 12px}.account-card p{color:#59616d;font-weight:800}.account-card.account-card-main p{color:#dbe7f2}.account-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}.account-card-main .btn-white{background:#fff;color:#111}.outline-account{background:#fff;color:#111;border:2px solid #111}.account-session{margin:18px 0 0;border:1px solid var(--line);border-radius:16px;background:#f8fafc;padding:14px;display:grid;grid-template-columns:54px 1fr;gap:14px;align-items:center}.account-avatar{width:54px;height:54px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;font-weight:1000;overflow:hidden}.account-avatar img{width:100%;height:100%;object-fit:cover}.account-session strong{display:block;font-size:18px}.account-session small{display:block;color:#657081;font-weight:850;line-height:1.35}.account-login-options{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.orders-panel{display:grid;gap:12px;margin-top:16px}.order-card{border:1px solid var(--line);border-radius:16px;background:#fbfcfd;padding:15px;display:grid;gap:8px}.order-card-head{display:flex;justify-content:space-between;gap:12px;align-items:start}.order-card h3{margin:0;font-size:18px}.order-status-pill{border-radius:999px;background:#e9fbfa;color:#087f78;padding:6px 10px;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}.order-card dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0}.order-card dt{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#687182;font-weight:1000}.order-card dd{margin:2px 0 0;font-weight:950;color:#18202b}.secure-note-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px}.secure-note-list span{border:1px solid #e4eef8;background:#f8fbff;border-radius:12px;padding:12px;font-size:12px;font-weight:1000;color:#23445f;text-align:center}.whatsapp-btn{background:#18c56f;color:#04140b;box-shadow:0 10px 24px rgba(24,197,111,.18)}.whatsapp-btn img{width:22px;height:22px;object-fit:contain}
     .order-timeline{display:grid;gap:12px;margin:18px 0 0;padding:0;list-style:none}.order-timeline li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid #edf0f4;border-radius:14px;padding:13px;background:#fbfcfd}.order-timeline b{width:40px;height:40px;border-radius:12px;background:#e9fbfa;color:#087f78;display:grid;place-items:center}.order-timeline strong{display:block;line-height:1.15}.order-timeline small{display:block;color:#626a76;font-weight:800;margin-top:3px}
-.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-review{border:1px solid #dceafe;background:#f6faff;border-radius:14px;padding:13px;display:grid;gap:9px;color:#24384d}.checkout-review[hidden]{display:none}.checkout-review h3{margin:0;font-size:16px;line-height:1.15}.checkout-review p{margin:0;color:#536174;font-size:12.5px;font-weight:850;line-height:1.35}.checkout-review dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0}.checkout-review dt{color:#5f6b7a;font-size:12px;font-weight:1000}.checkout-review dd{margin:0;text-align:right;font-size:12.5px;font-weight:1000;color:#101318}.checkout-review a{text-decoration:underline;text-underline-offset:2px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.policy-check{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fafc;color:#3c4450;font-size:12.5px;font-weight:900;line-height:1.35}.policy-check input{width:18px;height:18px;margin:0;accent-color:var(--red)}.policy-check a{color:#111;text-decoration:underline;text-underline-offset:2px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.cart-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:40}.cart-drawer{position:fixed;top:0;right:0;width:min(460px,100vw);height:100vh;background:#fff;z-index:41;box-shadow:-20px 0 60px rgba(0,0,0,.18);border-left:1px solid var(--line);transform:translateX(105%);visibility:hidden;pointer-events:none;transition:.25s transform,.25s visibility;padding:24px;display:flex;flex-direction:column;gap:18px;overflow:auto}.cart-drawer.open{transform:translateX(0);visibility:visible;pointer-events:auto}.drawer-head{display:flex;justify-content:space-between;align-items:start}.drawer-head small{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-weight:1000}.drawer-head h2{font-size:34px;margin:0}.close-drawer{border:0;background:#f0f1f4;border-radius:50%;width:38px;height:38px;font-size:28px;cursor:pointer}.drawer-items{display:grid;gap:12px;min-height:46px}.drawer-item{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:start;border:1px solid var(--line);border-radius:14px;padding:12px}.drawer-item img{width:76px;height:76px;object-fit:contain;background:#f6f7fa;border-radius:10px}.drawer-item h3{font-size:14px;line-height:1.2;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item small{display:block;color:#626a76;font-weight:800;margin:4px 0;line-height:1.25}.drawer-total{border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;font-size:22px;font-weight:1000}.coupon-box,.shipping-box{border:1px solid var(--line);border-radius:14px;padding:14px}.coupon-box label,.shipping-box label{display:block;margin:0 0 10px;font-weight:1000}.coupon-box input,.shipping-box input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px}.coupon-box small{display:block;color:#687182;font-size:12px;font-weight:900;line-height:1.35}.shipping-box summary{font-weight:1000;cursor:pointer}.shipping-box label{margin:12px 0}.delivery-choice{display:grid;gap:8px;margin-top:12px}.delivery-choice:empty{display:none}.shipping-quotes{display:grid;gap:8px;margin-top:10px}.shipping-option{border:1px solid var(--line);border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;cursor:pointer}.shipping-option.is-selected{border-color:#111;background:#f8fafc}.shipping-option.is-muted{background:#f7f8fb;color:#687182}.ship-main{display:flex;align-items:flex-start;gap:9px;min-width:0}.ship-main input{width:auto;margin-top:3px;flex:0 0 auto}.ship-copy{min-width:0}.ship-copy strong{display:block;font-size:14px;line-height:1.22;word-break:normal}.ship-copy small{display:block;margin-top:3px;color:#687182;font-size:12px;font-weight:900}.ship-price{white-space:nowrap;font-size:14px}.checkout-review{border:1px solid #dceafe;background:#f6faff;border-radius:14px;padding:13px;display:grid;gap:9px;color:#24384d}.checkout-review[hidden]{display:none}.checkout-review h3{margin:0;font-size:16px;line-height:1.15}.checkout-review p{margin:0;color:#536174;font-size:12.5px;font-weight:850;line-height:1.35}.checkout-review dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0}.checkout-review dt{color:#5f6b7a;font-size:12px;font-weight:1000}.checkout-review dd{margin:0;text-align:right;font-size:12.5px;font-weight:1000;color:#101318}.checkout-review a{text-decoration:underline;text-underline-offset:2px}.checkout-actions{display:grid;gap:10px}.checkout-pay{border:0;color:#111;box-shadow:0 10px 24px rgba(0,0,0,.11);gap:10px}.checkout-pay img{height:26px;max-width:92px;object-fit:contain}.checkout-mercado{background:#fff159;color:#1d2730}.checkout-abacate{background:#18f28b;color:#06130d}.drawer-note{font-size:13px;color:#666;font-weight:800}.policy-check{display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fafc;color:#3c4450;font-size:12.5px;font-weight:900;line-height:1.35}.policy-check[hidden]{display:none}.policy-check input{width:18px;height:18px;margin:0;accent-color:var(--red)}.policy-check a{color:#111;text-decoration:underline;text-underline-offset:2px}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;border-radius:999px;padding:12px 22px;font-weight:900;z-index:60;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.checkout-upsell{position:fixed;z-index:42;top:28px;left:38px;width:min(660px,calc(100vw - 560px));max-height:calc(100vh - 56px);overflow:auto;border:1px solid rgba(216,225,238,.95);border-radius:24px;background:rgba(255,255,255,.98);box-shadow:0 28px 70px rgba(5,20,45,.24);padding:22px;display:grid;gap:16px}.checkout-upsell[hidden]{display:none}.upsell-head{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:12px;align-items:start}.upsell-kicker{margin:0 0 6px;color:#0b7bdc;font-size:11px;font-weight:1000;text-transform:uppercase;letter-spacing:.12em}.upsell-head h3{margin:0;font-size:25px;line-height:1.08;color:#071529}.upsell-head p{margin:8px 0 0;color:#536174;font-weight:850;line-height:1.36}.upsell-close{width:38px;height:38px;border:0;border-radius:999px;background:#f0f3f8;color:#111;font-size:28px;line-height:1;cursor:pointer}.upsell-offer{border:1px solid #cfe4ff;background:linear-gradient(180deg,#f7fbff,#eef7ff);border-radius:16px;padding:13px 14px;display:grid;gap:7px;color:#12365d}.upsell-save{display:inline-flex;align-items:center;justify-content:center;justify-self:start;min-height:28px;border-radius:999px;background:#0b7bdc;color:#fff;font-size:12px;font-weight:1000;padding:0 12px;box-shadow:0 8px 16px rgba(11,123,220,.22)}.upsell-save-next{background:#111;color:#fff}.upsell-offer strong{font-size:15px;line-height:1.2}.upsell-offer small{font-size:12px;font-weight:850;line-height:1.35;color:#4b6078}.upsell-products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.upsell-product{border:1px solid #e0e8f2;border-radius:16px;background:#fff;padding:10px;display:grid;grid-template-rows:82px 42px 22px 34px;gap:7px;box-shadow:0 8px 20px rgba(15,36,64,.07);min-width:0}.upsell-product img{width:100%;height:82px;object-fit:contain;border-radius:12px;background:#f7f9fc}.upsell-product h4{margin:0;font-size:12px;line-height:1.18;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#101826}.upsell-price{font-size:14px;font-weight:1000;text-align:center;color:#071529}.upsell-add{min-height:34px;border:0;border-radius:999px;background:linear-gradient(180deg,#76c6ff,#1687ef);color:#fff;font-size:12px;font-weight:1000;cursor:pointer;box-shadow:0 9px 16px rgba(20,128,230,.25),inset 0 1px 0 rgba(255,255,255,.35)}.upsell-actions{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.upsell-continue{min-height:44px;border:0;border-radius:999px;background:#fff159;color:#1d2730;font-weight:1000;padding:0 18px;box-shadow:0 8px 18px rgba(0,0,0,.11);cursor:pointer}.upsell-muted{min-height:44px;border:1px solid #d8e1ec;border-radius:999px;background:#fff;color:#111;font-weight:1000;padding:0 16px;cursor:pointer}.upsell-empty{border:1px dashed #cbd7e6;border-radius:14px;padding:14px;color:#586678;font-weight:850;text-align:center}
 .drawer-item{grid-template-columns:76px minmax(0,1fr) 38px;align-items:start;min-height:102px}.drawer-item>div{min-width:0}.drawer-item strong{display:block;margin-top:5px;font-size:15px;line-height:1.1;white-space:nowrap}.drawer-adjustment{grid-template-columns:minmax(0,1fr) auto;min-height:0;align-items:center}.drawer-adjustment>div:first-child:empty{display:none}.drawer-adjustment strong{margin:0;text-align:right}.drawer-total{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;font-size:22px;line-height:1.05}.drawer-total strong{white-space:nowrap;text-align:right}.coupon-control{display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:8px;align-items:center}.coupon-box .coupon-control input{height:48px;padding:0 13px}.coupon-apply{height:48px;border:0;border-radius:12px;background:#111;color:#fff;font-size:25px;font-weight:1000;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 10px 20px rgba(0,0,0,.13)}.coupon-apply:hover{filter:brightness(1.08)}.checkout-review dl{grid-template-columns:minmax(0,1fr) minmax(92px,auto)}.checkout-review dd{overflow-wrap:anywhere}
 .cart-drawer>*{flex-shrink:0}.drawer-items{flex:0 0 auto;align-content:start}.drawer-item.drawer-adjustment{grid-template-columns:minmax(0,1fr) auto;min-height:74px}.drawer-item.drawer-adjustment>div:first-child{display:none}.drawer-item.drawer-adjustment h3{font-size:13px;margin:0}.drawer-item.drawer-adjustment small{margin:4px 0 0}.drawer-item.drawer-adjustment strong{align-self:center;margin:0;text-align:right}
 .drawer-item{overflow:hidden}.drawer-item>div{display:grid;gap:3px;align-content:start}.drawer-item h3,.drawer-item small,.drawer-item strong{min-width:0}.drawer-item small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.drawer-item .close-drawer{align-self:start;line-height:1}.drawer-item-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:2px;min-width:0}.drawer-item-foot strong{margin:0;text-align:right}.drawer-qty{display:inline-grid;grid-template-columns:28px 34px 28px;align-items:center;justify-self:start;border:1px solid #d8e0ea;border-radius:999px;overflow:hidden;background:#f8fafc;min-height:28px}.drawer-qty button{width:28px;height:28px;border:0;background:#fff;color:#111;font-size:17px;font-weight:1000;line-height:1;cursor:pointer}.drawer-qty button:disabled{color:#aab2bf;cursor:not-allowed}.drawer-qty span{min-width:34px;text-align:center;font-size:12px;font-weight:1000;color:#111}
@@ -1676,6 +1678,19 @@ def css() -> str:
       .spec-list{grid-template-columns:1fr}
       .variant-select{min-height:42px;font-size:12px}
       .cart-drawer{padding:18px;width:100vw}
+      .checkout-upsell{left:12px;right:12px;top:12px;bottom:12px;width:auto;max-height:none;border-radius:18px;padding:14px;gap:11px;background:#fff}
+      .upsell-head{grid-template-columns:minmax(0,1fr) 34px}
+      .upsell-head h3{font-size:19px}
+      .upsell-head p{font-size:12px;line-height:1.3}
+      .upsell-close{width:34px;height:34px;font-size:24px}
+      .upsell-products{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .upsell-product{grid-template-rows:66px 38px 17px 31px;padding:8px;border-radius:13px}
+      .upsell-product img{height:66px;border-radius:10px}
+      .upsell-product h4{font-size:10.5px}
+      .upsell-price{font-size:12.5px}
+      .upsell-add{min-height:31px;font-size:10.5px}
+      .upsell-actions{grid-template-columns:1fr;gap:8px}
+      .upsell-continue,.upsell-muted{min-height:40px;font-size:12px}
       .drawer-items{max-height:min(43vh,340px);overflow:auto;overscroll-behavior:contain;padding-right:2px}
       .drawer-item{grid-template-columns:58px minmax(0,1fr) 32px;gap:9px;min-height:88px;align-items:center}
       .drawer-item img{width:58px;height:58px}
@@ -1902,6 +1917,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         "dropshipping": public_dropshipping_payload(products, site_content),
         "addons": addons,
         "swaps": swaps,
+        "checkoutOffers": load_json("checkout-offers.json", {}),
         "featureFlags": (site_content or {}).get("featureFlags", {}),
         "homeFeaturedProducts": (site_content or {}).get("homeFeaturedProducts", {}),
     }
@@ -1916,6 +1932,8 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     let couponAttempted = false;
     try {{ localStorage.removeItem(couponKey); }} catch (error) {{}}
     let selectedShipping = null;
+    let checkoutUpsellOpen = false;
+    let checkoutUpsellPending = null;
     const IMPORT_TAX_IMPORT_DUTY_RATE = 0.60;
     const IMPORT_TAX_ICMS_RATE = 0.20;
     const IMPORT_TAX_DEFAULT_USD_BRL = 5.45;
@@ -2548,6 +2566,168 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       if (!promo) return null;
       return {{ code: promo.code, percent: promo.percent, discount: couponDiscount(), label: promo.label }};
     }}
+    function comboEligibleRows() {{
+      return cart.map((item) => ({{ item, product: productById(item.productId) }}))
+        .filter((row) => row.product && isDirectOrderProduct(row.product));
+    }}
+    function comboOfferConfig() {{
+      return DATA.checkoutOffers?.combo || {{}};
+    }}
+    function comboOfferRules() {{
+      const rules = Array.isArray(comboOfferConfig().rules) ? comboOfferConfig().rules : [];
+      return rules
+        .map((rule) => ({{
+          ...rule,
+          percent: Number(rule.percent || 0),
+          cap: Number(rule.cap || 0),
+          minItems: Number(rule.minItems || 0),
+          minSubtotal: Number(rule.minSubtotal || 0)
+        }}))
+        .filter((rule) => rule.code && rule.percent > 0)
+        .sort((a, b) => b.percent - a.percent);
+    }}
+    function comboRuleMatches(rule, itemCount, subtotal) {{
+      const itemOk = !rule.minItems || itemCount >= rule.minItems;
+      const subtotalOk = !rule.minSubtotal || subtotal >= rule.minSubtotal;
+      const hasBothCriteria = Boolean(rule.minItems && rule.minSubtotal);
+      if (String(rule.match || "").toLowerCase() === "any" && hasBothCriteria) return itemOk || subtotalOk;
+      return itemOk && subtotalOk;
+    }}
+    function comboRuleSummary(rule) {{
+      const parts = [];
+      if (rule.minItems) parts.push(`${{rule.minItems}}+ itens elegiveis`);
+      if (rule.minSubtotal) parts.push(`${{money(rule.minSubtotal)}} em produtos`);
+      return `${{rule.percent}}% OFF${{parts.length ? ` com ${{parts.join(" ou ")}}` : ""}}`;
+    }}
+    function comboRulesSummary() {{
+      const rules = comboOfferRules().slice().sort((a, b) => a.percent - b.percent);
+      return rules.length ? rules.map(comboRuleSummary).join(", ou ") : "desconto progressivo em itens elegiveis";
+    }}
+    function entryComboRule() {{
+      return comboOfferRules().slice().sort((a, b) => (a.minItems || 99) - (b.minItems || 99) || a.percent - b.percent)[0] || null;
+    }}
+    function comboOfferState() {{
+      const rows = comboEligibleRows();
+      const itemCount = rows.reduce((sum, row) => sum + Math.max(1, Number(row.item.quantity || 1)), 0);
+      const subtotal = rows.reduce((sum, row) => sum + productTotal(row.item), 0);
+      const rule = comboOfferConfig().enabled === false
+        ? null
+        : comboOfferRules().find((candidate) => comboRuleMatches(candidate, itemCount, subtotal));
+      const rawDiscount = rule ? subtotal * Number(rule.percent || 0) / 100 : 0;
+      const discount = rule ? Math.round(Math.min(rawDiscount, rule.cap) * 100) / 100 : 0;
+      return {{
+        active: discount > 0,
+        itemCount,
+        subtotal: Math.round(subtotal * 100) / 100,
+        discount,
+        code: rule?.code || "",
+        percent: rule?.percent || 0,
+        cap: rule?.cap || 0,
+        label: rule?.label || ""
+      }};
+    }}
+    function checkoutDiscountTotal() {{
+      return Math.round((couponDiscount() + comboOfferState().discount) * 100) / 100;
+    }}
+    function comboOfferPayload() {{
+      const combo = comboOfferState();
+      if (!combo.active) return null;
+      return {{
+        type: "mobilytech_combo",
+        source: "checkout_upsell",
+        code: combo.code,
+        percent: combo.percent,
+        expectedDiscount: combo.discount
+      }};
+    }}
+    function comboOfferHint(combo=comboOfferState()) {{
+      if (combo.active) {{
+        return `Seu carrinho ja liberou ${{combo.percent}}% OFF: economia de ${{money(combo.discount)}} no subtotal de Nossos produtos.`;
+      }}
+      if (combo.itemCount <= 0) return "Adicione itens de Nossos produtos para liberar descontos em combo.";
+      const entryRule = entryComboRule();
+      if (combo.itemCount === 1 && entryRule) return `Adicione mais 1 item elegivel e receba ${{entryRule.percent}}% OFF no subtotal de Nossos produtos.`;
+      const nextRule = comboOfferRules().find((rule) => !comboRuleMatches(rule, combo.itemCount, combo.subtotal));
+      return nextRule ? `Complete ${{comboRuleSummary(nextRule)}} para melhorar o combo.` : "Adicione mais itens para melhorar seu combo.";
+    }}
+    function checkoutUpsellProducts(limit=Number(comboOfferConfig().maxSuggestions || 25)) {{
+      const inCart = new Set(cart.map((item) => String(item.productId)));
+      return DATA.products
+        .filter((product) => product && product.active !== false && product.checkoutEnabled !== false)
+        .filter((product) => isDirectOrderProduct(product) && !inCart.has(String(product.id)))
+        .filter((product) => Number(product.price || 0) > 0 && (product.image || product.cutout))
+        .sort((a, b) => {{
+          const aPrice = Number(a.price || 0);
+          const bPrice = Number(b.price || 0);
+          const aPocket = aPrice <= 180 ? 0 : 1;
+          const bPocket = bPrice <= 180 ? 0 : 1;
+          return aPocket - bPocket || aPrice - bPrice || String(a.title || "").localeCompare(String(b.title || ""));
+        }})
+        .slice(0, limit);
+    }}
+    function renderCheckoutUpsell() {{
+      const panel = $("#checkoutUpsell");
+      if (!panel || !checkoutUpsellOpen) return;
+      const config = comboOfferConfig();
+      const combo = comboOfferState();
+      const entryRule = entryComboRule();
+      const saveBadge = combo.active
+        ? `<span class="upsell-save">${{combo.percent}}% OFF liberado - ${{money(combo.discount)}} de economia</span>`
+        : `<span class="upsell-save upsell-save-next">${{entryRule ? `${{entryRule.percent}}% OFF no combo` : "Combo disponivel"}}</span>`;
+      const products = checkoutUpsellProducts();
+      const productCards = products.length ? products.map((product) => {{
+        const action = hasProductVariants(product)
+          ? `data-detail="${{product.id}}"`
+          : `data-add="${{product.id}}"`;
+        return `<article class="upsell-product">
+          <img src="${{asset(product.cutout || product.image)}}" alt="${{escapeHtml(product.title || "Produto")}}">
+          <h4>${{escapeHtml(productBaseTitle(product))}}</h4>
+          <div class="upsell-price">${{money(product.price)}}</div>
+          <button class="upsell-add" type="button" ${{action}}>Adicionar</button>
+        </article>`;
+      }}).join("") : '<div class="upsell-empty">Nao encontrei sugestoes extras agora.</div>';
+      panel.hidden = false;
+      panel.innerHTML = `<div class="upsell-head">
+        <div>
+          <p class="upsell-kicker">${{escapeHtml(config.kicker || "Oferta antes do pagamento")}}</p>
+          <h3>${{escapeHtml(config.title || "Quer aproveitar um combo?")}}</h3>
+          <p>${{escapeHtml(config.intro || "Escolhi itens uteis para complementar o pedido antes do pagamento.")}}</p>
+        </div>
+        <button class="upsell-close" type="button" data-upsell-close aria-label="Fechar">&times;</button>
+      </div>
+      <div class="upsell-offer">
+        ${{saveBadge}}
+        <strong>${{escapeHtml(comboOfferHint(combo))}}</strong>
+        <small>O desconto aparece no resumo do carrinho antes do pagamento. Regra limitada: ${{escapeHtml(comboRulesSummary())}}. Frete continua separado.</small>
+      </div>
+      <div class="upsell-products">${{productCards}}</div>
+      <div class="upsell-actions">
+        <button class="upsell-muted" type="button" data-upsell-close>Voltar ao carrinho</button>
+        <button class="upsell-continue" type="button" data-upsell-continue>Continuar para Mercado Pago</button>
+      </div>`;
+    }}
+    function openCheckoutUpsell(endpoint, button) {{
+      checkoutUpsellOpen = true;
+      checkoutUpsellPending = {{ endpoint, button }};
+      $("#toast")?.classList.remove("show");
+      openCart();
+      renderCheckoutUpsell();
+    }}
+    function closeCheckoutUpsell() {{
+      checkoutUpsellOpen = false;
+      checkoutUpsellPending = null;
+      const panel = $("#checkoutUpsell");
+      if (panel) {{
+        panel.hidden = true;
+        panel.innerHTML = "";
+      }}
+    }}
+    function shouldShowCheckoutUpsell(endpoint) {{
+      if (!String(endpoint || "").includes("create-preference")) return false;
+      if (comboOfferConfig().enabled === false) return false;
+      if (!comboEligibleRows().length) return false;
+      return checkoutUpsellProducts(1).length > 0;
+    }}
     function policyPayload() {{
       const checked = $("#checkoutPoliciesAccepted")?.checked === true;
       const supplierDisclosure = $("#supplierDisclosureAccepted")?.checked === true;
@@ -2562,7 +2742,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     function checkoutSubtotal() {{ return cart.reduce((sum, item) => sum + productTotal(item), 0); }}
     function checkoutTotal() {{
       const taxes = importTaxEstimate();
-      return Math.max(0, checkoutSubtotal() - couponDiscount()) + (selectedShipping?.price || 0) + (taxes.pending ? 0 : taxes.total);
+      return Math.max(0, checkoutSubtotal() - checkoutDiscountTotal()) + (selectedShipping?.price || 0) + (taxes.pending ? 0 : taxes.total);
     }}
     function cartOriginSummary() {{
       const products = cartProducts();
@@ -2586,7 +2766,9 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       }}
       const state = cartFulfillmentState();
       const subtotal = checkoutSubtotal();
-      const discount = couponDiscount();
+      const coupon = couponDiscount();
+      const combo = comboOfferState();
+      const discount = checkoutDiscountTotal();
       const freight = selectedShipping?.price || 0;
       const taxes = importTaxEstimate();
       const total = checkoutTotal();
@@ -2604,7 +2786,9 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         <p>MobilyTech BR - CNPJ 66.834.883/0001-43. Revise valores, frete e prazo antes de pagar.</p>
         <dl>
           <dt>Produtos</dt><dd>${{money(subtotal)}}</dd>
-          ${{discount > 0 ? `<dt>Desconto</dt><dd>-${{money(discount)}}</dd>` : ""}}
+          ${{coupon > 0 ? `<dt>Cupom</dt><dd>-${{money(coupon)}}</dd>` : ""}}
+          ${{combo.discount > 0 ? `<dt>Combo</dt><dd>-${{money(combo.discount)}}</dd>` : ""}}
+          ${{discount > 0 && !(coupon > 0 || combo.discount > 0) ? `<dt>Desconto</dt><dd>-${{money(discount)}}</dd>` : ""}}
           <dt>Frete</dt><dd>${{freightLabel}}</dd>
           ${{taxes.applies ? `<dt>Tributos import.</dt><dd>${{taxes.pending ? "A calcular" : money(taxes.total)}}</dd>` : ""}}
           <dt>Total</dt><dd>${{money(total)}}</dd>
@@ -2640,6 +2824,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
     function showToast(message) {{
       const toast = $("#toast");
       if (!toast) return;
+      if (checkoutUpsellOpen && /adicionado/i.test(message || "")) return;
       toast.textContent = message;
       toast.classList.add("show");
       setTimeout(() => toast.classList.remove("show"), 2400);
@@ -3209,7 +3394,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     function renderCart() {{
       const count = cart.reduce((sum, item) => sum + Math.max(1, Number(item.quantity || 1)), 0);
       $("#cartCount") && ($("#cartCount").textContent = String(count));
-      const discount = couponDiscount();
+      const coupon = couponDiscount();
+      const combo = comboOfferState();
       const shippingPrice = selectedShipping?.price || 0;
       const importTaxes = importTaxEstimate();
       $("#cartTotal") && ($("#cartTotal").textContent = money(checkoutTotal()));
@@ -3219,6 +3405,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         items.innerHTML = '<p class="empty">Seu carrinho ainda esta vazio.</p>';
         const supplierDisclosure = $("#supplierDisclosureCheck");
         if (supplierDisclosure) supplierDisclosure.hidden = true;
+        closeCheckoutUpsell();
         renderDeliveryChoice();
         renderCheckoutReview();
         syncCouponFeedback();
@@ -3246,8 +3433,11 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
           <button class="close-drawer" type="button" data-remove="${{index}}" aria-label="Remover">&times;</button>
         </article>`;
       }}).join("");
-      const discountRow = discount > 0
-        ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Cupom ${{activePromotion().code}}</h3><small>${{activePromotion().label}}</small></div><strong>-${{money(discount)}}</strong></article>`
+      const couponRow = coupon > 0
+        ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Cupom ${{activePromotion().code}}</h3><small>${{activePromotion().label}}</small></div><strong>-${{money(coupon)}}</strong></article>`
+        : "";
+      const comboRow = combo.discount > 0
+        ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Combo MobilyTech</h3><small>${{combo.label}}</small></div><strong>-${{money(combo.discount)}}</strong></article>`
         : "";
       const shippingRow = shippingPrice > 0
         ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Frete selecionado</h3><small>${{selectedShipping.carrier || selectedShipping.company || "Entrega"}} - ${{selectedShipping.serviceName || selectedShipping.name || "servico"}}</small></div><strong>${{money(shippingPrice)}}</strong></article>`
@@ -3255,7 +3445,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const taxRow = importTaxes.applies
         ? `<article class="drawer-item drawer-adjustment"><div></div><div><h3>Tributos de importacao</h3><small>${{importTaxes.pending ? "Estimativa aparece apos calcular o frete." : "Estimativa conservadora de II + ICMS."}}</small></div><strong>${{importTaxes.pending ? "A calcular" : money(importTaxes.total)}}</strong></article>`
         : "";
-      items.innerHTML = cartRows + discountRow + shippingRow + taxRow;
+      items.innerHTML = cartRows + couponRow + comboRow + shippingRow + taxRow;
       renderDeliveryChoice();
       const supplierDisclosure = $("#supplierDisclosureCheck");
       if (supplierDisclosure) {{
@@ -3263,6 +3453,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       }}
       renderCheckoutReview();
       syncCouponFeedback();
+      if (checkoutUpsellOpen) renderCheckoutUpsell();
     }}
     function changeCartQuantity(index, delta) {{
       const item = cart[index];
@@ -3306,6 +3497,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       $("#cartDrawer")?.setAttribute("aria-hidden", "false");
     }}
     function closeCart() {{
+      closeCheckoutUpsell();
       $("#cartBackdrop")?.setAttribute("hidden", "");
       $("#cartDrawer")?.classList.remove("open");
       $("#cartDrawer")?.setAttribute("aria-hidden", "true");
@@ -3405,7 +3597,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         box.innerHTML = "<p>Nao conseguimos calcular o frete agora. Confira o CEP ou tente novamente em instantes.</p>";
       }}
     }}
-    async function startCheckout(endpoint, button) {{
+    async function startCheckout(endpoint, button, options={{}}) {{
       if (!cart.length) return showToast("Seu carrinho esta vazio.");
       const state = cartFulfillmentState();
       if (state.supplier && (!selectedShipping || !selectedShipping.serviceId)) {{
@@ -3418,6 +3610,10 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       if (state.supplier && !acceptedPolicies.supplierDisclosure) {{
         return showToast("Confirme o aviso de prazo e frete antes de finalizar.");
       }}
+      if (!options.skipUpsell && shouldShowCheckoutUpsell(endpoint)) {{
+        openCheckoutUpsell(endpoint, button);
+        return;
+      }}
       const original = button.innerHTML;
       button.innerHTML = "Abrindo checkout...";
       button.disabled = true;
@@ -3425,7 +3621,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         const response = await fetch(endpoint, {{
           method: "POST",
           headers: {{ "Content-Type": "application/json" }},
-          body: JSON.stringify({{ cartItems: cart, shipping: selectedShipping, coupon: couponPayload(), acceptedPolicies }})
+          body: JSON.stringify({{ cartItems: cart, shipping: selectedShipping, coupon: couponPayload(), offer: comboOfferPayload(), acceptedPolicies }})
         }});
         const data = await response.json();
         if (!response.ok || !data.checkout_url) throw new Error(data.error || "Nao foi possivel abrir o checkout agora.");
@@ -3506,6 +3702,8 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const addVariant = event.target.closest("[data-add-variant]");
       const remove = event.target.closest("[data-remove]");
       const qty = event.target.closest("[data-qty]");
+      const upsellClose = event.target.closest("[data-upsell-close]");
+      const upsellContinue = event.target.closest("[data-upsell-continue]");
       const focusOrder = event.target.closest("[data-focus-order]");
       const supportLogin = event.target.closest("[data-support-login]");
       if (focusOrder) {{
@@ -3517,6 +3715,13 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       }}
       if (supportLogin) {{
         window.open("https://wa.me/5511954801967?text=Ola%2C%20quero%20ajuda%20com%20minha%20conta%20MobilyTech%20BR.", "_blank");
+        return;
+      }}
+      if (upsellClose) {{ closeCheckoutUpsell(); return; }}
+      if (upsellContinue) {{
+        const pending = checkoutUpsellPending;
+        closeCheckoutUpsell();
+        if (pending?.endpoint && pending?.button) startCheckout(pending.endpoint, pending.button, {{ skipUpsell:true }});
         return;
       }}
       if (add) addBaseProduct(add.dataset.add);

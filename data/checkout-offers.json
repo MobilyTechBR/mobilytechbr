@@ -1,0 +1,30 @@
+{
+  "combo": {
+    "enabled": true,
+    "source": "checkout_upsell",
+    "kicker": "Oferta antes do pagamento",
+    "title": "Quer aproveitar um combo?",
+    "intro": "Escolhi itens leves e uteis para complementar o pedido; o frete continua separado e sempre revisado antes da sua confirmacao.",
+    "maxSuggestions": 25,
+    "rules": [
+      {
+        "code": "COMBO5",
+        "label": "Combo MobilyTech: 5% OFF em Nossos produtos",
+        "percent": 5,
+        "cap": 35,
+        "minItems": 3,
+        "minSubtotal": 150,
+        "match": "any"
+      },
+      {
+        "code": "COMBO3",
+        "label": "Combo MobilyTech: 3% OFF em Nossos produtos",
+        "percent": 3,
+        "cap": 20,
+        "minItems": 2,
+        "minSubtotal": 0,
+        "match": "all"
+      }
+    ]
+  }
+}

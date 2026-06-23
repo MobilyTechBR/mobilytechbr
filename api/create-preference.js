@@ -452,11 +452,13 @@ module.exports = async function createPreference(request, response) {
       const swapsTotal = item.swaps.reduce((swapSum, swap) => swapSum + swap.price, 0);
       return sum + ((item.unitPrice + addonsTotal + swapsTotal) * item.quantity);
     }, 0);
-    const promotion = discountForCheckoutItems(checkoutItems, payload.coupon);
+    const promotion = discountForCheckoutItems(checkoutItems, payload.coupon, {
+      autoCombo: payload.offer?.type === "mobilytech_combo" || payload.offer?.source === "checkout_upsell"
+    });
     const importTaxes = estimateImportTaxes(checkoutItems, normalizedShipping);
     const baseCheckoutTotal = Math.max(0, productsSubtotal - promotion.discount) + (normalizedShipping ? normalizedShipping.price : 0) + Number(importTaxes.total || 0);
     const mercadoFeeAdjustment = mercadoPagoGrossUp(baseCheckoutTotal).fee;
-    let remainingCouponDiscount = promotion.discount;
+    let remainingPromotionDiscount = promotion.discount;
     const preference = {
       items: [
         ...checkoutItems.flatMap((item) => {
@@ -466,11 +468,15 @@ module.exports = async function createPreference(request, response) {
           const adjustedUnitPrice = item.unitPrice + swapsTotal;
           let productUnitPrice = adjustedUnitPrice;
           let discountDescription = "";
-          if (remainingCouponDiscount > 0 && productCategory(item.product) === "pc") {
-            const appliedDiscount = Math.min(Math.max(0, productUnitPrice - 1), remainingCouponDiscount);
-            productUnitPrice = toMoney(productUnitPrice - appliedDiscount);
-            remainingCouponDiscount = toMoney(remainingCouponDiscount - appliedDiscount);
-            discountDescription = appliedDiscount > 0 ? `Cupom ${promotion.code}: -R$ ${appliedDiscount.toFixed(2)}` : "";
+          if (remainingPromotionDiscount > 0) {
+            const maxLineDiscount = Math.max(0, (productUnitPrice * item.quantity) - item.quantity);
+            const appliedLineDiscount = toMoney(Math.min(maxLineDiscount, remainingPromotionDiscount));
+            if (appliedLineDiscount > 0) {
+              productUnitPrice = toMoney(productUnitPrice - (appliedLineDiscount / item.quantity));
+              const effectiveDiscount = toMoney((adjustedUnitPrice - productUnitPrice) * item.quantity);
+              remainingPromotionDiscount = toMoney(remainingPromotionDiscount - effectiveDiscount);
+              discountDescription = `${promotion.label || "Desconto MobilyTech"}: -R$ ${effectiveDiscount.toFixed(2)}`;
+            }
           }
           return [
             {
