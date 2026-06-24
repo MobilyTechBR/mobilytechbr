@@ -262,6 +262,14 @@
       .editor-preview-card small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .editor-preview-card strong { font-size: 13px; }
       .editor-preview-card small { color: #647184; font-weight: 900; }
+      .editor-preview-card img {
+        width: 100%;
+        height: 82px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #fff;
+        border: 1px solid #e7edf5;
+      }
       .master-tools {
         display: grid;
         grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
@@ -374,6 +382,76 @@
       .maintenance-preview img { width: 86px; height: 86px; object-fit: contain; margin: 0 auto 12px; }
       .maintenance-preview h3 { margin: 0; font-size: 28px; }
       .maintenance-preview p { max-width: 520px; margin: 8px auto 0; color: #566272; font-weight: 850; }
+      .maintenance-state-card {
+        grid-column: 1 / -1;
+        border: 1px solid #dfe7f1;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #ffffff, #f8fbff);
+        padding: 16px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: center;
+      }
+      .maintenance-state-card.is-offline {
+        border-color: #ffc9c9;
+        background: linear-gradient(180deg, #fff8f8, #fff0f0);
+      }
+      .maintenance-state-card strong {
+        display: block;
+        font-size: clamp(19px, 2.4vw, 28px);
+        line-height: 1.05;
+      }
+      .maintenance-state-card small {
+        display: block;
+        margin-top: 5px;
+        color: #647184;
+        font-weight: 900;
+        line-height: 1.35;
+      }
+      .maintenance-state-card.is-offline strong { color: #b11212; }
+      .maintenance-global-alert {
+        margin: 0 0 18px;
+        border: 1px solid #ffb5b5;
+        background: #fff1f1;
+        color: #9b1111;
+        border-radius: 18px;
+        padding: 16px 18px;
+        font-weight: 1000;
+        box-shadow: 0 14px 36px rgba(177, 18, 18, 0.12);
+      }
+      .maintenance-global-alert small {
+        display: block;
+        margin-top: 4px;
+        color: #6f1b1b;
+        font-size: 12px;
+        line-height: 1.35;
+      }
+      .btn-maintenance-on { background: #111; color: #fff; }
+      .btn-maintenance-off { background: #10b981; color: #03140c; }
+      .confirm-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 80;
+        background: rgba(6, 15, 26, .52);
+        display: grid;
+        place-items: center;
+        padding: 20px;
+      }
+      .confirm-card {
+        width: min(480px, 100%);
+        border-radius: 22px;
+        border: 1px solid #e5eaf2;
+        background: #fff;
+        box-shadow: 0 30px 90px rgba(0,0,0,.24);
+        padding: 24px;
+        display: grid;
+        gap: 14px;
+        text-align: center;
+      }
+      .confirm-card h3 { margin: 0; font-size: 28px; line-height: 1.04; }
+      .confirm-card p { margin: 0; color: #59616d; font-weight: 850; line-height: 1.45; }
+      .confirm-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
       .builder-layout {
         display: grid;
         grid-template-columns: minmax(340px, .85fr) minmax(520px, 1.15fr);
@@ -558,6 +636,106 @@
       }
       .catalog-edit-form .wide { grid-column: span 2; }
       .catalog-edit-form .full { grid-column: 1 / -1; }
+      .catalog-media-panel {
+        grid-column: 1 / -1;
+        border: 1px solid #dbe6f2;
+        border-radius: 16px;
+        background: #fff;
+        padding: 12px;
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        gap: 14px;
+        align-items: start;
+      }
+      .catalog-media-preview {
+        min-height: 170px;
+        border: 1px dashed #cbd8e6;
+        border-radius: 14px;
+        background: #f8fafc;
+        display: grid;
+        place-items: center;
+        padding: 10px;
+        text-align: center;
+        color: #647184;
+        font-size: 12px;
+        font-weight: 1000;
+      }
+      .catalog-media-preview img {
+        width: 100%;
+        max-height: 190px;
+        object-fit: contain;
+        display: block;
+      }
+      .catalog-media-controls {
+        display: grid;
+        gap: 10px;
+      }
+      .catalog-upload-card {
+        border: 1px solid #e7edf5;
+        border-radius: 14px;
+        background: #fbfdff;
+        padding: 11px;
+        display: grid;
+        gap: 9px;
+      }
+      .catalog-upload-card.is-dragover {
+        border-color: #148bff;
+        background: #eef7ff;
+        box-shadow: 0 10px 24px rgba(20, 139, 255, 0.12);
+      }
+      .catalog-upload-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px;
+        align-items: center;
+      }
+      .catalog-upload-row input[type="file"] {
+        min-width: 0;
+        padding: 9px;
+        background: #fff;
+      }
+      .catalog-media-toggle {
+        display: flex !important;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        border: 1px solid #d8e7fb;
+        border-radius: 14px;
+        background: #f7fbff;
+        padding: 12px;
+      }
+      .catalog-media-toggle span { display: grid; gap: 4px; }
+      .catalog-media-toggle small {
+        color: #647184;
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0;
+        line-height: 1.35;
+        text-transform: none;
+      }
+      .catalog-media-toggle input { width: 22px; height: 22px; accent-color: var(--red); }
+      .catalog-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+        gap: 8px;
+      }
+      .catalog-gallery-item {
+        border: 1px solid #e6edf6;
+        border-radius: 12px;
+        background: #fff;
+        padding: 8px;
+        display: grid;
+        gap: 7px;
+      }
+      .catalog-gallery-item img {
+        width: 100%;
+        height: 78px;
+        object-fit: contain;
+        border-radius: 10px;
+        background: #f8fafc;
+      }
+      .catalog-gallery-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+      .catalog-gallery-actions .btn { min-height: 34px; padding: 0 10px; font-size: 12px; }
       .save-row {
         display: flex;
         flex-wrap: wrap;
@@ -1276,6 +1454,8 @@
         .visual-preview, .builder-canvas { position: relative; top: auto; }
         .sale-grid { grid-template-columns: 1fr; }
         .content-grid { grid-template-columns: 1fr; }
+        .catalog-media-panel,
+        .maintenance-state-card { grid-template-columns: 1fr; }
       }
       @media (max-width: 620px) {
         .desktop-copy { display: none; }
@@ -1328,6 +1508,10 @@
         .collapsible-editor summary { align-items: flex-start; flex-direction: column; padding: 16px; }
         .visual-editor-card .row, .catalog-edit-form { grid-template-columns: 1fr; }
         .catalog-edit-form .wide { grid-column: 1 / -1; }
+        .catalog-upload-row { grid-template-columns: 1fr; }
+        .catalog-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .maintenance-state-card .btn,
+        .confirm-actions .btn { width: 100%; }
         .visual-preview { min-height: 260px; }
         .visual-preview img { min-height: 260px; }
         .visual-preview-copy { inset: 18px 18px auto 18px; width: auto; }
@@ -1400,6 +1584,11 @@
           <button class="btn btn-ghost" type="button" id="openMaintenanceControls">Desligar site</button>
         </nav>
       </header>
+
+      <div class="maintenance-global-alert" id="maintenanceGlobalAlert" hidden>
+        O site esta desligado atualmente.
+        <small>Clientes veem a tela de manutencao ate voce reativar o site no painel.</small>
+      </div>
 
       <nav class="admin-nav" aria-label="Areas do painel">
         <button type="button" data-admin-tab="overview" aria-selected="true">Visao geral</button>
@@ -1642,6 +1831,16 @@
               <div class="site-content-form" id="maintenanceEditor"></div>
             </div>
             <aside class="maintenance-preview" id="maintenancePreview" aria-label="Preview da tela de manutencao"></aside>
+          </div>
+          <div class="confirm-backdrop" id="maintenanceConfirm" hidden>
+            <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="maintenanceConfirmTitle">
+              <h3 id="maintenanceConfirmTitle">Voce tem certeza?</h3>
+              <p id="maintenanceConfirmText">Essa acao altera o status publico do site.</p>
+              <div class="confirm-actions">
+                <button class="btn btn-ghost" type="button" id="cancelMaintenanceToggle">Cancelar</button>
+                <button class="btn btn-red" type="button" id="confirmMaintenanceToggle">Confirmar</button>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1935,6 +2134,7 @@
       let builderActivePageIndex = 0;
       let builderSelectedBlockId = "";
       let siteContentState = null;
+      let pendingMaintenanceMode = null;
       let lastSalePayload = null;
       const MEDIA_ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif,image/heic-sequence,image/heif-sequence";
       const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
@@ -2232,6 +2432,22 @@
         return `<img src="${escapeHtml(src)}" alt="">`;
       }
 
+      function catalogDisplayImage(product = {}) {
+        if (product.useCutout === false) return product.image || product.cutout || "";
+        return product.cutout || product.image || "";
+      }
+
+      function catalogGalleryItems(product = {}) {
+        return Array.isArray(product.gallery) ? product.gallery : [];
+      }
+
+      function catalogImagePreview(value, alt = "Preview do produto") {
+        const src = adminPreviewSrc(value);
+        if (!src) return `<span>Sem imagem</span>`;
+        if (isHeicPath(value)) return `<span>HEIC/HEIF salvo; preview pode depender do navegador.</span>`;
+        return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}">`;
+      }
+
       function imageGuidance(path) {
         return IMAGE_GUIDANCE[path] || {
           title: "Imagem do site",
@@ -2410,6 +2626,81 @@
           setMediaStatus(path, `${result.message || "Imagem enviada."}${shortSha}`, "ok");
         } catch (error) {
           setMediaStatus(path, error.message || "Erro ao enviar imagem.", "error");
+        }
+      }
+
+      function setProductUploadFile(input, file) {
+        if (!input || !file) return false;
+        const transfer = new DataTransfer();
+        transfer.items.add(file);
+        input.files = transfer.files;
+        input.dispatchEvent(new Event("change", { bubbles: true }));
+        return true;
+      }
+
+      function findProductUploadInput(productId, field) {
+        return Array.from(document.querySelectorAll("[data-product-upload-id]")).find((node) => (
+          String(node.dataset.productUploadId) === String(productId)
+          && String(node.dataset.productUploadField) === String(field)
+        ));
+      }
+
+      function findGalleryUploadInput(productId, index, field) {
+        return Array.from(document.querySelectorAll("[data-gallery-upload-id]")).find((node) => (
+          String(node.dataset.galleryUploadId) === String(productId)
+          && Number(node.dataset.galleryUploadIndex) === Number(index)
+          && String(node.dataset.galleryUploadField) === String(field)
+        ));
+      }
+
+      async function uploadCatalogProductImage(productId, targetField, galleryIndex = null) {
+        const input = galleryIndex === null
+          ? findProductUploadInput(productId, targetField)
+          : findGalleryUploadInput(productId, Number(galleryIndex), targetField);
+        const file = input?.files?.[0];
+        if (!file) {
+          setInlineStatus("productsCatalogStatus", "Escolha uma imagem primeiro.", "error");
+          return;
+        }
+        if (file.size > MEDIA_MAX_BYTES) {
+          setInlineStatus("productsCatalogStatus", "Imagem muito grande. Use ate 8 MB.", "error");
+          return;
+        }
+        try {
+          const token = $("#adminWriteToken")?.value || "";
+          setInlineStatus("productsCatalogStatus", "Enviando imagem do produto...", "info");
+          const dataBase64 = await readFileAsBase64(file);
+          const response = await fetch("/api/upload-media", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Token": token
+            },
+            body: JSON.stringify({
+              filename: file.name,
+              mimeType: file.type,
+              dataBase64
+            })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false) {
+            setInlineStatus("productsCatalogStatus", result.error || "Nao foi possivel enviar a imagem.", "error");
+            return;
+          }
+          const publicPath = result.publicPath || (result.path ? `./${result.path}` : "");
+          if (!publicPath) {
+            setInlineStatus("productsCatalogStatus", "Imagem enviada, mas sem caminho publico retornado.", "error");
+            return;
+          }
+          if (galleryIndex === null) {
+            updateProductField(productId, targetField, publicPath);
+          } else {
+            updateProductGalleryField(productId, Number(galleryIndex), targetField, publicPath);
+          }
+          const shortSha = result.commitSha ? ` Commit ${String(result.commitSha).slice(0, 7)}.` : "";
+          setInlineStatus("productsCatalogStatus", `${result.message || "Imagem enviada."}${shortSha} Salve products.json para publicar a referencia no catalogo.`, "ok");
+        } catch (error) {
+          setInlineStatus("productsCatalogStatus", error.message || "Erro ao enviar imagem do produto.", "error");
         }
       }
 
@@ -2726,16 +3017,81 @@
         `;
       }
 
+      function maintenanceActive() {
+        ensureMasterContentDefaults();
+        return siteContentState.featureFlags?.site?.maintenanceMode === true;
+      }
+
+      function renderGlobalMaintenanceStatus() {
+        const active = maintenanceActive();
+        const alert = $("#maintenanceGlobalAlert");
+        const shortcut = $("#openMaintenanceControls");
+        if (alert) alert.hidden = !active;
+        if (shortcut) {
+          shortcut.textContent = active ? "Reativar site" : "Desligar site";
+          shortcut.className = `btn ${active ? "btn-maintenance-on" : "btn-ghost"}`;
+        }
+      }
+
+      function maintenanceStateControlHtml() {
+        const active = maintenanceActive();
+        return `
+          <div class="maintenance-state-card${active ? " is-offline" : ""}">
+            <div>
+              <strong>${active ? "O site esta desligado atualmente" : "O site esta online atualmente"}</strong>
+              <small>${active ? "Os clientes veem apenas a tela de manutencao com WhatsApp/e-mail. Reative quando quiser voltar a vender." : "As paginas publicas e o checkout seguem visiveis para os clientes."}</small>
+            </div>
+            <button class="btn ${active ? "btn-maintenance-on" : "btn-maintenance-off"}" type="button" id="toggleMaintenanceMode">
+              ${active ? "Reativar site" : "Desligar site"}
+            </button>
+          </div>
+        `;
+      }
+
+      function openMaintenanceConfirm(nextMode) {
+        pendingMaintenanceMode = Boolean(nextMode);
+        const modal = $("#maintenanceConfirm");
+        const title = $("#maintenanceConfirmTitle");
+        const text = $("#maintenanceConfirmText");
+        const confirm = $("#confirmMaintenanceToggle");
+        if (title) title.textContent = pendingMaintenanceMode ? "Desligar o site agora?" : "Reativar o site agora?";
+        if (text) {
+          text.textContent = pendingMaintenanceMode
+            ? "Ao confirmar, os clientes passam a ver somente a tela de manutencao com os canais de contato."
+            : "Ao confirmar, o site volta a exibir as paginas publicas, produtos e checkout.";
+        }
+        if (confirm) {
+          confirm.textContent = pendingMaintenanceMode ? "Sim, desligar site" : "Sim, reativar site";
+          confirm.className = `btn ${pendingMaintenanceMode ? "btn-red" : "btn-maintenance-on"}`;
+        }
+        if (modal) modal.hidden = false;
+      }
+
+      function closeMaintenanceConfirm() {
+        pendingMaintenanceMode = null;
+        const modal = $("#maintenanceConfirm");
+        if (modal) modal.hidden = true;
+      }
+
+      async function applyPendingMaintenanceMode() {
+        if (pendingMaintenanceMode === null) return;
+        ensureMasterContentDefaults();
+        siteContentState.featureFlags.site.maintenanceMode = Boolean(pendingMaintenanceMode);
+        closeMaintenanceConfirm();
+        renderMaintenanceEditor();
+        renderMaintenancePreview();
+        renderGlobalMaintenanceStatus();
+        await saveCatalogJson("site-content", siteContentState, "maintenanceStatus");
+      }
+
       function renderMaintenanceEditor() {
         const editor = $("#maintenanceEditor");
         if (!editor) return;
         ensureMasterContentDefaults();
         editor.innerHTML = `
           <div class="content-fieldset">
-            <h3>Publicacao</h3>
-            <div class="content-grid">
-              ${contentCheckbox("featureFlags.site.maintenanceMode", "Site em manutencao", "Quando ligado, substitui as paginas publicas por uma tela simples de contato.")}
-            </div>
+            <h3>Status do site</h3>
+            ${maintenanceStateControlHtml()}
           </div>
           <div class="content-fieldset">
             <h3>Mensagem para clientes</h3>
@@ -2748,6 +3104,7 @@
           </div>
         `;
         renderMaintenancePreview();
+        renderGlobalMaintenanceStatus();
         setInlineStatus("maintenanceStatus", "Tela de manutencao carregada. Edite e salve quando quiser aplicar no site.", "ok");
       }
 
@@ -3296,7 +3653,7 @@
               ${contentCheckbox("featureFlags.payments.abacatePay", "Abacate Pay", "Pausado enquanto corrigimos a chave/API.")}
               ${contentCheckbox("featureFlags.catalog.physicalProducts", "Produtos fisicos proprios", "Reativa PCs, SSDs e fonte que estao fisicamente com voce.")}
               ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Nossos produtos", "Liga/desliga a vitrine Nossos produtos e trava o checkout quando desligado.")}
-              ${contentCheckbox("featureFlags.site.maintenanceMode", "Site em manutencao", "Quando ligado, o cliente ve uma tela simples com contato por WhatsApp/e-mail.")}
+              <button class="btn btn-dark" type="button" id="openMaintenanceFromFlags">Abrir controle de manutencao</button>
             </div>
           </div>
           <div class="content-fieldset">
@@ -3388,7 +3745,9 @@
           const detail = type === "finds"
             ? (item.platform || item.marketplace?.name || "Afiliado")
             : (item.category || item.niche || item.priceBand || "Catalogo");
+          const image = type === "finds" ? (item.productImage || item.selectedCreative || "") : catalogDisplayImage(item);
           return `<article class="editor-preview-card">
+            ${image ? catalogImagePreview(image, title) : ""}
             <strong>${escapeHtml(title)}</strong>
             <small>${escapeHtml(detail || "-")}</small>
             <small>${moneyInput(price) ? `R$ ${escapeHtml(moneyInput(price))}` : "sem preco"}</small>
@@ -3400,7 +3759,7 @@
         const product = productsState.find((item) => String(item.id) === String(id));
         if (!product) return;
         const numeric = ["price", "weightKg", "heightCm", "widthCm", "lengthCm"];
-        if (field === "active" || field === "featured") product[field] = value === "true";
+        if (field === "active" || field === "featured" || field === "useCutout") product[field] = value === "true";
         else if (numeric.includes(field)) product[field] = moneyNumber(value);
         else if (field.startsWith("specs.")) {
           product.specs = product.specs && typeof product.specs === "object" ? product.specs : {};
@@ -3414,9 +3773,114 @@
         setInlineStatus("productsCatalogStatus", "Alteracao local aplicada. Clique em salvar para publicar no GitHub.", "ok");
       }
 
+      function updateProductGalleryField(productId, index, field, value) {
+        const product = productsState.find((item) => String(item.id) === String(productId));
+        if (!product) return;
+        product.gallery = Array.isArray(product.gallery) ? product.gallery : [];
+        product.gallery[index] = product.gallery[index] && typeof product.gallery[index] === "object" ? product.gallery[index] : {};
+        product.gallery[index][field] = value;
+        renderCatalogProducts(productsState);
+        setInlineStatus("productsCatalogStatus", "Galeria atualizada localmente. Clique em salvar para publicar no GitHub.", "ok");
+      }
+
+      function addProductGalleryImage(productId) {
+        const product = productsState.find((item) => String(item.id) === String(productId));
+        if (!product) return;
+        product.gallery = Array.isArray(product.gallery) ? product.gallery : [];
+        product.gallery.push({ image: "", cutout: "" });
+        renderCatalogProducts(productsState);
+        setInlineStatus("productsCatalogStatus", "Espaco de foto adicional criado. Envie a imagem e salve quando estiver pronto.", "ok");
+      }
+
+      function removeProductGalleryImage(productId, index) {
+        const product = productsState.find((item) => String(item.id) === String(productId));
+        if (!product || !Array.isArray(product.gallery)) return;
+        product.gallery.splice(index, 1);
+        renderCatalogProducts(productsState);
+        setInlineStatus("productsCatalogStatus", "Foto adicional removida localmente. Clique em salvar para publicar.", "ok");
+      }
+
+      function attachCatalogUploadDropHandlers(editor) {
+        editor.querySelectorAll(".catalog-upload-card").forEach((card) => {
+          const input = card.querySelector('input[type="file"]');
+          if (!input) return;
+          ["dragenter", "dragover"].forEach((eventName) => {
+            card.addEventListener(eventName, (event) => {
+              event.preventDefault();
+              card.classList.add("is-dragover");
+            });
+          });
+          ["dragleave", "drop"].forEach((eventName) => {
+            card.addEventListener(eventName, (event) => {
+              event.preventDefault();
+              card.classList.remove("is-dragover");
+            });
+          });
+          card.addEventListener("drop", (event) => {
+            const file = event.dataTransfer?.files?.[0];
+            if (!file) return;
+            setProductUploadFile(input, file);
+            setInlineStatus("productsCatalogStatus", `${file.name} selecionado. Clique em Enviar arquivo para subir a imagem.`, "info");
+          });
+        });
+      }
+
+      function productUploadControl(product, field, label, hint) {
+        return `<div class="catalog-upload-card">
+          <label>${label}<input data-product-id="${escapeHtml(product.id)}" data-product-field="${escapeHtml(field)}" value="${escapeHtml(product[field] || "")}" placeholder="./assets/uploads/imagem.png"></label>
+          <div class="catalog-upload-row">
+            <input type="file" accept="${MEDIA_ACCEPT}" data-product-upload-id="${escapeHtml(product.id)}" data-product-upload-field="${escapeHtml(field)}">
+            <button class="btn btn-dark" type="button" data-product-upload-trigger="${escapeHtml(product.id)}" data-product-upload-target="${escapeHtml(field)}">Enviar arquivo</button>
+          </div>
+          <p class="media-hint">${escapeHtml(hint)}</p>
+        </div>`;
+      }
+
+      function galleryUploadControl(product, item, index) {
+        const imageValue = item?.image || "";
+        const cutoutValue = item?.cutout || "";
+        return `<div class="catalog-gallery-item" data-product-gallery-item="${escapeHtml(product.id)}-${index}">
+          ${catalogImagePreview(cutoutValue || imageValue, `${productTitle(product)} foto ${index + 1}`)}
+          <label>Foto <input data-product-gallery-id="${escapeHtml(product.id)}" data-gallery-index="${index}" data-gallery-field="image" value="${escapeHtml(imageValue)}"></label>
+          <label>Recorte <input data-product-gallery-id="${escapeHtml(product.id)}" data-gallery-index="${index}" data-gallery-field="cutout" value="${escapeHtml(cutoutValue)}"></label>
+          <div class="catalog-gallery-actions">
+            <input type="file" accept="${MEDIA_ACCEPT}" data-gallery-upload-id="${escapeHtml(product.id)}" data-gallery-upload-index="${index}" data-gallery-upload-field="image" aria-label="Enviar foto adicional ${index + 1}">
+            <button class="btn btn-dark" type="button" data-gallery-upload-trigger="${escapeHtml(product.id)}" data-gallery-upload-index="${index}" data-gallery-upload-target="image">Enviar</button>
+            <button class="btn btn-ghost" type="button" data-gallery-remove="${escapeHtml(product.id)}" data-gallery-remove-index="${index}">Excluir</button>
+          </div>
+        </div>`;
+      }
+
+      function productMediaPanel(product) {
+        const title = productTitle(product);
+        const gallery = catalogGalleryItems(product);
+        const useCutout = product.useCutout !== false;
+        return `<div class="catalog-media-panel">
+          <div class="catalog-media-preview">${catalogImagePreview(catalogDisplayImage(product), title)}</div>
+          <div class="catalog-media-controls">
+            <label class="catalog-media-toggle">
+              <span>
+                <strong>Usar recorte/fundo removido no anuncio</strong>
+                <small>Ligado: o site usa a imagem de recorte quando existir. Desligado: o anuncio usa a foto principal sem retirar fundo.</small>
+              </span>
+              <input type="checkbox" data-product-id="${escapeHtml(product.id)}" data-product-field="useCutout" value="true" ${useCutout ? "checked" : ""}>
+            </label>
+            ${productUploadControl(product, "image", "Foto principal", "Foto real do produto. Funciona pelo computador e celular; aceita JPG, PNG, WebP, GIF, HEIC e HEIF ate 8 MB.")}
+            ${productUploadControl(product, "cutout", "Recorte/arte sem fundo", "Use aqui a imagem gerada pela ferramenta de retirada de fundo. Se deixar vazio, o site usa a foto principal.")}
+            <div class="catalog-upload-card">
+              <strong>Fotos adicionais</strong>
+              <p class="media-hint">Adicione varias fotos para galeria do produto. A primeira foto continua sendo a principal acima.</p>
+              <div class="catalog-gallery">${gallery.map((item, index) => galleryUploadControl(product, item, index)).join("") || `<p class="media-hint">Nenhuma foto adicional cadastrada.</p>`}</div>
+              <button class="btn btn-ghost" type="button" data-gallery-add="${escapeHtml(product.id)}">Adicionar foto adicional</button>
+            </div>
+          </div>
+        </div>`;
+      }
+
       function productCatalogForm(product) {
         const shipping = product.shipping || {};
         return `<article class="catalog-edit-form" data-product-editor="${escapeHtml(product.id)}">
+          ${productMediaPanel(product)}
           <label>Ativo
             <select data-product-id="${escapeHtml(product.id)}" data-product-field="active">
               <option value="true"${product.active !== false ? " selected" : ""}>Sim</option>
@@ -3432,8 +3896,6 @@
           <label>Categoria <input data-product-id="${escapeHtml(product.id)}" data-product-field="category" value="${escapeHtml(product.category || "")}"></label>
           <label>Preco <input data-product-id="${escapeHtml(product.id)}" data-product-field="price" inputmode="decimal" value="${escapeHtml(moneyInput(product.price))}"></label>
           <label class="wide">Titulo <textarea data-product-id="${escapeHtml(product.id)}" data-product-field="title">${escapeHtml(productTitle(product))}</textarea></label>
-          <label class="wide">Imagem <input data-product-id="${escapeHtml(product.id)}" data-product-field="image" value="${escapeHtml(product.image || "")}"></label>
-          <label class="wide">Recorte/arte <input data-product-id="${escapeHtml(product.id)}" data-product-field="cutout" value="${escapeHtml(product.cutout || "")}"></label>
           <label>Peso kg <input data-product-id="${escapeHtml(product.id)}" data-product-field="weightKg" inputmode="decimal" value="${escapeHtml(moneyInput(product.weightKg || shipping.weightKg))}"></label>
           <label>Altura cm <input data-product-id="${escapeHtml(product.id)}" data-product-field="heightCm" inputmode="decimal" value="${escapeHtml(moneyInput(product.heightCm || shipping.heightCm))}"></label>
           <label>Largura cm <input data-product-id="${escapeHtml(product.id)}" data-product-field="widthCm" inputmode="decimal" value="${escapeHtml(moneyInput(product.widthCm || shipping.widthCm))}"></label>
@@ -3461,8 +3923,33 @@
         }
         editor.innerHTML = items.map(productCatalogForm).join("");
         editor.querySelectorAll("[data-product-id]").forEach((field) => {
-          field.addEventListener("change", () => updateProductField(field.dataset.productId, field.dataset.productField, field.value));
+          field.addEventListener("change", () => {
+            const value = field.type === "checkbox" ? String(Boolean(field.checked)) : field.value;
+            updateProductField(field.dataset.productId, field.dataset.productField, value);
+          });
         });
+        editor.querySelectorAll("[data-product-gallery-id]").forEach((field) => {
+          field.addEventListener("change", () => updateProductGalleryField(field.dataset.productGalleryId, Number(field.dataset.galleryIndex), field.dataset.galleryField, field.value));
+        });
+        editor.querySelectorAll("[data-product-upload-trigger]").forEach((button) => {
+          button.addEventListener("click", () => uploadCatalogProductImage(button.dataset.productUploadTrigger, button.dataset.productUploadTarget));
+        });
+        editor.querySelectorAll("[data-gallery-upload-trigger]").forEach((button) => {
+          button.addEventListener("click", () => uploadCatalogProductImage(button.dataset.galleryUploadTrigger, button.dataset.galleryUploadTarget, Number(button.dataset.galleryUploadIndex)));
+        });
+        editor.querySelectorAll("[data-gallery-add]").forEach((button) => {
+          button.addEventListener("click", () => addProductGalleryImage(button.dataset.galleryAdd));
+        });
+        editor.querySelectorAll("[data-gallery-remove]").forEach((button) => {
+          button.addEventListener("click", () => removeProductGalleryImage(button.dataset.galleryRemove, Number(button.dataset.galleryRemoveIndex)));
+        });
+        editor.querySelectorAll('input[type="file"]').forEach((input) => {
+          input.addEventListener("change", () => {
+            const file = input.files?.[0];
+            if (file) setInlineStatus("productsCatalogStatus", `${file.name} selecionado. Clique em Enviar para subir a imagem.`, "info");
+          });
+        });
+        attachCatalogUploadDropHandlers(editor);
         setInlineStatus("productsCatalogStatus", `${items.length} produtos carregados; ${ready.length} com peso e medidas.`, "ok");
       }
 
@@ -3594,7 +4081,7 @@
       }
 
       function productImage(product) {
-        return adminPreviewSrc(product?.cutout || product?.image || product?.photo || "/assets/mobilytech-logo.png");
+        return adminPreviewSrc(catalogDisplayImage(product) || product?.photo || "/assets/mobilytech-logo.png");
       }
 
       function renderSaleProductPreview(product) {
@@ -4192,6 +4679,10 @@
         if (path.startsWith("maintenance.") || path === "featureFlags.site.maintenanceMode") renderMaintenancePreview();
       });
       $("#siteContentEditor")?.addEventListener("click", (event) => {
+        if (event.target?.id === "openMaintenanceFromFlags") {
+          setAdminPage("maintenance");
+          return;
+        }
         if (event.target?.id === "addHeroVisualBlock") {
           ensureMasterContentDefaults();
           siteContentState.homeHero.visualBlocks.push({
@@ -4240,12 +4731,25 @@
         setPathValue(siteContentState, path, nextValue);
         renderMaintenancePreview();
       });
+      $("#maintenanceEditor")?.addEventListener("click", (event) => {
+        if (event.target?.id !== "toggleMaintenanceMode") return;
+        openMaintenanceConfirm(!maintenanceActive());
+      });
       $("#maintenanceEditor")?.addEventListener("change", (event) => {
         const path = event.target?.dataset?.contentPath;
         if (!path) return;
         const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
         setPathValue(siteContentState, path, nextValue);
         renderMaintenancePreview();
+      });
+      $("#cancelMaintenanceToggle")?.addEventListener("click", closeMaintenanceConfirm);
+      $("#maintenanceConfirm")?.addEventListener("click", (event) => {
+        if (event.target?.id === "maintenanceConfirm") closeMaintenanceConfirm();
+      });
+      $("#confirmMaintenanceToggle")?.addEventListener("click", () => {
+        applyPendingMaintenanceMode().catch((error) => {
+          setInlineStatus("maintenanceStatus", error.message || "Nao foi possivel alterar o status do site.", "error");
+        });
       });
       $("#addFindItem")?.addEventListener("click", addFindItem);
       $("#applyFindMargins")?.addEventListener("click", applyFindMarginDefaults);

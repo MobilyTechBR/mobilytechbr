@@ -306,6 +306,7 @@ PUBLIC_PRODUCT_FIELDS = {
     "badge",
     "image",
     "cutout",
+    "useCutout",
     "gallery",
     "photo",
     "tags",
@@ -1001,6 +1002,14 @@ def product_seed(products):
     return pcs, hardware
 
 
+def product_display_image(product: dict | None) -> str:
+    if not product:
+        return "./assets/mobilytech-logo.png"
+    if product.get("useCutout") is False:
+        return product.get("image") or product.get("cutout") or product.get("photo") or "./assets/mobilytech-logo.png"
+    return product.get("cutout") or product.get("image") or product.get("photo") or "./assets/mobilytech-logo.png"
+
+
 def home_main(products, finalists, prefix: str, site_content: dict | None = None) -> str:
     content = merge_dict(DEFAULT_SITE_CONTENT, site_content or {})
     home = content["homeHero"]
@@ -1018,7 +1027,7 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
     ):
         configured_product = None
     hero_product = configured_product or (pcs[0] if physical_enabled and pcs else {})
-    hero_image = hero_product.get("cutout") or hero_product.get("image") or "./assets/mobilytech-logo.png"
+    hero_image = product_display_image(hero_product)
     hero_specs = hero_product.get("specs", {})
     if hero_product and is_direct_order_product(hero_product):
         origin_note = hero_product.get("publicOriginNote") or "Origem e prazo informados antes do pagamento."
@@ -2176,6 +2185,11 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       if (/^https?:\\/\\//i.test(value) || value.startsWith("data:")) return value;
       return assetBase + value.replace(/^\\.\\//, "");
     }};
+    const productImageSource = (product) => {{
+      if (!product) return "";
+      if (product.useCutout === false) return product.image || product.cutout || product.photo || "";
+      return product.cutout || product.image || product.photo || "";
+    }};
     const money = (value) => new Intl.NumberFormat("pt-BR", {{ style:"currency", currency:"BRL" }}).format(Number(value || 0));
     const norm = (value) => String(value || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
     const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}}[char]));
@@ -2890,7 +2904,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       return DATA.products
         .filter((product) => product && product.active !== false && product.checkoutEnabled !== false)
         .filter((product) => isDirectOrderProduct(product) && !inCart.has(String(product.id)))
-        .filter((product) => Number(product.price || 0) > 0 && (product.image || product.cutout))
+        .filter((product) => Number(product.price || 0) > 0 && productImageSource(product))
         .sort((a, b) => {{
           const aPrice = Number(a.price || 0);
           const bPrice = Number(b.price || 0);
@@ -2915,7 +2929,7 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
           ? `data-detail="${{product.id}}"`
           : `data-add="${{product.id}}"`;
         return `<article class="upsell-product">
-          <img src="${{asset(product.cutout || product.image)}}" alt="${{escapeHtml(product.title || "Produto")}}">
+          <img src="${{asset(productImageSource(product))}}" alt="${{escapeHtml(product.title || "Produto")}}">
           <h4>${{escapeHtml(productBaseTitle(product))}}</h4>
           <div class="upsell-price">${{money(product.price)}}</div>
           <button class="upsell-add" type="button" ${{action}}>Adicionar</button>
@@ -3078,7 +3092,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       node.innerHTML = products.map(productCard).join("") || '<p class="empty">Nenhum produto encontrado.</p>';
     }}
     function productCard(product) {{
-      const image = asset(product.cutout || product.image);
+      const image = asset(productImageSource(product));
       const spec = specs(product).join(" / ");
       const old = product.old ? `<span class="old-price">${{money(product.old)}}</span>` : "";
       return `<article class="product-card" id="${{anchorId("produto", product.id)}}" data-kind="${{productType(product)}}" data-search="${{[product.title, spec].join(" ")}}">
@@ -3581,7 +3595,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
         ? `${{swapHtml ? `<h3>Trocas disponiveis</h3>${{swapHtml}}` : ""}}${{addonHtml ? `<h3>Adicionais</h3><div class="option-box">${{addonHtml}}</div>` : ""}}<button class="btn btn-red full" type="button" data-add-config="${{product.id}}"><span aria-hidden="true">&#128722;</span> Adicionar configurado</button>`
         : `${{variantHtml}}<button class="btn btn-red full" type="button" ${{variants.length ? `data-add-variant="${{product.id}}"` : `data-add="${{product.id}}"`}}><span aria-hidden="true">&#128722;</span> Adicionar ao carrinho</button>`;
       body.innerHTML = `<div class="modal-grid">
-        <img id="modalProductImage" src="${{asset(selectedVariant?.image || product.cutout || product.image)}}" alt="${{product.title}}">
+        <img id="modalProductImage" src="${{asset(selectedVariant?.image || productImageSource(product))}}" alt="${{product.title}}">
         <div>
           <h2>${{productBaseTitle(product)}}</h2>
           <p class="price" id="modalVariantPrice">${{money(variantPrice(product, selectedVariant))}}</p>
@@ -3599,7 +3613,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
       const priceNode = $("#modalVariantPrice");
       const imageNode = $("#modalProductImage");
       if (priceNode) priceNode.textContent = money(variantPrice(product, variant));
-      if (imageNode) imageNode.src = asset(variant?.image || product?.cutout || product?.image);
+      if (imageNode) imageNode.src = asset(variant?.image || productImageSource(product));
     }}
     function availableSwaps(product) {{
       if (product.category !== "pc" && product.allowGlobalSwaps !== true) return [];
@@ -3663,7 +3677,7 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
             </div>`
           : "";
         return `<article class="drawer-item">
-          <img src="${{asset(selectedVariant?.image || product.cutout || product.image)}}" alt="">
+          <img src="${{asset(selectedVariant?.image || productImageSource(product))}}" alt="">
           <div><h3>${{productBaseTitle(product)}}</h3><small>${{[options || "Sem opcionais", quantityLabel].filter(Boolean).join(" - ")}}</small><div class="drawer-item-foot">${{quantityControl}}<strong>${{money(productTotal(item))}}</strong></div></div>
           <button class="close-drawer" type="button" data-remove="${{index}}" aria-label="Remover">&times;</button>
         </article>`;
