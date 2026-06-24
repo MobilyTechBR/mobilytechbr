@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "browserPath": "Browser plugin used for public pages; standalone Playwright fallback used for gated admin session simulation.",
+  "statusText": "site-content salvo no GitHub (QA simulado). Commit qa12345.",
+  "builderState": {
+    "visibleSections": [
+      "builder"
+    ],
+    "pageButtons": 2,
+    "previewBlocks": 3,
+    "partialTextureSpans": 2,
+    "advancedOpen": true,
+    "selectedPreviewText": "MobilyTech BR com textura aplicada somente no BR",
+    "selectedType": "text",
+    "selectedTextMode": "solid",
+    "statusText": "site-content salvo no GitHub (QA simulado). Commit qa12345."
+  },
+  "maintenanceVisible": [
+    "maintenance"
+  ],
+  "consoleEntries": [],
+  "screenshots": {
+    "adminBuilderShot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\painel-master-2026-06-23\\admin-builder.png",
+    "adminMaintenanceShot": "C:\\Users\\MF\\Documents\\GitHub\\mobilytechbr\\docs\\qa\\painel-master-2026-06-23\\admin-maintenance-after-builder.png"
+  }
+}

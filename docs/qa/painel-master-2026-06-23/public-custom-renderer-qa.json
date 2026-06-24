@@ -1,0 +1,7 @@
+{
+  "has_stage": true,
+  "has_partial_texture_span": true,
+  "has_image": true,
+  "has_button_href": true,
+  "html_excerpt": "\n    <main class=\"custom-page\">\n      <section class=\"custom-page-head\">\n        <p class=\"section-kicker\">MobilyTech BR</p>\n        <h1>Pagina QA Painel Master</h1>\n        <p>Preview gerado por funcao publica.</p>\n      </section>\n      <section class=\"custom-stage\" aria-label=\"Pagina QA Painel Master\">\n        <div class=\"custom-block\" data-type=\"text\" data-bg-mode=\"solid\" data-text-mode=\"solid\" style=\"--x:8.00%;--y:12.00%;--w:420px;--h:90px;--r:14px;--bg:#ffffff;--fg:#111111;--g1:#ffffff;--g"
+}

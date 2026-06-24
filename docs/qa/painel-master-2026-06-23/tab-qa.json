@@ -1,0 +1,29 @@
+{
+  "ok": true,
+  "tabs": {
+    "visual": {
+      "overviewVisible": false,
+      "selectedVisible": true
+    },
+    "catalog": {
+      "overviewVisible": false,
+      "selectedVisible": true
+    },
+    "finds": {
+      "overviewVisible": false,
+      "selectedVisible": true
+    },
+    "nossos": {
+      "overviewVisible": false,
+      "selectedVisible": true
+    },
+    "maintenance": {
+      "overviewVisible": false,
+      "selectedVisible": true
+    },
+    "security": {
+      "overviewVisible": false,
+      "selectedVisible": true
+    }
+  }
+}

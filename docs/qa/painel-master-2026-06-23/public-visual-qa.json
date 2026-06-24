@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "results": [
+    {
+      "name": "home-desktop-after",
+      "url": "http://127.0.0.1:4317/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "title": "MobilyTech BR | Loja gamer",
+        "bodyChars": 6159,
+        "cards": 9,
+        "visibleAdminPages": [],
+        "hasBuilder": false,
+        "builderBlocks": 0,
+        "overflowX": false
+      },
+      "logs": []
+    },
+    {
+      "name": "produtos-desktop-after",
+      "url": "http://127.0.0.1:4317/fase2/nossos-produtos.html",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "metrics": {
+        "title": "Nossos produtos | MobilyTech BR",
+        "bodyChars": 33804,
+        "cards": 121,
+        "visibleAdminPages": [],
+        "hasBuilder": false,
+        "builderBlocks": 0,
+        "overflowX": false
+      },
+      "logs": []
+    },
+    {
+      "name": "home-mobile-after",
+      "url": "http://127.0.0.1:4317/index.html",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "metrics": {
+        "title": "MobilyTech BR | Loja gamer",
+        "bodyChars": 6159,
+        "cards": 9,
+        "visibleAdminPages": [],
+        "hasBuilder": false,
+        "builderBlocks": 0,
+        "overflowX": false
+      },
+      "logs": []
+    },
+    {
+      "name": "admin-builder-after",
+      "url": "http://127.0.0.1:4317/private/admin/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "admin": true,
+      "metrics": {
+        "title": "Painel MobilyTech BR",
+        "bodyChars": 45815,
+        "cards": 0,
+        "visibleAdminPages": [
+          "builder"
+        ],
+        "hasBuilder": true,
+        "builderBlocks": 2,
+        "overflowX": false
+      },
+      "logs": []
+    }
+  ]
+}

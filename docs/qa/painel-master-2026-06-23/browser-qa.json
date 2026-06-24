@@ -1,0 +1,102 @@
+{
+  "ok": true,
+  "pages": {
+    "home-desktop": {
+      "url": "http://127.0.0.1:4317/index.html",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "info": {
+        "title": "MobilyTech BR | Loja gamer",
+        "hasHeader": true,
+        "hasMaintenance": false,
+        "productCards": 7,
+        "findCards": 9,
+        "cartButtons": 13,
+        "width": 1440,
+        "viewport": 1440
+      },
+      "consoleErrors": []
+    },
+    "produtos-desktop": {
+      "url": "http://127.0.0.1:4317/fase2/nossos-produtos.html",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "info": {
+        "title": "Nossos produtos | MobilyTech BR",
+        "hasHeader": true,
+        "hasMaintenance": false,
+        "productCards": 0,
+        "findCards": 121,
+        "cartButtons": 121,
+        "width": 1440,
+        "viewport": 1440
+      },
+      "consoleErrors": []
+    },
+    "home-mobile": {
+      "url": "http://127.0.0.1:4317/index.html",
+      "viewport": {
+        "width": 390,
+        "height": 900
+      },
+      "info": {
+        "title": "MobilyTech BR | Loja gamer",
+        "hasHeader": true,
+        "hasMaintenance": false,
+        "productCards": 7,
+        "findCards": 9,
+        "cartButtons": 13,
+        "width": 390,
+        "viewport": 390
+      },
+      "consoleErrors": []
+    }
+  },
+  "errors": [],
+  "benignLocalErrors": [
+    "Failed to load resource: the server responded with a status of 404 (File not found)"
+  ],
+  "admin": {
+    "catalogInfo": {
+      "visible": true,
+      "previewCards": 8,
+      "productForms": 11,
+      "status": "11 produtos carregados; 5 com peso e medidas.",
+      "saveButton": true,
+      "optionsForms": 7
+    },
+    "visualInfo": {
+      "visible": true,
+      "heroPreview": true,
+      "visualForms": 1,
+      "previewBlocks": 1,
+      "maintenanceCheckbox": true,
+      "uploadControls": 10
+    },
+    "findsInfo": {
+      "visible": true,
+      "previewCards": 8,
+      "rows": 353,
+      "status": "353 itens carregados. Edite com cuidado e salve quando revisar.",
+      "saveButton": true
+    },
+    "nossosInfo": {
+      "visible": true,
+      "previewCards": 8,
+      "rows": 121,
+      "status": "121 nossos produtos carregados para auditoria.",
+      "saveButton": true
+    },
+    "maintenanceInfo": {
+      "visible": true,
+      "editorFields": 5,
+      "previewText": "Manutencao de teste\n\nA MobilyTech BR esta ajustando o site agora. Para compras, montagem ou suporte, fale conosco pelos canais abaixo.\n\nChamar no WhatsApp Enviar e-mail\n\nModo manutencao desligado no conteudo local.",
+      "saveButton": true
+    },
+    "consoleErrors": []
+  }
+}

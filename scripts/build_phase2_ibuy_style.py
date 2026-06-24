@@ -132,6 +132,9 @@ DEFAULT_SITE_CONTENT = {
             "physicalProducts": False,
             "dropshippingProducts": True,
         },
+        "site": {
+            "maintenanceMode": False,
+        },
     },
     "homeHero": {
         "title": "PCs revisados para jogar, trabalhar e criar.",
@@ -143,6 +146,8 @@ DEFAULT_SITE_CONTENT = {
         "backgroundMode": "preset",
         "backgroundPreset": "sky",
         "backgroundImage": "",
+        "backgroundFit": "stretch",
+        "visualBlocks": [],
     },
     "homeFeaturedProducts": {
         "finds": [
@@ -172,6 +177,13 @@ DEFAULT_SITE_CONTENT = {
         },
         "cleanFormImage": "./assets/phase2-clean-form-visual.png",
     },
+    "maintenance": {
+        "title": "Estamos em manutencao",
+        "message": "A MobilyTech BR esta ajustando o site agora. Para compras, montagem ou suporte, fale conosco pelos canais abaixo.",
+        "email": "mobilytechbr@gmail.com",
+        "whatsapp": "5511954801967",
+    },
+    "customPages": [],
     "pages": {
         "ofertas": {
             "title": "PCs revisados e hardware em estoque",
@@ -591,6 +603,187 @@ def page_links(prefix: str) -> dict[str, str]:
     }
 
 
+def custom_page_url(links: dict[str, str], slug: str) -> str:
+    base = links["produtos"].rsplit("/", 1)[0]
+    safe_slug = "".join(ch for ch in str(slug or "") if ch.isalnum() or ch in "-_").strip("-_")
+    return f"{base}/{safe_slug or 'pagina'}.html"
+
+
+def custom_nav_pages(site_content: dict | None) -> list[dict]:
+    pages = site_content.get("customPages", []) if isinstance(site_content, dict) else []
+    if not isinstance(pages, list):
+        return []
+    valid = []
+    for page in pages:
+        if not isinstance(page, dict) or page.get("active") is False or page.get("showInNav") is not True:
+            continue
+        slug = str(page.get("slug") or "").strip()
+        if not slug:
+            continue
+        valid.append(page)
+    return valid
+
+
+def public_find_id(item: dict) -> str:
+    return str(item.get("productId") or (f"find-{item.get('id')}" if item.get("id") else "") or "")
+
+
+def hero_block_href(target: str, links: dict[str, str], products, finalists) -> str:
+    value = str(target or "").strip()
+    if not value:
+        return ""
+    if value in links:
+        return links[value]
+    if value.startswith(("http://", "https://", "mailto:", "tel:", "#")):
+        return value
+    if value.startswith("product:"):
+        product_id = value.split(":", 1)[1]
+        product = product_by_id(products, product_id)
+        if product and is_direct_order_product(product):
+            return f'{links["produtos"]}#product-{clean_text(product_id)}'
+        return f'{links["ofertas"]}#product-{clean_text(product_id)}'
+    if value.startswith("find:"):
+        find_id = value.split(":", 1)[1]
+        return f'{links["achados"]}#{clean_text(find_id)}'
+    if value.startswith("custom:"):
+        return custom_page_url(links, value.split(":", 1)[1])
+    return ""
+
+
+def hero_visual_blocks(home: dict, links: dict[str, str], products, finalists) -> str:
+    def number(value, fallback):
+        try:
+            if value in ("", None):
+                return float(fallback)
+            return float(value)
+        except (TypeError, ValueError):
+            return float(fallback)
+
+    blocks = home.get("visualBlocks") if isinstance(home.get("visualBlocks"), list) else []
+    rendered = []
+    for block in blocks:
+        if not isinstance(block, dict) or not block.get("label"):
+            continue
+        href = hero_block_href(block.get("target"), links, products, finalists)
+        tag = "a" if href else "span"
+        attrs = f' href="{clean_text(href)}"' if href else ""
+        if href.startswith(("http://", "https://")):
+            attrs += ' target="_blank" rel="noreferrer"'
+        width = block.get("width")
+        width_number = number(width, 0)
+        width_value = f"{width_number:.0f}px" if width_number > 0 else "auto"
+        try:
+            font_weight = int(block.get("fontWeight") or 1000)
+        except (TypeError, ValueError):
+            font_weight = 1000
+        style = (
+            f'--x:{number(block.get("x"), 8):.1f}%;'
+            f'--y:{number(block.get("y"), 70):.1f}%;'
+            f'--w:{width_value};'
+            f'--h:{number(block.get("height"), 44):.0f}px;'
+            f'--bg:{clean_text(block.get("background") or "#ff2b2b")};'
+            f'--fg:{clean_text(block.get("color") or "#fff")};'
+            f'--fs:{number(block.get("fontSize"), 15):.0f}px;'
+            f'--fw:{font_weight};'
+            f'--r:{number(block.get("radius"), 999):.0f}px;'
+        )
+        rendered.append(
+            f'<{tag} class="hero-visual-block" data-kind="{clean_text(block.get("kind") or "button")}" style="{style}"{attrs}>{clean_text(block.get("label"))}</{tag}>'
+        )
+    return "\n".join(rendered)
+
+
+def custom_number(value, fallback=0.0) -> float:
+    try:
+        if value in ("", None):
+            return float(fallback)
+        return float(value)
+    except (TypeError, ValueError):
+        return float(fallback)
+
+
+def custom_rich_text(block: dict) -> tuple[str, str]:
+    source = str(block.get("text") or block.get("label") or "Bloco")
+    text_mode = str(block.get("textMode") or "solid")
+    texture = str(block.get("textTexture") or "").strip()
+    phrase = str(block.get("texturePhrase") or "")
+    if text_mode == "texture" and texture and phrase and phrase in source:
+        return "".join(
+            clean_text(part) + (f'<span class="text-texture-part">{clean_text(phrase)}</span>' if index < len(source.split(phrase)) - 1 else "")
+            for index, part in enumerate(source.split(phrase))
+        ), "solid"
+    return clean_text(source), text_mode
+
+
+def custom_block_html(block: dict, prefix: str, links: dict[str, str], products, finalists) -> str:
+    if not isinstance(block, dict):
+        return ""
+    block_type = str(block.get("type") or "box")
+    x = custom_number(block.get("x"), 8)
+    y = custom_number(block.get("y"), 12)
+    width = max(24, custom_number(block.get("width"), 260))
+    height = max(24, custom_number(block.get("height"), 80))
+    radius = max(0, custom_number(block.get("radius"), 14))
+    shadow_strength = max(0, custom_number(block.get("shadowStrength"), 18))
+    text_shadow_strength = max(0, custom_number(block.get("textShadowStrength"), 0))
+    blur = max(0, custom_number(block.get("blurPx"), 12))
+    shadow = (
+        f"0 {max(4, shadow_strength / 2):.0f}px {max(10, shadow_strength * 1.6):.0f}px rgba(13,23,38,{min(.38, shadow_strength / 180):.3f})"
+        if shadow_strength > 0 else "none"
+    )
+    text_shadow = (
+        f"0 2px {max(2, text_shadow_strength / 5):.0f}px rgba(0,0,0,{min(.55, text_shadow_strength / 140):.3f})"
+        if text_shadow_strength > 0 else "none"
+    )
+    rich_text, text_mode = custom_rich_text(block)
+    texture = str(block.get("textTexture") or "").strip()
+    texture_value = f"url({clean_text(asset_path(prefix, texture))})" if texture else "none"
+    image = str(block.get("image") or "").strip()
+    content = rich_text
+    if block_type == "image":
+        content = f'<img src="{asset_path(prefix, image)}" alt="{clean_text(block.get("label") or block.get("text") or "Imagem MobilyTech BR")}">' if image else '<span>Imagem</span>'
+    href = hero_block_href(block.get("target"), links, products, finalists)
+    tag = "a" if href else "div"
+    attrs = f' href="{clean_text(href)}"' if href else ""
+    if href.startswith(("http://", "https://")):
+        attrs += ' target="_blank" rel="noreferrer"'
+    style = (
+        f"--x:{x:.2f}%;--y:{y:.2f}%;--w:{width:.0f}px;--h:{height:.0f}px;--r:{radius:.0f}px;"
+        f"--bg:{clean_text(block.get('background') or '#ffffff')};--fg:{clean_text(block.get('color') or '#111111')};"
+        f"--g1:{clean_text(block.get('gradientFrom') or block.get('background') or '#ffffff')};"
+        f"--g2:{clean_text(block.get('gradientTo') or '#e9f5ff')};--angle:{custom_number(block.get('gradientAngle'), 135):.0f}deg;"
+        f"--tg1:{clean_text(block.get('textGradientFrom') or block.get('color') or '#111111')};"
+        f"--tg2:{clean_text(block.get('textGradientTo') or '#148bff')};--text-angle:{custom_number(block.get('textGradientAngle'), 90):.0f}deg;"
+        f"--text-texture:{texture_value};--shadow:{shadow};--text-shadow:{text_shadow};--blur:{blur:.0f}px;"
+        f"--fit:{clean_text(block.get('objectFit') or 'contain')};--fs:{custom_number(block.get('fontSize'), 16):.0f}px;"
+        f"--fw:{custom_number(block.get('fontWeight'), 900):.0f};--ta:{clean_text(block.get('textAlign') or 'center')}"
+    )
+    return (
+        f'<{tag} class="custom-block" data-type="{clean_text(block_type)}" '
+        f'data-bg-mode="{clean_text(block.get("backgroundMode") or "solid")}" data-text-mode="{clean_text(text_mode)}" '
+        f'style="{style}"{attrs}>{content}</{tag}>'
+    )
+
+
+def custom_page_main(page: dict, products, finalists, prefix: str, site_content: dict | None = None) -> str:
+    links = page_links(prefix)
+    title = page.get("title") or page.get("navLabel") or "Pagina MobilyTech BR"
+    blocks = page.get("blocks") if isinstance(page.get("blocks"), list) else []
+    blocks_html = "\n".join(custom_block_html(block, prefix, links, products, finalists) for block in blocks)
+    return f"""
+    <main class="custom-page">
+      <section class="custom-page-head">
+        <p class="section-kicker">MobilyTech BR</p>
+        <h1>{clean_text(title)}</h1>
+        <p>{clean_text(page.get("intro") or "")}</p>
+      </section>
+      <section class="custom-stage" aria-label="{clean_text(title)}">
+        {blocks_html}
+      </section>
+    </main>
+    """
+
+
 def header(prefix: str, active: str = "home", site_content: dict | None = None) -> str:
     links = page_links(prefix)
     google_enabled = feature_enabled(site_content, "auth", "google", True)
@@ -636,12 +829,18 @@ def header(prefix: str, active: str = "home", site_content: dict | None = None) 
         ]
         if dropshipping_enabled:
             nav.insert(1, ("produtos", "Nossos produtos", "produtos"))
+    for page in custom_nav_pages(site_content):
+        slug = str(page.get("slug") or "").strip()
+        nav.append((f"custom:{slug}", page.get("navLabel") or page.get("title") or slug, f"custom:{slug}"))
     nav_parts = []
     default_nav_key = "pc-gamer" if active == "ofertas" else active
     for index, (href_key, label, active_key) in enumerate(nav):
         if index:
             nav_parts.append('<span class="nav-separator" aria-hidden="true">|</span>')
-        href = links[href_key]
+        if href_key.startswith("custom:"):
+            href = custom_page_url(links, href_key.split(":", 1)[1])
+        else:
+            href = links[href_key]
         if href_key == "ofertas":
             separator = "&" if "?" in href else "?"
             href = f"{href}{separator}nav={active_key}#catalogGrid"
@@ -869,7 +1068,13 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
     hero_background_image = str(home.get("backgroundImage") or "").strip()
     if str(home.get("backgroundMode") or "preset") == "image" and hero_background_image:
         hero_classes.append("hero-bg-image")
+        hero_fit = str(home.get("backgroundFit") or "stretch")
+        if hero_fit == "contain":
+            hero_classes.append("hero-fit-contain")
+        elif hero_fit == "cover":
+            hero_classes.append("hero-fit-cover")
         hero_style = f' style="--hero-bg-image:url({clean_text(asset_path(prefix, hero_background_image))})"'
+    hero_visual_html = hero_visual_blocks(home, links, products, finalists)
     primary_hero_link = links["produtos"] if dropshipping_enabled else (links["ofertas"] if physical_enabled else links["achados"])
     primary_hero_label = home.get("primaryLabel")
     if not physical_enabled and not dropshipping_enabled:
@@ -921,6 +1126,7 @@ def home_main(products, finalists, prefix: str, site_content: dict | None = None
         </div>
         <img class="hero-pc" src="{asset_path(prefix, hero_image)}" alt="{clean_text(hero_product.get("title", "PC MobilyTech"))}">
         {hero_deal_html}
+        {hero_visual_html}
       </section>
       <section class="trust-row" aria-label="Diferenciais MobilyTech">
         <article><span>&#128737;</span><strong>Peças revisadas</strong><small>e testadas antes da venda</small></article>
@@ -1504,7 +1710,8 @@ def css() -> str:
     .main-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;min-width:0;scrollbar-width:none}.main-nav::-webkit-scrollbar{display:none}.nav-link{font-size:12.5px;font-weight:900;padding:12px 2px;border-bottom:3px solid transparent;white-space:nowrap}.nav-link.active{border-bottom-color:var(--red);color:#000}.nav-link:hover{color:#000;background:#f7f8fb;border-radius:10px}.nav-separator{color:#c8ced7;font-weight:1000;line-height:1;user-select:none}
     .search-zone{position:relative;min-width:0}.search-pill{height:44px;border-radius:999px;background:#f0f1f3;display:flex;align-items:center;gap:10px;padding:0 16px;color:#111}.search-pill input{border:0;background:transparent;outline:0;min-width:0;width:100%;font-weight:700}.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;z-index:36;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 54px rgba(10,18,30,.18);padding:8px;display:grid;gap:6px;max-height:360px;overflow:auto}.search-results[hidden]{display:none}.search-result{width:100%;border:0;background:#fff;border-radius:12px;padding:11px 12px;display:grid;grid-template-columns:34px 1fr auto;gap:10px;text-align:left;align-items:center;cursor:pointer}.search-result:hover,.search-result.active{background:#f4f7fb}.search-result-icon{width:34px;height:34px;border-radius:10px;background:#e7fbfa;color:#087f78;display:grid;place-items:center;font-weight:1000}.search-result-title{display:block;font-size:13px;font-weight:1000;color:#111;line-height:1.15}.search-result-desc{display:block;margin-top:2px;color:#69717c;font-size:11px;font-weight:800;line-height:1.25}.search-result-type{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#0b7c72;font-weight:1000;white-space:nowrap}.search-empty{margin:0;padding:10px 12px;color:#69717c;font-weight:900}
     .icon-action,.cart-mini{height:44px;border:0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.icon-action{font-size:28px}.account-menu-wrap{position:relative;display:flex;justify-content:center}.account-action{width:44px;border-radius:999px}.account-action span{width:30px;height:30px;border:2px solid #111;border-radius:50%;display:grid;place-items:center;transition:.18s border-color,.18s box-shadow}.account-action svg{width:18px;height:18px;fill:#111}.account-action.active span,.account-action[aria-expanded="true"] span{border-color:var(--red);box-shadow:0 0 0 4px rgba(255,43,43,.13)}.account-popover{position:absolute;top:calc(100% + 12px);right:-12px;width:292px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(10,18,30,.2);padding:18px;z-index:45;transform-origin:top right;animation:account-popover-in .16s ease-out both}.account-popover.is-closing{animation:account-popover-out .12s ease-in both}.account-popover:before{content:"";position:absolute;top:-8px;right:26px;width:16px;height:16px;background:#fff;border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}.account-popover[hidden]{display:none}@keyframes account-popover-in{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes account-popover-out{from{opacity:1;transform:translateY(0) scale(1)}to{opacity:0;transform:translateY(-6px) scale(.98)}}.account-popover-kicker{margin:0 0 8px;color:var(--red);font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:1000}.account-popover strong{display:block;font-size:18px;line-height:1.15}.account-popover small{display:block;margin-top:8px;color:#657081;font-weight:850;line-height:1.35}.account-popover-actions,.account-popover-links{display:grid;gap:8px;margin-top:14px}.account-popover-links a{border-top:1px solid #eef1f5;padding:9px 2px 0;font-weight:950;color:#2d3540}.account-popover-links a:hover{color:#0a6fce}.account-login{min-height:48px;border-radius:14px;border:1px solid #d9dee8;background:#fff;color:#111;display:inline-flex;align-items:center;justify-content:center;gap:14px;font-weight:1000;padding:0 22px;box-shadow:0 3px 10px rgba(16,24,40,.04);white-space:nowrap;line-height:1}.account-popover .account-login{min-height:40px;border-radius:999px;font-size:13px;padding:0 15px}.account-login img{width:28px;height:28px;object-fit:contain;flex:0 0 auto}.account-popover .account-login img{width:24px;height:24px}.account-login span{line-height:1}.cart-mini{gap:4px;font-size:28px;position:relative}.cart-mini strong{position:absolute;top:0;right:0;min-width:20px;height:20px;border-radius:20px;background:var(--cyan);color:#061015;font-size:12px;display:grid;place-items:center}
-    main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}.hero-bg-sky{background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%)}.hero-bg-cyan{background:linear-gradient(90deg,#20ddd4 0%,#79ece8 48%,#f4ffff 100%);color:#06222e}.hero-bg-graphite{background:linear-gradient(90deg,#101827 0%,#1d3045 52%,#4d718e 100%)}.hero-bg-white{background:linear-gradient(90deg,#f4f8fb 0%,#ffffff 52%,#e7fbff 100%);color:#111}.hero-bg-red{background:linear-gradient(90deg,#ff2b2b 0%,#ff5353 52%,#ffd9d9 100%)}.hero-bg-green{background:linear-gradient(90deg,#087f78 0%,#16c48f 52%,#d9fff4 100%)}.hero-bg-image{background-image:linear-gradient(90deg,rgba(8,15,26,.74),rgba(8,15,26,.25)),var(--hero-bg-image);background-size:cover;background-position:center}
+    main{max-width:1540px;margin:auto;padding:0 22px 36px}.hero-slider{min-height:420px;margin:0 auto 28px;border-radius:0 0 16px 16px;background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1.2fr 280px;align-items:center;padding:48px 62px;color:#fff}.hero-bg-sky{background:linear-gradient(90deg,#1788e8 0%,#2f9cf2 43%,#89d2ff 100%)}.hero-bg-cyan{background:linear-gradient(90deg,#20ddd4 0%,#79ece8 48%,#f4ffff 100%);color:#06222e}.hero-bg-graphite{background:linear-gradient(90deg,#101827 0%,#1d3045 52%,#4d718e 100%)}.hero-bg-white{background:linear-gradient(90deg,#f4f8fb 0%,#ffffff 52%,#e7fbff 100%);color:#111}.hero-bg-red{background:linear-gradient(90deg,#ff2b2b 0%,#ff5353 52%,#ffd9d9 100%)}.hero-bg-green{background:linear-gradient(90deg,#087f78 0%,#16c48f 52%,#d9fff4 100%)}.hero-bg-image{background-image:linear-gradient(90deg,rgba(8,15,26,.74),rgba(8,15,26,.25)),var(--hero-bg-image);background-size:100% 100%;background-position:center;background-repeat:no-repeat}.hero-bg-image.hero-fit-contain{background-size:contain;background-color:#f8fafc}.hero-bg-image.hero-fit-cover{background-size:cover}.hero-visual-block{position:absolute;z-index:4;left:var(--x,8%);top:var(--y,70%);width:var(--w,auto);min-height:var(--h,44px);display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:var(--r,999px);background:var(--bg,#ff2b2b);color:var(--fg,#fff);font-size:var(--fs,15px);font-weight:var(--fw,1000);text-align:center;box-shadow:0 14px 30px rgba(0,0,0,.18);line-height:1.12}.hero-visual-block[data-kind="text"]{box-shadow:none}.hero-visual-block:hover{transform:translateY(-1px)}.site-maintenance{max-width:none;margin:0;min-height:100vh;display:grid;place-items:center;padding:28px;background:radial-gradient(circle at top,#f4fbff,#fff 58%);text-align:center;color:#111}.site-maintenance-card{width:min(680px,100%);border:1px solid #dce5f0;border-radius:24px;background:#fff;padding:34px;box-shadow:0 26px 70px rgba(10,25,45,.14);display:grid;justify-items:center;gap:12px}.site-maintenance-card img{width:92px;height:92px;object-fit:contain}.site-maintenance-card h1{font-size:clamp(30px,6vw,48px);line-height:1;margin:0}.site-maintenance-card p{margin:0;color:#566272;font-weight:850;line-height:1.45}.site-maintenance-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+    .custom-page{max-width:1540px;margin:auto;padding:34px 22px 46px}.custom-page-head{max-width:860px;margin:0 0 20px}.custom-page-head h1{font-size:clamp(32px,5vw,56px);line-height:1.02;margin:0 0 10px}.custom-page-head p{margin:0;color:#5f6874;font-weight:850;font-size:18px}.custom-stage{position:relative;min-height:680px;border:1px solid #dbe4ef;border-radius:24px;background:linear-gradient(135deg,#f8fbff,#fff);box-shadow:0 22px 70px rgba(13,23,38,.1);overflow:hidden}.custom-block{position:absolute;left:var(--x,8%);top:var(--y,12%);width:var(--w,260px);min-height:var(--h,80px);display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:var(--r,14px);background:var(--bg,#fff);color:var(--fg,#111);font-size:var(--fs,16px);font-weight:var(--fw,900);text-align:var(--ta,center);line-height:1.15;box-shadow:var(--shadow,none);text-shadow:var(--text-shadow,none);overflow:hidden;overflow-wrap:anywhere}.custom-block[data-bg-mode="gradient"]{background:linear-gradient(var(--angle,135deg),var(--g1,#fff),var(--g2,#e9f5ff))}.custom-block[data-bg-mode="glass"]{background:rgba(255,255,255,.34);border:1px solid rgba(255,255,255,.52);backdrop-filter:blur(var(--blur,12px));-webkit-backdrop-filter:blur(var(--blur,12px))}.custom-block[data-text-mode="gradient"],.custom-block[data-text-mode="texture"]{color:transparent;-webkit-background-clip:text;background-clip:text}.custom-block[data-text-mode="gradient"]{background-image:linear-gradient(var(--text-angle,90deg),var(--tg1,#111),var(--tg2,#148bff))}.custom-block[data-text-mode="texture"]{background-image:var(--text-texture);background-size:cover;background-position:center}.custom-block .text-texture-part{color:transparent;background-image:var(--text-texture);background-size:cover;background-position:center;-webkit-background-clip:text;background-clip:text}.custom-block[data-type="button"]{border-radius:var(--r,999px);min-height:var(--h,52px);padding:0 26px}.custom-block[data-type="text"]{background:transparent;box-shadow:none}.custom-block[data-type="image"]{padding:0;background:transparent;box-shadow:none}.custom-block[data-type="image"] img{width:100%;height:100%;object-fit:var(--fit,contain);display:block}.custom-block:hover{filter:saturate(1.04)}
     .hero-slider:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 84%,rgba(255,255,255,.26),transparent 26%),radial-gradient(circle at 82% 20%,rgba(255,255,255,.25),transparent 20%);pointer-events:none}
     .hero-copy{position:relative;z-index:2;max-width:620px}.hero-copy h1{font-size:48px;line-height:1.02;margin:0 0 18px;font-weight:1000;letter-spacing:0}.hero-copy p{font-size:21px;font-weight:800;margin:0 0 26px;max-width:620px}
     .hero-actions{display:flex;gap:16px;flex-wrap:wrap}.btn{border:0;border-radius:999px;min-height:50px;padding:0 28px;display:inline-flex;align-items:center;justify-content:center;gap:12px;font-weight:1000;cursor:pointer;transition:.2s transform,.2s box-shadow}.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.16)}.btn-red{background:var(--red);color:#fff}.btn-white{background:#fff;color:#111}.btn-dark{background:#111;color:#fff}.full{width:100%}
@@ -1547,6 +1754,9 @@ def css() -> str:
     @media (max-width:680px){
       body{font-size:14px}
       main{width:auto;max-width:none;padding-left:0;padding-right:0;margin-left:22px;margin-right:22px}
+      .custom-page{padding:24px 0 36px;margin-left:22px;margin-right:22px}
+      .custom-stage{min-height:520px;border-radius:18px}
+      .custom-block{max-width:calc(100% - 20px);font-size:clamp(12px,var(--fs,16px),28px)}
       .topbar-inner{height:36px;font-size:11px;padding:0 8px;gap:10px}
       .nav-shell{gap:8px;padding:10px 12px;grid-template-columns:auto 1fr auto}
       .brand{gap:8px}
@@ -1903,6 +2113,21 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
             {"type": "Loja", "icon": "C", "title": "Carrinho e checkout", "description": checkout_description, "href": "\"#cart\"", "terms": checkout_terms},
         ]
     )
+    custom_pages = [
+        page
+        for page in ((site_content or {}).get("customPages", []) if isinstance(site_content, dict) else [])
+        if isinstance(page, dict) and page.get("active") is not False and page.get("slug")
+    ]
+    for page in custom_pages:
+        slug = str(page.get("slug") or "")
+        search_entries.append({
+            "type": "Pagina",
+            "icon": "MT",
+            "title": str(page.get("navLabel") or page.get("title") or slug),
+            "description": str(page.get("intro") or "Pagina personalizada da MobilyTech BR."),
+            "href": f'ROUTES.custom["{clean_text(slug)}"]',
+            "terms": f'{page.get("title") or ""} {page.get("navLabel") or ""} {page.get("intro") or ""} pagina personalizada mobilytech',
+        })
     for entry in search_entries:
         href = entry["href"]
         if href.startswith('"') and href.endswith('"'):
@@ -1911,6 +2136,10 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
             entry["hrefExpression"] = href
         entry.pop("href", None)
     search_entries_js = json.dumps(search_entries, ensure_ascii=False)
+    custom_routes = {str(page.get("slug")): custom_page_url(page_links(""), str(page.get("slug"))) for page in custom_pages}
+    custom_nav_by_file = {f'{str(page.get("slug"))}.html': f'custom:{str(page.get("slug"))}' for page in custom_pages}
+    custom_routes_js = json.dumps(custom_routes, ensure_ascii=False)
+    custom_nav_by_file_js = json.dumps(custom_nav_by_file, ensure_ascii=False)
     payloads = {
         "products": public_products_payload(products, site_content),
         "finds": public_finds_payload(finalists, products, site_content),
@@ -1971,7 +2200,8 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       privacidade: assetBase + "fase2/privacidade.html",
       trocas: assetBase + "fase2/trocas-devolucoes.html",
       entrega: assetBase + "fase2/entrega-prazos.html",
-      garantia: assetBase + "fase2/garantia.html"
+      garantia: assetBase + "fase2/garantia.html",
+      custom: Object.fromEntries(Object.entries({custom_routes_js}).map(([slug, path]) => [slug, assetBase + path.replace(/^\\.\\//, "")]))
     }};
     function currentNavKey() {{
       const file = window.location.pathname.split("/").pop() || "index.html";
@@ -1985,7 +2215,8 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
         "montagem.html": "montagem",
         "limpeza.html": "limpeza",
         "avaliacoes.html": "avaliacoes",
-        "contato.html": "contato"
+        "contato.html": "contato",
+        ...{custom_nav_by_file_js}
       }};
       return navByFile[file] || "";
     }}
@@ -2020,6 +2251,10 @@ def js(products, finalists, addons, swaps, site_content: dict | None = None) -> 
       else if (href === "ROUTES.conta") href = ROUTES.conta;
       else if (href === "ROUTES.contato") href = ROUTES.contato;
       else if (href === "ROUTES.termos") href = ROUTES.termos;
+      else if (href.startsWith('ROUTES.custom["')) {{
+        const slug = href.slice(15, -2);
+        href = ROUTES.custom[slug] || "";
+      }}
       return {{ ...item, href }};
     }});
     let currentSearchResults = [];
@@ -3837,7 +4072,44 @@ let products = DATA.products.filter((item) => item.active !== false && !["finds"
     """
 
 
+def site_in_maintenance(site_content: dict | None) -> bool:
+    flags = site_content.get("featureFlags", {}) if isinstance(site_content, dict) else {}
+    site_flags = flags.get("site", {}) if isinstance(flags, dict) else {}
+    return bool(isinstance(site_flags, dict) and site_flags.get("maintenanceMode") is True)
+
+
+def maintenance_main(prefix: str, site_content: dict | None) -> str:
+    content = merge_dict(DEFAULT_SITE_CONTENT, site_content or {})
+    maintenance = content.get("maintenance", {})
+    whatsapp = "".join(ch for ch in str(maintenance.get("whatsapp") or "") if ch.isdigit()) or "5511954801967"
+    email = str(maintenance.get("email") or "mobilytechbr@gmail.com").strip()
+    return f"""
+    <main class="site-maintenance">
+      <section class="site-maintenance-card" aria-labelledby="maintenance-title">
+        <img src="{asset_path(prefix, "./assets/mobilytech-logo.png")}" alt="MobilyTech BR">
+        <h1 id="maintenance-title">{clean_text(maintenance.get("title"))}</h1>
+        <p>{clean_text(maintenance.get("message"))}</p>
+        <div class="site-maintenance-actions">
+          <a class="btn btn-red" href="https://wa.me/{clean_text(whatsapp)}" target="_blank" rel="noreferrer">Chamar no WhatsApp</a>
+          <a class="btn btn-dark" href="mailto:{clean_text(email)}">Enviar e-mail</a>
+        </div>
+      </section>
+    </main>
+    """
+
+
 def html_doc(title: str, main: str, prefix: str, active: str, products, finalists, addons, swaps, site_content) -> str:
+    if site_in_maintenance(site_content):
+        main = maintenance_main(prefix, site_content)
+        header_html = ""
+        footer_html = ""
+        cart_html = ""
+        script_html = ""
+    else:
+        header_html = header(prefix, active, site_content)
+        footer_html = footer(prefix, site_content)
+        cart_html = cart_drawer(prefix, site_content)
+        script_html = f"<script>{js(products, finalists, addons, swaps, site_content)}</script>"
     document = f"""<!doctype html>
 <html lang="pt-BR">
   <head>
@@ -3855,11 +4127,11 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
     <style>{css()}</style>
   </head>
   <body data-asset-base="{prefix}">
-    {header(prefix, active, site_content)}
+    {header_html}
     {main}
-    {footer(prefix, site_content)}
-    {cart_drawer(prefix, site_content)}
-    <script>{js(products, finalists, addons, swaps, site_content)}</script>
+    {footer_html}
+    {cart_html}
+    {script_html}
   </body>
 </html>
 """
@@ -3974,6 +4246,20 @@ def main():
             "garantia",
         ),
     }
+    custom_pages = site_content.get("customPages", []) if isinstance(site_content.get("customPages"), list) else []
+    for custom_page in custom_pages:
+        if not isinstance(custom_page, dict) or custom_page.get("active") is False:
+            continue
+        slug = "".join(ch for ch in str(custom_page.get("slug") or "") if ch.isalnum() or ch in "-_").strip("-_")
+        if not slug:
+            continue
+        title = custom_page.get("title") or custom_page.get("navLabel") or "Pagina MobilyTech BR"
+        pages[FASE2_DIR / f"{slug}.html"] = (
+            f"{title} | MobilyTech BR",
+            custom_page_main(custom_page, products, finalists, "../", site_content),
+            "../",
+            f"custom:{slug}",
+        )
     for path, (title, content, prefix, active) in pages.items():
         path.write_text(html_doc(title, content, prefix, active, products, finalists, addons, swaps, site_content), encoding="utf-8")
 

@@ -25,6 +25,7 @@
         font-family: "Nunito", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
       html { scroll-behavior: smooth; }
       html, body { max-width: 100%; overflow-x: hidden; }
       body {
@@ -168,6 +169,404 @@
         font-weight: 1000;
       }
       .header-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+      .admin-nav {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        margin: 0 0 18px;
+        padding: 10px;
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        background: rgba(255, 255, 255, .92);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(13, 23, 38, .08);
+        backdrop-filter: blur(18px);
+      }
+      .admin-nav button {
+        flex: 0 0 auto;
+        min-height: 42px;
+        border: 0;
+        border-radius: 999px;
+        padding: 0 14px;
+        background: #f2f5f9;
+        color: #222935;
+        font-size: 13px;
+        font-weight: 1000;
+        cursor: pointer;
+      }
+      .admin-nav button[aria-selected="true"] {
+        background: #111;
+        color: #fff;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, .16);
+      }
+      .admin-page { display: grid; gap: 22px; }
+      .admin-page[hidden] { display: none; }
+      .admin-page-intro {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        padding: 22px;
+        box-shadow: 0 10px 28px rgba(13, 23, 38, .06);
+      }
+      .admin-page-intro h2 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; }
+      .admin-page-intro p { max-width: 980px; margin: 10px 0 0; color: var(--muted); font-weight: 850; line-height: 1.45; }
+      .admin-panel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .section-shell { display: grid; gap: 18px; }
+      .collapsible-editor {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 12px 36px rgba(13, 23, 38, .08);
+        overflow: hidden;
+      }
+      .collapsible-editor summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        font-weight: 1000;
+      }
+      .collapsible-editor summary::-webkit-details-marker { display: none; }
+      .collapsible-editor summary:after {
+        content: "Abrir";
+        border: 1px solid #d8dde7;
+        border-radius: 999px;
+        padding: 8px 12px;
+        color: #111;
+        background: #f8fafc;
+        font-size: 12px;
+      }
+      .collapsible-editor[open] summary:after { content: "Recolher"; }
+      .editor-preview-grid {
+        padding: 0 22px 18px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .editor-preview-card {
+        min-height: 92px;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        background: #f8fafc;
+        padding: 10px;
+        display: grid;
+        gap: 7px;
+        overflow: hidden;
+      }
+      .editor-preview-card strong,
+      .editor-preview-card small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .editor-preview-card strong { font-size: 13px; }
+      .editor-preview-card small { color: #647184; font-weight: 900; }
+      .master-tools {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+        gap: 18px;
+        align-items: start;
+      }
+      .visual-preview {
+        position: sticky;
+        top: 90px;
+        min-height: 330px;
+        border-radius: 18px;
+        border: 1px solid #d8e5f2;
+        overflow: hidden;
+        background: linear-gradient(90deg, #1788e8, #91d7ff);
+        box-shadow: 0 18px 46px rgba(13, 23, 38, .14);
+      }
+      .visual-preview img {
+        width: 100%;
+        height: 100%;
+        min-height: 330px;
+        object-fit: fill;
+        display: block;
+      }
+      .visual-preview.is-contain img { object-fit: contain; background: #f8fafc; }
+      .visual-preview.is-cover img { object-fit: cover; }
+      .visual-preview-copy {
+        position: absolute;
+        inset: 24px auto auto 24px;
+        width: min(52%, 360px);
+        color: #fff;
+        text-shadow: 0 2px 12px rgba(0,0,0,.28);
+        pointer-events: none;
+      }
+      .visual-preview-copy strong { display: block; font-size: 28px; line-height: 1.05; }
+      .visual-preview-copy span { display: block; margin-top: 8px; font-weight: 900; line-height: 1.25; }
+      .visual-block {
+        position: absolute;
+        left: var(--x, 8%);
+        top: var(--y, 70%);
+        width: var(--w, auto);
+        min-height: var(--h, 42px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border-radius: var(--r, 999px);
+        background: var(--bg, #ff2b2b);
+        color: var(--fg, #fff);
+        font-size: var(--fs, 14px);
+        font-weight: var(--fw, 1000);
+        text-align: center;
+        box-shadow: 0 14px 30px rgba(0,0,0,.18);
+        cursor: move;
+        user-select: none;
+      }
+      .visual-block[data-kind="text"] {
+        box-shadow: none;
+        background: var(--bg, rgba(255,255,255,.88));
+        color: var(--fg, #111);
+        border-radius: var(--r, 14px);
+      }
+      .visual-editor-card {
+        border: 1px solid #dfe6ef;
+        border-radius: 16px;
+        padding: 14px;
+        background: #fbfdff;
+        display: grid;
+        gap: 12px;
+      }
+      .visual-editor-card .row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .visual-editor-card label,
+      .catalog-edit-form label {
+        display: grid;
+        gap: 6px;
+        color: #59616d;
+        font-size: 11px;
+        font-weight: 1000;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+      }
+      .visual-editor-card input,
+      .visual-editor-card select,
+      .visual-editor-card textarea,
+      .catalog-edit-form input,
+      .catalog-edit-form select,
+      .catalog-edit-form textarea {
+        width: 100%;
+        border: 1px solid #d8dde7;
+        border-radius: 12px;
+        padding: 10px 11px;
+        background: #fff;
+        color: #111;
+        font-weight: 900;
+      }
+      .catalog-edit-form textarea { min-height: 68px; resize: vertical; }
+      .maintenance-preview {
+        min-height: 260px;
+        border-radius: 18px;
+        border: 1px solid #d8e5f2;
+        background: radial-gradient(circle at top, #f3fbff, #fff 58%);
+        display: grid;
+        place-items: center;
+        text-align: center;
+        padding: 24px;
+      }
+      .maintenance-preview img { width: 86px; height: 86px; object-fit: contain; margin: 0 auto 12px; }
+      .maintenance-preview h3 { margin: 0; font-size: 28px; }
+      .maintenance-preview p { max-width: 520px; margin: 8px auto 0; color: #566272; font-weight: 850; }
+      .builder-layout {
+        display: grid;
+        grid-template-columns: minmax(340px, .85fr) minmax(520px, 1.15fr);
+        gap: 18px;
+        align-items: start;
+      }
+      .builder-sidebar {
+        display: grid;
+        gap: 14px;
+      }
+      .builder-page-list {
+        display: grid;
+        gap: 8px;
+      }
+      .builder-page-list button {
+        width: 100%;
+        border: 1px solid #dce5f0;
+        border-radius: 14px;
+        background: #fff;
+        padding: 12px;
+        text-align: left;
+        font-weight: 1000;
+        cursor: pointer;
+      }
+      .builder-page-list button[aria-selected="true"] {
+        border-color: #111;
+        background: #f7fbff;
+        box-shadow: 0 10px 20px rgba(13, 23, 38, .08);
+      }
+      .builder-toolbar {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .builder-toolbar .btn { width: 100%; padding-inline: 12px; }
+      .builder-canvas {
+        position: sticky;
+        top: 90px;
+        min-height: 620px;
+        border: 1px solid #d8e5f2;
+        border-radius: 22px;
+        background: linear-gradient(180deg, #f8fbff, #ffffff);
+        box-shadow: 0 18px 46px rgba(13, 23, 38, .12);
+        overflow: hidden;
+      }
+      .builder-canvas-header {
+        padding: 22px;
+        border-bottom: 1px solid #e3ebf4;
+        background: rgba(255,255,255,.86);
+      }
+      .builder-canvas-header h3 { margin: 0; font-size: 30px; line-height: 1.05; }
+      .builder-canvas-header p { margin: 7px 0 0; color: #5e6876; font-weight: 850; }
+      .builder-stage {
+        position: relative;
+        min-height: 560px;
+        background:
+          linear-gradient(90deg, rgba(27,139,240,.045) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(27,139,240,.045) 1px, transparent 1px);
+        background-size: 28px 28px;
+      }
+      .builder-block {
+        position: absolute;
+        left: var(--x, 8%);
+        top: var(--y, 8%);
+        width: var(--w, 260px);
+        min-height: var(--h, 74px);
+        border-radius: var(--r, 14px);
+        background: var(--bg, #ffffff);
+        color: var(--fg, #111);
+        text-shadow: var(--text-shadow, none);
+        border: 1px solid rgba(15, 23, 42, .08);
+        box-shadow: var(--shadow, 0 12px 28px rgba(13, 23, 38, .12));
+        padding: 14px;
+        display: grid;
+        place-items: center;
+        text-align: var(--ta, center);
+        font-size: var(--fs, 16px);
+        font-weight: var(--fw, 900);
+        cursor: move;
+        overflow: hidden;
+      }
+      .builder-block[data-bg-mode="gradient"] { background: linear-gradient(var(--angle, 135deg), var(--g1, #ffffff), var(--g2, #e9f5ff)); }
+      .builder-block[data-bg-mode="glass"] {
+        background: rgba(255,255,255,.28);
+        border-color: rgba(255,255,255,.52);
+        backdrop-filter: blur(var(--blur, 12px));
+      }
+      .builder-block[data-text-mode="gradient"],
+      .builder-block[data-text-mode="texture"] {
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .builder-block[data-text-mode="gradient"] {
+        background-image: linear-gradient(var(--text-angle, 90deg), var(--tg1, #111111), var(--tg2, #148bff));
+      }
+      .builder-block[data-text-mode="texture"] {
+        background-image: var(--text-texture);
+        background-size: cover;
+        background-position: center;
+      }
+      .text-texture-part {
+        color: transparent;
+        background-image: var(--text-texture);
+        background-size: cover;
+        background-position: center;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .builder-block[data-type="button"] {
+        border-radius: var(--r, 999px);
+        background: var(--bg, #ff2b2b);
+        color: var(--fg, #fff);
+        min-height: var(--h, 50px);
+      }
+      .builder-block[data-type="button"][data-bg-mode="gradient"] { background: linear-gradient(var(--angle, 135deg), var(--g1, #ff2b2b), var(--g2, #148bff)); }
+      .builder-block[data-type="button"][data-bg-mode="glass"] { background: rgba(255,255,255,.28); color: var(--fg, #111); backdrop-filter: blur(var(--blur, 12px)); }
+      .builder-block[data-type="text"] {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+      }
+      .builder-block[data-type="image"] {
+        padding: 0;
+        border-color: transparent;
+        box-shadow: none;
+        background: transparent;
+      }
+      .builder-block img { width: 100%; height: 100%; object-fit: var(--fit, contain); }
+      .builder-block.is-selected { outline: 3px solid rgba(20, 139, 255, .46); outline-offset: 2px; }
+      .builder-resize {
+        position: absolute;
+        right: -8px;
+        bottom: -8px;
+        width: 18px;
+        height: 18px;
+        border: 2px solid #fff;
+        border-radius: 6px;
+        background: #148bff;
+        box-shadow: 0 8px 18px rgba(13, 23, 38, .2);
+        cursor: nwse-resize;
+        display: none;
+      }
+      .builder-lock {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        width: 28px;
+        height: 28px;
+        border: 2px solid #fff;
+        border-radius: 999px;
+        background: #111;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 1000;
+        display: none;
+        place-items: center;
+        box-shadow: 0 8px 18px rgba(13, 23, 38, .2);
+        cursor: pointer;
+      }
+      .builder-block.is-selected .builder-resize,
+      .builder-block.is-selected .builder-lock { display: grid; }
+      .builder-help {
+        border: 1px solid #dbeafe;
+        border-radius: 16px;
+        background: #f7fbff;
+        padding: 14px;
+        color: #29405a;
+        font-size: 13px;
+        font-weight: 850;
+        line-height: 1.45;
+      }
+      .builder-help strong { color: #111; }
+      .catalog-edit-form {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        gap: 10px;
+        padding: 14px;
+        border: 1px solid #e4eaf2;
+        border-radius: 16px;
+        background: #fbfcff;
+      }
+      .catalog-edit-form .wide { grid-column: span 2; }
+      .catalog-edit-form .full { grid-column: 1 / -1; }
+      .save-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 22px;
+        background: #f7fbff;
+        border-top: 1px solid var(--line);
+      }
       .btn {
         min-height: 44px;
         border-radius: 999px;
@@ -872,6 +1271,9 @@
         .hero, .workflow { grid-template-columns: 1fr; }
         .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .cards { grid-template-columns: 1fr; }
+        .admin-panel-grid, .master-tools, .builder-layout { grid-template-columns: 1fr; }
+        .editor-preview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .visual-preview, .builder-canvas { position: relative; top: auto; }
         .sale-grid { grid-template-columns: 1fr; }
         .content-grid { grid-template-columns: 1fr; }
       }
@@ -918,6 +1320,21 @@
         .section-head h2 { font-size: 28px; }
         .btn { width: 100%; min-height: 46px; }
         .editor-toolbar { align-items: flex-start; flex-direction: column; }
+        .admin-nav { border-radius: 14px; margin-inline: -2px; }
+        .admin-nav button { min-height: 40px; font-size: 12px; }
+        .admin-page-intro { padding: 16px; border-radius: 14px; }
+        .admin-page-intro h2 { font-size: 28px; }
+        .editor-preview-grid { grid-template-columns: 1fr; padding: 0 14px 14px; }
+        .collapsible-editor summary { align-items: flex-start; flex-direction: column; padding: 16px; }
+        .visual-editor-card .row, .catalog-edit-form { grid-template-columns: 1fr; }
+        .catalog-edit-form .wide { grid-column: 1 / -1; }
+        .visual-preview { min-height: 260px; }
+        .visual-preview img { min-height: 260px; }
+        .visual-preview-copy { inset: 18px 18px auto 18px; width: auto; }
+        .visual-preview-copy strong { font-size: 22px; }
+        .builder-toolbar { grid-template-columns: 1fr; }
+        .builder-canvas { min-height: 520px; }
+        .builder-stage { min-height: 460px; }
         .margin-tools { grid-template-columns: 1fr; }
         .finds-table { min-width: 980px; }
         footer { flex-direction: column; align-items: flex-start; }
@@ -980,11 +1397,24 @@
           <a class="btn btn-red" href="https://app.pagescms.org/" target="_blank" rel="noreferrer">Abrir Pages CMS</a>
           <a class="btn btn-dark" href="https://manage.wix.com/dashboard/" target="_blank" rel="noreferrer">Abrir Wix</a>
           <a class="btn btn-ghost" href="https://www.mobilytech.com.br/">Ver site oficial</a>
+          <button class="btn btn-ghost" type="button" id="openMaintenanceControls">Desligar site</button>
         </nav>
       </header>
 
+      <nav class="admin-nav" aria-label="Areas do painel">
+        <button type="button" data-admin-tab="overview" aria-selected="true">Visao geral</button>
+        <button type="button" data-admin-tab="visual">Textos e artes</button>
+        <button type="button" data-admin-tab="builder">Construtor</button>
+        <button type="button" data-admin-tab="catalog">PCs e catalogo</button>
+        <button type="button" data-admin-tab="finds">MobilyTech Finds</button>
+        <button type="button" data-admin-tab="nossos">Nossos produtos</button>
+        <button type="button" data-admin-tab="sales">Registrar vendas</button>
+        <button type="button" data-admin-tab="maintenance">Manutencao</button>
+        <button type="button" data-admin-tab="security">Seguranca</button>
+      </nav>
+
       <main>
-        <section class="hero" aria-labelledby="title">
+        <section class="hero" aria-labelledby="title" data-admin-page="overview">
           <div>
             <p class="kicker">Controle da loja</p>
             <h1 id="title"><span class="desktop-copy">Painel para manter a MobilyTech BR atualizada.</span><span class="mobile-copy">Painel MobilyTech BR</span></h1>
@@ -997,7 +1427,7 @@
           </aside>
         </section>
 
-        <section aria-labelledby="stats-title">
+        <section aria-labelledby="stats-title" data-admin-page="overview">
           <div class="section-head">
             <div>
               <p class="section-kicker">Visao rapida</p>
@@ -1034,7 +1464,7 @@
           </div>
         </section>
 
-        <section aria-labelledby="actions-title">
+        <section aria-labelledby="actions-title" data-admin-page="overview">
           <div class="section-head">
             <div>
               <p class="section-kicker">Operacao</p>
@@ -1089,7 +1519,87 @@
           </div>
         </section>
 
-        <section aria-labelledby="content-editor-title">
+        <section aria-labelledby="catalog-editor-title" data-admin-page="catalog" hidden>
+          <div class="admin-page-intro">
+            <p class="section-kicker">Catalogo principal</p>
+            <h2 id="catalog-editor-title">PCs, hardware, swaps e adicionais</h2>
+            <p>Edite os campos mais importantes que antes ficavam espalhados no CMS: produto, preco, status, imagens, peso, medidas, adicionais e trocas. Os controles ficam progressivos para nao virar uma parede de informacao.</p>
+          </div>
+          <div class="admin-panel-grid">
+            <article class="card stat-card">
+              <small>Catalogo editavel</small>
+              <strong id="catalogEditableCount">--</strong>
+              <span>PCs e hardware proprio</span>
+            </article>
+            <article class="card stat-card">
+              <small>Frete configurado</small>
+              <strong id="shippingReadyCount">--</strong>
+              <span>com peso e medidas</span>
+            </article>
+          </div>
+
+          <details class="collapsible-editor" id="catalogProductsPanel" open>
+            <summary>
+              <span>Produtos fisicos proprios</span>
+              <small>Preview dos primeiros itens; expanda para editar tudo.</small>
+            </summary>
+            <div class="editor-preview-grid" id="catalogProductsPreview"></div>
+            <div class="editor-panel">
+              <div class="editor-toolbar">
+                <div>
+                  <strong>PCs e hardware</strong>
+                  <p>Edite preco, status, foto, categoria, peso e medidas usados pelo frete.</p>
+                </div>
+                <button class="btn btn-red" type="button" id="saveProductsCatalog">Salvar products.json no site</button>
+                <button class="btn btn-dark" type="button" id="downloadProductsCatalog">Baixar products.json revisado</button>
+              </div>
+              <div class="sale-status is-info" id="productsCatalogStatus">Carregando produtos editaveis...</div>
+              <div id="catalogProductsEditor" class="site-content-form"></div>
+            </div>
+          </details>
+
+          <details class="collapsible-editor" id="optionsPanel">
+            <summary>
+              <span>Adicionais e swaps</span>
+              <small>Extras globais do carrinho, upgrades e trocas.</small>
+            </summary>
+            <div class="editor-panel">
+              <div class="editor-toolbar">
+                <div>
+                  <strong>Opcoes do carrinho</strong>
+                  <p>Edite adicionais e swaps sem abrir o CMS.</p>
+                </div>
+                <button class="btn btn-red" type="button" id="saveCatalogOptions">Salvar adicionais e swaps</button>
+                <button class="btn btn-dark" type="button" id="downloadCatalogOptions">Baixar JSONs revisados</button>
+              </div>
+              <div class="sale-status is-info" id="catalogOptionsStatus">Carregando adicionais e swaps...</div>
+              <div class="admin-panel-grid">
+                <div>
+                  <div class="section-head">
+                    <div>
+                      <p class="section-kicker">Adicionais</p>
+                      <h2>Extras</h2>
+                    </div>
+                    <button class="btn btn-ghost" type="button" id="addAddonOption">Adicionar extra</button>
+                  </div>
+                  <div id="addonsEditor" class="site-content-form"></div>
+                </div>
+                <div>
+                  <div class="section-head">
+                    <div>
+                      <p class="section-kicker">Swaps</p>
+                      <h2>Trocas</h2>
+                    </div>
+                    <button class="btn btn-ghost" type="button" id="addSwapOption">Adicionar troca</button>
+                  </div>
+                  <div id="swapsEditor" class="site-content-form"></div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section aria-labelledby="content-editor-title" data-admin-page="visual" hidden>
           <div class="section-head">
             <div>
               <p class="section-kicker">Editor visual</p>
@@ -1113,7 +1623,78 @@
           </div>
         </section>
 
-        <section aria-labelledby="finds-editor-title">
+        <section aria-labelledby="maintenance-title" data-admin-page="maintenance" hidden>
+          <div class="admin-page-intro">
+            <p class="section-kicker">Seguranca operacional</p>
+            <h2 id="maintenance-title">Desligar o site temporariamente</h2>
+            <p>Use quando quiser pausar o site por manutencao, revisao legal, instabilidade de checkout ou qualquer ajuste grande. A pagina publica fica simples, com contato por WhatsApp/e-mail.</p>
+          </div>
+          <div class="master-tools">
+            <div class="editor-panel">
+              <div class="editor-toolbar">
+                <div>
+                  <strong>Tela de manutencao</strong>
+                  <p>Ative/desative e ajuste a mensagem que o cliente ve.</p>
+                </div>
+                <button class="btn btn-red" type="button" id="saveMaintenanceContent">Salvar manutencao no site</button>
+              </div>
+              <div class="sale-status is-info" id="maintenanceStatus">Carregando manutencao...</div>
+              <div class="site-content-form" id="maintenanceEditor"></div>
+            </div>
+            <aside class="maintenance-preview" id="maintenancePreview" aria-label="Preview da tela de manutencao"></aside>
+          </div>
+        </section>
+
+        <section aria-labelledby="builder-title" data-admin-page="builder" hidden>
+          <div class="admin-page-intro">
+            <p class="section-kicker">Construtor visual</p>
+            <h2 id="builder-title">Criar paginas, caixas, textos e botoes</h2>
+            <p>Crie subpaginas simples do site sem mexer no codigo. Escolha uma pagina, adicione blocos, arraste no preview, ajuste texto, cor, borda e redirecionamento, depois salve no site.</p>
+          </div>
+          <div class="builder-layout">
+            <aside class="builder-sidebar">
+              <div class="editor-panel">
+                <div class="editor-toolbar">
+                  <div>
+                    <strong>Paginas criadas</strong>
+                    <p>Use nomes curtos. O endereco e gerado pelo campo slug.</p>
+                  </div>
+                  <button class="btn btn-red" type="button" id="addCustomPage">Nova pagina</button>
+                </div>
+                <div class="sale-status is-info" id="builderStatus">Carregando construtor...</div>
+                <div class="builder-page-list" id="builderPageList"></div>
+              </div>
+              <div class="editor-panel">
+                <div class="editor-toolbar">
+                  <div>
+                    <strong>Editar pagina e blocos</strong>
+                    <p>Campos simples para o preview selecionado.</p>
+                  </div>
+                  <button class="btn btn-red" type="button" id="saveCustomPages">Salvar paginas no site</button>
+                </div>
+                <div class="builder-help">
+                  <strong>Como fazer um botao funcionar:</strong> crie um bloco do tipo <strong>Botao</strong>, escreva o texto e escolha a acao no campo <strong>Redirecionamento</strong>. Para levar a uma area do site, escolha a pagina na lista. Para produto especifico, escolha uma opcao que comece com <strong>Produto:</strong> ou <strong>Find:</strong>. Depois clique em salvar.
+                </div>
+                <div class="builder-toolbar">
+                  <button class="btn btn-ghost" type="button" data-add-builder-block="box">Caixa</button>
+                  <button class="btn btn-ghost" type="button" data-add-builder-block="text">Texto</button>
+                  <button class="btn btn-ghost" type="button" data-add-builder-block="button">Botao</button>
+                  <button class="btn btn-ghost" type="button" data-add-builder-block="image">Imagem</button>
+                </div>
+                <div class="site-content-form" id="builderEditor"></div>
+              </div>
+            </aside>
+            <aside class="builder-canvas" aria-label="Preview da pagina personalizada">
+              <div class="builder-canvas-header">
+                <h3 id="builderPreviewTitle">Preview</h3>
+                <p id="builderPreviewIntro">Selecione ou crie uma pagina.</p>
+              </div>
+              <div class="builder-stage" id="builderStage"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section aria-labelledby="finds-editor-title" data-admin-page="finds" hidden>
           <div class="section-head">
             <div>
               <p class="section-kicker">Editor local</p>
@@ -1128,40 +1709,49 @@
                 <p>Edite titulo, grupo publico, marketplace, origem, imagem, preco de referencia, comissao afiliada estimada e links Mercado Livre, Amazon ou AliExpress. Marque link pronto apenas depois de validar que o link abre o produto direto e contem rastreio de afiliado. Shopee fica pausado ate reativarmos afiliado valido.</p>
               </div>
               <button class="btn btn-red" type="button" id="addFindItem">Adicionar item</button>
+              <button class="btn btn-red" type="button" id="saveFinds">Salvar Finds no site</button>
               <button class="btn btn-dark" type="button" id="exportFinds">Baixar JSON revisado</button>
             </div>
             <div class="editor-note">MobilyTech Finds e uma area de afiliados: nao existe margem propria editavel aqui. A comissao vem do marketplace/programa de afiliados e deve ser preenchida quando o link rastreado informar esse percentual ou valor.</div>
-            <div class="table-wrap">
-              <table class="finds-table" aria-label="Editor local de MobilyTech Finds">
-                <thead>
-                  <tr>
-                    <th>Ativo</th>
-                    <th>Grupo</th>
-                    <th>Link pronto</th>
-                    <th>Produto</th>
-                    <th>Marketplace</th>
-                    <th>Origem</th>
-                    <th>Imagem</th>
-                    <th>Preco</th>
-                    <th>Comissao afiliada</th>
-                    <th>Ganho estimado</th>
-                    <th>Descricao</th>
-                    <th>Mercado Livre</th>
-                    <th>Amazon</th>
-                    <th>Shopee</th>
-                    <th>AliExpress</th>
-                  </tr>
-                </thead>
-                <tbody id="findsEditorRows">
-                  <tr><td colspan="15">Carregando MobilyTech Finds...</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="sale-status is-info" id="findsStatus">Carregando MobilyTech Finds...</div>
+            <div class="editor-preview-grid" id="findsPreviewCards"></div>
+            <details class="collapsible-editor" id="findsFullList">
+              <summary>
+                <span>Editar lista completa</span>
+                <small>Abra apenas quando quiser ver todos os produtos.</small>
+              </summary>
+              <div class="table-wrap">
+                <table class="finds-table" aria-label="Editor local de MobilyTech Finds">
+                  <thead>
+                    <tr>
+                      <th>Ativo</th>
+                      <th>Grupo</th>
+                      <th>Link pronto</th>
+                      <th>Produto</th>
+                      <th>Marketplace</th>
+                      <th>Origem</th>
+                      <th>Imagem</th>
+                      <th>Preco</th>
+                      <th>Comissao afiliada</th>
+                      <th>Ganho estimado</th>
+                      <th>Descricao</th>
+                      <th>Mercado Livre</th>
+                      <th>Amazon</th>
+                      <th>Shopee</th>
+                      <th>AliExpress</th>
+                    </tr>
+                  </thead>
+                  <tbody id="findsEditorRows">
+                    <tr><td colspan="15">Carregando MobilyTech Finds...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
             <div class="editor-note">Use o JSON revisado para atualizar <code>data/phase2-finalists.json</code> e gerar o site novamente. O fluxo automatico de escrita deve ficar atras de token administrativo; sem token, o download continua sendo o caminho seguro.</div>
           </div>
         </section>
 
-        <section aria-labelledby="dropshipping-products-title">
+        <section aria-labelledby="dropshipping-products-title" data-admin-page="nossos" hidden>
           <div class="section-head">
             <div>
               <p class="section-kicker">Nossos produtos</p>
@@ -1175,6 +1765,7 @@
                 <strong>Regra de seguranca</strong>
                 <p>O botao global <strong>Nossos produtos</strong> fica no editor visual acima. Quando desligado, a secao some do site gerado e o backend bloqueia checkout e frete dessa vitrine.</p>
               </div>
+              <button class="btn btn-red" type="button" id="saveDropshippingProducts">Salvar products.json no site</button>
               <button class="btn btn-dark" type="button" id="exportDropshippingProducts">Baixar products.json revisado</button>
             </div>
             <div class="margin-tools" aria-label="Margens dos nossos produtos">
@@ -1185,36 +1776,43 @@
               <button class="btn btn-ghost" type="button" id="disableAllDropshippingCheckout">Pausar checkout dos produtos</button>
             </div>
             <div class="sale-status is-info" id="dropshippingStatus">Revise os nossos produtos antes de publicar. Produtos incompletos ficam bloqueados.</div>
-            <div class="table-wrap">
-              <table class="finds-table" aria-label="Auditoria de nossos produtos">
-                <thead>
-                  <tr>
-                    <th>Status</th>
-                    <th>Ativo</th>
-                    <th>Checkout</th>
-                    <th>Produto</th>
-                    <th>Nicho</th>
-                    <th>Faixa</th>
-                    <th>Preco site</th>
-                    <th>Custo produto</th>
-                    <th>Frete ate MT</th>
-                    <th>Custo total</th>
-                    <th>Lucro e margem</th>
-                    <th>Frete cliente</th>
-                    <th>Origem</th>
-                    <th>Link de referencia</th>
-                  </tr>
-                </thead>
-                <tbody id="dropshippingProductsRows">
-                  <tr><td colspan="14">Carregando produtos...</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="editor-preview-grid" id="dropshippingPreviewCards"></div>
+            <details class="collapsible-editor" id="dropshippingFullList">
+              <summary>
+                <span>Editar lista completa</span>
+                <small>Abra para revisar custos, frete ate a MobilyTech, checkout e links internos.</small>
+              </summary>
+              <div class="table-wrap">
+                <table class="finds-table" aria-label="Auditoria de nossos produtos">
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Ativo</th>
+                      <th>Checkout</th>
+                      <th>Produto</th>
+                      <th>Nicho</th>
+                      <th>Faixa</th>
+                      <th>Preco site</th>
+                      <th>Custo produto</th>
+                      <th>Frete ate MT</th>
+                      <th>Custo total</th>
+                      <th>Lucro e margem</th>
+                      <th>Frete cliente</th>
+                      <th>Origem</th>
+                      <th>Link de referencia</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dropshippingProductsRows">
+                    <tr><td colspan="14">Carregando produtos...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
             <div class="editor-note">O link de referencia fica apenas no painel e nos e-mails internos de pedido; ele nao aparece para o cliente no site publico. O cliente confere frete, prazo estimado total e valor final no carrinho antes do pagamento.</div>
           </div>
         </section>
 
-        <section aria-labelledby="sale-register-title">
+        <section aria-labelledby="sale-register-title" data-admin-page="sales" hidden>
           <div class="section-head">
             <div>
               <p class="section-kicker">Venda registrada</p>
@@ -1293,7 +1891,7 @@
           </div>
         </section>
 
-        <section class="workflow" aria-label="Fluxo recomendado">
+        <section class="workflow" aria-label="Fluxo recomendado" data-admin-page="security" hidden>
           <article class="card">
             <small>Passo a passo seguro</small>
             <h3>Antes de publicar</h3>
@@ -1316,7 +1914,7 @@
           </article>
         </section>
 
-        <section class="notice" role="note">
+        <section class="notice" role="note" data-admin-page="security" hidden>
           Nao cole tokens, access tokens, client secrets ou senhas neste painel. Credenciais ficam apenas no provedor correto: Vercel, Wix, Mercado Pago, Abacate Pay, Melhor Envio ou Google Apps Script.
         </section>
       </main>
@@ -1332,6 +1930,10 @@
       const countActive = (items = []) => items.filter((item) => item && item.active !== false).length;
       let findsState = null;
       let productsState = [];
+      let addonsState = [];
+      let swapsState = [];
+      let builderActivePageIndex = 0;
+      let builderSelectedBlockId = "";
       let siteContentState = null;
       let lastSalePayload = null;
       const MEDIA_ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif,image/heic-sequence,image/heif-sequence";
@@ -1419,6 +2021,23 @@
           return fallback;
         }
       }
+
+      function setAdminPage(page) {
+        const selected = page || "overview";
+        document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
+          tab.setAttribute("aria-selected", tab.dataset.adminTab === selected ? "true" : "false");
+        });
+        document.querySelectorAll("[data-admin-page]").forEach((section) => {
+          section.hidden = section.dataset.adminPage !== selected;
+        });
+        try { localStorage.setItem("mobilytechAdminPage", selected); } catch (_error) {}
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
+        tab.addEventListener("click", () => setAdminPage(tab.dataset.adminTab || "overview"));
+      });
+      $("#openMaintenanceControls")?.addEventListener("click", () => setAdminPage("maintenance"));
 
       function getAffiliateLink(item, name) {
         const links = Array.isArray(item.affiliateLinks) ? item.affiliateLinks : [];
@@ -1518,6 +2137,8 @@
         } else if (field.startsWith("link:")) {
           upsertAffiliateLink(item, field.split(":")[1], value);
         } else item[field] = value;
+        renderPreviewCards("findsPreviewCards", findsState?.finalists || [], "finds");
+        setInlineStatus("findsStatus", "Alteracao local aplicada. Clique em salvar para publicar ou baixe o JSON revisado como fallback.", "ok");
       }
 
       function makeFindId(title) {
@@ -1884,6 +2505,741 @@
         `;
       }
 
+      function ensureMasterContentDefaults() {
+        siteContentState.featureFlags = siteContentState.featureFlags || {};
+        siteContentState.featureFlags.site = siteContentState.featureFlags.site || {};
+        siteContentState.featureFlags.site.maintenanceMode = siteContentState.featureFlags.site.maintenanceMode === true;
+        siteContentState.homeHero = siteContentState.homeHero || {};
+        siteContentState.homeHero.backgroundFit = siteContentState.homeHero.backgroundFit || "stretch";
+        siteContentState.homeHero.visualBlocks = Array.isArray(siteContentState.homeHero.visualBlocks)
+          ? siteContentState.homeHero.visualBlocks
+          : [];
+        siteContentState.maintenance = siteContentState.maintenance && typeof siteContentState.maintenance === "object"
+          ? siteContentState.maintenance
+          : {};
+        siteContentState.maintenance.title = siteContentState.maintenance.title || "Estamos em manutencao";
+        siteContentState.maintenance.message = siteContentState.maintenance.message || "A MobilyTech BR esta ajustando o site agora. Para compras, montagem ou suporte, fale conosco pelos canais abaixo.";
+        siteContentState.maintenance.email = siteContentState.maintenance.email || "mobilytechbr@gmail.com";
+        siteContentState.maintenance.whatsapp = siteContentState.maintenance.whatsapp || "5511954801967";
+        siteContentState.customPages = Array.isArray(siteContentState.customPages) ? siteContentState.customPages : [];
+        siteContentState.customPages.forEach((page, index) => {
+          page.id = page.id || `custom-page-${index + 1}`;
+          page.active = page.active !== false;
+          page.showInNav = page.showInNav === true;
+          page.title = page.title || "Nova pagina";
+          page.navLabel = page.navLabel || page.title;
+          page.slug = slugify(page.slug || page.title || page.id);
+          page.intro = page.intro || "";
+          page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
+        });
+      }
+
+      function makeVisualBlockId() {
+        return `hero-block-${Date.now().toString(36)}-${Math.random().toString(16).slice(2, 6)}`;
+      }
+
+      function redirectOptions(selectedValue = "") {
+        const base = [
+          ["home", "Pagina inicial"],
+          ["produtos", "Nossos produtos"],
+          ["achados", "MobilyTech Finds"],
+          ["ofertas", "PCs e hardware"],
+          ["montagem", "Monte seu PC"],
+          ["limpeza", "Limpeza"],
+          ["avaliacoes", "Avaliacoes"],
+          ["contato", "Suporte/contato"],
+          ["conta", "Minha conta"]
+        ];
+        const customOptionsHtml = (siteContentState.customPages || [])
+          .filter((page) => page && page.active !== false)
+          .map((page) => [`custom:${page.slug}`, `Pagina criada: ${page.navLabel || page.title || page.slug}`]);
+        const productOptionsHtml = productsState
+          .filter((item) => item && item.active !== false)
+          .slice(0, 120)
+          .map((item) => [`product:${item.id}`, `Produto: ${productTitle(item)}`]);
+        const findOptionsHtml = (findsState?.finalists || [])
+          .filter((item) => item && item.active !== false)
+          .slice(0, 120)
+          .map((item) => [`find:${findPublicId(item)}`, `Find: ${productTitle(item)}`]);
+        return [...base, ...customOptionsHtml, ...productOptionsHtml, ...findOptionsHtml]
+          .map(([value, label]) => `<option value="${escapeHtml(value)}"${String(value) === String(selectedValue) ? " selected" : ""}>${escapeHtml(label)}</option>`)
+          .join("");
+      }
+
+      function visualBlockForm(block, index) {
+        return `<article class="visual-editor-card" data-visual-editor="${escapeHtml(block.id)}">
+          <div class="row">
+            <label>Tipo
+              <select data-visual-index="${index}" data-visual-field="kind">
+                <option value="button"${block.kind !== "text" ? " selected" : ""}>Botao</option>
+                <option value="text"${block.kind === "text" ? " selected" : ""}>Texto/aviso</option>
+              </select>
+            </label>
+            <label>Acao
+              <select data-visual-index="${index}" data-visual-field="target">
+                <option value="">Sem clique</option>
+                ${redirectOptions(block.target || "")}
+              </select>
+            </label>
+          </div>
+          <label>Texto <input data-visual-index="${index}" data-visual-field="label" value="${escapeHtml(block.label || "")}"></label>
+          <div class="row">
+            <label>Cor fundo <input type="color" data-visual-index="${index}" data-visual-field="background" value="${escapeHtml(block.background || (block.kind === "text" ? "#ffffff" : "#ff2b2b"))}"></label>
+            <label>Cor texto <input type="color" data-visual-index="${index}" data-visual-field="color" value="${escapeHtml(block.color || (block.kind === "text" ? "#111111" : "#ffffff"))}"></label>
+          </div>
+          <div class="row">
+            <label>X % <input type="number" min="0" max="100" data-visual-index="${index}" data-visual-field="x" value="${escapeHtml(block.x ?? 8)}"></label>
+            <label>Y % <input type="number" min="0" max="100" data-visual-index="${index}" data-visual-field="y" value="${escapeHtml(block.y ?? 70)}"></label>
+          </div>
+          <div class="row">
+            <label>Largura px <input type="number" min="0" data-visual-index="${index}" data-visual-field="width" value="${escapeHtml(block.width || "")}" placeholder="auto"></label>
+            <label>Altura px <input type="number" min="0" data-visual-index="${index}" data-visual-field="height" value="${escapeHtml(block.height || 44)}"></label>
+          </div>
+          <div class="row">
+            <label>Fonte px <input type="number" min="10" max="72" data-visual-index="${index}" data-visual-field="fontSize" value="${escapeHtml(block.fontSize || 15)}"></label>
+            <label>Borda px <input type="number" min="0" max="999" data-visual-index="${index}" data-visual-field="radius" value="${escapeHtml(block.radius ?? 999)}"></label>
+          </div>
+          <button class="btn btn-ghost" type="button" data-remove-visual="${index}">Excluir bloco</button>
+        </article>`;
+      }
+
+      function heroVisualEditor() {
+        const blocks = siteContentState.homeHero.visualBlocks || [];
+        const forms = blocks.length
+          ? blocks.map(visualBlockForm).join("")
+          : '<p class="editor-note">Nenhum botao/texto solto criado ainda. Adicione um bloco para posicionar no preview.</p>';
+        return `
+          <div class="content-fieldset">
+            <h3>Editor visual do hero</h3>
+            <p class="editor-note">Arraste os blocos no preview para ajustar a posicao. Use texto sem clique para avisos/promocoes e botao para redirecionar para areas ou produtos.</p>
+            <div class="master-tools">
+              <div class="site-content-form">
+                <label>Encaixe da imagem do hero
+                  <select data-content-path="homeHero.backgroundFit">
+                    <option value="stretch"${siteContentState.homeHero.backgroundFit === "stretch" ? " selected" : ""}>Esticar ate preencher sem cortar</option>
+                    <option value="contain"${siteContentState.homeHero.backgroundFit === "contain" ? " selected" : ""}>Mostrar inteira sem cortar</option>
+                    <option value="cover"${siteContentState.homeHero.backgroundFit === "cover" ? " selected" : ""}>Cobrir o espaco cortando se precisar</option>
+                  </select>
+                </label>
+                <button class="btn btn-red" type="button" id="addHeroVisualBlock">Adicionar botao/texto</button>
+                <div id="heroVisualBlockForms">${forms}</div>
+              </div>
+              <div class="visual-preview" id="heroVisualPreview" aria-label="Preview visual do hero"></div>
+            </div>
+          </div>
+        `;
+      }
+
+      function updateHeroVisualBlock(index, field, value) {
+        const block = siteContentState.homeHero.visualBlocks?.[index];
+        if (!block) return;
+        const numeric = ["x", "y", "width", "height", "fontSize", "radius"];
+        block[field] = numeric.includes(field) ? (value === "" ? "" : Number(value)) : value;
+        renderHeroVisualBlockForms();
+        renderHeroVisualPreview();
+      }
+
+      function renderHeroVisualBlockForms() {
+        const node = $("#heroVisualBlockForms");
+        if (!node) return;
+        const blocks = siteContentState.homeHero.visualBlocks || [];
+        node.innerHTML = blocks.length ? blocks.map(visualBlockForm).join("") : '<p class="editor-note">Nenhum botao/texto solto criado ainda.</p>';
+        node.querySelectorAll("[data-visual-index]").forEach((field) => {
+          field.addEventListener("change", () => updateHeroVisualBlock(Number(field.dataset.visualIndex), field.dataset.visualField, field.value));
+          field.addEventListener("input", () => updateHeroVisualBlock(Number(field.dataset.visualIndex), field.dataset.visualField, field.value));
+        });
+        node.querySelectorAll("[data-remove-visual]").forEach((button) => {
+          button.addEventListener("click", () => {
+            siteContentState.homeHero.visualBlocks.splice(Number(button.dataset.removeVisual), 1);
+            renderHeroVisualBlockForms();
+            renderHeroVisualPreview();
+          });
+        });
+      }
+
+      function renderHeroVisualPreview() {
+        const preview = $("#heroVisualPreview");
+        if (!preview) return;
+        const image = getPathValue(siteContentState, "homeHero.backgroundImage") || "";
+        const fit = getPathValue(siteContentState, "homeHero.backgroundFit") || "stretch";
+        preview.classList.toggle("is-contain", fit === "contain");
+        preview.classList.toggle("is-cover", fit === "cover");
+        const imageHtml = image ? `<img src="${escapeHtml(adminPreviewSrc(image))}" alt="">` : "";
+        const blocks = (siteContentState.homeHero.visualBlocks || []).map((block, index) => `
+          <span class="visual-block" data-visual-preview-index="${index}" data-kind="${escapeHtml(block.kind || "button")}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 70)}%;--w:${block.width ? `${Number(block.width)}px` : "auto"};--h:${Number(block.height || 44)}px;--bg:${escapeHtml(block.background || "#ff2b2b")};--fg:${escapeHtml(block.color || "#fff")};--fs:${Number(block.fontSize || 15)}px;--fw:${Number(block.fontWeight || 1000)};--r:${Number(block.radius ?? 999)}px">${escapeHtml(block.label || "Novo bloco")}</span>
+        `).join("");
+        preview.innerHTML = `${imageHtml}<div class="visual-preview-copy"><strong>${escapeHtml(siteContentState.homeHero.title || "")}</strong><span>${escapeHtml(siteContentState.homeHero.subtitle || "")}</span></div>${blocks}`;
+        attachVisualDragHandlers();
+      }
+
+      function attachVisualDragHandlers() {
+        const preview = $("#heroVisualPreview");
+        if (!preview) return;
+        preview.querySelectorAll("[data-visual-preview-index]").forEach((node) => {
+          node.addEventListener("pointerdown", (event) => {
+            event.preventDefault();
+            const index = Number(node.dataset.visualPreviewIndex);
+            node.setPointerCapture(event.pointerId);
+            const move = (moveEvent) => {
+              const box = preview.getBoundingClientRect();
+              const x = Math.max(0, Math.min(100, ((moveEvent.clientX - box.left) / box.width) * 100));
+              const y = Math.max(0, Math.min(100, ((moveEvent.clientY - box.top) / box.height) * 100));
+              const block = siteContentState.homeHero.visualBlocks?.[index];
+              if (!block) return;
+              block.x = Math.round(x * 10) / 10;
+              block.y = Math.round(y * 10) / 10;
+              node.style.setProperty("--x", `${block.x}%`);
+              node.style.setProperty("--y", `${block.y}%`);
+            };
+            const up = () => {
+              node.removeEventListener("pointermove", move);
+              node.removeEventListener("pointerup", up);
+              renderHeroVisualBlockForms();
+            };
+            node.addEventListener("pointermove", move);
+            node.addEventListener("pointerup", up);
+          });
+        });
+      }
+
+      function renderMaintenancePreview() {
+        const preview = $("#maintenancePreview");
+        if (!preview) return;
+        ensureMasterContentDefaults();
+        const maintenance = siteContentState.maintenance || {};
+        const title = maintenance.title || "Estamos em manutencao";
+        const message = maintenance.message || "A MobilyTech BR esta ajustando o site agora.";
+        const email = maintenance.email || "mobilytechbr@gmail.com";
+        const whatsapp = String(maintenance.whatsapp || "5511954801967");
+        const active = siteContentState.featureFlags?.site?.maintenanceMode === true;
+        preview.innerHTML = `
+          <div>
+            <img src="/assets/mobilytech-logo.png" alt="MobilyTech BR">
+            <h3>${escapeHtml(title)}</h3>
+            <p>${escapeHtml(message)}</p>
+            <div class="hero-actions" style="justify-content:center;margin-top:18px">
+              <a class="btn btn-red" href="https://wa.me/${escapeHtml(whatsapp.replace(/\D/g, ""))}" target="_blank" rel="noreferrer">Chamar no WhatsApp</a>
+              <a class="btn btn-dark" href="mailto:${escapeHtml(email)}">Enviar e-mail</a>
+            </div>
+            <p style="margin-top:14px">${active ? "Modo manutencao ligado no conteudo local." : "Modo manutencao desligado no conteudo local."}</p>
+          </div>
+        `;
+      }
+
+      function renderMaintenanceEditor() {
+        const editor = $("#maintenanceEditor");
+        if (!editor) return;
+        ensureMasterContentDefaults();
+        editor.innerHTML = `
+          <div class="content-fieldset">
+            <h3>Publicacao</h3>
+            <div class="content-grid">
+              ${contentCheckbox("featureFlags.site.maintenanceMode", "Site em manutencao", "Quando ligado, substitui as paginas publicas por uma tela simples de contato.")}
+            </div>
+          </div>
+          <div class="content-fieldset">
+            <h3>Mensagem para clientes</h3>
+            <div class="content-grid">
+              ${contentInput("maintenance.title", "Titulo")}
+              ${contentInput("maintenance.message", "Mensagem", "textarea", "wide")}
+              ${contentInput("maintenance.whatsapp", "WhatsApp com DDI")}
+              ${contentInput("maintenance.email", "E-mail de contato")}
+            </div>
+          </div>
+        `;
+        renderMaintenancePreview();
+        setInlineStatus("maintenanceStatus", "Tela de manutencao carregada. Edite e salve quando quiser aplicar no site.", "ok");
+      }
+
+      function slugify(value) {
+        return String(value || "nova-pagina")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .slice(0, 48) || "nova-pagina";
+      }
+
+      function makeBuilderPageId() {
+        return `custom-page-${Date.now().toString(36)}-${Math.random().toString(16).slice(2, 6)}`;
+      }
+
+      function makeBuilderBlockId() {
+        return `custom-block-${Date.now().toString(36)}-${Math.random().toString(16).slice(2, 6)}`;
+      }
+
+      function activeCustomPage() {
+        ensureMasterContentDefaults();
+        if (!siteContentState.customPages.length) addCustomPage(false);
+        builderActivePageIndex = Math.max(0, Math.min(builderActivePageIndex, siteContentState.customPages.length - 1));
+        return siteContentState.customPages[builderActivePageIndex];
+      }
+
+      function defaultBuilderBlock(type = "box") {
+        const base = {
+          id: makeBuilderBlockId(),
+          type,
+          label: type === "button" ? "Ver nossos produtos" : type === "image" ? "" : "Novo bloco",
+          text: type === "button" ? "Ver nossos produtos" : type === "image" ? "" : "Escreva aqui",
+          target: type === "button" ? "produtos" : "",
+          image: "",
+          objectFit: type === "image" ? "contain" : "",
+          lockAspect: type === "image",
+          aspectRatio: type === "image" ? 1.6 : 0,
+          x: 8,
+          y: 12,
+          width: type === "button" ? 220 : 320,
+          height: type === "button" ? 54 : type === "image" ? 180 : 120,
+          radius: type === "button" ? 999 : 18,
+          background: type === "button" ? "#ff2b2b" : type === "image" ? "#ffffff" : "#ffffff",
+          color: type === "button" ? "#ffffff" : "#111111",
+          backgroundMode: "solid",
+          gradientFrom: type === "button" ? "#ff2b2b" : "#ffffff",
+          gradientTo: type === "button" ? "#148bff" : "#e9f5ff",
+          gradientAngle: 135,
+          textMode: "solid",
+          textGradientFrom: "#111111",
+          textGradientTo: "#148bff",
+          textGradientAngle: 90,
+          textTexture: "",
+          texturePhrase: "",
+          shadowStrength: 18,
+          textShadowStrength: 0,
+          blurPx: 12,
+          fontSize: type === "button" ? 16 : 18,
+          fontWeight: 900,
+          textAlign: "center"
+        };
+        if (type === "text") {
+          base.background = "#ffffff";
+          base.width = 360;
+          base.height = 84;
+          base.radius = 0;
+          base.shadowStrength = 0;
+        }
+        return base;
+      }
+
+      function addCustomPage(render = true) {
+        ensureMasterContentDefaults();
+        const count = siteContentState.customPages.length + 1;
+        siteContentState.customPages.push({
+          id: makeBuilderPageId(),
+          active: true,
+          showInNav: false,
+          title: `Nova pagina ${count}`,
+          navLabel: `Nova pagina ${count}`,
+          slug: `nova-pagina-${count}`,
+          intro: "Edite esta pagina pelo construtor visual.",
+          blocks: [
+            defaultBuilderBlock("box"),
+            { ...defaultBuilderBlock("button"), y: 42 }
+          ]
+        });
+        builderActivePageIndex = siteContentState.customPages.length - 1;
+        builderSelectedBlockId = "";
+        if (render) renderPageBuilder();
+      }
+
+      function builderPageListHtml() {
+        ensureMasterContentDefaults();
+        return siteContentState.customPages.map((page, index) => `
+          <button type="button" data-builder-page="${index}" aria-selected="${index === builderActivePageIndex ? "true" : "false"}">
+            ${escapeHtml(page.navLabel || page.title || page.slug)}
+            <small style="display:block;color:#647184;margin-top:4px">${escapeHtml(page.slug || "")}${page.showInNav ? " | no menu" : ""}${page.active === false ? " | pausada" : ""}</small>
+          </button>
+        `).join("") || '<p class="editor-note">Nenhuma pagina criada ainda.</p>';
+      }
+
+      function builderBlockForm(block, index) {
+        return `<article class="visual-editor-card${block.id === builderSelectedBlockId ? " is-selected" : ""}" data-builder-block-form="${escapeHtml(block.id)}">
+          <div class="row">
+            <label>Tipo
+              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="type">
+                <option value="box"${block.type === "box" ? " selected" : ""}>Caixa</option>
+                <option value="text"${block.type === "text" ? " selected" : ""}>Texto</option>
+                <option value="button"${block.type === "button" ? " selected" : ""}>Botao</option>
+                <option value="image"${block.type === "image" ? " selected" : ""}>Imagem</option>
+              </select>
+            </label>
+            <label>Redirecionamento
+              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="target">
+                <option value="">Sem clique</option>
+                ${redirectOptions(block.target || "")}
+              </select>
+            </label>
+          </div>
+          <label>Texto/rotulo <textarea data-builder-block="${escapeHtml(block.id)}" data-builder-field="text">${escapeHtml(block.text || block.label || "")}</textarea></label>
+          <label>Imagem/PNG sem fundo <input data-builder-block="${escapeHtml(block.id)}" data-builder-field="image" value="${escapeHtml(block.image || "")}" placeholder="./assets/minha-imagem.png"></label>
+          <div class="media-upload-row">
+            <input type="file" accept="${MEDIA_ACCEPT}" data-builder-upload="${escapeHtml(block.id)}" data-builder-upload-field="image">
+            <button class="btn btn-dark" type="button" data-builder-upload-trigger="${escapeHtml(block.id)}" data-builder-upload-target="image">Enviar imagem</button>
+          </div>
+          <div class="row">
+            <label>X % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="x" value="${escapeHtml(block.x ?? 8)}"></label>
+            <label>Y % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="y" value="${escapeHtml(block.y ?? 12)}"></label>
+          </div>
+          <div class="row">
+            <label>Largura px <input type="number" min="80" data-builder-block="${escapeHtml(block.id)}" data-builder-field="width" value="${escapeHtml(block.width || 260)}"></label>
+            <label>Altura px <input type="number" min="40" data-builder-block="${escapeHtml(block.id)}" data-builder-field="height" value="${escapeHtml(block.height || 80)}"></label>
+          </div>
+          <div class="row">
+            <label>Cor fundo <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="background" value="${escapeHtml(block.background || "#ffffff")}"></label>
+            <label>Cor texto <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="color" value="${escapeHtml(block.color || "#111111")}"></label>
+          </div>
+          <div class="row">
+            <label>Fundo
+              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="backgroundMode">
+                <option value="solid"${(block.backgroundMode || "solid") === "solid" ? " selected" : ""}>Cor solida</option>
+                <option value="gradient"${block.backgroundMode === "gradient" ? " selected" : ""}>Gradiente</option>
+                <option value="glass"${block.backgroundMode === "glass" ? " selected" : ""}>Glass</option>
+              </select>
+            </label>
+            <label>Imagem encaixe
+              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="objectFit">
+                <option value="contain"${(block.objectFit || "contain") === "contain" ? " selected" : ""}>Inteira</option>
+                <option value="cover"${block.objectFit === "cover" ? " selected" : ""}>Cobrir</option>
+                <option value="fill"${block.objectFit === "fill" ? " selected" : ""}>Esticar livre</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientFrom" value="${escapeHtml(block.gradientFrom || block.background || "#ffffff")}"></label>
+            <label>Gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientTo" value="${escapeHtml(block.gradientTo || "#e9f5ff")}"></label>
+          </div>
+          <div class="row">
+            <label>Angulo gradiente <input type="number" min="0" max="360" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientAngle" value="${escapeHtml(block.gradientAngle ?? 135)}"></label>
+            <label>Cadeado proporcao
+              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="lockAspect">
+                <option value="true"${block.lockAspect !== false ? " selected" : ""}>Travado</option>
+                <option value="false"${block.lockAspect === false ? " selected" : ""}>Livre</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Texto alinhado
+              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="textAlign">
+                <option value="left"${block.textAlign === "left" ? " selected" : ""}>Esquerda</option>
+                <option value="center"${block.textAlign !== "left" && block.textAlign !== "right" ? " selected" : ""}>Centro</option>
+                <option value="right"${block.textAlign === "right" ? " selected" : ""}>Direita</option>
+              </select>
+            </label>
+            <label>Borda curva px <input type="number" min="0" max="999" data-builder-block="${escapeHtml(block.id)}" data-builder-field="radius" value="${escapeHtml(block.radius ?? 14)}"></label>
+          </div>
+          <div class="row">
+            <label>Fonte px <input type="number" min="10" max="80" data-builder-block="${escapeHtml(block.id)}" data-builder-field="fontSize" value="${escapeHtml(block.fontSize || 16)}"></label>
+            <label>Peso fonte <input type="number" min="300" max="1000" step="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="fontWeight" value="${escapeHtml(block.fontWeight || 900)}"></label>
+          </div>
+          <details class="media-details" ${block.id === builderSelectedBlockId ? "open" : ""}>
+            <summary>Visual avancado</summary>
+            <div class="row">
+              <label>Texto
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="textMode">
+                  <option value="solid"${(block.textMode || "solid") === "solid" ? " selected" : ""}>Cor solida</option>
+                  <option value="gradient"${block.textMode === "gradient" ? " selected" : ""}>Gradiente</option>
+                  <option value="texture"${block.textMode === "texture" ? " selected" : ""}>Textura por imagem</option>
+                </select>
+              </label>
+              <label>Sombra box <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="shadowStrength" value="${escapeHtml(block.shadowStrength ?? 18)}"></label>
+            </div>
+            <div class="row">
+              <label>Texto gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientFrom" value="${escapeHtml(block.textGradientFrom || block.color || "#111111")}"></label>
+              <label>Texto gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientTo" value="${escapeHtml(block.textGradientTo || "#148bff")}"></label>
+            </div>
+            <div class="row">
+              <label>Angulo texto <input type="number" min="0" max="360" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientAngle" value="${escapeHtml(block.textGradientAngle ?? 90)}"></label>
+              <label>Sombra texto <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textShadowStrength" value="${escapeHtml(block.textShadowStrength ?? 0)}"></label>
+            </div>
+            <label>Textura do texto <input data-builder-block="${escapeHtml(block.id)}" data-builder-field="textTexture" value="${escapeHtml(block.textTexture || "")}" placeholder="./assets/bandeira.png"></label>
+            <label>Trecho com textura <input data-builder-block="${escapeHtml(block.id)}" data-builder-field="texturePhrase" value="${escapeHtml(block.texturePhrase || "")}" placeholder="Ex.: BR, uma palavra ou letras exatas"></label>
+            <p class="editor-note">Para aplicar a textura so em uma palavra ou letras, escreva o trecho exato acima. Se deixar vazio, a textura vale para o texto inteiro.</p>
+            <div class="media-upload-row">
+              <input type="file" accept="${MEDIA_ACCEPT}" data-builder-upload="${escapeHtml(block.id)}" data-builder-upload-field="textTexture">
+              <button class="btn btn-dark" type="button" data-builder-upload-trigger="${escapeHtml(block.id)}" data-builder-upload-target="textTexture">Enviar textura</button>
+            </div>
+            <label>Blur do glass <input type="number" min="0" max="40" data-builder-block="${escapeHtml(block.id)}" data-builder-field="blurPx" value="${escapeHtml(block.blurPx ?? 12)}"></label>
+          </details>
+          <button class="btn btn-ghost" type="button" data-remove-builder-block="${escapeHtml(block.id)}">Excluir bloco</button>
+        </article>`;
+      }
+
+      function renderBuilderEditor() {
+        const editor = $("#builderEditor");
+        if (!editor) return;
+        const page = activeCustomPage();
+        editor.innerHTML = `
+          <div class="content-fieldset">
+            <h3>Dados da pagina</h3>
+            <div class="content-grid">
+              <label>Ativa
+                <select data-builder-page-field="active">
+                  <option value="true"${page.active !== false ? " selected" : ""}>Sim</option>
+                  <option value="false"${page.active === false ? " selected" : ""}>Nao</option>
+                </select>
+              </label>
+              <label>Mostrar no menu
+                <select data-builder-page-field="showInNav">
+                  <option value="false"${page.showInNav !== true ? " selected" : ""}>Nao</option>
+                  <option value="true"${page.showInNav === true ? " selected" : ""}>Sim</option>
+                </select>
+              </label>
+              <label>Titulo <input data-builder-page-field="title" value="${escapeHtml(page.title || "")}"></label>
+              <label>Nome no menu <input data-builder-page-field="navLabel" value="${escapeHtml(page.navLabel || "")}"></label>
+              <label>Slug/endereco <input data-builder-page-field="slug" value="${escapeHtml(page.slug || "")}"></label>
+              <label class="wide">Texto inicial <textarea data-builder-page-field="intro">${escapeHtml(page.intro || "")}</textarea></label>
+              <button class="btn btn-ghost" type="button" id="deleteCustomPage">Excluir esta pagina</button>
+            </div>
+          </div>
+          <div class="content-fieldset">
+            <h3>Blocos desta pagina</h3>
+            <p class="editor-note">Clique em um bloco no preview para selecionar. Arraste o bloco dentro do preview para ajustar a posicao.</p>
+            ${(page.blocks || []).map(builderBlockForm).join("") || '<p class="editor-note">Nenhum bloco nesta pagina.</p>'}
+          </div>
+        `;
+        editor.querySelectorAll("[data-builder-page-field]").forEach((field) => {
+          field.addEventListener("input", () => updateBuilderPageField(field.dataset.builderPageField, field.value, field.type === "checkbox" ? field.checked : null));
+          field.addEventListener("change", () => updateBuilderPageField(field.dataset.builderPageField, field.value, field.type === "checkbox" ? field.checked : null));
+        });
+        editor.querySelectorAll("[data-builder-block]").forEach((field) => {
+          field.addEventListener("input", () => updateBuilderBlockField(field.dataset.builderBlock, field.dataset.builderField, field.value));
+          field.addEventListener("change", () => updateBuilderBlockField(field.dataset.builderBlock, field.dataset.builderField, field.value));
+        });
+        editor.querySelectorAll("[data-remove-builder-block]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const targetId = button.dataset.removeBuilderBlock;
+            const page = activeCustomPage();
+            page.blocks = (page.blocks || []).filter((block) => block.id !== targetId);
+            if (builderSelectedBlockId === targetId) builderSelectedBlockId = "";
+            renderPageBuilder();
+          });
+        });
+        $("#deleteCustomPage")?.addEventListener("click", () => {
+          ensureMasterContentDefaults();
+          if (!siteContentState.customPages.length) return;
+          siteContentState.customPages.splice(builderActivePageIndex, 1);
+          builderActivePageIndex = Math.max(0, builderActivePageIndex - 1);
+          builderSelectedBlockId = "";
+          renderPageBuilder();
+          setInlineStatus("builderStatus", "Pagina removida localmente. Salve para publicar a remocao.", "ok");
+        });
+      }
+
+      function updateBuilderPageField(field, value) {
+        const page = activeCustomPage();
+        if (field === "active" || field === "showInNav") page[field] = value === "true";
+        else if (field === "slug") page.slug = slugify(value);
+        else page[field] = value;
+        if (field === "title" && !page.navLabel) page.navLabel = value;
+        renderBuilderPageList();
+        renderBuilderPreview();
+        setInlineStatus("builderStatus", "Alteracao local aplicada. Clique em salvar paginas no site para publicar.", "ok");
+      }
+
+      function updateBuilderBlockField(id, field, value) {
+        const page = activeCustomPage();
+        const block = (page.blocks || []).find((item) => item.id === id);
+        if (!block) return;
+        const numeric = ["x", "y", "width", "height", "radius", "fontSize", "fontWeight", "gradientAngle", "textGradientAngle", "shadowStrength", "textShadowStrength", "blurPx"];
+        if (field === "lockAspect") block.lockAspect = value === "true";
+        else block[field] = numeric.includes(field) ? Number(value || 0) : value;
+        if (field === "text") block.label = value;
+        if ((field === "width" || field === "height") && Number(block.width) > 0 && Number(block.height) > 0) {
+          block.aspectRatio = Number(block.width) / Number(block.height);
+        }
+        builderSelectedBlockId = id;
+        renderBuilderPreview();
+        renderBuilderEditor();
+        setInlineStatus("builderStatus", "Bloco atualizado no preview. Clique em salvar para publicar.", "ok");
+      }
+
+      async function uploadBuilderImage(blockId, targetField = "image") {
+        const input = Array.from(document.querySelectorAll("[data-builder-upload]")).find((node) => node.dataset.builderUpload === blockId && node.dataset.builderUploadField === targetField);
+        const file = input?.files?.[0];
+        if (!file) {
+          setInlineStatus("builderStatus", "Escolha uma imagem primeiro.", "error");
+          return;
+        }
+        if (file.size > MEDIA_MAX_BYTES) {
+          setInlineStatus("builderStatus", "Imagem muito grande. Use ate 8 MB.", "error");
+          return;
+        }
+        try {
+          setInlineStatus("builderStatus", "Enviando imagem do construtor...", "info");
+          const token = $("#adminWriteToken")?.value || "";
+          const response = await fetch("/api/upload-media", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Token": token
+            },
+            body: JSON.stringify({
+              filename: file.name,
+              mimeType: file.type,
+              dataBase64: await readFileAsBase64(file)
+            })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false) {
+            setInlineStatus("builderStatus", result.error || "Nao foi possivel enviar a imagem.", "error");
+            return;
+          }
+          const publicPath = result.publicPath || (result.path ? `./${result.path}` : "");
+          if (!publicPath) {
+            setInlineStatus("builderStatus", "Imagem enviada, mas sem caminho publico retornado.", "error");
+            return;
+          }
+          updateBuilderBlockField(blockId, targetField, publicPath);
+          setInlineStatus("builderStatus", "Imagem enviada e aplicada no bloco. Clique em salvar paginas no site para publicar.", "ok");
+        } catch (error) {
+          setInlineStatus("builderStatus", error.message || "Erro ao enviar imagem.", "error");
+        }
+      }
+
+      function builderBlockPreview(block) {
+        const image = block.type === "image" && block.image ? `<img src="${escapeHtml(adminPreviewSrc(block.image))}" alt="">` : "";
+        const sourceText = String(block.text || block.label || "Bloco");
+        let richText = escapeHtml(sourceText);
+        if (block.textMode === "texture" && block.textTexture && block.texturePhrase && sourceText.includes(block.texturePhrase)) {
+          const parts = sourceText.split(block.texturePhrase);
+          richText = parts.map(escapeHtml).join(`<span class="text-texture-part">${escapeHtml(block.texturePhrase)}</span>`);
+        }
+        const text = block.type === "image" ? image || "Imagem" : richText;
+        const shadow = Number(block.shadowStrength || 0) > 0
+          ? `0 ${Math.max(4, Number(block.shadowStrength) / 2)}px ${Math.max(10, Number(block.shadowStrength) * 1.6)}px rgba(13,23,38,${Math.min(.38, Number(block.shadowStrength) / 180)})`
+          : "none";
+        const textShadow = Number(block.textShadowStrength || 0) > 0
+          ? `0 2px ${Math.max(2, Number(block.textShadowStrength) / 5)}px rgba(0,0,0,${Math.min(.55, Number(block.textShadowStrength) / 140)})`
+          : "none";
+        const texture = block.textTexture ? `url(${escapeHtml(adminPreviewSrc(block.textTexture))})` : "none";
+        const lock = block.lockAspect === false ? "L" : "T";
+        const textMode = block.textMode === "texture" && block.texturePhrase ? "solid" : (block.textMode || "solid");
+        return `<div class="builder-block${block.id === builderSelectedBlockId ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")}">${text}<button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
+      }
+
+      function renderBuilderPreview() {
+        const page = activeCustomPage();
+        const title = $("#builderPreviewTitle");
+        const intro = $("#builderPreviewIntro");
+        const stage = $("#builderStage");
+        if (title) title.textContent = page.title || "Preview";
+        if (intro) intro.textContent = page.intro || `Endereco: /fase2/${page.slug || "nova-pagina"}.html`;
+        if (!stage) return;
+        stage.innerHTML = (page.blocks || []).map(builderBlockPreview).join("");
+        attachBuilderDragHandlers();
+      }
+
+      function attachBuilderDragHandlers() {
+        const stage = $("#builderStage");
+        if (!stage) return;
+        stage.querySelectorAll("[data-toggle-builder-lock]").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const page = activeCustomPage();
+            const block = (page.blocks || []).find((item) => item.id === button.dataset.toggleBuilderLock);
+            if (!block) return;
+            block.lockAspect = block.lockAspect === false;
+            if (Number(block.width) > 0 && Number(block.height) > 0) block.aspectRatio = Number(block.width) / Number(block.height);
+            builderSelectedBlockId = block.id;
+            renderPageBuilder();
+          });
+        });
+        stage.querySelectorAll("[data-builder-resize]").forEach((handle) => {
+          handle.addEventListener("pointerdown", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const page = activeCustomPage();
+            const block = (page.blocks || []).find((item) => item.id === handle.dataset.builderResize);
+            const node = handle.closest("[data-builder-preview-block]");
+            if (!block || !node) return;
+            builderSelectedBlockId = block.id;
+            handle.setPointerCapture(event.pointerId);
+            const startX = event.clientX;
+            const startY = event.clientY;
+            const startWidth = Number(block.width || node.offsetWidth || 260);
+            const startHeight = Number(block.height || node.offsetHeight || 80);
+            const ratio = Number(block.aspectRatio || (startWidth / Math.max(1, startHeight)) || 1);
+            const move = (moveEvent) => {
+              const nextWidth = Math.max(40, Math.round(startWidth + moveEvent.clientX - startX));
+              let nextHeight = Math.max(30, Math.round(startHeight + moveEvent.clientY - startY));
+              if (block.lockAspect !== false) nextHeight = Math.max(30, Math.round(nextWidth / ratio));
+              block.width = nextWidth;
+              block.height = nextHeight;
+              block.aspectRatio = nextWidth / Math.max(1, nextHeight);
+              node.style.setProperty("--w", `${block.width}px`);
+              node.style.setProperty("--h", `${block.height}px`);
+            };
+            const up = () => {
+              handle.removeEventListener("pointermove", move);
+              handle.removeEventListener("pointerup", up);
+              renderBuilderEditor();
+              setInlineStatus("builderStatus", "Tamanho do bloco atualizado. Clique em salvar para publicar.", "ok");
+            };
+            handle.addEventListener("pointermove", move);
+            handle.addEventListener("pointerup", up);
+          });
+        });
+        stage.querySelectorAll("[data-builder-preview-block]").forEach((node) => {
+          node.addEventListener("click", () => {
+            builderSelectedBlockId = node.dataset.builderPreviewBlock;
+            renderBuilderPreview();
+            renderBuilderEditor();
+          });
+          node.addEventListener("pointerdown", (event) => {
+            if (event.target?.dataset?.builderResize || event.target?.dataset?.toggleBuilderLock) return;
+            event.preventDefault();
+            builderSelectedBlockId = node.dataset.builderPreviewBlock;
+            node.setPointerCapture(event.pointerId);
+            const move = (moveEvent) => {
+              const box = stage.getBoundingClientRect();
+              const x = Math.max(0, Math.min(100, ((moveEvent.clientX - box.left) / box.width) * 100));
+              const y = Math.max(0, Math.min(100, ((moveEvent.clientY - box.top) / box.height) * 100));
+              const page = activeCustomPage();
+              const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
+              if (!block) return;
+              block.x = Math.round(x * 10) / 10;
+              block.y = Math.round(y * 10) / 10;
+              node.style.setProperty("--x", `${block.x}%`);
+              node.style.setProperty("--y", `${block.y}%`);
+            };
+            const up = () => {
+              node.removeEventListener("pointermove", move);
+              node.removeEventListener("pointerup", up);
+              renderBuilderEditor();
+              setInlineStatus("builderStatus", "Posicao do bloco atualizada. Clique em salvar para publicar.", "ok");
+            };
+            node.addEventListener("pointermove", move);
+            node.addEventListener("pointerup", up);
+          });
+        });
+      }
+
+      function renderBuilderPageList() {
+        const list = $("#builderPageList");
+        if (!list) return;
+        ensureMasterContentDefaults();
+        list.innerHTML = builderPageListHtml();
+        list.querySelectorAll("[data-builder-page]").forEach((button) => {
+          button.addEventListener("click", () => {
+            builderActivePageIndex = Number(button.dataset.builderPage || 0);
+            builderSelectedBlockId = "";
+            renderPageBuilder();
+          });
+        });
+      }
+
+      function renderPageBuilder() {
+        ensureMasterContentDefaults();
+        if (!$("#builderEditor")) return;
+        activeCustomPage();
+        renderBuilderPageList();
+        renderBuilderEditor();
+        renderBuilderPreview();
+        setInlineStatus("builderStatus", `${siteContentState.customPages.length} pagina(s) no construtor.`, "ok");
+      }
+
+
       function renderSiteContentEditor() {
         const editor = $("#siteContentEditor");
         if (!editor) return;
@@ -1892,6 +3248,7 @@
         siteContentState.featureFlags.auth = siteContentState.featureFlags.auth || {};
         siteContentState.featureFlags.payments = siteContentState.featureFlags.payments || {};
         siteContentState.featureFlags.catalog = siteContentState.featureFlags.catalog || {};
+        ensureMasterContentDefaults();
         if (siteContentState.featureFlags.auth.google !== false) siteContentState.featureFlags.auth.google = true;
         siteContentState.featureFlags.auth.microsoft = siteContentState.featureFlags.auth.microsoft === true;
         if (siteContentState.featureFlags.payments.mercadoPago !== false) siteContentState.featureFlags.payments.mercadoPago = true;
@@ -1939,6 +3296,7 @@
               ${contentCheckbox("featureFlags.payments.abacatePay", "Abacate Pay", "Pausado enquanto corrigimos a chave/API.")}
               ${contentCheckbox("featureFlags.catalog.physicalProducts", "Produtos fisicos proprios", "Reativa PCs, SSDs e fonte que estao fisicamente com voce.")}
               ${contentCheckbox("featureFlags.catalog.dropshippingProducts", "Nossos produtos", "Liga/desliga a vitrine Nossos produtos e trava o checkout quando desligado.")}
+              ${contentCheckbox("featureFlags.site.maintenanceMode", "Site em manutencao", "Quando ligado, o cliente ve uma tela simples com contato por WhatsApp/e-mail.")}
             </div>
           </div>
           <div class="content-fieldset">
@@ -1958,6 +3316,7 @@
               ${heroBackgroundControls()}
             </div>
           </div>
+          ${heroVisualEditor()}
           ${featuredProductSlots("dropshipping", "Destaques da home - Nossos produtos", "Escolha os 6 nossos produtos que aparecem na secao principal. Se deixar algum slot automatico, o site preenche com os proximos produtos validos.", 6)}
           ${featuredProductSlots("finds", "Destaques da home - MobilyTech Finds", "Escolha os 3 achados de marketplace que aparecem na pagina principal. O checkout externo continua no marketplace parceiro.", 3)}
           <div class="content-fieldset">
@@ -1973,6 +3332,9 @@
           ${pageFields}
         `;
         hydrateMediaMeasures();
+        renderHeroVisualBlockForms();
+        renderHeroVisualPreview();
+        renderMaintenanceEditor();
       }
 
       function moneyNumber(value) {
@@ -1986,6 +3348,163 @@
       function moneyInput(value) {
         const number = Number(value || 0);
         return Number.isFinite(number) && number > 0 ? number.toFixed(2).replace(".", ",") : "";
+      }
+
+      function setInlineStatus(id, message, type = "info") {
+        const status = $(`#${id}`);
+        if (!status) return;
+        status.className = `sale-status is-${type}`;
+        status.textContent = message;
+      }
+
+      function isOwnCatalogProduct(item = {}) {
+        return Boolean(item && !["affiliate", "dropshipping", "sob-encomenda"].includes(item.category) && !isMadeToOrderProduct(item));
+      }
+
+      function safeArrayText(value) {
+        return Array.isArray(value) ? value.join(", ") : String(value || "");
+      }
+
+      function syncProductShipping(product) {
+        product.shipping = product.shipping && typeof product.shipping === "object" ? product.shipping : {};
+        ["weightKg", "heightCm", "widthCm", "lengthCm"].forEach((key) => {
+          const number = moneyNumber(product[key]);
+          if (number) product.shipping[key] = number;
+        });
+        if (moneyNumber(product.price)) product.shipping.insuranceValue = moneyNumber(product.price);
+      }
+
+      function renderPreviewCards(containerId, items, type = "products") {
+        const node = $(`#${containerId}`);
+        if (!node) return;
+        const previewItems = (items || []).slice(0, 8);
+        if (!previewItems.length) {
+          node.innerHTML = '<article class="editor-preview-card"><strong>Nenhum item carregado</strong><small>Confira o JSON de origem.</small></article>';
+          return;
+        }
+        node.innerHTML = previewItems.map((item) => {
+          const title = productTitle(item);
+          const price = type === "finds" ? item.salePrice : item.price;
+          const detail = type === "finds"
+            ? (item.platform || item.marketplace?.name || "Afiliado")
+            : (item.category || item.niche || item.priceBand || "Catalogo");
+          return `<article class="editor-preview-card">
+            <strong>${escapeHtml(title)}</strong>
+            <small>${escapeHtml(detail || "-")}</small>
+            <small>${moneyInput(price) ? `R$ ${escapeHtml(moneyInput(price))}` : "sem preco"}</small>
+          </article>`;
+        }).join("");
+      }
+
+      function updateProductField(id, field, value) {
+        const product = productsState.find((item) => String(item.id) === String(id));
+        if (!product) return;
+        const numeric = ["price", "weightKg", "heightCm", "widthCm", "lengthCm"];
+        if (field === "active" || field === "featured") product[field] = value === "true";
+        else if (numeric.includes(field)) product[field] = moneyNumber(value);
+        else if (field.startsWith("specs.")) {
+          product.specs = product.specs && typeof product.specs === "object" ? product.specs : {};
+          product.specs[field.split(".")[1]] = value;
+        } else if (field === "links.olx") {
+          product.links = product.links && typeof product.links === "object" ? product.links : {};
+          product.links.olx = value;
+        } else product[field] = value;
+        if (numeric.includes(field) || field === "price") syncProductShipping(product);
+        renderCatalogProducts(productsState);
+        setInlineStatus("productsCatalogStatus", "Alteracao local aplicada. Clique em salvar para publicar no GitHub.", "ok");
+      }
+
+      function productCatalogForm(product) {
+        const shipping = product.shipping || {};
+        return `<article class="catalog-edit-form" data-product-editor="${escapeHtml(product.id)}">
+          <label>Ativo
+            <select data-product-id="${escapeHtml(product.id)}" data-product-field="active">
+              <option value="true"${product.active !== false ? " selected" : ""}>Sim</option>
+              <option value="false"${product.active === false ? " selected" : ""}>Nao</option>
+            </select>
+          </label>
+          <label>Destaque
+            <select data-product-id="${escapeHtml(product.id)}" data-product-field="featured">
+              <option value="true"${product.featured === true ? " selected" : ""}>Sim</option>
+              <option value="false"${product.featured !== true ? " selected" : ""}>Nao</option>
+            </select>
+          </label>
+          <label>Categoria <input data-product-id="${escapeHtml(product.id)}" data-product-field="category" value="${escapeHtml(product.category || "")}"></label>
+          <label>Preco <input data-product-id="${escapeHtml(product.id)}" data-product-field="price" inputmode="decimal" value="${escapeHtml(moneyInput(product.price))}"></label>
+          <label class="wide">Titulo <textarea data-product-id="${escapeHtml(product.id)}" data-product-field="title">${escapeHtml(productTitle(product))}</textarea></label>
+          <label class="wide">Imagem <input data-product-id="${escapeHtml(product.id)}" data-product-field="image" value="${escapeHtml(product.image || "")}"></label>
+          <label class="wide">Recorte/arte <input data-product-id="${escapeHtml(product.id)}" data-product-field="cutout" value="${escapeHtml(product.cutout || "")}"></label>
+          <label>Peso kg <input data-product-id="${escapeHtml(product.id)}" data-product-field="weightKg" inputmode="decimal" value="${escapeHtml(moneyInput(product.weightKg || shipping.weightKg))}"></label>
+          <label>Altura cm <input data-product-id="${escapeHtml(product.id)}" data-product-field="heightCm" inputmode="decimal" value="${escapeHtml(moneyInput(product.heightCm || shipping.heightCm))}"></label>
+          <label>Largura cm <input data-product-id="${escapeHtml(product.id)}" data-product-field="widthCm" inputmode="decimal" value="${escapeHtml(moneyInput(product.widthCm || shipping.widthCm))}"></label>
+          <label>Comprimento cm <input data-product-id="${escapeHtml(product.id)}" data-product-field="lengthCm" inputmode="decimal" value="${escapeHtml(moneyInput(product.lengthCm || shipping.lengthCm))}"></label>
+          <label>Processador <input data-product-id="${escapeHtml(product.id)}" data-product-field="specs.processor" value="${escapeHtml(product.specs?.processor || "")}"></label>
+          <label>Memoria <input data-product-id="${escapeHtml(product.id)}" data-product-field="specs.memory" value="${escapeHtml(product.specs?.memory || "")}"></label>
+          <label>GPU <input data-product-id="${escapeHtml(product.id)}" data-product-field="specs.gpu" value="${escapeHtml(product.specs?.gpu || "")}"></label>
+          <label>Armazenamento <input data-product-id="${escapeHtml(product.id)}" data-product-field="specs.storage" value="${escapeHtml(product.specs?.storage || "")}"></label>
+          <label class="wide">Link OLX/Referencia <input data-product-id="${escapeHtml(product.id)}" data-product-field="links.olx" value="${escapeHtml(product.links?.olx || "")}"></label>
+        </article>`;
+      }
+
+      function renderCatalogProducts(products) {
+        const editor = $("#catalogProductsEditor");
+        if (!editor) return;
+        const items = (products || []).filter(isOwnCatalogProduct).sort((a, b) => String(productTitle(a)).localeCompare(String(productTitle(b)), "pt-BR"));
+        const ready = items.filter((item) => moneyNumber(item.weightKg || item.shipping?.weightKg) && moneyNumber(item.heightCm || item.shipping?.heightCm) && moneyNumber(item.widthCm || item.shipping?.widthCm) && moneyNumber(item.lengthCm || item.shipping?.lengthCm));
+        if ($("#catalogEditableCount")) $("#catalogEditableCount").textContent = String(items.length);
+        if ($("#shippingReadyCount")) $("#shippingReadyCount").textContent = String(ready.length);
+        renderPreviewCards("catalogProductsPreview", items, "products");
+        if (!items.length) {
+          editor.innerHTML = '<p>Nenhum produto fisico proprio encontrado.</p>';
+          setInlineStatus("productsCatalogStatus", "Nenhum produto fisico proprio encontrado.", "info");
+          return;
+        }
+        editor.innerHTML = items.map(productCatalogForm).join("");
+        editor.querySelectorAll("[data-product-id]").forEach((field) => {
+          field.addEventListener("change", () => updateProductField(field.dataset.productId, field.dataset.productField, field.value));
+        });
+        setInlineStatus("productsCatalogStatus", `${items.length} produtos carregados; ${ready.length} com peso e medidas.`, "ok");
+      }
+
+      function updateOptionList(kind, index, field, value) {
+        const list = kind === "addon" ? addonsState : swapsState;
+        const item = list[index];
+        if (!item) return;
+        if (field === "active") item.active = value === "true";
+        else if (field === "price") item.price = moneyNumber(value);
+        else if (field === "whenContains" || field === "excludeContains") {
+          item[field] = String(value || "").split(",").map((part) => part.trim()).filter(Boolean);
+        } else item[field] = value;
+        renderOptionsEditors();
+        setInlineStatus("catalogOptionsStatus", "Alteracao local aplicada. Clique em salvar para publicar adicionais/swaps.", "ok");
+      }
+
+      function optionForm(kind, item, index) {
+        const isSwap = kind === "swap";
+        return `<article class="catalog-edit-form">
+          <label>Ativo
+            <select data-option-kind="${kind}" data-option-index="${index}" data-option-field="active">
+              <option value="true"${item.active !== false ? " selected" : ""}>Sim</option>
+              <option value="false"${item.active === false ? " selected" : ""}>Nao</option>
+            </select>
+          </label>
+          <label>${isSwap ? "Alvo" : "Categoria"} <input data-option-kind="${kind}" data-option-index="${index}" data-option-field="${isSwap ? "target" : "category"}" value="${escapeHtml(isSwap ? item.target || "" : item.category || "")}"></label>
+          <label>Preco <input data-option-kind="${kind}" data-option-index="${index}" data-option-field="price" inputmode="decimal" value="${escapeHtml(moneyInput(item.price) || String(item.price || ""))}"></label>
+          <label class="wide">Nome <textarea data-option-kind="${kind}" data-option-index="${index}" data-option-field="label">${escapeHtml(item.label || "")}</textarea></label>
+          ${isSwap ? `<label class="wide">Aparece quando contem <input data-option-kind="${kind}" data-option-index="${index}" data-option-field="whenContains" value="${escapeHtml(safeArrayText(item.whenContains))}"></label>
+          <label class="wide">Oculta quando contem <input data-option-kind="${kind}" data-option-index="${index}" data-option-field="excludeContains" value="${escapeHtml(safeArrayText(item.excludeContains))}"></label>` : `<label class="wide">Imagem <input data-option-kind="${kind}" data-option-index="${index}" data-option-field="image" value="${escapeHtml(item.image || "")}"></label>`}
+        </article>`;
+      }
+
+      function renderOptionsEditors() {
+        const addonsNode = $("#addonsEditor");
+        const swapsNode = $("#swapsEditor");
+        if (addonsNode) addonsNode.innerHTML = (addonsState || []).map((item, index) => optionForm("addon", item, index)).join("") || "<p>Nenhum adicional cadastrado.</p>";
+        if (swapsNode) swapsNode.innerHTML = (swapsState || []).map((item, index) => optionForm("swap", item, index)).join("") || "<p>Nenhum swap cadastrado.</p>";
+        document.querySelectorAll("[data-option-kind]").forEach((field) => {
+          field.addEventListener("change", () => updateOptionList(field.dataset.optionKind, Number(field.dataset.optionIndex), field.dataset.optionField, field.value));
+        });
+        setInlineStatus("catalogOptionsStatus", `${addonsState.length} adicionais e ${swapsState.length} swaps carregados.`, "ok");
       }
 
       function parsePercent(value) {
@@ -2270,8 +3789,8 @@
           item.specs = item.specs && typeof item.specs === "object" ? item.specs : {};
           item.specs.niche = item.niche;
         }
-        setDropshippingStatus("Alteracao local aplicada. Baixe o products.json revisado para salvar no repositorio.", "ok");
         renderDropshippingProducts(productsState);
+        setDropshippingStatus("Alteracao local aplicada. Clique em salvar para publicar ou baixe o JSON revisado como fallback.", "ok");
       }
 
       function applyDropshippingMargin(percent) {
@@ -2291,8 +3810,10 @@
         const tbody = $("#dropshippingProductsRows");
         if (!tbody) return;
         const items = products.filter((item) => item && isDirectOrderProduct(item));
+        renderPreviewCards("dropshippingPreviewCards", items, "products");
         if (!items.length) {
           tbody.innerHTML = '<tr><td colspan="14">Nenhum item de Nossos produtos cadastrado.</td></tr>';
+          setDropshippingStatus("Nenhum item de Nossos produtos cadastrado.", "info");
           return;
         }
         tbody.innerHTML = items.map((item) => {
@@ -2341,13 +3862,16 @@
         tbody.querySelectorAll("[data-drop-id]").forEach((field) => {
           field.addEventListener("change", () => updateDropshippingProduct(field.dataset.dropId, field.dataset.dropField, field.value));
         });
+        setDropshippingStatus(`${items.length} nossos produtos carregados para auditoria.`, "ok");
       }
 
       function renderFindsEditor(finds) {
         const tbody = $("#findsEditorRows");
         if (!tbody) return;
+        renderPreviewCards("findsPreviewCards", Array.isArray(finds) ? finds : [], "finds");
         if (!Array.isArray(finds) || !finds.length) {
           tbody.innerHTML = '<tr><td colspan="15">Nenhum item em MobilyTech Finds.</td></tr>';
+          setInlineStatus("findsStatus", "Nenhum item em MobilyTech Finds.", "info");
           return;
         }
         tbody.innerHTML = finds.map((item, index) => `
@@ -2373,6 +3897,7 @@
           field.addEventListener("input", () => updateFind(Number(field.dataset.find), field.dataset.field, field.value));
           field.addEventListener("change", () => updateFind(Number(field.dataset.find), field.dataset.field, field.value));
         });
+        setInlineStatus("findsStatus", `${finds.length} itens carregados. Edite com cuidado e salve quando revisar.`, "ok");
       }
 
       function downloadJson(filename, data) {
@@ -2385,6 +3910,32 @@
         link.click();
         link.remove();
         URL.revokeObjectURL(url);
+      }
+
+      async function saveCatalogJson(target, content, statusId) {
+        const token = $("#adminWriteToken")?.value || "";
+        setInlineStatus(statusId, `Salvando ${target} no GitHub...`, "info");
+        try {
+          const response = await fetch("/api/update-catalog-file", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Admin-Token": token
+            },
+            body: JSON.stringify({ target, content })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false) {
+            setInlineStatus(statusId, result.error || "Nao foi possivel salvar. Use o download como fallback.", "error");
+            return false;
+          }
+          const shortSha = result.commitSha ? ` Commit ${String(result.commitSha).slice(0, 7)}.` : "";
+          setInlineStatus(statusId, `${result.message || "Arquivo salvo."}${shortSha}`, "ok");
+          return true;
+        } catch (error) {
+          setInlineStatus(statusId, error.message || "Erro ao salvar. Use o download como fallback.", "error");
+          return false;
+        }
       }
 
       function adminInitials(user = {}) {
@@ -2478,6 +4029,8 @@
         ]);
         const productList = Array.isArray(products) ? products : [];
         productsState = productList;
+        addonsState = Array.isArray(addons) ? addons : [];
+        swapsState = Array.isArray(swaps) ? swaps : [];
         const ownProducts = productList.filter((item) => item && !["affiliate", "dropshipping", "sob-encomenda"].includes(item.category) && !isMadeToOrderProduct(item));
         const pcs = productList.filter((item) => item && item.category === "pc");
         const finds = Array.isArray(finalists?.finalists) ? finalists.finalists : [];
@@ -2492,10 +4045,14 @@
         $("#syncStatus").textContent = "Catalogo carregado para edicao segura.";
         hydrateMarginControls();
         renderSiteContentEditor();
+        renderCatalogProducts(productList);
+        renderOptionsEditors();
         renderFindsEditor(finds);
         renderDropshippingProducts(productList);
         renderSaleProducts(productList);
         syncSaleProductFields();
+        renderPageBuilder();
+        setAdminPage(localStorage.getItem("mobilytechAdminPage") || "overview");
       }
 
       $("#exportFinds")?.addEventListener("click", () => {
@@ -2509,6 +4066,81 @@
       $("#exportDropshippingProducts")?.addEventListener("click", () => {
         downloadJson("products-sob-encomenda-revisado-mobilytech.json", productsState);
         setDropshippingStatus("products.json revisado baixado com os ajustes locais de nossos produtos.", "ok");
+      });
+      $("#saveFinds")?.addEventListener("click", async () => {
+        if (!findsState) return;
+        await saveCatalogJson("phase2-finalists", findsState, "findsStatus");
+      });
+      $("#saveDropshippingProducts")?.addEventListener("click", async () => {
+        await saveCatalogJson("products", productsState, "dropshippingStatus");
+      });
+      $("#saveProductsCatalog")?.addEventListener("click", async () => {
+        productsState.forEach((product) => {
+          if (product && isOwnCatalogProduct(product)) syncProductShipping(product);
+        });
+        await saveCatalogJson("products", productsState, "productsCatalogStatus");
+      });
+      $("#downloadProductsCatalog")?.addEventListener("click", () => {
+        downloadJson("products-revisado-mobilytech.json", productsState);
+        setInlineStatus("productsCatalogStatus", "products.json revisado baixado como fallback.", "ok");
+      });
+      $("#saveCatalogOptions")?.addEventListener("click", async () => {
+        const savedAddons = await saveCatalogJson("addons", addonsState, "catalogOptionsStatus");
+        if (!savedAddons) return;
+        await saveCatalogJson("swaps", swapsState, "catalogOptionsStatus");
+      });
+      $("#downloadCatalogOptions")?.addEventListener("click", () => {
+        downloadJson("addons-revisado-mobilytech.json", addonsState);
+        downloadJson("swaps-revisado-mobilytech.json", swapsState);
+        setInlineStatus("catalogOptionsStatus", "addons.json e swaps.json revisados baixados como fallback.", "ok");
+      });
+      $("#addAddonOption")?.addEventListener("click", () => {
+        addonsState.push({
+          id: `addon-${Date.now().toString(36)}`,
+          active: true,
+          category: "upgrade",
+          label: "Novo adicional",
+          price: 0,
+          image: ""
+        });
+        renderOptionsEditors();
+      });
+      $("#addSwapOption")?.addEventListener("click", () => {
+        swapsState.push({
+          id: `swap-${Date.now().toString(36)}`,
+          active: true,
+          target: "storage",
+          label: "Nova troca",
+          price: 0,
+          whenContains: [],
+          excludeContains: []
+        });
+        renderOptionsEditors();
+      });
+      $("#saveMaintenanceContent")?.addEventListener("click", async () => {
+        if (!siteContentState) return;
+        await saveCatalogJson("site-content", siteContentState, "maintenanceStatus");
+      });
+      $("#addCustomPage")?.addEventListener("click", () => addCustomPage(true));
+      document.querySelectorAll("[data-add-builder-block]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const page = activeCustomPage();
+          const block = defaultBuilderBlock(button.dataset.addBuilderBlock || "box");
+          page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
+          page.blocks.push(block);
+          builderSelectedBlockId = block.id;
+          renderPageBuilder();
+          setInlineStatus("builderStatus", "Bloco adicionado ao preview. Ajuste e salve para publicar.", "ok");
+        });
+      });
+      $("#saveCustomPages")?.addEventListener("click", async () => {
+        if (!siteContentState) return;
+        await saveCatalogJson("site-content", siteContentState, "builderStatus");
+      });
+      $("#builderEditor")?.addEventListener("click", (event) => {
+        const trigger = event.target?.dataset?.builderUploadTrigger;
+        if (!trigger) return;
+        uploadBuilderImage(trigger, event.target.dataset.builderUploadTarget || "image");
       });
       $("#applyDropshippingMargin")?.addEventListener("click", () => {
         try {
@@ -2556,8 +4188,31 @@
         const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
         setPathValue(siteContentState, path, nextValue);
         if (nodeByDataset("[data-content-preview]", "contentPreview", path)) setMediaPreview(path, event.target.value || "");
+        if (path.startsWith("homeHero.")) renderHeroVisualPreview();
+        if (path.startsWith("maintenance.") || path === "featureFlags.site.maintenanceMode") renderMaintenancePreview();
       });
       $("#siteContentEditor")?.addEventListener("click", (event) => {
+        if (event.target?.id === "addHeroVisualBlock") {
+          ensureMasterContentDefaults();
+          siteContentState.homeHero.visualBlocks.push({
+            id: makeVisualBlockId(),
+            kind: "button",
+            label: "Ver nossos produtos",
+            target: "produtos",
+            x: 8,
+            y: 72,
+            width: 190,
+            height: 48,
+            background: "#ff2b2b",
+            color: "#ffffff",
+            fontSize: 15,
+            fontWeight: 1000,
+            radius: 999
+          });
+          renderHeroVisualBlockForms();
+          renderHeroVisualPreview();
+          return;
+        }
         const uploadPath = event.target?.dataset?.contentUploadTrigger;
         if (!uploadPath) return;
         uploadContentImage(uploadPath);
@@ -2575,6 +4230,22 @@
         const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
         setPathValue(siteContentState, path, nextValue);
         if (nodeByDataset("[data-content-preview]", "contentPreview", path)) setMediaPreview(path, event.target.value || "");
+        if (path.startsWith("homeHero.")) renderHeroVisualPreview();
+        if (path.startsWith("maintenance.") || path === "featureFlags.site.maintenanceMode") renderMaintenancePreview();
+      });
+      $("#maintenanceEditor")?.addEventListener("input", (event) => {
+        const path = event.target?.dataset?.contentPath;
+        if (!path) return;
+        const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
+        setPathValue(siteContentState, path, nextValue);
+        renderMaintenancePreview();
+      });
+      $("#maintenanceEditor")?.addEventListener("change", (event) => {
+        const path = event.target?.dataset?.contentPath;
+        if (!path) return;
+        const nextValue = event.target?.type === "checkbox" ? Boolean(event.target.checked) : (event.target.value || "");
+        setPathValue(siteContentState, path, nextValue);
+        renderMaintenancePreview();
       });
       $("#addFindItem")?.addEventListener("click", addFindItem);
       $("#applyFindMargins")?.addEventListener("click", applyFindMarginDefaults);

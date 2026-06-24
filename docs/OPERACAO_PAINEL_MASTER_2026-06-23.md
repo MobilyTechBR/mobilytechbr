@@ -39,6 +39,26 @@ Resumo fiel dos requisitos do pedido:
   - tamanho, altura e largura;
   - redirecionamento/acao do clique;
   - preview visual.
+- Criar tambem editor de textos/mensagens visuais, nao apenas botoes:
+  - texto livre;
+  - texto clicavel ou nao clicavel;
+  - cor;
+  - tamanho de fonte;
+  - peso da fonte;
+  - largura/altura da caixa;
+  - alinhamento;
+  - posicao no hero/arte/secao;
+  - preview visual antes de salvar.
+- Heroes do site devem ser totalmente personalizaveis pelo painel, com preview lateral: imagem, encaixe/esticar/cortar, botoes, textos soltos, mensagens promocionais, posicao por arrastar com mouse, cor, tamanho e redirecionamentos.
+- Todas as secoes, textos, botoes e caixas do site devem ser editaveis pelo painel quando for seguro:
+  - editar texto existente;
+  - criar nova caixa/bloco;
+  - excluir caixa/bloco existente;
+  - centralizar/alinha textos;
+  - ajustar tamanho, cor, estilo e espacamento;
+  - editar botoes e links;
+  - editar exemplos como suporte/WhatsApp/e-mail, mas aplicar ao site inteiro.
+- A edicao deve continuar simplificada, com controles progressivos/expansiveis para nao virar uma tela poluida.
 - No redirecionamento dos botoes, oferecer lista de opcoes do site:
   - areas gerais, como avaliacoes, Nossos produtos, MobilyTech Finds, Monte seu PC, limpeza, suporte etc.;
   - produto especifico de Nossos produtos;
@@ -64,6 +84,7 @@ Resumo fiel dos requisitos do pedido:
 4. Implementar navegacao superior do painel com subpaginas.
 5. Implementar tela/flag de manutencao do site.
 6. Implementar editor visual de artes/heroes com imagem, fit/stretch, botoes, color picker, redirecionamentos e preview arrastavel.
+6.1. Implementar editor visual de textos e caixas: criar, editar, excluir, posicionar, alinhar e estilizar textos/caixas/botoes de cada secao com preview.
 7. Implementar paginas separadas para MobilyTech Finds e Nossos produtos, com listas recolhidas/expansiveis, resumo e edicao de campos.
 8. Implementar pagina de PCs/swaps/adicionais com edicao segura e intuitiva.
 9. Garantir escrita segura no GitHub/Vercel sem expor tokens.

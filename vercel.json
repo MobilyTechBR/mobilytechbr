@@ -36,6 +36,10 @@
       "dest": "/api/account?action=update-site-content"
     },
     {
+      "src": "/api/update-catalog-file/?",
+      "dest": "/api/account?action=update-catalog-file"
+    },
+    {
       "src": "/api/upload-media/?",
       "dest": "/api/account?action=upload-media"
     },
