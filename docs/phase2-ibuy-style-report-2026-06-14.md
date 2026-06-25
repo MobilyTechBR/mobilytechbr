@@ -1,6 +1,6 @@
 # MobilyTech BR - Fase 2 iBUYPOWER style
 
-Gerado em: 2026-06-19 13:19:04
+Gerado em: 2026-06-25 12:50:52
 
 - Home oficial: `index.html`.
 - Preview alternativo preservado: `fase2-hibrida.html`.

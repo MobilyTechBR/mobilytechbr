@@ -522,7 +522,7 @@
       .confirm-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
       .builder-layout {
         display: grid;
-        grid-template-columns: minmax(340px, .85fr) minmax(520px, 1.15fr);
+        grid-template-columns: minmax(320px, 380px) minmax(520px, 1fr);
         gap: 18px;
         align-items: start;
       }
@@ -533,13 +533,16 @@
       .builder-page-list {
         display: grid;
         gap: 8px;
+        max-height: 240px;
+        overflow: auto;
+        padding-right: 4px;
       }
       .builder-page-list button {
         width: 100%;
         border: 1px solid #dce5f0;
         border-radius: 14px;
         background: #fff;
-        padding: 12px;
+        padding: 9px 11px;
         text-align: left;
         font-weight: 1000;
         cursor: pointer;
@@ -570,7 +573,7 @@
       .builder-page-meta {
         display: block;
         color: #647184;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 850;
       }
       .builder-toolbar {
@@ -600,6 +603,18 @@
       }
       .builder-canvas-header h3 { margin: 0; font-size: 30px; line-height: 1.05; }
       .builder-canvas-header p { margin: 7px 0 0; color: #5e6876; font-weight: 850; }
+      .builder-canvas-hint {
+        display: inline-flex;
+        width: fit-content;
+        margin-top: 10px;
+        border: 1px solid #bfe4ff;
+        border-radius: 999px;
+        background: #f0f9ff;
+        color: #076bbd;
+        padding: 7px 10px;
+        font-size: 12px;
+        font-weight: 1000;
+      }
       .builder-canvas-actions {
         display: grid;
         gap: 8px;
@@ -642,6 +657,36 @@
         display: inline-flex;
         align-items: center;
         gap: 5px;
+      }
+      .builder-zoom-controls {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px;
+        border: 1px solid #d8e3ef;
+        border-radius: 999px;
+        background: #fff;
+      }
+      .builder-zoom-controls .btn {
+        min-height: 30px;
+        padding: 0 10px;
+        font-size: 12px;
+      }
+      .builder-zoom-controls span {
+        min-width: 44px;
+        text-align: center;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 1000;
+      }
+      .builder-zoom-controls select {
+        min-height: 30px;
+        border: 0;
+        border-left: 1px solid #e2e8f0;
+        background: transparent;
+        padding: 0 8px;
+        font-size: 12px;
+        font-weight: 900;
       }
       .builder-preview-frame {
         width: 100%;
@@ -707,6 +752,8 @@
       .builder-stage {
         position: relative;
         min-height: 560px;
+        padding: 18px;
+        box-sizing: border-box;
         overflow: auto;
         background:
           linear-gradient(90deg, rgba(27,139,240,.045) 1px, transparent 1px),
@@ -724,8 +771,11 @@
         position: relative;
         width: calc(var(--design-width, 1440px) * var(--design-scale, 1));
         height: calc(var(--design-height, 1180px) * var(--design-scale, 1));
-        min-width: 100%;
+        min-width: 0;
+        margin: 0 auto;
       }
+      .builder-design-shell[data-focus="top-left"] { margin-left: 0; margin-right: auto; }
+      .builder-design-shell[data-focus="top-right"] { margin-left: auto; margin-right: 0; }
       .builder-design-surface {
         position: relative;
         width: var(--design-width, 1440px);
@@ -740,6 +790,10 @@
         inset: 0;
         z-index: 0;
         background: #fff;
+      }
+      .builder-system-preview.has-editable-base {
+        opacity: .88;
+        filter: saturate(.95);
       }
       .builder-system-preview iframe {
         display: block;
@@ -844,6 +898,46 @@
         font-weight: var(--fw, 900);
         cursor: move;
         overflow: visible;
+      }
+      .builder-block[data-system-source="true"] {
+        outline: 2px dashed rgba(20, 139, 255, .55);
+        outline-offset: 4px;
+      }
+      .builder-block[data-passive-real="true"] {
+        background: rgba(20,139,255,.055);
+        border-color: rgba(20,139,255,.28);
+        box-shadow: none;
+      }
+      .builder-block[data-passive-real="true"] .builder-inline-editor,
+      .builder-block[data-passive-real="true"] img {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .builder-block[data-passive-real="true"]:hover {
+        background: rgba(20,139,255,.11);
+      }
+      .builder-block[data-system-source="true"]:before {
+        content: "editavel";
+        position: absolute;
+        left: 10px;
+        top: -20px;
+        border-radius: 999px;
+        background: #148bff;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 1000;
+        letter-spacing: .04em;
+        padding: 3px 8px;
+        text-transform: uppercase;
+        box-shadow: 0 6px 16px rgba(13,23,38,.18);
+        opacity: 0;
+        transform: translateY(4px);
+        transition: opacity .16s ease, transform .16s ease;
+      }
+      .builder-block[data-system-source="true"]:hover:before,
+      .builder-block[data-system-source="true"].is-selected:before {
+        opacity: 1;
+        transform: translateY(0);
       }
       .builder-block[data-animation="fade"] { animation: builderFade var(--anim-duration, 600ms) ease both; }
       .builder-block[data-animation="rise"] { animation: builderRise var(--anim-duration, 600ms) cubic-bezier(.2,.8,.2,1) both; }
@@ -973,10 +1067,10 @@
       .builder-block.is-selected { outline: 3px solid rgba(20, 139, 255, .46); outline-offset: 2px; }
       .builder-resize {
         position: absolute;
-        right: -12px;
-        bottom: -12px;
-        width: 18px;
-        height: 18px;
+        right: 8px;
+        bottom: 8px;
+        width: 16px;
+        height: 16px;
         border: 2px solid #fff;
         border-radius: 6px;
         background: #148bff;
@@ -987,10 +1081,10 @@
       }
       .builder-lock {
         position: absolute;
-        right: -14px;
-        top: -14px;
-        width: 28px;
-        height: 28px;
+        right: 8px;
+        top: 8px;
+        width: 24px;
+        height: 24px;
         border: 2px solid #fff;
         border-radius: 999px;
         background: #111;
@@ -1005,10 +1099,10 @@
       }
       .builder-delete {
         position: absolute;
-        left: -14px;
-        top: -14px;
-        width: 28px;
-        height: 28px;
+        left: 8px;
+        top: 8px;
+        width: 24px;
+        height: 24px;
         border: 2px solid #fff;
         border-radius: 999px;
         background: #ff2b2b;
@@ -1083,7 +1177,7 @@
         padding: 18px;
         background: linear-gradient(135deg, #eefbff, #f7fbff 48%, #ffffff);
         display: grid;
-        grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr);
         gap: 14px;
         overflow: hidden;
       }
@@ -1095,8 +1189,22 @@
         overflow: auto;
         box-shadow: 0 22px 60px rgba(13,23,38,.18);
       }
+      body.builder-edit-fullscreen .builder-sidebar {
+        position: fixed;
+        left: 18px;
+        top: 18px;
+        bottom: 18px;
+        z-index: 146;
+        width: min(390px, calc(100vw - 36px));
+        background: rgba(255,255,255,.96);
+        border: 1px solid #d8e5f2;
+        border-radius: 22px;
+        padding: 0;
+        backdrop-filter: blur(16px);
+      }
       body.builder-edit-fullscreen .builder-canvas {
         min-height: calc(100vh - 36px);
+        grid-column: 1;
       }
       body.builder-edit-fullscreen .builder-stage {
         min-height: calc(100vh - 178px);
@@ -1172,7 +1280,85 @@
         font-weight: 850;
         line-height: 1.45;
       }
+      .builder-help summary {
+        cursor: pointer;
+        font-weight: 1000;
+        color: #111;
+      }
+      .builder-help p {
+        margin: 10px 0 0;
+      }
       .builder-help strong { color: #111; }
+      .builder-block-overview {
+        display: grid;
+        gap: 10px;
+      }
+      .builder-block-list {
+        display: grid;
+        gap: 8px;
+        max-height: 260px;
+        overflow: auto;
+        padding-right: 4px;
+      }
+      .builder-block-list button {
+        width: 100%;
+        border: 1px solid #dce6f2;
+        border-radius: 14px;
+        background: #fff;
+        padding: 10px 12px;
+        text-align: left;
+        display: grid;
+        gap: 4px;
+        cursor: pointer;
+      }
+      .builder-block-list button[aria-selected="true"] {
+        border-color: #111;
+        background: #f8fbff;
+        box-shadow: 0 10px 20px rgba(13,23,38,.08);
+      }
+      .builder-block-list strong {
+        color: #111;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+      .builder-block-list small {
+        color: #627086;
+        font-size: 11px;
+        font-weight: 850;
+        line-height: 1.25;
+      }
+      .builder-block-list .source-pill {
+        display: inline-flex;
+        width: max-content;
+        border-radius: 999px;
+        background: #e9f6ff;
+        color: #076bbd;
+        padding: 3px 8px;
+        font-size: 10px;
+        font-weight: 1000;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+      }
+      .builder-selected-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .builder-selected-toolbar .btn {
+        min-height: 34px;
+        padding: 0 12px;
+        font-size: 12px;
+      }
+      .builder-inspector-empty {
+        border: 1px dashed #cbd8e6;
+        border-radius: 16px;
+        padding: 16px;
+        background: #fbfdff;
+        color: #526176;
+        font-weight: 850;
+        line-height: 1.45;
+      }
       .catalog-edit-form {
         display: grid;
         grid-template-columns: repeat(4, minmax(120px, 1fr));
@@ -2425,9 +2611,10 @@
                   </div>
                   <button class="btn btn-red" type="button" id="saveCustomPages">Salvar páginas no site</button>
                 </div>
-                <div class="builder-help">
-                  <strong>Como fazer um botão funcionar:</strong> crie um bloco do tipo <strong>Botão</strong>, escreva o texto e escolha a ação no campo <strong>Redirecionamento</strong>. Para levar a uma área do site, escolha a página na lista. Para produto específico, escolha uma opção que comece com <strong>Produto:</strong> ou <strong>Find:</strong>. Depois clique em salvar.
-                </div>
+                <details class="builder-help">
+                  <summary>Ajuda rapida de redirecionamento</summary>
+                  <p>Crie um bloco do tipo <strong>Botao</strong>, escreva o texto e escolha a acao no campo <strong>Redirecionamento</strong>. Para levar a uma area do site, escolha a pagina na lista. Para produto especifico, escolha uma opcao que comece com <strong>Produto:</strong> ou <strong>Find:</strong>. Depois clique em salvar.</p>
+                </details>
                 <div class="builder-toolbar">
                   <button class="btn btn-ghost" type="button" data-add-builder-block="box">Caixa</button>
                   <button class="btn btn-ghost" type="button" data-add-builder-block="text">Texto</button>
@@ -2454,12 +2641,25 @@
                     <label><input type="checkbox" id="builderGridToggle" checked> Grade</label>
                     <label><input type="checkbox" id="builderSnapToggle" checked> Alinhar</label>
                   </div>
+                  <div class="builder-zoom-controls" aria-label="Zoom do preview">
+                    <button class="btn btn-ghost" type="button" id="builderZoomOut">-</button>
+                    <button class="btn btn-ghost" type="button" id="builderZoomFit">Ajustar</button>
+                    <span id="builderZoomLabel">auto</span>
+                    <button class="btn btn-ghost" type="button" id="builderZoomIn">+</button>
+                    <select id="builderFocusSelect" aria-label="Foco do preview">
+                      <option value="center">Centro</option>
+                      <option value="top-left">Esquerda</option>
+                      <option value="top-right">Direita</option>
+                    </select>
+                  </div>
                   <button class="btn btn-dark" type="button" id="builderOpenFullscreenEdit">Editar tela cheia</button>
+                  <button class="btn btn-red" type="button" id="saveCustomPagesCanvas">Salvar no site</button>
                   <button class="btn btn-ghost builder-fullscreen-only" type="button" id="builderToggleFullscreenTools">Ocultar ferramentas</button>
                   <button class="btn btn-red builder-fullscreen-only" type="button" id="builderCloseFullscreenEdit">Sair da edicao</button>
                   <button class="btn btn-ghost" type="button" id="builderOpenFullscreen">Tela cheia</button>
                 </div>
               </div>
+              <span class="builder-canvas-hint" id="builderCanvasHint">Clique em uma area editavel para abrir o inspector.</span>
               <div class="builder-preview-frame" id="builderPreviewFrame">
                 <div class="builder-preview-nav" id="builderPreviewNav"></div>
                 <div class="builder-stage" id="builderStage" tabindex="0"></div>
@@ -2700,6 +2900,8 @@
     </div>
     <div class="builder-context-menu" id="builderContextMenu" role="menu" aria-label="Opções rápidas do bloco">
       <button type="button" data-builder-context-action="delete">Excluir bloco</button>
+      <button type="button" data-builder-context-action="duplicate">Duplicar bloco</button>
+      <button type="button" data-builder-context-action="reset-system">Resetar elemento real</button>
       <button type="button" data-builder-context-action="toggle-lock">Bloquear/liberar proporção</button>
       <button type="button" data-builder-context-action="layer-up">Camada para cima</button>
       <button type="button" data-builder-context-action="layer-down">Camada para baixo</button>
@@ -2741,6 +2943,9 @@
       let builderPreviewMode = "desktop";
       let builderGridEnabled = true;
       let builderSnapEnabled = true;
+      let builderPreviewZoom = 1;
+      let builderPreviewFocus = "center";
+      let builderContextSuppressClickUntil = 0;
       let siteContentState = null;
       let pendingMaintenanceMode = null;
       let lastSalePayload = null;
@@ -3455,6 +3660,7 @@
           current.navLabel = current.navLabel || definition.navLabel || current.title;
           current.intro = current.intro || sourcePage.intro || definition.intro || "";
           current.blocks = Array.isArray(current.blocks) ? current.blocks : [];
+          mergeSystemEditableBlocks(current, definition);
           siteContentState.pageBuilder[definition.key] = current;
         });
         siteContentState.customPages = Array.isArray(siteContentState.customPages) ? siteContentState.customPages : [];
@@ -3772,6 +3978,177 @@
         return `custom-block-${Date.now().toString(36)}-${Math.random().toString(16).slice(2, 6)}`;
       }
 
+      function realPageBlock(id, type, text, options = {}) {
+        const width = Number(options.width ?? (type === "button" ? 230 : type === "image" ? 340 : 420));
+        const height = Number(options.height ?? (type === "button" ? 54 : type === "image" ? 260 : 92));
+        return {
+          id,
+          type,
+          label: text || "",
+          text: text || "",
+          target: options.target || "",
+          image: options.image || "",
+          objectFit: options.objectFit || (type === "image" ? "contain" : ""),
+          lockAspect: options.lockAspect ?? (type === "image" || type === "icon"),
+          aspectRatio: Number(options.aspectRatio || (width / Math.max(1, height)) || 1),
+          x: Number(options.x ?? 8),
+          y: Number(options.y ?? 12),
+          width,
+          height,
+          layer: Number(options.layer ?? (type === "image" ? 2 : type === "button" ? 6 : 4)),
+          radius: Number(options.radius ?? (type === "button" ? 999 : type === "text" ? 0 : 18)),
+          background: options.background || (type === "button" ? "#ff2b2b" : "#ffffff"),
+          color: options.color || (type === "button" ? "#ffffff" : "#071529"),
+          backgroundMode: options.backgroundMode || "solid",
+          gradientFrom: options.gradientFrom || options.background || "#ffffff",
+          gradientTo: options.gradientTo || "#e9f5ff",
+          gradientAngle: Number(options.gradientAngle ?? 135),
+          textMode: options.textMode || "solid",
+          textGradientFrom: options.textGradientFrom || options.color || "#111111",
+          textGradientTo: options.textGradientTo || "#148bff",
+          textGradientAngle: Number(options.textGradientAngle ?? 90),
+          textTexture: options.textTexture || "",
+          texturePhrase: options.texturePhrase || "",
+          shadowStrength: Number(options.shadowStrength ?? (type === "text" || type === "image" || type === "line" ? 0 : 18)),
+          textShadowStrength: Number(options.textShadowStrength ?? 0),
+          blurPx: Number(options.blurPx ?? 12),
+          animation: options.animation || "none",
+          animationDuration: Number(options.animationDuration ?? 600),
+          fontSize: Number(options.fontSize ?? (type === "button" ? 16 : type === "icon" ? 34 : 20)),
+          fontWeight: Number(options.fontWeight ?? 900),
+          textAlign: options.textAlign || "center",
+          sourceSelector: options.sourceSelector || "",
+          contentPath: options.contentPath || "",
+          systemManaged: true,
+          realPageElement: true,
+          overrideOriginal: options.overrideOriginal === true
+        };
+      }
+
+      function firstCatalogProduct(category = "") {
+        const items = Array.isArray(productsState) ? productsState : [];
+        const active = items.filter((item) => item && item.active !== false);
+        const found = active.find((item) => !category || norm(item.category || "") === norm(category));
+        return found || active[0] || {};
+      }
+
+      function systemEditableBlocks(definition = {}) {
+        const key = definition.key || "";
+        const pageData = definition.contentKey ? (siteContentState.pages?.[definition.contentKey] || {}) : {};
+        const home = siteContentState.homeHero || {};
+        const panels = siteContentState.servicePanels || {};
+        const heroProduct = firstCatalogProduct("pc");
+        const heroImage = heroProduct.cutout || heroProduct.image || heroProduct.photo || "./assets/mobilytech-logo.png";
+        const pageTitle = pageData.title || definition.title || "Pagina MobilyTech BR";
+        const pageIntro = pageData.intro || definition.intro || "";
+        const genericHero = [
+          realPageBlock(`system-${key}-hero-title`, "text", pageTitle, { x: 20, y: 10, width: 720, height: 86, fontSize: 44, textAlign: "left", contentPath: definition.contentKey ? `pages.${definition.contentKey}.title` : "", sourceSelector: ".page-hero h1" }),
+          realPageBlock(`system-${key}-hero-intro`, "text", pageIntro, { x: 20, y: 18, width: 760, height: 92, fontSize: 22, fontWeight: 800, textAlign: "left", color: "#526176", contentPath: definition.contentKey ? `pages.${definition.contentKey}.intro` : "", sourceSelector: ".page-hero p" })
+        ];
+        if (key === "home") {
+          return [
+            realPageBlock("system-home-hero-title", "text", home.title || "Tecnologia para setup, trabalho e upgrades.", { x: 20, y: 10, width: 520, height: 155, fontSize: 50, textAlign: "left", color: "#ffffff", contentPath: "homeHero.title", sourceSelector: ".hero-copy h1" }),
+            realPageBlock("system-home-hero-subtitle", "text", home.subtitle || "", { x: 20, y: 24, width: 560, height: 110, fontSize: 24, fontWeight: 900, textAlign: "left", color: "#ffffff", contentPath: "homeHero.subtitle", sourceSelector: ".hero-copy p" }),
+            realPageBlock("system-home-primary-button", "button", home.primaryLabel || "Ver nossos produtos", { x: 20, y: 39, width: 232, height: 58, target: "produtos", contentPath: "homeHero.primaryLabel", sourceSelector: ".hero-actions .btn-red" }),
+            realPageBlock("system-home-secondary-button", "button", home.secondaryLabel || "Monte seu PC", { x: 35, y: 39, width: 185, height: 58, background: "#ffffff", color: "#071529", target: "montagem", contentPath: "homeHero.secondaryLabel", sourceSelector: ".hero-actions .btn-white" }),
+            realPageBlock("system-home-hero-image", "image", "", { x: 48, y: 10, width: 360, height: 380, image: heroImage, sourceSelector: ".hero-pc" }),
+            realPageBlock("system-home-deal-card", "box", `${home.featuredKicker || "Curadoria MobilyTech"}\n${heroProduct.title || "Produto em destaque"}\n${moneyInput(heroProduct.price || 0) ? `R$ ${moneyInput(heroProduct.price || 0)}` : ""}`, { x: 67, y: 13, width: 270, height: 290, background: "#f8fbff", color: "#071529", textAlign: "left", fontSize: 18, sourceSelector: ".hero-deal-card" }),
+            realPageBlock("system-home-trust-pieces", "box", "Pecas revisadas\ne testadas antes da venda", { x: 17, y: 53, width: 260, height: 88, background: "#ffffff", fontSize: 16, textAlign: "left", sourceSelector: ".trust-row article:nth-child(1)" }),
+            realPageBlock("system-home-trust-warranty", "box", "Garantia clara\ncobertura informada antes da compra", { x: 32, y: 53, width: 280, height: 88, background: "#ffffff", fontSize: 16, textAlign: "left", sourceSelector: ".trust-row article:nth-child(2)" }),
+            realPageBlock("system-home-trust-shipping", "box", "Envio para todo o Brasil\nfrete calculado no checkout", { x: 49, y: 53, width: 280, height: 88, background: "#ffffff", fontSize: 16, textAlign: "left", sourceSelector: ".trust-row article:nth-child(3)" }),
+            realPageBlock("system-home-trust-support", "box", "Suporte humano\npre e pos-compra", { x: 66, y: 53, width: 260, height: 88, background: "#ffffff", fontSize: 16, textAlign: "left", sourceSelector: ".trust-row article:nth-child(4)" }),
+            realPageBlock("system-home-pc-heading", "text", "PCs em destaque", { x: 17, y: 65, width: 400, height: 62, fontSize: 34, textAlign: "left", sourceSelector: "#ofertas h2" }),
+            realPageBlock("system-home-pc-grid", "box", "Grid de PCs em destaque\n(editado pelo catalogo)", { x: 17, y: 72, width: 620, height: 360, background: "rgba(255,255,255,.78)", color: "#071529", sourceSelector: "#homePcGrid" }),
+            realPageBlock("system-home-finds-band", "box", "MobilyTech Finds\ntexto, botao e preview", { x: 17, y: 88, width: 1100, height: 230, background: "rgba(255,255,255,.82)", color: "#071529", sourceSelector: ".finds-band#finds" })
+          ];
+        }
+        if (key === "ofertas" || key === "hardware") {
+          return [
+            ...genericHero,
+            realPageBlock(`system-${key}-catalog-kicker`, "text", "Catalogo", { x: 18, y: 30, width: 220, height: 42, fontSize: 15, textAlign: "left", color: "#148bff", sourceSelector: ".section-head .section-kicker" }),
+            realPageBlock(`system-${key}-catalog-title`, "text", "Estoque MobilyTech BR", { x: 18, y: 34, width: 520, height: 60, fontSize: 34, textAlign: "left", sourceSelector: ".section-head h2" }),
+            realPageBlock(`system-${key}-chips`, "box", "Tudo | PCs | Hardware", { x: 18, y: 41, width: 420, height: 58, background: "rgba(255,255,255,.86)", sourceSelector: ".filter-row" }),
+            realPageBlock(`system-${key}-catalog-grid`, "box", "Grid de produtos\n(editado em PCs e catalogo)", { x: 18, y: 50, width: 980, height: 520, background: "rgba(255,255,255,.78)", sourceSelector: "#catalogGrid" })
+          ];
+        }
+        if (key === "produtos") {
+          return [
+            ...genericHero,
+            realPageBlock("system-produtos-head-kicker", "text", "Curadoria MobilyTech BR", { x: 18, y: 27, width: 360, height: 40, fontSize: 15, textAlign: "left", color: "#148bff", sourceSelector: ".finds-primary-head .section-kicker" }),
+            realPageBlock("system-produtos-head-title", "text", "Nossos produtos na MobilyTech BR", { x: 18, y: 31, width: 620, height: 66, fontSize: 34, textAlign: "left", sourceSelector: ".finds-primary-head h2" }),
+            realPageBlock("system-produtos-head-copy", "text", "Produtos selecionados para setup, escritorio, manutencao e upgrades.", { x: 18, y: 38, width: 760, height: 78, fontSize: 19, fontWeight: 800, textAlign: "left", color: "#526176", sourceSelector: ".finds-primary-head p" }),
+            realPageBlock("system-produtos-filters", "box", "Filtros: busca, nicho, envio, preco", { x: 18, y: 49, width: 300, height: 360, background: "rgba(255,255,255,.88)", textAlign: "left", sourceSelector: ".finds-filters" }),
+            realPageBlock("system-produtos-grid", "box", "Grid de nossos produtos\n(editado em Nossos produtos)", { x: 36, y: 49, width: 860, height: 560, background: "rgba(255,255,255,.78)", sourceSelector: "#findsGrid" })
+          ];
+        }
+        if (key === "achados") {
+          return [
+            ...genericHero,
+            realPageBlock("system-achados-head-title", "text", "Boas compras nos marketplaces parceiros", { x: 18, y: 31, width: 740, height: 66, fontSize: 34, textAlign: "left", sourceSelector: ".finds-primary-head h2" }),
+            realPageBlock("system-achados-head-copy", "text", "Itens que fazem sentido para setup, manutencao e uso diario.", { x: 18, y: 38, width: 760, height: 78, fontSize: 19, fontWeight: 800, textAlign: "left", color: "#526176", sourceSelector: ".finds-primary-head p" }),
+            realPageBlock("system-achados-filters", "box", "Filtros MobilyTech Finds", { x: 18, y: 49, width: 300, height: 420, background: "rgba(255,255,255,.88)", textAlign: "left", sourceSelector: ".finds-filters" }),
+            realPageBlock("system-achados-grid", "box", "Grid de afiliados\n(editado em MobilyTech Finds)", { x: 36, y: 49, width: 860, height: 560, background: "rgba(255,255,255,.78)", sourceSelector: "#findsGrid" })
+          ];
+        }
+        if (key === "montagem" || key === "limpeza") {
+          const image = pageData.image || panels[key === "montagem" ? "build" : "clean"]?.image || "";
+          return [
+            ...genericHero,
+            realPageBlock(`system-${key}-hero-image`, "image", "", { x: 66, y: 8, width: 360, height: 280, image, contentPath: definition.contentKey ? `pages.${definition.contentKey}.image` : "", sourceSelector: ".page-hero img" }),
+            realPageBlock(`system-${key}-lead-panel`, "box", key === "montagem" ? "Formulario de orcamento\nobjetivo, uso e contato" : "Servico especializado\nlimpeza, relatorio e agendamento", { x: 18, y: 34, width: 1120, height: 360, background: "rgba(255,255,255,.84)", textAlign: "left", sourceSelector: ".build-form-section, .clean-service" })
+          ];
+        }
+        if (key === "avaliacoes") {
+          return [
+            ...genericHero,
+            realPageBlock("system-avaliacoes-title", "text", "Avaliacoes de quem compra e confia", { x: 18, y: 30, width: 740, height: 72, fontSize: 34, textAlign: "left", sourceSelector: ".reviews-head h2" }),
+            realPageBlock("system-avaliacoes-score", "box", "5,0\navaliacoes reais", { x: 18, y: 42, width: 260, height: 220, background: "#ffffff", sourceSelector: ".score-card" }),
+            realPageBlock("system-avaliacoes-grid", "box", "Cards de avaliacao", { x: 34, y: 42, width: 780, height: 300, background: "rgba(255,255,255,.78)", sourceSelector: ".reviews-grid" })
+          ];
+        }
+        if (key === "contato") {
+          return [
+            ...genericHero,
+            realPageBlock("system-contato-whatsapp", "box", "WhatsApp\n+55 (11) 95480-1967\nChamar no WhatsApp", { x: 18, y: 34, width: 330, height: 210, background: "#ffffff", textAlign: "left", sourceSelector: ".contact-grid article:nth-child(1)" }),
+            realPageBlock("system-contato-email", "box", "E-mail\nmobilytechbr@gmail.com\nEnviar e-mail", { x: 38, y: 34, width: 330, height: 210, background: "#ffffff", textAlign: "left", sourceSelector: ".contact-grid article:nth-child(2)" }),
+            realPageBlock("system-contato-envio", "box", "Envio para todo o Brasil\ntransportadora ou Correios", { x: 58, y: 34, width: 330, height: 210, background: "#ffffff", textAlign: "left", sourceSelector: ".shipping-contact-card" })
+          ];
+        }
+        if (key === "cart" || key === "checkout" || key === "upsell") {
+          return [
+            realPageBlock(`system-${key}-drawer-title`, "text", pageTitle, { x: 8, y: 8, width: 480, height: 76, fontSize: 38, textAlign: "left" }),
+            realPageBlock(`system-${key}-cart-items`, "box", "Lista de itens do carrinho", { x: 8, y: 18, width: 520, height: 220, background: "#ffffff", textAlign: "left" }),
+            realPageBlock(`system-${key}-coupon`, "box", "Cupom promocional e frete", { x: 8, y: 42, width: 520, height: 220, background: "#ffffff", textAlign: "left" }),
+            realPageBlock(`system-${key}-offer`, "box", "Oferta antes do pagamento\ncombo e desconto", { x: 42, y: 18, width: 620, height: 360, background: "#ffffff", textAlign: "left" })
+          ];
+        }
+        return genericHero;
+      }
+
+      function mergeSystemEditableBlocks(page, definition) {
+        if (!page || !definition) return;
+        page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
+        const templates = systemEditableBlocks(definition);
+        const existingById = new Map(page.blocks.map((block) => [String(block.id || ""), block]));
+        const merged = templates.map((template) => {
+          const existing = existingById.get(template.id);
+          if (!existing) return template;
+          return {
+            ...template,
+            ...existing,
+            systemManaged: true,
+            realPageElement: true,
+            sourceSelector: existing.sourceSelector || template.sourceSelector || "",
+            contentPath: existing.contentPath || template.contentPath || ""
+          };
+        });
+        page.blocks.forEach((block) => {
+          if (!block || !block.id || templates.some((template) => template.id === block.id)) return;
+          merged.push(block);
+        });
+        page.blocks = merged;
+      }
+
       function builderPageKey(page, index = 0) {
         if (!page) return "";
         return page.isSystem || page.systemKey ? `system:${page.systemKey}` : `custom:${page.id || index}`;
@@ -3921,14 +4298,92 @@
         }[type] || "Bloco";
       }
 
+      function builderBlockSummary(block = {}, index = 0) {
+        const raw = String(block.text || block.label || block.image || builderBlockTypeLabel(block.type)).trim();
+        const title = raw.length > 58 ? `${raw.slice(0, 58)}...` : raw;
+        const source = block.realPageElement ? "Elemento real" : "Bloco livre";
+        return { title: title || `${builderBlockTypeLabel(block.type)} ${index + 1}`, source };
+      }
+
+      function builderBlockListHtml(page = {}) {
+        const blocks = Array.isArray(page.blocks) ? page.blocks : [];
+        if (!blocks.length) return '<p class="builder-inspector-empty">Nenhum bloco nesta pagina. Adicione uma caixa, texto, botao, imagem, icone ou linha.</p>';
+        return `<div class="builder-block-list">${blocks.map((block, index) => {
+          const summary = builderBlockSummary(block, index);
+          const selected = block.id === builderSelectedBlockId;
+          return `<button type="button" data-select-builder-block="${escapeHtml(block.id)}" aria-selected="${selected ? "true" : "false"}">
+            <strong>${escapeHtml(builderBlockTypeLabel(block.type))} ${index + 1}: ${escapeHtml(summary.title)}</strong>
+            <small>${escapeHtml(summary.source)} | x ${escapeHtml(block.x ?? 0)}% | y ${escapeHtml(block.y ?? 0)}% | camada ${escapeHtml(block.layer ?? 1)}</small>
+            ${block.realPageElement ? '<span class="source-pill">editavel do site</span>' : ""}
+          </button>`;
+        }).join("")}</div>`;
+      }
+
+      function duplicateBuilderBlock(blockId = builderSelectedBlockId) {
+        const page = activeCustomPage();
+        const block = (page.blocks || []).find((item) => item.id === blockId);
+        if (!block) return;
+        const copy = JSON.parse(JSON.stringify(block));
+        copy.id = makeBuilderBlockId();
+        copy.x = Math.min(96, Number(copy.x || 8) + 2);
+        copy.y = Math.min(96, Number(copy.y || 12) + 2);
+        copy.realPageElement = false;
+        copy.overrideOriginal = false;
+        copy.userEdited = true;
+        copy.contentPath = "";
+        copy.sourceSelector = "";
+        page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
+        page.blocks.push(copy);
+        builderSelectedBlockId = copy.id;
+        renderPageBuilder();
+        setInlineStatus("builderStatus", "Bloco duplicado como bloco livre. Clique em salvar para publicar.", "ok");
+      }
+
+      function resetBuilderSystemBlock(blockId = builderSelectedBlockId) {
+        const page = activeCustomPage();
+        const blockIndex = (page.blocks || []).findIndex((item) => item.id === blockId);
+        if (blockIndex < 0) return;
+        const current = page.blocks[blockIndex];
+        if (!current.realPageElement) {
+          setInlineStatus("builderStatus", "Reset disponivel apenas para elementos reais importados do site.", "info");
+          return;
+        }
+        const definition = builderSystemDefinition(page);
+        const template = systemEditableBlocks(definition).find((item) => item.id === current.id);
+        if (!template) {
+          setInlineStatus("builderStatus", "Nao encontrei o modelo original deste elemento real.", "error");
+          return;
+        }
+        page.blocks[blockIndex] = { ...template, overrideOriginal: false, userEdited: false };
+        builderSelectedBlockId = page.blocks[blockIndex].id;
+        renderPageBuilder();
+        setInlineStatus("builderStatus", "Elemento real voltou ao padrao importado. Clique em salvar para publicar.", "ok");
+      }
+
+      function colorInputValue(value, fallback = "#ffffff") {
+        const raw = String(value || "").trim();
+        return /^#[0-9a-f]{6}$/i.test(raw) ? raw : fallback;
+      }
+
       function builderBlockForm(block, index) {
         const isSelected = block.id === builderSelectedBlockId;
+        const sourceHint = block.realPageElement
+          ? "Elemento real importado da pagina existente. Ao editar, ele vira override publicavel do site."
+          : "Bloco criado no construtor.";
         return `<article class="visual-editor-card${isSelected ? " is-selected" : ""}" data-builder-block-form="${escapeHtml(block.id)}">
           <div class="builder-editor-summary">
             <strong>${escapeHtml(builderBlockTypeLabel(block.type))} ${index + 1}</strong>
-            <span>Arraste no preview. Use as setas do teclado para ajuste fino. Clique no X do bloco para excluir direto pelo preview.</span>
+            <span>${escapeHtml(sourceHint)} Arraste no preview. Use as setas do teclado para ajuste fino.</span>
+            <div class="builder-selected-toolbar" aria-label="Acoes rapidas do bloco selecionado">
+              <button class="btn btn-ghost" type="button" data-builder-quick-action="duplicate" data-builder-quick-target="${escapeHtml(block.id)}">Duplicar</button>
+              <button class="btn btn-ghost" type="button" data-builder-quick-action="layer-top" data-builder-quick-target="${escapeHtml(block.id)}">Frente</button>
+              <button class="btn btn-ghost" type="button" data-builder-quick-action="layer-bottom" data-builder-quick-target="${escapeHtml(block.id)}">Tras</button>
+              <button class="btn btn-ghost" type="button" data-builder-quick-action="center-x" data-builder-quick-target="${escapeHtml(block.id)}">Centro X</button>
+              <button class="btn btn-ghost" type="button" data-builder-quick-action="center-y" data-builder-quick-target="${escapeHtml(block.id)}">Centro Y</button>
+              ${block.realPageElement ? `<button class="btn btn-ghost" type="button" data-builder-quick-action="reset-system" data-builder-quick-target="${escapeHtml(block.id)}">Resetar real</button>` : ""}
+            </div>
           </div>
-          <details class="media-details" open>
+          <details class="media-details" ${isSelected ? "open" : ""}>
             <summary>Controles principais</summary>
             <div class="row">
               <label>Tipo
@@ -3971,8 +4426,8 @@
               <label>Altura px <input type="number" min="30" data-builder-block="${escapeHtml(block.id)}" data-builder-field="height" value="${escapeHtml(block.height || 80)}"></label>
             </div>
             <div class="row">
-              <label>Cor fundo <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="background" value="${escapeHtml(block.background || "#ffffff")}"></label>
-              <label>Cor texto <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="color" value="${escapeHtml(block.color || "#111111")}"></label>
+              <label>Cor fundo <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="background" value="${escapeHtml(colorInputValue(block.background, "#ffffff"))}"></label>
+              <label>Cor texto <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="color" value="${escapeHtml(colorInputValue(block.color, "#111111"))}"></label>
             </div>
             <div class="row">
               <label>Cantos arredondados <input type="number" min="0" max="999" data-builder-block="${escapeHtml(block.id)}" data-builder-field="radius" value="${escapeHtml(block.radius ?? 14)}"></label>
@@ -4013,8 +4468,8 @@
               </label>
             </div>
             <div class="row">
-              <label>Gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientFrom" value="${escapeHtml(block.gradientFrom || block.background || "#ffffff")}"></label>
-              <label>Gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientTo" value="${escapeHtml(block.gradientTo || "#e9f5ff")}"></label>
+              <label>Gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientFrom" value="${escapeHtml(colorInputValue(block.gradientFrom || block.background, "#ffffff"))}"></label>
+              <label>Gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientTo" value="${escapeHtml(colorInputValue(block.gradientTo, "#e9f5ff"))}"></label>
             </div>
             <div class="row">
               <label>Angulo gradiente <input type="number" min="0" max="360" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientAngle" value="${escapeHtml(block.gradientAngle ?? 135)}"></label>
@@ -4047,8 +4502,8 @@
               <label>Sombra box <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="shadowStrength" value="${escapeHtml(block.shadowStrength ?? 18)}"></label>
             </div>
             <div class="row">
-              <label>Texto gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientFrom" value="${escapeHtml(block.textGradientFrom || block.color || "#111111")}"></label>
-              <label>Texto gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientTo" value="${escapeHtml(block.textGradientTo || "#148bff")}"></label>
+              <label>Texto gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientFrom" value="${escapeHtml(colorInputValue(block.textGradientFrom || block.color, "#111111"))}"></label>
+              <label>Texto gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientTo" value="${escapeHtml(colorInputValue(block.textGradientTo, "#148bff"))}"></label>
             </div>
             <div class="row">
               <label>Angulo texto <input type="number" min="0" max="360" data-builder-block="${escapeHtml(block.id)}" data-builder-field="textGradientAngle" value="${escapeHtml(block.textGradientAngle ?? 90)}"></label>
@@ -4072,9 +4527,14 @@
         if (!editor) return;
         const page = activeCustomPage();
         const isSystemPage = Boolean(page.isSystem || page.systemKey);
+        const blocks = Array.isArray(page.blocks) ? page.blocks : [];
+        const selectedIndex = blocks.findIndex((block) => block.id === builderSelectedBlockId);
+        const selectedBlock = selectedIndex >= 0 ? blocks[selectedIndex] : null;
+        const realCount = blocks.filter((block) => block.realPageElement).length;
+        const customCount = Math.max(0, blocks.length - realCount);
         editor.innerHTML = `
-          <div class="content-fieldset">
-            <h3>Dados da página</h3>
+          <details class="content-fieldset">
+            <summary><strong>Dados da pagina</strong></summary>
             <p class="editor-note">${isSystemPage ? "Página existente do site. Você pode editar texto, menu, status, ordem e blocos do preview; ela não pode ser excluída." : "Página criada pelo painel. Você pode excluir, pausar ou mostrar no menu."}</p>
             <div class="content-grid">
               <label>Ativa
@@ -4096,11 +4556,22 @@
               <label class="wide">Texto inicial <textarea data-builder-page-field="intro">${escapeHtml(page.intro || "")}</textarea></label>
               ${isSystemPage ? "" : '<button class="btn btn-ghost" type="button" id="deleteCustomPage">Excluir esta pagina</button>'}
             </div>
+          </details>
+          <div class="content-fieldset">
+            <div class="editor-toolbar">
+              <div>
+                <strong>Elementos da pagina</strong>
+                <p>${blocks.length} bloco(s): ${realCount} real(is) importado(s) e ${customCount} livre(s). Clique no preview ou na lista.</p>
+              </div>
+              ${isSystemPage ? '<button class="btn btn-ghost" type="button" id="refreshSystemBlocks">Reimportar reais</button>' : ""}
+            </div>
+            <div class="builder-block-overview">
+              ${builderBlockListHtml(page)}
+            </div>
           </div>
           <div class="content-fieldset">
-            <h3>Blocos desta pagina</h3>
-            <p class="editor-note">Clique em um bloco no preview para selecionar. Arraste para mover, use setas para ajuste fino, ative grade/alinhamento no topo do preview.</p>
-            ${(page.blocks || []).map(builderBlockForm).join("") || '<p class="editor-note">Nenhum bloco nesta pagina.</p>'}
+            <h3>Inspector do selecionado</h3>
+            ${selectedBlock ? builderBlockForm(selectedBlock, selectedIndex) : '<p class="builder-inspector-empty">Selecione um elemento no preview ou na lista para editar texto, tamanho, cor, camada, imagem, animacao e redirecionamento.</p>'}
           </div>
         `;
         editor.querySelectorAll("[data-builder-page-field]").forEach((field) => {
@@ -4110,6 +4581,25 @@
         editor.querySelectorAll("[data-builder-block]").forEach((field) => {
           field.addEventListener("input", () => updateBuilderBlockField(field.dataset.builderBlock, field.dataset.builderField, field.value));
           field.addEventListener("change", () => updateBuilderBlockField(field.dataset.builderBlock, field.dataset.builderField, field.value));
+        });
+        editor.querySelectorAll("[data-select-builder-block]").forEach((button) => {
+          button.addEventListener("click", () => {
+            builderSelectedBlockId = button.dataset.selectBuilderBlock || "";
+            renderBuilderPreview();
+            renderBuilderEditor();
+            $("#builderStage")?.focus({ preventScroll: true });
+          });
+        });
+        editor.querySelectorAll("[data-builder-quick-action]").forEach((button) => {
+          button.addEventListener("click", () => {
+            builderSelectedBlockId = button.dataset.builderQuickTarget || builderSelectedBlockId;
+            const action = button.dataset.builderQuickAction || "";
+            if (action === "duplicate") duplicateBuilderBlock(builderSelectedBlockId);
+            else if (action === "reset-system") resetBuilderSystemBlock(builderSelectedBlockId);
+            else if (["layer-up", "layer-down", "layer-top", "layer-bottom"].includes(action)) setBuilderBlockLayer(action);
+            else if (action === "center-x") centerBuilderBlock("x");
+            else if (action === "center-y") centerBuilderBlock("y");
+          });
         });
         editor.querySelectorAll("[data-remove-builder-block]").forEach((button) => {
           button.addEventListener("click", () => {
@@ -4129,6 +4619,14 @@
           builderSelectedBlockId = "";
           renderPageBuilder();
           setInlineStatus("builderStatus", "Pagina removida localmente. Salve para publicar a remocao.", "ok");
+        });
+        $("#refreshSystemBlocks")?.addEventListener("click", () => {
+          const page = activeCustomPage();
+          const definition = builderSystemDefinition(page);
+          if (!definition) return;
+          mergeSystemEditableBlocks(page, definition);
+          renderPageBuilder();
+          setInlineStatus("builderStatus", "Elementos reais importados/atualizados. Edite e salve para publicar.", "ok");
         });
       }
 
@@ -4169,6 +4667,14 @@
         if (field === "lockAspect") block.lockAspect = value === "true";
         else block[field] = numeric.includes(field) ? Number(value || 0) : value;
         if (field === "text") block.label = value;
+        if (block.realPageElement) {
+          block.overrideOriginal = true;
+          block.userEdited = true;
+          if (block.contentPath && ["text", "label", "image"].includes(field)) {
+            setPathValue(siteContentState, block.contentPath, field === "label" ? block.label : value);
+            syncBuilderSystemPage(page);
+          }
+        }
         if ((field === "width" || field === "height") && Number(block.width) > 0 && Number(block.height) > 0) {
           block.aspectRatio = Number(block.width) / Number(block.height);
         }
@@ -4184,6 +4690,14 @@
         if (!block || block.type === "image") return;
         block.text = value;
         block.label = value;
+        if (block.realPageElement) {
+          block.overrideOriginal = true;
+          block.userEdited = true;
+          if (block.contentPath) {
+            setPathValue(siteContentState, block.contentPath, value);
+            syncBuilderSystemPage(page);
+          }
+        }
         builderSelectedBlockId = id;
         const field = document.querySelector(`[data-builder-block="${CSS.escape(id)}"][data-builder-field="text"]`);
         if (field && field.value !== value) field.value = value;
@@ -4357,7 +4871,9 @@
         const lock = block.lockAspect === false ? "L" : "T";
         const textMode = block.textMode === "texture" && block.texturePhrase ? "solid" : (block.textMode || "solid");
         const opacity = Math.max(0, Math.min(100, Number(block.opacity ?? 100))) / 100;
-        return `<div class="builder-block${block.id === builderSelectedBlockId ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" data-animation="${escapeHtml(block.animation || "none")}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--z:${Number(block.layer ?? 1)};--opacity:${opacity};--anim-duration:${Number(block.animationDuration || 600)}ms">${text}<button class="builder-delete" type="button" data-delete-builder-preview="${escapeHtml(block.id)}" title="Excluir bloco">x</button><button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
+        const isSelected = block.id === builderSelectedBlockId;
+        const passiveReal = Boolean(block.realPageElement && !block.overrideOriginal && !isSelected);
+        return `<div class="builder-block${isSelected ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" data-animation="${escapeHtml(block.animation || "none")}" data-system-source="${block.realPageElement ? "true" : "false"}" data-passive-real="${passiveReal ? "true" : "false"}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--z:${Number(block.layer ?? 1)};--opacity:${opacity};--anim-duration:${Number(block.animationDuration || 600)}ms">${text}<button class="builder-delete" type="button" data-delete-builder-preview="${escapeHtml(block.id)}" title="Excluir bloco">x</button><button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
       }
 
       function builderPreviewNavigation(activePage) {
@@ -4385,16 +4901,23 @@
       function builderDesignViewport(page = {}) {
         const isMobile = builderPreviewMode === "mobile";
         const key = page.systemKey || page.key || "";
-        const baseHeight = key === "home" ? 1320 : key === "produtos" || key === "ofertas" || key === "achados" || key === "hardware" ? 1580 : 1320;
+        const baseHeight = key === "home" ? 1800 : key === "produtos" || key === "ofertas" || key === "achados" || key === "hardware" ? 1900 : 1600;
         return {
-          width: isMobile ? 390 : 1440,
+          width: isMobile ? 390 : 1920,
           height: isMobile ? Math.max(1280, baseHeight) : baseHeight
         };
       }
 
       function builderDesignScale(stage, viewport) {
-        const available = Math.max(260, Number(stage?.clientWidth || viewport.width) - 2);
-        return Math.min(1, Math.max(0.18, available / Math.max(1, viewport.width)));
+        const rect = stage?.getBoundingClientRect?.();
+        const boundedWidth = rect ? Math.max(260, window.innerWidth - rect.left - 40) : viewport.width;
+        const availableWidth = Math.max(260, Math.min(Number(stage?.clientWidth || viewport.width), boundedWidth) - 42);
+        const availableHeight = Math.max(420, Number(stage?.clientHeight || 720) - 42);
+        const firstFoldHeight = builderPreviewMode === "mobile" ? 844 : 1080;
+        const fitWidth = availableWidth / Math.max(1, viewport.width);
+        const fitHeight = availableHeight / Math.max(1, firstFoldHeight);
+        const fit = Math.min(fitWidth, fitHeight);
+        return Math.max(0.08, Math.min(2.2, fit * Number(builderPreviewZoom || 1)));
       }
 
       function builderSurface() {
@@ -4426,11 +4949,33 @@
         if (definition?.key === "cart" || definition?.key === "checkout" || definition?.key === "upsell") {
           return builderCommercePreviewHtml(page, definition.key);
         }
+        const hasEditableBase = (page.blocks || []).some((block) => block && block.realPageElement);
         return `
-          <div class="builder-system-preview" data-system-preview="${escapeHtml(definition?.key || "site")}">
+          <div class="builder-system-preview${hasEditableBase ? " has-editable-base" : ""}" data-system-preview="${escapeHtml(definition?.key || "site")}">
             <iframe src="${escapeHtml(url)}" title="Preview real de ${escapeHtml(page.title || "pagina")}" loading="lazy"></iframe>
           </div>
         `;
+      }
+
+      function attachBuilderSystemIframeMask(page = activeCustomPage()) {
+        const selected = (page.blocks || []).find((block) => block.id === builderSelectedBlockId);
+        const iframe = $("#builderDesignSurface iframe");
+        if (!iframe || !selected?.realPageElement || !selected.sourceSelector) return;
+        const applyMask = () => {
+          try {
+            const doc = iframe.contentDocument;
+            if (!doc) return;
+            doc.querySelector("#mobilytech-builder-source-mask")?.remove();
+            const style = doc.createElement("style");
+            style.id = "mobilytech-builder-source-mask";
+            style.textContent = `${selected.sourceSelector}{opacity:.12!important;filter:saturate(.35)!important;outline:2px dashed rgba(20,139,255,.35)!important;outline-offset:3px!important;}`;
+            doc.head.appendChild(style);
+          } catch (_error) {
+            // Iframe can be temporarily unavailable while loading; preview remains usable.
+          }
+        };
+        iframe.addEventListener("load", applyMask, { once: true });
+        setTimeout(applyMask, 180);
       }
 
       function previewProductCards(source = [], limit = 6) {
@@ -4548,6 +5093,8 @@
         const nav = $("#builderPreviewNav");
         const desktopButton = $("#builderDesktopPreview");
         const mobileButton = $("#builderMobilePreview");
+        const scaleAdjustmentPass = stage.dataset.scaleAdjustmentPass === "true";
+        stage.dataset.scaleAdjustmentPass = "";
         if (title) title.textContent = page.title || "Preview";
         if (intro) intro.textContent = page.intro || `Endereco: /fase2/${page.slug || "nova-pagina"}.html`;
         if (!stage) return;
@@ -4562,12 +5109,23 @@
         if (mobileButton) mobileButton.setAttribute("aria-pressed", builderPreviewMode === "mobile" ? "true" : "false");
         if ($("#builderGridToggle")) $("#builderGridToggle").checked = builderGridEnabled;
         if ($("#builderSnapToggle")) $("#builderSnapToggle").checked = builderSnapEnabled;
+        if ($("#builderFocusSelect")) $("#builderFocusSelect").value = builderPreviewFocus;
         const guides = '<span class="builder-guide builder-guide-x" id="builderGuideX"></span><span class="builder-guide builder-guide-y" id="builderGuideY"></span>';
         const viewport = builderDesignViewport(page);
-        const scale = builderDesignScale(stage, viewport);
+        const scale = builderDesignScale(frame || stage, viewport);
+        const zoomLabel = $("#builderZoomLabel");
+        if (zoomLabel) zoomLabel.textContent = `${Math.round(scale * 100)}%`;
+        const hint = $("#builderCanvasHint");
+        if (hint) {
+          const realCount = (page.blocks || []).filter((block) => block.realPageElement).length;
+          const selected = (page.blocks || []).find((block) => block.id === builderSelectedBlockId);
+          hint.textContent = selected
+            ? `Editando ${builderBlockTypeLabel(selected.type)}. Arraste, escreva no preview ou use as setas.`
+            : `${realCount} area(s) editavel(is). Clique em uma area azul ou na lista lateral.`;
+        }
         const surfaceHtml = builderSystemPreviewHtml(page) + guides + (page.blocks || []).map(builderBlockPreview).join("");
         stage.innerHTML = `
-          <div class="builder-design-shell" style="--design-width:${viewport.width}px;--design-height:${viewport.height}px;--design-scale:${scale}">
+          <div class="builder-design-shell" data-focus="${escapeHtml(builderPreviewFocus)}" style="--design-width:${viewport.width}px;--design-height:${viewport.height}px;--design-scale:${scale}">
             <div class="builder-design-surface" id="builderDesignSurface" style="--design-width:${viewport.width}px;--design-height:${viewport.height}px;--design-scale:${scale}">
               ${surfaceHtml}
             </div>
@@ -4575,6 +5133,19 @@
         `;
         stage.tabIndex = 0;
         attachBuilderDragHandlers();
+        attachBuilderSystemIframeMask(page);
+        [120, 420, 900].forEach((delay) => {
+          setTimeout(() => {
+            const shell = $("#builderStage .builder-design-shell");
+            const currentFrame = $("#builderPreviewFrame");
+            if (!shell || !currentFrame || scaleAdjustmentPass) return;
+            const overflow = shell.getBoundingClientRect().right - currentFrame.getBoundingClientRect().right;
+            if (overflow > 1) {
+              stage.dataset.scaleAdjustmentPass = "true";
+              renderBuilderPreview();
+            }
+          }, delay);
+        });
       }
 
       function setBuilderGuides({ x = null, y = null } = {}) {
@@ -4662,6 +5233,10 @@
         if (action === "layer-down") block.layer = Math.max(0, Number(block.layer ?? 1) - 1);
         if (action === "layer-top") block.layer = maxLayer + 1;
         if (action === "layer-bottom") block.layer = Math.max(0, minLayer - 1);
+        if (block.realPageElement) {
+          block.overrideOriginal = true;
+          block.userEdited = true;
+        }
         renderBuilderPreview();
         renderBuilderEditor();
         setInlineStatus("builderStatus", "Camada atualizada no preview. Clique em salvar para publicar.", "ok");
@@ -4678,6 +5253,10 @@
         if (axis === "y") {
           const heightPercent = (Number(block.height || 0) / Math.max(1, stage.clientHeight)) * 100;
           block.y = Math.round(Math.max(0, (100 - heightPercent) / 2) * 10) / 10;
+        }
+        if (block.realPageElement) {
+          block.overrideOriginal = true;
+          block.userEdited = true;
         }
         renderBuilderPreview();
         renderBuilderEditor();
@@ -4700,6 +5279,7 @@
         menu.style.left = `${Math.max(margin, event.clientX)}px`;
         menu.style.top = `${Math.max(margin, event.clientY)}px`;
         menu.classList.add("is-open");
+        builderContextSuppressClickUntil = Date.now() + 300;
         const rect = menu.getBoundingClientRect();
         const nextLeft = Math.max(margin, Math.min(event.clientX, window.innerWidth - rect.width - margin));
         const nextTop = Math.max(margin, Math.min(event.clientY, window.innerHeight - rect.height - margin));
@@ -4718,6 +5298,10 @@
         const nextY = Number(block.y || 0) + (deltaYPx / Math.max(1, stage.clientHeight)) * 100;
         block.x = Math.round(Math.max(0, Math.min(100, nextX)) * 10) / 10;
         block.y = Math.round(Math.max(0, Math.min(100, nextY)) * 10) / 10;
+        if (block.realPageElement) {
+          block.overrideOriginal = true;
+          block.userEdited = true;
+        }
         const node = stage.querySelector(`[data-builder-preview-block="${CSS.escape(block.id)}"]`);
         if (node) {
           node.style.setProperty("--x", `${block.x}%`);
@@ -4804,6 +5388,10 @@
               block.width = nextWidth;
               block.height = nextHeight;
               block.aspectRatio = nextWidth / Math.max(1, nextHeight);
+              if (block.realPageElement) {
+                block.overrideOriginal = true;
+                block.userEdited = true;
+              }
               node.style.setProperty("--w", `${block.width}px`);
               node.style.setProperty("--h", `${block.height}px`);
             };
@@ -4852,6 +5440,10 @@
               const snapped = snapBuilderPosition(block, rawX, rawY, surface);
               block.x = Math.round(snapped.x * 10) / 10;
               block.y = Math.round(snapped.y * 10) / 10;
+              if (block.realPageElement) {
+                block.overrideOriginal = true;
+                block.userEdited = true;
+              }
               node.style.setProperty("--x", `${block.x}%`);
               node.style.setProperty("--y", `${block.y}%`);
               setBuilderGuides({ x: snapped.guideX, y: snapped.guideY });
@@ -5954,6 +6546,23 @@
         builderSnapEnabled = Boolean(event.target.checked);
         renderBuilderPreview();
       });
+      $("#builderZoomOut")?.addEventListener("click", () => {
+        builderPreviewZoom = Math.max(0.35, Math.round((builderPreviewZoom - 0.15) * 100) / 100);
+        renderBuilderPreview();
+      });
+      $("#builderZoomIn")?.addEventListener("click", () => {
+        builderPreviewZoom = Math.min(2.5, Math.round((builderPreviewZoom + 0.15) * 100) / 100);
+        renderBuilderPreview();
+      });
+      $("#builderZoomFit")?.addEventListener("click", () => {
+        builderPreviewZoom = 1;
+        builderPreviewFocus = "center";
+        renderBuilderPreview();
+      });
+      $("#builderFocusSelect")?.addEventListener("change", (event) => {
+        builderPreviewFocus = event.target.value || "center";
+        renderBuilderPreview();
+      });
       $("#builderOpenFullscreen")?.addEventListener("click", () => {
         openBuilderFullscreenPreview();
       });
@@ -5976,6 +6585,8 @@
         const action = event.target?.dataset?.builderContextAction;
         if (!action) return;
         if (action === "delete") deleteBuilderBlock(builderSelectedBlockId);
+        else if (action === "duplicate") duplicateBuilderBlock(builderSelectedBlockId);
+        else if (action === "reset-system") resetBuilderSystemBlock(builderSelectedBlockId);
         else if (action === "toggle-lock") {
           const block = activeBuilderBlock();
           if (block) {
@@ -6001,6 +6612,7 @@
       document.addEventListener("click", (event) => {
         const menu = $("#builderContextMenu");
         if (!menu || !menu.classList.contains("is-open")) return;
+        if (Date.now() < builderContextSuppressClickUntil) return;
         if (menu.contains(event.target)) return;
         closeBuilderContextMenu();
       });
@@ -6012,6 +6624,10 @@
         }
       });
       $("#saveCustomPages")?.addEventListener("click", async () => {
+        if (!siteContentState) return;
+        await saveCatalogJson("site-content", siteContentState, "builderStatus");
+      });
+      $("#saveCustomPagesCanvas")?.addEventListener("click", async () => {
         if (!siteContentState) return;
         await saveCatalogJson("site-content", siteContentState, "builderStatus");
       });

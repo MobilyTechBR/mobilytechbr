@@ -771,6 +771,44 @@ def custom_block_html(block: dict, prefix: str, links: dict[str, str], products,
     )
 
 
+def safe_css_selector(selector: str) -> str:
+    raw = str(selector or "").strip()
+    return "".join(ch for ch in raw if ch.isalnum() or ch in ".#>:+-*[]=_(), '\"-").strip()
+
+
+def system_builder_overlay(site_content: dict | None, key: str, prefix: str, products, finalists) -> str:
+    if not isinstance(site_content, dict) or not key:
+        return ""
+    page_builder = site_content.get("pageBuilder", {})
+    page = page_builder.get(key, {}) if isinstance(page_builder, dict) else {}
+    blocks = page.get("blocks", []) if isinstance(page, dict) else []
+    publishable = [
+        block for block in blocks
+        if isinstance(block, dict)
+        and block.get("overrideOriginal") is True
+        and block.get("realPageElement") is True
+    ]
+    if not publishable:
+        return ""
+    selectors = [safe_css_selector(block.get("sourceSelector")) for block in publishable if block.get("sourceSelector")]
+    selectors = [selector for selector in selectors if selector]
+    hide_css = f'<style>{",".join(selectors)}{{visibility:hidden!important}}</style>' if selectors else ""
+    links = page_links(prefix)
+    blocks_html = "\n".join(custom_block_html(block, prefix, links, products, finalists) for block in publishable)
+    return f'{hide_css}<section class="system-builder-layer" data-builder-page="{clean_text(key)}" aria-hidden="true">{blocks_html}</section>'
+
+
+def inject_system_builder_overlay(main: str, active: str, prefix: str, products, finalists, site_content: dict | None) -> str:
+    key = str(active or "").replace("custom:", "")
+    allowed = {"home", "ofertas", "produtos", "achados", "montagem", "limpeza", "avaliacoes", "conta", "contato"}
+    if key not in allowed:
+        return main
+    overlay = system_builder_overlay(site_content, key, prefix, products, finalists)
+    if not overlay:
+        return main
+    return main.replace("</main>", f"{overlay}</main>", 1) if "</main>" in main else f"{main}{overlay}"
+
+
 def custom_page_main(page: dict, products, finalists, prefix: str, site_content: dict | None = None) -> str:
     links = page_links(prefix)
     title = page.get("title") or page.get("navLabel") or "Pagina MobilyTech BR"
@@ -1712,6 +1750,9 @@ def css() -> str:
     *{box-sizing:border-box}
     html{scroll-behavior:smooth;max-width:100%;overflow-x:hidden}
     body{margin:0;background:#fff;color:var(--ink);font-size:16px;line-height:1.45;max-width:100%;overflow-x:hidden}
+    main{position:relative}
+    .system-builder-layer{position:absolute;inset:0;z-index:18;pointer-events:none}
+    .system-builder-layer .custom-block{pointer-events:auto}
     a{color:inherit;text-decoration:none}
     button,input,textarea{font:inherit}
     img{max-width:100%;display:block}
@@ -4125,6 +4166,7 @@ def html_doc(title: str, main: str, prefix: str, active: str, products, finalist
         cart_html = ""
         script_html = ""
     else:
+        main = inject_system_builder_overlay(main, active, prefix, products, finalists, site_content)
         header_html = header(prefix, active, site_content)
         footer_html = footer(prefix, site_content)
         cart_html = cart_drawer(prefix, site_content)
