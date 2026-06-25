@@ -522,13 +522,15 @@
       .confirm-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
       .builder-layout {
         display: grid;
-        grid-template-columns: minmax(320px, 380px) minmax(520px, 1fr);
+        grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
         gap: 18px;
         align-items: start;
       }
       .builder-sidebar {
         display: grid;
         gap: 14px;
+        min-width: 0;
+        align-content: start;
       }
       .builder-page-list {
         display: grid;
@@ -578,10 +580,17 @@
       }
       .builder-toolbar {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
-      .builder-toolbar .btn { width: 100%; padding-inline: 12px; }
+      .builder-toolbar .btn {
+        width: 100%;
+        min-height: 40px;
+        padding: 0 10px;
+        border-width: 1px;
+        border-radius: 14px;
+        font-size: 13px;
+      }
       .builder-canvas {
         position: sticky;
         top: 90px;
@@ -593,12 +602,12 @@
         overflow: hidden;
       }
       .builder-canvas-header {
-        padding: 22px;
+        padding: 18px;
         border-bottom: 1px solid #e3ebf4;
         background: rgba(255,255,255,.86);
-        display: flex;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
         align-items: flex-start;
-        justify-content: space-between;
         gap: 14px;
       }
       .builder-canvas-header h3 { margin: 0; font-size: 30px; line-height: 1.05; }
@@ -616,10 +625,13 @@
         font-weight: 1000;
       }
       .builder-canvas-actions {
-        display: grid;
+        display: flex;
+        flex-wrap: wrap;
         gap: 8px;
-        justify-items: end;
+        justify-content: flex-end;
+        align-items: center;
         flex: 0 0 auto;
+        max-width: 430px;
       }
       .builder-view-toggle {
         display: inline-flex;
@@ -693,6 +705,7 @@
         margin: 0 auto;
         transition: width .18s ease;
         background: #fff;
+        min-width: 0;
       }
       .builder-preview-frame.is-mobile {
         width: min(390px, 100%);
@@ -881,7 +894,8 @@
         left: var(--x, 8%);
         top: var(--y, 8%);
         width: var(--w, 260px);
-        min-height: var(--h, 74px);
+        height: var(--h, 74px);
+        min-height: 0;
         border-radius: var(--r, 14px);
         background: var(--bg, #ffffff);
         color: var(--fg, #111);
@@ -891,36 +905,62 @@
         box-shadow: var(--shadow, 0 12px 28px rgba(13, 23, 38, .12));
         z-index: var(--z, 1);
         padding: 14px;
+        box-sizing: border-box;
         display: grid;
         place-items: center;
         text-align: var(--ta, center);
         font-size: var(--fs, 16px);
         font-weight: var(--fw, 900);
         cursor: move;
+        touch-action: none;
+        user-select: none;
         overflow: visible;
       }
       .builder-block[data-system-source="true"] {
-        outline: 2px dashed rgba(20, 139, 255, .55);
-        outline-offset: 4px;
+        padding: 0;
+        border: 1px dashed transparent;
+        outline: 0;
+        background: transparent;
+        box-shadow: none;
+        color: transparent;
       }
       .builder-block[data-passive-real="true"] {
-        background: rgba(20,139,255,.055);
-        border-color: rgba(20,139,255,.28);
+        background: transparent;
+        border-color: transparent;
         box-shadow: none;
+      }
+      .builder-block[data-passive-real="true"].is-selected {
+        background: rgba(20,139,255,.075);
+        border-color: rgba(20,139,255,.58);
+      }
+      .builder-block[data-system-source="true"][data-overridden="true"] {
+        padding: 14px;
+        background: var(--bg, #ffffff);
+        color: var(--fg, #111);
+        border: 1px solid rgba(20,139,255,.32);
+        box-shadow: var(--shadow, 0 12px 28px rgba(13, 23, 38, .12));
       }
       .builder-block[data-passive-real="true"] .builder-inline-editor,
       .builder-block[data-passive-real="true"] img {
         opacity: 0;
         pointer-events: none;
       }
+      .builder-block[data-passive-real="true"].is-selected {
+        color: var(--fg, #111);
+      }
+      .builder-block[data-passive-real="true"].is-selected .builder-inline-editor {
+        opacity: .96;
+        pointer-events: auto;
+      }
       .builder-block[data-passive-real="true"]:hover {
-        background: rgba(20,139,255,.11);
+        background: rgba(20,139,255,.075);
+        border-color: rgba(20,139,255,.5);
       }
       .builder-block[data-system-source="true"]:before {
         content: "editavel";
         position: absolute;
         left: 10px;
-        top: -20px;
+        top: 8px;
         border-radius: 999px;
         background: #148bff;
         color: #fff;
@@ -931,13 +971,34 @@
         text-transform: uppercase;
         box-shadow: 0 6px 16px rgba(13,23,38,.18);
         opacity: 0;
-        transform: translateY(4px);
+        transform: translateY(-3px);
         transition: opacity .16s ease, transform .16s ease;
       }
       .builder-block[data-system-source="true"]:hover:before,
       .builder-block[data-system-source="true"].is-selected:before {
         opacity: 1;
-        transform: translateY(0);
+        transform: none;
+      }
+      .builder-block[data-system-source="true"][data-overridden="true"]:before {
+        content: "alterado";
+        top: -24px;
+      }
+      .builder-source-label {
+        position: absolute;
+        inset: auto 8px 8px 8px;
+        display: none;
+        border-radius: 999px;
+        background: rgba(255,255,255,.94);
+        color: #075c9f;
+        padding: 5px 8px;
+        font-size: 11px;
+        font-weight: 1000;
+        line-height: 1.1;
+        pointer-events: none;
+        box-shadow: 0 8px 18px rgba(13,23,38,.14);
+      }
+      .builder-block[data-system-source="true"].is-selected .builder-source-label {
+        display: inline-flex;
       }
       .builder-block[data-animation="fade"] { animation: builderFade var(--anim-duration, 600ms) ease both; }
       .builder-block[data-animation="rise"] { animation: builderRise var(--anim-duration, 600ms) cubic-bezier(.2,.8,.2,1) both; }
@@ -1015,7 +1076,7 @@
         border-radius: var(--r, 999px);
         background: var(--bg, #ff2b2b);
         color: var(--fg, #fff);
-        min-height: var(--h, 50px);
+        min-height: 0;
       }
       .builder-block[data-type="button"][data-bg-mode="gradient"] { background: linear-gradient(var(--angle, 135deg), var(--g1, #ff2b2b), var(--g2, #148bff)); }
       .builder-block[data-type="button"][data-bg-mode="glass"] { background: rgba(255,255,255,.28); color: var(--fg, #111); backdrop-filter: blur(var(--blur, 12px)); }
@@ -1064,13 +1125,17 @@
         background-size: cover;
         background-position: center;
       }
-      .builder-block.is-selected { outline: 3px solid rgba(20, 139, 255, .46); outline-offset: 2px; }
+      .builder-block.is-selected {
+        outline: 3px solid rgba(20, 139, 255, .46);
+        outline-offset: 2px;
+        z-index: 9999 !important;
+      }
       .builder-resize {
         position: absolute;
-        right: 8px;
-        bottom: 8px;
-        width: 16px;
-        height: 16px;
+        right: 6px;
+        bottom: 6px;
+        width: 18px;
+        height: 18px;
         border: 2px solid #fff;
         border-radius: 6px;
         background: #148bff;
@@ -1081,10 +1146,10 @@
       }
       .builder-lock {
         position: absolute;
-        right: 8px;
-        top: 8px;
-        width: 24px;
-        height: 24px;
+        right: 6px;
+        top: 6px;
+        width: 28px;
+        height: 28px;
         border: 2px solid #fff;
         border-radius: 999px;
         background: #111;
@@ -1099,10 +1164,10 @@
       }
       .builder-delete {
         position: absolute;
-        left: 8px;
-        top: 8px;
-        width: 24px;
-        height: 24px;
+        left: 6px;
+        top: 6px;
+        width: 28px;
+        height: 28px;
         border: 2px solid #fff;
         border-radius: 999px;
         background: #ff2b2b;
@@ -1177,7 +1242,7 @@
         padding: 18px;
         background: linear-gradient(135deg, #eefbff, #f7fbff 48%, #ffffff);
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
+        grid-template-columns: minmax(300px, 360px) minmax(0, 1fr);
         gap: 14px;
         overflow: hidden;
       }
@@ -1190,12 +1255,12 @@
         box-shadow: 0 22px 60px rgba(13,23,38,.18);
       }
       body.builder-edit-fullscreen .builder-sidebar {
-        position: fixed;
-        left: 18px;
-        top: 18px;
-        bottom: 18px;
+        position: relative;
+        left: auto;
+        top: auto;
+        bottom: auto;
         z-index: 146;
-        width: min(390px, calc(100vw - 36px));
+        width: auto;
         background: rgba(255,255,255,.96);
         border: 1px solid #d8e5f2;
         border-radius: 22px;
@@ -1204,7 +1269,7 @@
       }
       body.builder-edit-fullscreen .builder-canvas {
         min-height: calc(100vh - 36px);
-        grid-column: 1;
+        grid-column: 2;
       }
       body.builder-edit-fullscreen .builder-stage {
         min-height: calc(100vh - 178px);
@@ -1214,9 +1279,38 @@
       }
       body.builder-edit-fullscreen.builder-tools-collapsed .builder-layout {
         grid-template-columns: minmax(0, 1fr);
+        padding-left: 72px;
       }
       body.builder-edit-fullscreen.builder-tools-collapsed .builder-sidebar {
         display: none;
+      }
+      body.builder-edit-fullscreen.builder-tools-collapsed .builder-canvas {
+        grid-column: 1 / -1;
+      }
+      .builder-floating-tools-toggle {
+        display: none !important;
+      }
+      body.builder-edit-fullscreen.builder-tools-collapsed .builder-floating-tools-toggle {
+        position: fixed;
+        left: 16px;
+        top: 50%;
+        z-index: 149;
+        width: 44px;
+        min-height: 150px;
+        padding: 12px 6px;
+        border-radius: 999px;
+        border: 1px solid #d8e5f2;
+        background: #111;
+        color: #fff;
+        box-shadow: 0 18px 44px rgba(13,23,38,.22);
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        font-size: 12px;
+        font-weight: 1000;
+        cursor: pointer;
       }
       .builder-fullscreen-only {
         display: none !important;
@@ -1349,6 +1443,8 @@
         min-height: 34px;
         padding: 0 12px;
         font-size: 12px;
+        width: auto;
+        flex: 1 1 100px;
       }
       .builder-inspector-empty {
         border: 1px dashed #cbd8e6;
@@ -1358,6 +1454,77 @@
         color: #526176;
         font-weight: 850;
         line-height: 1.45;
+      }
+      .builder-sidebar .editor-panel {
+        overflow: hidden;
+      }
+      .builder-sidebar .editor-toolbar {
+        padding: 14px 16px;
+        gap: 10px;
+        align-items: flex-start;
+      }
+      .builder-sidebar .editor-toolbar strong {
+        display: block;
+        font-size: 16px;
+        line-height: 1.15;
+      }
+      .builder-sidebar .editor-toolbar p {
+        font-size: 12px;
+        line-height: 1.35;
+      }
+      .builder-sidebar .editor-toolbar .btn {
+        width: auto;
+        min-width: 118px;
+        max-width: 136px;
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 18px;
+        flex: 0 0 auto;
+        white-space: normal;
+        line-height: 1.08;
+      }
+      .builder-sidebar .site-content-form {
+        padding: 14px;
+        gap: 12px;
+      }
+      .builder-sidebar .content-fieldset > .editor-toolbar {
+        padding: 0;
+        border-bottom: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .builder-sidebar .content-fieldset > .editor-toolbar .btn {
+        width: 100%;
+        max-width: none;
+        min-height: 38px;
+      }
+      .builder-sidebar .content-fieldset,
+      .builder-sidebar .visual-editor-card {
+        padding: 12px;
+        border-radius: 14px;
+      }
+      .builder-sidebar .content-grid,
+      .builder-sidebar .visual-editor-card .row,
+      .builder-sidebar .media-upload-row {
+        grid-template-columns: 1fr;
+      }
+      .builder-sidebar .content-grid input,
+      .builder-sidebar .content-grid select,
+      .builder-sidebar .content-grid textarea,
+      .builder-sidebar .visual-editor-card input,
+      .builder-sidebar .visual-editor-card select,
+      .builder-sidebar .visual-editor-card textarea {
+        min-height: 38px;
+        padding: 9px 10px;
+        font-size: 13px;
+      }
+      .builder-sidebar .media-upload-row .btn,
+      .builder-sidebar .visual-editor-card .btn {
+        width: 100%;
+        min-height: 38px;
+        padding: 0 10px;
+        white-space: normal;
+        line-height: 1.15;
       }
       .catalog-edit-form {
         display: grid;
@@ -2591,6 +2758,7 @@
             <p>Crie subpáginas simples do site sem mexer no código. Escolha uma página, adicione blocos, arraste no preview, ajuste texto, cor, borda e redirecionamento, depois salve no site.</p>
           </div>
           <div class="builder-layout">
+            <button class="builder-floating-tools-toggle" type="button" id="builderFloatingToolsToggle" aria-label="Mostrar ferramentas">Ferramentas</button>
             <aside class="builder-sidebar">
               <div class="editor-panel">
                 <div class="editor-toolbar">
@@ -2946,9 +3114,11 @@
       let builderPreviewZoom = 1;
       let builderPreviewFocus = "center";
       let builderContextSuppressClickUntil = 0;
+      let builderLastPointerStart = 0;
       let siteContentState = null;
       let pendingMaintenanceMode = null;
       let lastSalePayload = null;
+      const BUILDER_LAYOUT_FIELDS = new Set(["x", "y", "width", "height", "aspectRatio"]);
       const MEDIA_ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif,image/heic-sequence,image/heif-sequence";
       const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
       const mediaPreviewUrls = new Map();
@@ -3978,9 +4148,67 @@
         return `custom-block-${Date.now().toString(36)}-${Math.random().toString(16).slice(2, 6)}`;
       }
 
+      function builderLayoutMode() {
+        return builderPreviewMode === "mobile" ? "mobile" : "desktop";
+      }
+
+      function legacyBlockLayout(block = {}) {
+        return {
+          x: Number(block.x ?? 8),
+          y: Number(block.y ?? 12),
+          width: Number(block.width || 260),
+          height: Number(block.height || 80),
+          aspectRatio: Number(block.aspectRatio || (Number(block.width || 260) / Math.max(1, Number(block.height || 80))) || 1)
+        };
+      }
+
+      function ensureBuilderLayouts(block = {}) {
+        if (!block.layouts || typeof block.layouts !== "object") block.layouts = {};
+        if (!block.layouts.desktop || typeof block.layouts.desktop !== "object") block.layouts.desktop = legacyBlockLayout(block);
+        if (!block.layoutEditedModes || typeof block.layoutEditedModes !== "object") block.layoutEditedModes = {};
+        return block.layouts;
+      }
+
+      function builderBlockLayout(block = {}, mode = builderLayoutMode()) {
+        const layouts = ensureBuilderLayouts(block);
+        return {
+          ...legacyBlockLayout(block),
+          ...(layouts[mode] || {})
+        };
+      }
+
+      function setBuilderBlockLayout(block, values = {}, mode = builderLayoutMode(), markEdited = true) {
+        if (!block) return {};
+        const layouts = ensureBuilderLayouts(block);
+        const next = {
+          ...legacyBlockLayout(block),
+          ...(layouts[mode] || {}),
+          ...values
+        };
+        if (Number(next.width) > 0 && Number(next.height) > 0 && !values.aspectRatio) {
+          next.aspectRatio = Number(next.width) / Math.max(1, Number(next.height));
+        }
+        layouts[mode] = next;
+        if (markEdited) block.layoutEditedModes[mode] = true;
+        if (mode === "desktop") {
+          block.x = next.x;
+          block.y = next.y;
+          block.width = next.width;
+          block.height = next.height;
+          block.aspectRatio = next.aspectRatio;
+        }
+        return next;
+      }
+
+      function builderLayoutEdited(block = {}, mode = builderLayoutMode()) {
+        return Boolean(block.layoutEditedModes && block.layoutEditedModes[mode]);
+      }
+
       function realPageBlock(id, type, text, options = {}) {
         const width = Number(options.width ?? (type === "button" ? 230 : type === "image" ? 340 : 420));
         const height = Number(options.height ?? (type === "button" ? 54 : type === "image" ? 260 : 92));
+        const transparentTypes = ["text", "image", "icon", "line"];
+        const defaultBackground = type === "button" ? "#ff2b2b" : transparentTypes.includes(type) ? "transparent" : "#ffffff";
         return {
           id,
           type,
@@ -3997,7 +4225,7 @@
           height,
           layer: Number(options.layer ?? (type === "image" ? 2 : type === "button" ? 6 : 4)),
           radius: Number(options.radius ?? (type === "button" ? 999 : type === "text" ? 0 : 18)),
-          background: options.background || (type === "button" ? "#ff2b2b" : "#ffffff"),
+          background: options.background || defaultBackground,
           color: options.color || (type === "button" ? "#ffffff" : "#071529"),
           backgroundMode: options.backgroundMode || "solid",
           gradientFrom: options.gradientFrom || options.background || "#ffffff",
@@ -4311,9 +4539,10 @@
         return `<div class="builder-block-list">${blocks.map((block, index) => {
           const summary = builderBlockSummary(block, index);
           const selected = block.id === builderSelectedBlockId;
+          const layout = builderBlockLayout(block);
           return `<button type="button" data-select-builder-block="${escapeHtml(block.id)}" aria-selected="${selected ? "true" : "false"}">
             <strong>${escapeHtml(builderBlockTypeLabel(block.type))} ${index + 1}: ${escapeHtml(summary.title)}</strong>
-            <small>${escapeHtml(summary.source)} | x ${escapeHtml(block.x ?? 0)}% | y ${escapeHtml(block.y ?? 0)}% | camada ${escapeHtml(block.layer ?? 1)}</small>
+            <small>${escapeHtml(summary.source)} | ${builderLayoutMode() === "mobile" ? "mobile" : "desktop"} | x ${escapeHtml(layout.x ?? 0)}% | y ${escapeHtml(layout.y ?? 0)}% | camada ${escapeHtml(block.layer ?? 1)}</small>
             ${block.realPageElement ? '<span class="source-pill">editavel do site</span>' : ""}
           </button>`;
         }).join("")}</div>`;
@@ -4325,8 +4554,11 @@
         if (!block) return;
         const copy = JSON.parse(JSON.stringify(block));
         copy.id = makeBuilderBlockId();
-        copy.x = Math.min(96, Number(copy.x || 8) + 2);
-        copy.y = Math.min(96, Number(copy.y || 12) + 2);
+        const layout = builderBlockLayout(copy);
+        setBuilderBlockLayout(copy, {
+          x: Math.min(96, Number(layout.x || 8) + 2),
+          y: Math.min(96, Number(layout.y || 12) + 2)
+        }, builderLayoutMode(), true);
         copy.realPageElement = false;
         copy.overrideOriginal = false;
         copy.userEdited = true;
@@ -4370,10 +4602,12 @@
         const sourceHint = block.realPageElement
           ? "Elemento real importado da pagina existente. Ao editar, ele vira override publicavel do site."
           : "Bloco criado no construtor.";
+        const layout = builderBlockLayout(block);
+        const modeLabel = builderLayoutMode() === "mobile" ? "Mobile" : "Desktop";
         return `<article class="visual-editor-card${isSelected ? " is-selected" : ""}" data-builder-block-form="${escapeHtml(block.id)}">
           <div class="builder-editor-summary">
             <strong>${escapeHtml(builderBlockTypeLabel(block.type))} ${index + 1}</strong>
-            <span>${escapeHtml(sourceHint)} Arraste no preview. Use as setas do teclado para ajuste fino.</span>
+            <span>${escapeHtml(sourceHint)} Arraste no preview. Use as setas do teclado para ajuste fino. Posicao e tamanho abaixo valem para ${escapeHtml(modeLabel)}.</span>
             <div class="builder-selected-toolbar" aria-label="Acoes rapidas do bloco selecionado">
               <button class="btn btn-ghost" type="button" data-builder-quick-action="duplicate" data-builder-quick-target="${escapeHtml(block.id)}">Duplicar</button>
               <button class="btn btn-ghost" type="button" data-builder-quick-action="layer-top" data-builder-quick-target="${escapeHtml(block.id)}">Frente</button>
@@ -4418,12 +4652,12 @@
               <button class="btn btn-dark" type="button" data-builder-remove-bg-ai="${escapeHtml(block.id)}">Remover fundo por IA</button>
             </div>
             <div class="row">
-              <label>X % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="x" value="${escapeHtml(block.x ?? 8)}"></label>
-              <label>Y % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="y" value="${escapeHtml(block.y ?? 12)}"></label>
+              <label>X % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="x" value="${escapeHtml(layout.x ?? 8)}"></label>
+              <label>Y % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="y" value="${escapeHtml(layout.y ?? 12)}"></label>
             </div>
             <div class="row">
-              <label>Largura px <input type="number" min="40" data-builder-block="${escapeHtml(block.id)}" data-builder-field="width" value="${escapeHtml(block.width || 260)}"></label>
-              <label>Altura px <input type="number" min="30" data-builder-block="${escapeHtml(block.id)}" data-builder-field="height" value="${escapeHtml(block.height || 80)}"></label>
+              <label>Largura px <input type="number" min="40" data-builder-block="${escapeHtml(block.id)}" data-builder-field="width" value="${escapeHtml(layout.width || 260)}"></label>
+              <label>Altura px <input type="number" min="30" data-builder-block="${escapeHtml(block.id)}" data-builder-field="height" value="${escapeHtml(layout.height || 80)}"></label>
             </div>
             <div class="row">
               <label>Cor fundo <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="background" value="${escapeHtml(colorInputValue(block.background, "#ffffff"))}"></label>
@@ -4664,8 +4898,13 @@
         const block = (page.blocks || []).find((item) => item.id === id);
         if (!block) return;
         const numeric = ["x", "y", "width", "height", "radius", "fontSize", "fontWeight", "gradientAngle", "textGradientAngle", "shadowStrength", "textShadowStrength", "blurPx", "layer", "opacity", "animationDuration", "removeBgTolerance"];
-        if (field === "lockAspect") block.lockAspect = value === "true";
-        else block[field] = numeric.includes(field) ? Number(value || 0) : value;
+        if (BUILDER_LAYOUT_FIELDS.has(field)) {
+          setBuilderBlockLayout(block, { [field]: Number(value || 0) }, builderLayoutMode(), true);
+        } else if (field === "lockAspect") {
+          block.lockAspect = value === "true";
+        } else {
+          block[field] = numeric.includes(field) ? Number(value || 0) : value;
+        }
         if (field === "text") block.label = value;
         if (block.realPageElement) {
           block.overrideOriginal = true;
@@ -4674,9 +4913,12 @@
             setPathValue(siteContentState, block.contentPath, field === "label" ? block.label : value);
             syncBuilderSystemPage(page);
           }
-        }
-        if ((field === "width" || field === "height") && Number(block.width) > 0 && Number(block.height) > 0) {
-          block.aspectRatio = Number(block.width) / Number(block.height);
+          applyBuilderIframeOverrides(page);
+          const node = document.querySelector(`[data-builder-preview-block="${CSS.escape(id)}"]`);
+          if (node) {
+            node.dataset.overridden = "true";
+            node.dataset.passiveReal = "false";
+          }
         }
         builderSelectedBlockId = id;
         renderBuilderPreview();
@@ -4696,6 +4938,12 @@
           if (block.contentPath) {
             setPathValue(siteContentState, block.contentPath, value);
             syncBuilderSystemPage(page);
+          }
+          applyBuilderIframeOverrides(page);
+          const node = document.querySelector(`[data-builder-preview-block="${CSS.escape(id)}"]`);
+          if (node) {
+            node.dataset.overridden = "true";
+            node.dataset.passiveReal = "false";
           }
         }
         builderSelectedBlockId = id;
@@ -4849,6 +5097,7 @@
       }
 
       function builderBlockPreview(block) {
+        const layout = builderBlockLayout(block);
         const image = block.type === "image" && block.image ? `<img src="${escapeHtml(adminPreviewSrc(block.image))}" alt="">` : "";
         const sourceText = String(block.text || block.label || "Bloco");
         let richText = escapeHtml(sourceText);
@@ -4856,7 +5105,13 @@
           const parts = sourceText.split(block.texturePhrase);
           richText = parts.map(escapeHtml).join(`<span class="text-texture-part">${escapeHtml(block.texturePhrase)}</span>`);
         }
-        const text = block.type === "line"
+        const isReal = Boolean(block.realPageElement);
+        const isOverridden = Boolean(block.overrideOriginal);
+        const isSelected = block.id === builderSelectedBlockId;
+        const label = `<span class="builder-source-label">${escapeHtml(builderBlockTypeLabel(block.type))}${sourceText ? `: ${escapeHtml(sourceText).slice(0, 54)}` : ""}</span>`;
+        const text = isReal && !isOverridden && !isSelected
+          ? label
+          : block.type === "line"
           ? ""
           : block.type === "image"
           ? image || "Imagem"
@@ -4871,9 +5126,8 @@
         const lock = block.lockAspect === false ? "L" : "T";
         const textMode = block.textMode === "texture" && block.texturePhrase ? "solid" : (block.textMode || "solid");
         const opacity = Math.max(0, Math.min(100, Number(block.opacity ?? 100))) / 100;
-        const isSelected = block.id === builderSelectedBlockId;
-        const passiveReal = Boolean(block.realPageElement && !block.overrideOriginal && !isSelected);
-        return `<div class="builder-block${isSelected ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" data-animation="${escapeHtml(block.animation || "none")}" data-system-source="${block.realPageElement ? "true" : "false"}" data-passive-real="${passiveReal ? "true" : "false"}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--z:${Number(block.layer ?? 1)};--opacity:${opacity};--anim-duration:${Number(block.animationDuration || 600)}ms">${text}<button class="builder-delete" type="button" data-delete-builder-preview="${escapeHtml(block.id)}" title="Excluir bloco">x</button><button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
+        const passiveReal = Boolean(isReal && !isOverridden);
+        return `<div class="builder-block${isSelected ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" data-animation="${escapeHtml(block.animation || "none")}" data-system-source="${isReal ? "true" : "false"}" data-overridden="${isOverridden ? "true" : "false"}" data-passive-real="${passiveReal ? "true" : "false"}" style="--x:${Number(layout.x ?? 8)}%;--y:${Number(layout.y ?? 12)}%;--w:${Number(layout.width || 260)}px;--h:${Number(layout.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--z:${Number(block.layer ?? 1)};--opacity:${opacity};--anim-duration:${Number(block.animationDuration || 600)}ms">${text}<button class="builder-delete" type="button" data-delete-builder-preview="${escapeHtml(block.id)}" title="Excluir bloco">x</button><button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
       }
 
       function builderPreviewNavigation(activePage) {
@@ -4910,13 +5164,10 @@
 
       function builderDesignScale(stage, viewport) {
         const rect = stage?.getBoundingClientRect?.();
-        const boundedWidth = rect ? Math.max(260, window.innerWidth - rect.left - 40) : viewport.width;
-        const availableWidth = Math.max(260, Math.min(Number(stage?.clientWidth || viewport.width), boundedWidth) - 42);
-        const availableHeight = Math.max(420, Number(stage?.clientHeight || 720) - 42);
-        const firstFoldHeight = builderPreviewMode === "mobile" ? 844 : 1080;
+        const boundedWidth = rect ? Math.max(260, window.innerWidth - rect.left - 28) : viewport.width;
+        const availableWidth = Math.max(220, Math.min(Number(stage?.clientWidth || viewport.width), boundedWidth) - 36);
         const fitWidth = availableWidth / Math.max(1, viewport.width);
-        const fitHeight = availableHeight / Math.max(1, firstFoldHeight);
-        const fit = Math.min(fitWidth, fitHeight);
+        const fit = fitWidth;
         return Math.max(0.08, Math.min(2.2, fit * Number(builderPreviewZoom || 1)));
       }
 
@@ -4957,25 +5208,85 @@
         `;
       }
 
-      function attachBuilderSystemIframeMask(page = activeCustomPage()) {
-        const selected = (page.blocks || []).find((block) => block.id === builderSelectedBlockId);
+      function applyBuilderIframeOverrides(page = activeCustomPage()) {
         const iframe = $("#builderDesignSurface iframe");
-        if (!iframe || !selected?.realPageElement || !selected.sourceSelector) return;
-        const applyMask = () => {
-          try {
-            const doc = iframe.contentDocument;
-            if (!doc) return;
-            doc.querySelector("#mobilytech-builder-source-mask")?.remove();
-            const style = doc.createElement("style");
-            style.id = "mobilytech-builder-source-mask";
-            style.textContent = `${selected.sourceSelector}{opacity:.12!important;filter:saturate(.35)!important;outline:2px dashed rgba(20,139,255,.35)!important;outline-offset:3px!important;}`;
-            doc.head.appendChild(style);
-          } catch (_error) {
-            // Iframe can be temporarily unavailable while loading; preview remains usable.
-          }
-        };
-        iframe.addEventListener("load", applyMask, { once: true });
-        setTimeout(applyMask, 180);
+        if (!iframe) return;
+        try {
+          const doc = iframe.contentDocument;
+          if (!doc?.head) return;
+          doc.querySelector("#mobilytech-builder-source-mask")?.remove();
+          const selectors = (page.blocks || [])
+            .filter((block) => block?.realPageElement && block.overrideOriginal && block.sourceSelector)
+            .map((block) => block.sourceSelector)
+            .filter(Boolean);
+          if (!selectors.length) return;
+          const style = doc.createElement("style");
+          style.id = "mobilytech-builder-source-mask";
+          style.textContent = `${selectors.join(",")}{visibility:hidden!important;opacity:0!important;pointer-events:none!important;}`;
+          doc.head.appendChild(style);
+        } catch (_error) {
+          // Iframe can be temporarily unavailable while loading; preview remains usable.
+        }
+      }
+
+      function syncBuilderRealBlockRects(page = activeCustomPage()) {
+        const iframe = $("#builderDesignSurface iframe");
+        const surface = $("#builderDesignSurface");
+        if (!iframe || !surface) return;
+        try {
+          const doc = iframe.contentDocument;
+          const win = iframe.contentWindow;
+          if (!doc || !win) return;
+          const viewportWidth = Math.max(1, doc.documentElement?.clientWidth || win.innerWidth || iframe.clientWidth || surface.clientWidth);
+          const surfaceHeight = Math.max(1, surface.clientHeight || Number(getComputedStyle(surface).getPropertyValue("--design-height").replace("px", "")) || 1600);
+          const mode = builderLayoutMode();
+          let changed = false;
+          (page.blocks || []).forEach((block) => {
+            if (!block?.realPageElement || !block.sourceSelector || builderLayoutEdited(block, mode)) return;
+            const element = doc.querySelector(block.sourceSelector);
+            if (!element) return;
+            const rect = element.getBoundingClientRect();
+            if (rect.width < 4 || rect.height < 4) return;
+            const nextX = Math.max(0, Math.min(100, ((rect.left + (win.scrollX || 0)) / viewportWidth) * 100));
+            const nextY = Math.max(0, Math.min(100, ((rect.top + (win.scrollY || 0)) / surfaceHeight) * 100));
+            const nextWidth = Math.max(12, Math.round(rect.width));
+            const nextHeight = Math.max(10, Math.round(rect.height));
+            const roundedX = Math.round(nextX * 10) / 10;
+            const roundedY = Math.round(nextY * 10) / 10;
+            const currentLayout = builderBlockLayout(block, mode);
+            if (currentLayout.x !== roundedX || currentLayout.y !== roundedY || currentLayout.width !== nextWidth || currentLayout.height !== nextHeight) {
+              setBuilderBlockLayout(block, {
+                x: roundedX,
+                y: roundedY,
+                width: nextWidth,
+                height: nextHeight,
+                aspectRatio: nextWidth / Math.max(1, nextHeight)
+              }, mode, false);
+              block.derivedFromDom = true;
+              changed = true;
+            }
+            const node = surface.querySelector(`[data-builder-preview-block="${CSS.escape(block.id)}"]`);
+            const nextLayout = builderBlockLayout(block, mode);
+            if (node) {
+              node.style.setProperty("--x", `${nextLayout.x}%`);
+              node.style.setProperty("--y", `${nextLayout.y}%`);
+              node.style.setProperty("--w", `${nextLayout.width}px`);
+              node.style.setProperty("--h", `${nextLayout.height}px`);
+            }
+          });
+          applyBuilderIframeOverrides(page);
+          if (changed && builderSelectedBlockId) renderBuilderEditor();
+        } catch (_error) {
+          // If the iframe has not finished layout, the next delayed pass handles it.
+        }
+      }
+
+      function attachBuilderSystemIframeMask(page = activeCustomPage()) {
+        const iframe = $("#builderDesignSurface iframe");
+        if (!iframe) return;
+        const apply = () => syncBuilderRealBlockRects(page);
+        iframe.addEventListener("load", apply, { once: true });
+        [160, 520, 1100].forEach((delay) => setTimeout(apply, delay));
       }
 
       function previewProductCards(source = [], limit = 6) {
@@ -5026,9 +5337,10 @@
 
       function builderCustomPreviewHtml(page = {}) {
         const blocks = (page.blocks || []).map((block) => {
+          const layout = builderBlockLayout(block);
           const image = block.type === "image" && block.image ? `<img src="${escapeHtml(adminPreviewSrc(block.image))}" alt="">` : "";
           const text = block.type === "line" ? "" : block.type === "image" ? image : escapeHtml(block.text || block.label || "");
-          return `<div class="custom-block" data-type="${escapeHtml(block.type || "box")}" data-animation="${escapeHtml(block.animation || "none")}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#fff")};--fg:${escapeHtml(block.color || "#111")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--opacity:${Math.max(0, Math.min(100, Number(block.opacity ?? 100))) / 100};--anim-duration:${Number(block.animationDuration || 600)}ms;--shadow:0 14px 30px rgba(13,23,38,.12)">${text}</div>`;
+          return `<div class="custom-block" data-type="${escapeHtml(block.type || "box")}" data-animation="${escapeHtml(block.animation || "none")}" style="--x:${Number(layout.x ?? 8)}%;--y:${Number(layout.y ?? 12)}%;--w:${Number(layout.width || 260)}px;--h:${Number(layout.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#fff")};--fg:${escapeHtml(block.color || "#111")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--opacity:${Math.max(0, Math.min(100, Number(block.opacity ?? 100))) / 100};--anim-duration:${Number(block.animationDuration || 600)}ms;--shadow:0 14px 30px rgba(13,23,38,.12)">${text}</div>`;
         }).join("");
         return `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(page.title || "Preview")}</title><style>body{margin:0;font-family:Inter,Arial,sans-serif;background:#fff;color:#071529}.preview-nav{height:68px;display:flex;align-items:center;gap:18px;padding:0 28px;border-bottom:1px solid #e8eef5;font-weight:900}.preview-nav img{width:38px;height:38px}.custom-page{padding:34px 24px}.custom-page h1{font-size:clamp(34px,5vw,64px);margin:0 0 8px}.custom-page p{font-size:18px;color:#526176;font-weight:850}.custom-stage{position:relative;min-height:720px;border:1px solid #dbe4ef;border-radius:24px;background:linear-gradient(135deg,#f8fbff,#fff);overflow:hidden}.custom-block{position:absolute;left:var(--x);top:var(--y);width:var(--w);min-height:var(--h);border-radius:var(--r);background:var(--bg);color:var(--fg);font-size:var(--fs);font-weight:var(--fw);text-align:var(--ta);display:grid;place-items:center;padding:14px;box-shadow:var(--shadow);opacity:var(--opacity,1);box-sizing:border-box}.custom-block[data-type=line]{min-height:0;height:var(--h);padding:0;box-shadow:none}.custom-block[data-type=icon]{line-height:1}.custom-block img{width:100%;height:100%;object-fit:contain}.custom-block[data-animation=fade]{animation:fade var(--anim-duration) ease both}.custom-block[data-animation=rise]{animation:rise var(--anim-duration) ease both}.custom-block[data-animation=pop]{animation:pop var(--anim-duration) ease both}.custom-block[data-animation=pulse]{animation:pulse calc(var(--anim-duration) * 1.2) ease-in-out infinite}@keyframes fade{from{opacity:0}to{opacity:var(--opacity,1)}}@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:var(--opacity,1);transform:translateY(0)}}@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:var(--opacity,1);transform:scale(1)}}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}</style></head><body><nav class="preview-nav"><img src="/assets/mobilytech-logo.png" alt=""><span>MobilyTech BR</span></nav><main class="custom-page"><h1>${escapeHtml(page.title || "Nova pagina")}</h1><p>${escapeHtml(page.intro || "")}</p><section class="custom-stage">${blocks}</section></main></body></html>`;
       }
@@ -5081,6 +5393,13 @@
         document.body.classList.toggle("builder-tools-collapsed");
         const button = $("#builderToggleFullscreenTools");
         if (button) button.textContent = document.body.classList.contains("builder-tools-collapsed") ? "Mostrar ferramentas" : "Ocultar ferramentas";
+        setTimeout(() => renderBuilderPreview(), 80);
+      }
+
+      function setBuilderFullscreenToolsVisible(visible = true) {
+        document.body.classList.toggle("builder-tools-collapsed", !visible);
+        const button = $("#builderToggleFullscreenTools");
+        if (button) button.textContent = visible ? "Ocultar ferramentas" : "Mostrar ferramentas";
         setTimeout(() => renderBuilderPreview(), 80);
       }
 
@@ -5165,21 +5484,23 @@
         setBuilderGuides({ x: null, y: null });
       }
 
-      function snapBuilderPosition(block, rawX, rawY, stage) {
+      function snapBuilderPosition(block, rawX, rawY, stage, pageOverride = null) {
         if (!builderSnapEnabled) return { x: rawX, y: rawY, guideX: null, guideY: null };
-        const page = activeCustomPage();
+        const page = pageOverride || activeCustomPage();
         const stageWidth = Math.max(1, stage.clientWidth);
         const stageHeight = Math.max(1, stage.clientHeight);
-        const blockWidthPercent = (Number(block.width || 0) / stageWidth) * 100;
-        const blockHeightPercent = (Number(block.height || 0) / stageHeight) * 100;
+        const blockLayout = builderBlockLayout(block);
+        const blockWidthPercent = (Number(blockLayout.width || 0) / stageWidth) * 100;
+        const blockHeightPercent = (Number(blockLayout.height || 0) / stageHeight) * 100;
         const snapPointsX = [0, 50, 100 - blockWidthPercent];
         const snapPointsY = [0, 50, 100 - blockHeightPercent];
         (page.blocks || []).forEach((other) => {
           if (!other || other.id === block.id) return;
-          const otherX = Number(other.x || 0);
-          const otherY = Number(other.y || 0);
-          const otherW = (Number(other.width || 0) / stageWidth) * 100;
-          const otherH = (Number(other.height || 0) / stageHeight) * 100;
+          const otherLayout = builderBlockLayout(other);
+          const otherX = Number(otherLayout.x || 0);
+          const otherY = Number(otherLayout.y || 0);
+          const otherW = (Number(otherLayout.width || 0) / stageWidth) * 100;
+          const otherH = (Number(otherLayout.height || 0) / stageHeight) * 100;
           snapPointsX.push(otherX, otherX + otherW, otherX + (otherW / 2) - (blockWidthPercent / 2));
           snapPointsY.push(otherY, otherY + otherH, otherY + (otherH / 2) - (blockHeightPercent / 2));
         });
@@ -5236,6 +5557,7 @@
         if (block.realPageElement) {
           block.overrideOriginal = true;
           block.userEdited = true;
+          applyBuilderIframeOverrides(page);
         }
         renderBuilderPreview();
         renderBuilderEditor();
@@ -5246,17 +5568,21 @@
         const stage = builderSurface();
         const block = activeBuilderBlock();
         if (!stage || !block) return;
+        const layout = builderBlockLayout(block);
+        const next = {};
         if (axis === "x") {
-          const widthPercent = (Number(block.width || 0) / Math.max(1, stage.clientWidth)) * 100;
-          block.x = Math.round(Math.max(0, (100 - widthPercent) / 2) * 10) / 10;
+          const widthPercent = (Number(layout.width || 0) / Math.max(1, stage.clientWidth)) * 100;
+          next.x = Math.round(Math.max(0, (100 - widthPercent) / 2) * 10) / 10;
         }
         if (axis === "y") {
-          const heightPercent = (Number(block.height || 0) / Math.max(1, stage.clientHeight)) * 100;
-          block.y = Math.round(Math.max(0, (100 - heightPercent) / 2) * 10) / 10;
+          const heightPercent = (Number(layout.height || 0) / Math.max(1, stage.clientHeight)) * 100;
+          next.y = Math.round(Math.max(0, (100 - heightPercent) / 2) * 10) / 10;
         }
+        setBuilderBlockLayout(block, next, builderLayoutMode(), true);
         if (block.realPageElement) {
           block.overrideOriginal = true;
           block.userEdited = true;
+          applyBuilderIframeOverrides(activeCustomPage());
         }
         renderBuilderPreview();
         renderBuilderEditor();
@@ -5294,18 +5620,22 @@
         const page = activeCustomPage();
         const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
         if (!stage || !block) return;
-        const nextX = Number(block.x || 0) + (deltaXPx / Math.max(1, stage.clientWidth)) * 100;
-        const nextY = Number(block.y || 0) + (deltaYPx / Math.max(1, stage.clientHeight)) * 100;
-        block.x = Math.round(Math.max(0, Math.min(100, nextX)) * 10) / 10;
-        block.y = Math.round(Math.max(0, Math.min(100, nextY)) * 10) / 10;
+        const layout = builderBlockLayout(block);
+        const nextX = Number(layout.x || 0) + (deltaXPx / Math.max(1, stage.clientWidth)) * 100;
+        const nextY = Number(layout.y || 0) + (deltaYPx / Math.max(1, stage.clientHeight)) * 100;
+        const nextLayout = setBuilderBlockLayout(block, {
+          x: Math.round(Math.max(0, Math.min(100, nextX)) * 10) / 10,
+          y: Math.round(Math.max(0, Math.min(100, nextY)) * 10) / 10
+        }, builderLayoutMode(), true);
         if (block.realPageElement) {
           block.overrideOriginal = true;
           block.userEdited = true;
+          applyBuilderIframeOverrides(page);
         }
         const node = stage.querySelector(`[data-builder-preview-block="${CSS.escape(block.id)}"]`);
         if (node) {
-          node.style.setProperty("--x", `${block.x}%`);
-          node.style.setProperty("--y", `${block.y}%`);
+          node.style.setProperty("--x", `${nextLayout.x}%`);
+          node.style.setProperty("--y", `${nextLayout.y}%`);
         }
         renderBuilderEditor();
         setInlineStatus("builderStatus", "Posicao ajustada pelas setas. Clique em salvar para publicar.", "ok");
@@ -5315,6 +5645,32 @@
         const stage = $("#builderStage");
         const surface = builderSurface();
         if (!stage) return;
+        const startEventNames = ["pointerdown", "mousedown"];
+        const dragEventsFor = (event) => event.type === "mousedown"
+          ? { move: "mousemove", up: "mouseup" }
+          : { move: "pointermove", up: "pointerup" };
+        const shouldIgnorePointerStart = (event) => {
+          if (event.type === "mousedown") {
+            if (event.button !== 0) return true;
+            if (window.PointerEvent && Date.now() - builderLastPointerStart < 450) return true;
+            return false;
+          }
+          if (event.type === "pointerdown") {
+            if (event.button === 2) return true;
+            builderLastPointerStart = Date.now();
+          }
+          return false;
+        };
+        const markRealBlockEdited = (block, node, page) => {
+          if (!block?.realPageElement) return;
+          block.overrideOriginal = true;
+          block.userEdited = true;
+          if (node) {
+            node.dataset.overridden = "true";
+            node.dataset.passiveReal = "false";
+          }
+          applyBuilderIframeOverrides(page);
+        };
         stage.onkeydown = (event) => {
           if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
           if (!builderSelectedBlockId) return;
@@ -5339,16 +5695,33 @@
             const block = (page.blocks || []).find((item) => item.id === button.dataset.toggleBuilderLock);
             if (!block) return;
             block.lockAspect = block.lockAspect === false;
-            if (Number(block.width) > 0 && Number(block.height) > 0) block.aspectRatio = Number(block.width) / Number(block.height);
+            const layout = builderBlockLayout(block);
+            if (Number(layout.width) > 0 && Number(layout.height) > 0) {
+              setBuilderBlockLayout(block, { aspectRatio: Number(layout.width) / Number(layout.height) }, builderLayoutMode(), true);
+            }
+            if (block.realPageElement) {
+              block.overrideOriginal = true;
+              block.userEdited = true;
+              applyBuilderIframeOverrides(page);
+            }
             builderSelectedBlockId = block.id;
             renderPageBuilder();
           });
         });
         surface.querySelectorAll("[data-builder-inline-text]").forEach((editor) => {
-          editor.addEventListener("pointerdown", (event) => {
-            event.stopPropagation();
+          const startInlineEdit = (event) => {
             builderSelectedBlockId = editor.dataset.builderInlineText;
             closeBuilderContextMenu();
+            if (document.activeElement === editor || event.detail > 1) {
+              event.stopPropagation();
+            }
+          };
+          startEventNames.forEach((eventName) => editor.addEventListener(eventName, startInlineEdit));
+          editor.addEventListener("dblclick", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            builderSelectedBlockId = editor.dataset.builderInlineText;
+            editor.focus();
           });
           editor.addEventListener("focus", () => {
             builderSelectedBlockId = editor.dataset.builderInlineText;
@@ -5365,7 +5738,8 @@
           });
         });
         surface.querySelectorAll("[data-builder-resize]").forEach((handle) => {
-          handle.addEventListener("pointerdown", (event) => {
+          const startResize = (event) => {
+            if (shouldIgnorePointerStart(event)) return;
             event.preventDefault();
             event.stopPropagation();
             const page = activeCustomPage();
@@ -5373,37 +5747,41 @@
             const node = handle.closest("[data-builder-preview-block]");
             if (!block || !node) return;
             builderSelectedBlockId = block.id;
-            handle.setPointerCapture(event.pointerId);
+            markRealBlockEdited(block, node, page);
+            const layout = builderBlockLayout(block);
             const startX = event.clientX;
             const startY = event.clientY;
-            const startWidth = Number(block.width || node.offsetWidth || 260);
-            const startHeight = Number(block.height || node.offsetHeight || 80);
-            const ratio = Number(block.aspectRatio || (startWidth / Math.max(1, startHeight)) || 1);
+            const startWidth = Number(layout.width || node.offsetWidth || 260);
+            const startHeight = Number(layout.height || node.offsetHeight || 80);
+            const ratio = Number(layout.aspectRatio || (startWidth / Math.max(1, startHeight)) || 1);
             const surfaceBox = surface.getBoundingClientRect();
             const surfaceScale = Math.max(0.01, surfaceBox.width / Math.max(1, surface.clientWidth));
             const move = (moveEvent) => {
+              moveEvent.preventDefault();
               const nextWidth = Math.max(40, Math.round(startWidth + (moveEvent.clientX - startX) / surfaceScale));
               let nextHeight = Math.max(30, Math.round(startHeight + (moveEvent.clientY - startY) / surfaceScale));
               if (block.lockAspect !== false) nextHeight = Math.max(30, Math.round(nextWidth / ratio));
-              block.width = nextWidth;
-              block.height = nextHeight;
-              block.aspectRatio = nextWidth / Math.max(1, nextHeight);
-              if (block.realPageElement) {
-                block.overrideOriginal = true;
-                block.userEdited = true;
-              }
-              node.style.setProperty("--w", `${block.width}px`);
-              node.style.setProperty("--h", `${block.height}px`);
+              const nextLayout = setBuilderBlockLayout(block, {
+                width: nextWidth,
+                height: nextHeight,
+                aspectRatio: nextWidth / Math.max(1, nextHeight)
+              }, builderLayoutMode(), true);
+              markRealBlockEdited(block, node, page);
+              node.style.setProperty("--w", `${nextLayout.width}px`);
+              node.style.setProperty("--h", `${nextLayout.height}px`);
             };
             const up = () => {
-              handle.removeEventListener("pointermove", move);
-              handle.removeEventListener("pointerup", up);
+              document.removeEventListener(events.move, move);
+              document.removeEventListener(events.up, up);
+              if (block.realPageElement) renderBuilderPreview();
               renderBuilderEditor();
               setInlineStatus("builderStatus", "Tamanho do bloco atualizado. Clique em salvar para publicar.", "ok");
             };
-            handle.addEventListener("pointermove", move);
-            handle.addEventListener("pointerup", up);
-          });
+            const events = dragEventsFor(event);
+            document.addEventListener(events.move, move);
+            document.addEventListener(events.up, up, { once: true });
+          };
+          startEventNames.forEach((eventName) => handle.addEventListener(eventName, startResize));
         });
         surface.querySelectorAll("[data-builder-preview-block]").forEach((node) => {
           node.addEventListener("click", (event) => {
@@ -5418,46 +5796,54 @@
             event.preventDefault();
             openBuilderContextMenu(node.dataset.builderPreviewBlock, event);
           });
-          node.addEventListener("pointerdown", (event) => {
+          const startDrag = (event) => {
+            if (shouldIgnorePointerStart(event)) return;
             if (event.target?.dataset?.builderResize || event.target?.dataset?.toggleBuilderLock || event.target?.dataset?.deleteBuilderPreview) return;
-            if (event.target?.closest?.("[data-builder-inline-text]")) return;
-            if (event.button === 2) return;
+            const inlineEditor = event.target?.closest?.("[data-builder-inline-text]");
+            if (inlineEditor && (document.activeElement === inlineEditor || event.detail > 1)) return;
             event.preventDefault();
             builderSelectedBlockId = node.dataset.builderPreviewBlock;
             closeBuilderContextMenu();
             stage.focus({ preventScroll: true });
-            node.setPointerCapture(event.pointerId);
             const stageBox = surface.getBoundingClientRect();
             const nodeBox = node.getBoundingClientRect();
             const offsetX = event.clientX - nodeBox.left;
             const offsetY = event.clientY - nodeBox.top;
+            let didDrag = false;
             const move = (moveEvent) => {
+              moveEvent.preventDefault();
               const page = activeCustomPage();
               const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
               if (!block) return;
+              didDrag = true;
               const rawX = ((moveEvent.clientX - offsetX - stageBox.left) / stageBox.width) * 100;
               const rawY = ((moveEvent.clientY - offsetY - stageBox.top) / stageBox.height) * 100;
-              const snapped = snapBuilderPosition(block, rawX, rawY, surface);
-              block.x = Math.round(snapped.x * 10) / 10;
-              block.y = Math.round(snapped.y * 10) / 10;
-              if (block.realPageElement) {
-                block.overrideOriginal = true;
-                block.userEdited = true;
-              }
-              node.style.setProperty("--x", `${block.x}%`);
-              node.style.setProperty("--y", `${block.y}%`);
+              const snapped = snapBuilderPosition(block, rawX, rawY, surface, page);
+              const nextLayout = setBuilderBlockLayout(block, {
+                x: Math.round(snapped.x * 10) / 10,
+                y: Math.round(snapped.y * 10) / 10
+              }, builderLayoutMode(), true);
+              markRealBlockEdited(block, node, page);
+              node.style.setProperty("--x", `${nextLayout.x}%`);
+              node.style.setProperty("--y", `${nextLayout.y}%`);
               setBuilderGuides({ x: snapped.guideX, y: snapped.guideY });
             };
             const up = () => {
-              node.removeEventListener("pointermove", move);
-              node.removeEventListener("pointerup", up);
+              document.removeEventListener(events.move, move);
+              document.removeEventListener(events.up, up);
               clearBuilderGuides();
+              if (!didDrag) return;
+              const page = activeCustomPage();
+              const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
+              if (block?.realPageElement) renderBuilderPreview();
               renderBuilderEditor();
               setInlineStatus("builderStatus", "Posicao do bloco atualizada. Clique em salvar para publicar.", "ok");
             };
-            node.addEventListener("pointermove", move);
-            node.addEventListener("pointerup", up);
-          });
+            const events = dragEventsFor(event);
+            document.addEventListener(events.move, move);
+            document.addEventListener(events.up, up, { once: true });
+          };
+          startEventNames.forEach((eventName) => node.addEventListener(eventName, startDrag));
         });
       }
 
@@ -6574,6 +6960,9 @@
       });
       $("#builderToggleFullscreenTools")?.addEventListener("click", () => {
         toggleBuilderFullscreenTools();
+      });
+      $("#builderFloatingToolsToggle")?.addEventListener("click", () => {
+        setBuilderFullscreenToolsVisible(true);
       });
       $("#builderCloseFullscreen")?.addEventListener("click", () => {
         closeBuilderFullscreenPreview();

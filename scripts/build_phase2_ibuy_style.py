@@ -703,6 +703,18 @@ def custom_number(value, fallback=0.0) -> float:
         return float(fallback)
 
 
+def custom_block_layout(block: dict, mode: str = "desktop") -> dict:
+    layouts = block.get("layouts") if isinstance(block.get("layouts"), dict) else {}
+    layout = layouts.get(mode) if isinstance(layouts.get(mode), dict) else {}
+    fallback_layout = layouts.get("desktop") if isinstance(layouts.get("desktop"), dict) else {}
+    return {
+        "x": layout.get("x", fallback_layout.get("x", block.get("x", 8))),
+        "y": layout.get("y", fallback_layout.get("y", block.get("y", 12))),
+        "width": layout.get("width", fallback_layout.get("width", block.get("width", 260))),
+        "height": layout.get("height", fallback_layout.get("height", block.get("height", 80))),
+    }
+
+
 def custom_rich_text(block: dict) -> tuple[str, str]:
     source = str(block.get("text") or block.get("label") or "Bloco")
     text_mode = str(block.get("textMode") or "solid")
@@ -720,10 +732,17 @@ def custom_block_html(block: dict, prefix: str, links: dict[str, str], products,
     if not isinstance(block, dict):
         return ""
     block_type = str(block.get("type") or "box")
-    x = custom_number(block.get("x"), 8)
-    y = custom_number(block.get("y"), 12)
-    width = max(24, custom_number(block.get("width"), 260))
-    height = max(24, custom_number(block.get("height"), 80))
+    desktop_layout = custom_block_layout(block, "desktop")
+    mobile_layout = custom_block_layout(block, "mobile")
+    x = custom_number(desktop_layout.get("x"), 8)
+    y = custom_number(desktop_layout.get("y"), 12)
+    width = max(24, custom_number(desktop_layout.get("width"), 260))
+    height = max(24, custom_number(desktop_layout.get("height"), 80))
+    mobile_x = custom_number(mobile_layout.get("x"), x)
+    mobile_y = custom_number(mobile_layout.get("y"), y)
+    mobile_width = max(24, custom_number(mobile_layout.get("width"), width))
+    mobile_height = max(24, custom_number(mobile_layout.get("height"), height))
+    has_mobile_layout = isinstance(block.get("layouts"), dict) and isinstance(block.get("layouts", {}).get("mobile"), dict)
     radius = max(0, custom_number(block.get("radius"), 14))
     shadow_strength = max(0, custom_number(block.get("shadowStrength"), 18))
     text_shadow_strength = max(0, custom_number(block.get("textShadowStrength"), 0))
@@ -752,6 +771,7 @@ def custom_block_html(block: dict, prefix: str, links: dict[str, str], products,
         attrs += ' target="_blank" rel="noreferrer"'
     style = (
         f"--x:{x:.2f}%;--y:{y:.2f}%;--w:{width:.0f}px;--h:{height:.0f}px;--r:{radius:.0f}px;"
+        f"--mx:{mobile_x:.2f}%;--my:{mobile_y:.2f}%;--mw:{mobile_width:.0f}px;--mh:{mobile_height:.0f}px;"
         f"--bg:{clean_text(block.get('background') or '#ffffff')};--fg:{clean_text(block.get('color') or '#111111')};"
         f"--g1:{clean_text(block.get('gradientFrom') or block.get('background') or '#ffffff')};"
         f"--g2:{clean_text(block.get('gradientTo') or '#e9f5ff')};--angle:{custom_number(block.get('gradientAngle'), 135):.0f}deg;"
@@ -764,7 +784,7 @@ def custom_block_html(block: dict, prefix: str, links: dict[str, str], products,
         f"--z:{custom_number(block.get('layer'), 1):.0f};--anim-duration:{custom_number(block.get('animationDuration'), 600):.0f}ms"
     )
     return (
-        f'<{tag} class="custom-block" data-type="{clean_text(block_type)}" '
+        f'<{tag} class="custom-block" data-type="{clean_text(block_type)}" data-mobile-layout="{"true" if has_mobile_layout else "false"}" '
         f'data-bg-mode="{clean_text(block.get("backgroundMode") or "solid")}" data-text-mode="{clean_text(text_mode)}" '
         f'data-animation="{clean_text(block.get("animation") or "none")}" '
         f'style="{style}"{attrs}>{content}</{tag}>'
@@ -1812,6 +1832,7 @@ def css() -> str:
       .custom-page{padding:24px 0 36px;margin-left:22px;margin-right:22px}
       .custom-stage{min-height:520px;border-radius:18px}
       .custom-block{max-width:calc(100% - 20px);font-size:clamp(12px,var(--fs,16px),28px)}
+      .custom-block[data-mobile-layout="true"]{left:var(--mx,var(--x));top:var(--my,var(--y));width:var(--mw,var(--w));min-height:var(--mh,var(--h))}
       .topbar-inner{height:36px;font-size:11px;padding:0 8px;gap:10px}
       .nav-shell{gap:8px;padding:10px 12px;grid-template-columns:auto 1fr auto}
       .brand{gap:8px}
