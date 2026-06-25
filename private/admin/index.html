@@ -195,11 +195,29 @@
         font-size: 13px;
         font-weight: 1000;
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
+      .admin-nav .nav-icon {
+        width: 18px;
+        height: 18px;
+        display: inline-grid;
+        place-items: center;
+        border-radius: 999px;
+        background: rgba(17, 17, 17, .07);
+        color: currentColor;
+        font-size: 14px;
+        line-height: 1;
       }
       .admin-nav button[aria-selected="true"] {
         background: #111;
         color: #fff;
         box-shadow: 0 10px 26px rgba(0, 0, 0, .16);
+      }
+      .admin-nav button[aria-selected="true"] .nav-icon {
+        background: rgba(255, 255, 255, .18);
       }
       .admin-page { display: grid; gap: 22px; }
       .admin-page[hidden] { display: none; }
@@ -212,6 +230,42 @@
       }
       .admin-page-intro h2 { margin: 0; font-size: clamp(30px, 4vw, 46px); line-height: 1; }
       .admin-page-intro p { max-width: 980px; margin: 10px 0 0; color: var(--muted); font-weight: 850; line-height: 1.45; }
+      .builder-title-lockup {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 4px;
+      }
+      .builder-title-logo {
+        width: clamp(40px, 4.5vw, 54px);
+        height: clamp(40px, 4.5vw, 54px);
+        border-radius: 16px;
+        object-fit: contain;
+        padding: 6px;
+        background:
+          linear-gradient(#ffffff, #ffffff) padding-box,
+          linear-gradient(145deg, rgba(20,139,255,.75), rgba(8,24,42,.35)) border-box;
+        border: 1px solid transparent;
+        box-shadow: 0 14px 30px rgba(20, 139, 255, .18);
+      }
+      .builder-brand-title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: .28em;
+        margin: 0;
+        letter-spacing: 0;
+        line-height: .98;
+      }
+      .builder-title-mobily { color: #080f1d; }
+      .builder-title-site {
+        color: #148bff;
+        background: linear-gradient(115deg, #148bff 0%, #12c7ff 48%, #0756d6 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 10px 30px rgba(20,139,255,.22);
+      }
       .admin-panel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
       .section-shell { display: grid; gap: 18px; }
       .collapsible-editor {
@@ -475,11 +529,35 @@
         text-align: left;
         font-weight: 1000;
         cursor: pointer;
+        display: grid;
+        gap: 6px;
       }
       .builder-page-list button[aria-selected="true"] {
         border-color: #111;
         background: #f7fbff;
         box-shadow: 0 10px 20px rgba(13, 23, 38, .08);
+      }
+      .builder-page-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .builder-page-kind {
+        border: 1px solid #d8e3ef;
+        border-radius: 999px;
+        padding: 4px 8px;
+        background: #f8fafc;
+        color: #4b5b70;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+      }
+      .builder-page-meta {
+        display: block;
+        color: #647184;
+        font-size: 12px;
+        font-weight: 850;
       }
       .builder-toolbar {
         display: grid;
@@ -501,9 +579,117 @@
         padding: 22px;
         border-bottom: 1px solid #e3ebf4;
         background: rgba(255,255,255,.86);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
       }
       .builder-canvas-header h3 { margin: 0; font-size: 30px; line-height: 1.05; }
       .builder-canvas-header p { margin: 7px 0 0; color: #5e6876; font-weight: 850; }
+      .builder-canvas-actions {
+        display: grid;
+        gap: 8px;
+        justify-items: end;
+        flex: 0 0 auto;
+      }
+      .builder-view-toggle {
+        display: inline-flex;
+        gap: 6px;
+        padding: 5px;
+        border-radius: 999px;
+        border: 1px solid #d8e2ee;
+        background: #f7fafc;
+      }
+      .builder-view-toggle button {
+        border: 0;
+        border-radius: 999px;
+        min-height: 32px;
+        padding: 0 12px;
+        background: transparent;
+        color: #4a5668;
+        font-size: 12px;
+        font-weight: 1000;
+        cursor: pointer;
+      }
+      .builder-view-toggle button[aria-pressed="true"] {
+        background: #111;
+        color: #fff;
+      }
+      .builder-canvas-options {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .builder-canvas-options label {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .builder-preview-frame {
+        width: 100%;
+        margin: 0 auto;
+        transition: width .18s ease;
+        background: #fff;
+      }
+      .builder-preview-frame.is-mobile {
+        width: min(390px, 100%);
+        border-left: 1px solid #e4ebf3;
+        border-right: 1px solid #e4ebf3;
+      }
+      .builder-preview-nav {
+        min-height: 64px;
+        padding: 10px 18px;
+        border-bottom: 1px solid #e8eef5;
+        background: rgba(255,255,255,.96);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        overflow: hidden;
+      }
+      .builder-preview-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        flex: 0 0 auto;
+        color: #0f172a;
+        font-weight: 1000;
+      }
+      .builder-preview-brand img {
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+      }
+      .builder-preview-menu {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 1000;
+      }
+      .builder-preview-menu span {
+        padding: 6px 8px;
+        border-radius: 999px;
+        color: #172033;
+      }
+      .builder-preview-menu span.is-active {
+        background: #111;
+        color: #fff;
+      }
+      .builder-preview-frame.is-mobile .builder-preview-nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .builder-preview-frame.is-mobile .builder-preview-menu {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
       .builder-stage {
         position: relative;
         min-height: 560px;
@@ -511,6 +697,34 @@
           linear-gradient(90deg, rgba(27,139,240,.045) 1px, transparent 1px),
           linear-gradient(180deg, rgba(27,139,240,.045) 1px, transparent 1px);
         background-size: 28px 28px;
+      }
+      .builder-stage.no-grid {
+        background: linear-gradient(180deg, #f8fbff, #ffffff);
+      }
+      .builder-preview-frame.is-mobile .builder-stage {
+        min-height: 640px;
+        background-size: 20px 20px;
+      }
+      .builder-guide {
+        position: absolute;
+        z-index: 4;
+        display: none;
+        pointer-events: none;
+        background: rgba(255, 43, 43, .82);
+        box-shadow: 0 0 0 1px rgba(255,255,255,.7);
+      }
+      .builder-guide.is-visible { display: block; }
+      .builder-guide-x {
+        left: 0;
+        right: 0;
+        height: 1px;
+        top: var(--guide-y, 50%);
+      }
+      .builder-guide-y {
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        left: var(--guide-x, 50%);
       }
       .builder-block {
         position: absolute;
@@ -522,8 +736,10 @@
         background: var(--bg, #ffffff);
         color: var(--fg, #111);
         text-shadow: var(--text-shadow, none);
+        opacity: var(--opacity, 1);
         border: 1px solid rgba(15, 23, 42, .08);
         box-shadow: var(--shadow, 0 12px 28px rgba(13, 23, 38, .12));
+        z-index: var(--z, 1);
         padding: 14px;
         display: grid;
         place-items: center;
@@ -581,11 +797,44 @@
         background: transparent;
       }
       .builder-block img { width: 100%; height: 100%; object-fit: var(--fit, contain); }
+      .builder-inline-editor {
+        width: 100%;
+        min-width: 0;
+        min-height: 1.2em;
+        border-radius: 10px;
+        outline: 0;
+        cursor: text;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .builder-inline-editor:focus {
+        box-shadow: inset 0 0 0 2px rgba(20, 139, 255, .22);
+      }
+      .builder-block[data-text-mode="gradient"],
+      .builder-block[data-text-mode="texture"] {
+        color: var(--fg, #111);
+        background-clip: initial;
+        -webkit-background-clip: initial;
+      }
+      .builder-block[data-text-mode="gradient"] .builder-inline-editor,
+      .builder-block[data-text-mode="texture"] .builder-inline-editor {
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .builder-block[data-text-mode="gradient"] .builder-inline-editor {
+        background-image: linear-gradient(var(--text-angle, 90deg), var(--tg1, #111111), var(--tg2, #148bff));
+      }
+      .builder-block[data-text-mode="texture"] .builder-inline-editor {
+        background-image: var(--text-texture);
+        background-size: cover;
+        background-position: center;
+      }
       .builder-block.is-selected { outline: 3px solid rgba(20, 139, 255, .46); outline-offset: 2px; }
       .builder-resize {
         position: absolute;
-        right: -8px;
-        bottom: -8px;
+        right: 12px;
+        bottom: 12px;
         width: 18px;
         height: 18px;
         border: 2px solid #fff;
@@ -594,11 +843,12 @@
         box-shadow: 0 8px 18px rgba(13, 23, 38, .2);
         cursor: nwse-resize;
         display: none;
+        z-index: 8;
       }
       .builder-lock {
         position: absolute;
-        right: -10px;
-        top: -10px;
+        right: 12px;
+        top: 12px;
         width: 28px;
         height: 28px;
         border: 2px solid #fff;
@@ -611,9 +861,75 @@
         place-items: center;
         box-shadow: 0 8px 18px rgba(13, 23, 38, .2);
         cursor: pointer;
+        z-index: 9;
+      }
+      .builder-delete {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        width: 28px;
+        height: 28px;
+        border: 2px solid #fff;
+        border-radius: 999px;
+        background: #ff2b2b;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 1000;
+        display: none;
+        place-items: center;
+        box-shadow: 0 8px 18px rgba(13, 23, 38, .2);
+        cursor: pointer;
+        z-index: 9;
       }
       .builder-block.is-selected .builder-resize,
-      .builder-block.is-selected .builder-lock { display: grid; }
+      .builder-block.is-selected .builder-lock,
+      .builder-block.is-selected .builder-delete { display: grid; }
+      .builder-editor-summary {
+        border: 1px solid #dbeafe;
+        border-radius: 16px;
+        background: linear-gradient(180deg, #f8fbff, #ffffff);
+        padding: 14px;
+        display: grid;
+        gap: 8px;
+      }
+      .builder-editor-summary strong { color: #111; }
+      .builder-editor-summary span { color: #526277; font-size: 13px; font-weight: 850; line-height: 1.4; }
+      .builder-context-menu {
+        position: fixed;
+        z-index: 120;
+        min-width: 238px;
+        max-height: calc(100vh - 64px);
+        overflow: auto;
+        border: 1px solid #d8e3ef;
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 24px 60px rgba(13, 23, 38, .22);
+        padding: 8px;
+        display: none;
+        gap: 6px;
+      }
+      .builder-context-menu.is-open { display: grid; }
+      .builder-context-menu button,
+      .builder-context-menu label {
+        width: 100%;
+        min-height: 34px;
+        border: 0;
+        border-radius: 10px;
+        background: #f7fafc;
+        color: #111827;
+        padding: 7px 10px;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 950;
+        cursor: pointer;
+      }
+      .builder-context-menu button:hover { background: #eaf3ff; }
+      .builder-context-menu label {
+        display: grid;
+        gap: 6px;
+        cursor: default;
+      }
+      .builder-context-menu input[type="range"] { width: 100%; }
       .builder-help {
         border: 1px solid #dbeafe;
         border-radius: 16px;
@@ -1591,15 +1907,15 @@
       </div>
 
       <nav class="admin-nav" aria-label="Areas do painel">
-        <button type="button" data-admin-tab="overview" aria-selected="true">Visao geral</button>
-        <button type="button" data-admin-tab="visual">Textos e artes</button>
-        <button type="button" data-admin-tab="builder">Construtor</button>
-        <button type="button" data-admin-tab="catalog">PCs e catalogo</button>
-        <button type="button" data-admin-tab="finds">MobilyTech Finds</button>
-        <button type="button" data-admin-tab="nossos">Nossos produtos</button>
-        <button type="button" data-admin-tab="sales">Registrar vendas</button>
-        <button type="button" data-admin-tab="maintenance">Manutencao</button>
-        <button type="button" data-admin-tab="security">Seguranca</button>
+        <button type="button" data-admin-tab="overview" aria-selected="true"><span class="nav-icon">G</span>Visao geral</button>
+        <button type="button" data-admin-tab="visual"><span class="nav-icon">Aa</span>Textos e artes</button>
+        <button type="button" data-admin-tab="builder"><span class="nav-icon">+</span>Construtor</button>
+        <button type="button" data-admin-tab="catalog"><span class="nav-icon">PC</span>PCs e catalogo</button>
+        <button type="button" data-admin-tab="finds"><span class="nav-icon">F</span>MobilyTech Finds</button>
+        <button type="button" data-admin-tab="nossos"><span class="nav-icon">N</span>Nossos produtos</button>
+        <button type="button" data-admin-tab="sales"><span class="nav-icon">R$</span>Registrar vendas</button>
+        <button type="button" data-admin-tab="maintenance"><span class="nav-icon">M</span>Manutencao</button>
+        <button type="button" data-admin-tab="security"><span class="nav-icon">S</span>Seguranca</button>
       </nav>
 
       <main>
@@ -1847,7 +2163,13 @@
         <section aria-labelledby="builder-title" data-admin-page="builder" hidden>
           <div class="admin-page-intro">
             <p class="section-kicker">Construtor visual</p>
-            <h2 id="builder-title">Criar paginas, caixas, textos e botoes</h2>
+            <div class="builder-title-lockup">
+              <img class="builder-title-logo" src="../../assets/mobilytech-logo.png" alt="" aria-hidden="true">
+              <h2 class="builder-brand-title" id="builder-title">
+                <span class="builder-title-mobily">MobilyTech</span>
+                <span class="builder-title-site">Site Builder</span>
+              </h2>
+            </div>
             <p>Crie subpaginas simples do site sem mexer no codigo. Escolha uma pagina, adicione blocos, arraste no preview, ajuste texto, cor, borda e redirecionamento, depois salve no site.</p>
           </div>
           <div class="builder-layout">
@@ -1855,8 +2177,8 @@
               <div class="editor-panel">
                 <div class="editor-toolbar">
                   <div>
-                    <strong>Paginas criadas</strong>
-                    <p>Use nomes curtos. O endereco e gerado pelo campo slug.</p>
+                    <strong>Paginas do site</strong>
+                    <p>Edite paginas existentes, crie novas, pause no menu e reorganize a ordem.</p>
                   </div>
                   <button class="btn btn-red" type="button" id="addCustomPage">Nova pagina</button>
                 </div>
@@ -1867,7 +2189,7 @@
                 <div class="editor-toolbar">
                   <div>
                     <strong>Editar pagina e blocos</strong>
-                    <p>Campos simples para o preview selecionado.</p>
+                    <p>Controles principais ficam aqui; detalhes ficam em Opcoes avancadas.</p>
                   </div>
                   <button class="btn btn-red" type="button" id="saveCustomPages">Salvar paginas no site</button>
                 </div>
@@ -1885,10 +2207,25 @@
             </aside>
             <aside class="builder-canvas" aria-label="Preview da pagina personalizada">
               <div class="builder-canvas-header">
-                <h3 id="builderPreviewTitle">Preview</h3>
-                <p id="builderPreviewIntro">Selecione ou crie uma pagina.</p>
+                <div>
+                  <h3 id="builderPreviewTitle">Preview</h3>
+                  <p id="builderPreviewIntro">Selecione ou crie uma pagina.</p>
+                </div>
+                <div class="builder-canvas-actions" aria-label="Controles do preview">
+                  <div class="builder-view-toggle" role="group" aria-label="Tamanho do preview">
+                    <button type="button" id="builderDesktopPreview" aria-pressed="true">Desktop</button>
+                    <button type="button" id="builderMobilePreview" aria-pressed="false">Mobile</button>
+                  </div>
+                  <div class="builder-canvas-options">
+                    <label><input type="checkbox" id="builderGridToggle" checked> Grade</label>
+                    <label><input type="checkbox" id="builderSnapToggle" checked> Alinhar</label>
+                  </div>
+                </div>
               </div>
-              <div class="builder-stage" id="builderStage"></div>
+              <div class="builder-preview-frame" id="builderPreviewFrame">
+                <div class="builder-preview-nav" id="builderPreviewNav"></div>
+                <div class="builder-stage" id="builderStage" tabindex="0"></div>
+              </div>
             </aside>
           </div>
         </section>
@@ -2123,6 +2460,19 @@
         <span>Fonte atual: GitHub/Vercel. Ponte: Wix Stores, membros e marketing.</span>
       </footer>
     </div>
+    <div class="builder-context-menu" id="builderContextMenu" role="menu" aria-label="Opcoes rapidas do bloco">
+      <button type="button" data-builder-context-action="delete">Excluir bloco</button>
+      <button type="button" data-builder-context-action="toggle-lock">Bloquear/liberar proporcao</button>
+      <button type="button" data-builder-context-action="layer-up">Camada para cima</button>
+      <button type="button" data-builder-context-action="layer-down">Camada para baixo</button>
+      <button type="button" data-builder-context-action="layer-top">Trazer para frente</button>
+      <button type="button" data-builder-context-action="layer-bottom">Enviar para tras</button>
+      <button type="button" data-builder-context-action="center-x">Centralizar horizontal</button>
+      <button type="button" data-builder-context-action="center-y">Centralizar vertical</button>
+      <label>Opacidade
+        <input type="range" min="0" max="100" value="100" id="builderOpacityRange">
+      </label>
+    </div>
 
     <script>
       const $ = (selector) => document.querySelector(selector);
@@ -2132,13 +2482,27 @@
       let addonsState = [];
       let swapsState = [];
       let builderActivePageIndex = 0;
+      let builderActivePageKey = "";
       let builderSelectedBlockId = "";
+      let builderPreviewMode = "desktop";
+      let builderGridEnabled = true;
+      let builderSnapEnabled = true;
       let siteContentState = null;
       let pendingMaintenanceMode = null;
       let lastSalePayload = null;
       const MEDIA_ACCEPT = ".png,.jpg,.jpeg,.webp,.gif,.heic,.heif,image/png,image/jpeg,image/webp,image/gif,image/heic,image/heif,image/heic-sequence,image/heif-sequence";
       const MEDIA_MAX_BYTES = 8 * 1024 * 1024;
       const mediaPreviewUrls = new Map();
+      const BUILDER_SYSTEM_PAGES = [
+        { key: "ofertas", title: "PC Gamer", navLabel: "PC Gamer", slug: "ofertas", href: "ofertas.html", contentKey: "ofertas", intro: "PCs revisados, upgrades e hardware selecionado." },
+        { key: "produtos", title: "Nossos produtos", navLabel: "Nossos produtos", slug: "produtos", href: "produtos.html", contentKey: "produtos", intro: "Produtos selecionados pela MobilyTech BR." },
+        { key: "achados", title: "MobilyTech Finds", navLabel: "MobilyTech Finds", slug: "achados", href: "achados.html", contentKey: "achados", intro: "Recomendacoes e achados com curadoria." },
+        { key: "hardware", title: "Hardware", navLabel: "Hardware", slug: "hardware", href: "ofertas.html#hardware", contentKey: "ofertas", intro: "Pecas, upgrades e acessorios para setup." },
+        { key: "montagem", title: "Monte seu PC", navLabel: "Monte seu PC", slug: "montagem", href: "montagem.html", contentKey: "montagem", intro: "Configuracao sob medida para seu uso." },
+        { key: "limpeza", title: "Limpeza", navLabel: "Limpeza", slug: "limpeza", href: "limpeza.html", contentKey: "limpeza", intro: "Limpeza e manutencao de computadores." },
+        { key: "avaliacoes", title: "Avaliacoes", navLabel: "Avaliacoes", slug: "avaliacoes", href: "index.html#avaliacoes", contentKey: "avaliacoes", intro: "Provas sociais e feedbacks de clientes." },
+        { key: "contato", title: "Suporte", navLabel: "Suporte", slug: "suporte", href: "index.html#contato", contentKey: "conta", intro: "Canais oficiais de contato e atendimento." }
+      ];
       const HERO_BACKGROUND_PRESETS = [
         { id: "sky", label: "Azul MobilyTech", gradient: "linear-gradient(90deg, #1788e8 0%, #2f9cf2 43%, #89d2ff 100%)" },
         { id: "cyan", label: "Ciano claro", gradient: "linear-gradient(90deg, #20ddd4 0%, #79ece8 48%, #f4ffff 100%)" },
@@ -2812,6 +3176,28 @@
         siteContentState.maintenance.message = siteContentState.maintenance.message || "A MobilyTech BR esta ajustando o site agora. Para compras, montagem ou suporte, fale conosco pelos canais abaixo.";
         siteContentState.maintenance.email = siteContentState.maintenance.email || "mobilytechbr@gmail.com";
         siteContentState.maintenance.whatsapp = siteContentState.maintenance.whatsapp || "5511954801967";
+        siteContentState.pages = siteContentState.pages && typeof siteContentState.pages === "object" ? siteContentState.pages : {};
+        siteContentState.pageBuilder = siteContentState.pageBuilder && typeof siteContentState.pageBuilder === "object" ? siteContentState.pageBuilder : {};
+        BUILDER_SYSTEM_PAGES.forEach((definition, index) => {
+          const sourcePage = siteContentState.pages[definition.contentKey] || {};
+          const current = siteContentState.pageBuilder[definition.key] && typeof siteContentState.pageBuilder[definition.key] === "object"
+            ? siteContentState.pageBuilder[definition.key]
+            : {};
+          current.id = current.id || `system-${definition.key}`;
+          current.systemKey = definition.key;
+          current.isSystem = true;
+          current.contentKey = definition.contentKey;
+          current.href = definition.href;
+          current.slug = current.slug || definition.slug;
+          current.active = current.active !== false;
+          current.showInNav = current.showInNav !== false;
+          current.order = Number.isFinite(Number(current.order)) ? Number(current.order) : index;
+          current.title = current.title || sourcePage.title || definition.title;
+          current.navLabel = current.navLabel || definition.navLabel || current.title;
+          current.intro = current.intro || sourcePage.intro || definition.intro || "";
+          current.blocks = Array.isArray(current.blocks) ? current.blocks : [];
+          siteContentState.pageBuilder[definition.key] = current;
+        });
         siteContentState.customPages = Array.isArray(siteContentState.customPages) ? siteContentState.customPages : [];
         siteContentState.customPages.forEach((page, index) => {
           page.id = page.id || `custom-page-${index + 1}`;
@@ -2821,6 +3207,7 @@
           page.navLabel = page.navLabel || page.title;
           page.slug = slugify(page.slug || page.title || page.id);
           page.intro = page.intro || "";
+          page.order = Number.isFinite(Number(page.order)) ? Number(page.order) : BUILDER_SYSTEM_PAGES.length + index;
           page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
         });
       }
@@ -3126,11 +3513,50 @@
         return `custom-block-${Date.now().toString(36)}-${Math.random().toString(16).slice(2, 6)}`;
       }
 
-      function activeCustomPage() {
+      function builderPageKey(page, index = 0) {
+        if (!page) return "";
+        return page.isSystem || page.systemKey ? `system:${page.systemKey}` : `custom:${page.id || index}`;
+      }
+
+      function builderAllPages() {
         ensureMasterContentDefaults();
-        if (!siteContentState.customPages.length) addCustomPage(false);
-        builderActivePageIndex = Math.max(0, Math.min(builderActivePageIndex, siteContentState.customPages.length - 1));
-        return siteContentState.customPages[builderActivePageIndex];
+        const systemPages = BUILDER_SYSTEM_PAGES
+          .map((definition) => siteContentState.pageBuilder[definition.key])
+          .filter(Boolean);
+        const customPages = (siteContentState.customPages || []).map((page) => {
+          page.isSystem = false;
+          return page;
+        });
+        return [...systemPages, ...customPages]
+          .sort((a, b) => Number(a.order || 0) - Number(b.order || 0));
+      }
+
+      function setBuilderActivePage(pageKey) {
+        const pages = builderAllPages();
+        const found = pages.find((page, index) => builderPageKey(page, index) === pageKey);
+        const fallback = found || pages[0];
+        builderActivePageKey = builderPageKey(fallback, 0);
+        builderActivePageIndex = Math.max(0, pages.findIndex((page, index) => builderPageKey(page, index) === builderActivePageKey));
+        return fallback;
+      }
+
+      function activeCustomPage() {
+        const pages = builderAllPages();
+        if (!pages.length) addCustomPage(false);
+        const active = pages.find((page, index) => builderPageKey(page, index) === builderActivePageKey) || pages[builderActivePageIndex] || pages[0];
+        builderActivePageKey = builderPageKey(active, builderActivePageIndex);
+        builderActivePageIndex = Math.max(0, pages.findIndex((page, index) => builderPageKey(page, index) === builderActivePageKey));
+        return active;
+      }
+
+      function syncBuilderSystemPage(page) {
+        if (!page || !page.systemKey) return;
+        const definition = BUILDER_SYSTEM_PAGES.find((item) => item.key === page.systemKey);
+        if (!definition || !definition.contentKey) return;
+        siteContentState.pages = siteContentState.pages || {};
+        siteContentState.pages[definition.contentKey] = siteContentState.pages[definition.contentKey] || {};
+        if (page.title) siteContentState.pages[definition.contentKey].title = page.title;
+        if (typeof page.intro === "string") siteContentState.pages[definition.contentKey].intro = page.intro;
       }
 
       function defaultBuilderBlock(type = "box") {
@@ -3148,6 +3574,7 @@
           y: 12,
           width: type === "button" ? 220 : 320,
           height: type === "button" ? 54 : type === "image" ? 180 : 120,
+          layer: type === "box" ? 1 : type === "image" ? 2 : type === "text" ? 3 : 4,
           radius: type === "button" ? 999 : 18,
           background: type === "button" ? "#ff2b2b" : type === "image" ? "#ffffff" : "#ffffff",
           color: type === "button" ? "#ffffff" : "#111111",
@@ -3189,107 +3616,128 @@
           navLabel: `Nova pagina ${count}`,
           slug: `nova-pagina-${count}`,
           intro: "Edite esta pagina pelo construtor visual.",
+          order: builderAllPages().length,
           blocks: [
             defaultBuilderBlock("box"),
             { ...defaultBuilderBlock("button"), y: 42 }
           ]
         });
-        builderActivePageIndex = siteContentState.customPages.length - 1;
+        builderActivePageKey = `custom:${siteContentState.customPages[siteContentState.customPages.length - 1].id}`;
         builderSelectedBlockId = "";
         if (render) renderPageBuilder();
       }
 
       function builderPageListHtml() {
         ensureMasterContentDefaults();
-        return siteContentState.customPages.map((page, index) => `
-          <button type="button" data-builder-page="${index}" aria-selected="${index === builderActivePageIndex ? "true" : "false"}">
-            ${escapeHtml(page.navLabel || page.title || page.slug)}
-            <small style="display:block;color:#647184;margin-top:4px">${escapeHtml(page.slug || "")}${page.showInNav ? " | no menu" : ""}${page.active === false ? " | pausada" : ""}</small>
+        return builderAllPages().map((page, index) => {
+          const key = builderPageKey(page, index);
+          const kind = page.isSystem || page.systemKey ? "Site" : "Criada";
+          const active = key === builderActivePageKey;
+          return `
+          <button type="button" draggable="true" data-builder-page-key="${escapeHtml(key)}" aria-selected="${active ? "true" : "false"}">
+            <span class="builder-page-title">
+              <span>${escapeHtml(page.navLabel || page.title || page.slug)}</span>
+              <span class="builder-page-kind">${escapeHtml(kind)}</span>
+            </span>
+            <span class="builder-page-meta">${escapeHtml(page.slug || page.href || "")}${page.showInNav ? " | no menu" : " | fora do menu"}${page.active === false ? " | pausada" : ""}</span>
           </button>
-        `).join("") || '<p class="editor-note">Nenhuma pagina criada ainda.</p>';
+        `;
+        }).join("") || '<p class="editor-note">Nenhuma pagina criada ainda.</p>';
       }
 
       function builderBlockForm(block, index) {
-        return `<article class="visual-editor-card${block.id === builderSelectedBlockId ? " is-selected" : ""}" data-builder-block-form="${escapeHtml(block.id)}">
-          <div class="row">
-            <label>Tipo
-              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="type">
-                <option value="box"${block.type === "box" ? " selected" : ""}>Caixa</option>
-                <option value="text"${block.type === "text" ? " selected" : ""}>Texto</option>
-                <option value="button"${block.type === "button" ? " selected" : ""}>Botao</option>
-                <option value="image"${block.type === "image" ? " selected" : ""}>Imagem</option>
-              </select>
-            </label>
-            <label>Redirecionamento
-              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="target">
-                <option value="">Sem clique</option>
-                ${redirectOptions(block.target || "")}
-              </select>
-            </label>
+        const isSelected = block.id === builderSelectedBlockId;
+        return `<article class="visual-editor-card${isSelected ? " is-selected" : ""}" data-builder-block-form="${escapeHtml(block.id)}">
+          <div class="builder-editor-summary">
+            <strong>${escapeHtml(block.type === "button" ? "Botao" : block.type === "image" ? "Imagem" : block.type === "text" ? "Texto" : "Caixa")} ${index + 1}</strong>
+            <span>Arraste no preview. Use as setas do teclado para ajuste fino. Clique no X do bloco para excluir direto pelo preview.</span>
           </div>
-          <label>Texto/rotulo <textarea data-builder-block="${escapeHtml(block.id)}" data-builder-field="text">${escapeHtml(block.text || block.label || "")}</textarea></label>
-          <label>Imagem/PNG sem fundo <input data-builder-block="${escapeHtml(block.id)}" data-builder-field="image" value="${escapeHtml(block.image || "")}" placeholder="./assets/minha-imagem.png"></label>
-          <div class="media-upload-row">
-            <input type="file" accept="${MEDIA_ACCEPT}" data-builder-upload="${escapeHtml(block.id)}" data-builder-upload-field="image">
-            <button class="btn btn-dark" type="button" data-builder-upload-trigger="${escapeHtml(block.id)}" data-builder-upload-target="image">Enviar imagem</button>
-          </div>
-          <div class="row">
-            <label>X % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="x" value="${escapeHtml(block.x ?? 8)}"></label>
-            <label>Y % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="y" value="${escapeHtml(block.y ?? 12)}"></label>
-          </div>
-          <div class="row">
-            <label>Largura px <input type="number" min="80" data-builder-block="${escapeHtml(block.id)}" data-builder-field="width" value="${escapeHtml(block.width || 260)}"></label>
-            <label>Altura px <input type="number" min="40" data-builder-block="${escapeHtml(block.id)}" data-builder-field="height" value="${escapeHtml(block.height || 80)}"></label>
-          </div>
-          <div class="row">
-            <label>Cor fundo <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="background" value="${escapeHtml(block.background || "#ffffff")}"></label>
-            <label>Cor texto <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="color" value="${escapeHtml(block.color || "#111111")}"></label>
-          </div>
-          <div class="row">
-            <label>Fundo
-              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="backgroundMode">
-                <option value="solid"${(block.backgroundMode || "solid") === "solid" ? " selected" : ""}>Cor solida</option>
-                <option value="gradient"${block.backgroundMode === "gradient" ? " selected" : ""}>Gradiente</option>
-                <option value="glass"${block.backgroundMode === "glass" ? " selected" : ""}>Glass</option>
-              </select>
-            </label>
-            <label>Imagem encaixe
-              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="objectFit">
-                <option value="contain"${(block.objectFit || "contain") === "contain" ? " selected" : ""}>Inteira</option>
-                <option value="cover"${block.objectFit === "cover" ? " selected" : ""}>Cobrir</option>
-                <option value="fill"${block.objectFit === "fill" ? " selected" : ""}>Esticar livre</option>
-              </select>
-            </label>
-          </div>
-          <div class="row">
-            <label>Gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientFrom" value="${escapeHtml(block.gradientFrom || block.background || "#ffffff")}"></label>
-            <label>Gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientTo" value="${escapeHtml(block.gradientTo || "#e9f5ff")}"></label>
-          </div>
-          <div class="row">
-            <label>Angulo gradiente <input type="number" min="0" max="360" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientAngle" value="${escapeHtml(block.gradientAngle ?? 135)}"></label>
-            <label>Cadeado proporcao
-              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="lockAspect">
-                <option value="true"${block.lockAspect !== false ? " selected" : ""}>Travado</option>
-                <option value="false"${block.lockAspect === false ? " selected" : ""}>Livre</option>
-              </select>
-            </label>
-          </div>
-          <div class="row">
-            <label>Texto alinhado
-              <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="textAlign">
-                <option value="left"${block.textAlign === "left" ? " selected" : ""}>Esquerda</option>
-                <option value="center"${block.textAlign !== "left" && block.textAlign !== "right" ? " selected" : ""}>Centro</option>
-                <option value="right"${block.textAlign === "right" ? " selected" : ""}>Direita</option>
-              </select>
-            </label>
-            <label>Borda curva px <input type="number" min="0" max="999" data-builder-block="${escapeHtml(block.id)}" data-builder-field="radius" value="${escapeHtml(block.radius ?? 14)}"></label>
-          </div>
-          <div class="row">
-            <label>Fonte px <input type="number" min="10" max="80" data-builder-block="${escapeHtml(block.id)}" data-builder-field="fontSize" value="${escapeHtml(block.fontSize || 16)}"></label>
-            <label>Peso fonte <input type="number" min="300" max="1000" step="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="fontWeight" value="${escapeHtml(block.fontWeight || 900)}"></label>
-          </div>
-          <details class="media-details" ${block.id === builderSelectedBlockId ? "open" : ""}>
-            <summary>Visual avancado</summary>
+          <details class="media-details" open>
+            <summary>Controles principais</summary>
+            <div class="row">
+              <label>Tipo
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="type">
+                  <option value="box"${block.type === "box" ? " selected" : ""}>Caixa</option>
+                  <option value="text"${block.type === "text" ? " selected" : ""}>Texto</option>
+                  <option value="button"${block.type === "button" ? " selected" : ""}>Botao</option>
+                  <option value="image"${block.type === "image" ? " selected" : ""}>Imagem</option>
+                </select>
+              </label>
+              <label>Redirecionamento
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="target">
+                  <option value="">Sem clique</option>
+                  ${redirectOptions(block.target || "")}
+                </select>
+              </label>
+            </div>
+            <label>Texto/rotulo <textarea data-builder-block="${escapeHtml(block.id)}" data-builder-field="text">${escapeHtml(block.text || block.label || "")}</textarea></label>
+            <label>Imagem <input data-builder-block="${escapeHtml(block.id)}" data-builder-field="image" value="${escapeHtml(block.image || "")}" placeholder="./assets/minha-imagem.png"></label>
+            <div class="media-upload-row">
+              <input type="file" accept="${MEDIA_ACCEPT}" data-builder-upload="${escapeHtml(block.id)}" data-builder-upload-field="image">
+              <button class="btn btn-dark" type="button" data-builder-upload-trigger="${escapeHtml(block.id)}" data-builder-upload-target="image">Enviar imagem</button>
+            </div>
+            <div class="row">
+              <label>X % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="x" value="${escapeHtml(block.x ?? 8)}"></label>
+              <label>Y % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="y" value="${escapeHtml(block.y ?? 12)}"></label>
+            </div>
+            <div class="row">
+              <label>Largura px <input type="number" min="40" data-builder-block="${escapeHtml(block.id)}" data-builder-field="width" value="${escapeHtml(block.width || 260)}"></label>
+              <label>Altura px <input type="number" min="30" data-builder-block="${escapeHtml(block.id)}" data-builder-field="height" value="${escapeHtml(block.height || 80)}"></label>
+            </div>
+            <div class="row">
+              <label>Cor fundo <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="background" value="${escapeHtml(block.background || "#ffffff")}"></label>
+              <label>Cor texto <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="color" value="${escapeHtml(block.color || "#111111")}"></label>
+            </div>
+            <div class="row">
+              <label>Cantos arredondados <input type="number" min="0" max="999" data-builder-block="${escapeHtml(block.id)}" data-builder-field="radius" value="${escapeHtml(block.radius ?? 14)}"></label>
+              <label>Fonte px <input type="number" min="10" max="80" data-builder-block="${escapeHtml(block.id)}" data-builder-field="fontSize" value="${escapeHtml(block.fontSize || 16)}"></label>
+            </div>
+            <div class="row">
+              <label>Fundo
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="backgroundMode">
+                  <option value="solid"${(block.backgroundMode || "solid") === "solid" ? " selected" : ""}>Cor solida</option>
+                  <option value="gradient"${block.backgroundMode === "gradient" ? " selected" : ""}>Gradiente</option>
+                  <option value="glass"${block.backgroundMode === "glass" ? " selected" : ""}>Glass</option>
+                </select>
+              </label>
+              <label>Texto alinhado
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="textAlign">
+                  <option value="left"${block.textAlign === "left" ? " selected" : ""}>Esquerda</option>
+                  <option value="center"${block.textAlign !== "left" && block.textAlign !== "right" ? " selected" : ""}>Centro</option>
+                  <option value="right"${block.textAlign === "right" ? " selected" : ""}>Direita</option>
+                </select>
+              </label>
+            </div>
+          </details>
+          <details class="media-details" ${isSelected ? "open" : ""}>
+            <summary>Opcoes avancadas</summary>
+            <div class="row">
+              <label>Imagem encaixe
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="objectFit">
+                  <option value="contain"${(block.objectFit || "contain") === "contain" ? " selected" : ""}>Inteira</option>
+                  <option value="cover"${block.objectFit === "cover" ? " selected" : ""}>Cobrir</option>
+                  <option value="fill"${block.objectFit === "fill" ? " selected" : ""}>Esticar livre</option>
+                </select>
+              </label>
+              <label>Cadeado proporcao
+                <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="lockAspect">
+                  <option value="true"${block.lockAspect !== false ? " selected" : ""}>Travado</option>
+                  <option value="false"${block.lockAspect === false ? " selected" : ""}>Livre</option>
+                </select>
+              </label>
+            </div>
+            <div class="row">
+              <label>Gradiente inicio <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientFrom" value="${escapeHtml(block.gradientFrom || block.background || "#ffffff")}"></label>
+              <label>Gradiente fim <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientTo" value="${escapeHtml(block.gradientTo || "#e9f5ff")}"></label>
+            </div>
+            <div class="row">
+              <label>Angulo gradiente <input type="number" min="0" max="360" data-builder-block="${escapeHtml(block.id)}" data-builder-field="gradientAngle" value="${escapeHtml(block.gradientAngle ?? 135)}"></label>
+              <label>Peso fonte <input type="number" min="300" max="1000" step="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="fontWeight" value="${escapeHtml(block.fontWeight || 900)}"></label>
+            </div>
+            <div class="row">
+              <label>Camada <input type="number" min="0" max="999" data-builder-block="${escapeHtml(block.id)}" data-builder-field="layer" value="${escapeHtml(block.layer ?? 1)}"></label>
+              <label>Opacidade % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="opacity" value="${escapeHtml(block.opacity ?? 100)}"></label>
+            </div>
             <div class="row">
               <label>Texto
                 <select data-builder-block="${escapeHtml(block.id)}" data-builder-field="textMode">
@@ -3325,9 +3773,11 @@
         const editor = $("#builderEditor");
         if (!editor) return;
         const page = activeCustomPage();
+        const isSystemPage = Boolean(page.isSystem || page.systemKey);
         editor.innerHTML = `
           <div class="content-fieldset">
             <h3>Dados da pagina</h3>
+            <p class="editor-note">${isSystemPage ? "Pagina existente do site. Voce pode editar texto, menu, status, ordem e blocos do preview; ela nao pode ser excluida." : "Pagina criada pelo painel. Voce pode excluir, pausar ou mostrar no menu."}</p>
             <div class="content-grid">
               <label>Ativa
                 <select data-builder-page-field="active">
@@ -3343,14 +3793,15 @@
               </label>
               <label>Titulo <input data-builder-page-field="title" value="${escapeHtml(page.title || "")}"></label>
               <label>Nome no menu <input data-builder-page-field="navLabel" value="${escapeHtml(page.navLabel || "")}"></label>
-              <label>Slug/endereco <input data-builder-page-field="slug" value="${escapeHtml(page.slug || "")}"></label>
+              <label>Slug/identificador <input data-builder-page-field="slug" value="${escapeHtml(page.slug || "")}" ${isSystemPage ? "readonly" : ""}></label>
+              <label>Ordem no menu <input type="number" data-builder-page-field="order" value="${escapeHtml(page.order ?? 0)}"></label>
               <label class="wide">Texto inicial <textarea data-builder-page-field="intro">${escapeHtml(page.intro || "")}</textarea></label>
-              <button class="btn btn-ghost" type="button" id="deleteCustomPage">Excluir esta pagina</button>
+              ${isSystemPage ? "" : '<button class="btn btn-ghost" type="button" id="deleteCustomPage">Excluir esta pagina</button>'}
             </div>
           </div>
           <div class="content-fieldset">
             <h3>Blocos desta pagina</h3>
-            <p class="editor-note">Clique em um bloco no preview para selecionar. Arraste o bloco dentro do preview para ajustar a posicao.</p>
+            <p class="editor-note">Clique em um bloco no preview para selecionar. Arraste para mover, use setas para ajuste fino, ative grade/alinhamento no topo do preview.</p>
             ${(page.blocks || []).map(builderBlockForm).join("") || '<p class="editor-note">Nenhum bloco nesta pagina.</p>'}
           </div>
         `;
@@ -3373,9 +3824,10 @@
         });
         $("#deleteCustomPage")?.addEventListener("click", () => {
           ensureMasterContentDefaults();
-          if (!siteContentState.customPages.length) return;
-          siteContentState.customPages.splice(builderActivePageIndex, 1);
-          builderActivePageIndex = Math.max(0, builderActivePageIndex - 1);
+          const page = activeCustomPage();
+          if (!page || page.isSystem || page.systemKey) return;
+          siteContentState.customPages = (siteContentState.customPages || []).filter((item) => item.id !== page.id);
+          builderActivePageKey = "";
           builderSelectedBlockId = "";
           renderPageBuilder();
           setInlineStatus("builderStatus", "Pagina removida localmente. Salve para publicar a remocao.", "ok");
@@ -3385,9 +3837,11 @@
       function updateBuilderPageField(field, value) {
         const page = activeCustomPage();
         if (field === "active" || field === "showInNav") page[field] = value === "true";
+        else if (field === "order") page.order = Number(value || 0);
         else if (field === "slug") page.slug = slugify(value);
         else page[field] = value;
         if (field === "title" && !page.navLabel) page.navLabel = value;
+        syncBuilderSystemPage(page);
         renderBuilderPageList();
         renderBuilderPreview();
         setInlineStatus("builderStatus", "Alteracao local aplicada. Clique em salvar paginas no site para publicar.", "ok");
@@ -3397,7 +3851,7 @@
         const page = activeCustomPage();
         const block = (page.blocks || []).find((item) => item.id === id);
         if (!block) return;
-        const numeric = ["x", "y", "width", "height", "radius", "fontSize", "fontWeight", "gradientAngle", "textGradientAngle", "shadowStrength", "textShadowStrength", "blurPx"];
+        const numeric = ["x", "y", "width", "height", "radius", "fontSize", "fontWeight", "gradientAngle", "textGradientAngle", "shadowStrength", "textShadowStrength", "blurPx", "layer", "opacity"];
         if (field === "lockAspect") block.lockAspect = value === "true";
         else block[field] = numeric.includes(field) ? Number(value || 0) : value;
         if (field === "text") block.label = value;
@@ -3408,6 +3862,18 @@
         renderBuilderPreview();
         renderBuilderEditor();
         setInlineStatus("builderStatus", "Bloco atualizado no preview. Clique em salvar para publicar.", "ok");
+      }
+
+      function updateBuilderInlineText(id, value) {
+        const page = activeCustomPage();
+        const block = (page.blocks || []).find((item) => item.id === id);
+        if (!block || block.type === "image") return;
+        block.text = value;
+        block.label = value;
+        builderSelectedBlockId = id;
+        const field = document.querySelector(`[data-builder-block="${CSS.escape(id)}"][data-builder-field="text"]`);
+        if (field && field.value !== value) field.value = value;
+        setInlineStatus("builderStatus", "Texto atualizado no preview. Clique em salvar para publicar.", "ok");
       }
 
       async function uploadBuilderImage(blockId, targetField = "image") {
@@ -3461,7 +3927,9 @@
           const parts = sourceText.split(block.texturePhrase);
           richText = parts.map(escapeHtml).join(`<span class="text-texture-part">${escapeHtml(block.texturePhrase)}</span>`);
         }
-        const text = block.type === "image" ? image || "Imagem" : richText;
+        const text = block.type === "image"
+          ? image || "Imagem"
+          : `<span class="builder-inline-editor" contenteditable="true" role="textbox" spellcheck="false" data-builder-inline-text="${escapeHtml(block.id)}">${richText}</span>`;
         const shadow = Number(block.shadowStrength || 0) > 0
           ? `0 ${Math.max(4, Number(block.shadowStrength) / 2)}px ${Math.max(10, Number(block.shadowStrength) * 1.6)}px rgba(13,23,38,${Math.min(.38, Number(block.shadowStrength) / 180)})`
           : "none";
@@ -3471,7 +3939,26 @@
         const texture = block.textTexture ? `url(${escapeHtml(adminPreviewSrc(block.textTexture))})` : "none";
         const lock = block.lockAspect === false ? "L" : "T";
         const textMode = block.textMode === "texture" && block.texturePhrase ? "solid" : (block.textMode || "solid");
-        return `<div class="builder-block${block.id === builderSelectedBlockId ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")}">${text}<button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
+        const opacity = Math.max(0, Math.min(100, Number(block.opacity ?? 100))) / 100;
+        return `<div class="builder-block${block.id === builderSelectedBlockId ? " is-selected" : ""}" data-builder-preview-block="${escapeHtml(block.id)}" data-type="${escapeHtml(block.type || "box")}" data-bg-mode="${escapeHtml(block.backgroundMode || "solid")}" data-text-mode="${escapeHtml(textMode)}" style="--x:${Number(block.x ?? 8)}%;--y:${Number(block.y ?? 12)}%;--w:${Number(block.width || 260)}px;--h:${Number(block.height || 80)}px;--r:${Number(block.radius ?? 14)}px;--bg:${escapeHtml(block.background || "#ffffff")};--fg:${escapeHtml(block.color || "#111111")};--g1:${escapeHtml(block.gradientFrom || block.background || "#ffffff")};--g2:${escapeHtml(block.gradientTo || "#e9f5ff")};--angle:${Number(block.gradientAngle ?? 135)}deg;--tg1:${escapeHtml(block.textGradientFrom || block.color || "#111111")};--tg2:${escapeHtml(block.textGradientTo || "#148bff")};--text-angle:${Number(block.textGradientAngle ?? 90)}deg;--text-texture:${texture};--shadow:${shadow};--text-shadow:${textShadow};--blur:${Number(block.blurPx ?? 12)}px;--fit:${escapeHtml(block.objectFit || "contain")};--fs:${Number(block.fontSize || 16)}px;--fw:${Number(block.fontWeight || 900)};--ta:${escapeHtml(block.textAlign || "center")};--z:${Number(block.layer ?? 1)};--opacity:${opacity}">${text}<button class="builder-delete" type="button" data-delete-builder-preview="${escapeHtml(block.id)}" title="Excluir bloco">x</button><button class="builder-lock" type="button" data-toggle-builder-lock="${escapeHtml(block.id)}" title="${block.lockAspect === false ? "Proporcao livre" : "Proporcao travada"}">${lock}</button><span class="builder-resize" data-builder-resize="${escapeHtml(block.id)}" title="Arraste para redimensionar"></span></div>`;
+      }
+
+      function builderPreviewNavigation(activePage) {
+        const pages = builderAllPages()
+          .filter((page) => page && page.active !== false && page.showInNav !== false)
+          .sort((a, b) => Number(a.order || 0) - Number(b.order || 0));
+        const activeKey = builderPageKey(activePage);
+        const links = pages.map((page, index) => {
+          const key = builderPageKey(page, index);
+          return `<span class="${key === activeKey ? "is-active" : ""}">${escapeHtml(page.navLabel || page.title || page.slug)}</span>`;
+        }).join("");
+        return `
+          <div class="builder-preview-brand">
+            <img src="../../assets/mobilytech-logo.png" alt="">
+            <span>MobilyTech BR</span>
+          </div>
+          <div class="builder-preview-menu">${links}</div>
+        `;
       }
 
       function renderBuilderPreview() {
@@ -3479,16 +3966,195 @@
         const title = $("#builderPreviewTitle");
         const intro = $("#builderPreviewIntro");
         const stage = $("#builderStage");
+        const frame = $("#builderPreviewFrame");
+        const nav = $("#builderPreviewNav");
+        const desktopButton = $("#builderDesktopPreview");
+        const mobileButton = $("#builderMobilePreview");
         if (title) title.textContent = page.title || "Preview";
         if (intro) intro.textContent = page.intro || `Endereco: /fase2/${page.slug || "nova-pagina"}.html`;
         if (!stage) return;
-        stage.innerHTML = (page.blocks || []).map(builderBlockPreview).join("");
+        if (frame) frame.classList.toggle("is-mobile", builderPreviewMode === "mobile");
+        if (stage) stage.classList.toggle("no-grid", !builderGridEnabled);
+        if (nav) nav.innerHTML = builderPreviewNavigation(page);
+        if (desktopButton) desktopButton.setAttribute("aria-pressed", builderPreviewMode === "desktop" ? "true" : "false");
+        if (mobileButton) mobileButton.setAttribute("aria-pressed", builderPreviewMode === "mobile" ? "true" : "false");
+        if ($("#builderGridToggle")) $("#builderGridToggle").checked = builderGridEnabled;
+        if ($("#builderSnapToggle")) $("#builderSnapToggle").checked = builderSnapEnabled;
+        const guides = '<span class="builder-guide builder-guide-x" id="builderGuideX"></span><span class="builder-guide builder-guide-y" id="builderGuideY"></span>';
+        stage.innerHTML = guides + (page.blocks || []).map(builderBlockPreview).join("");
+        stage.tabIndex = 0;
         attachBuilderDragHandlers();
+      }
+
+      function setBuilderGuides({ x = null, y = null } = {}) {
+        const guideY = $("#builderGuideY");
+        const guideX = $("#builderGuideX");
+        if (guideY) {
+          guideY.style.setProperty("--guide-x", `${Number(x || 0)}%`);
+          guideY.classList.toggle("is-visible", x !== null);
+        }
+        if (guideX) {
+          guideX.style.setProperty("--guide-y", `${Number(y || 0)}%`);
+          guideX.classList.toggle("is-visible", y !== null);
+        }
+      }
+
+      function clearBuilderGuides() {
+        setBuilderGuides({ x: null, y: null });
+      }
+
+      function snapBuilderPosition(block, rawX, rawY, stage) {
+        if (!builderSnapEnabled) return { x: rawX, y: rawY, guideX: null, guideY: null };
+        const page = activeCustomPage();
+        const stageWidth = Math.max(1, stage.clientWidth);
+        const stageHeight = Math.max(1, stage.clientHeight);
+        const blockWidthPercent = (Number(block.width || 0) / stageWidth) * 100;
+        const blockHeightPercent = (Number(block.height || 0) / stageHeight) * 100;
+        const snapPointsX = [0, 50, 100 - blockWidthPercent];
+        const snapPointsY = [0, 50, 100 - blockHeightPercent];
+        (page.blocks || []).forEach((other) => {
+          if (!other || other.id === block.id) return;
+          const otherX = Number(other.x || 0);
+          const otherY = Number(other.y || 0);
+          const otherW = (Number(other.width || 0) / stageWidth) * 100;
+          const otherH = (Number(other.height || 0) / stageHeight) * 100;
+          snapPointsX.push(otherX, otherX + otherW, otherX + (otherW / 2) - (blockWidthPercent / 2));
+          snapPointsY.push(otherY, otherY + otherH, otherY + (otherH / 2) - (blockHeightPercent / 2));
+        });
+        const threshold = builderPreviewMode === "mobile" ? 1.8 : 1.1;
+        let nextX = rawX;
+        let nextY = rawY;
+        let guideX = null;
+        let guideY = null;
+        snapPointsX.forEach((point) => {
+          if (Math.abs(rawX - point) <= threshold) {
+            nextX = point;
+            guideX = point + (blockWidthPercent / 2);
+          }
+        });
+        snapPointsY.forEach((point) => {
+          if (Math.abs(rawY - point) <= threshold) {
+            nextY = point;
+            guideY = point + (blockHeightPercent / 2);
+          }
+        });
+        return {
+          x: Math.max(0, Math.min(100, nextX)),
+          y: Math.max(0, Math.min(100, nextY)),
+          guideX: guideX === null ? null : Math.max(0, Math.min(100, guideX)),
+          guideY: guideY === null ? null : Math.max(0, Math.min(100, guideY))
+        };
+      }
+
+      function deleteBuilderBlock(blockId) {
+        const page = activeCustomPage();
+        page.blocks = (page.blocks || []).filter((block) => block.id !== blockId);
+        if (builderSelectedBlockId === blockId) builderSelectedBlockId = "";
+        closeBuilderContextMenu();
+        renderPageBuilder();
+        setInlineStatus("builderStatus", "Bloco excluido localmente. Clique em salvar para publicar.", "ok");
+      }
+
+      function activeBuilderBlock() {
+        const page = activeCustomPage();
+        return (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
+      }
+
+      function setBuilderBlockLayer(action) {
+        const page = activeCustomPage();
+        const block = activeBuilderBlock();
+        if (!block) return;
+        const layers = (page.blocks || []).map((item) => Number(item.layer ?? 1));
+        const minLayer = Math.min(0, ...layers);
+        const maxLayer = Math.max(1, ...layers);
+        if (action === "layer-up") block.layer = Number(block.layer ?? 1) + 1;
+        if (action === "layer-down") block.layer = Math.max(0, Number(block.layer ?? 1) - 1);
+        if (action === "layer-top") block.layer = maxLayer + 1;
+        if (action === "layer-bottom") block.layer = Math.max(0, minLayer - 1);
+        renderBuilderPreview();
+        renderBuilderEditor();
+        setInlineStatus("builderStatus", "Camada atualizada no preview. Clique em salvar para publicar.", "ok");
+      }
+
+      function centerBuilderBlock(axis) {
+        const stage = $("#builderStage");
+        const block = activeBuilderBlock();
+        if (!stage || !block) return;
+        if (axis === "x") {
+          const widthPercent = (Number(block.width || 0) / Math.max(1, stage.clientWidth)) * 100;
+          block.x = Math.round(Math.max(0, (100 - widthPercent) / 2) * 10) / 10;
+        }
+        if (axis === "y") {
+          const heightPercent = (Number(block.height || 0) / Math.max(1, stage.clientHeight)) * 100;
+          block.y = Math.round(Math.max(0, (100 - heightPercent) / 2) * 10) / 10;
+        }
+        renderBuilderPreview();
+        renderBuilderEditor();
+        setInlineStatus("builderStatus", "Bloco centralizado no preview. Clique em salvar para publicar.", "ok");
+      }
+
+      function closeBuilderContextMenu() {
+        const menu = $("#builderContextMenu");
+        if (menu) menu.classList.remove("is-open");
+      }
+
+      function openBuilderContextMenu(blockId, event) {
+        const menu = $("#builderContextMenu");
+        if (!menu) return;
+        builderSelectedBlockId = blockId;
+        const block = activeBuilderBlock();
+        const opacity = $("#builderOpacityRange");
+        if (opacity && block) opacity.value = String(Math.max(0, Math.min(100, Number(block.opacity ?? 100))));
+        const margin = 24;
+        menu.style.left = `${Math.max(margin, event.clientX)}px`;
+        menu.style.top = `${Math.max(margin, event.clientY)}px`;
+        menu.classList.add("is-open");
+        const rect = menu.getBoundingClientRect();
+        const nextLeft = Math.max(margin, Math.min(event.clientX, window.innerWidth - rect.width - margin));
+        const nextTop = Math.max(margin, Math.min(event.clientY, window.innerHeight - rect.height - margin));
+        menu.style.left = `${nextLeft}px`;
+        menu.style.top = `${nextTop}px`;
+        renderBuilderPreview();
+        renderBuilderEditor();
+      }
+
+      function moveBuilderSelectedBy(deltaXPx, deltaYPx) {
+        const stage = $("#builderStage");
+        const page = activeCustomPage();
+        const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
+        if (!stage || !block) return;
+        const nextX = Number(block.x || 0) + (deltaXPx / Math.max(1, stage.clientWidth)) * 100;
+        const nextY = Number(block.y || 0) + (deltaYPx / Math.max(1, stage.clientHeight)) * 100;
+        block.x = Math.round(Math.max(0, Math.min(100, nextX)) * 10) / 10;
+        block.y = Math.round(Math.max(0, Math.min(100, nextY)) * 10) / 10;
+        const node = stage.querySelector(`[data-builder-preview-block="${CSS.escape(block.id)}"]`);
+        if (node) {
+          node.style.setProperty("--x", `${block.x}%`);
+          node.style.setProperty("--y", `${block.y}%`);
+        }
+        renderBuilderEditor();
+        setInlineStatus("builderStatus", "Posicao ajustada pelas setas. Clique em salvar para publicar.", "ok");
       }
 
       function attachBuilderDragHandlers() {
         const stage = $("#builderStage");
         if (!stage) return;
+        stage.onkeydown = (event) => {
+          if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
+          if (!builderSelectedBlockId) return;
+          event.preventDefault();
+          const step = event.shiftKey ? 10 : 1;
+          const dx = event.key === "ArrowLeft" ? -step : event.key === "ArrowRight" ? step : 0;
+          const dy = event.key === "ArrowUp" ? -step : event.key === "ArrowDown" ? step : 0;
+          moveBuilderSelectedBy(dx, dy);
+        };
+        stage.querySelectorAll("[data-delete-builder-preview]").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            deleteBuilderBlock(button.dataset.deleteBuilderPreview);
+          });
+        });
         stage.querySelectorAll("[data-toggle-builder-lock]").forEach((button) => {
           button.addEventListener("click", (event) => {
             event.preventDefault();
@@ -3500,6 +4166,26 @@
             if (Number(block.width) > 0 && Number(block.height) > 0) block.aspectRatio = Number(block.width) / Number(block.height);
             builderSelectedBlockId = block.id;
             renderPageBuilder();
+          });
+        });
+        stage.querySelectorAll("[data-builder-inline-text]").forEach((editor) => {
+          editor.addEventListener("pointerdown", (event) => {
+            event.stopPropagation();
+            builderSelectedBlockId = editor.dataset.builderInlineText;
+            closeBuilderContextMenu();
+          });
+          editor.addEventListener("focus", () => {
+            builderSelectedBlockId = editor.dataset.builderInlineText;
+            renderBuilderEditor();
+          });
+          editor.addEventListener("input", () => {
+            updateBuilderInlineText(editor.dataset.builderInlineText, editor.innerText.trim());
+          });
+          editor.addEventListener("blur", () => {
+            renderBuilderEditor();
+          });
+          editor.addEventListener("keydown", (event) => {
+            event.stopPropagation();
           });
         });
         stage.querySelectorAll("[data-builder-resize]").forEach((handle) => {
@@ -3538,31 +4224,48 @@
           });
         });
         stage.querySelectorAll("[data-builder-preview-block]").forEach((node) => {
-          node.addEventListener("click", () => {
+          node.addEventListener("click", (event) => {
+            if (event.target?.closest?.("[data-builder-inline-text]")) return;
             builderSelectedBlockId = node.dataset.builderPreviewBlock;
+            stage.focus({ preventScroll: true });
+            closeBuilderContextMenu();
             renderBuilderPreview();
             renderBuilderEditor();
           });
+          node.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            openBuilderContextMenu(node.dataset.builderPreviewBlock, event);
+          });
           node.addEventListener("pointerdown", (event) => {
-            if (event.target?.dataset?.builderResize || event.target?.dataset?.toggleBuilderLock) return;
+            if (event.target?.dataset?.builderResize || event.target?.dataset?.toggleBuilderLock || event.target?.dataset?.deleteBuilderPreview) return;
+            if (event.target?.closest?.("[data-builder-inline-text]")) return;
+            if (event.button === 2) return;
             event.preventDefault();
             builderSelectedBlockId = node.dataset.builderPreviewBlock;
+            closeBuilderContextMenu();
+            stage.focus({ preventScroll: true });
             node.setPointerCapture(event.pointerId);
+            const stageBox = stage.getBoundingClientRect();
+            const nodeBox = node.getBoundingClientRect();
+            const offsetX = event.clientX - nodeBox.left;
+            const offsetY = event.clientY - nodeBox.top;
             const move = (moveEvent) => {
-              const box = stage.getBoundingClientRect();
-              const x = Math.max(0, Math.min(100, ((moveEvent.clientX - box.left) / box.width) * 100));
-              const y = Math.max(0, Math.min(100, ((moveEvent.clientY - box.top) / box.height) * 100));
               const page = activeCustomPage();
               const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
               if (!block) return;
-              block.x = Math.round(x * 10) / 10;
-              block.y = Math.round(y * 10) / 10;
+              const rawX = ((moveEvent.clientX - offsetX - stageBox.left) / stageBox.width) * 100;
+              const rawY = ((moveEvent.clientY - offsetY - stageBox.top) / stageBox.height) * 100;
+              const snapped = snapBuilderPosition(block, rawX, rawY, stage);
+              block.x = Math.round(snapped.x * 10) / 10;
+              block.y = Math.round(snapped.y * 10) / 10;
               node.style.setProperty("--x", `${block.x}%`);
               node.style.setProperty("--y", `${block.y}%`);
+              setBuilderGuides({ x: snapped.guideX, y: snapped.guideY });
             };
             const up = () => {
               node.removeEventListener("pointermove", move);
               node.removeEventListener("pointerup", up);
+              clearBuilderGuides();
               renderBuilderEditor();
               setInlineStatus("builderStatus", "Posicao do bloco atualizada. Clique em salvar para publicar.", "ok");
             };
@@ -3577,11 +4280,33 @@
         if (!list) return;
         ensureMasterContentDefaults();
         list.innerHTML = builderPageListHtml();
-        list.querySelectorAll("[data-builder-page]").forEach((button) => {
+        list.querySelectorAll("[data-builder-page-key]").forEach((button) => {
           button.addEventListener("click", () => {
-            builderActivePageIndex = Number(button.dataset.builderPage || 0);
+            setBuilderActivePage(button.dataset.builderPageKey || "");
             builderSelectedBlockId = "";
             renderPageBuilder();
+          });
+          button.addEventListener("dragstart", (event) => {
+            event.dataTransfer?.setData("text/plain", button.dataset.builderPageKey || "");
+          });
+          button.addEventListener("dragover", (event) => {
+            event.preventDefault();
+          });
+          button.addEventListener("drop", (event) => {
+            event.preventDefault();
+            const sourceKey = event.dataTransfer?.getData("text/plain") || "";
+            const targetKey = button.dataset.builderPageKey || "";
+            if (!sourceKey || !targetKey || sourceKey === targetKey) return;
+            const pages = builderAllPages();
+            const from = pages.findIndex((page, index) => builderPageKey(page, index) === sourceKey);
+            const to = pages.findIndex((page, index) => builderPageKey(page, index) === targetKey);
+            if (from < 0 || to < 0) return;
+            const [moved] = pages.splice(from, 1);
+            pages.splice(to, 0, moved);
+            pages.forEach((page, index) => { page.order = index; });
+            setBuilderActivePage(sourceKey);
+            renderPageBuilder();
+            setInlineStatus("builderStatus", "Ordem das paginas atualizada localmente. Clique em salvar para publicar.", "ok");
           });
         });
       }
@@ -3593,7 +4318,9 @@
         renderBuilderPageList();
         renderBuilderEditor();
         renderBuilderPreview();
-        setInlineStatus("builderStatus", `${siteContentState.customPages.length} pagina(s) no construtor.`, "ok");
+        const pages = builderAllPages();
+        const customCount = (siteContentState.customPages || []).length;
+        setInlineStatus("builderStatus", `${pages.length} pagina(s) no construtor: ${BUILDER_SYSTEM_PAGES.length} do site e ${customCount} criada(s).`, "ok");
       }
 
 
@@ -4609,6 +5336,57 @@
         await saveCatalogJson("site-content", siteContentState, "maintenanceStatus");
       });
       $("#addCustomPage")?.addEventListener("click", () => addCustomPage(true));
+      $("#builderDesktopPreview")?.addEventListener("click", () => {
+        builderPreviewMode = "desktop";
+        renderBuilderPreview();
+      });
+      $("#builderMobilePreview")?.addEventListener("click", () => {
+        builderPreviewMode = "mobile";
+        renderBuilderPreview();
+      });
+      $("#builderGridToggle")?.addEventListener("change", (event) => {
+        builderGridEnabled = Boolean(event.target.checked);
+        renderBuilderPreview();
+      });
+      $("#builderSnapToggle")?.addEventListener("change", (event) => {
+        builderSnapEnabled = Boolean(event.target.checked);
+        renderBuilderPreview();
+      });
+      $("#builderContextMenu")?.addEventListener("click", (event) => {
+        const action = event.target?.dataset?.builderContextAction;
+        if (!action) return;
+        if (action === "delete") deleteBuilderBlock(builderSelectedBlockId);
+        else if (action === "toggle-lock") {
+          const block = activeBuilderBlock();
+          if (block) {
+            block.lockAspect = block.lockAspect === false;
+            closeBuilderContextMenu();
+            renderPageBuilder();
+          }
+        } else if (["layer-up", "layer-down", "layer-top", "layer-bottom"].includes(action)) {
+          setBuilderBlockLayer(action);
+        } else if (action === "center-x") {
+          centerBuilderBlock("x");
+        } else if (action === "center-y") {
+          centerBuilderBlock("y");
+        }
+      });
+      $("#builderOpacityRange")?.addEventListener("input", (event) => {
+        const block = activeBuilderBlock();
+        if (!block) return;
+        block.opacity = Number(event.target.value || 100);
+        renderBuilderPreview();
+        setInlineStatus("builderStatus", "Opacidade atualizada no preview. Clique em salvar para publicar.", "ok");
+      });
+      document.addEventListener("click", (event) => {
+        const menu = $("#builderContextMenu");
+        if (!menu || !menu.classList.contains("is-open")) return;
+        if (menu.contains(event.target)) return;
+        closeBuilderContextMenu();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeBuilderContextMenu();
+      });
       document.querySelectorAll("[data-add-builder-block]").forEach((button) => {
         button.addEventListener("click", () => {
           const page = activeCustomPage();
