@@ -707,7 +707,7 @@
       .builder-stage {
         position: relative;
         min-height: 560px;
-        overflow: hidden;
+        overflow: auto;
         background:
           linear-gradient(90deg, rgba(27,139,240,.045) 1px, transparent 1px),
           linear-gradient(180deg, rgba(27,139,240,.045) 1px, transparent 1px);
@@ -720,25 +720,37 @@
         min-height: 640px;
         background-size: 20px 20px;
       }
-      .builder-system-preview {
+      .builder-design-shell {
         position: relative;
+        width: calc(var(--design-width, 1440px) * var(--design-scale, 1));
+        height: calc(var(--design-height, 1180px) * var(--design-scale, 1));
+        min-width: 100%;
+      }
+      .builder-design-surface {
+        position: relative;
+        width: var(--design-width, 1440px);
+        height: var(--design-height, 1180px);
+        transform: scale(var(--design-scale, 1));
+        transform-origin: 0 0;
+        background: #fff;
+        overflow: hidden;
+      }
+      .builder-system-preview {
+        position: absolute;
+        inset: 0;
         z-index: 0;
-        min-height: 760px;
         background: #fff;
       }
       .builder-system-preview iframe {
         display: block;
         width: 100%;
-        height: 980px;
+        height: 100%;
         border: 0;
         background: #fff;
         pointer-events: none;
       }
-      .builder-preview-frame.is-mobile .builder-system-preview iframe {
-        height: 900px;
-      }
       .builder-system-fallback {
-        min-height: 680px;
+        min-height: 100%;
         padding: 46px;
         background: linear-gradient(180deg, #f8fbff, #fff);
       }
@@ -961,8 +973,8 @@
       .builder-block.is-selected { outline: 3px solid rgba(20, 139, 255, .46); outline-offset: 2px; }
       .builder-resize {
         position: absolute;
-        right: 12px;
-        bottom: 12px;
+        right: -12px;
+        bottom: -12px;
         width: 18px;
         height: 18px;
         border: 2px solid #fff;
@@ -975,8 +987,8 @@
       }
       .builder-lock {
         position: absolute;
-        right: 12px;
-        top: 12px;
+        right: -14px;
+        top: -14px;
         width: 28px;
         height: 28px;
         border: 2px solid #fff;
@@ -993,8 +1005,8 @@
       }
       .builder-delete {
         position: absolute;
-        left: 12px;
-        top: 12px;
+        left: -14px;
+        top: -14px;
         width: 28px;
         height: 28px;
         border: 2px solid #fff;
@@ -1060,6 +1072,49 @@
         height: 100%;
         border: 0;
         background: #fff;
+      }
+      body.builder-edit-fullscreen {
+        overflow: hidden;
+      }
+      body.builder-edit-fullscreen .builder-layout {
+        position: fixed;
+        inset: 0;
+        z-index: 140;
+        padding: 18px;
+        background: linear-gradient(135deg, #eefbff, #f7fbff 48%, #ffffff);
+        display: grid;
+        grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+        gap: 14px;
+        overflow: hidden;
+      }
+      body.builder-edit-fullscreen .builder-sidebar,
+      body.builder-edit-fullscreen .builder-canvas {
+        position: relative;
+        top: auto;
+        max-height: calc(100vh - 36px);
+        overflow: auto;
+        box-shadow: 0 22px 60px rgba(13,23,38,.18);
+      }
+      body.builder-edit-fullscreen .builder-canvas {
+        min-height: calc(100vh - 36px);
+      }
+      body.builder-edit-fullscreen .builder-stage {
+        min-height: calc(100vh - 178px);
+      }
+      body.builder-edit-fullscreen .builder-design-shell {
+        min-width: 0;
+      }
+      body.builder-edit-fullscreen.builder-tools-collapsed .builder-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      body.builder-edit-fullscreen.builder-tools-collapsed .builder-sidebar {
+        display: none;
+      }
+      .builder-fullscreen-only {
+        display: none !important;
+      }
+      body.builder-edit-fullscreen .builder-fullscreen-only {
+        display: inline-flex !important;
       }
       .builder-editor-summary {
         border: 1px solid #dbeafe;
@@ -2399,6 +2454,9 @@
                     <label><input type="checkbox" id="builderGridToggle" checked> Grade</label>
                     <label><input type="checkbox" id="builderSnapToggle" checked> Alinhar</label>
                   </div>
+                  <button class="btn btn-dark" type="button" id="builderOpenFullscreenEdit">Editar tela cheia</button>
+                  <button class="btn btn-ghost builder-fullscreen-only" type="button" id="builderToggleFullscreenTools">Ocultar ferramentas</button>
+                  <button class="btn btn-red builder-fullscreen-only" type="button" id="builderCloseFullscreenEdit">Sair da edicao</button>
                   <button class="btn btn-ghost" type="button" id="builderOpenFullscreen">Tela cheia</button>
                 </div>
               </div>
@@ -3897,6 +3955,14 @@
               <button class="btn btn-dark" type="button" data-builder-upload-trigger="${escapeHtml(block.id)}" data-builder-upload-target="image">Enviar imagem</button>
             </div>
             <div class="row">
+              <label>Fundo a remover <input type="color" data-builder-block="${escapeHtml(block.id)}" data-builder-field="removeBgColor" value="${escapeHtml(block.removeBgColor || "#ffffff")}"></label>
+              <label>Tolerancia <input type="number" min="0" max="120" data-builder-block="${escapeHtml(block.id)}" data-builder-field="removeBgTolerance" value="${escapeHtml(block.removeBgTolerance ?? 28)}"></label>
+            </div>
+            <div class="media-upload-row">
+              <button class="btn btn-ghost" type="button" data-builder-remove-bg-color="${escapeHtml(block.id)}">Remover fundo por cor</button>
+              <button class="btn btn-dark" type="button" data-builder-remove-bg-ai="${escapeHtml(block.id)}">Remover fundo por IA</button>
+            </div>
+            <div class="row">
               <label>X % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="x" value="${escapeHtml(block.x ?? 8)}"></label>
               <label>Y % <input type="number" min="0" max="100" data-builder-block="${escapeHtml(block.id)}" data-builder-field="y" value="${escapeHtml(block.y ?? 12)}"></label>
             </div>
@@ -4066,6 +4132,22 @@
         });
       }
 
+      function attachBuilderAddBlockHandlers() {
+        document.querySelectorAll("[data-add-builder-block]").forEach((button) => {
+          if (button.dataset.builderAddBound === "true") return;
+          button.dataset.builderAddBound = "true";
+          button.addEventListener("click", () => {
+            const page = activeCustomPage();
+            const block = defaultBuilderBlock(button.dataset.addBuilderBlock || "box");
+            page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
+            page.blocks.push(block);
+            builderSelectedBlockId = block.id;
+            renderPageBuilder();
+            setInlineStatus("builderStatus", "Bloco adicionado ao preview. Ajuste e salve para publicar.", "ok");
+          });
+        });
+      }
+
       function updateBuilderPageField(field, value) {
         const page = activeCustomPage();
         if (field === "active" || field === "showInNav") page[field] = value === "true";
@@ -4083,7 +4165,7 @@
         const page = activeCustomPage();
         const block = (page.blocks || []).find((item) => item.id === id);
         if (!block) return;
-        const numeric = ["x", "y", "width", "height", "radius", "fontSize", "fontWeight", "gradientAngle", "textGradientAngle", "shadowStrength", "textShadowStrength", "blurPx", "layer", "opacity", "animationDuration"];
+        const numeric = ["x", "y", "width", "height", "radius", "fontSize", "fontWeight", "gradientAngle", "textGradientAngle", "shadowStrength", "textShadowStrength", "blurPx", "layer", "opacity", "animationDuration", "removeBgTolerance"];
         if (field === "lockAspect") block.lockAspect = value === "true";
         else block[field] = numeric.includes(field) ? Number(value || 0) : value;
         if (field === "text") block.label = value;
@@ -4151,6 +4233,107 @@
         }
       }
 
+      function hexToRgb(value) {
+        const raw = String(value || "#ffffff").replace("#", "");
+        const full = raw.length === 3 ? raw.split("").map((char) => char + char).join("") : raw.padEnd(6, "f").slice(0, 6);
+        return {
+          r: parseInt(full.slice(0, 2), 16),
+          g: parseInt(full.slice(2, 4), 16),
+          b: parseInt(full.slice(4, 6), 16)
+        };
+      }
+
+      function imageElementFromSrc(src) {
+        return new Promise((resolve, reject) => {
+          const image = new Image();
+          image.crossOrigin = "anonymous";
+          image.onload = () => resolve(image);
+          image.onerror = () => reject(new Error("Nao foi possivel abrir a imagem para processamento."));
+          image.src = adminPreviewSrc(src);
+        });
+      }
+
+      async function uploadGeneratedBuilderImage(blockId, dataUrl, filename = "builder-image.png") {
+        const token = $("#adminWriteToken")?.value || "";
+        const response = await fetch("/api/upload-media", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Token": token
+          },
+          body: JSON.stringify({
+            filename,
+            mimeType: "image/png",
+            dataBase64: String(dataUrl || "").replace(/^data:[^;]+;base64,/, "")
+          })
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.ok === false) throw new Error(result.error || "Nao foi possivel salvar a imagem processada.");
+        return result.publicPath || (result.path ? `./${result.path}` : "");
+      }
+
+      async function removeBuilderImageBackgroundByColor(blockId) {
+        const page = activeCustomPage();
+        const block = (page.blocks || []).find((item) => item.id === blockId);
+        if (!block || !block.image) {
+          setInlineStatus("builderStatus", "Selecione um bloco com imagem antes de remover fundo.", "error");
+          return;
+        }
+        try {
+          setInlineStatus("builderStatus", "Removendo fundo por cor no navegador...", "info");
+          const image = await imageElementFromSrc(block.image);
+          const canvas = document.createElement("canvas");
+          canvas.width = image.naturalWidth || image.width;
+          canvas.height = image.naturalHeight || image.height;
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          ctx.drawImage(image, 0, 0);
+          const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const target = hexToRgb(block.removeBgColor || "#ffffff");
+          const tolerance = Math.max(0, Math.min(120, Number(block.removeBgTolerance ?? 28)));
+          for (let i = 0; i < data.data.length; i += 4) {
+            const distance = Math.sqrt(
+              ((data.data[i] - target.r) ** 2) +
+              ((data.data[i + 1] - target.g) ** 2) +
+              ((data.data[i + 2] - target.b) ** 2)
+            );
+            if (distance <= tolerance) data.data[i + 3] = 0;
+          }
+          ctx.putImageData(data, 0, 0);
+          const publicPath = await uploadGeneratedBuilderImage(blockId, canvas.toDataURL("image/png"), `builder-cutout-${blockId}.png`);
+          if (!publicPath) throw new Error("Imagem processada sem caminho publico.");
+          updateBuilderBlockField(blockId, "image", publicPath);
+          setInlineStatus("builderStatus", "Fundo removido por cor e imagem aplicada. Clique em salvar para publicar.", "ok");
+        } catch (error) {
+          setInlineStatus("builderStatus", `${error.message || "Falha ao remover fundo."} Se a imagem for externa, baixe e envie pelo painel primeiro.`, "error");
+        }
+      }
+
+      async function removeBuilderImageBackgroundByAi(blockId) {
+        const page = activeCustomPage();
+        const block = (page.blocks || []).find((item) => item.id === blockId);
+        if (!block || !block.image) {
+          setInlineStatus("builderStatus", "Selecione um bloco com imagem antes de usar IA.", "error");
+          return;
+        }
+        try {
+          setInlineStatus("builderStatus", "Tentando remocao por IA configurada no backend...", "info");
+          const token = $("#adminWriteToken")?.value || "";
+          const response = await fetch("/api/remove-background", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "X-Admin-Token": token },
+            body: JSON.stringify({ image: block.image, blockId })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || result.ok === false || !result.publicPath) {
+            throw new Error(result.error || "A rota de IA ainda nao esta configurada.");
+          }
+          updateBuilderBlockField(blockId, "image", result.publicPath);
+          setInlineStatus("builderStatus", "Fundo removido por IA e imagem aplicada. Clique em salvar para publicar.", "ok");
+        } catch (error) {
+          setInlineStatus("builderStatus", `${error.message || "IA indisponivel."} Use a remocao por cor como fallback gratuito.`, "error");
+        }
+      }
+
       function builderBlockPreview(block) {
         const image = block.type === "image" && block.image ? `<img src="${escapeHtml(adminPreviewSrc(block.image))}" alt="">` : "";
         const sourceText = String(block.text || block.label || "Bloco");
@@ -4197,6 +4380,25 @@
 
       function builderSystemDefinition(page = {}) {
         return BUILDER_SYSTEM_PAGES.find((item) => item.key === page.systemKey || item.key === page.key) || null;
+      }
+
+      function builderDesignViewport(page = {}) {
+        const isMobile = builderPreviewMode === "mobile";
+        const key = page.systemKey || page.key || "";
+        const baseHeight = key === "home" ? 1320 : key === "produtos" || key === "ofertas" || key === "achados" || key === "hardware" ? 1580 : 1320;
+        return {
+          width: isMobile ? 390 : 1440,
+          height: isMobile ? Math.max(1280, baseHeight) : baseHeight
+        };
+      }
+
+      function builderDesignScale(stage, viewport) {
+        const available = Math.max(260, Number(stage?.clientWidth || viewport.width) - 2);
+        return Math.min(1, Math.max(0.18, available / Math.max(1, viewport.width)));
+      }
+
+      function builderSurface() {
+        return $("#builderDesignSurface") || $("#builderStage");
       }
 
       function builderPageUrl(page = {}) {
@@ -4318,6 +4520,25 @@
         }
       }
 
+      function openBuilderFullscreenEditor() {
+        document.body.classList.add("builder-edit-fullscreen");
+        document.body.classList.remove("builder-tools-collapsed");
+        renderBuilderPreview();
+        $("#builderStage")?.focus({ preventScroll: true });
+      }
+
+      function closeBuilderFullscreenEditor() {
+        document.body.classList.remove("builder-edit-fullscreen", "builder-tools-collapsed");
+        renderBuilderPreview();
+      }
+
+      function toggleBuilderFullscreenTools() {
+        document.body.classList.toggle("builder-tools-collapsed");
+        const button = $("#builderToggleFullscreenTools");
+        if (button) button.textContent = document.body.classList.contains("builder-tools-collapsed") ? "Mostrar ferramentas" : "Ocultar ferramentas";
+        setTimeout(() => renderBuilderPreview(), 80);
+      }
+
       function renderBuilderPreview() {
         const page = activeCustomPage();
         const title = $("#builderPreviewTitle");
@@ -4332,13 +4553,26 @@
         if (!stage) return;
         if (frame) frame.classList.toggle("is-mobile", builderPreviewMode === "mobile");
         if (stage) stage.classList.toggle("no-grid", !builderGridEnabled);
-        if (nav) nav.innerHTML = builderPreviewNavigation(page);
+        if (nav) {
+          const isRealSitePreview = Boolean(page.isSystem || page.systemKey);
+          nav.hidden = isRealSitePreview;
+          nav.innerHTML = isRealSitePreview ? "" : builderPreviewNavigation(page);
+        }
         if (desktopButton) desktopButton.setAttribute("aria-pressed", builderPreviewMode === "desktop" ? "true" : "false");
         if (mobileButton) mobileButton.setAttribute("aria-pressed", builderPreviewMode === "mobile" ? "true" : "false");
         if ($("#builderGridToggle")) $("#builderGridToggle").checked = builderGridEnabled;
         if ($("#builderSnapToggle")) $("#builderSnapToggle").checked = builderSnapEnabled;
         const guides = '<span class="builder-guide builder-guide-x" id="builderGuideX"></span><span class="builder-guide builder-guide-y" id="builderGuideY"></span>';
-        stage.innerHTML = builderSystemPreviewHtml(page) + guides + (page.blocks || []).map(builderBlockPreview).join("");
+        const viewport = builderDesignViewport(page);
+        const scale = builderDesignScale(stage, viewport);
+        const surfaceHtml = builderSystemPreviewHtml(page) + guides + (page.blocks || []).map(builderBlockPreview).join("");
+        stage.innerHTML = `
+          <div class="builder-design-shell" style="--design-width:${viewport.width}px;--design-height:${viewport.height}px;--design-scale:${scale}">
+            <div class="builder-design-surface" id="builderDesignSurface" style="--design-width:${viewport.width}px;--design-height:${viewport.height}px;--design-scale:${scale}">
+              ${surfaceHtml}
+            </div>
+          </div>
+        `;
         stage.tabIndex = 0;
         attachBuilderDragHandlers();
       }
@@ -4434,7 +4668,7 @@
       }
 
       function centerBuilderBlock(axis) {
-        const stage = $("#builderStage");
+        const stage = builderSurface();
         const block = activeBuilderBlock();
         if (!stage || !block) return;
         if (axis === "x") {
@@ -4476,7 +4710,7 @@
       }
 
       function moveBuilderSelectedBy(deltaXPx, deltaYPx) {
-        const stage = $("#builderStage");
+        const stage = builderSurface();
         const page = activeCustomPage();
         const block = (page.blocks || []).find((item) => item.id === builderSelectedBlockId);
         if (!stage || !block) return;
@@ -4495,6 +4729,7 @@
 
       function attachBuilderDragHandlers() {
         const stage = $("#builderStage");
+        const surface = builderSurface();
         if (!stage) return;
         stage.onkeydown = (event) => {
           if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return;
@@ -4505,14 +4740,14 @@
           const dy = event.key === "ArrowUp" ? -step : event.key === "ArrowDown" ? step : 0;
           moveBuilderSelectedBy(dx, dy);
         };
-        stage.querySelectorAll("[data-delete-builder-preview]").forEach((button) => {
+        surface.querySelectorAll("[data-delete-builder-preview]").forEach((button) => {
           button.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
             deleteBuilderBlock(button.dataset.deleteBuilderPreview);
           });
         });
-        stage.querySelectorAll("[data-toggle-builder-lock]").forEach((button) => {
+        surface.querySelectorAll("[data-toggle-builder-lock]").forEach((button) => {
           button.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -4525,7 +4760,7 @@
             renderPageBuilder();
           });
         });
-        stage.querySelectorAll("[data-builder-inline-text]").forEach((editor) => {
+        surface.querySelectorAll("[data-builder-inline-text]").forEach((editor) => {
           editor.addEventListener("pointerdown", (event) => {
             event.stopPropagation();
             builderSelectedBlockId = editor.dataset.builderInlineText;
@@ -4545,7 +4780,7 @@
             event.stopPropagation();
           });
         });
-        stage.querySelectorAll("[data-builder-resize]").forEach((handle) => {
+        surface.querySelectorAll("[data-builder-resize]").forEach((handle) => {
           handle.addEventListener("pointerdown", (event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -4560,9 +4795,11 @@
             const startWidth = Number(block.width || node.offsetWidth || 260);
             const startHeight = Number(block.height || node.offsetHeight || 80);
             const ratio = Number(block.aspectRatio || (startWidth / Math.max(1, startHeight)) || 1);
+            const surfaceBox = surface.getBoundingClientRect();
+            const surfaceScale = Math.max(0.01, surfaceBox.width / Math.max(1, surface.clientWidth));
             const move = (moveEvent) => {
-              const nextWidth = Math.max(40, Math.round(startWidth + moveEvent.clientX - startX));
-              let nextHeight = Math.max(30, Math.round(startHeight + moveEvent.clientY - startY));
+              const nextWidth = Math.max(40, Math.round(startWidth + (moveEvent.clientX - startX) / surfaceScale));
+              let nextHeight = Math.max(30, Math.round(startHeight + (moveEvent.clientY - startY) / surfaceScale));
               if (block.lockAspect !== false) nextHeight = Math.max(30, Math.round(nextWidth / ratio));
               block.width = nextWidth;
               block.height = nextHeight;
@@ -4580,7 +4817,7 @@
             handle.addEventListener("pointerup", up);
           });
         });
-        stage.querySelectorAll("[data-builder-preview-block]").forEach((node) => {
+        surface.querySelectorAll("[data-builder-preview-block]").forEach((node) => {
           node.addEventListener("click", (event) => {
             if (event.target?.closest?.("[data-builder-inline-text]")) return;
             builderSelectedBlockId = node.dataset.builderPreviewBlock;
@@ -4602,7 +4839,7 @@
             closeBuilderContextMenu();
             stage.focus({ preventScroll: true });
             node.setPointerCapture(event.pointerId);
-            const stageBox = stage.getBoundingClientRect();
+            const stageBox = surface.getBoundingClientRect();
             const nodeBox = node.getBoundingClientRect();
             const offsetX = event.clientX - nodeBox.left;
             const offsetY = event.clientY - nodeBox.top;
@@ -4612,7 +4849,7 @@
               if (!block) return;
               const rawX = ((moveEvent.clientX - offsetX - stageBox.left) / stageBox.width) * 100;
               const rawY = ((moveEvent.clientY - offsetY - stageBox.top) / stageBox.height) * 100;
-              const snapped = snapBuilderPosition(block, rawX, rawY, stage);
+              const snapped = snapBuilderPosition(block, rawX, rawY, surface);
               block.x = Math.round(snapped.x * 10) / 10;
               block.y = Math.round(snapped.y * 10) / 10;
               node.style.setProperty("--x", `${block.x}%`);
@@ -4675,6 +4912,7 @@
         renderBuilderPageList();
         renderBuilderEditor();
         renderBuilderPreview();
+        attachBuilderAddBlockHandlers();
         const pages = builderAllPages();
         const customCount = (siteContentState.customPages || []).length;
         setInlineStatus("builderStatus", `${pages.length} pagina(s) no construtor: ${BUILDER_SYSTEM_PAGES.length} do site e ${customCount} criada(s).`, "ok");
@@ -5719,6 +5957,15 @@
       $("#builderOpenFullscreen")?.addEventListener("click", () => {
         openBuilderFullscreenPreview();
       });
+      $("#builderOpenFullscreenEdit")?.addEventListener("click", () => {
+        openBuilderFullscreenEditor();
+      });
+      $("#builderCloseFullscreenEdit")?.addEventListener("click", () => {
+        closeBuilderFullscreenEditor();
+      });
+      $("#builderToggleFullscreenTools")?.addEventListener("click", () => {
+        toggleBuilderFullscreenTools();
+      });
       $("#builderCloseFullscreen")?.addEventListener("click", () => {
         closeBuilderFullscreenPreview();
       });
@@ -5761,18 +6008,8 @@
         if (event.key === "Escape") {
           closeBuilderContextMenu();
           if (!$("#builderFullscreenModal")?.hidden) closeBuilderFullscreenPreview();
+          if (document.body.classList.contains("builder-edit-fullscreen")) closeBuilderFullscreenEditor();
         }
-      });
-      document.querySelectorAll("[data-add-builder-block]").forEach((button) => {
-        button.addEventListener("click", () => {
-          const page = activeCustomPage();
-          const block = defaultBuilderBlock(button.dataset.addBuilderBlock || "box");
-          page.blocks = Array.isArray(page.blocks) ? page.blocks : [];
-          page.blocks.push(block);
-          builderSelectedBlockId = block.id;
-          renderPageBuilder();
-          setInlineStatus("builderStatus", "Bloco adicionado ao preview. Ajuste e salve para publicar.", "ok");
-        });
       });
       $("#saveCustomPages")?.addEventListener("click", async () => {
         if (!siteContentState) return;
@@ -5780,8 +6017,19 @@
       });
       $("#builderEditor")?.addEventListener("click", (event) => {
         const trigger = event.target?.dataset?.builderUploadTrigger;
-        if (!trigger) return;
-        uploadBuilderImage(trigger, event.target.dataset.builderUploadTarget || "image");
+        const removeColor = event.target?.dataset?.builderRemoveBgColor;
+        const removeAi = event.target?.dataset?.builderRemoveBgAi;
+        if (trigger) {
+          uploadBuilderImage(trigger, event.target.dataset.builderUploadTarget || "image");
+          return;
+        }
+        if (removeColor) {
+          removeBuilderImageBackgroundByColor(removeColor);
+          return;
+        }
+        if (removeAi) {
+          removeBuilderImageBackgroundByAi(removeAi);
+        }
       });
       $("#applyDropshippingMargin")?.addEventListener("click", () => {
         try {

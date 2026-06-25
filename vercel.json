@@ -44,6 +44,10 @@
       "dest": "/api/account?action=upload-media"
     },
     {
+      "src": "/api/remove-background/?",
+      "dest": "/api/account?action=remove-background"
+    },
+    {
       "src": "/api/dropify-products/?",
       "dest": "/api/account?action=dropify-products"
     },
