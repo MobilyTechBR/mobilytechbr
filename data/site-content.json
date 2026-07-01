@@ -13,7 +13,7 @@
       "dropshippingProducts": true
     },
     "site": {
-      "maintenanceMode": true
+      "maintenanceMode": false
     }
   },
   "homeHero": {
