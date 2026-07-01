@@ -150,7 +150,17 @@
           "contentPath": "homeHero.title",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 20,
+              "y": 10,
+              "width": 520,
+              "height": 155,
+              "aspectRatio": 3.3548387096774195
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-hero-subtitle",
@@ -192,7 +202,17 @@
           "contentPath": "homeHero.subtitle",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 20,
+              "y": 24,
+              "width": 560,
+              "height": 110,
+              "aspectRatio": 5.090909090909091
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-primary-button",
@@ -234,7 +254,17 @@
           "contentPath": "homeHero.primaryLabel",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 20,
+              "y": 39,
+              "width": 232,
+              "height": 58,
+              "aspectRatio": 4
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-secondary-button",
@@ -276,7 +306,17 @@
           "contentPath": "homeHero.secondaryLabel",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 35,
+              "y": 39,
+              "width": 185,
+              "height": 58,
+              "aspectRatio": 3.189655172413793
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-hero-image",
@@ -318,7 +358,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 48,
+              "y": 10,
+              "width": 360,
+              "height": 380,
+              "aspectRatio": 0.9473684210526315
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-deal-card",
@@ -360,7 +410,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 67,
+              "y": 13,
+              "width": 270,
+              "height": 290,
+              "aspectRatio": 0.9310344827586207
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-trust-pieces",
@@ -402,7 +462,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 17,
+              "y": 53,
+              "width": 260,
+              "height": 88,
+              "aspectRatio": 2.9545454545454546
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-trust-warranty",
@@ -444,7 +514,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 32,
+              "y": 53,
+              "width": 280,
+              "height": 88,
+              "aspectRatio": 3.1818181818181817
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-trust-shipping",
@@ -486,7 +566,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 49,
+              "y": 53,
+              "width": 280,
+              "height": 88,
+              "aspectRatio": 3.1818181818181817
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-trust-support",
@@ -528,7 +618,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 66,
+              "y": 53,
+              "width": 260,
+              "height": 88,
+              "aspectRatio": 2.9545454545454546
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-pc-heading",
@@ -570,7 +670,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 17,
+              "y": 65,
+              "width": 400,
+              "height": 62,
+              "aspectRatio": 6.451612903225806
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-pc-grid",
@@ -612,7 +722,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 17,
+              "y": 72,
+              "width": 620,
+              "height": 360,
+              "aspectRatio": 1.7222222222222223
+            }
+          },
+          "layoutEditedModes": {}
         },
         {
           "id": "system-home-finds-band",
@@ -654,7 +774,17 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false
+          "overrideOriginal": false,
+          "layouts": {
+            "desktop": {
+              "x": 17,
+              "y": 88,
+              "width": 1100,
+              "height": 230,
+              "aspectRatio": 4.782608695652174
+            }
+          },
+          "layoutEditedModes": {}
         }
       ]
     },
