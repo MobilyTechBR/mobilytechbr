@@ -119,11 +119,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 3.3548387096774195,
-          "x": 20,
-          "y": 10,
-          "width": 520,
-          "height": 155,
+          "aspectRatio": 3.3741496598639458,
+          "x": 13.9,
+          "y": 10.2,
+          "width": 496,
+          "height": 147,
           "layer": 4,
           "radius": 0,
           "background": "transparent",
@@ -153,14 +153,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 20,
-              "y": 10,
-              "width": 520,
-              "height": 155,
-              "aspectRatio": 3.3548387096774195
+              "x": 13.9,
+              "y": 10.2,
+              "width": 496,
+              "height": 147,
+              "aspectRatio": 3.3741496598639458
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-hero-subtitle",
@@ -171,11 +172,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 5.090909090909091,
-          "x": 20,
-          "y": 24,
-          "width": 560,
-          "height": 110,
+          "aspectRatio": 4.065573770491803,
+          "x": 13.9,
+          "y": 19.3,
+          "width": 496,
+          "height": 122,
           "layer": 4,
           "radius": 0,
           "background": "transparent",
@@ -205,14 +206,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 20,
-              "y": 24,
-              "width": 560,
-              "height": 110,
-              "aspectRatio": 5.090909090909091
+              "x": 13.9,
+              "y": 19.3,
+              "width": 496,
+              "height": 122,
+              "aspectRatio": 4.065573770491803
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-primary-button",
@@ -223,11 +225,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 4,
-          "x": 20,
-          "y": 39,
-          "width": 232,
-          "height": 58,
+          "aspectRatio": 4.84,
+          "x": 13.9,
+          "y": 27.5,
+          "width": 242,
+          "height": 50,
           "layer": 6,
           "radius": 999,
           "background": "#ff2b2b",
@@ -257,14 +259,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 20,
-              "y": 39,
-              "width": 232,
-              "height": 58,
-              "aspectRatio": 4
+              "x": 13.9,
+              "y": 27.5,
+              "width": 242,
+              "height": 50,
+              "aspectRatio": 4.84
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-secondary-button",
@@ -275,11 +278,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 3.189655172413793,
-          "x": 35,
-          "y": 39,
-          "width": 185,
-          "height": 58,
+          "aspectRatio": 3.24,
+          "x": 27.5,
+          "y": 27.5,
+          "width": 162,
+          "height": 50,
           "layer": 6,
           "radius": 999,
           "background": "#ffffff",
@@ -309,14 +312,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 35,
-              "y": 39,
-              "width": 185,
-              "height": 58,
-              "aspectRatio": 3.189655172413793
+              "x": 27.5,
+              "y": 27.5,
+              "width": 162,
+              "height": 50,
+              "aspectRatio": 3.24
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-hero-image",
@@ -327,11 +331,11 @@
           "image": "./assets/generated/pc-i7-3770-16gb-gtx550ti-ssd240-cutout.png",
           "objectFit": "contain",
           "lockAspect": true,
-          "aspectRatio": 0.9473684210526315,
-          "x": 48,
-          "y": 10,
-          "width": 360,
-          "height": 380,
+          "aspectRatio": 0.8641025641025641,
+          "x": 46.8,
+          "y": 9.4,
+          "width": 337,
+          "height": 390,
           "layer": 2,
           "radius": 18,
           "background": "transparent",
@@ -361,14 +365,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 48,
-              "y": 10,
-              "width": 360,
-              "height": 380,
-              "aspectRatio": 0.9473684210526315
+              "x": 46.8,
+              "y": 9.4,
+              "width": 337,
+              "height": 390,
+              "aspectRatio": 0.8641025641025641
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-deal-card",
@@ -379,11 +384,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 0.9310344827586207,
-          "x": 67,
-          "y": 13,
-          "width": 270,
-          "height": 290,
+          "aspectRatio": 0.8408408408408409,
+          "x": 71.4,
+          "y": 11,
+          "width": 280,
+          "height": 333,
           "layer": 4,
           "radius": 18,
           "background": "#f8fbff",
@@ -413,14 +418,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 67,
-              "y": 13,
-              "width": 270,
-              "height": 290,
-              "aspectRatio": 0.9310344827586207
+              "x": 71.4,
+              "y": 11,
+              "width": 280,
+              "height": 333,
+              "aspectRatio": 0.8408408408408409
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-trust-pieces",
@@ -431,11 +437,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 2.9545454545454546,
-          "x": 17,
-          "y": 53,
-          "width": 260,
-          "height": 88,
+          "aspectRatio": 4.144444444444445,
+          "x": 10.7,
+          "y": 35.4,
+          "width": 373,
+          "height": 90,
           "layer": 4,
           "radius": 18,
           "background": "#ffffff",
@@ -462,17 +468,21 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false,
+          "overrideOriginal": true,
           "layouts": {
             "desktop": {
-              "x": 17,
-              "y": 53,
-              "width": 260,
-              "height": 88,
-              "aspectRatio": 2.9545454545454546
+              "x": 10.7,
+              "y": 35.4,
+              "width": 373,
+              "height": 90,
+              "aspectRatio": 4.144444444444445
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {
+            "desktop": true
+          },
+          "derivedFromDom": true,
+          "userEdited": true
         },
         {
           "id": "system-home-trust-warranty",
@@ -483,11 +493,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 3.1818181818181817,
-          "x": 32,
-          "y": 53,
-          "width": 280,
-          "height": 88,
+          "aspectRatio": 4.144444444444445,
+          "x": 30.4,
+          "y": 35.4,
+          "width": 373,
+          "height": 90,
           "layer": 4,
           "radius": 18,
           "background": "#ffffff",
@@ -517,14 +527,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 32,
-              "y": 53,
-              "width": 280,
-              "height": 88,
-              "aspectRatio": 3.1818181818181817
+              "x": 30.4,
+              "y": 35.4,
+              "width": 373,
+              "height": 90,
+              "aspectRatio": 4.144444444444445
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-trust-shipping",
@@ -535,11 +546,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 3.1818181818181817,
-          "x": 49,
-          "y": 53,
-          "width": 280,
-          "height": 88,
+          "aspectRatio": 4.144444444444445,
+          "x": 50,
+          "y": 35.4,
+          "width": 373,
+          "height": 90,
           "layer": 4,
           "radius": 18,
           "background": "#ffffff",
@@ -569,14 +580,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 49,
-              "y": 53,
-              "width": 280,
-              "height": 88,
-              "aspectRatio": 3.1818181818181817
+              "x": 50,
+              "y": 35.4,
+              "width": 373,
+              "height": 90,
+              "aspectRatio": 4.144444444444445
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-trust-support",
@@ -587,11 +599,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 2.9545454545454546,
-          "x": 66,
-          "y": 53,
-          "width": 260,
-          "height": 88,
+          "aspectRatio": 4.144444444444445,
+          "x": 69.6,
+          "y": 35.4,
+          "width": 373,
+          "height": 90,
           "layer": 4,
           "radius": 18,
           "background": "#ffffff",
@@ -621,14 +633,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 66,
-              "y": 53,
-              "width": 260,
-              "height": 88,
-              "aspectRatio": 2.9545454545454546
+              "x": 69.6,
+              "y": 35.4,
+              "width": 373,
+              "height": 90,
+              "aspectRatio": 4.144444444444445
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-pc-heading",
@@ -639,11 +652,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 6.451612903225806,
-          "x": 17,
-          "y": 65,
-          "width": 400,
-          "height": 62,
+          "aspectRatio": 7.378378378378378,
+          "x": 10.7,
+          "y": 44,
+          "width": 273,
+          "height": 37,
           "layer": 4,
           "radius": 0,
           "background": "transparent",
@@ -673,14 +686,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 17,
-              "y": 65,
-              "width": 400,
-              "height": 62,
-              "aspectRatio": 6.451612903225806
+              "x": 10.7,
+              "y": 44,
+              "width": 273,
+              "height": 37,
+              "aspectRatio": 7.378378378378378
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-pc-grid",
@@ -691,11 +705,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 1.7222222222222223,
-          "x": 17,
-          "y": 72,
-          "width": 620,
-          "height": 360,
+          "aspectRatio": 2.4285714285714284,
+          "x": 10.7,
+          "y": 47,
+          "width": 1496,
+          "height": 616,
           "layer": 4,
           "radius": 18,
           "background": "rgba(255,255,255,.78)",
@@ -725,14 +739,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 17,
-              "y": 72,
-              "width": 620,
-              "height": 360,
-              "aspectRatio": 1.7222222222222223
+              "x": 10.7,
+              "y": 47,
+              "width": 1496,
+              "height": 616,
+              "aspectRatio": 2.4285714285714284
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         },
         {
           "id": "system-home-finds-band",
@@ -743,11 +758,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 4.782608695652174,
-          "x": 17,
-          "y": 88,
-          "width": 1100,
-          "height": 230,
+          "aspectRatio": 2.6810035842293907,
+          "x": 10.7,
+          "y": 100,
+          "width": 1496,
+          "height": 558,
           "layer": 4,
           "radius": 18,
           "background": "rgba(255,255,255,.82)",
@@ -777,14 +792,15 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 17,
-              "y": 88,
-              "width": 1100,
-              "height": 230,
-              "aspectRatio": 4.782608695652174
+              "x": 10.7,
+              "y": 100,
+              "width": 1496,
+              "height": 558,
+              "aspectRatio": 2.6810035842293907
             }
           },
-          "layoutEditedModes": {}
+          "layoutEditedModes": {},
+          "derivedFromDom": true
         }
       ]
     },
@@ -3286,5 +3302,68 @@
       ]
     }
   },
-  "customPages": []
+  "customPages": [
+    {
+      "id": "custom-page-ms2ehfks-197a",
+      "active": true,
+      "showInNav": false,
+      "title": "Weelkome BACK",
+      "navLabel": "Weelkome BACK",
+      "slug": "weelkome-back",
+      "intro": "Edite esta pagina pelo construtor visual.",
+      "order": 4,
+      "blocks": [
+        {
+          "id": "custom-block-ms2eizxv-809c",
+          "type": "text",
+          "label": "Weelkome BACK",
+          "text": "Weelkome BACK",
+          "target": "",
+          "image": "",
+          "objectFit": "",
+          "lockAspect": false,
+          "aspectRatio": 3.81981981981982,
+          "x": 36.2,
+          "y": 15.3,
+          "width": 424,
+          "height": 111,
+          "layer": 3,
+          "radius": 0,
+          "background": "#ffffff",
+          "color": "#111111",
+          "backgroundMode": "glass",
+          "gradientFrom": "#ffffff",
+          "gradientTo": "#e9f5ff",
+          "gradientAngle": 135,
+          "textMode": "solid",
+          "textGradientFrom": "#111111",
+          "textGradientTo": "#148bff",
+          "textGradientAngle": 90,
+          "textTexture": "",
+          "texturePhrase": "",
+          "shadowStrength": 0,
+          "textShadowStrength": 0,
+          "blurPx": 12,
+          "animation": "none",
+          "animationDuration": 600,
+          "fontSize": 0,
+          "fontWeight": 900,
+          "textAlign": "center",
+          "layouts": {
+            "desktop": {
+              "x": 36.2,
+              "y": 15.3,
+              "width": 424,
+              "height": 111,
+              "aspectRatio": 3.81981981981982
+            }
+          },
+          "layoutEditedModes": {
+            "desktop": true
+          }
+        }
+      ],
+      "isSystem": false
+    }
+  ]
 }
