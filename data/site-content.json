@@ -436,12 +436,12 @@
           "target": "",
           "image": "",
           "objectFit": "",
-          "lockAspect": false,
-          "aspectRatio": 4.144444444444445,
-          "x": 10.7,
-          "y": 35.4,
-          "width": 373,
-          "height": 90,
+          "lockAspect": true,
+          "aspectRatio": 4.1477272727272725,
+          "x": 10.6,
+          "y": 35.5,
+          "width": 365,
+          "height": 88,
           "layer": 4,
           "radius": 18,
           "background": "#ffffff",
@@ -471,11 +471,11 @@
           "overrideOriginal": true,
           "layouts": {
             "desktop": {
-              "x": 10.7,
-              "y": 35.4,
-              "width": 373,
-              "height": 90,
-              "aspectRatio": 4.144444444444445
+              "x": 10.6,
+              "y": 35.5,
+              "width": 365,
+              "height": 88,
+              "aspectRatio": 4.1477272727272725
             }
           },
           "layoutEditedModes": {
@@ -494,7 +494,7 @@
           "objectFit": "",
           "lockAspect": false,
           "aspectRatio": 4.144444444444445,
-          "x": 30.4,
+          "x": 29.6,
           "y": 35.4,
           "width": 373,
           "height": 90,
@@ -524,18 +524,21 @@
           "contentPath": "",
           "systemManaged": true,
           "realPageElement": true,
-          "overrideOriginal": false,
+          "overrideOriginal": true,
           "layouts": {
             "desktop": {
-              "x": 30.4,
+              "x": 29.6,
               "y": 35.4,
               "width": 373,
               "height": 90,
               "aspectRatio": 4.144444444444445
             }
           },
-          "layoutEditedModes": {},
-          "derivedFromDom": true
+          "layoutEditedModes": {
+            "desktop": true
+          },
+          "derivedFromDom": true,
+          "userEdited": true
         },
         {
           "id": "system-home-trust-shipping",
@@ -653,7 +656,7 @@
           "objectFit": "",
           "lockAspect": false,
           "aspectRatio": 7.378378378378378,
-          "x": 10.7,
+          "x": 10.6,
           "y": 44,
           "width": 273,
           "height": 37,
@@ -686,7 +689,7 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 10.7,
+              "x": 10.6,
               "y": 44,
               "width": 273,
               "height": 37,
@@ -705,11 +708,11 @@
           "image": "",
           "objectFit": "",
           "lockAspect": false,
-          "aspectRatio": 2.4285714285714284,
-          "x": 10.7,
-          "y": 47,
+          "aspectRatio": 2.436482084690554,
+          "x": 10.6,
+          "y": 47.1,
           "width": 1496,
-          "height": 616,
+          "height": 614,
           "layer": 4,
           "radius": 18,
           "background": "rgba(255,255,255,.78)",
@@ -739,11 +742,11 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 10.7,
-              "y": 47,
+              "x": 10.6,
+              "y": 47.1,
               "width": 1496,
-              "height": 616,
-              "aspectRatio": 2.4285714285714284
+              "height": 614,
+              "aspectRatio": 2.436482084690554
             }
           },
           "layoutEditedModes": {},
@@ -759,7 +762,7 @@
           "objectFit": "",
           "lockAspect": false,
           "aspectRatio": 2.6810035842293907,
-          "x": 10.7,
+          "x": 10.6,
           "y": 100,
           "width": 1496,
           "height": 558,
@@ -792,7 +795,7 @@
           "overrideOriginal": false,
           "layouts": {
             "desktop": {
-              "x": 10.7,
+              "x": 10.6,
               "y": 100,
               "width": 1496,
               "height": 558,
